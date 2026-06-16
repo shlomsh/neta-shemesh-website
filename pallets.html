@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neta — Palette Options</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #FAF6F3;
+      color: #2C1F1A;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 2.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 720px;
+      width: 100%;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .letter {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+      padding: 14px 18px 6px;
+    }
+
+    .swatches {
+      display: flex;
+      height: 90px;
+    }
+
+    .swatch {
+      flex: 1;
+      position: relative;
+    }
+
+    .hex {
+      position: absolute;
+      bottom: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      font-family: "SF Mono", "Fira Mono", monospace;
+      white-space: nowrap;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.18);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .info {
+      padding: 12px 18px 16px;
+    }
+
+    .name {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .desc {
+      font-size: 12.5px;
+      color: #888;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Palette options — choose one</h1>
+
+  <div class="grid">
+
+    <!-- A -->
+    <div class="card">
+      <div class="letter">A</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#5C4A52;">
+          <span class="hex">#5C4A52</span>
+        </div>
+        <div class="swatch" style="background:#9F8383;">
+          <span class="hex">#9F8383</span>
+        </div>
+        <div class="swatch" style="background:#C8AAAA;">
+          <span class="hex" style="background:rgba(0,0,0,0.12);color:rgba(60,20,20,0.75);">#C8AAAA</span>
+        </div>
+        <div class="swatch" style="background:#F7E2D6;">
+          <span class="hex" style="background:rgba(0,0,0,0.1);color:rgba(80,45,35,0.8);">#F7E2D6</span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name">Plum rose</div>
+        <div class="desc">Closest to original — dark plum-brown anchor, blush midtones, warm cream.</div>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="card">
+      <div class="letter">B</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#6B4F47;">
+          <span class="hex">#6B4F47</span>
+        </div>
+        <div class="swatch" style="background:#A88076;">
+          <span class="hex">#A88076</span>
+        </div>
+        <div class="swatch" style="background:#CFB3AA;">
+          <span class="hex" style="background:rgba(0,0,0,0.12);color:rgba(70,30,22,0.75);">#CFB3AA</span>
+        </div>
+        <div class="swatch" style="background:#F7E2D6;">
+          <span class="hex" style="background:rgba(0,0,0,0.1);color:rgba(80,45,35,0.8);">#F7E2D6</span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name">Terracotta dusk</div>
+        <div class="desc">Earthy brown-red anchor, warm terracotta midtones, soft peachy cream.</div>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="card">
+      <div class="letter">C</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#4A3D4A;">
+          <span class="hex">#4A3D4A</span>
+        </div>
+        <div class="swatch" style="background:#8C7A8C;">
+          <span class="hex">#8C7A8C</span>
+        </div>
+        <div class="swatch" style="background:#C2ADBB;">
+          <span class="hex" style="background:rgba(0,0,0,0.12);color:rgba(50,20,50,0.7);">#C2ADBB</span>
+        </div>
+        <div class="swatch" style="background:#F7E2D6;">
+          <span class="hex" style="background:rgba(0,0,0,0.1);color:rgba(80,45,35,0.8);">#F7E2D6</span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name">Dusty mauve</div>
+        <div class="desc">Deep purple-grey anchor, muted mauve midtones — more lavender, less brown.</div>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="card">
+      <div class="letter">D</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#5E4840;">
+          <span class="hex">#5E4840</span>
+        </div>
+        <div class="swatch" style="background:#9E8070;">
+          <span class="hex">#9E8070</span>
+        </div>
+        <div class="swatch" style="background:#C9B0A3;">
+          <span class="hex" style="background:rgba(0,0,0,0.12);color:rgba(60,30,20,0.75);">#C9B0A3</span>
+        </div>
+        <div class="swatch" style="background:#F7E2D6;">
+          <span class="hex" style="background:rgba(0,0,0,0.1);color:rgba(80,45,35,0.8);">#F7E2D6</span>
+        </div>
+      </div>
+      <div class="info">
+        <div class="name">Warm walnut</div>
+        <div class="desc">Richest brown anchor, sandy-nude midtones — warmest and most grounded of the four.</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
