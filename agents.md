@@ -35,3 +35,9 @@ We implemented `ScrollAnimator.tsx` to unpause these animations as they scroll i
 - **Animations**: `src/components/ScrollAnimator.tsx`
 - **Tests**: `tests/` (Includes visual regression and staggered animation DOM checks)
 - **Original Source**: `public/index.html` and `public/styles.css`
+
+## ⚠️ Critical Next.js & Vercel Gotchas
+1. **Never override `<head>` in `layout.tsx`**: In the Next.js App Router, manually defining a `<head>` wrapper around `<link>` tags will completely override Next.js's internal head injection. This instantly destroys `globals.css` loading, Tailwind, and React hydration scripts. Always rely on Next.js `import` statements or Metadata APIs.
+2. **CSS Import Order Specificity**: Canva's `styles.css` contains extreme specificity that can hide elements (e.g. `opacity: 0`). When importing stylesheets in `layout.tsx`, `import "./globals.css"` **MUST** come absolutely last so that our clean override animations (`cleanFadeUp`) win the specificity war.
+3. **Missing Fonts break Vercel Builds**: Canva's exported CSS contains hundreds of `url(fonts/...)` references. Because `public/fonts` is `.gitignore`d (to save space), Next.js's Webpack parser will crash with `Module not found` during the Vercel production build. Always use `sed` to strip broken font URLs from Canva CSS files before importing them.
+4. **Never run Playwright in Vercel Builds**: Vercel build containers lack the OS-level graphics dependencies (X11, etc.) required to launch Chromium. If you add `playwright test` to the `"build"` script in `package.json`, Vercel will crash. E2E tests must be run in GitHub Actions instead.
