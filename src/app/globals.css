@@ -6,9 +6,22 @@
   --color-canva-light: #C8AAAA;
   --color-canva-bg: #F7E2D6;
 
-  --font-canva-primary: "YAFdtQi73Xs-0", sans-serif;
-  --font-canva-secondary: "YAErUQDw3VY-0", serif;
-  --font-canva-accent: "YAD87vDtOPY-0", sans-serif;
+  --font-canva-primary: var(--font-montserrat), sans-serif;
+  --font-canva-secondary: var(--font-playfair), serif;
+  --font-canva-accent: var(--font-great-vibes), cursive;
+}
+
+:root {
+  --color-dark: #100f0d;
+  --color-white: #ffffff;
+  --color-text-muted: #191919;
+  --color-text-primary: #29282e;
+  --color-black: #000000;
+  --color-brand-primary: #a68d26;
+  --color-brand-secondary: #b39d3f;
+  --color-brand-dark: #8e7d32;
+  --color-text-secondary: #606060;
+  --color-bg-light: #fffbe8;
 }
 
 @layer base {
