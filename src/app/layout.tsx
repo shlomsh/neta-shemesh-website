@@ -10,11 +10,9 @@ import ScrollAnimator from "@/components/ScrollAnimator";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="stylesheet" href="/canva-fonts.css" />
-        <link rel="stylesheet" href="/styles.css" />
-      </head>
       <body>
+        <link rel="stylesheet" href="/canva-fonts.css" precedence="default" />
+        <link rel="stylesheet" href="/styles.css" precedence="default" />
         {children}
         <ScrollAnimator />
       </body>
