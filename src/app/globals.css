@@ -103,6 +103,7 @@
 #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,    /* About "ליווי מומחה" Header */
 #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,    /* Expertise Section Header */
 #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,    /* Services "How It Works" Header */
+#eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,    /* Services "סיפורי הצלחה" Header */
 #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,    /* Testimonials Header */
 #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,    /* Contact "Follow Me" Header */
 #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {   /* Contact "My Office" Header */
@@ -115,7 +116,6 @@
 }
 
 /* 2. Sub-headers & Section Overlay Texts */
-#eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,    /* Services "Success Stories" Header */
 #T749khVkMfNluBNv, #T749khVkMfNluBNv span,    /* Testimonials Subheader */
 #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {   /* Testimonials Appointment Title */
   font-family: var(--font-canva-accent) !important;
@@ -137,12 +137,12 @@
   #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,
   #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,
   #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,
+  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
   #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,
   #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,
   #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {
     font-size: 3.5rem !important; /* Section header size */
   }
-  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
   #T749khVkMfNluBNv, #T749khVkMfNluBNv span,
   #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {
     font-size: 2.2rem !important; /* Sub-header size */
@@ -158,12 +158,12 @@
   #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,
   #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,
   #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,
+  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
   #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,
   #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,
   #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {
     font-size: 1.8rem !important; /* Mobile section header size */
   }
-  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
   #T749khVkMfNluBNv, #T749khVkMfNluBNv span,
   #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {
     font-size: 1.4rem !important; /* Mobile sub-header size */
