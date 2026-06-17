@@ -30,7 +30,7 @@ export default function Footer() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-a0796c87-c454-431a-bd3f-7d742f15dfb7 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="fWFOHcnbrjnWCwKo" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Jlq0wYkaWE3FGqH9" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="kvg9i1r6Ce8DxGSp" style="color:var(--color-white);">Overcome challenges and rekindle the emotional and physical connection.</span><br></p>
+                  <p id="Jlq0wYkaWE3FGqH9" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="kvg9i1r6Ce8DxGSp" style="color:var(--color-white);">Overcome challenges and rekindle the emotional and physical connection.</span><br></p>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function Footer() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-e7a7daf8-2ed3-416f-8dcc-f8bd7b6afc82 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="fGwTzDr0dOOC5oYM" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="jRhQcqGKNwL5FzWr" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.35038278em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="t7mpFHkutgAWck7G" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">BOOK FOR AN APPOINTMENT</a><br></p>
+                        <p id="jRhQcqGKNwL5FzWr" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.35038278em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="t7mpFHkutgAWck7G" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">BOOK FOR AN APPOINTMENT</a><br></p>
                       </div>
                     </div>
                   </div>
@@ -77,7 +77,7 @@ export default function Footer() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-b742ab17-8e7f-4b2f-b374-d91bb18327c9 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="cMaVTbybPOF2Cq9E" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="NJnO8X7N6IGbro1k" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-accent);margin-left:0em;line-height:1.0899522em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="jkbtaL3OlM9XL5RY" style="color:var(--color-white);">Doctor Avalon</span><br></p>
+                  <p id="NJnO8X7N6IGbro1k" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-accent);margin-right:0em;line-height:1.0899522em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="jkbtaL3OlM9XL5RY" style="color:var(--color-white);">Doctor Avalon</span><br></p>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function Footer() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-57b3be02-9253-4450-95cc-4960ba03a49b 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="aDOv6q5HLsW2XAxs" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Yrwk23bLOxGAjGYH" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.49999423em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="oitsbKLtGbXNCxEY" style="color:var(--color-white);">Copyright © 2025. All rights reserved.</span><br></p>
+                  <p id="Yrwk23bLOxGAjGYH" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.49999423em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="oitsbKLtGbXNCxEY" style="color:var(--color-white);">Copyright © 2025. All rights reserved.</span><br></p>
                 </div>
               </div>
             </div>

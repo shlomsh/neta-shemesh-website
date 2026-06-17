@@ -28,7 +28,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-b8ae13b7-61b2-4ba8-9947-a75c446fbe69 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="YfhsApdiWgSg5tZA" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="pEc3w8pe4QAw5k7o" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="lEBZC8bpB2HUMalg" style="color:var(--color-white);">How It Works?</span><br></p>
+                  <p id="pEc3w8pe4QAw5k7o" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="lEBZC8bpB2HUMalg" style="color:var(--color-white);">How It Works?</span><br></p>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@ export default function Services() {
                   <p id="GvfE2AOaiaQzPkbY" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
                   <p id="iiQRKNxjnesrUwHT" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="rME94TcFVpnM7AgS" style="color:var(--color-white);font-weight:700;">Lorem Ipsum</span><br></p>
                   <p id="joTV2sCKH27BNSpn" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="AZuEQ8FQG0F8rcL6" style="color:var(--color-white);">Proin vel turpis et ligula commodo.</span></p>
-                  <p id="nbn4aiZIDwwEKbki" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;white-space:pre;"><br></p>
+                  <p id="nbn4aiZIDwwEKbki" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;white-space:pre;"><br></p>
                 </div>
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-c95438c7-2a3a-43f3-a7e5-34d52009ab81 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="LwbojNGVUdaJr75j" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="vPQMnjUrxBcg03le" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="M239kPBlL45z0Nj1" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">contact me</a><br></p>
+                        <p id="vPQMnjUrxBcg03le" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="M239kPBlL45z0Nj1" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">contact me</a><br></p>
                       </div>
                     </div>
                   </div>
@@ -108,7 +108,7 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-3fa6b73e-1b4d-4657-b9ad-14e85c8d6d59 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="ytRJgtUZn1ioBeuA" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="IYyL7EmDH2sttYmP" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="p0vAPlrG13iCojvv" style="color:var(--color-white);font-weight:700;">01.</span><br></p>
+                        <p id="IYyL7EmDH2sttYmP" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="p0vAPlrG13iCojvv" style="color:var(--color-white);font-weight:700;">01.</span><br></p>
                       </div>
                     </div>
                   </div>
@@ -163,7 +163,7 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-e85138cb-5927-4e79-ae0a-741b597d3a88 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="QKyXyNfEFhuclX1r" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="rDoLsn3SVFq5cGro" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="OW4S7XAHMYRoQiFd" style="color:var(--color-white);font-weight:700;">03.</span><br></p>
+                        <p id="rDoLsn3SVFq5cGro" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="OW4S7XAHMYRoQiFd" style="color:var(--color-white);font-weight:700;">03.</span><br></p>
                       </div>
                     </div>
                   </div>
@@ -218,7 +218,7 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-de9e60c6-bead-4347-9a66-2964d4d1032d 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="ZCeu0htih5UsiGju" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="PZWGDTY8wO8Qdpyn" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="bE6niutJLWUEJqSP" style="color:var(--color-white);font-weight:700;">02.</span><br></p>
+                        <p id="PZWGDTY8wO8Qdpyn" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="bE6niutJLWUEJqSP" style="color:var(--color-white);font-weight:700;">02.</span><br></p>
                       </div>
                     </div>
                   </div>
@@ -273,7 +273,7 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-a329983f-f9c2-4384-b95c-f96f1b6705af 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="jH2recUvffBJp4gt" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="zWFmobdPUa7s7UTD" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="UA5ZT85pd6zPtifu" style="color:var(--color-white);font-weight:700;">04.</span><br></p>
+                        <p id="zWFmobdPUa7s7UTD" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.08750068em;text-transform:none;letter-spacing:-0.02em;"><span id="UA5ZT85pd6zPtifu" style="color:var(--color-white);font-weight:700;">04.</span><br></p>
                       </div>
                     </div>
                   </div>
@@ -328,7 +328,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-677dde79-4cfb-40cb-abd9-fa215f10f6eb 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="z1TQKU04KcSYVmCO" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="eIrsfUtmMjgXi5KA" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="qEQsTBBQ8lF4QUSv" style="color:var(--color-white);">Success Stories</span><br></p>
+                  <p id="eIrsfUtmMjgXi5KA" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="qEQsTBBQ8lF4QUSv" style="color:var(--color-white);">Success Stories</span><br></p>
                 </div>
               </div>
             </div>
@@ -339,7 +339,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-72b6cbdf-c493-47f9-b34e-c041ae20fd43 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="pNZcnD7eiN569moS" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="lLOfHQS27asJnRZs" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="wziUNdTX9SBqDshy" style="color:var(--color-white);">Embark on a collaborative journey towards a healthier and happier partnership.</span><br></p>
+                  <p id="lLOfHQS27asJnRZs" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="wziUNdTX9SBqDshy" style="color:var(--color-white);">Embark on a collaborative journey towards a healthier and happier partnership.</span><br></p>
                 </div>
               </div>
             </div>

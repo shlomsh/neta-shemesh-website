@@ -28,7 +28,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-231f2396-c509-43c6-9d2d-ba6eb88e43fa 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="icdXhbvRN6ngozMI" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Dct2rK7XCXJaLA2e" style="color:var(--color-text-primary);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zxhh7nAzRvjXP5BT" style="color:var(--color-text-primary);">Testimonials</span><br></p>
+                  <p id="Dct2rK7XCXJaLA2e" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zxhh7nAzRvjXP5BT" style="color:var(--color-text-primary);">Testimonials</span><br></p>
                 </div>
               </div>
             </div>
@@ -357,7 +357,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-755454f6-16b7-4e95-a828-342009358739 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="ADlou2fjsMZuLUYj" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="iVtldd7PMtN1BthG" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="VqD8RL1Dlcv6nIpY" style="color:var(--color-white);">Book Appointment!</span><br></p>
+                  <p id="iVtldd7PMtN1BthG" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="VqD8RL1Dlcv6nIpY" style="color:var(--color-white);">Book Appointment!</span><br></p>
                 </div>
               </div>
             </div>
@@ -393,7 +393,7 @@ export default function Testimonials() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-a858e0d1-810b-4358-80f7-013b72f70268 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="hECvx9oGEEMEFdIf" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="kSwt6y543Ad7VYJN" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="MFPFSGdbxQ7Ds8ch" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">book appointment</a><br></p>
+                        <p id="kSwt6y543Ad7VYJN" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="MFPFSGdbxQ7Ds8ch" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">book appointment</a><br></p>
                       </div>
                     </div>
                   </div>
@@ -433,7 +433,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-1677c2d6-dae2-48e3-8a78-715a77ab521f 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="MT5xmW7NYdq2pX8x" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="T749khVkMfNluBNv" style="color:var(--color-text-primary);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="y5TxhTV4Bys7XHFV" style="color:var(--color-text-primary);">Couples Counseling for a Healthier Relationship</span><br></p>
+                  <p id="T749khVkMfNluBNv" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="y5TxhTV4Bys7XHFV" style="color:var(--color-text-primary);">Couples Counseling for a Healthier Relationship</span><br></p>
                 </div>
               </div>
             </div>
@@ -444,7 +444,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-14edd7d2-3b99-4dbe-8935-c353e6ec64c3 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="CqpotDcF8PpmWl4N" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="xCIDOy3f4yosGjqA" style="color:var(--color-text-primary);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="lMTvLkDlyprPE2V1" style="color:var(--color-text-primary);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span><br></p>
+                  <p id="xCIDOy3f4yosGjqA" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="lMTvLkDlyprPE2V1" style="color:var(--color-text-primary);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span><br></p>
                 </div>
               </div>
             </div>

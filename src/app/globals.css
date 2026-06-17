@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --color-canva-dark: #5C4A52;
-  --color-canva-mid: #9F8383;
-  --color-canva-light: #C8AAAA;
+  --color-canva-dark: #4A3D4A;
+  --color-canva-mid: #8C7A8C;
+  --color-canva-light: #C2ADBB;
   --color-canva-bg: #F7E2D6;
 
-  --font-canva-primary: var(--font-montserrat), sans-serif;
-  --font-canva-secondary: var(--font-playfair), serif;
-  --font-canva-accent: var(--font-great-vibes), cursive;
+  --font-canva-primary: var(--font-assistant), sans-serif;
+  --font-canva-secondary: var(--font-frank), serif;
+  --font-canva-accent: var(--font-assistant), cursive;
 }
 
 :root {
-  --color-dark: #100f0d;
-  --color-white: #ffffff;
-  --color-text-muted: #191919;
-  --color-text-primary: #29282e;
+  --color-dark: var(--color-canva-dark);
+  --color-white: #FFF0E4;
+  --color-text-muted: var(--color-canva-dark);
+  --color-text-primary: var(--color-canva-dark);
   --color-black: #000000;
-  --color-brand-primary: #a68d26;
-  --color-brand-secondary: #b39d3f;
-  --color-brand-dark: #8e7d32;
-  --color-text-secondary: #606060;
-  --color-bg-light: #fffbe8;
+  --color-brand-primary: var(--color-canva-light);
+  --color-brand-secondary: var(--color-canva-mid);
+  --color-brand-dark: var(--color-canva-dark);
+  --color-text-secondary: var(--color-canva-mid);
+  --color-bg-light: var(--color-canva-bg);
 }
 
 @layer base {
@@ -29,7 +29,7 @@
     background-color: var(--color-canva-bg);
     color: var(--color-canva-dark);
     font-family: var(--font-canva-primary);
-    direction: ltr; /* English LTR for Milestone 1 */
+    direction: rtl; /* Hebrew RTL */
   }
 
   /* Force Canva animations to run immediately since we aren't using their JS */

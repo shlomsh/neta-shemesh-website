@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Montserrat, Della_Respira, Great_Vibes } from "next/font/google";
+import { Assistant, Frank_Ruhl_Libre } from "next/font/google";
 import "../../public/canva-fonts.css";
 import "../../public/styles.css";
 import "./globals.css";
 
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
-const dellaRespira = Della_Respira({ weight: "400", subsets: ["latin"], variable: "--font-playfair" });
-const greatVibes = Great_Vibes({ weight: "400", subsets: ["latin"], variable: "--font-great-vibes" });
+const assistant = Assistant({ subsets: ["hebrew"], variable: "--font-assistant" });
+const frankRuhl = Frank_Ruhl_Libre({ subsets: ["hebrew"], variable: "--font-frank" });
 
 export const metadata: Metadata = {
   title: "Doctor Avalon — Couples Therapist",
@@ -16,7 +15,7 @@ import ScrollAnimator from "@/components/ScrollAnimator";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${dellaRespira.variable} ${greatVibes.variable}`}>
+    <html lang="he" dir="rtl" className={`${assistant.variable} ${frankRuhl.variable}`}>
       <body>
         {children}
         <ScrollAnimator />

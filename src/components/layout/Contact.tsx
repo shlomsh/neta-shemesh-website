@@ -115,7 +115,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-d0977c69-ce3a-4452-a2e6-3f23df82dbcb 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="NgK6B8BlZuK5oa4s" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="ZgJbejfHoeBrgmf7" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="B79wv2x3YXP7KaZB" style="color:var(--color-white);">Follow Me</span><br></p>
+                  <p id="ZgJbejfHoeBrgmf7" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="B79wv2x3YXP7KaZB" style="color:var(--color-white);">Follow Me</span><br></p>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function Contact() {
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-efbe3e61-0a04-4447-8a9f-95307e46ce1b 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="NrMYxCft2woPfhYM" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
                   <p id="yL5ClEHSlov9yc23" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="hYjMIzSYwvmkrIbh" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo. </span><span id="jdQIjuqhW6JB456R" style="color:var(--color-white);font-weight:700;">Lorem Ipsum proin</span><span id="aMzO4CQzvjxjbmlN" style="color:var(--color-white);"> vel turpis et ligula commodo.</span></p>
-                  <p id="S1AC5yguAq9MXyMS" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;white-space:pre;"><br></p>
+                  <p id="S1AC5yguAq9MXyMS" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;white-space:pre;"><br></p>
                 </div>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-cd2c881e-6fc4-45b3-8ed8-05d2d6239f0a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="KqBS2JfoMQm56LvC" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="zNSWHTotP3XOaXao" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="kQfimt371NND026m" style="color:var(--color-white);">My Office</span><br></p>
+                  <p id="zNSWHTotP3XOaXao" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="kQfimt371NND026m" style="color:var(--color-white);">My Office</span><br></p>
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-ff1515c5-947c-4a31-88b4-b0de96214535 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="AMQyb2JVC0ApQkqd" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="P1mLpK5g8qF4rKxQ" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="ieKyTPM5iiRiluTG" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit.</span><span id="p24nWR9GmDrQ97An" style="color:var(--color-white);font-weight:700;"> Proin vel turpis et</span><span id="uBZT2IxVk07Z4dqQ" style="color:var(--color-white);"> ligula commodo. </span><br></p>
+                  <p id="P1mLpK5g8qF4rKxQ" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="ieKyTPM5iiRiluTG" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit.</span><span id="p24nWR9GmDrQ97An" style="color:var(--color-white);font-weight:700;"> Proin vel turpis et</span><span id="uBZT2IxVk07Z4dqQ" style="color:var(--color-white);"> ligula commodo. </span><br></p>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-6ec83920-8830-47e9-b40a-5c3dde6c11ed 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="UMXUCtn7tYwOETMe" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="xmvHhSFyX6mbhRll" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.45312727em;text-align:left;text-transform:none;letter-spacing:0.012em;"><span id="HnG2t1mBKYTdM9re" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">38, Ashenvale, USA</span></p>
+                  <p id="xmvHhSFyX6mbhRll" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.45312727em;text-align:right;text-transform:none;letter-spacing:0.012em;"><span id="HnG2t1mBKYTdM9re" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">38, Ashenvale, USA</span></p>
                 </div>
               </div>
             </div>
@@ -257,7 +257,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-5d74e071-b8ee-4a0d-a079-c14cb8be35aa 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="G2HH9ZRE7lgJuZkM" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="CNTQK2esPy5orRTn" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.45312727em;text-align:left;text-transform:none;letter-spacing:0.012em;"><span id="TszxHEtxHIJ5forB" style="text-decoration-line:none;color:var(--color-white);font-style:normal;">Get to my Location</span></p>
+                  <p id="CNTQK2esPy5orRTn" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.45312727em;text-align:right;text-transform:none;letter-spacing:0.012em;"><span id="TszxHEtxHIJ5forB" style="text-decoration-line:none;color:var(--color-white);font-style:normal;">Get to my Location</span></p>
                 </div>
               </div>
             </div>

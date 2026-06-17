@@ -30,7 +30,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-edd8fee5-9168-440a-8b50-289cecef7f78 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="TKziGWzzMRcpYtGN" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Fyf1hlFV3WFGVXJq" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-accent);margin-left:0em;line-height:1.08995208em;text-transform:none;letter-spacing:-0.02em;"><span id="p9yAxwRPlT6eTQ72" style="color:var(--color-white);">Doctor Avalon</span><br></p>
+                  <p id="Fyf1hlFV3WFGVXJq" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-accent);margin-right:0em;line-height:1.08995208em;text-transform:none;letter-spacing:-0.02em;"><span id="p9yAxwRPlT6eTQ72" style="color:var(--color-white);">Doctor Avalon</span><br></p>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-6bec28f8-9075-4b1b-9305-a96a903bae9d 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="oinB1tjbApH9IPoV" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="UVb2e58thtXY4CK3" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.49999732em;text-align:center;letter-spacing:0.047em;"><a id="AIswJUP0SjvYqhdH" href="index.html#about" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">ABOUT</a><br></p>
+                  <p id="UVb2e58thtXY4CK3" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.49999732em;text-align:center;letter-spacing:0.047em;"><a id="AIswJUP0SjvYqhdH" href="index.html#about" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">ABOUT</a><br></p>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-413a6326-2a42-4471-a87f-fc677490a86c 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="n32wNTv7Px2vuBFJ" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="iJLNgCJUsWY6vOaQ" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.49999732em;text-align:center;letter-spacing:0.047em;"><a id="eU9g2Pyl4YVfKsI3" href="index.html#expertise" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">EXPERTISE</a><br></p>
+                  <p id="iJLNgCJUsWY6vOaQ" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.49999732em;text-align:center;letter-spacing:0.047em;"><a id="eU9g2Pyl4YVfKsI3" href="index.html#expertise" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">EXPERTISE</a><br></p>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-12ab85a8-56cb-4ed4-bc1b-1f968f9c5236 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="K25TkQTdBUgi833N" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="laRGSQrzpMXn4dPz" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.49999732em;text-align:center;letter-spacing:0.047em;"><a id="bYtDv3k3mGwlg0Qg" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">CONTACT</a><br></p>
+                  <p id="laRGSQrzpMXn4dPz" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.49999732em;text-align:center;letter-spacing:0.047em;"><a id="bYtDv3k3mGwlg0Qg" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">CONTACT</a><br></p>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function Hero() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-0ba817a9-3032-40d8-b717-67781ed18386 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="awxkXfAtCSuxG6m9" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="ULhpcRCBlHatIxDJ" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><span id="HS3VqM2Zv15WZN9N" style="color:var(--color-white);font-weight:700;">+01 234 5678 90</span><br></p>
+                        <p id="ULhpcRCBlHatIxDJ" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><span id="HS3VqM2Zv15WZN9N" style="color:var(--color-white);font-weight:700;">+01 234 5678 90</span><br></p>
                       </div>
                     </div>
                   </div>
@@ -102,7 +102,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-40cacc69-d77a-4f17-831b-49b1207c6df5 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="mNqlsf0Wm1vBQvcf" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="yWav85A872J3eebD" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.11666667em;text-transform:none;letter-spacing:-0.02em;"><span id="Slo5QD513jyev9ML" style="color:var(--color-white);">We’re Drifting Apart. Can Somebody Help Save Our Relationship?</span><br></p>
+                  <p id="yWav85A872J3eebD" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.11666667em;text-transform:none;letter-spacing:-0.02em;"><span id="Slo5QD513jyev9ML" style="color:var(--color-white);">We’re Drifting Apart. Can Somebody Help Save Our Relationship?</span><br></p>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-7fdece25-700a-4876-affe-9448c1a9a982 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="awwjFajLojUyVSdh" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="LUJfyBHoL3dN8Wvp" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="xhqlQ0Psr1wKqhN2" style="color:var(--color-white);">Our connection, once so strong, now seems fragile. Can we still find the strength to rebuild and rediscover each other? </span><br></p>
+                  <p id="LUJfyBHoL3dN8Wvp" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="xhqlQ0Psr1wKqhN2" style="color:var(--color-white);">Our connection, once so strong, now seems fragile. Can we still find the strength to rebuild and rediscover each other? </span><br></p>
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function Hero() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-13fb1e54-6af1-4b59-9055-faf404c3b486 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="oNT3qPg9tSOz645n" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="A0eF3OW2wGRFKxDe" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="fCUyK9zaiyvY8B4h" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">consult dr. avalon</a><br></p>
+                        <p id="A0eF3OW2wGRFKxDe" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="fCUyK9zaiyvY8B4h" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">consult dr. avalon</a><br></p>
                       </div>
                     </div>
                   </div>

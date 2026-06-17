@@ -28,7 +28,7 @@ export default function Expertise() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-46129a64-b554-49d2-a41d-9105a346d0fc 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="kNM3Pu36GB7lJT5k" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="vyKTmOw3YNYlJZPL" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-secondary);margin-left:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="yo5lJWw1fIStxuAi" style="color:var(--color-white);">A Safe Space for Your Relationship</span><br></p>
+                  <p id="vyKTmOw3YNYlJZPL" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="yo5lJWw1fIStxuAi" style="color:var(--color-white);">A Safe Space for Your Relationship</span><br></p>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@ export default function Expertise() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-d6b6a948-f2ff-49c8-a5fb-447e9b8cd407 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="dfCDGyu4dyi361Tf" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="olYunuW8Ay9ECtP4" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="Q7iAGac8Cqj1RVqX" style="color:var(--color-white);">Support and guidance for rebuilding trust and healing emotional wounds.</span><br></p>
+                  <p id="olYunuW8Ay9ECtP4" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="Q7iAGac8Cqj1RVqX" style="color:var(--color-white);">Support and guidance for rebuilding trust and healing emotional wounds.</span><br></p>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function Expertise() {
                     <div class="animation_container" style="width:100%;height:100%;">
                       <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-88fe716e-99f8-4083-83a4-2b0ea1f0263e 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                         <div id="jwZrTUEVvd9nxez9" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                          <p id="PdbLfACdCMxc8hQc" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="iX1y60KQCFRO2tz7" style="color:var(--color-white);font-weight:700;">adult psychotherapy</span><br></p>
+                          <p id="PdbLfACdCMxc8hQc" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="iX1y60KQCFRO2tz7" style="color:var(--color-white);font-weight:700;">adult psychotherapy</span><br></p>
                         </div>
                       </div>
                     </div>
@@ -141,7 +141,7 @@ export default function Expertise() {
                     <div class="animation_container" style="width:100%;height:100%;">
                       <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-9f3df27b-66c7-4f8b-8e93-724b0b62675d 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                         <div id="Y8XrgwX5bbejufu0" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                          <p id="Wzs500xhWj981bgF" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="nvYoaDfEf8PYEUkZ" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:400;">memory practice</span></p>
+                          <p id="Wzs500xhWj981bgF" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="nvYoaDfEf8PYEUkZ" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:400;">memory practice</span></p>
                         </div>
                       </div>
                     </div>
@@ -194,7 +194,7 @@ export default function Expertise() {
                     <div class="animation_container" style="width:100%;height:100%;">
                       <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-47ba9bde-0244-446f-9b2e-52d12e6bef36 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                         <div id="brstpuVEFIHZjcaF" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                          <p id="pXmZZ5dck4nyz4Aw" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="UTWENAM2BndHWxTG" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">couples therapy</span></p>
+                          <p id="pXmZZ5dck4nyz4Aw" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="UTWENAM2BndHWxTG" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">couples therapy</span></p>
                         </div>
                       </div>
                     </div>
@@ -247,7 +247,7 @@ export default function Expertise() {
                     <div class="animation_container" style="width:100%;height:100%;">
                       <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-62ac91a0-f1c4-41f5-bfe9-7f3e9e567c2a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                         <div id="huKGVq0A8dIZRywS" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                          <p id="omJ5m5WtvdZ7KhnW" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:0.9375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="C6kwWbyjvll4Onps" style="color:var(--color-white);font-weight:700;">psychological evaluation</span><br></p>
+                          <p id="omJ5m5WtvdZ7KhnW" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:0.9375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="C6kwWbyjvll4Onps" style="color:var(--color-white);font-weight:700;">psychological evaluation</span><br></p>
                         </div>
                       </div>
                     </div>
@@ -300,7 +300,7 @@ export default function Expertise() {
                     <div class="animation_container" style="width:100%;height:100%;">
                       <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-b8463476-8216-48dd-a0fa-6edb90877099 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                         <div id="cDkvYn0jSZEjICTa" style="opacity:0.8;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                          <p id="dnMRg6EbSRKPyJQu" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="S4Z6ufGypobah33q" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">play therapy</span></p>
+                          <p id="dnMRg6EbSRKPyJQu" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="S4Z6ufGypobah33q" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">play therapy</span></p>
                         </div>
                       </div>
                     </div>
@@ -353,7 +353,7 @@ export default function Expertise() {
                     <div class="animation_container" style="width:100%;height:100%;">
                       <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-48d7e408-21d1-422d-8ae9-6f9bc1e021d2 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                         <div id="VY4GP4A2NUamLguZ" style="opacity:0.8;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                          <p id="awuBnthcpR1t2MRt" style="color:var(--color-white);direction:ltr;font-family:var(--font-canva-primary);margin-left:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="sxTQm2kdPRgTXj9F" style="color:var(--color-white);font-weight:700;">neuropsychology</span><br></p>
+                          <p id="awuBnthcpR1t2MRt" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.012em;"><span id="sxTQm2kdPRgTXj9F" style="color:var(--color-white);font-weight:700;">neuropsychology</span><br></p>
                         </div>
                       </div>
                     </div>
