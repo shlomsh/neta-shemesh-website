@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+@theme {
+  --color-canva-dark: #5C4A52;
+  --color-canva-mid: #9F8383;
+  --color-canva-light: #C8AAAA;
+  --color-canva-bg: #F7E2D6;
+
+  --font-canva-primary: "YAFdtQi73Xs-0", sans-serif;
+  --font-canva-secondary: "YAErUQDw3VY-0", serif;
+  --font-canva-accent: "YAD87vDtOPY-0", sans-serif;
+}
+
+@layer base {
+  html, body {
+    background-color: var(--color-canva-bg);
+    color: var(--color-canva-dark);
+    font-family: var(--font-canva-primary);
+    direction: ltr; /* English LTR for Milestone 1 */
+  }
+
+  /* Force Canva animations to run immediately since we aren't using their JS */
+  .animated {
+    animation-play-state: running !important;
+  }
+}
+
+
+
+/* Canva Styles */
+
+/* Prevent flicker on initial load before animation is applied */
+.animated {
+  opacity: 0;
+}
+
+/* --- CLEAN FADE-UP ANIMATION SYSTEM --- */
+
+@keyframes cleanFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animation_container {
+  opacity: 0; /* Keep everything invisible on initial paint to prevent flicker */
+}
+
+/* Triggered by ScrollAnimator.tsx */
+.animation_container.start-animation {
+  /* Increased duration from 0.8s to 1.5s and used ease-out for a gentler, slower float */
+  animation: cleanFadeUp 1.5s ease-out forwards;
+}
+
+/* Overriding any stray Canva opacities that might conflict with our master animation */
+.animation_container.start-animation .animated {
+  opacity: 1 !important; 
+}
