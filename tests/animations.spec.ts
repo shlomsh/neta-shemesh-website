@@ -12,7 +12,7 @@ test.describe('Clean CSS Animations', () => {
 
     // Get an element far down the page (e.g. How It Works? section)
     // and verify it DOES NOT have the start-animation class initially
-    const targetSection = page.locator('text="How It Works?"');
+    const targetSection = page.locator('text="איך זה עובד?"');
     const container = targetSection.locator('xpath=ancestor::*[contains(@class, "animation_container")]').first();
     
     await expect(container).not.toHaveClass(/start-animation/);
