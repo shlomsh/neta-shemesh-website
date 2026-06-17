@@ -19,8 +19,8 @@ test.describe('Text Visibility and Content Tests', () => {
     await heroSubtitleWrapper.scrollIntoViewIfNeeded();
     await expect(heroSubtitleWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
     
-    // Check for another section's text
-    const approachTextWrapper = page.locator('.animated').filter({ hasText: 'couples therapy' }).first();
+    // Check for another section's text (Expertise cards — translated to Hebrew)
+    const approachTextWrapper = page.locator('.animated').filter({ hasText: 'טיפול זוגי' }).first();
     await approachTextWrapper.scrollIntoViewIfNeeded();
     await expect(approachTextWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
   });
