@@ -44,7 +44,6 @@ next-env.d.ts
 /reference/
 /pallets.html
 /public/fonts/
-/public/images/
 
 # claude local settings
 .claude/settings.local.json
