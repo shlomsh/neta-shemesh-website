@@ -10,7 +10,7 @@ Welcome, fellow AI Agent! This file contains critical context, guidelines, and l
 
 ## The Canva Migration Pipeline
 The original Canva export was massive (15,000+ lines of inline styles). To make it maintainable in Next.js:
-1. We run `tailwind-generator.js` (a custom Node script) to parse the original `public/index.html`.
+1. We run `tailwind-generator.js` (a custom Node script) to parse the original `canva-source/index.html`.
 2. It extracts structural styles, converts inline colors to Tailwind classes (e.g., `#F7E2D6` -> `bg-[#F7E2D6]`), and generates the final React component code in `src/app/page.tsx`.
 3. The original Canva HTML string is heavily utilized via `dangerouslySetInnerHTML`.
 
@@ -34,7 +34,8 @@ We implemented `ScrollAnimator.tsx` to unpause these animations as they scroll i
 - **Main Page**: `src/app/page.tsx`
 - **Animations**: `src/components/ScrollAnimator.tsx`
 - **Tests**: `tests/` (Includes visual regression and staggered animation DOM checks)
-- **Original Source**: `public/index.html` and `public/styles.css`
+- **Original Source**: `canva-source/index.html` and `canva-source/styles.css`
+- **Netta's Voice**: `netta_voice.md` (Reference for Netta's writing style and tone)
 
 ## ⚠️ Critical Next.js & Vercel Gotchas
 1. **Never override `<head>` in `layout.tsx`**: In the Next.js App Router, manually defining a `<head>` wrapper around `<link>` tags will completely override Next.js's internal head injection. This instantly destroys `globals.css` loading, Tailwind, and React hydration scripts. Always rely on Next.js `import` statements or Metadata APIs.

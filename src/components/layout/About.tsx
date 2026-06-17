@@ -77,7 +77,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-4f5aa9c7-e6c1-47e2-943e-471e20da3037 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="EZFZs04XaaRNwppw" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="GDq1TYUPnp1UCFMP" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="LiKlxsLIEcIqp0QV" style="color:var(--color-white);">Expert Guidance for Couples</span><br></p>
+                  <p id="GDq1TYUPnp1UCFMP" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="LiKlxsLIEcIqp0QV" style="color:var(--color-white);">ליווי מקצועי לזוגות</span><br></p>
                 </div>
               </div>
             </div>
@@ -88,9 +88,9 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-9db11cdc-af21-4465-bcf4-e45c420944b1 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="pi6BEWQab8OWHnsy" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="SUZcIL6QrQuBSKnS" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="bImo1tk55R4x5mOQ" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et </span><span id="zPYBxbdOqCfCe4ah" style="color:var(--color-white);font-weight:700;">ligula commodo </span><span id="aJTFcxSJJiDhpn5d" style="color:var(--color-white);">malesuada ac id justo.</span><br></p>
-                  <p id="KbXXfhI6yHydziwj" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
-                  <p id="Y3WINbehoCuJzsfh" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="EGw2nE36OsHiiCtd" style="color:var(--color-white);">Pellentesque bibendum quam in purus bibendum, id sollicitudin odio volutpat.</span><br></p>
+                  <p id="SUZcIL6QrQuBSKnS" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="bImo1tk55R4x5mOQ" style="color:var(--color-white);">מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום, השחיקה או המשברים מעלים בנו תחושות של ריחוק ובדידות, דווקא בתוך הביחד.</span><br></p>
+                  <p id="KbXXfhI6yHydziwj" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
+                  <p id="Y3WINbehoCuJzsfh" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="EGw2nE36OsHiiCtd" style="color:var(--color-white);">בקליניקה שלי, אני מציעה לכם מרחב בטוח ומקבל שבו נוכל להניח את מנגנוני ההגנה, ללמוד להקשיב באמת זה לזו, ולמצוא את הגשר חזרה לחיבור, קירבה וביטחון זוגי.</span><br></p>
                 </div>
               </div>
             </div>
@@ -142,12 +142,12 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-a66f49a8-a22f-41a6-b516-873828bd0bd4 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="rUshYoU2Q5B6Qsuv" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="RAUMFnHr7uNGzgW2" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="EEMvkShPtp606RH5" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span><br></p>
-                  <p id="BZ9GpGLacVLxX2pQ" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
-                  <p id="OYeWsbX6TXAzchpt" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="WrRmA6nCn10PEix5" style="color:var(--color-white);">Pellentesque bibendum quam in purus bibendum, id sollicitudin odio volutpat.</span><br></p>
+                  <p id="RAUMFnHr7uNGzgW2" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="EEMvkShPtp606RH5" style="color:var(--color-white);">הטיפול הזוגי מספק לכם מרחב מוגן, בו תוכלו לפרק את השתיקות, ללמוד להקשיב ולהתחיל לבנות מחדש את הקשר.</span><br></p>
+                  <p id="BZ9GpGLacVLxX2pQ" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
+                  <p id="OYeWsbX6TXAzchpt" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="WrRmA6nCn10PEix5" style="color:var(--color-white);">יחד, נלמד לזהות את הדינמיקה הזוגית ולייצר שפה משותפת שמחזירה את הקרבה הביתה.</span><br></p>
                   <p id="vXybPJBL6G9aZcmB" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
-                  <p id="NL2B4S3LkuT5Z64h" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="gktAPXGDqjrXZLOJ" style="color:var(--color-white);font-weight:700;">Dr. Elowen Avalon, PhD</span><br></p>
-                  <p id="SYNgJ68f92aHhlTa" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="snIPwLERG6l2eqRs" style="color:var(--color-white);font-style:italic;">Clinical Psychologist</span><br></p>
+                  <p id="NL2B4S3LkuT5Z64h" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="gktAPXGDqjrXZLOJ" style="color:var(--color-white);font-family:var(--font-canva-secondary);font-weight:700;">נטע שמש</span><br></p>
+                  <p id="SYNgJ68f92aHhlTa" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="snIPwLERG6l2eqRs" style="color:var(--color-white);font-style:italic;">פסיכולוגית קלינית</span><br></p>
                 </div>
               </div>
             </div>
@@ -158,7 +158,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-28e5d6f8-363e-4966-93b8-63ac6726e106 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="K9EUDUyfAQV2sCM5" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="BmrH5EDiExeB9JoU" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-accent);margin-right:0em;line-height:1.09500541em;text-transform:none;letter-spacing:-0.02em;"><span id="Tald17TaG3K0bRPu" style="color:var(--color-white);">Dr. Elowen A.</span><br></p>
+                  <p id="BmrH5EDiExeB9JoU" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-accent);margin-right:0em;line-height:1.09500541em;text-transform:none;letter-spacing:-0.02em;"><span id="Tald17TaG3K0bRPu" style="color:var(--color-white);">נטע שמש</span><br></p>
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-6f47e365-29ad-480f-9029-2ba401e51d4a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="nhVKe1AuwTj7gpF9" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="YoSfu967TqAAsgNM" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.2083283em;text-align:center;text-transform:none;letter-spacing:0em;"><span id="elMTpmVT7SYFLBf5" style="color:var(--color-text-primary);">Expert guidance for overcoming obstacles and strengthening your bond.</span><br></p>
+                  <p id="YoSfu967TqAAsgNM" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.2083283em;text-align:center;text-transform:none;letter-spacing:0em;"><span id="elMTpmVT7SYFLBf5" style="color:var(--color-text-primary);">ליווי מומחה להתגברות על מכשולים וחיזוק הקשר בין בני הזוג.</span><br></p>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-b106cf0a-4bab-4700-9c36-7144578a6c9a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="GB8PxZ87pRXT1iT3" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="ihxL61Sy1upqpw1o" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="mTJdMB3BiBJ1qgRm" style="color:var(--color-text-primary);">15 Years of Experience</span><br></p>
+                  <p id="ihxL61Sy1upqpw1o" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="mTJdMB3BiBJ1qgRm" style="color:var(--color-text-primary);">15 שנות ניסיון קליני</span><br></p>
                 </div>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-70adff0a-f45b-49c2-9528-23c5848ab346 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="vKcuoWZYN426R59C" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="y4ntIIGqeTADbQWT" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="jCGDSU2YGxX1dlGP" style="color:var(--color-text-primary);">Over 1,000 Satisfied Clients</span><br></p>
+                  <p id="y4ntIIGqeTADbQWT" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="jCGDSU2YGxX1dlGP" style="color:var(--color-text-primary);">חברה באגודה לטיפול זוגי ומשפחתי</span><br></p>
                 </div>
               </div>
             </div>
@@ -298,7 +298,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-59dd5077-774b-44e5-ad3d-cddd5b985860 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="rFIRJksK48YIQYIJ" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="m3zcyoWaKXGQoAj8" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="MT9uiMapHNiO8fY7" style="color:var(--color-text-primary);">Most Trusted Clinical Psychologist</span><br></p>
+                  <p id="m3zcyoWaKXGQoAj8" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="MT9uiMapHNiO8fY7" style="color:var(--color-text-primary);">עובדת סוציאלית קלינית</span><br></p>
                 </div>
               </div>
             </div>
@@ -324,7 +324,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-2c3f5175-c9ca-49c7-98ee-d9dc008fd22d 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="OnAFj2WFerQB6fTy" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="H2qS9IHpKRocg00y" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="JJPyDplzfiTpghrM" style="color:var(--color-text-primary);">AAMFT Achievement Award</span><br></p>
+                  <p id="H2qS9IHpKRocg00y" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="JJPyDplzfiTpghrM" style="color:var(--color-text-primary);">M.S.W. עובדת סוציאלית קלינית</span><br></p>
                 </div>
               </div>
             </div>
@@ -350,7 +350,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-c7e04147-af74-4e8c-9d8e-6fe9b1ff6c91 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="giyXff8189P0vOM0" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="lDoK0zi5FL7vgeMQ" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="BoYmJsXgkhxkSpvo" style="color:var(--color-text-primary);">ABCT Outstanding Mentor Award</span><br></p>
+                  <p id="lDoK0zi5FL7vgeMQ" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="BoYmJsXgkhxkSpvo" style="color:var(--color-text-primary);">פרס מנטור מצטיין ABCT</span><br></p>
                 </div>
               </div>
             </div>
@@ -376,7 +376,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-1b962d6a-bbaf-4455-a965-889932db7705 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="YzDNzKZZ6YWWGHqv" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="nib8vdhwoJv43xrl" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="S9WIGXtzhltCFPoX" style="color:var(--color-text-primary);">Consistent 5-Star Client Rating</span><br></p>
+                  <p id="nib8vdhwoJv43xrl" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.07812668em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="S9WIGXtzhltCFPoX" style="color:var(--color-text-primary);">דירוג 5 כוכבים עקבי מלקוחות</span><br></p>
                 </div>
               </div>
             </div>
@@ -415,7 +415,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-efff6c87-8f22-44a1-823b-0c4031b620c5 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="EMFnmpZBsRMItVRz" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="JkkbI1eIj5p9V33T" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zAbE7HQ8k7Sh09dO" style="color:var(--color-text-primary);">Reignite Your Connection</span><br></p>
+                  <p id="JkkbI1eIj5p9V33T" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zAbE7HQ8k7Sh09dO" style="color:var(--color-text-primary);">להצית מחדש את הקשר הזוגי</span><br></p>
                 </div>
               </div>
             </div>
@@ -426,7 +426,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-a0b2d01b-3831-4e81-96ba-4a7e628cb9d4 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="rhcj5q94VA3ix0tD" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="pMsjzooTINddB494" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="rutxFDA1OKGUA5eM" style="color:var(--color-text-primary);">Support and guidance for rebuilding trust and healing emotional wounds.</span><br></p>
+                  <p id="pMsjzooTINddB494" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="rutxFDA1OKGUA5eM" style="color:var(--color-text-primary);">תמיכה והכוונה לבנייה מחדש של האמון וריפוי פצעים רגשיים בקשר.</span><br></p>
                 </div>
               </div>
             </div>

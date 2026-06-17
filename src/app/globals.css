@@ -6,9 +6,13 @@
   --color-canva-light: #C2ADBB;
   --color-canva-bg: #F7E2D6;
 
-  --font-canva-primary: var(--font-assistant), sans-serif;
-  --font-canva-secondary: var(--font-frank), serif;
-  --font-canva-accent: var(--font-assistant), cursive;
+  --font-dganit: var(--font-dganit), sans-serif;
+  --font-elamy: var(--font-elamy), sans-serif;
+  --font-stanga: var(--font-stanga), sans-serif;
+
+  --font-canva-primary: var(--font-stanga), sans-serif;
+  --font-canva-secondary: var(--font-elamy), serif;
+  --font-canva-accent: var(--font-dganit), cursive;
 }
 
 :root {
@@ -22,6 +26,10 @@
   --color-brand-dark: var(--color-canva-dark);
   --color-text-secondary: var(--color-canva-mid);
   --color-bg-light: var(--color-canva-bg);
+
+  /* Scale up fonts because Hebrew fonts appear smaller */
+  --bfso: 1.1;
+  --rfso: 1.1;
 }
 
 @layer base {
@@ -35,6 +43,11 @@
   /* Force Canva animations to run immediately since we aren't using their JS */
   .animated {
     animation-play-state: running !important;
+  }
+
+  /* Override the Expertise title font size to be fuller than the card texts */
+  #YoSfu967TqAAsgNM {
+    font-size: max(calc(12px * var(--rfso, var(--bfso, 1))), calc(7em - var(--ffsd))) !important;
   }
 }
 
@@ -74,3 +87,92 @@
 .animation_container.start-animation .animated {
   opacity: 1 !important; 
 }
+
+/* Align map in Contact section to have a left gutter in RTL desktop view */
+@media (min-width: 1024.05px) {
+  #LW4zsSyHyezRncZj {
+    max-width: 600px !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* ==========================================================================
+   UNIFIED BRAND SECTION HEADERS OVERRIDES (Non-Cursive & Responsive Sizes)
+   ========================================================================== */
+
+/* 1. Main Hero Heading & Section Headers (Modern Sans-serif brand font) */
+#yWav85A872J3eebD, #yWav85A872J3eebD span,    /* Hero Title */
+#GDq1TYUPnp1UCFMP, #GDq1TYUPnp1UCFMP span,    /* About Section Header */
+#vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,    /* Expertise Section Header */
+#pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,    /* Services "How It Works" Header */
+#Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,    /* Testimonials Header */
+#ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,    /* Contact "Follow Me" Header */
+#zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {   /* Contact "My Office" Header */
+  font-family: var(--font-canva-accent) !important; /* Dganit Modern Hebrew Font */
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1.2em !important;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* 2. Sub-headers & Section Overlay Texts (Modern Sans-serif brand font) */
+#YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,    /* About Overlay Subheader */
+#eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,    /* Services "Success Stories" Header */
+#T749khVkMfNluBNv, #T749khVkMfNluBNv span,    /* Testimonials Subheader */
+#iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {   /* Testimonials Appointment Title */
+  font-family: var(--font-canva-accent) !important; /* Dganit Modern Hebrew Font */
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1.3em !important;
+  text-transform: none !important;
+  letter-spacing: 0em !important;
+}
+
+/* 3. Responsive Font Sizes Override */
+
+/* Desktop / Large Screens */
+@media (min-width: 769px) {
+  #yWav85A872J3eebD, #yWav85A872J3eebD span {
+    font-size: 4.5rem !important; /* Hero title size */
+  }
+  #GDq1TYUPnp1UCFMP, #GDq1TYUPnp1UCFMP span,
+  #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,
+  #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,
+  #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,
+  #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,
+  #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {
+    font-size: 3.5rem !important; /* Section header size */
+  }
+  #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,
+  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
+  #T749khVkMfNluBNv, #T749khVkMfNluBNv span,
+  #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {
+    font-size: 2.2rem !important; /* Sub-header size */
+  }
+}
+
+/* Mobile & Tablet Screens */
+@media (max-width: 768px) {
+  #yWav85A872J3eebD, #yWav85A872J3eebD span {
+    font-size: 2.2rem !important; /* Mobile Hero title size */
+  }
+  #GDq1TYUPnp1UCFMP, #GDq1TYUPnp1UCFMP span,
+  #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,
+  #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,
+  #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,
+  #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,
+  #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {
+    font-size: 1.8rem !important; /* Mobile section header size */
+  }
+  #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,
+  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
+  #T749khVkMfNluBNv, #T749khVkMfNluBNv span,
+  #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {
+    font-size: 1.4rem !important; /* Mobile sub-header size */
+  }
+}
+
+

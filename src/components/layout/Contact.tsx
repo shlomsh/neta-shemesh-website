@@ -17,7 +17,7 @@ export default function Contact() {
         <div id="KoMJt4nsPTBSIGQP" style="z-index:0;">
           <div id="oKIHxwkPGTPKSTr1" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
             <div id="jtXbnBlUwNbfoBR8" style="width:100%;height:100%;opacity:1.0;">
-              <div id="nLCXbVsVbaYSvhPI" style="background-color:var(--color-black);opacity:1.0;transform:scale(1, 1);width:100%;height:100%;overflow:hidden;position:relative;"></div>
+              <div id="nLCXbVsVbaYSvhPI" style="background-color:var(--color-dark);opacity:1.0;transform:scale(1, 1);width:100%;height:100%;overflow:hidden;position:relative;"></div>
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-d0977c69-ce3a-4452-a2e6-3f23df82dbcb 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="NgK6B8BlZuK5oa4s" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="ZgJbejfHoeBrgmf7" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="B79wv2x3YXP7KaZB" style="color:var(--color-white);">Follow Me</span><br></p>
+                  <p id="ZgJbejfHoeBrgmf7" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="B79wv2x3YXP7KaZB" style="color:var(--color-white);">עקבו אחריי</span><br></p>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-efbe3e61-0a04-4447-8a9f-95307e46ce1b 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="NrMYxCft2woPfhYM" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="yL5ClEHSlov9yc23" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="hYjMIzSYwvmkrIbh" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo. </span><span id="jdQIjuqhW6JB456R" style="color:var(--color-white);font-weight:700;">Lorem Ipsum proin</span><span id="aMzO4CQzvjxjbmlN" style="color:var(--color-white);"> vel turpis et ligula commodo.</span></p>
+                  <p id="yL5ClEHSlov9yc23" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="hYjMIzSYwvmkrIbh" style="color:var(--color-white);">בואו נשמור על קשר גם ברשתות החברתיות. שם אני משתפת תובנות, כלים ומחשבות על </span><span id="jdQIjuqhW6JB456R" style="color:var(--color-white);font-weight:700;">זוגיות, הורות</span><span id="aMzO4CQzvjxjbmlN" style="color:var(--color-white);"> וצמיחה אישית.</span></p>
                   <p id="S1AC5yguAq9MXyMS" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;white-space:pre;"><br></p>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function Contact() {
         <div id="LUn3ixMqzwrlMWsT" style="z-index:0;">
           <div id="UwxX8iz3vAWLNvvA" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
             <div id="hNTf3rn9X0oLzYlB" style="width:100%;height:100%;opacity:1.0;">
-              <div id="RZE9xCKVtxhcFJd8" style="background-color:var(--color-black);opacity:1.0;transform:scale(1, 1);width:100%;height:100%;overflow:hidden;position:relative;"></div>
+              <div id="RZE9xCKVtxhcFJd8" style="background-color:var(--color-dark);opacity:1.0;transform:scale(1, 1);width:100%;height:100%;overflow:hidden;position:relative;"></div>
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-cd2c881e-6fc4-45b3-8ed8-05d2d6239f0a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="KqBS2JfoMQm56LvC" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="zNSWHTotP3XOaXao" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="kQfimt371NND026m" style="color:var(--color-white);">My Office</span><br></p>
+                  <p id="zNSWHTotP3XOaXao" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="kQfimt371NND026m" style="color:var(--color-white);">המשרד שלי</span><br></p>
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-ff1515c5-947c-4a31-88b4-b0de96214535 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="AMQyb2JVC0ApQkqd" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="P1mLpK5g8qF4rKxQ" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="ieKyTPM5iiRiluTG" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit.</span><span id="p24nWR9GmDrQ97An" style="color:var(--color-white);font-weight:700;"> Proin vel turpis et</span><span id="uBZT2IxVk07Z4dqQ" style="color:var(--color-white);"> ligula commodo. </span><br></p>
+                  <p id="P1mLpK5g8qF4rKxQ" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="ieKyTPM5iiRiluTG" style="color:var(--color-white);">קליניקה נעימה ובטוחה, מרחב שבו תרגישו </span><span id="p24nWR9GmDrQ97An" style="color:var(--color-white);font-weight:700;">עטופים, מובנים</span><span id="uBZT2IxVk07Z4dqQ" style="color:var(--color-white);"> ומקובלים.</span><br></p>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-6ec83920-8830-47e9-b40a-5c3dde6c11ed 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="UMXUCtn7tYwOETMe" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="xmvHhSFyX6mbhRll" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.45312727em;text-align:right;text-transform:none;letter-spacing:0.012em;"><span id="HnG2t1mBKYTdM9re" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">38, Ashenvale, USA</span></p>
+                  <p id="xmvHhSFyX6mbhRll" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.45312727em;text-align:right;text-transform:none;letter-spacing:0.012em;"><span id="HnG2t1mBKYTdM9re" style="text-decoration-line:none;color:var(--color-white);font-style:normal;font-weight:700;">שביל המוביל, כפר יעבץ</span></p>
                 </div>
               </div>
             </div>
@@ -257,7 +257,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-5d74e071-b8ee-4a0d-a079-c14cb8be35aa 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="G2HH9ZRE7lgJuZkM" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="CNTQK2esPy5orRTn" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.45312727em;text-align:right;text-transform:none;letter-spacing:0.012em;"><span id="TszxHEtxHIJ5forB" style="text-decoration-line:none;color:var(--color-white);font-style:normal;">Get to my Location</span></p>
+                  <p id="CNTQK2esPy5orRTn" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.45312727em;text-align:right;text-transform:none;letter-spacing:0.012em;"><span id="TszxHEtxHIJ5forB" style="text-decoration-line:none;color:var(--color-white);font-style:normal;">הגיעו אלי</span></p>
                 </div>
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-ffa627aa-0feb-4a77-a991-4779e6b121d2 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="t5pyYyVCTb3zpK8d" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="u97TKRNwwJ9iJHQ6" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.26562698em;letter-spacing:0.05em;"><span id="MyIBhoKx3MHSJV8C" style="color:var(--color-white);">Call Me Today</span></p>
+                  <p id="u97TKRNwwJ9iJHQ6" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.26562698em;letter-spacing:0.05em;"><span id="MyIBhoKx3MHSJV8C" style="color:var(--color-white);">התקשרו אלי היום</span></p>
                 </div>
               </div>
             </div>
@@ -320,7 +320,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-60ce13aa-9586-4b40-a3d6-96725d705d8d 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="efSY6TFy64KrQm0x" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Atb96xxs0K2KxebQ" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:0.84375132em;text-transform:uppercase;"><span id="SxyYofVFtLrF0YSY" style="color:var(--color-white);font-weight:700;">INFO@yourwebsite.COM</span></p>
+                  <p id="Atb96xxs0K2KxebQ" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:0.84375132em;text-transform:uppercase;"><span id="SxyYofVFtLrF0YSY" style="color:var(--color-white);font-weight:700;">INFO@YOURWEBSITE.COM</span></p>
                 </div>
               </div>
             </div>
@@ -331,7 +331,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-4265d098-2dcd-44c5-ab3b-0984f251ed14 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="uPK5y9NztCVZ1Kd7" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="ZUoBXajzg0v8ieM1" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.26562698em;letter-spacing:0.05em;"><span id="X69cyQMcX8SIto7B" style="color:var(--color-white);">Send me Email</span></p>
+                  <p id="ZUoBXajzg0v8ieM1" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.26562698em;letter-spacing:0.05em;"><span id="X69cyQMcX8SIto7B" style="color:var(--color-white);">שלחו לי אימייל</span></p>
                 </div>
               </div>
             </div>
@@ -341,7 +341,7 @@ export default function Contact() {
           <div id="BdByB9u1CLNHj4SG" style="box-sizing:border-box;width:100%;height:100%;">
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-e10fb7ff-5a8e-40a1-9654-ad12b22d9d59 833ms 100ms both paused, linear_fade 400ms linear both paused;">
-                <div id="embed-kCI25qH3pN0YCygp" data-content-width="600.0" data-content-height="450.0001125000281" style="width:100%;height:100%;aspect-ratio:600 / 450.0001125;opacity:1.0;"><iframe src="https://cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.google.com%2Fmaps%3Fq%3Dplace_id%3AChIJrRMgU7ZhLxMRxAOFkC7I8Sg&amp;key=462812a26b593f2dbfbfcbb14f6d699a" style="width:100%;height:100%;border:0" allowfullscreen="allowfullscreen" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe></div>
+                <div id="embed-kCI25qH3pN0YCygp" data-content-width="600.0" data-content-height="450.0001125000281" style="width:100%;height:100%;aspect-ratio:600 / 450.0001125;opacity:1.0;"><iframe src="https://maps.google.com/maps?q=%D7%A9%D7%91%D7%99%D7%9C%20%D7%94%D7%9E%D7%95%D7%91%D7%99%D7%9C,%20%D7%9B%D7%A4%D7%A8%20%D7%99%D7%A2%D7%91%D7%A5&t=&z=15&ie=UTF8&iwloc=&output=embed" style="width:100%;height:100%;border:0" allowfullscreen="allowfullscreen" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe></div>
               </div>
             </div>
           </div>

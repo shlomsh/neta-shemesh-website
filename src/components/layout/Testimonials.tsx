@@ -28,7 +28,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-231f2396-c509-43c6-9d2d-ba6eb88e43fa 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="icdXhbvRN6ngozMI" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Dct2rK7XCXJaLA2e" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zxhh7nAzRvjXP5BT" style="color:var(--color-text-primary);">Testimonials</span><br></p>
+                  <p id="Dct2rK7XCXJaLA2e" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zxhh7nAzRvjXP5BT" style="color:var(--color-text-primary);">לקוחות ממליצים</span><br></p>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-99267733-f58f-462a-9d7c-31de058c7fe6 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="zgPpBY37NbK7MNOe" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="WgYkNKOrD078WLmZ" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.46250914em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="RvJE9dNpYt1MzjJ2" style="color:var(--color-text-primary);font-style:normal;font-weight:400;">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span></p>
+                  <p id="WgYkNKOrD078WLmZ" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.46250914em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="RvJE9dNpYt1MzjJ2" style="color:var(--color-text-primary);font-style:normal;font-weight:400;">מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.</span></p>
                 </div>
               </div>
             </div>
@@ -90,7 +90,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-4cfff876-1d84-4c25-958b-6db5be21809b 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="EEEvJ1PhoZR3493p" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="VQQa0SSOh8ncRohg" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.46250914em;text-transform:none;letter-spacing:0.012em;"><span id="DFa8dHaVn2MwUBT5" style="color:var(--color-text-primary);">We've learned to navigate challenges together, rebuild trust, and rediscover the love that initially brought us together. Thanks to Dr. Avalon, our marriage has not only survived but thrived. </span><br></p>
+                  <p id="VQQa0SSOh8ncRohg" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.46250914em;text-transform:none;letter-spacing:0.012em;"><span id="DFa8dHaVn2MwUBT5" style="color:var(--color-text-primary);">למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.</span><br></p>
                 </div>
               </div>
             </div>
@@ -101,8 +101,8 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-1e7e2781-55db-4f64-a57b-223b9d9edec2 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="kgrkkpr7sER7wgTy" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="lWqJzgf9v6poLhsa" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="vlTW9IsiGsEIBJUK" style="color:var(--color-text-primary);font-weight:700;">Vinny &amp; Alexei</span><br></p>
-                  <p id="dxrFu8moK2yA2CC0" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="M06f5Kbw5Qqr45EA" style="color:var(--color-text-primary);font-style:italic;">Happily married</span><br></p>
+                  <p id="lWqJzgf9v6poLhsa" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="vlTW9IsiGsEIBJUK" style="color:var(--color-text-primary);font-weight:700;">ויני ואלכסיי</span><br></p>
+                  <p id="dxrFu8moK2yA2CC0" style="color:var(--color-text-primary);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="M06f5Kbw5Qqr45EA" style="color:var(--color-text-primary);font-style:italic;">נשואים באושר</span><br></p>
                 </div>
               </div>
             </div>
@@ -357,7 +357,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-755454f6-16b7-4e95-a828-342009358739 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="ADlou2fjsMZuLUYj" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="iVtldd7PMtN1BthG" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="VqD8RL1Dlcv6nIpY" style="color:var(--color-white);">Book Appointment!</span><br></p>
+                  <p id="iVtldd7PMtN1BthG" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="VqD8RL1Dlcv6nIpY" style="color:var(--color-white);">קביעת פגישת ייעוץ</span><br></p>
                 </div>
               </div>
             </div>
@@ -368,7 +368,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-2b1f902d-31cc-4761-8a9a-3ec3e811a29f 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="Dm9yMX1vInWdW99R" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="RNlPmZvNPRowQGk7" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.46250914em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="RaL4e8DyhNlrPWe3" style="color:var(--color-white);font-style:normal;font-weight:400;">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span></p>
+                  <p id="RNlPmZvNPRowQGk7" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.46250914em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="RaL4e8DyhNlrPWe3" style="color:var(--color-white);font-style:normal;font-weight:400;">הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם.</span></p>
                 </div>
               </div>
             </div>
@@ -393,7 +393,7 @@ export default function Testimonials() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-a858e0d1-810b-4358-80f7-013b72f70268 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="hECvx9oGEEMEFdIf" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="kSwt6y543Ad7VYJN" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="MFPFSGdbxQ7Ds8ch" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">book appointment</a><br></p>
+                        <p id="kSwt6y543Ad7VYJN" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="MFPFSGdbxQ7Ds8ch" href="#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">מוזמנים ליצור קשר</a><br></p>
                       </div>
                     </div>
                   </div>
@@ -433,7 +433,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-1677c2d6-dae2-48e3-8a78-715a77ab521f 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="MT5xmW7NYdq2pX8x" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="T749khVkMfNluBNv" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="y5TxhTV4Bys7XHFV" style="color:var(--color-text-primary);">Couples Counseling for a Healthier Relationship</span><br></p>
+                  <p id="T749khVkMfNluBNv" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="y5TxhTV4Bys7XHFV" style="color:var(--color-text-primary);">טיפול זוגי לקשר בריא ותומך</span><br></p>
                 </div>
               </div>
             </div>
@@ -444,7 +444,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-14edd7d2-3b99-4dbe-8935-c353e6ec64c3 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="CqpotDcF8PpmWl4N" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="xCIDOy3f4yosGjqA" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="lMTvLkDlyprPE2V1" style="color:var(--color-text-primary);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span><br></p>
+                  <p id="xCIDOy3f4yosGjqA" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="lMTvLkDlyprPE2V1" style="color:var(--color-text-primary);">השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.</span><br></p>
                 </div>
               </div>
             </div>

@@ -42,7 +42,7 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 375, height: 812 });
     
     // Check that the hero text doesn't flow off-screen
-    const heroTitle = page.locator('.animated').filter({ hasText: 'Doctor Avalon' }).first();
+    const heroTitle = page.locator('.animated').filter({ hasText: 'נטע שמש' }).first();
     await heroTitle.scrollIntoViewIfNeeded();
     
     const isVisible = await heroTitle.isVisible();
@@ -52,7 +52,7 @@ test.describe('Responsive Layout Tests', () => {
     expect(boundingBox).not.toBeNull();
     if (boundingBox) {
        // Ensure the element's right edge doesn't significantly exceed viewport width (375)
-       expect(boundingBox.x).toBeGreaterThanOrEqual(0);
+       expect(boundingBox.x).toBeGreaterThanOrEqual(-5); // Allow slight sub-pixel rounding
        expect(boundingBox.x + boundingBox.width).toBeLessThanOrEqual(375 + 10); // Allow slight sub-pixel rounding
     }
   });

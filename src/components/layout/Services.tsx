@@ -28,7 +28,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-b8ae13b7-61b2-4ba8-9947-a75c446fbe69 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="YfhsApdiWgSg5tZA" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="pEc3w8pe4QAw5k7o" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="lEBZC8bpB2HUMalg" style="color:var(--color-white);">How It Works?</span><br></p>
+                  <p id="pEc3w8pe4QAw5k7o" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="lEBZC8bpB2HUMalg" style="color:var(--color-white);">איך זה עובד?</span><br></p>
                 </div>
               </div>
             </div>
@@ -39,10 +39,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-6e07ea29-b9fe-4852-9247-8ddea2d62de4 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="koPkycQvqJfCmJlD" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="LeYMrzBOEoTRyIRz" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="QMTLSe48k2svapJB" style="color:var(--color-white);">Quisque ut dui vel turpis dignissim congue a et elit. Proin vel turpis et ligula commodo malesuada ac id justo.</span><br></p>
-                  <p id="GvfE2AOaiaQzPkbY" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;white-space:pre;"><br></p>
-                  <p id="iiQRKNxjnesrUwHT" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="rME94TcFVpnM7AgS" style="color:var(--color-white);font-weight:700;">Lorem Ipsum</span><br></p>
-                  <p id="joTV2sCKH27BNSpn" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="AZuEQ8FQG0F8rcL6" style="color:var(--color-white);">Proin vel turpis et ligula commodo.</span></p>
+                  <p id="LeYMrzBOEoTRyIRz" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="QMTLSe48k2svapJB" style="color:var(--color-white);">התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי.</span><br></p>
                   <p id="nbn4aiZIDwwEKbki" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;white-space:pre;"><br></p>
                 </div>
               </div>
@@ -68,7 +65,7 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-c95438c7-2a3a-43f3-a7e5-34d52009ab81 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="LwbojNGVUdaJr75j" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="vPQMnjUrxBcg03le" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="M239kPBlL45z0Nj1" href="index.html#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">contact me</a><br></p>
+                        <p id="vPQMnjUrxBcg03le" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);margin-right:0em;line-height:1.375em;text-align:center;text-transform:uppercase;letter-spacing:0.138em;"><a id="M239kPBlL45z0Nj1" href="#contact" style="color:var(--color-white);font-weight:700;pointer-events:all;" target="_self">צרו קשר</a><br></p>
                       </div>
                     </div>
                   </div>
@@ -119,11 +116,11 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-542e8129-c94a-45b1-9474-4121a204abc5 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="LavYTfB3lqHOjdiD" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="vhrvq88jkwVmDoO3" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="AmW1sCKlX4P4dVIr" style="color:var(--color-white);font-weight:700;">Assessment and Goal Setting</span><br></p>
-                        <p id="bIgkQ47izrRNKNjs" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="bBYtbbt57ecvIISg" style="color:var(--color-white);">Quisque ut </span></p>
-                        <p id="lAO0QkU8FUwr35ep" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="SvJx0j7zBWLiLU90" style="color:var(--color-white);">Lorem ipsum</span></p>
-                        <p id="Try73pt8bGhnwkpk" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="ZPeza8pKP2nTzXpl" style="color:var(--color-white);">Proin vel turpis</span></p>
-                        <p id="koLpYJs4PpFC4B9L" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="PqA7E9K35rpVkbbU" style="color:var(--color-white);">......</span><br></p>
+                        <p id="vhrvq88jkwVmDoO3" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="AmW1sCKlX4P4dVIr" style="color:var(--color-white);font-weight:700;">הערכה ראשונית והגדרת מטרות</span><br></p>
+                        <p id="bIgkQ47izrRNKNjs" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="bBYtbbt57ecvIISg" style="color:var(--color-white);">הבנת הרקע והקשיים הייחודיים שלכם</span></p>
+                        <p id="lAO0QkU8FUwr35ep" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="SvJx0j7zBWLiLU90" style="color:var(--color-white);">הגדרת יעדים זוגיים ברורים לטיפול</span></p>
+                        <p id="Try73pt8bGhnwkpk" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="ZPeza8pKP2nTzXpl" style="color:var(--color-white);">יצירת מפת דרכים מותאמת אישית</span></p>
+                        <p id="koLpYJs4PpFC4B9L" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="PqA7E9K35rpVkbbU" style="color:var(--color-white);"></span><br></p>
                       </div>
                     </div>
                   </div>
@@ -174,11 +171,11 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-f58f11fa-5b63-45c3-9f5e-6f8fef0119ec 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="aL8DpBhbPP2v8KKp" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="U0vWMyC5esoOQnUz" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="QbNTaWOrlbjCnG2F" style="color:var(--color-white);font-weight:700;">Exploration and Understanding</span><br></p>
-                        <p id="ddESJowECs9yiTWS" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="SBxwn3Gaw9hZeRP3" style="color:var(--color-white);">Quisque ut </span></p>
-                        <p id="GFC85bLkyrU8SKRv" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="Um3WtaUXP6kT3zif" style="color:var(--color-white);">Lorem ipsum</span></p>
-                        <p id="DEKX3a2KI9arzhP7" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="YqsC7YT8T8oYY8g0" style="color:var(--color-white);">Proin vel turpis</span></p>
-                        <p id="xQTrkmn4TUvsVAgB" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="aFtlcL6Yx6IqkmMT" style="color:var(--color-white);">......</span><br></p>
+                        <p id="U0vWMyC5esoOQnUz" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="QbNTaWOrlbjCnG2F" style="color:var(--color-white);font-weight:700;">חקירה והבנה זוגית</span><br></p>
+                        <p id="ddESJowECs9yiTWS" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="SBxwn3Gaw9hZeRP3" style="color:var(--color-white);">זיהוי דפוסי התקשורת החוזרים שלכם</span></p>
+                        <p id="GFC85bLkyrU8SKRv" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="Um3WtaUXP6kT3zif" style="color:var(--color-white);">הבנת הצרכים הרגשיים העמוקים</span></p>
+                        <p id="DEKX3a2KI9arzhP7" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="YqsC7YT8T8oYY8g0" style="color:var(--color-white);">חשיפת מעגלי הפגיעות והתקיעות</span></p>
+                        <p id="xQTrkmn4TUvsVAgB" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="aFtlcL6Yx6IqkmMT" style="color:var(--color-white);"></span><br></p>
                       </div>
                     </div>
                   </div>
@@ -229,11 +226,11 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-a2bea880-3f99-4c49-9ba8-36c64e2e0812 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="uTyAuhUVUXrMe1vj" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="JuVhllLu1rhrYEQs" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="ggDz9NMDiJR6yKXN" style="color:var(--color-white);font-weight:700;">Building Rapport </span><br></p>
-                        <p id="TFTaybg7d4pj9oTd" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="BNNA3ss3aU4SuUuv" style="color:var(--color-white);">Quisque ut </span></p>
-                        <p id="H1zLad6gfvqVHX5x" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="izgrITGcBCazWQ32" style="color:var(--color-white);">Lorem ipsum</span></p>
-                        <p id="aIu28h5KKJC13P21" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="BIDM4GhohbnQ2jCx" style="color:var(--color-white);">Proin vel turpis</span></p>
-                        <p id="YSWk1nvbzRUfvyBe" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="hGMcEftXFbIbOJBs" style="color:var(--color-white);">......</span><br></p>
+                        <p id="JuVhllLu1rhrYEQs" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="ggDz9NMDiJR6yKXN" style="color:var(--color-white);font-weight:700;">בניית יחסי אמון</span><br></p>
+                        <p id="TFTaybg7d4pj9oTd" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="BNNA3ss3aU4SuUuv" style="color:var(--color-white);">יצירת מרחב בטוח ומכיל עבורכם</span></p>
+                        <p id="H1zLad6gfvqVHX5x" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="izgrITGcBCazWQ32" style="color:var(--color-white);">הקשבה אמפתית ומקרבת ללא שיפוטיות</span></p>
+                        <p id="aIu28h5KKJC13P21" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="BIDM4GhohbnQ2jCx" style="color:var(--color-white);">ביסוס ביטחון ראשוני בתוך הטיפול</span></p>
+                        <p id="YSWk1nvbzRUfvyBe" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="hGMcEftXFbIbOJBs" style="color:var(--color-white);"></span><br></p>
                       </div>
                     </div>
                   </div>
@@ -284,11 +281,11 @@ export default function Services() {
                   <div class="animation_container" style="width:100%;height:100%;">
                     <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-c5a3912f-5d51-4545-bd3d-d7d920ccc300 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                       <div id="eW4mr8JfKEIJXeGQ" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                        <p id="f4e5RsL2XOb94cLn" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="Z0D9bL9mOim1zqGZ" style="color:var(--color-white);font-weight:700;">Skill-Building and Implementation</span><br></p>
-                        <p id="kM9rxzyvWRoGRICG" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="q6npuDNyRAp3nBxU" style="color:var(--color-white);">Quisque ut </span></p>
-                        <p id="SKJjLmJqoNvbIyrT" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="fuQZcLk65agY9dix" style="color:var(--color-white);">Lorem ipsum</span></p>
-                        <p id="jF2oPPHqDiAi00Jg" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="Anv6YtqlbQpG2GAy" style="color:var(--color-white);">Proin vel turpis</span></p>
-                        <p id="L77BHRVICRDTrsw3" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="OK3EAbyFzUtO4fjd" style="color:var(--color-white);">......</span><br></p>
+                        <p id="f4e5RsL2XOb94cLn" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="Z0D9bL9mOim1zqGZ" style="color:var(--color-white);font-weight:700;">רכישת כלים ויישום</span><br></p>
+                        <p id="kM9rxzyvWRoGRICG" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="q6npuDNyRAp3nBxU" style="color:var(--color-white);">למידת כלים פרקטיים לתקשורת מקרבת</span></p>
+                        <p id="SKJjLmJqoNvbIyrT" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="fuQZcLk65agY9dix" style="color:var(--color-white);">פתרון קונפליקטים וחיבור מחדש</span></p>
+                        <p id="jF2oPPHqDiAi00Jg" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;letter-spacing:0.012em;"><span id="Anv6YtqlbQpG2GAy" style="color:var(--color-white);">תרגול ויישום בחיי היומיום שלכם</span></p>
+                        <p id="L77BHRVICRDTrsw3" style="color:var(--color-white);font-family:var(--font-canva-primary);line-height:1.45312727em;text-transform:none;letter-spacing:0.012em;"><span id="OK3EAbyFzUtO4fjd" style="color:var(--color-white);"></span><br></p>
                       </div>
                     </div>
                   </div>
@@ -328,7 +325,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-677dde79-4cfb-40cb-abd9-fa215f10f6eb 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="z1TQKU04KcSYVmCO" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="eIrsfUtmMjgXi5KA" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="qEQsTBBQ8lF4QUSv" style="color:var(--color-white);">Success Stories</span><br></p>
+                  <p id="eIrsfUtmMjgXi5KA" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="qEQsTBBQ8lF4QUSv" style="color:var(--color-white);">סיפורי הצלחה</span><br></p>
                 </div>
               </div>
             </div>
@@ -339,7 +336,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-72b6cbdf-c493-47f9-b34e-c041ae20fd43 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="pNZcnD7eiN569moS" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="lLOfHQS27asJnRZs" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="wziUNdTX9SBqDshy" style="color:var(--color-white);">Embark on a collaborative journey towards a healthier and happier partnership.</span><br></p>
+                  <p id="lLOfHQS27asJnRZs" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="wziUNdTX9SBqDshy" style="color:var(--color-white);">הנה כמה זוגות שעברו את התהליך בקליניקה ויצרו מציאות חדשה ומקרבת בחייהם.</span><br></p>
                 </div>
               </div>
             </div>

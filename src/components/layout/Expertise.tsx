@@ -28,7 +28,7 @@ export default function Expertise() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-46129a64-b554-49d2-a41d-9105a346d0fc 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="kNM3Pu36GB7lJT5k" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="vyKTmOw3YNYlJZPL" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="yo5lJWw1fIStxuAi" style="color:var(--color-white);">A Safe Space for Your Relationship</span><br></p>
+                  <p id="vyKTmOw3YNYlJZPL" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="yo5lJWw1fIStxuAi" style="color:var(--color-white);">מרחב בטוח לקשר שלכם</span><br></p>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@ export default function Expertise() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-d6b6a948-f2ff-49c8-a5fb-447e9b8cd407 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="dfCDGyu4dyi361Tf" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="olYunuW8Ay9ECtP4" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="Q7iAGac8Cqj1RVqX" style="color:var(--color-white);">Support and guidance for rebuilding trust and healing emotional wounds.</span><br></p>
+                  <p id="olYunuW8Ay9ECtP4" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-primary);line-height:1.45312727em;text-align:center;text-transform:none;letter-spacing:0.012em;"><span id="Q7iAGac8Cqj1RVqX" style="color:var(--color-white);">תמיכה והכוונה מקצועית לבניית אמון וחיזוק הביטחון בקשר.</span><br></p>
                 </div>
               </div>
             </div>

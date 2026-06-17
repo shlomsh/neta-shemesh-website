@@ -11,11 +11,11 @@ test.describe('Text Visibility and Content Tests', () => {
   test('Critical text content is visible to the user', async ({ page }) => {
     // Playwright's toBeVisible() considers opacity:0 elements as visible because they take up space!
     // We must explicitly assert that the animation successfully unpauses and reaches opacity 1
-    const doctorNameWrapper = page.locator('.animated').filter({ hasText: 'Doctor Avalon' }).first();
+    const doctorNameWrapper = page.locator('.animated').filter({ hasText: 'נטע שמש' }).first();
     await doctorNameWrapper.scrollIntoViewIfNeeded();
     await expect(doctorNameWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
 
-    const heroSubtitleWrapper = page.locator('.animated').filter({ hasText: 'Expert Guidance for Couples' }).first();
+    const heroSubtitleWrapper = page.locator('.animated').filter({ hasText: 'ליווי מקצועי לזוגות' }).first();
     await heroSubtitleWrapper.scrollIntoViewIfNeeded();
     await expect(heroSubtitleWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
     

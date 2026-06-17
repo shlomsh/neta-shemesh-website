@@ -2,7 +2,7 @@ const fs = require('fs');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const htmlContent = fs.readFileSync('public/index.html', 'utf8');
+const htmlContent = fs.readFileSync('canva-source/index.html', 'utf8');
 const dom = new JSDOM(htmlContent);
 const document = dom.window.document;
 
