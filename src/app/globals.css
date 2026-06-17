@@ -44,12 +44,164 @@
   .animated {
     animation-play-state: running !important;
   }
+}
 
-  /* Override the Expertise title font size to be fuller than the card texts */
-  #YoSfu967TqAAsgNM {
-    font-size: max(calc(12px * var(--rfso, var(--bfso, 1))), calc(7em - var(--ffsd))) !important;
+
+
+/* Canva Styles */
+
+/* Prevent flicker on initial load before animation is applied */
+.animated {
+  opacity: 0;
+}
+
+/* --- CLEAN FADE-UP ANIMATION SYSTEM --- */
+
+@keyframes cleanFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+.animation_container {
+  opacity: 0; /* Keep everything invisible on initial paint to prevent flicker */
+}
+
+/* Triggered by ScrollAnimator.tsx */
+.animation_container.start-animation {
+  /* Increased duration from 0.8s to 1.5s and used ease-out for a gentler, slower float */
+  animation: cleanFadeUp 1.5s ease-out forwards;
+}
+
+/* Overriding any stray Canva opacities that might conflict with our master animation */
+.animation_container.start-animation .animated {
+  opacity: 1 !important; 
+}
+
+/* Align map in Contact section to have a left gutter in RTL desktop view */
+@media (min-width: 1024.05px) {
+  #LW4zsSyHyezRncZj {
+    max-width: 600px !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* ==========================================================================
+   UNIFIED BRAND SECTION HEADERS OVERRIDES (Non-Cursive & Responsive Sizes)
+   ========================================================================== */
+
+/* 1. Main Section Headers (Dganit — modern, non-cursive Hebrew) */
+#yWav85A872J3eebD, #yWav85A872J3eebD span,    /* Hero Title */
+#GDq1TYUPnp1UCFMP, #GDq1TYUPnp1UCFMP span,    /* About Section Header */
+#YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,    /* About "ליווי מומחה" Header */
+#vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,    /* Expertise Section Header */
+#pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,    /* Services "How It Works" Header */
+#Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,    /* Testimonials Header */
+#ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,    /* Contact "Follow Me" Header */
+#zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {   /* Contact "My Office" Header */
+  font-family: var(--font-canva-accent) !important; /* Dganit Modern Hebrew Font */
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1.2em !important;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* 2. Sub-headers & Section Overlay Texts */
+#eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,    /* Services "Success Stories" Header */
+#T749khVkMfNluBNv, #T749khVkMfNluBNv span,    /* Testimonials Subheader */
+#iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {   /* Testimonials Appointment Title */
+  font-family: var(--font-canva-accent) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1.3em !important;
+  text-transform: none !important;
+  letter-spacing: 0em !important;
+}
+
+/* 3. Responsive Font Sizes Override */
+
+/* Desktop / Large Screens */
+@media (min-width: 769px) {
+  #yWav85A872J3eebD, #yWav85A872J3eebD span {
+    font-size: 4.5rem !important; /* Hero title size */
+  }
+  #GDq1TYUPnp1UCFMP, #GDq1TYUPnp1UCFMP span,
+  #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,
+  #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,
+  #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,
+  #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,
+  #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,
+  #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {
+    font-size: 3.5rem !important; /* Section header size */
+  }
+  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
+  #T749khVkMfNluBNv, #T749khVkMfNluBNv span,
+  #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {
+    font-size: 2.2rem !important; /* Sub-header size */
+  }
+}
+
+/* Mobile & Tablet Screens */
+@media (max-width: 768px) {
+  #yWav85A872J3eebD, #yWav85A872J3eebD span {
+    font-size: 2.2rem !important; /* Mobile Hero title size */
+  }
+  #GDq1TYUPnp1UCFMP, #GDq1TYUPnp1UCFMP span,
+  #YoSfu967TqAAsgNM, #YoSfu967TqAAsgNM span,
+  #vyKTmOw3YNYlJZPL, #vyKTmOw3YNYlJZPL span,
+  #pEc3w8pe4QAw5k7o, #pEc3w8pe4QAw5k7o span,
+  #Dct2rK7XCXJaLA2e, #Dct2rK7XCXJaLA2e span,
+  #ZgJbejfHoeBrgmf7, #ZgJbejfHoeBrgmf7 span,
+  #zNSWHTotP3XOaXao, #zNSWHTotP3XOaXao span {
+    font-size: 1.8rem !important; /* Mobile section header size */
+  }
+  #eIrsfUtmMjgXi5KA, #eIrsfUtmMjgXi5KA span,
+  #T749khVkMfNluBNv, #T749khVkMfNluBNv span,
+  #iVtldd7PMtN1BthG, #iVtldd7PMtN1BthG span {
+    font-size: 1.4rem !important; /* Mobile sub-header size */
+  }
+}
+
+/* ==========================================================================
+   EXPERTISE SECTION — Card grid & badge styles
+   (previously inline <style> in Expertise.tsx — moved here per Tailwind best practice)
+   ========================================================================== */
+
+@layer components {
+  /* Description lines inside expertise card badges */
+  .expertise-desc {
+    display: block;
+    font-size: 0.72em;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 0.35em;
+    opacity: 0.85;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+}
+
+/* Allow badge labels to wrap for the description text */
+#iX1y60KQCFRO2tz7,
+#nvYoaDfEf8PYEUkZ,
+#UTWENAM2BndHWxTG,
+#C6kwWbyjvll4Onps,
+#S4Z6ufGypobah33q,
+#sxTQm2kdPRgTXj9F {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  word-break: keep-all !important;
+}
+
 
 
 
