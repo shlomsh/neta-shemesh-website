@@ -173,3 +173,14 @@ the cursive Hebrew headers are the intended brand accent font, not a fallback.)
   (Next chunk-injects payload scripts on componentization — framework scaffolding, not content; justified
   because computed-styles/runtime/screenshots independently proved output identical). golden regenerated.
   Build green on merge; live Hero renders correctly (132 animation_containers preserved).
+- **Navbar — DROPPED (2026-06-18).** `Navbar.tsx` was dead (imported nowhere, not in page.tsx, no Canva
+  IDs); real nav lives in Hero.tsx (migrated w/ Hero). Deleted the dead file. Card count → 13 (Hero done).
+- **Footer (card 14) — ACCEPTED & merged (2026-06-18, ccd31cd).** Fully JSX via primitives (3 Badges for
+  stacked SVGs; preserved IDs/animation classes/inline styles incl `marginTop:-1px`). Gate green:
+  computed-styles byte-identical, dom-fingerprint/runtime/screenshots pass, zero golden mods, 1 file changed.
+  Build green; live render clean (0 broken images).
+- **⚠️ INCIDENT #2 (2026-06-18):** agents ran git branch ops in the SHARED main worktree (checkout -b,
+  renames, basing off old tips) instead of isolated worktrees — stranded the manager's Track C + Navbar
+  commits onto `trackb/navbar`, left `refactor`/`trackb/footer` on `692b591`. Recovered via reflog
+  (ff-merge navbar + cherry-pick footer → ccd31cd); nothing lost. **Fix: manager owns ALL git/worktree ops;
+  agents edit + test only in a pre-created worktree path, never switch/create branches.**
