@@ -395,7 +395,8 @@
                                       "tag": "p",
                                       "id": "yWav85A872J3eebD",
                                       "classes": [
-                                        "hero-title"
+                                        "hero-title",
+                                        "on-dark"
                                       ],
                                       "children": [
                                         {
@@ -830,6 +831,7 @@
                                       "tag": "p",
                                       "id": "GDq1TYUPnp1UCFMP",
                                       "classes": [
+                                        "on-dark",
                                         "section-header"
                                       ],
                                       "children": [
@@ -2477,6 +2479,7 @@
                                       "tag": "p",
                                       "id": "vyKTmOw3YNYlJZPL",
                                       "classes": [
+                                        "on-dark",
                                         "section-header"
                                       ],
                                       "children": [
@@ -3772,6 +3775,7 @@
                                       "tag": "p",
                                       "id": "pEc3w8pe4QAw5k7o",
                                       "classes": [
+                                        "on-dark",
                                         "section-header"
                                       ],
                                       "children": [
@@ -4987,6 +4991,7 @@
                                       "tag": "p",
                                       "id": "eIrsfUtmMjgXi5KA",
                                       "classes": [
+                                        "on-dark",
                                         "sub-header"
                                       ],
                                       "children": [
@@ -6420,6 +6425,7 @@
                                       "tag": "p",
                                       "id": "iVtldd7PMtN1BthG",
                                       "classes": [
+                                        "on-dark",
                                         "sub-header"
                                       ],
                                       "children": [
@@ -7456,6 +7462,7 @@
                                       "tag": "p",
                                       "id": "ZgJbejfHoeBrgmf7",
                                       "classes": [
+                                        "on-dark",
                                         "section-header"
                                       ],
                                       "children": [
@@ -7794,6 +7801,7 @@
                                       "tag": "p",
                                       "id": "zNSWHTotP3XOaXao",
                                       "classes": [
+                                        "on-dark",
                                         "section-header"
                                       ],
                                       "children": [
@@ -8683,9 +8691,6 @@
     {
       "tag": "script",
       "id": "_R_"
-    },
-    {
-      "tag": "script"
     },
     {
       "tag": "script"

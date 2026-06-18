@@ -177,6 +177,9 @@
 
 
 @layer components {
+  :root { --header-color: var(--color-canva-dark); }   /* default: dark plum, for light surfaces */
+  .on-dark { --header-color: var(--color-white); }      /* cream, for titles on dark bands */
+
   .hero-title, .hero-title span,
   .section-header, .section-header span {
     font-family: var(--font-canva-accent) !important;
@@ -185,6 +188,7 @@
     line-height: 1.2em !important;
     text-transform: none !important;
     letter-spacing: -0.01em !important;
+    color: var(--header-color) !important;
   }
   .sub-header, .sub-header span {
     font-family: var(--font-canva-accent) !important;
@@ -193,16 +197,10 @@
     line-height: 1.3em !important;
     text-transform: none !important;
     letter-spacing: 0em !important;
+    color: var(--header-color) !important;
   }
-  @media (min-width: 769px) {
-    .hero-title, .hero-title span { font-size: 4.5rem !important; }
-    .section-header, .section-header span { font-size: 3.5rem !important; }
-    .sub-header, .sub-header span { font-size: 2.2rem !important; }
-  }
-  @media (max-width: 768px) {
-    .hero-title, .hero-title span { font-size: 2.2rem !important; }
-    .section-header, .section-header span { font-size: 1.8rem !important; }
-    .sub-header, .sub-header span { font-size: 1.4rem !important; }
-  }
+  .hero-title, .hero-title span     { font-size: clamp(34px, 4.95vw, 63.36px) !important; }
+  .section-header, .section-header span { font-size: clamp(28px, 3.85vw, 49.28px) !important; }
+  .sub-header, .sub-header span     { font-size: clamp(22px, 2.42vw, 30.98px) !important; }
 }
 

@@ -27,7 +27,7 @@ BASE_URL=http://localhost:3000 npx playwright test            # full suite, all 
 | 1 | **De-duplicate globals.css** — delete first duplicated block (~L51–160); keep winning 2nd copy; preserve `.expertise-desc`/badge rules (~L162–192). | DONE | Golden byte-identical; build + suite green. | Pure no-op |
 | 2 | **Semantic header classes** — add `.hero-title/.section-header/.sub-header` in `@layer components` (verbatim incl `!important` + media). Add classNames to title `<p>` in 6 section components. | DONE | Golden byte-identical; build + suite green. | Pure no-op |
 | 3 | **Retire per-ID header blocks** — delete `#id` header rules + media blocks; classes are sole source. Keep map + badge ID rules. | DONE — safety pre-verified: canva-source sets only non-`!important` `font-size` on the 11 header IDs, so our `!important` classes win after deletion → no specificity-downgrade regression. | Golden byte-identical; build + suite green. | Pure no-op |
-| 4 | **Governed color unification** — `--header-color` token on header classes; white on dark-surface wrappers; strip dead inline color/lh/ls. | TODO | Golden diff limited to color keys; re-baseline + visual review desktop+mobile. | Intentional visual change |
+| 4 | **Governed color + responsive headers** (user: "you decide… unified and responsive"). (a) Responsive sizes: rem→`clamp(px,vw,px)` on the 3 classes (hero 34/4.95vw/63.36; section 28/3.85vw/49.28; sub 22/2.42vw/30.98) — preserves desktop, fixes mobile 5–9px bug. (b) `--header-color` token: default plum, cream via `.on-dark` on the 8 dark-band titles; strip inline color/lh/ls from 11 titles+spans. | IN PROGRESS | color computed keys UNCHANGED (surface mapping proof); font-size desktop ~same / mobile intentionally larger; regenerate computed-styles+dom-fingerprint+screenshots for intended keys; manager before/after review desktop+mobile. | DONE |
 
 ## Track B — Componentization & Tailwind (strangler-fig)
 
@@ -101,6 +101,18 @@ BASE_URL=http://localhost:3000 npx playwright test            # full suite, all 
   globals.css ground truth). `computed-styles.json` untouched + golden byte-identical in assert mode
   (typography no-op). `dom-fingerprint.json` regenerated — diff is **exactly** the 11 class additions,
   no stray nodes. Suite 58 passed / 14 skipped. Visually unchanged. **Phase 2 COMPLETE.**
+- **Phase 4 — ACCEPTED & user-signed-off (2026-06-18).** (a) Responsive: header font-sizes rem→`clamp(px,vw,px)`
+  on the 3 classes — desktop byte-identical (golden: zero desktop changes), mobile fixed (section 7.4→28px,
+  sub 5.8→22px, hero 9→34px). (b) Color governed via `--header-color` token + `.on-dark` on 8 dark-band titles;
+  inline color/lh/ls stripped from 11 titles. Verified: **no color value changed** (all 11 preserved per surface),
+  only fontSize/lineHeight/letterSpacing/height moved (mobile), dom-fingerprint diff = 8 `on-dark` classes.
+  Live before/after reviewed desktop+mobile. **Phase 4 COMPLETE → Track A DONE.**
+- **DEFERRED TO TRACK B (user decision 2026-06-18):** cross-section title consistency. About.tsx is a monolith
+  welding ≥4 bands (dark `--color-dark` @L20/119; light `--color-white` @L210/405 incl. a 3-image gallery).
+  Three "section titles" diverge: `GDq` (section-header, dark band, cream) / `YoSfu` (sub-header, light, plum) /
+  **`JkkbI` "להצית מחדש את הקשר הזוגי" — UNGOVERNED, still Elamy ~68px, no class** (the worst outlier).
+  Resolve when About is split into real components (B7): assign each section's title tier/color per true structure;
+  bring `JkkbI` into the governed system. Color differs by surface (cream on dark / plum on light) — that's correct.
 - **Phase 3 — ACCEPTED (2026-06-18).** Deleted the entire "UNIFIED BRAND SECTION HEADERS" per-ID
   block; `@layer components` classes + badge ID rules preserved. Sanity greps: 11 header IDs gone,
   badge IDs intact. `computed-styles.json` untouched + golden byte-identical in assert mode — proves

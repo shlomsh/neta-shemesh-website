@@ -115,7 +115,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-d0977c69-ce3a-4452-a2e6-3f23df82dbcb 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="NgK6B8BlZuK5oa4s" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="ZgJbejfHoeBrgmf7" class="section-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="B79wv2x3YXP7KaZB" style="color:var(--color-white);">עקבו אחריי</span><br></p>
+                  <p id="ZgJbejfHoeBrgmf7" class="section-header on-dark" style="direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;text-transform:none;"><span id="B79wv2x3YXP7KaZB" style="">עקבו אחריי</span><br></p>
                 </div>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function Contact() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-cd2c881e-6fc4-45b3-8ed8-05d2d6239f0a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="KqBS2JfoMQm56LvC" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="zNSWHTotP3XOaXao" class="section-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="kQfimt371NND026m" style="color:var(--color-white);">המשרד שלי</span><br></p>
+                  <p id="zNSWHTotP3XOaXao" class="section-header on-dark" style="direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;text-transform:none;"><span id="kQfimt371NND026m" style="">המשרד שלי</span><br></p>
                 </div>
               </div>
             </div>

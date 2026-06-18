@@ -29,7 +29,7 @@ export default function Expertise() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-46129a64-b554-49d2-a41d-9105a346d0fc 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="kNM3Pu36GB7lJT5k" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="vyKTmOw3YNYlJZPL" class="section-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="yo5lJWw1fIStxuAi" style="color:var(--color-white);">מרחב בטוח לקשר שלכם</span><br></p>
+                  <p id="vyKTmOw3YNYlJZPL" class="section-header on-dark" style="direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;text-align:center;text-transform:none;"><span id="yo5lJWw1fIStxuAi" style="">מרחב בטוח לקשר שלכם</span><br></p>
                 </div>
               </div>
             </div>

@@ -102,7 +102,7 @@ export default function Hero() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-40cacc69-d77a-4f17-831b-49b1207c6df5 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="mNqlsf0Wm1vBQvcf" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="yWav85A872J3eebD" class="hero-title" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.11666667em;text-transform:none;letter-spacing:-0.02em;"><span id="Slo5QD513jyev9ML" style="color:var(--color-white);">מקום בטוח לצמוח בו ביחד.</span><br></p>
+                  <p id="yWav85A872J3eebD" class="hero-title on-dark" style="direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;text-transform:none;"><span id="Slo5QD513jyev9ML" style="">מקום בטוח לצמוח בו ביחד.</span><br></p>
                 </div>
               </div>
             </div>
