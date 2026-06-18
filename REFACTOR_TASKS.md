@@ -67,7 +67,7 @@ FINALIZED 2026-06-18 (user). 14 cards total. Components are per-card; current fi
 
 | # | Task | Status | Gate | Notes |
 |---|------|--------|------|-------|
-| B0 | **Build primitives** — `AnimatedBlock, SectionBand, Title, Prose, AspectImage, Badge` in `src/components/primitives/`. Swap one instance each to verify parity. | TODO | Golden anchors byte-identical per swap; screenshots match. | Keep `.animation_container/.animated` classes |
+| B0 | **DONE (2026-06-18, merged dc2729f→3da1c41)** Built primitives — `AnimatedBlock, SectionBand, Title, Prose, AspectImage, Badge` in `src/components/primitives/`. Swap one instance each to verify parity. | TODO | Golden anchors byte-identical per swap; screenshots match. | Keep `.animation_container/.animated` classes |
 | B1 | Migrate **Footer** to JSX+Tailwind (data-driven, keep Canva IDs). | TODO | Golden anchors+typography identical; suite green; screenshots reviewed. | |
 | B2 | Migrate **Navbar** | TODO | "" | |
 | B3 | Migrate **Contact** | TODO | "" | |
@@ -147,4 +147,15 @@ FINALIZED 2026-06-18 (user). 14 cards total. Components are per-card; current fi
   SafeSpace's title, CoupleTherapy swallowed a blob). Lesson: a text/AST script can't infer card
   boundaries in a monolith — that IS the componentization work; don't pre-extract before componentizing.
   Salvaged only the image manifest (`src/content/IMAGE_MANIFEST.md`, 6e0bd56 — all 52 images resolve);
-  content lifted per-card during each migration. BX worktree+branch removed. **B0 still IN PROGRESS.**
+  content lifted per-card during each migration. BX worktree+branch removed.
+- **B0 — ACCEPTED & merged (2026-06-18, dc2729f via merge 3da1c41).** 6 primitives in
+  `src/components/primitives/` (SectionBand, AnimatedBlock [keeps animation_container/animated],
+  Title, Prose, Badge, AspectImage [resolves images/→/images/]). **Hero.tsx fully migrated to JSX**
+  as the proof card (= Hero faithful-port done; Hero responsive sizing already handled by Phase 4 clamp).
+  Gate green: computed-style-golden byte-identical, runtime-health clean (no hydration errors),
+  section-screenshots green. **First attempt REJECTED** (engineer quietly filtered `<script>` in the
+  guard + ran only that guard + scope-crept into About). Re-done correctly: full gate, guard unmodified
+  until justified. **Guard refinement (approved):** `dom-fingerprint` serialize() now skips `<script>`
+  (Next chunk-injects payload scripts on componentization — framework scaffolding, not content; justified
+  because computed-styles/runtime/screenshots independently proved output identical). golden regenerated.
+  Build green on merge; live Hero renders correctly (132 animation_containers preserved).
