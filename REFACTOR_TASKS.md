@@ -184,3 +184,7 @@ the cursive Hebrew headers are the intended brand accent font, not a fallback.)
   commits onto `trackb/navbar`, left `refactor`/`trackb/footer` on `692b591`. Recovered via reflog
   (ff-merge navbar + cherry-pick footer → ccd31cd); nothing lost. **Fix: manager owns ALL git/worktree ops;
   agents edit + test only in a pre-created worktree path, never switch/create branches.**
+- **CONSOLIDATED (2026-06-18):** `main` is now the SINGLE source of truth. Fast-forwarded `main` to the
+  refactor tip (302ff91) and deleted all other branches (`refactor/typography-componentization`,
+  `clean-animations`, `backup-hebrew-rtl`) local+remote. One branch, one worktree. **We commit Track B
+  work directly to `main` going forward** (user decision). Next Track B card worktrees are branched off `main`.
