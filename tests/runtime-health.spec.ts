@@ -1,0 +1,109 @@
+import { test, expect } from '@playwright/test';
+
+const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
+
+test.describe.configure({ timeout: 120000 });
+
+test.describe('Runtime Health Guards', () => {
+  test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium only');
+
+  test('Guard 3 & 4: Console Health and Image Integrity', async ({ page, request }) => {
+    const consoleLogs: { type: string, text: string }[] = [];
+    const pageErrors: Error[] = [];
+
+    page.on('console', msg => {
+      if (msg.type() === 'error' || msg.type() === 'warning') {
+        consoleLogs.push({ type: msg.type(), text: msg.text() });
+      }
+    });
+
+    page.on('pageerror', error => {
+      pageErrors.push(error);
+    });
+
+    await page.goto(TARGET_URL, { waitUntil: 'load' });
+    
+    // Scroll down to ensure lazy loaded images and components are triggered
+    await page.evaluate(async () => {
+      const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+      const scrollHeight = document.body.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      for (let i = 0; i < scrollHeight; i += Math.max(viewportHeight / 2, 100)) {
+        window.scrollTo(0, i);
+        await delay(200);
+      }
+      window.scrollTo(0, 0);
+    });
+    
+    await page.waitForTimeout(2000);
+
+    // Guard 4: Console Errors & Warnings
+    if (pageErrors.length > 0 || consoleLogs.length > 0) {
+      const errorMsg = [
+        `Found ${pageErrors.length} page errors and ${consoleLogs.length} console warnings/errors.`,
+        'Page Errors:',
+        ...pageErrors.map(e => e.message),
+        'Console logs:',
+        ...consoleLogs.map(l => `[${l.type}] ${l.text}`)
+      ].join('\n');
+      // Always fail if there are warnings or errors to report for manager review
+      expect(pageErrors.length + consoleLogs.length, errorMsg).toBe(0);
+    }
+
+    // Guard 3: Image Integrity
+    const imageElements = await page.evaluate(() => {
+      return Array.from(document.querySelectorAll('img')).map(img => {
+        const srcCandidates: string[] = [];
+        if (img.currentSrc) {
+          srcCandidates.push(img.currentSrc);
+        } else if (img.src) {
+          srcCandidates.push(img.src);
+        }
+        
+        // rudimentary srcset parser
+        if (img.srcset) {
+          const parts = img.srcset.split(',');
+          for (const p of parts) {
+            const urlMatch = p.trim().split(/\s+/)[0];
+            if (urlMatch) {
+              // try to resolve relative URL to absolute
+              try {
+                srcCandidates.push(new URL(urlMatch, window.location.href).href);
+              } catch (e) {
+                // ignore invalid
+              }
+            }
+          }
+        }
+        return {
+          src: img.src,
+          candidates: Array.from(new Set(srcCandidates)),
+          naturalWidth: img.naturalWidth
+        };
+      });
+    });
+
+    const brokenImages: string[] = [];
+    
+    for (const img of imageElements) {
+      if (img.naturalWidth === 0) {
+        brokenImages.push(`Zero-width image: ${img.src}`);
+      }
+
+      for (const url of img.candidates) {
+        if (!url.startsWith('http') && !url.startsWith('data:')) continue; // Skip if invalid
+        if (url.startsWith('data:')) continue; // skip inline base64
+
+        const res = await request.get(url);
+        if (!res.ok()) {
+          brokenImages.push(`Broken image (HTTP ${res.status()}): ${url}`);
+        }
+      }
+    }
+
+    if (brokenImages.length > 0) {
+      expect(brokenImages.length, `Found broken images:\n${brokenImages.join('\n')}`).toBe(0);
+    }
+  });
+
+});

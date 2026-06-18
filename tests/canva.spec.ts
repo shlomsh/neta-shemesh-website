@@ -14,7 +14,7 @@ test.describe('1:1 Canva Template Migration Tests', () => {
   });
 
   test('Page Title matches', async ({ page }) => {
-    await expect(page).toHaveTitle(/COUPLES THERAPIST/i);
+    await expect(page).toHaveTitle(/נטע שמש/i);
   });
 
   test('Responsive Layout: No horizontal scroll overflow', async ({ page }) => {
@@ -26,14 +26,14 @@ test.describe('1:1 Canva Template Migration Tests', () => {
   });
 
   test('Visual Regression: Full Page Layout', async ({ page }) => {
-    test.setTimeout(90000); 
-    
+    test.setTimeout(90000);
+
     // Scroll down slowly to trigger all scroll-based animations (common in Canva sites)
     await page.evaluate(async () => {
       const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
       const scrollHeight = document.body.scrollHeight;
       const viewportHeight = window.innerHeight;
-      
+
       for (let i = 0; i < scrollHeight; i += viewportHeight / 2) {
         window.scrollTo(0, i);
         await delay(300); // wait for animations at each step
