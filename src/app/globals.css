@@ -100,16 +100,9 @@
    ========================================================================== */
 
 @layer components {
-  /* Description lines inside expertise card badges */
+  /* Description lines inside expertise card badges — hidden; title-only display */
   .expertise-desc {
-    display: block;
-    font-size: 0.72em;
-    font-weight: 400;
-    line-height: 1.5;
-    margin-top: 0.35em;
-    opacity: 0.85;
-    text-transform: none;
-    letter-spacing: 0;
+    display: none !important;
   }
 }
 
@@ -249,19 +242,30 @@
     grid-area: unset !important;
     z-index: 1 !important;
   }
-  /* Text overlay badges: center-bottom of each card */
+  /* Text overlay badges: vertically centered on card (matches template layout) */
   #lSLyIhGivSGNBVUN,
   #YVXTfTS7xMuImRo0,
   #fGDTVi1RNpwxygWJ,
   #Ljo8rtgnn6TikpkH {
     position: absolute !important;
     grid-area: unset !important;
-    bottom: 8% !important;
+    top: 50% !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    transform: translate(-50%, -50%) !important;
     z-index: 5 !important;
     width: max-content !important;
     max-width: 88% !important;
+  }
+  /* Title text in expertise pill: larger, single-line treatment */
+  #PdbLfACdCMxc8hQc,
+  #Wzs500xhWj981bgF,
+  #pXmZZ5dck4nyz4Aw,
+  #omJ5m5WtvdZ7KhnW {
+    font-size: clamp(1.1rem, 3vw, 1.6rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
   }
 }
 
