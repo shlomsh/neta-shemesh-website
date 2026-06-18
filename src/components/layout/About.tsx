@@ -77,7 +77,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-4f5aa9c7-e6c1-47e2-943e-471e20da3037 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="EZFZs04XaaRNwppw" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="GDq1TYUPnp1UCFMP" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="LiKlxsLIEcIqp0QV" style="color:var(--color-white);">ליווי מקצועי לזוגות</span><br></p>
+                  <p id="GDq1TYUPnp1UCFMP" class="section-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="LiKlxsLIEcIqp0QV" style="color:var(--color-white);">ליווי מקצועי לזוגות</span><br></p>
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function About() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-6f47e365-29ad-480f-9029-2ba401e51d4a 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="nhVKe1AuwTj7gpF9" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="YoSfu967TqAAsgNM" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.2083283em;text-align:center;text-transform:none;letter-spacing:0em;"><span id="elMTpmVT7SYFLBf5" style="color:var(--color-text-primary);">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג</span><br></p>
+                  <p id="YoSfu967TqAAsgNM" class="sub-header" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.2083283em;text-align:center;text-transform:none;letter-spacing:0em;"><span id="elMTpmVT7SYFLBf5" style="color:var(--color-text-primary);">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג</span><br></p>
                 </div>
               </div>
             </div>

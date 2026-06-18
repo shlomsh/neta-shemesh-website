@@ -251,4 +251,33 @@
   }
 }
 
+@layer components {
+  .hero-title, .hero-title span,
+  .section-header, .section-header span {
+    font-family: var(--font-canva-accent) !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 1.2em !important;
+    text-transform: none !important;
+    letter-spacing: -0.01em !important;
+  }
+  .sub-header, .sub-header span {
+    font-family: var(--font-canva-accent) !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 1.3em !important;
+    text-transform: none !important;
+    letter-spacing: 0em !important;
+  }
+  @media (min-width: 769px) {
+    .hero-title, .hero-title span { font-size: 4.5rem !important; }
+    .section-header, .section-header span { font-size: 3.5rem !important; }
+    .sub-header, .sub-header span { font-size: 2.2rem !important; }
+  }
+  @media (max-width: 768px) {
+    .hero-title, .hero-title span { font-size: 2.2rem !important; }
+    .section-header, .section-header span { font-size: 1.8rem !important; }
+    .sub-header, .sub-header span { font-size: 1.4rem !important; }
+  }
+}
 

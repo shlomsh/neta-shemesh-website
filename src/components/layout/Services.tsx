@@ -28,7 +28,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-b8ae13b7-61b2-4ba8-9947-a75c446fbe69 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="YfhsApdiWgSg5tZA" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="pEc3w8pe4QAw5k7o" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="lEBZC8bpB2HUMalg" style="color:var(--color-white);">איך זה עובד?</span><br></p>
+                  <p id="pEc3w8pe4QAw5k7o" class="section-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-transform:none;letter-spacing:-0.02em;"><span id="lEBZC8bpB2HUMalg" style="color:var(--color-white);">איך זה עובד?</span><br></p>
                 </div>
               </div>
             </div>
@@ -325,7 +325,7 @@ export default function Services() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-677dde79-4cfb-40cb-abd9-fa215f10f6eb 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="z1TQKU04KcSYVmCO" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="eIrsfUtmMjgXi5KA" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="qEQsTBBQ8lF4QUSv" style="color:var(--color-white);">סיפורי הצלחה</span><br></p>
+                  <p id="eIrsfUtmMjgXi5KA" class="sub-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="qEQsTBBQ8lF4QUSv" style="color:var(--color-white);">סיפורי הצלחה</span><br></p>
                 </div>
               </div>
             </div>

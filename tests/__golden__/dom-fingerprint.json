@@ -394,6 +394,9 @@
                                     {
                                       "tag": "p",
                                       "id": "yWav85A872J3eebD",
+                                      "classes": [
+                                        "hero-title"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -826,6 +829,9 @@
                                     {
                                       "tag": "p",
                                       "id": "GDq1TYUPnp1UCFMP",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -1333,6 +1339,9 @@
                                     {
                                       "tag": "p",
                                       "id": "YoSfu967TqAAsgNM",
+                                      "classes": [
+                                        "sub-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -2467,6 +2476,9 @@
                                     {
                                       "tag": "p",
                                       "id": "vyKTmOw3YNYlJZPL",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -3759,6 +3771,9 @@
                                     {
                                       "tag": "p",
                                       "id": "pEc3w8pe4QAw5k7o",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -4971,6 +4986,9 @@
                                     {
                                       "tag": "p",
                                       "id": "eIrsfUtmMjgXi5KA",
+                                      "classes": [
+                                        "sub-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -5167,6 +5185,9 @@
                                     {
                                       "tag": "p",
                                       "id": "Dct2rK7XCXJaLA2e",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -6398,6 +6419,9 @@
                                     {
                                       "tag": "p",
                                       "id": "iVtldd7PMtN1BthG",
+                                      "classes": [
+                                        "sub-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -6642,6 +6666,9 @@
                                     {
                                       "tag": "p",
                                       "id": "T749khVkMfNluBNv",
+                                      "classes": [
+                                        "sub-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -7428,6 +7455,9 @@
                                     {
                                       "tag": "p",
                                       "id": "ZgJbejfHoeBrgmf7",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -7763,6 +7793,9 @@
                                     {
                                       "tag": "p",
                                       "id": "zNSWHTotP3XOaXao",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",

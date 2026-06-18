@@ -28,7 +28,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-231f2396-c509-43c6-9d2d-ba6eb88e43fa 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="icdXhbvRN6ngozMI" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="Dct2rK7XCXJaLA2e" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zxhh7nAzRvjXP5BT" style="color:var(--color-text-primary);">לקוחות ממליצים</span><br></p>
+                  <p id="Dct2rK7XCXJaLA2e" class="section-header" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="zxhh7nAzRvjXP5BT" style="color:var(--color-text-primary);">לקוחות ממליצים</span><br></p>
                 </div>
               </div>
             </div>
@@ -357,7 +357,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-755454f6-16b7-4e95-a828-342009358739 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="ADlou2fjsMZuLUYj" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="iVtldd7PMtN1BthG" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="VqD8RL1Dlcv6nIpY" style="color:var(--color-white);">קביעת פגישת ייעוץ</span><br></p>
+                  <p id="iVtldd7PMtN1BthG" class="sub-header" style="color:var(--color-white);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="VqD8RL1Dlcv6nIpY" style="color:var(--color-white);">קביעת פגישת ייעוץ</span><br></p>
                 </div>
               </div>
             </div>
@@ -433,7 +433,7 @@ export default function Testimonials() {
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-LEFT-1677c2d6-dae2-48e3-8a78-715a77ab521f 833ms 100ms both paused, linear_fade 400ms linear both paused;">
                 <div id="MT5xmW7NYdq2pX8x" style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
-                  <p id="T749khVkMfNluBNv" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="y5TxhTV4Bys7XHFV" style="color:var(--color-text-primary);">טיפול זוגי לקשר בריא ותומך</span><br></p>
+                  <p id="T749khVkMfNluBNv" class="sub-header" style="color:var(--color-text-primary);direction:rtl;font-family:var(--font-canva-secondary);margin-right:0em;line-height:1.1em;text-align:center;text-transform:none;letter-spacing:-0.02em;"><span id="y5TxhTV4Bys7XHFV" style="color:var(--color-text-primary);">טיפול זוגי לקשר בריא ותומך</span><br></p>
                 </div>
               </div>
             </div>
