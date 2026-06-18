@@ -42,6 +42,29 @@ BASE_URL=http://localhost:3000 npx playwright test            # full suite, all 
 > before/after desktop+mobile screenshots, then golden re-baselined deliberately. Desktop stays
 > identical unless a desktop change is explicitly intended.
 
+### Track B CARD MAP (component decomposition — user-driven, 2026-06-18)
+Components are per **card** (title-led content block), NOT per current file. Files bundle multiple cards.
+✅ = user explicitly confirmed its own card. ❓ = needs user confirmation on grouping.
+
+FINALIZED 2026-06-18 (user). 14 cards total. Components are per-card; current files bundle multiple cards.
+
+| # | Card | Title | Source file | Title id | Notes |
+|---|---|---|---|---|---|
+| 1 | Navbar | (nav) | Navbar.tsx | — | |
+| 2 | Hero | מקום בטוח לצמוח בו ביחד. | Hero.tsx | yWav85A872J3eebD | |
+| 3 | About-Intro-Dark | ליווי מקצועי לזוגות | About.tsx | GDq1TYUPnp1UCFMP | dark band; cream |
+| 4 | About-Light | ליווי להתגברות על מכשולים… | About.tsx | YoSfu967TqAAsgNM | light band; plum |
+| 5 | Reignite | להצית מחדש את הקשר הזוגי + 3-photo gallery | About.tsx | JkkbI1eIj5p9V33T | JkkbI UNGOVERNED (Elamy ~68px) — fix here |
+| 6 | SafeSpace | מרחב בטוח לקשר שלכם + photos | Expertise.tsx | vyKTmOw3YNYlJZPL | |
+| 7 | HowItWorks | איך זה עובד? | Services.tsx | pEc3w8pe4QAw5k7o | |
+| 8 | SuccessStories | סיפורי הצלחה | Services.tsx | eIrsfUtmMjgXi5KA | |
+| 9 | Testimonials | לקוחות ממליצים | Testimonials.tsx | Dct2rK7XCXJaLA2e | |
+| 10 | Scheduling | קביעת פגישת ייעוץ | Testimonials.tsx | iVtldd7PMtN1BthG | own card |
+| 11 | CoupleTherapy | טיפול זוגי לקשר בריא ותומך | Testimonials.tsx | T749khVkMfNluBNv | own card |
+| 12 | Contact-Follow | עקבו אחריי | Contact.tsx | ZgJbejfHoeBrgmf7 | social/follow |
+| 13 | Contact-Office | המשרד שלי | Contact.tsx | zNSWHTotP3XOaXao | office/map |
+| 14 | Footer | (footer) | Footer.tsx | — | |
+
 | # | Task | Status | Gate | Notes |
 |---|------|--------|------|-------|
 | B0 | **Build primitives** — `AnimatedBlock, SectionBand, Title, Prose, AspectImage, Badge` in `src/components/primitives/`. Swap one instance each to verify parity. | TODO | Golden anchors byte-identical per swap; screenshots match. | Keep `.animation_container/.animated` classes |
