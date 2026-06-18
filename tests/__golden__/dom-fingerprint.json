@@ -1342,7 +1342,7 @@
                                       "tag": "p",
                                       "id": "YoSfu967TqAAsgNM",
                                       "classes": [
-                                        "sub-header"
+                                        "section-header"
                                       ],
                                       "children": [
                                         {
@@ -2058,6 +2058,9 @@
                                     {
                                       "tag": "p",
                                       "id": "JkkbI1eIj5p9V33T",
+                                      "classes": [
+                                        "section-header"
+                                      ],
                                       "children": [
                                         {
                                           "tag": "span",
@@ -4992,7 +4995,7 @@
                                       "id": "eIrsfUtmMjgXi5KA",
                                       "classes": [
                                         "on-dark",
-                                        "sub-header"
+                                        "section-header"
                                       ],
                                       "children": [
                                         {
@@ -6426,7 +6429,7 @@
                                       "id": "iVtldd7PMtN1BthG",
                                       "classes": [
                                         "on-dark",
-                                        "sub-header"
+                                        "section-header"
                                       ],
                                       "children": [
                                         {
@@ -6673,7 +6676,7 @@
                                       "tag": "p",
                                       "id": "T749khVkMfNluBNv",
                                       "classes": [
-                                        "sub-header"
+                                        "section-header"
                                       ],
                                       "children": [
                                         {
