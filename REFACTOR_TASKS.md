@@ -26,7 +26,7 @@ BASE_URL=http://localhost:3000 npx playwright test            # full suite, all 
 | 0 | **Build regression oracle** — `computed-style-golden.spec.ts` (typography + bbox anchors, 2 viewports) + guards 1–6 (DOM fingerprint, ID inventory, image integrity, no console errors, section bg+order, per-section screenshots). Capture goldens. Re-baseline `canva.spec` vs localhost. | DONE | Golden passes against itself (idempotent); build green; full suite green vs localhost. | Foundation for everything. Owner: engineer-agent #1 |
 | 1 | **De-duplicate globals.css** — delete first duplicated block (~L51–160); keep winning 2nd copy; preserve `.expertise-desc`/badge rules (~L162–192). | DONE | Golden byte-identical; build + suite green. | Pure no-op |
 | 2 | **Semantic header classes** — add `.hero-title/.section-header/.sub-header` in `@layer components` (verbatim incl `!important` + media). Add classNames to title `<p>` in 6 section components. | DONE | Golden byte-identical; build + suite green. | Pure no-op |
-| 3 | **Retire per-ID header blocks** — delete `#id` header rules + media blocks; classes are sole source. Keep map + badge ID rules. | TODO | Golden byte-identical; build + suite green. | Pure no-op |
+| 3 | **Retire per-ID header blocks** — delete `#id` header rules + media blocks; classes are sole source. Keep map + badge ID rules. | DONE — safety pre-verified: canva-source sets only non-`!important` `font-size` on the 11 header IDs, so our `!important` classes win after deletion → no specificity-downgrade regression. | Golden byte-identical; build + suite green. | Pure no-op |
 | 4 | **Governed color unification** — `--header-color` token on header classes; white on dark-surface wrappers; strip dead inline color/lh/ls. | TODO | Golden diff limited to color keys; re-baseline + visual review desktop+mobile. | Intentional visual change |
 
 ## Track B — Componentization & Tailwind (strangler-fig)
@@ -101,3 +101,9 @@ BASE_URL=http://localhost:3000 npx playwright test            # full suite, all 
   globals.css ground truth). `computed-styles.json` untouched + golden byte-identical in assert mode
   (typography no-op). `dom-fingerprint.json` regenerated — diff is **exactly** the 11 class additions,
   no stray nodes. Suite 58 passed / 14 skipped. Visually unchanged. **Phase 2 COMPLETE.**
+- **Phase 3 — ACCEPTED (2026-06-18).** Deleted the entire "UNIFIED BRAND SECTION HEADERS" per-ID
+  block; `@layer components` classes + badge ID rules preserved. Sanity greps: 11 header IDs gone,
+  badge IDs intact. `computed-styles.json` untouched + golden byte-identical in assert mode — proves
+  the ID→class handoff is lossless and nothing in canva-source was masked. Live check: `#GDq...`
+  computes `font-family:dganit` purely via `.section-header`. Suite 58/14. **Phase 3 COMPLETE —
+  typography now governed by 3 semantic classes as sole source of truth (original bug resolved).**
