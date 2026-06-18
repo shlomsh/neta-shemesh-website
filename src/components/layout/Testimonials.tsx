@@ -426,7 +426,7 @@ export default function Testimonials() {
             <div id="tsQ0KIV5F4obGPwF" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
               <AnimatedBlock animation="rise-LEFT-755454f6-16b7-4e95-a828-342009358739 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                 <div id="ADlou2fjsMZuLUYj" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                  <Title tier="sub" onDark={true} id="iVtldd7PMtN1BthG" spanId="VqD8RL1Dlcv6nIpY" text="קביעת פגישת ייעוץ" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
+                  <Title tier="section" onDark={true} id="iVtldd7PMtN1BthG" spanId="VqD8RL1Dlcv6nIpY" text="קביעת פגישת ייעוץ" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
                 </div>
               </AnimatedBlock>
             </div>
@@ -505,7 +505,7 @@ export default function Testimonials() {
             <div id="p8UNLBOt0FDtOaFe" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
               <AnimatedBlock animation="rise-LEFT-1677c2d6-dae2-48e3-8a78-715a77ab521f 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                 <div id="MT5xmW7NYdq2pX8x" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                  <Title tier="sub" id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" text="טיפול זוגי לקשר בריא ותומך" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
+                  <Title tier="section" id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" text="טיפול זוגי לקשר בריא ותומך" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
                 </div>
               </AnimatedBlock>
             </div>

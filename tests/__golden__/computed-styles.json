@@ -18,7 +18,7 @@
       "rect": {
         "width": 239,
         "height": 69,
-        "top": 8390,
+        "top": 8412,
         "left": 49
       }
     },
@@ -40,7 +40,7 @@
       "rect": {
         "width": 378,
         "height": 34,
-        "top": 12541,
+        "top": 12563,
         "left": -20
       },
       "span": {
@@ -115,7 +115,7 @@
       "rect": {
         "width": 377,
         "height": 283,
-        "top": 20785,
+        "top": 20807,
         "left": -20
       }
     },
@@ -125,11 +125,11 @@
     "T749khVkMfNluBNv": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -139,17 +139,17 @@
       },
       "rect": {
         "width": 378,
-        "height": 29,
-        "top": 15749,
+        "height": 34,
+        "top": 15772,
         "left": -20
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -176,18 +176,18 @@
       "rect": {
         "width": 239,
         "height": 69,
-        "top": 7904,
+        "top": 7926,
         "left": 49
       }
     },
     "YoSfu967TqAAsgNM": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -197,17 +197,17 @@
       },
       "rect": {
         "width": 378,
-        "height": 29,
+        "height": 67,
         "top": 3234,
         "left": -20
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -234,7 +234,7 @@
       "rect": {
         "width": 378,
         "height": 34,
-        "top": 19684,
+        "top": 19706,
         "left": -20
       },
       "span": {
@@ -255,11 +255,11 @@
     "eIrsfUtmMjgXi5KA": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -269,17 +269,17 @@
       },
       "rect": {
         "width": 378,
-        "height": 29,
-        "top": 11870,
+        "height": 34,
+        "top": 11892,
         "left": -20
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -291,11 +291,11 @@
     "iVtldd7PMtN1BthG": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -305,17 +305,17 @@
       },
       "rect": {
         "width": 378,
-        "height": 29,
-        "top": 15269,
+        "height": 34,
+        "top": 15291,
         "left": -20
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "22px",
+        "fontSize": "28px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "28.6px",
-        "letterSpacing": "normal",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.28px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -342,7 +342,7 @@
       "rect": {
         "width": 239,
         "height": 69,
-        "top": 6905,
+        "top": 6927,
         "left": 49
       }
     },
@@ -364,7 +364,7 @@
       "rect": {
         "width": 239,
         "height": 69,
-        "top": 7422,
+        "top": 7444,
         "left": 49
       }
     },
@@ -386,7 +386,7 @@
       "rect": {
         "width": 378,
         "height": 34,
-        "top": 9624,
+        "top": 9646,
         "left": -20
       },
       "span": {
@@ -425,7 +425,7 @@
       "rect": {
         "width": 378,
         "height": 34,
-        "top": 6440,
+        "top": 6462,
         "left": -20
       },
       "span": {
@@ -497,7 +497,7 @@
       "rect": {
         "width": 378,
         "height": 34,
-        "top": 20082,
+        "top": 20104,
         "left": -20
       },
       "span": {
@@ -535,18 +535,18 @@
       "rect": {
         "width": 224,
         "height": 65,
-        "top": 5072,
+        "top": 5140,
         "left": 464
       }
     },
     "Dct2rK7XCXJaLA2e": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -556,17 +556,17 @@
       },
       "rect": {
         "width": 716,
-        "height": 59,
-        "top": 7715,
+        "height": 67,
+        "top": 7782,
         "left": 219
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -578,11 +578,11 @@
     "GDq1TYUPnp1UCFMP": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -592,17 +592,17 @@
       },
       "rect": {
         "width": 391,
-        "height": 59,
+        "height": 67,
         "top": 966,
         "left": 85
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -632,7 +632,7 @@
       "rect": {
         "width": 600,
         "height": 572,
-        "top": 12235,
+        "top": 12302,
         "left": 17
       }
     },
@@ -642,11 +642,11 @@
     "T749khVkMfNluBNv": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -656,17 +656,17 @@
       },
       "rect": {
         "width": 716,
-        "height": 40,
-        "top": 10095,
+        "height": 67,
+        "top": 10162,
         "left": 219
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -693,18 +693,18 @@
       "rect": {
         "width": 224,
         "height": 65,
-        "top": 4617,
+        "top": 4684,
         "left": 463
       }
     },
     "YoSfu967TqAAsgNM": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -714,17 +714,17 @@
       },
       "rect": {
         "width": 548,
-        "height": 40,
+        "height": 134,
         "top": 2425,
         "left": 303
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
         "textAlign": "center",
@@ -736,11 +736,11 @@
     "ZgJbejfHoeBrgmf7": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -750,17 +750,17 @@
       },
       "rect": {
         "width": 422,
-        "height": 59,
-        "top": 11585,
+        "height": 67,
+        "top": 11652,
         "left": 60
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -772,11 +772,11 @@
     "eIrsfUtmMjgXi5KA": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -786,17 +786,17 @@
       },
       "rect": {
         "width": 716,
-        "height": 40,
-        "top": 6525,
+        "height": 67,
+        "top": 6592,
         "left": 219
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -808,11 +808,11 @@
     "iVtldd7PMtN1BthG": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -822,17 +822,17 @@
       },
       "rect": {
         "width": 716,
-        "height": 40,
-        "top": 9561,
+        "height": 67,
+        "top": 9628,
         "left": 219
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "30.976px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "40.2688px",
-        "letterSpacing": "normal",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -859,7 +859,7 @@
       "rect": {
         "width": 224,
         "height": 65,
-        "top": 4617,
+        "top": 4684,
         "left": 854
       }
     },
@@ -881,18 +881,18 @@
       "rect": {
         "width": 224,
         "height": 65,
-        "top": 5076,
+        "top": 5143,
         "left": 855
       }
     },
     "pEc3w8pe4QAw5k7o": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -902,17 +902,17 @@
       },
       "rect": {
         "width": 397,
-        "height": 59,
-        "top": 5732,
+        "height": 67,
+        "top": 5800,
         "left": 749
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -927,11 +927,11 @@
     "vyKTmOw3YNYlJZPL": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -941,17 +941,17 @@
       },
       "rect": {
         "width": 716,
-        "height": 59,
-        "top": 4107,
+        "height": 67,
+        "top": 4174,
         "left": 218
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "center",
@@ -999,11 +999,11 @@
     "zNSWHTotP3XOaXao": {
       "p": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",
@@ -1013,17 +1013,17 @@
       },
       "rect": {
         "width": 371,
-        "height": 59,
-        "top": 12232,
+        "height": 67,
+        "top": 12299,
         "left": 775
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
-        "fontSize": "49.28px",
+        "fontSize": "56px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "59.136px",
-        "letterSpacing": "-0.4928px",
+        "lineHeight": "67.2px",
+        "letterSpacing": "-0.56px",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
         "textAlign": "start",

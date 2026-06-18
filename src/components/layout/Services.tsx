@@ -430,7 +430,7 @@ export default function Services() {
             <div id="Y4vOyyGgmfMI4Krp" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
               <AnimatedBlock animation="rise-LEFT-677dde79-4cfb-40cb-abd9-fa215f10f6eb 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                 <div id="z1TQKU04KcSYVmCO" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                  <Title tier="sub" onDark={true} id="eIrsfUtmMjgXi5KA" spanId="qEQsTBBQ8lF4QUSv" text="סיפורי הצלחה" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
+                  <Title tier="section" onDark={true} id="eIrsfUtmMjgXi5KA" spanId="qEQsTBBQ8lF4QUSv" text="סיפורי הצלחה" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
                 </div>
               </AnimatedBlock>
             </div>

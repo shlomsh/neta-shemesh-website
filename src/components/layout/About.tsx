@@ -263,7 +263,7 @@ export default function About() {
             <div id="IoKnZJEUhf4KA50O" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
               <AnimatedBlock animation="rise-LEFT-6f47e365-29ad-480f-9029-2ba401e51d4a 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                 <div id="nhVKe1AuwTj7gpF9" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                  <Title tier="sub" id="YoSfu967TqAAsgNM" spanId="elMTpmVT7SYFLBf5" text="ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
+                  <Title tier="section" id="YoSfu967TqAAsgNM" spanId="elMTpmVT7SYFLBf5" text="ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג" style={{"direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
                 </div>
               </AnimatedBlock>
             </div>
@@ -475,12 +475,7 @@ export default function About() {
             <div id="HMh6xvYRSVhVb82a" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
               <AnimatedBlock animation="rise-RIGHT-efff6c87-8f22-44a1-823b-0c4031b620c5 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                 <div id="EMFnmpZBsRMItVRz" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                  <Prose id="JkkbI1eIj5p9V33T" style={{"color":"var(--color-text-primary)","direction":"rtl","fontFamily":"var(--font-canva-secondary)","marginRight":"0em","lineHeight":"1.1em","textAlign":"center","textTransform":"none","letterSpacing":"-0.02em"}}>
-                    <span id="zAbE7HQ8k7Sh09dO" style={{"color":"var(--color-text-primary)"}}>
-                      להצית מחדש את הקשר הזוגי
-                    </span>
-                    <br />
-                  </Prose>
+                  <Title tier="section" id="JkkbI1eIj5p9V33T" spanId="zAbE7HQ8k7Sh09dO" text="להצית מחדש את הקשר הזוגי" style={{"direction":"rtl","marginRight":"0em","textAlign":"center","textTransform":"none"}} />
                 </div>
               </AnimatedBlock>
             </div>
