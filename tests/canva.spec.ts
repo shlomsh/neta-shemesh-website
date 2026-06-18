@@ -5,6 +5,7 @@ const TARGET_URL = process.env.BASE_URL || 'https://kromaticdesignstudio.my.canv
 test.describe.configure({ timeout: 120000 });
 
 test.describe('1:1 Canva Template Migration Tests', () => {
+  test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium only — cross-browser snapshots require per-OS baselines');
 
   test.beforeEach(async ({ page }) => {
     // Navigate and wait for the page to fully load
