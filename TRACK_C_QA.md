@@ -1,13 +1,17 @@
 # Track C — Template Fidelity QA (punch-list)
 
 **Goal:** close the size/spacing/margin drift between our build and the original Canva template.
-**Status:** prep (seeded while Track B card faithful-ports are in flight). Full pass runs AFTER Track B.
+**Status:** CLOSED — header sizes fixed; structural height drift deferred to redesign phase.
 
 ## Ground truth & method
 - **Template (reference):** `reference/template/.../couples-therapist` → served on **:8899** (`launch.json` config `template`).
 - **Our build:** **:3000**.
 - Compare each section at **desktop 1280** and **mobile 375**, matched viewports. Capture both screenshots; measure title font-size, title position, body column width/position, image/card sizes, inter-element spacing, section vertical rhythm, and side margins.
 - Drift fixes are **intentional, reviewed** changes — re-baseline goldens (`computed-styles`, `dom-fingerprint`, `section-screenshots`) deliberately per fix. (Track B faithful-ports preserve the *current* drifted state; this round closes the gap.)
+
+## Deferred to redesign
+- **Mobile section height inflation (+1,259px total):** Every section is 5–15% taller on our site vs template at 375px. Root cause: `SectionBand` wraps each Canva section in an extra `grid-template-columns: auto 100rem auto` container, adding height to every section. Fixing this requires replacing the `SectionBand` + `canva-source/styles.css` layout engine with proper Tailwind responsive layout (the redesign phase).
+- **Testimonials/HowItWorks cramped at mobile:** Downstream of the height inflation issue — content clips against the narrower effective column at 375px. Same redesign fix.
 
 ## Resolved / not QA items
 - **Header font face:** NOT a bug. Dganit contains Hebrew glyphs (canvas glyph-width test: dganit width ≠ cursive/serif/sans generics). The cursive look is the intended brand script. Leave as-is.
