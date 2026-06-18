@@ -98,8 +98,8 @@ export default function Expertise() {
                     <div id="jNStv0z3PKTwUa7T" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
                       <AnimatedBlock animation="rise-LEFT-88fe716e-99f8-4083-83a4-2b0ea1f0263e 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                         <div id="jwZrTUEVvd9nxez9" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                          <Prose id="PdbLfACdCMxc8hQc" style={{"color":"var(--color-text-primary)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","letterSpacing":"0.012em"}}>
-                            <span id="iX1y60KQCFRO2tz7" style={{"color":"var(--color-text-primary)","fontWeight":"700"}}>
+                          <Prose id="PdbLfACdCMxc8hQc" style={{"color":"var(--color-white)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","letterSpacing":"0.012em"}}>
+                            <span id="iX1y60KQCFRO2tz7" style={{"color":"var(--color-white)","fontWeight":"700"}}>
                               טיפול זוגי
                               <span className="expertise-desc">
                                 עבודה משותפת על הדינאמיקה הזוגית, דפוסי תקשורת, קרבה רגשית ובניית אמון מחדש. שיטות מבוססות מחקר ליצירת שינוי אמיתי.
@@ -157,8 +157,8 @@ export default function Expertise() {
                     <div id="rhRDabLO8ZZJMy4f" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
                       <AnimatedBlock animation="rise-LEFT-9f3df27b-66c7-4f8b-8e93-724b0b62675d 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                         <div id="Y8XrgwX5bbejufu0" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                          <Prose id="Wzs500xhWj981bgF" style={{"color":"var(--color-text-primary)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","textTransform":"uppercase","letterSpacing":"0.012em"}}>
-                            <span id="nvYoaDfEf8PYEUkZ" style={{"textDecorationLine":"none","color":"var(--color-text-primary)","fontStyle":"normal","fontWeight":"400"}}>
+                          <Prose id="Wzs500xhWj981bgF" style={{"color":"var(--color-white)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","textTransform":"uppercase","letterSpacing":"0.012em"}}>
+                            <span id="nvYoaDfEf8PYEUkZ" style={{"textDecorationLine":"none","color":"var(--color-white)","fontStyle":"normal","fontWeight":"400"}}>
                               טיפול משפחתי
                               <span className="expertise-desc">
                                 חיזוק הקשרים בתוך המשפחה, הבנת הדינמיקה המשפחתית ומציאת דרכים חדשות להתמודד עם אתגרים יחד.
@@ -215,8 +215,8 @@ export default function Expertise() {
                     <div id="DxDyuIDUycRV1YhH" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
                       <AnimatedBlock animation="rise-RIGHT-47ba9bde-0244-446f-9b2e-52d12e6bef36 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                         <div id="brstpuVEFIHZjcaF" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                          <Prose id="pXmZZ5dck4nyz4Aw" style={{"color":"var(--color-text-primary)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","letterSpacing":"0.012em"}}>
-                            <span id="UTWENAM2BndHWxTG" style={{"textDecorationLine":"none","color":"var(--color-text-primary)","fontStyle":"normal","fontWeight":"700"}}>
+                          <Prose id="pXmZZ5dck4nyz4Aw" style={{"color":"var(--color-white)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","letterSpacing":"0.012em"}}>
+                            <span id="UTWENAM2BndHWxTG" style={{"textDecorationLine":"none","color":"var(--color-white)","fontStyle":"normal","fontWeight":"700"}}>
                               הדרכת הורים
                               <span className="expertise-desc">
                                 כלים מעשיים להורות מיטבית, התמודדות עם אתגרי הגיל, תקשורת עם ילדים ובני נוער וחיזוק הביטחון ההורי.
@@ -273,8 +273,8 @@ export default function Expertise() {
                     <div id="xNztdTYxRwTYMBn3" style={{"boxSizing":"border-box","width":"100%","height":"100%"}}>
                       <AnimatedBlock animation="rise-LEFT-62ac91a0-f1c4-41f5-bfe9-7f3e9e567c2a 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                         <div id="huKGVq0A8dIZRywS" style={{"opacity":"1.0","display":"flex","boxSizing":"border-box","flexDirection":"column","justifyContent":"flex-start","width":"100%","height":"100%"}}>
-                          <Prose id="omJ5m5WtvdZ7KhnW" style={{"color":"var(--color-text-primary)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","letterSpacing":"0.012em"}}>
-                            <span id="C6kwWbyjvll4Onps" style={{"color":"var(--color-text-primary)","fontWeight":"700"}}>
+                          <Prose id="omJ5m5WtvdZ7KhnW" style={{"color":"var(--color-white)","direction":"rtl","fontFamily":"var(--font-canva-primary)","marginRight":"0em","lineHeight":"1.375em","textAlign":"center","letterSpacing":"0.012em"}}>
+                            <span id="C6kwWbyjvll4Onps" style={{"color":"var(--color-white)","fontWeight":"700"}}>
                               ליווי אישי
                               <span className="expertise-desc">
                                 מרחב אישי לעיבוד רגשי, לצמיחה ולבחינה של צמתים משמעותיים בחיים — קריירה, זוגיות, הורות.

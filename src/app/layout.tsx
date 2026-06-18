@@ -37,12 +37,14 @@ export const metadata: Metadata = {
 };
 
 import ScrollAnimator from "@/components/ScrollAnimator";
+import ViewportScale from "@/components/ViewportScale";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl" className={`${dganit.variable} ${elamy.variable} ${stanga.variable}`}>
       <body>
         {children}
+        <ViewportScale />
         <ScrollAnimator />
       </body>
     </html>

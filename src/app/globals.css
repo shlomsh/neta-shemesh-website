@@ -27,9 +27,18 @@
   --color-text-secondary: var(--color-canva-mid);
   --color-bg-light: var(--color-canva-bg);
 
-  /* Scale up fonts because Hebrew fonts appear smaller */
+  /* Scale up body text because Hebrew fonts appear smaller.
+     NOTE: only --bfso (body font-size) may be scaled. --rfso multiplies the
+     *html* font-size, which is the rem unit the Canva "auto 100rem auto" grid is
+     built on — inflating it makes 100rem > 100vw and clips the layout off-screen
+     on narrow viewports. Keep --rfso at its default (1). */
   --bfso: 1.1;
-  --rfso: 1.1;
+}
+
+@media (min-width: 1024.05px) {
+  :root {
+    --rfso: 1.1;
+  }
 }
 
 @layer base {
@@ -100,9 +109,23 @@
    ========================================================================== */
 
 @layer components {
-  /* Description lines inside expertise card badges — hidden; title-only display */
+  /* Description lines inside expertise card badges */
   .expertise-desc {
-    display: none !important;
+    display: block;
+    font-size: 0.72em;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 0.35em;
+    opacity: 0.85;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 1024px) {
+    /* Description lines inside expertise card badges — hidden; title-only display */
+    .expertise-desc {
+      display: none !important;
+    }
   }
 }
 
@@ -196,76 +219,85 @@
   .section-header, .section-header span { font-size: clamp(28px, 4.375vw, 56px) !important; }
   .sub-header, .sub-header span     { font-size: clamp(22px, 2.42vw, 30.98px) !important; }
 
-  /* === Expertise section: 4-card 2×2 responsive grid === */
   #expertise-cards-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: clamp(0.75rem, 2vw, 1.5rem) !important;
-    width: 100% !important;
-    grid-column: 1 / -1 !important;
+    display: contents !important;
   }
-  /* Card slot wrappers: leave the Canva grid, become equal grid cells */
-  #sHUJhhWFDhXUmSDT,
-  #XEshIf5fwajEMP2Z,
-  #awRn04UDaDpf7GxJ,
-  #ZquWGg5T0ljh4eIn {
-    position: static !important;
-    grid-area: unset !important;
-    aspect-ratio: 1 !important;
+
+  @media (max-width: 1024px) {
+    /* === Expertise section: 4-card 2×2 responsive grid === */
+    #expertise-cards-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: clamp(0.75rem, 2vw, 1.5rem) !important;
+      width: 100% !important;
+      grid-column: 1 / -1 !important;
+    }
+    /* Card slot wrappers: leave the Canva grid, become equal grid cells */
+    #sHUJhhWFDhXUmSDT,
+    #XEshIf5fwajEMP2Z,
+    #awRn04UDaDpf7GxJ,
+    #ZquWGg5T0ljh4eIn {
+      position: static !important;
+      grid-area: unset !important;
+      aspect-ratio: 1 !important;
+    }
+    /* Inner card grid containers: fill the slot */
+    #AD7MMYAF35qSLOcl,
+    #xGtB40uOcM5p0nyc,
+    #KqNNMB2rkkLy6oh4,
+    #z7NlTyk90OLtuAKv {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    /* Card content grids: block layout so children can be absolutely positioned */
+    #NZ7UR8piGxyHMS3h,
+    #C5eOBGwWLxFG35zZ,
+    #iPSXEt3sFDwNE8Uh,
+    #pwgXdtHaRUlJFSmJ {
+      display: block !important;
+      position: relative !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    /* Image containers: absolute-fill the card */
+    #hLpe3RMUgrAsHytK,
+    #NSdaUueXWfadgQsT,
+    #PsoRfW8aflDwlPun,
+    #lQbbLGJjVzrxwsHy {
+      position: absolute !important;
+      inset: 0 !important;
+      grid-area: unset !important;
+      z-index: 1 !important;
+    }
   }
-  /* Inner card grid containers: fill the slot */
-  #AD7MMYAF35qSLOcl,
-  #xGtB40uOcM5p0nyc,
-  #KqNNMB2rkkLy6oh4,
-  #z7NlTyk90OLtuAKv {
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  /* Card content grids: block layout so children can be absolutely positioned */
-  #NZ7UR8piGxyHMS3h,
-  #C5eOBGwWLxFG35zZ,
-  #iPSXEt3sFDwNE8Uh,
-  #pwgXdtHaRUlJFSmJ {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  /* Image containers: absolute-fill the card */
-  #hLpe3RMUgrAsHytK,
-  #NSdaUueXWfadgQsT,
-  #PsoRfW8aflDwlPun,
-  #lQbbLGJjVzrxwsHy {
-    position: absolute !important;
-    inset: 0 !important;
-    grid-area: unset !important;
-    z-index: 1 !important;
-  }
-  /* Text overlay badges: vertically centered on card (matches template layout) */
-  #lSLyIhGivSGNBVUN,
-  #YVXTfTS7xMuImRo0,
-  #fGDTVi1RNpwxygWJ,
-  #Ljo8rtgnn6TikpkH {
-    position: absolute !important;
-    grid-area: unset !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    z-index: 5 !important;
-    width: max-content !important;
-    max-width: 88% !important;
-  }
-  /* Title text in expertise pill: larger, single-line treatment */
-  #PdbLfACdCMxc8hQc,
-  #Wzs500xhWj981bgF,
-  #pXmZZ5dck4nyz4Aw,
-  #omJ5m5WtvdZ7KhnW {
-    font-size: clamp(1.1rem, 3vw, 1.6rem) !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.04em !important;
-    line-height: 1.2 !important;
-    white-space: nowrap !important;
+  @media (max-width: 1024px) {
+    /* Text overlay badges: vertically centered on card (matches mobile template layout) */
+    #lSLyIhGivSGNBVUN,
+    #YVXTfTS7xMuImRo0,
+    #fGDTVi1RNpwxygWJ,
+    #Ljo8rtgnn6TikpkH {
+      position: absolute !important;
+      grid-area: unset !important;
+      top: 50% !important;
+      bottom: unset !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: max-content !important;
+      max-width: 88% !important;
+      z-index: 5 !important;
+    }
+    /* Title text in expertise pill: larger, single-line treatment */
+    #PdbLfACdCMxc8hQc,
+    #Wzs500xhWj981bgF,
+    #pXmZZ5dck4nyz4Aw,
+    #omJ5m5WtvdZ7KhnW {
+      font-size: clamp(14px, 3vw, 18px) !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.04em !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+    }
   }
 }
 

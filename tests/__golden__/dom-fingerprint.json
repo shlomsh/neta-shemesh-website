@@ -2554,111 +2554,27 @@
                 },
                 {
                   "tag": "div",
-                  "id": "sHUJhhWFDhXUmSDT",
+                  "id": "expertise-cards-grid",
                   "children": [
                     {
                       "tag": "div",
-                      "id": "AD7MMYAF35qSLOcl",
+                      "id": "sHUJhhWFDhXUmSDT",
                       "children": [
                         {
                           "tag": "div",
-                          "id": "NZ7UR8piGxyHMS3h",
+                          "id": "AD7MMYAF35qSLOcl",
                           "children": [
                             {
                               "tag": "div",
-                              "id": "hLpe3RMUgrAsHytK",
+                              "id": "NZ7UR8piGxyHMS3h",
                               "children": [
                                 {
                                   "tag": "div",
-                                  "id": "dI4kCJWKJDER5gbR",
+                                  "id": "hLpe3RMUgrAsHytK",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "classes": [
-                                        "animation_container"
-                                      ],
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animated"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "id": "LUdK0kqvpFynWe9C",
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "alBRF2mGKrvDciR5",
-                                                  "children": [
-                                                    {
-                                                      "tag": "div",
-                                                      "id": "Vsp9vvfG4cDcpDHI",
-                                                      "children": [
-                                                        {
-                                                          "tag": "img"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "tag": "svg",
-                                                      "id": "yBLZjZy5Z1Iq4wmD",
-                                                      "children": [
-                                                        {
-                                                          "tag": "g",
-                                                          "id": "QZ7bHt94yqdvz71z",
-                                                          "children": [
-                                                            {
-                                                              "tag": "g",
-                                                              "id": "pLkBpR1Ub1BgFIHA",
-                                                              "children": [
-                                                                {
-                                                                  "tag": "clippath",
-                                                                  "id": "vWNntW1QBZIj7Jtw",
-                                                                  "children": [
-                                                                    {
-                                                                      "tag": "path"
-                                                                    }
-                                                                  ]
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "jzbics4BCL2r1WAC"
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "gyvNhfhtFKbj1hiu"
-                                                                }
-                                                              ]
-                                                            }
-                                                          ]
-                                                        }
-                                                      ]
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "tag": "div",
-                              "id": "lSLyIhGivSGNBVUN",
-                              "children": [
-                                {
-                                  "tag": "div",
-                                  "id": "UZP4p5q8n7vf3BBD",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "id": "gspf04BIBX13uI64",
+                                      "id": "dI4kCJWKJDER5gbR",
                                       "children": [
                                         {
                                           "tag": "div",
@@ -2674,162 +2590,51 @@
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "P10XtQmvROV15OcV",
+                                                  "id": "LUdK0kqvpFynWe9C",
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "BV4dJFKF2Bo3aKfs"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "tag": "div",
-                                  "id": "AwvZPmYWlHqiGO1a",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "id": "jNStv0z3PKTwUa7T",
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "classes": [
-                                                "animated"
-                                              ],
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "jwZrTUEVvd9nxez9",
-                                                  "children": [
-                                                    {
-                                                      "tag": "p",
-                                                      "id": "PdbLfACdCMxc8hQc",
+                                                      "id": "alBRF2mGKrvDciR5",
                                                       "children": [
                                                         {
-                                                          "tag": "span",
-                                                          "id": "iX1y60KQCFRO2tz7",
+                                                          "tag": "div",
+                                                          "id": "Vsp9vvfG4cDcpDHI",
                                                           "children": [
                                                             {
-                                                              "tag": "span",
-                                                              "classes": [
-                                                                "expertise-desc"
-                                                              ]
+                                                              "tag": "img"
                                                             }
                                                           ]
                                                         },
                                                         {
-                                                          "tag": "br"
-                                                        }
-                                                      ]
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "tag": "div",
-                  "id": "XEshIf5fwajEMP2Z",
-                  "children": [
-                    {
-                      "tag": "div",
-                      "id": "xGtB40uOcM5p0nyc",
-                      "children": [
-                        {
-                          "tag": "div",
-                          "id": "C5eOBGwWLxFG35zZ",
-                          "children": [
-                            {
-                              "tag": "div",
-                              "id": "NSdaUueXWfadgQsT",
-                              "children": [
-                                {
-                                  "tag": "div",
-                                  "id": "g6MOq27QTCfkIHMw",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "classes": [
-                                        "animation_container"
-                                      ],
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animated"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "id": "kkHZhg9C2cFXPIKf",
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "E02Q9ax7Hd5Cqev0",
-                                                  "children": [
-                                                    {
-                                                      "tag": "div",
-                                                      "id": "N3JyQaaRC18EsqUJ",
-                                                      "children": [
-                                                        {
-                                                          "tag": "img"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "tag": "svg",
-                                                      "id": "pwKjW5EWfVOQEMn5",
-                                                      "children": [
-                                                        {
-                                                          "tag": "g",
-                                                          "id": "SaT3J7HzzCRk4Xyr",
+                                                          "tag": "svg",
+                                                          "id": "yBLZjZy5Z1Iq4wmD",
                                                           "children": [
                                                             {
                                                               "tag": "g",
-                                                              "id": "vCcycJ3j2VtymO5p",
+                                                              "id": "QZ7bHt94yqdvz71z",
                                                               "children": [
                                                                 {
-                                                                  "tag": "clippath",
-                                                                  "id": "AamfwptS7Ckdk7ha",
+                                                                  "tag": "g",
+                                                                  "id": "pLkBpR1Ub1BgFIHA",
                                                                   "children": [
                                                                     {
-                                                                      "tag": "path"
+                                                                      "tag": "clippath",
+                                                                      "id": "vWNntW1QBZIj7Jtw",
+                                                                      "children": [
+                                                                        {
+                                                                          "tag": "path"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "jzbics4BCL2r1WAC"
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "gyvNhfhtFKbj1hiu"
                                                                     }
                                                                   ]
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "IivRki4ybYuwZtnV"
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "Qp9YSuYk9FoUKXqL"
                                                                 }
                                                               ]
                                                             }
@@ -2846,40 +2651,40 @@
                                       ]
                                     }
                                   ]
-                                }
-                              ]
-                            },
-                            {
-                              "tag": "div",
-                              "id": "YVXTfTS7xMuImRo0",
-                              "children": [
+                                },
                                 {
                                   "tag": "div",
-                                  "id": "yk8yZFhVEZnwCFHn",
+                                  "id": "lSLyIhGivSGNBVUN",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "id": "fclccpEIxwNbO0pO",
+                                      "id": "UZP4p5q8n7vf3BBD",
                                       "children": [
                                         {
                                           "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
+                                          "id": "gspf04BIBX13uI64",
                                           "children": [
                                             {
                                               "tag": "div",
                                               "classes": [
-                                                "animated"
+                                                "animation_container"
                                               ],
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "NBiAvobYuoPxNsIl",
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "k9OLcKVmLVA7ET8t"
+                                                      "id": "P10XtQmvROV15OcV",
+                                                      "children": [
+                                                        {
+                                                          "tag": "div",
+                                                          "id": "BV4dJFKF2Bo3aKfs"
+                                                        }
+                                                      ]
                                                     }
                                                   ]
                                                 }
@@ -2888,46 +2693,49 @@
                                           ]
                                         }
                                       ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "tag": "div",
-                                  "id": "I9G3uw4Ng32dfW3y",
-                                  "children": [
+                                    },
                                     {
                                       "tag": "div",
-                                      "id": "rhRDabLO8ZZJMy4f",
+                                      "id": "AwvZPmYWlHqiGO1a",
                                       "children": [
                                         {
                                           "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
+                                          "id": "jNStv0z3PKTwUa7T",
                                           "children": [
                                             {
                                               "tag": "div",
                                               "classes": [
-                                                "animated"
+                                                "animation_container"
                                               ],
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "Y8XrgwX5bbejufu0",
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
                                                   "children": [
                                                     {
-                                                      "tag": "p",
-                                                      "id": "Wzs500xhWj981bgF",
+                                                      "tag": "div",
+                                                      "id": "jwZrTUEVvd9nxez9",
                                                       "children": [
                                                         {
-                                                          "tag": "span",
-                                                          "id": "nvYoaDfEf8PYEUkZ",
+                                                          "tag": "p",
+                                                          "id": "PdbLfACdCMxc8hQc",
                                                           "children": [
                                                             {
                                                               "tag": "span",
-                                                              "classes": [
-                                                                "expertise-desc"
+                                                              "id": "iX1y60KQCFRO2tz7",
+                                                              "children": [
+                                                                {
+                                                                  "tag": "span",
+                                                                  "classes": [
+                                                                    "expertise-desc"
+                                                                  ]
+                                                                }
                                                               ]
+                                                            },
+                                                            {
+                                                              "tag": "br"
                                                             }
                                                           ]
                                                         }
@@ -2948,116 +2756,26 @@
                           ]
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "tag": "div",
-                  "id": "awRn04UDaDpf7GxJ",
-                  "children": [
+                    },
                     {
                       "tag": "div",
-                      "id": "KqNNMB2rkkLy6oh4",
+                      "id": "XEshIf5fwajEMP2Z",
                       "children": [
                         {
                           "tag": "div",
-                          "id": "iPSXEt3sFDwNE8Uh",
+                          "id": "xGtB40uOcM5p0nyc",
                           "children": [
                             {
                               "tag": "div",
-                              "id": "PsoRfW8aflDwlPun",
+                              "id": "C5eOBGwWLxFG35zZ",
                               "children": [
                                 {
                                   "tag": "div",
-                                  "id": "KtNl5xrJ0UcE1Dyb",
+                                  "id": "NSdaUueXWfadgQsT",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "classes": [
-                                        "animation_container"
-                                      ],
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animated"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "id": "letaiKMsGo8oXqb4",
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "STTnVc5KnDogTFbU",
-                                                  "children": [
-                                                    {
-                                                      "tag": "div",
-                                                      "id": "Uue3vLefExhT389m",
-                                                      "children": [
-                                                        {
-                                                          "tag": "img"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "tag": "svg",
-                                                      "id": "jj5YGFj219cxLBeQ",
-                                                      "children": [
-                                                        {
-                                                          "tag": "g",
-                                                          "id": "DpIqpQtLFkqpz4kL",
-                                                          "children": [
-                                                            {
-                                                              "tag": "g",
-                                                              "id": "obuxRAoDlpfWm8tu",
-                                                              "children": [
-                                                                {
-                                                                  "tag": "clippath",
-                                                                  "id": "PHhCiefVTR8ozsuC",
-                                                                  "children": [
-                                                                    {
-                                                                      "tag": "path"
-                                                                    }
-                                                                  ]
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "e8bimMZ5uR3haY7s"
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "iShCVpw8MRAKgTWZ"
-                                                                }
-                                                              ]
-                                                            }
-                                                          ]
-                                                        }
-                                                      ]
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "tag": "div",
-                              "id": "fGDTVi1RNpwxygWJ",
-                              "children": [
-                                {
-                                  "tag": "div",
-                                  "id": "jqUXbyPlen77jTaa",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "id": "nfzLNFAyR9gJ7ljw",
+                                      "id": "g6MOq27QTCfkIHMw",
                                       "children": [
                                         {
                                           "tag": "div",
@@ -3073,262 +2791,55 @@
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "LAFjJ0UoTOlPo2GC",
+                                                  "id": "kkHZhg9C2cFXPIKf",
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "QnIvrKdyQWLyfeX3"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "tag": "div",
-                                  "id": "MSgXsQUyVcRVo5ou",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "id": "DxDyuIDUycRV1YhH",
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "classes": [
-                                                "animated"
-                                              ],
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "brstpuVEFIHZjcaF",
-                                                  "children": [
-                                                    {
-                                                      "tag": "p",
-                                                      "id": "pXmZZ5dck4nyz4Aw",
+                                                      "id": "E02Q9ax7Hd5Cqev0",
                                                       "children": [
                                                         {
-                                                          "tag": "span",
-                                                          "id": "UTWENAM2BndHWxTG",
+                                                          "tag": "div",
+                                                          "id": "N3JyQaaRC18EsqUJ",
                                                           "children": [
                                                             {
-                                                              "tag": "span",
-                                                              "classes": [
-                                                                "expertise-desc"
-                                                              ]
-                                                            }
-                                                          ]
-                                                        }
-                                                      ]
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "tag": "div",
-                  "id": "ZquWGg5T0ljh4eIn",
-                  "children": [
-                    {
-                      "tag": "div",
-                      "id": "z7NlTyk90OLtuAKv",
-                      "children": [
-                        {
-                          "tag": "div",
-                          "id": "pwgXdtHaRUlJFSmJ",
-                          "children": [
-                            {
-                              "tag": "div",
-                              "id": "lQbbLGJjVzrxwsHy",
-                              "children": [
-                                {
-                                  "tag": "div",
-                                  "id": "h53O20PiL0qpieBP",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "classes": [
-                                        "animation_container"
-                                      ],
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animated"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "id": "h7EEs2HFB4D9UUUx",
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "i3orMCW6iBwtZQxZ",
-                                                  "children": [
-                                                    {
-                                                      "tag": "div",
-                                                      "id": "I3dfVfST3tKJAX71",
-                                                      "children": [
-                                                        {
-                                                          "tag": "img"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "tag": "svg",
-                                                      "id": "DProP7dQoVTCYOzd",
-                                                      "children": [
-                                                        {
-                                                          "tag": "g",
-                                                          "id": "jOfXqXbs8bbNzGmD",
-                                                          "children": [
-                                                            {
-                                                              "tag": "g",
-                                                              "id": "JYZ1Z5yAauRiS4hS",
-                                                              "children": [
-                                                                {
-                                                                  "tag": "clippath",
-                                                                  "id": "agcndPm9GECHLYum",
-                                                                  "children": [
-                                                                    {
-                                                                      "tag": "path"
-                                                                    }
-                                                                  ]
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "BXe7Ztzqb4Lc6eRY"
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "SBtBzNWKqyWlWOtw"
-                                                                }
-                                                              ]
-                                                            }
-                                                          ]
-                                                        }
-                                                      ]
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "tag": "div",
-                              "id": "Ljo8rtgnn6TikpkH",
-                              "children": [
-                                {
-                                  "tag": "div",
-                                  "id": "VU38x70HXmuwMdVk",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "id": "QYnVTd39t40KP0Wh",
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "classes": [
-                                                "animated"
-                                              ],
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "Z5GsvxXhTjG1KQgy",
-                                                  "children": [
-                                                    {
-                                                      "tag": "div",
-                                                      "id": "vaPOeVtQ4W4o0AZK"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "tag": "div",
-                                  "id": "QsrtOEoKLn9HFUj6",
-                                  "children": [
-                                    {
-                                      "tag": "div",
-                                      "id": "xNztdTYxRwTYMBn3",
-                                      "children": [
-                                        {
-                                          "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
-                                          "children": [
-                                            {
-                                              "tag": "div",
-                                              "classes": [
-                                                "animated"
-                                              ],
-                                              "children": [
-                                                {
-                                                  "tag": "div",
-                                                  "id": "huKGVq0A8dIZRywS",
-                                                  "children": [
-                                                    {
-                                                      "tag": "p",
-                                                      "id": "omJ5m5WtvdZ7KhnW",
-                                                      "children": [
-                                                        {
-                                                          "tag": "span",
-                                                          "id": "C6kwWbyjvll4Onps",
-                                                          "children": [
-                                                            {
-                                                              "tag": "span",
-                                                              "classes": [
-                                                                "expertise-desc"
-                                                              ]
+                                                              "tag": "img"
                                                             }
                                                           ]
                                                         },
                                                         {
-                                                          "tag": "br"
+                                                          "tag": "svg",
+                                                          "id": "pwKjW5EWfVOQEMn5",
+                                                          "children": [
+                                                            {
+                                                              "tag": "g",
+                                                              "id": "SaT3J7HzzCRk4Xyr",
+                                                              "children": [
+                                                                {
+                                                                  "tag": "g",
+                                                                  "id": "vCcycJ3j2VtymO5p",
+                                                                  "children": [
+                                                                    {
+                                                                      "tag": "clippath",
+                                                                      "id": "AamfwptS7Ckdk7ha",
+                                                                      "children": [
+                                                                        {
+                                                                          "tag": "path"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "IivRki4ybYuwZtnV"
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "Qp9YSuYk9FoUKXqL"
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
                                                         }
                                                       ]
                                                     }
@@ -3341,92 +2852,86 @@
                                       ]
                                     }
                                   ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "tag": "div",
-                  "id": "SGfXNw3YwUrwNbzA",
-                  "children": [
-                    {
-                      "tag": "div",
-                      "id": "HmT5DO6gNjEE4gjf",
-                      "children": [
-                        {
-                          "tag": "div",
-                          "id": "V4PS4ZeSkUjGxwyX",
-                          "children": [
-                            {
-                              "tag": "div",
-                              "id": "dh1Q5yRh37ly7Fsf",
-                              "children": [
+                                },
                                 {
                                   "tag": "div",
-                                  "id": "w4uC168OVWHecSFi",
+                                  "id": "YVXTfTS7xMuImRo0",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "classes": [
-                                        "animation_container"
-                                      ],
+                                      "id": "yk8yZFhVEZnwCFHn",
                                       "children": [
                                         {
                                           "tag": "div",
-                                          "classes": [
-                                            "animated"
-                                          ],
+                                          "id": "fclccpEIxwNbO0pO",
                                           "children": [
                                             {
                                               "tag": "div",
-                                              "id": "T8Eqa6GoHxD88a3b",
+                                              "classes": [
+                                                "animation_container"
+                                              ],
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "luKpjkdsHf0AMAi6",
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "lCyZ13XTaPH30Dhc",
+                                                      "id": "NBiAvobYuoPxNsIl",
                                                       "children": [
                                                         {
-                                                          "tag": "img"
+                                                          "tag": "div",
+                                                          "id": "k9OLcKVmLVA7ET8t"
                                                         }
                                                       ]
-                                                    },
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "div",
+                                      "id": "I9G3uw4Ng32dfW3y",
+                                      "children": [
+                                        {
+                                          "tag": "div",
+                                          "id": "rhRDabLO8ZZJMy4f",
+                                          "children": [
+                                            {
+                                              "tag": "div",
+                                              "classes": [
+                                                "animation_container"
+                                              ],
+                                              "children": [
+                                                {
+                                                  "tag": "div",
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
+                                                  "children": [
                                                     {
-                                                      "tag": "svg",
-                                                      "id": "s6QshVJITmjVhV5O",
+                                                      "tag": "div",
+                                                      "id": "Y8XrgwX5bbejufu0",
                                                       "children": [
                                                         {
-                                                          "tag": "g",
-                                                          "id": "yKrUaK8UB7SYdMDd",
+                                                          "tag": "p",
+                                                          "id": "Wzs500xhWj981bgF",
                                                           "children": [
                                                             {
-                                                              "tag": "g",
-                                                              "id": "nE5tkoeWPDP0ekV1",
+                                                              "tag": "span",
+                                                              "id": "nvYoaDfEf8PYEUkZ",
                                                               "children": [
                                                                 {
-                                                                  "tag": "clippath",
-                                                                  "id": "iFQa1dIOZSWxWgr3",
-                                                                  "children": [
-                                                                    {
-                                                                      "tag": "path"
-                                                                    }
+                                                                  "tag": "span",
+                                                                  "classes": [
+                                                                    "expertise-desc"
                                                                   ]
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "ykERV8eRRTpicqZT"
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "xumFZqgwKFMrQ3mR"
                                                                 }
                                                               ]
                                                             }
@@ -3445,18 +2950,30 @@
                                   ]
                                 }
                               ]
-                            },
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "id": "awRn04UDaDpf7GxJ",
+                      "children": [
+                        {
+                          "tag": "div",
+                          "id": "KqNNMB2rkkLy6oh4",
+                          "children": [
                             {
                               "tag": "div",
-                              "id": "iRmNwplcFjhmsZ6V",
+                              "id": "iPSXEt3sFDwNE8Uh",
                               "children": [
                                 {
                                   "tag": "div",
-                                  "id": "dnVExdLKAIqCDCN2",
+                                  "id": "PsoRfW8aflDwlPun",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "id": "Hz9zhWLD6fEepYwC",
+                                      "id": "KtNl5xrJ0UcE1Dyb",
                                       "children": [
                                         {
                                           "tag": "div",
@@ -3472,11 +2989,57 @@
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "LqeD1gAd6Q0DVkDN",
+                                                  "id": "letaiKMsGo8oXqb4",
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "wMqnmonRlZQLfsOL"
+                                                      "id": "STTnVc5KnDogTFbU",
+                                                      "children": [
+                                                        {
+                                                          "tag": "div",
+                                                          "id": "Uue3vLefExhT389m",
+                                                          "children": [
+                                                            {
+                                                              "tag": "img"
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "tag": "svg",
+                                                          "id": "jj5YGFj219cxLBeQ",
+                                                          "children": [
+                                                            {
+                                                              "tag": "g",
+                                                              "id": "DpIqpQtLFkqpz4kL",
+                                                              "children": [
+                                                                {
+                                                                  "tag": "g",
+                                                                  "id": "obuxRAoDlpfWm8tu",
+                                                                  "children": [
+                                                                    {
+                                                                      "tag": "clippath",
+                                                                      "id": "PHhCiefVTR8ozsuC",
+                                                                      "children": [
+                                                                        {
+                                                                          "tag": "path"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "e8bimMZ5uR3haY7s"
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "iShCVpw8MRAKgTWZ"
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
                                                     }
                                                   ]
                                                 }
@@ -3490,121 +3053,83 @@
                                 },
                                 {
                                   "tag": "div",
-                                  "id": "fD3vK3YgXUX4nX7E",
+                                  "id": "fGDTVi1RNpwxygWJ",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "id": "pK4yQqQXVSwZMI5z",
+                                      "id": "jqUXbyPlen77jTaa",
                                       "children": [
                                         {
                                           "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
+                                          "id": "nfzLNFAyR9gJ7ljw",
                                           "children": [
                                             {
                                               "tag": "div",
                                               "classes": [
-                                                "animated"
+                                                "animation_container"
                                               ],
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "cDkvYn0jSZEjICTa"
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
+                                                  "children": [
+                                                    {
+                                                      "tag": "div",
+                                                      "id": "LAFjJ0UoTOlPo2GC",
+                                                      "children": [
+                                                        {
+                                                          "tag": "div",
+                                                          "id": "QnIvrKdyQWLyfeX3"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
                                                 }
                                               ]
                                             }
                                           ]
                                         }
                                       ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "tag": "div",
-                  "id": "mMotRik1ihhSvjJw",
-                  "children": [
-                    {
-                      "tag": "div",
-                      "id": "Dh9m1LSaVXur6NU7",
-                      "children": [
-                        {
-                          "tag": "div",
-                          "id": "D54IoOXv4TVLrBS0",
-                          "children": [
-                            {
-                              "tag": "div",
-                              "id": "ydURWrMX4tI0SwjT",
-                              "children": [
-                                {
-                                  "tag": "div",
-                                  "id": "JApuxvD6PMaBAsVV",
-                                  "children": [
+                                    },
                                     {
                                       "tag": "div",
-                                      "classes": [
-                                        "animation_container"
-                                      ],
+                                      "id": "MSgXsQUyVcRVo5ou",
                                       "children": [
                                         {
                                           "tag": "div",
-                                          "classes": [
-                                            "animated"
-                                          ],
+                                          "id": "DxDyuIDUycRV1YhH",
                                           "children": [
                                             {
                                               "tag": "div",
-                                              "id": "rbRIJkRpedeWqW7U",
+                                              "classes": [
+                                                "animation_container"
+                                              ],
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "YqQp9VS5Anj2DKA3",
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "JQ00RqD7GCLGlyKm",
+                                                      "id": "brstpuVEFIHZjcaF",
                                                       "children": [
                                                         {
-                                                          "tag": "img"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "tag": "svg",
-                                                      "id": "sa0hP36TDHbwmyKV",
-                                                      "children": [
-                                                        {
-                                                          "tag": "g",
-                                                          "id": "cqupH4FYh6dcc77h",
+                                                          "tag": "p",
+                                                          "id": "pXmZZ5dck4nyz4Aw",
                                                           "children": [
                                                             {
-                                                              "tag": "g",
-                                                              "id": "wLTJGPU37TICESZI",
+                                                              "tag": "span",
+                                                              "id": "UTWENAM2BndHWxTG",
                                                               "children": [
                                                                 {
-                                                                  "tag": "clippath",
-                                                                  "id": "EUqLrUDIckPDYQHe",
-                                                                  "children": [
-                                                                    {
-                                                                      "tag": "path"
-                                                                    }
+                                                                  "tag": "span",
+                                                                  "classes": [
+                                                                    "expertise-desc"
                                                                   ]
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "LUNh4OWlu9BNCEeg"
-                                                                },
-                                                                {
-                                                                  "tag": "path",
-                                                                  "id": "VGg9HlJoA5mbulfI"
                                                                 }
                                                               ]
                                                             }
@@ -3623,18 +3148,30 @@
                                   ]
                                 }
                               ]
-                            },
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "id": "ZquWGg5T0ljh4eIn",
+                      "children": [
+                        {
+                          "tag": "div",
+                          "id": "z7NlTyk90OLtuAKv",
+                          "children": [
                             {
                               "tag": "div",
-                              "id": "RAxwfdeXesvltnje",
+                              "id": "pwgXdtHaRUlJFSmJ",
                               "children": [
                                 {
                                   "tag": "div",
-                                  "id": "bvCTjxbg1av3D0Vw",
+                                  "id": "lQbbLGJjVzrxwsHy",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "id": "C0AERVNmMPcoVdRP",
+                                      "id": "h53O20PiL0qpieBP",
                                       "children": [
                                         {
                                           "tag": "div",
@@ -3650,11 +3187,57 @@
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "xI8HJnNzYvtHKtge",
+                                                  "id": "h7EEs2HFB4D9UUUx",
                                                   "children": [
                                                     {
                                                       "tag": "div",
-                                                      "id": "FFUTMSMUTAKX3zNZ"
+                                                      "id": "i3orMCW6iBwtZQxZ",
+                                                      "children": [
+                                                        {
+                                                          "tag": "div",
+                                                          "id": "I3dfVfST3tKJAX71",
+                                                          "children": [
+                                                            {
+                                                              "tag": "img"
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "tag": "svg",
+                                                          "id": "DProP7dQoVTCYOzd",
+                                                          "children": [
+                                                            {
+                                                              "tag": "g",
+                                                              "id": "jOfXqXbs8bbNzGmD",
+                                                              "children": [
+                                                                {
+                                                                  "tag": "g",
+                                                                  "id": "JYZ1Z5yAauRiS4hS",
+                                                                  "children": [
+                                                                    {
+                                                                      "tag": "clippath",
+                                                                      "id": "agcndPm9GECHLYum",
+                                                                      "children": [
+                                                                        {
+                                                                          "tag": "path"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "BXe7Ztzqb4Lc6eRY"
+                                                                    },
+                                                                    {
+                                                                      "tag": "path",
+                                                                      "id": "SBtBzNWKqyWlWOtw"
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
                                                     }
                                                   ]
                                                 }
@@ -3668,27 +3251,94 @@
                                 },
                                 {
                                   "tag": "div",
-                                  "id": "gQUws499e1Tngv41",
+                                  "id": "Ljo8rtgnn6TikpkH",
                                   "children": [
                                     {
                                       "tag": "div",
-                                      "id": "Q3IXIM42GF3CTJJ9",
+                                      "id": "VU38x70HXmuwMdVk",
                                       "children": [
                                         {
                                           "tag": "div",
-                                          "classes": [
-                                            "animation_container"
-                                          ],
+                                          "id": "QYnVTd39t40KP0Wh",
                                           "children": [
                                             {
                                               "tag": "div",
                                               "classes": [
-                                                "animated"
+                                                "animation_container"
                                               ],
                                               "children": [
                                                 {
                                                   "tag": "div",
-                                                  "id": "VY4GP4A2NUamLguZ"
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
+                                                  "children": [
+                                                    {
+                                                      "tag": "div",
+                                                      "id": "Z5GsvxXhTjG1KQgy",
+                                                      "children": [
+                                                        {
+                                                          "tag": "div",
+                                                          "id": "vaPOeVtQ4W4o0AZK"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "div",
+                                      "id": "QsrtOEoKLn9HFUj6",
+                                      "children": [
+                                        {
+                                          "tag": "div",
+                                          "id": "xNztdTYxRwTYMBn3",
+                                          "children": [
+                                            {
+                                              "tag": "div",
+                                              "classes": [
+                                                "animation_container"
+                                              ],
+                                              "children": [
+                                                {
+                                                  "tag": "div",
+                                                  "classes": [
+                                                    "animated"
+                                                  ],
+                                                  "children": [
+                                                    {
+                                                      "tag": "div",
+                                                      "id": "huKGVq0A8dIZRywS",
+                                                      "children": [
+                                                        {
+                                                          "tag": "p",
+                                                          "id": "omJ5m5WtvdZ7KhnW",
+                                                          "children": [
+                                                            {
+                                                              "tag": "span",
+                                                              "id": "C6kwWbyjvll4Onps",
+                                                              "children": [
+                                                                {
+                                                                  "tag": "span",
+                                                                  "classes": [
+                                                                    "expertise-desc"
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "tag": "br"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
                                                 }
                                               ]
                                             }

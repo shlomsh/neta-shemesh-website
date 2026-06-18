@@ -3,10 +3,10 @@
     "C6kwWbyjvll4Onps": {
       "p": {
         "fontFamily": "stanga, \"stanga Fallback\", sans-serif",
-        "fontSize": "19.36px",
+        "fontSize": "14px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "26.62px",
+        "lineHeight": "16.8px",
         "letterSpacing": "normal",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
@@ -16,10 +16,10 @@
         "wordBreak": "keep-all"
       },
       "rect": {
-        "width": 239,
-        "height": 69,
-        "top": 8412,
-        "left": 49
+        "width": 32,
+        "height": 13,
+        "top": 6098,
+        "left": 29
       }
     },
     "Dct2rK7XCXJaLA2e": {
@@ -38,10 +38,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 12563,
-        "left": -20
+        "top": 11534,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -74,10 +74,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 1709,
-        "left": -20
+        "top": 1553,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -97,10 +97,10 @@
     "LW4zsSyHyezRncZj": {
       "p": {
         "fontFamily": "Times",
-        "fontSize": "4.5375px",
+        "fontSize": "4.125px",
         "fontWeight": "400",
         "fontStyle": "normal",
-        "lineHeight": "6.80625px",
+        "lineHeight": "6.1875px",
         "letterSpacing": "normal",
         "color": "rgb(74, 61, 74)",
         "textTransform": "none",
@@ -113,10 +113,10 @@
         "marginRight": "0px"
       },
       "rect": {
-        "width": 377,
-        "height": 283,
-        "top": 20807,
-        "left": -20
+        "width": 343,
+        "height": 257,
+        "top": 19031,
+        "left": 16
       }
     },
     "S4Z6ufGypobah33q": {
@@ -138,10 +138,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 15772,
-        "left": -20
+        "top": 14453,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -161,10 +161,10 @@
     "UTWENAM2BndHWxTG": {
       "p": {
         "fontFamily": "stanga, \"stanga Fallback\", sans-serif",
-        "fontSize": "19.36px",
+        "fontSize": "14px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "26.62px",
+        "lineHeight": "16.8px",
         "letterSpacing": "normal",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
@@ -174,10 +174,10 @@
         "wordBreak": "keep-all"
       },
       "rect": {
-        "width": 239,
-        "height": 69,
-        "top": 7926,
-        "left": 49
+        "width": 42,
+        "height": 13,
+        "top": 6102,
+        "left": 214
       }
     },
     "YoSfu967TqAAsgNM": {
@@ -196,10 +196,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 67,
-        "top": 3234,
-        "left": -20
+        "top": 2940,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -232,10 +232,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 19706,
-        "left": -20
+        "top": 18030,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -268,10 +268,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 11892,
-        "left": -20
+        "top": 10924,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -304,10 +304,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 15291,
-        "left": -20
+        "top": 14016,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -327,10 +327,10 @@
     "iX1y60KQCFRO2tz7": {
       "p": {
         "fontFamily": "stanga, \"stanga Fallback\", sans-serif",
-        "fontSize": "19.36px",
+        "fontSize": "14px",
         "fontWeight": "700",
         "fontStyle": "normal",
-        "lineHeight": "26.62px",
+        "lineHeight": "16.8px",
         "letterSpacing": "normal",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
@@ -340,19 +340,19 @@
         "wordBreak": "keep-all"
       },
       "rect": {
-        "width": 239,
-        "height": 69,
-        "top": 6927,
-        "left": 49
+        "width": 33,
+        "height": 13,
+        "top": 5912,
+        "left": 219
       }
     },
     "nvYoaDfEf8PYEUkZ": {
       "p": {
         "fontFamily": "stanga, \"stanga Fallback\", sans-serif",
-        "fontSize": "19.36px",
+        "fontSize": "14px",
         "fontWeight": "400",
         "fontStyle": "normal",
-        "lineHeight": "26.62px",
+        "lineHeight": "16.8px",
         "letterSpacing": "normal",
         "color": "rgb(255, 240, 228)",
         "textTransform": "none",
@@ -362,10 +362,10 @@
         "wordBreak": "keep-all"
       },
       "rect": {
-        "width": 239,
-        "height": 69,
-        "top": 7444,
-        "left": 49
+        "width": 48,
+        "height": 13,
+        "top": 5912,
+        "left": 21
       }
     },
     "pEc3w8pe4QAw5k7o": {
@@ -384,10 +384,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 9646,
-        "left": -20
+        "top": 8881,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -423,10 +423,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 6462,
-        "left": -20
+        "top": 6206,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -459,10 +459,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 41,
-        "top": 492,
-        "left": -20
+        "top": 447,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
@@ -495,10 +495,10 @@
         "wordBreak": "normal"
       },
       "rect": {
-        "width": 378,
+        "width": 344,
         "height": 34,
-        "top": 20104,
-        "left": -20
+        "top": 18391,
+        "left": 16
       },
       "span": {
         "fontFamily": "dganit, \"dganit Fallback\", cursive",
