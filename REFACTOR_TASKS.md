@@ -80,6 +80,20 @@ FINALIZED 2026-06-18 (user). 14 cards total. Components are per-card; current fi
 
 ---
 
+## Track C — Template Fidelity QA (user decision 2026-06-18)
+The regression oracle only guards "don't change the CURRENT implementation" — its golden was captured
+from localhost, never from the original template. So the current site has **pre-existing drift** from the
+Canva template (size/spacing/margins), independent of this refactor. (Font *face* is fine: Dganit is loaded;
+the cursive Hebrew headers are the intended brand accent font, not a fallback.)
+- **Timing:** ONE dedicated QA round **after** all 14 cards are faithfully ported (not per-card). Faithful
+  ports stay strictly byte-identical (preserve current) — fidelity fixes are deferred to this round so
+  migration risk and design changes never mix.
+- **Method:** serve the local template (`reference/template/.../couples-therapist`) on `:8899` (launch.json
+  config `template`) as ground truth; compare vs our build on `:3000` at desktop+mobile; fix size/spacing/
+  margins as reviewed intentional changes; re-baseline goldens deliberately per fix.
+- **OUT OF SCOPE for QA:** the Phase 4 header `clamp()` cap stays (user: capped headers intentional — don't
+  grow on wide screens like the template). QA tunes spacing/margins, not header font growth.
+
 ## Validation log (manager fills in after each task)
 - **Phase 0 — CONDITIONAL PASS (2026-06-18).** Oracle built & independently verified by manager:
   zero `src/` changes; 6/6 oracle+guard specs idempotent in assert mode; build green;
