@@ -50,6 +50,6 @@ test.describe('1:1 Canva Template Migration Tests', () => {
     await page.addStyleTag({ content: 'div[class*="cookie"], div[class*="banner"], iframe { display: none !important; }' });
 
     // Assert the full page snapshot
-    await expect(page).toHaveScreenshot('full-page-layout.png', { fullPage: true, maxDiffPixelRatio: 0.1 });
+    await expect(page).toHaveScreenshot('full-page-layout.png', { fullPage: true, maxDiffPixelRatio: 0.1, animations: 'disabled' });
   });
 });

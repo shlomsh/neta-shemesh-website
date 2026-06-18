@@ -130,6 +130,9 @@ test.describe('Computed Style Golden Oracle', () => {
               continue;
             }
             for (const prop of Object.keys(sortedCapture[id][nodeType])) {
+              // fontFamily for the Google Maps iframe resolves to OS-specific serif names
+              // ("Times" on macOS, "Times New Roman" on linux) — not our CSS, skip it.
+              if (id === 'LW4zsSyHyezRncZj' && prop === 'fontFamily') continue;
               expect(sortedCapture[id][nodeType][prop], `Mismatch at [${vp.name}][${id}][${nodeType}][${prop}]`)
                 .toEqual(goldenData[vp.name]?.[id]?.[nodeType]?.[prop]);
             }

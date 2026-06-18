@@ -9,6 +9,8 @@ test.describe('Section Screenshots (Guard 6)', () => {
 
   test('Capture visual baselines for each section band', async ({ page }) => {
     await page.goto(TARGET_URL, { waitUntil: 'load' });
+    // Hide iframes and videos — they keep repainting and prevent stable screenshots
+    await page.addStyleTag({ content: 'iframe, video { visibility: hidden !important; }' });
 
     // Scroll the entire page to ensure IntersectionObserver reveals all sections
     await page.evaluate(async () => {
