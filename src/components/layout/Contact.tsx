@@ -341,7 +341,7 @@ export default function Contact() {
           <div id="BdByB9u1CLNHj4SG" style="box-sizing:border-box;width:100%;height:100%;">
             <div class="animation_container" style="width:100%;height:100%;">
               <div class="animated" style="width:100%;height:100%;animation:rise-RIGHT-e10fb7ff-5a8e-40a1-9654-ad12b22d9d59 833ms 100ms both paused, linear_fade 400ms linear both paused;">
-                <div id="embed-kCI25qH3pN0YCygp" data-content-width="600.0" data-content-height="450.0001125000281" style="width:100%;height:100%;aspect-ratio:600 / 450.0001125;opacity:1.0;"><iframe src="https://maps.google.com/maps?q=%D7%A9%D7%91%D7%99%D7%9C%20%D7%94%D7%9E%D7%95%D7%91%D7%99%D7%9C,%20%D7%9B%D7%A4%D7%A8%20%D7%99%D7%A2%D7%91%D7%A5&t=&z=15&ie=UTF8&iwloc=&output=embed" style="width:100%;height:100%;border:0" allowfullscreen="allowfullscreen" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe></div>
+                <div id="embed-kCI25qH3pN0YCygp" data-content-width="600.0" data-content-height="450.0001125000281" style="width:100%;height:100%;aspect-ratio:600 / 450.0001125;opacity:1.0;"><iframe src="https://maps.google.com/maps?q=Kfar+Yavetz&t=&z=15&ie=UTF8&iwloc=&output=embed" style="width:100%;height:100%;border:0" allowfullscreen="allowfullscreen" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe></div>
               </div>
             </div>
           </div>
