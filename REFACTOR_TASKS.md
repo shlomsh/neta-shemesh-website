@@ -50,7 +50,7 @@ FINALIZED 2026-06-18 (user). 14 cards total. Components are per-card; current fi
 
 | # | Card | Title | Source file | Title id | Notes |
 |---|---|---|---|---|---|
-| 1 | Navbar | (nav) | Navbar.tsx | — | |
+| 1 | ~~Navbar~~ | (nav) | — | — | **NOT A CARD.** `Navbar.tsx` is DEAD CODE (imported nowhere, no Canva IDs). Real nav links live inside Hero.tsx → already migrated with Hero (B0). Delete the dead file. |
 | 2 | Hero | מקום בטוח לצמוח בו ביחד. | Hero.tsx | yWav85A872J3eebD | |
 | 3 | About-Intro-Dark | ליווי מקצועי לזוגות | About.tsx | GDq1TYUPnp1UCFMP | dark band; cream |
 | 4 | About-Light | ליווי להתגברות על מכשולים… | About.tsx | YoSfu967TqAAsgNM | light band; plum |
