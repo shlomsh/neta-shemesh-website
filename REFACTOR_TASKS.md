@@ -142,3 +142,9 @@ FINALIZED 2026-06-18 (user). 14 cards total. Components are per-card; current fi
   the ID→class handoff is lossless and nothing in canva-source was masked. Live check: `#GDq...`
   computes `font-family:dganit` purely via `.section-header`. Suite 58/14. **Phase 3 COMPLETE —
   typography now governed by 3 semantic classes as sole source of truth (original bug resolved).**
+- **Track B — BX (content pre-extraction) REJECTED (2026-06-18).** Ran parallel to B0. Card boundaries
+  inside multi-card files mis-mapped (6/12 wrong: SuccessStories↔Testimonials swapped, Reignite got
+  SafeSpace's title, CoupleTherapy swallowed a blob). Lesson: a text/AST script can't infer card
+  boundaries in a monolith — that IS the componentization work; don't pre-extract before componentizing.
+  Salvaged only the image manifest (`src/content/IMAGE_MANIFEST.md`, 6e0bd56 — all 52 images resolve);
+  content lifted per-card during each migration. BX worktree+branch removed. **B0 still IN PROGRESS.**
