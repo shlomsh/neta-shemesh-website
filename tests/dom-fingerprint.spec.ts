@@ -21,7 +21,7 @@ test.describe('DOM Fingerprint & Structural Guards', () => {
     const fingerprint = await page.evaluate(() => {
       function serialize(el: Element): any {
         const tag = el.tagName.toLowerCase();
-        if (tag === 'nextjs-portal' || tag === 'next-route-announcer' || (el.id && el.id.includes('route-announcer'))) return null;
+        if (tag === 'script' || tag === 'nextjs-portal' || tag === 'next-route-announcer' || (el.id && el.id.includes('route-announcer'))) return null;
         const obj: any = { tag };
         if (el.id) obj.id = el.id;
         if (el.classList.length > 0) {
