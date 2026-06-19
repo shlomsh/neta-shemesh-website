@@ -12,21 +12,21 @@ import React from 'react';
 // ── About ────────────────────────────────────────────────────────────────────
 import About from '@/components/layout/About';
 
-describe('About.tsx — h2 headings use Stanga font class', () => {
-  it('renders all three h2 headings with font-[family-name:var(--font-stanga)]', () => {
+describe('About.tsx — h2 headings use Elamy/Accent font class', () => {
+  it('renders all three h2 headings with font-[family-name:var(--font-canva-accent)]', () => {
     const { container } = render(<About />);
     const headings = container.querySelectorAll('h2');
     expect(headings.length).toBeGreaterThanOrEqual(3);
 
-    const STANGA = 'font-[family-name:var(--font-stanga)]';
-    const BAD_ACCENT = 'font-[family-name:var(--font-canva-accent)]';
-    const BAD_BARE = 'font-[var(--font-stanga)]';
+    const STANGA = 'font-[family-name:var(--font-canva-accent)]';
+    const BAD_STANGA = 'font-[family-name:var(--font-stanga)]';
+    const BAD_BARE = 'font-[var(--font-canva-accent)]';
     const BAD_SECTION = 'section-header';
 
     headings.forEach((h2) => {
       const cls = h2.className;
-      expect(cls, `h2 "${h2.textContent?.trim()}" missing Stanga class`).toContain(STANGA);
-      expect(cls, `h2 "${h2.textContent?.trim()}" must not use accent font`).not.toContain(BAD_ACCENT);
+      expect(cls, `h2 "${h2.textContent?.trim()}" missing Accent class`).toContain(STANGA);
+      expect(cls, `h2 "${h2.textContent?.trim()}" must not use stanga font`).not.toContain(BAD_STANGA);
       expect(cls, `h2 "${h2.textContent?.trim()}" must not use bare var() syntax`).not.toContain(BAD_BARE);
       expect(cls, `h2 "${h2.textContent?.trim()}" must not use old section-header class`).not.toContain(BAD_SECTION);
     });
@@ -36,13 +36,13 @@ describe('About.tsx — h2 headings use Stanga font class', () => {
 // ── Expertise ────────────────────────────────────────────────────────────────
 import Expertise from '@/components/layout/Expertise';
 
-describe('Expertise.tsx — section h2 uses Stanga font class', () => {
-  it('renders h2 "מרחב בטוח לקשר שלכם" with font-[family-name:var(--font-stanga)]', () => {
+describe('Expertise.tsx — section h2 uses Elamy/Accent font class', () => {
+  it('renders h2 "מרחב בטוח לקשר שלכם" with font-[family-name:var(--font-canva-accent)]', () => {
     const { container } = render(<Expertise />);
     const h2 = container.querySelector('h2#vyKTmOw3YNYlJZPL');
     expect(h2, 'Expertise h2 not found by id').toBeTruthy();
-    expect(h2!.className).toContain('font-[family-name:var(--font-stanga)]');
-    expect(h2!.className).not.toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(h2!.className).toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(h2!.className).not.toContain('font-[family-name:var(--font-stanga)]');
     expect(h2!.className).not.toContain('section-header');
   });
 });
@@ -50,13 +50,13 @@ describe('Expertise.tsx — section h2 uses Stanga font class', () => {
 // ── Services ─────────────────────────────────────────────────────────────────
 import Services from '@/components/layout/Services';
 
-describe('Services.tsx — section h2 uses Stanga font class', () => {
-  it('renders h2 "איך זה עובד?" with font-[family-name:var(--font-stanga)]', () => {
+describe('Services.tsx — section h2 uses Elamy/Accent font class', () => {
+  it('renders h2 "איך זה עובד?" with font-[family-name:var(--font-canva-accent)]', () => {
     const { container } = render(<Services />);
     const h2 = container.querySelector('h2#pEc3w8pe4QAw5k7o');
     expect(h2, 'Services h2 not found by id').toBeTruthy();
-    expect(h2!.className).toContain('font-[family-name:var(--font-stanga)]');
-    expect(h2!.className).not.toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(h2!.className).toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(h2!.className).not.toContain('font-[family-name:var(--font-stanga)]');
     expect(h2!.className).not.toContain('section-header');
   });
 });
