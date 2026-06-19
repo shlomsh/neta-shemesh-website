@@ -1,77 +1,120 @@
-'use client';
-
-import React from 'react';
 import { ScrollReveal } from '../ui/ScrollReveal';
 
 interface StepCardProps {
-  id: string;
-  imageSrc: string;
-  numberText: string;
+  step: string;        // "01." | "02." | "03." | "04."
   title: string;
   bullets: string[];
-  index: number;
-  className?: string;
+  imageSrc: string;
+  imageObjectPosition?: string;
+  delay?: number;
 }
 
 /**
- * Fully fluid step card. No fixed px dimensions — the card fills its grid column
- * and keeps a 3:4 portrait ratio, so it scales from full-width on mobile down to a
- * staggered 2-up on desktop without any breakpoint-specific size juggling.
+ * StepCard — self-contained step card for the "איך זה עובד?" band.
+ * No rem utilities, no AnimatedBlock, no cleanFadeUp.
+ * Styled with local px/clamp/%.
  */
-export function StepCard({
-  id,
-  imageSrc,
-  numberText,
+export default function StepCard({
+  step,
   title,
   bullets,
-  index,
-  className = '',
+  imageSrc,
+  imageObjectPosition = '50% 50%',
+  delay = 0,
 }: StepCardProps) {
   return (
-    <ScrollReveal delay={index * 0.12} className={className}>
+    <ScrollReveal delay={delay}>
       <div
-        id={id}
-        className="relative w-full aspect-[3/4] overflow-hidden rounded-[28px]"
+        style={{
+          background: 'rgba(255,255,255,0.07)',
+          borderRadius: '28px',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          direction: 'rtl',
+        }}
       >
-        {/* Background image */}
-        <img
-          src={imageSrc}
-          alt={title}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ objectPosition: '50% 50%' }}
-        />
-
-        {/* Legibility gradient so white text reads on any photo */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
-
-        {/* Content, bottom-anchored */}
+        {/* Image */}
         <div
-          className="absolute inset-0 flex flex-col justify-end p-5 text-right sm:p-6"
-          style={{ direction: 'rtl', fontFamily: 'var(--font-canva-primary)' }}
+          style={{
+            position: 'relative',
+            width: '100%',
+            paddingTop: '73%', /* matches ~341/260 card aspect from original */
+            overflow: 'hidden',
+            borderRadius: '28px 28px 0 0',
+          }}
         >
-          <span
-            dir="ltr"
-            className="self-end font-sans text-[clamp(56px,9vw,84px)] font-black leading-none tracking-tight text-white drop-shadow-md"
-            style={{ fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}
+          <img
+            src={imageSrc}
+            loading="lazy"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: imageObjectPosition,
+              display: 'block',
+            }}
+          />
+        </div>
+
+        {/* Text body */}
+        <div
+          style={{
+            padding: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '5px',
+          }}
+        >
+          {/* Step number */}
+          <p
+            style={{
+              margin: 0,
+              fontFamily: 'var(--font-canva-primary)',
+              fontSize: 'clamp(18px, 2vw, 26px)',
+              fontWeight: 700,
+              lineHeight: '1.0875em',
+              letterSpacing: '-0.02em',
+              color: 'var(--color-white)',
+              direction: 'rtl',
+            }}
           >
-            {numberText}
-          </span>
+            {step}
+          </p>
 
-          <h3 className="mt-2 mb-3 text-[clamp(18px,2.4vw,24px)] font-bold leading-tight text-white drop-shadow">
+          {/* Title */}
+          <p
+            style={{
+              margin: '6px 0 10px',
+              fontFamily: 'var(--font-canva-primary)',
+              fontSize: 'clamp(14px, 1.3vw, 16px)',
+              fontWeight: 700,
+              lineHeight: '1.45312727em',
+              letterSpacing: '0.012em',
+              color: 'var(--color-white)',
+            }}
+          >
             {title}
-          </h3>
+          </p>
 
-          <ul className="flex flex-col gap-1.5">
-            {bullets.map((bullet, i) => (
-              <li
-                key={i}
-                className="text-[clamp(13px,1.4vw,16px)] leading-snug text-white/90"
-              >
-                {bullet}
-              </li>
-            ))}
-          </ul>
+          {/* Bullets */}
+          {bullets.map((bullet, i) => (
+            <p
+              key={i}
+              style={{
+                margin: 0,
+                fontFamily: 'var(--font-canva-primary)',
+                fontSize: 'clamp(13px, 1.1vw, 15px)',
+                lineHeight: '1.45312727em',
+                letterSpacing: '0.012em',
+                color: 'var(--color-white)',
+              }}
+            >
+              {bullet}
+            </p>
+          ))}
         </div>
       </div>
     </ScrollReveal>

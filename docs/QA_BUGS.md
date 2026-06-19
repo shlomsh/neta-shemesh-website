@@ -27,6 +27,7 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Expertise | 1280 | **Card background color ambiguity:** The template uses a dark card background with light text, while ours uses a cream background with dark text. | *Note for Team Lead: Is this an intentional redesign decision for the Hebrew version?* | P2 | OPEN |
 | Expertise | 375 | **Missing animation stagger gaps:** The 4 cards load simultaneously on mobile without the waterfall effect present in the Canva build. | `ScrollReveal` index stagger missing. | P3 | OPEN |
+| Expertise | 1280/768/375 | **"מרחב בטוח לקשר שלכם" header card broken:** The dark background blob/pill overlay is collapsed, severely misaligned, or missing entirely behind the text. | The `onDark={true}` prop makes the text white, which causes it to become invisible or low-contrast against the underlying cream body background since its own container block (`#d1eV7SLN4TcFxQyE` / `#quTDyco8dtY8jpt9`) has collapsed out of the grid flow. | P1 | OPEN |
 
 ## 4. Services (איך זה עובד? + סיפורי הצלחה) `[rebuild-in-flight]`
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
