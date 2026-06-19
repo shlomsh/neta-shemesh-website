@@ -47,9 +47,9 @@ export default function Contact() {
       <section
         id="contact-social"
         dir="rtl"
-        className="bg-[var(--color-dark)] py-[80px] px-[24px]"
+        className="bg-[var(--color-dark)] py-[80px] px-[24px] min-h-[100svh] flex flex-col justify-center"
       >
-        <div className="max-w-[1100px] mx-auto flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
+        <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
           {/* Left col on desktop: photo grid */}
           <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0">
@@ -115,9 +115,9 @@ export default function Contact() {
       <section
         id="contact-office"
         dir="rtl"
-        className="bg-[var(--color-dark)] py-[80px] px-[24px] border-t border-[#5c4d5c]"
+        className="bg-[var(--color-dark)] py-[80px] px-[24px] border-t border-[#5c4d5c] min-h-[100svh] flex flex-col justify-center"
       >
-        <div className="max-w-[1100px] mx-auto flex flex-col gap-[48px] lg:flex-row lg:gap-[64px]">
+        <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:gap-[64px]">
 
           {/* Right col on desktop: heading + body + details */}
           <div className="flex flex-col gap-[24px] text-right lg:w-[45%] shrink-0">

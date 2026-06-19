@@ -28,12 +28,13 @@ const IntersectionObserverMock = vi.fn(() => ({
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
 
 describe('Layout Components', () => {
-  it('Contact has h-full and lg:flex-1 on the right column container', () => {
+  it('Contact sections have min-h-[100svh] to fill the viewport', () => {
     const { container } = render(<Contact />);
-    const div = container.querySelector('.flex.flex-col.gap-\\[24px\\].text-right.h-full');
-    expect(div).not.toBeNull();
-    expect(div?.className).toContain('h-full');
-    expect(div?.className).toContain('lg:flex-1');
+    const sections = container.querySelectorAll('section');
+    expect(sections.length).toBeGreaterThan(0);
+    sections.forEach((section) => {
+      expect(section.className, 'Contact section missing 100svh').toContain('min-h-[100svh]');
+    });
   });
 
   it('Footer has h-full on the tagline container', () => {
@@ -41,5 +42,24 @@ describe('Layout Components', () => {
     // The p with the tagline
     const pTag = container.querySelector('p');
     expect(pTag?.className).toContain('h-full');
+  });
+
+  it('Footer has min-h-[100svh] to fill the viewport', () => {
+    const { container } = render(<Footer />);
+    const footer = container.querySelector('footer');
+    expect(footer?.className).toContain('min-h-[100svh]');
+  });
+});
+
+import Testimonials from '../src/components/layout/Testimonials';
+
+describe('Testimonials Layout Component', () => {
+  it('Testimonials sections have min-h-[100svh] to fill the viewport', () => {
+    const { container } = render(<Testimonials />);
+    const sections = container.querySelectorAll('section');
+    expect(sections.length).toBeGreaterThan(0);
+    sections.forEach((section) => {
+      expect(section.className, 'Testimonials section missing 100svh').toContain('min-h-[100svh]');
+    });
   });
 });

@@ -14,13 +14,15 @@ export default function Expertise() {
         className="
           w-full
           bg-[var(--color-dark)]
-          py-[clamp(48px,7vw,96px)]
+          py-[clamp(32px,5vw,64px)]
           px-[clamp(16px,5vw,80px)]
+          min-h-[100svh]
+          flex flex-col justify-center
         "
       >
         {/* Section header */}
         <ScrollReveal delay={0}>
-          <div className="text-center mb-[clamp(32px,5vw,64px)]">
+          <div className="text-center mb-[clamp(24px,4vw,48px)]">
             <SectionTitle id="vyKTmOw3YNYlJZPL" onDark className="mb-[clamp(12px,1.5vw,20px)]">מרחב בטוח לקשר שלכם</SectionTitle>
             <p
               className="
@@ -39,19 +41,17 @@ export default function Expertise() {
           </div>
         </ScrollReveal>
 
-        {/* Cards container: stacked vertically with sticky positioning */}
-        <div className="flex flex-col relative w-full pb-[10vh]">
+        {/* Cards container: 2x2 grid tightly constrained to fit 100svh on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(16px,3vw,32px)] max-w-[640px] mx-auto w-full">
           {EXPERTISE_CARDS.map((card, index) => (
             <div 
               key={card.title} 
-              className="sticky top-0 lg:top-[10vh] h-[100dvh] w-full flex items-stretch justify-center"
+              className="w-full h-full aspect-[4/5] lg:aspect-square"
             >
-              <div className="w-full h-full max-w-[1024px] mx-auto shadow-2xl p-[20px] lg:p-[40px]">
-                <ExpertiseCard
-                  {...card}
-                  delay={index * 0.12}
-                />
-              </div>
+              <ExpertiseCard
+                {...card}
+                delay={index * 0.12}
+              />
             </div>
           ))}
         </div>

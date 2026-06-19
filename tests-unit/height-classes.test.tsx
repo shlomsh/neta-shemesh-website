@@ -1,7 +1,6 @@
 /**
  * REGRESSION: Height/layout class assertions (class-level only — jsdom has no layout engine).
- * Verifies sticky card wrappers use h-[100dvh] + items-stretch (not the old lg:h-[80vh]).
- * Also checks ExpertiseCard ScrollReveal carries w-full h-full.
+ * Verifies the new 2x2 CSS Grid architecture for Expertise and Services.
  */
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
@@ -11,58 +10,34 @@ import Expertise from '@/components/layout/Expertise';
 import Services from '@/components/layout/Services';
 import { ExpertiseCard } from '@/components/layout/expertise/ExpertiseCard';
 
-describe('Expertise.tsx — sticky card wrapper classes', () => {
-  it('contains h-[100dvh] on each sticky card wrapper', () => {
+describe('Expertise.tsx — Grid layout classes', () => {
+  it('contains the 2x2 grid container', () => {
     const { container } = render(<Expertise />);
-    // The sticky wrappers have class "sticky top-0 ... h-[100dvh] w-full flex items-stretch ..."
-    const wrappers = container.querySelectorAll('.sticky');
-    expect(wrappers.length).toBeGreaterThan(0);
-    wrappers.forEach((el) => {
-      expect(el.className, 'sticky wrapper missing h-[100dvh]').toContain('h-[100dvh]');
-    });
+    const grid = container.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
+    expect(grid, 'Expertise missing grid layout').not.toBeNull();
   });
 
-  it('contains items-stretch on each sticky card wrapper', () => {
+  it('contains aspect ratio classes on the card containers to prevent 0px height collapse', () => {
     const { container } = render(<Expertise />);
-    const wrappers = container.querySelectorAll('.sticky');
-    wrappers.forEach((el) => {
-      expect(el.className, 'sticky wrapper missing items-stretch').toContain('items-stretch');
-    });
-  });
-
-  it('does NOT contain lg:h-[80vh] on any sticky card wrapper', () => {
-    const { container } = render(<Expertise />);
-    const wrappers = container.querySelectorAll('.sticky');
-    wrappers.forEach((el) => {
-      expect(el.className, 'sticky wrapper must not have lg:h-[80vh]').not.toContain('lg:h-[80vh]');
-    });
+    const cards = container.querySelectorAll('.aspect-\\[4\\/5\\]');
+    expect(cards.length).toBeGreaterThan(0);
+    expect(cards[0].className).toContain('lg:aspect-square');
   });
 });
 
-describe('Services.tsx — sticky card wrapper classes', () => {
-  it('contains h-[100dvh] on each sticky card wrapper', () => {
+describe('Services.tsx — Grid layout classes', () => {
+  it('contains the 2x2 grid container', () => {
     const { container } = render(<Services />);
-    const wrappers = container.querySelectorAll('.sticky');
-    expect(wrappers.length).toBeGreaterThan(0);
-    wrappers.forEach((el) => {
-      expect(el.className, 'sticky wrapper missing h-[100dvh]').toContain('h-[100dvh]');
-    });
+    const grid = container.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
+    expect(grid, 'Services missing grid layout').not.toBeNull();
   });
 
-  it('contains items-stretch on each sticky card wrapper', () => {
+  it('contains aspect ratio classes on the StepCards to prevent 0px height collapse', () => {
     const { container } = render(<Services />);
-    const wrappers = container.querySelectorAll('.sticky');
-    wrappers.forEach((el) => {
-      expect(el.className, 'sticky wrapper missing items-stretch').toContain('items-stretch');
-    });
-  });
-
-  it('does NOT contain lg:h-[80vh] on any sticky card wrapper', () => {
-    const { container } = render(<Services />);
-    const wrappers = container.querySelectorAll('.sticky');
-    wrappers.forEach((el) => {
-      expect(el.className, 'sticky wrapper must not have lg:h-[80vh]').not.toContain('lg:h-[80vh]');
-    });
+    // StepCard applies its staggerClass to the ScrollReveal wrapper
+    const cards = container.querySelectorAll('.aspect-\\[4\\/5\\]');
+    expect(cards.length).toBeGreaterThan(0);
+    expect(cards[0].className).toContain('lg:aspect-[4/3]');
   });
 });
 
@@ -77,7 +52,7 @@ describe('ExpertiseCard — ScrollReveal carries w-full h-full', () => {
         delay={0}
       />
     );
-    // ScrollReveal (mocked as plain div) is the outermost element — it receives className="w-full h-full"
+    // ScrollReveal (mocked as plain div) is the outermost element
     const outerDiv = container.firstElementChild as HTMLElement;
     expect(outerDiv, 'outermost element not found').toBeTruthy();
     expect(outerDiv.className).toContain('w-full');

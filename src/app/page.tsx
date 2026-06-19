@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   return (
-    <main className="relative w-full overflow-hidden" style={{ backgroundColor: 'var(--color-bg-light)', paddingBottom: '35px' }}>
+    <main className="relative w-full overflow-hidden" style={{ backgroundColor: 'var(--color-bg-light)' }}>
       <Hero />
       <About />
       <Expertise />

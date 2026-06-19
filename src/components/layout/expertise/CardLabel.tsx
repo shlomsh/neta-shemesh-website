@@ -7,11 +7,11 @@ export function CardLabel({ title, description }: CardLabelProps) {
   return (
     <div
       className="
-        absolute bottom-[10%] left-[50%] -translate-x-1/2
-        bg-[var(--color-brand-primary)] opacity-90
+        absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2
+        bg-[var(--color-brand-primary)] opacity-95
         rounded-[50px]
-        px-[16px] py-[10px]
-        min-w-[60%] max-w-[88%]
+        px-[24px] py-[8px]
+        w-max max-w-[90%]
         text-center
         z-[5]
       "
@@ -22,27 +22,14 @@ export function CardLabel({ title, description }: CardLabelProps) {
           font-[family-name:var(--font-canva-primary)]
           text-[var(--color-white)]
           font-bold
-          text-[clamp(14px,1.6vw,20px)]
+          text-[clamp(14px,1.6vw,18px)]
           leading-[1.3]
           tracking-[0.012em]
         "
       >
         {title}
       </span>
-      <span
-        className="
-          hidden
-          sm:block
-          font-[family-name:var(--font-canva-primary)]
-          text-[var(--color-white)]
-          font-normal
-          text-[clamp(11px,0.9vw,14px)]
-          leading-[1.5]
-          tracking-[0]
-          mt-[4px]
-          opacity-85
-        "
-      >
+      <span className="sr-only">
         {description}
       </span>
     </div>

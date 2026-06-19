@@ -28,7 +28,7 @@ export default function Hero() {
           relative
           w-full
           overflow-hidden
-          min-h-[clamp(520px,80vh,900px)]
+          min-h-[100svh]
         "
       >
         <HeroBackground />

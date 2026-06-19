@@ -72,22 +72,18 @@ export default function Services() {
             </a>
           </div>
 
-          {/* Cards container: stacked vertically with sticky positioning */}
-          <div className="flex-1 flex flex-col relative w-full pb-[10vh]">
+          {/* Cards container: 2x2 grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(24px,4vw,64px)] w-full">
             {STEPS.map((step, i) => (
-              <div 
-                key={step.imageSrc} 
-                className="sticky top-0 lg:top-[10vh] h-[100dvh] w-full flex items-stretch justify-center shadow-2xl"
-              >
-                <StepCard
-                  imageSrc={step.imageSrc}
-                  numberText={step.numberText}
-                  title={step.title}
-                  bullets={step.bullets}
-                  delay={0}
-                  staggerClass="w-full h-full lg:max-w-[600px] mx-auto"
-                />
-              </div>
+              <StepCard
+                key={step.imageSrc}
+                imageSrc={step.imageSrc}
+                numberText={step.numberText}
+                title={step.title}
+                bullets={step.bullets}
+                delay={0}
+                staggerClass="w-full h-full lg:max-w-[600px] mx-auto shadow-2xl aspect-[4/5] lg:aspect-[4/3]"
+              />
             ))}
           </div>
         </div>

@@ -43,9 +43,9 @@ export default function Testimonials() {
       <section
         id="DaRRC8Qhxc8unVfz"
         dir="rtl"
-        className="bg-[var(--color-white)] relative overflow-hidden py-[clamp(48px,5vw,96px)]"
+        className="bg-[var(--color-white)] relative overflow-hidden py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center"
       >
-        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)]">
+        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
 
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
@@ -107,7 +107,7 @@ export default function Testimonials() {
       </section>
 
       {/* CTA Section */}
-      <section id="afNbX7iGTuOdSbLC" className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)]">
+      <section id="afNbX7iGTuOdSbLC" className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)] min-h-[100svh]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/311529093e852ce987bfa9b8b4953c4a.jpg"
@@ -118,7 +118,7 @@ export default function Testimonials() {
           <div className="absolute inset-0 bg-black/20" />
         </div>
 
-        <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center">
+        <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center w-full">
           <ScrollReveal delay={0.1}>
             <SectionTitle id="iVtldd7PMtN1BthG" spanId="VqD8RL1Dlcv6nIpY" onDark
               className="mb-[24px] drop-shadow-md">קביעת פגישת ייעוץ</SectionTitle>
@@ -139,8 +139,8 @@ export default function Testimonials() {
       <div id="gallery" aria-hidden="true" />
 
       {/* Gallery Section */}
-      <section id="vln9V07dEMN7DyMa" className="bg-[var(--color-bg-light)] py-[clamp(48px,5vw,96px)]">
-        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)]">
+      <section id="vln9V07dEMN7DyMa" className="bg-[var(--color-bg-light)] py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center">
+        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
           <ScrollReveal delay={0.1}>
             <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
             <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-[clamp(15px,1.1vw,18px)]">

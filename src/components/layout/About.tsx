@@ -6,6 +6,11 @@ import { CredentialsList } from './about/CredentialsList';
 import { OrganicBg } from './about/OrganicBg';
 import type { Credential } from './about/CredentialsList';
 
+import { ScrollAnchor } from '@/components/primitives/layout/ScrollAnchor';
+import { Section } from '@/components/primitives/layout/Section';
+import { Container } from '@/components/primitives/layout/Container';
+import { BodyText } from '@/components/primitives/ui/BodyText';
+
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const photoPanels = [
@@ -73,13 +78,10 @@ export default function About() {
   return (
     <>
       {/* ── Section 1: Intro with photo collage + text ── */}
-      <div id="about" className="invisible" />
+      <ScrollAnchor id="about" />
 
-      <section
-        dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-dark)] -mt-px"
-      >
-        <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
+      <Section id="about-intro" bgVariant="dark" className="-mt-px py-[clamp(56px,8vw,120px)]">
+        <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] lg:flex-row-reverse lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
             {/* Photo collage — left column on desktop, top on mobile */}
@@ -118,52 +120,42 @@ export default function About() {
             </div>
 
             {/* Text column */}
-            <div
-              className="relative w-full lg:w-[40%] flex flex-col justify-center gap-[24px]"
-            >
+            <div className="relative w-full lg:w-[40%] flex flex-col justify-center gap-[24px]">
               <OrganicBg className="opacity-60 z-0 pointer-events-none" />
 
               <ScrollReveal delay={0} className="relative z-10">
-                <SectionTitle id="GDq1TYUPnp1UCFMP" onDark>ליווי מקצועי לזוגות
-                </SectionTitle>
+                <SectionTitle id="GDq1TYUPnp1UCFMP" onDark>ליווי מקצועי לזוגות</SectionTitle>
               </ScrollReveal>
 
               <ScrollReveal delay={0.12} className="relative z-10">
-                <div
-                  className="flex flex-col gap-[1em] text-[var(--color-white)] font-[family-name:var(--font-stanga)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
-                >
-                  <p>
+                <div className="flex flex-col gap-[1em]">
+                  <BodyText onDark>
                     מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
                     השחיקה או המשברים מעלים בנו תחושות של ריחוק ובדידות, דווקא
                     בתוך הביחד.
-                  </p>
-                  <p>
+                  </BodyText>
+                  <BodyText onDark>
                     בקליניקה שלי, אני מציעה לכם מרחב בטוח ומקבל שבו נוכל
                     להניח את מנגנוני ההגנה, ללמוד להקשיב באמת זה לזו, ולמצוא
                     את הגשר חזרה לחיבור, קירבה וביטחון זוגי.
-                  </p>
+                  </BodyText>
                 </div>
               </ScrollReveal>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ── Section 2: Quote block ── */}
-      <div id="page-3" className="invisible" />
+      <ScrollAnchor id="page-3" />
 
-      <section
-        dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-dark)] -mt-px"
-      >
-        <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(48px,7vw,100px)]">
+      <Section id="about-quote" bgVariant="dark" className="-mt-px py-[clamp(48px,7vw,100px)]">
+        <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
             {/* Profile circle photo */}
             <ScrollReveal delay={0} className="shrink-0 self-center lg:self-start">
-              <div
-                className="relative overflow-hidden rounded-full w-[clamp(96px,12vw,160px)] h-[clamp(96px,12vw,160px)]"
-              >
+              <div className="relative overflow-hidden rounded-full w-[clamp(96px,12vw,160px)] h-[clamp(96px,12vw,160px)]">
                 <img
                   src={PROFILE_PHOTO}
                   alt="נטע שמש"
@@ -171,9 +163,7 @@ export default function About() {
                   className="w-full h-full object-cover object-[50%_38%]"
                 />
                 {/* thin ring matching original stroke */}
-                <div
-                  className="absolute inset-0 rounded-full shadow-[0_0_0_1.5px_var(--color-text-muted)]"
-                />
+                <div className="absolute inset-0 rounded-full shadow-[0_0_0_1.5px_var(--color-text-muted)]" />
               </div>
             </ScrollReveal>
 
@@ -198,24 +188,19 @@ export default function About() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.36}>
-                <p
-                  className="text-[var(--color-white)] font-[family-name:var(--font-canva-accent)] text-[clamp(28px,3vw,44px)] leading-[1.095] tracking-[-0.02em] normal-case"
-                >
+                <p className="text-[var(--color-white)] font-[family-name:var(--font-canva-accent)] text-[clamp(28px,3vw,44px)] leading-[1.095] tracking-[-0.02em] normal-case">
                   נטע שמש
                 </p>
               </ScrollReveal>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ── Section 3: Credentials list ── */}
-      <div id="page-4" className="invisible" />
+      <ScrollAnchor id="page-4" />
 
-      <section
-        dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-white)] -mt-px min-h-[100svh] flex flex-col justify-center"
-      >
+      <Section id="about-credentials" bgVariant="white" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
         {/* Subtle rays background at low opacity */}
         <img
           src={RAYS_BG}
@@ -225,7 +210,7 @@ export default function About() {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.18] z-0"
         />
 
-        <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
+        <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col items-center gap-[40px]">
 
             <ScrollReveal delay={0}>
@@ -237,16 +222,13 @@ export default function About() {
               <CredentialsList items={credentials} checkIconSrc={CHECK_ICON} />
             </ScrollReveal>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ── Section 4: Re-ignite connection — photo gallery + heading ── */}
-      <div id="about-2" className="invisible" />
+      <ScrollAnchor id="about-2" />
 
-      <section
-        dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-white)] -mt-px"
-      >
+      <Section id="about-gallery" bgVariant="white" className="-mt-px py-[clamp(56px,8vw,120px)]">
         {/* White-rays decorative bg */}
         <img
           src={WHITE_RAYS_BG}
@@ -256,7 +238,7 @@ export default function About() {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-100 z-0"
         />
 
-        <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
+        <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] items-center">
 
             {/* Heading + sub-text */}
@@ -267,12 +249,9 @@ export default function About() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.12}>
-                <p
-                  className="text-[var(--color-text-primary)] max-w-[640px] font-[family-name:var(--font-stanga)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
-                  dir="rtl"
-                >
+                <BodyText centered>
                   תמיכה והכוונה לבנייה מחדש של האמון וריפוי פצעים רגשיים בקשר.
-                </p>
+                </BodyText>
               </ScrollReveal>
             </div>
 
@@ -280,9 +259,7 @@ export default function About() {
             <div className="grid grid-cols-1 gap-[16px] w-full sm:grid-cols-3">
               {galleryPanels.map((panel, i) => (
                 <ScrollReveal key={i} delay={i * 0.12}>
-                  <div
-                    className="relative overflow-hidden rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)]"
-                  >
+                  <div className="relative overflow-hidden rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)]">
                     {/* intrinsic aspect ratio 348:531 ≈ 152.5% */}
                     <div className="pt-[152.47%]" />
                     <img
@@ -297,8 +274,8 @@ export default function About() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </>
   );
 }

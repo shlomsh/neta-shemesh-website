@@ -19,7 +19,7 @@ export default function Footer() {
     <footer
       id="contact"
       dir="rtl"
-      className="relative w-full overflow-hidden flex flex-col items-center justify-between px-6 py-[clamp(48px,6vw,96px)] min-h-[clamp(560px,56.25vw,720px)]"
+      className="relative w-full overflow-hidden flex flex-col items-center justify-between px-6 py-[clamp(48px,6vw,96px)] min-h-[100svh]"
     >
       {/* Background photo + scrim — absolutely positioned */}
       <FooterBackground />
@@ -30,7 +30,7 @@ export default function Footer() {
         {/* 1. Tagline */}
         <FooterReveal delay={0} className="h-full">
           <p
-            className="text-[color:var(--color-white)] font-[family-name:var(--font-stanga)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full h-full flex items-center justify-center"
+            className="text-[color:var(--color-white)] font-[family-name:var(--font-canva-accent)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full h-full flex items-center justify-center"
             dir="rtl"
           >
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.

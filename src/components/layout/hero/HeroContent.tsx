@@ -21,9 +21,8 @@ export function HeroContent() {
       className="
         relative z-10
         flex flex-col
-        justify-between
         w-full
-        min-h-[clamp(520px,80vh,900px)]
+        min-h-[100svh]
         px-[clamp(20px,5vw,80px)]
         py-[clamp(32px,4vw,56px)]
         gap-[clamp(24px,3vw,40px)]
@@ -35,8 +34,8 @@ export function HeroContent() {
         <HeroNav />
       </ScrollReveal>
 
-      {/* ── Centre block: heading + subtext ── */}
-      <div className="flex flex-col gap-[clamp(16px,2vw,28px)] max-w-[clamp(280px,60vw,720px)]">
+      {/* ── Middle Block: heading + subtext + CTA ── */}
+      <div className="flex flex-col gap-[clamp(16px,2vw,28px)] mt-auto mb-[15vh] max-w-[clamp(280px,60vw,720px)]">
         <ScrollReveal delay={0.1}>
           <HeroHeading />
         </ScrollReveal>
@@ -44,12 +43,11 @@ export function HeroContent() {
         <ScrollReveal delay={0.2}>
           <HeroSubtext />
         </ScrollReveal>
-      </div>
 
-      {/* ── Bottom: CTAs ── */}
-      <ScrollReveal delay={0.3}>
-        <HeroCTA />
-      </ScrollReveal>
+        <ScrollReveal delay={0.3}>
+          <HeroCTA />
+        </ScrollReveal>
+      </div>
     </div>
   );
 }
