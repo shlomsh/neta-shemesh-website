@@ -39,7 +39,7 @@ export default function About() {
                     <AnimatedBlock animation="rise-LEFT-732d752b-b5d8-4ad6-9a98-5166216d0f1e 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="F5nz9eQ9kACFtW2R" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="iILKMMAJmZYcl6AR" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"9.02296027%/10.36425023%"}}>
-                          <div id="IVeE5HRPvCv5LVTZ" style={{"width":"calc(130.6694109% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="IVeE5HRPvCv5LVTZ" style={{"width":"calc(130.6694109% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/17bebae32af462ae5e9c2885c4f1750c.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                           </div>
                         </div>
@@ -54,7 +54,7 @@ export default function About() {
                     <AnimatedBlock animation="rise-LEFT-9eea6ae3-1364-42cd-864e-f6d36a82205f 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="XOI3vsPVtqoIb6Fg" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="r4o2ZRWdrLxal8vo" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"9.02296027%/10.36425023%"}}>
-                          <div id="FnELM34Ahle1Ahba" style={{"width":"calc(186.71284725% * max(1, var(--scale-fill, 1)))","height":"calc(142.8894842% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="FnELM34Ahle1Ahba" style={{"width":"calc(186.71284725% * max(1, var(--scale-fill, 1)))","height":"calc(142.8894842% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/1c2a7477c15666cecc2b164c84a0bed8.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"48.10676816% 47.71120749%","transform":"translate(-48.10676816%, -47.71120749%) rotate(0deg)"}} />
                           </div>
                         </div>
@@ -69,7 +69,7 @@ export default function About() {
                     <AnimatedBlock animation="rise-LEFT-52906de4-9c96-45c4-8c55-f5677f26399d 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="Se3fzBbTRKfJULgq" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="k22lIcTwB107TpOg" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"4.51148014%/4.84720732%"}}>
-                          <div id="VLGEBj1N0ZV4Negy" style={{"width":"calc(139.69801405% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="VLGEBj1N0ZV4Negy" style={{"width":"calc(139.69801405% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/6f51fa01092daf6b558e0ff274debe53.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"55.34337571% 50%","transform":"translate(-55.34337571%, -50%) rotate(0deg)"}} />
                           </div>
                         </div>
@@ -144,7 +144,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-LEFT-c9d05f19-aa7b-4f29-b69c-1a48eac6bfd9 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="nKIHQjmDChY8R4zM" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="iqbzdI1OUnOi12IG" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="a9EoX0lVzoE3EeTI" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="a9EoX0lVzoE3EeTI" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/42fd096b86fdf26f4525532e1d5bbd85.svg" alt="Quotation Marks Icon" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -250,7 +250,7 @@ export default function About() {
             <div id="c4ei3u0UfFJQsmNT" style={{"boxSizing":"border-box","width":"100%","height":"100%","transform":"rotate(0deg)"}}>
               <div id="MaoitY0yh58hiNXJ" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                 <div id="cTBjUPWDDk8kvjWj" style={{"backgroundColor":"var(--color-white)","opacity":"1.0","transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                  <div id="lMpsFVcZNd208Jch" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(149.72167488% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"0.18","animation":"pulse 1.5s ease-in-out infinite"}}>
+                  <div id="lMpsFVcZNd208Jch" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(149.72167488% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"0.18"}}>
                     <img src="/images/d06ba91ec14a00cf227ed30587771514.jpg" loading="lazy" srcSet="/images/b80e4ea61b5aaa19e1cad5493bc0c581.jpg 1100w, /images/d06ba91ec14a00cf227ed30587771514.jpg 2200w" sizes="(max-width: 375px) 587.43237381vw, (min-width: 375.05px) and (max-width: 480px) 464.24714635vw, (min-width: 480.05px) and (max-width: 768px) 302.66809762vw, (min-width: 768.05px) and (max-width: 1024px) 134.77673908vw, (min-width: 1024.05px) 100vw" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 52.96115946%","transform":"translate(-50%, -52.96115946%) rotate(0deg)"}} />
                   </div>
                 </div>
@@ -274,7 +274,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-LEFT-69fea579-b65a-4583-bc53-34680d2fce7a 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="mtPaT9aTQj4f1LMB" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="ZFOv1QDs8VkEuDp1" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="uJRhUlq4q7v4tI5F" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="uJRhUlq4q7v4tI5F" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/4e3686725d22ef08df30137416c9368d.svg" alt="Check list button icon. Check mark in box sign" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -303,7 +303,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-RIGHT-9b62530f-1907-474c-83ff-cf5f2c8eeca1 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="zXke8DMwovpX5jhW" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="fdKtOIfyRQWxseo7" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="eiLgRhLjXyVrdmJj" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="eiLgRhLjXyVrdmJj" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/4e3686725d22ef08df30137416c9368d.svg" alt="Check list button icon. Check mark in box sign" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -332,7 +332,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-RIGHT-30114a9b-2c04-41c3-9f85-8190e44ab64e 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="JYtWIWmVNEA3KqBD" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="I22Y3ZvdHaoN1tJ4" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="qTOK1R10O9oIKSVc" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="qTOK1R10O9oIKSVc" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/4e3686725d22ef08df30137416c9368d.svg" alt="Check list button icon. Check mark in box sign" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -361,7 +361,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-LEFT-337e81e5-f4d0-4520-883d-fde61f914876 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="i78DqrKzfdprMHw3" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="ZTdgywso5q4EF3od" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="PW1cjwOs1YuO5zdZ" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="PW1cjwOs1YuO5zdZ" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/4e3686725d22ef08df30137416c9368d.svg" alt="Check list button icon. Check mark in box sign" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -390,7 +390,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-LEFT-31957282-133a-4280-a693-461db113d720 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="Tc15htBeZSZsqMAH" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="jltMN8kfbI0tCgom" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="cuJaAq4ufaySkPic" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="cuJaAq4ufaySkPic" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/4e3686725d22ef08df30137416c9368d.svg" alt="Check list button icon. Check mark in box sign" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -419,7 +419,7 @@ export default function About() {
                 <AnimatedBlock animation="rise-RIGHT-6436e210-745a-4ecd-8a3d-77246c64ea3b 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="a3kN85rpoaegoO6C" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="kCNu2G13LH0wWEpk" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="xyqznOlusyZJuaYp" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="xyqznOlusyZJuaYp" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/4e3686725d22ef08df30137416c9368d.svg" alt="Check list button icon. Check mark in box sign" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -462,7 +462,7 @@ export default function About() {
             <div id="XA2d033v3JydTbEu" style={{"boxSizing":"border-box","width":"100%","height":"100%","transform":"rotate(0deg)"}}>
               <div id="QffgdKiK1AmI6o7N" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                 <div id="ksqYvGBinSYx3ua9" style={{"backgroundColor":"var(--color-white)","opacity":"1.0","transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                  <div id="iA5zCmlOblw5lO2F" style={{"width":"calc(108.53021636% * max(1, var(--scale-fill, 1)))","height":"calc(107.11869621% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                  <div id="iA5zCmlOblw5lO2F" style={{"width":"calc(108.53021636% * max(1, var(--scale-fill, 1)))","height":"calc(107.11869621% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                     <img src="/images/b43948bd4c0a0535200651858e1e4708.jpg" alt="White Rays Background" loading="lazy" srcSet="/images/d6f15f0e1c6621d26397727809f536d0.jpg 1239w, /images/b43948bd4c0a0535200651858e1e4708.jpg 2064w" sizes="(max-width: 375px) 738.46070872vw, (min-width: 375.05px) and (max-width: 480px) 591.41317432vw, (min-width: 480.05px) and (max-width: 768px) 377.56465926vw, (min-width: 768.05px) and (max-width: 1024px) 281.64761469vw, (min-width: 1024.05px) 108.53021636vw" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 51.44384218%","transform":"translate(-50%, -51.44384218%) rotate(0deg)"}} />
                   </div>
                 </div>
@@ -502,7 +502,7 @@ export default function About() {
                     <AnimatedBlock animation="rise-LEFT-ca5d8c81-697c-4b07-bcce-d43b662f6c61 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="pv7ULffqXmtNidYC" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="HOnNdMB2Bx7IuOXh" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"4.30279765%/2.82201515%"}}>
-                          <div id="eFdLM7NUszaxgdi0" style={{"width":"calc(101.58481739% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="eFdLM7NUszaxgdi0" style={{"width":"calc(101.58481739% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/e32becfeb791b0a6bcc85c45a0e6fa51.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                           </div>
                           <svg id="usggVJAQU1Njhy5q" viewBox="0 0 348.6103973180558 531.5350627017338" preserveAspectRatio="none" style={{"width":"100%","height":"100%","opacity":"1.0","overflow":"hidden","position":"absolute","top":"0%","left":"0%","background":"url(https://kromaticdesignstudio.my.canva.site/couples-therapist/&)"}}>
@@ -528,7 +528,7 @@ export default function About() {
                     <AnimatedBlock animation="rise-RIGHT-d8a4da93-6c9a-48d3-82c1-151a0b1679ae 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="u8VJeF6gA99tfZRW" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="okD4jByZV7WFkNhK" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"4.30279765%/2.82201515%"}}>
-                          <div id="IGJH2r3hH3dZkHwl" style={{"width":"calc(101.58481739% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="IGJH2r3hH3dZkHwl" style={{"width":"calc(101.58481739% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/96be0cab3c596e6c5f381573217388be.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                           </div>
                           <svg id="YnT5AG5Wo40Qe6Fx" viewBox="0 0 348.6103973180558 531.5350627017338" preserveAspectRatio="none" style={{"width":"100%","height":"100%","opacity":"1.0","overflow":"hidden","position":"absolute","top":"0%","left":"0%","background":"url(https://kromaticdesignstudio.my.canva.site/couples-therapist/&)"}}>
@@ -554,7 +554,7 @@ export default function About() {
                     <AnimatedBlock animation="rise-RIGHT-fb773808-5b23-4d1b-8573-823677590d6f 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="K03VNxA7EVTumr6d" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="ObYVHRa43cpcajUK" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"4.30279765%/2.82201515%"}}>
-                          <div id="eE2Uz65tm3VvPkoJ" style={{"width":"calc(101.58481739% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="eE2Uz65tm3VvPkoJ" style={{"width":"calc(101.58481739% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/996bfa8eae734c587f45d866d0e7a3e1.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                           </div>
                           <svg id="DxktfP5QeCO5OJHC" viewBox="0 0 348.6103973180559 531.5350627017338" preserveAspectRatio="none" style={{"width":"100%","height":"100%","opacity":"1.0","overflow":"hidden","position":"absolute","top":"0%","left":"0%","background":"url(https://kromaticdesignstudio.my.canva.site/couples-therapist/&)"}}>

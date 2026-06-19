@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'https://kromaticdesignstudio.my.canva.site/couples-therapist';
+const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 test.describe.configure({ timeout: 120000 });
 

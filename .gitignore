@@ -55,3 +55,11 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# scratch / QA leftovers
+*.log
+qa_*.png
+qa_*.js
+replace.js
+_shot.js
+debug.js

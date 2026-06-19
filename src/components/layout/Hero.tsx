@@ -15,7 +15,7 @@ export default function Hero() {
             <div id="TTOXJtYK8y8ebgIv" style={{ boxSizing: "border-box", width: "100%", height: "100%", transform: "rotate(0deg)" }}>
               <div id="e6ZSeDLdPVGepb3V" style={{ width: "100%", height: "100%", opacity: 1.0 }}>
                 <div id="DJBfm8X37EYs2QAa" style={{ backgroundColor: "var(--color-white)", opacity: 1.0, transform: "scale(-1, 1)", width: "100%", height: "100%", overflow: "hidden", position: "relative" }}>
-                  <div id="saRDhwoh9y6LkJNa" style={{ width: "calc(120.42078801% * max(1, var(--scale-fill, 1)))", height: "calc(131.09408865% / min(1, var(--scale-fill, 1)))", position: "absolute", top: "50%", left: "50%", opacity: 1.0, animation: "pulse 1.5s ease-in-out infinite" }}>
+                  <div id="saRDhwoh9y6LkJNa" style={{ width: "calc(120.42078801% * max(1, var(--scale-fill, 1)))", height: "calc(131.09408865% / min(1, var(--scale-fill, 1)))", position: "absolute", top: "50%", left: "50%", opacity: 1.0 }}>
                     <img src="images/4211b13c2664ad402dce9a3e5740987d.jpg" loading="lazy" srcSet="images/04d6ac1bed10e8d5307f9d0b9972e487.jpg 1248w, images/4211b13c2664ad402dce9a3e5740987d.jpg 2496w" sizes="(max-width: 375px) 447.04805917vw, (min-width: 375.05px) and (max-width: 480px) 349.25629622vw, (min-width: 480.05px) and (max-width: 768px) 222.38443744vw, (min-width: 768.05px) and (max-width: 1024px) 166.78832808vw, (min-width: 1024.05px) 120.42078801vw" style={{ width: "100%", height: "100%", display: "block", objectFit: "cover", objectPosition: "58.47892974% 46.88506547%", transform: "translate(-58.47892974%, -46.88506547%) rotate(0deg)" }} />
                   </div>
                 </div>

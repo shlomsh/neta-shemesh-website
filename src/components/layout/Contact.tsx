@@ -39,7 +39,7 @@ export default function Contact() {
                     <AnimatedBlock animation="rise-LEFT-6854cfae-be01-410e-bf7c-dad2cb0a7f5a 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="nlakXvJP4I101H3J" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="bH3ovnJyC7wzaMkA" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"5.72823309%/7.17251023%"}}>
-                          <div id="wvWkJBmfuR3oQVXS" style={{"width":"calc(119.6460142% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="wvWkJBmfuR3oQVXS" style={{"width":"calc(119.6460142% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/cd66a766bd49488df6445af5e15baf9d.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                           </div>
                           <svg id="VuiGFwv215dsKa5E" viewBox="0 0 261.86085225933857 209.1318033869933" preserveAspectRatio="none" style={{"width":"100%","height":"100%","opacity":"1.0","overflow":"hidden","position":"absolute","top":"0%","left":"0%","background":"url(https://kromaticdesignstudio.my.canva.site/couples-therapist/&)"}}>
@@ -69,7 +69,7 @@ export default function Contact() {
                     <AnimatedBlock animation="rise-LEFT-72e27a67-d557-4389-99be-511217b005e6 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="Ec8vs8XFYCMgodw8" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="OVLmbRmKIDYG1rvh" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"5.72823309%/7.17251023%"}}>
-                          <div id="g23jkXgnyb2CN49G" style={{"width":"calc(164.4591416% * max(1, var(--scale-fill, 1)))","height":"calc(137.19735402% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="g23jkXgnyb2CN49G" style={{"width":"calc(164.4591416% * max(1, var(--scale-fill, 1)))","height":"calc(137.19735402% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/06156d8b9572da9e8cf4bac79706e046.jpg" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"30.40268818% 63.55614847%","transform":"translate(-30.40268818%, -63.55614847%) rotate(0deg)"}} />
                           </div>
                           <svg id="gO8F3F8k1m2SYdsW" viewBox="0 0 261.86085225933857 209.1318033869933" preserveAspectRatio="none" style={{"width":"100%","height":"100%","opacity":"1.0","overflow":"hidden","position":"absolute","top":"0%","left":"0%","background":"url(https://kromaticdesignstudio.my.canva.site/couples-therapist/&)"}}>
@@ -99,7 +99,7 @@ export default function Contact() {
                     <AnimatedBlock animation="rise-LEFT-1dff7512-1ffb-4485-8a64-df2e61bb3b20 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                       <div id="jUubXvxWAMpdsAXo" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                         <div id="pX4r6Nelafv6TYmN" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative","borderRadius":"5.6953432%/3.48835655%"}}>
-                          <div id="Moeo6YQEdsSPy30i" style={{"width":"calc(108.98087778% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                          <div id="Moeo6YQEdsSPy30i" style={{"width":"calc(108.98087778% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                             <img src="/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg" loading="lazy" srcSet="/images/21b39277211129c0ca3e465e0f913219.jpg 534w, /images/cf06e9544f6ebccd5ec2e44960196ab6.jpg 801w" sizes="(max-width: 375px) 76.5403411vw, (min-width: 375.05px) and (max-width: 480px) 59.79714148vw, (min-width: 480.05px) and (max-width: 768px) 37.37321343vw, (min-width: 768.05px) and (max-width: 1024px) 28.02991007vw, (min-width: 1024.05px) 21.0121727vw" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                           </div>
                           <svg id="Co9Q4pzozAVKaugG" viewBox="0 0 263.37306595021425 430.00191627692715" preserveAspectRatio="none" style={{"width":"100%","height":"100%","opacity":"1.0","overflow":"hidden","position":"absolute","top":"0%","left":"0%","background":"url(https://kromaticdesignstudio.my.canva.site/couples-therapist/&)"}}>
@@ -159,7 +159,7 @@ export default function Contact() {
                   <a id="uZvgtfTrcEljbI88" target="_blank" rel="noopener" href="https://facebook.com" style={{"pointerEvents":"all"}} data-interstitial-link="">
                     <div id="UgX5fOGrxVTLbyWo" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                       <div id="PIUnaTBD6dsDlsBI" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                        <div id="shpE8PxBZquKyW1X" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                        <div id="shpE8PxBZquKyW1X" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                           <img src="/images/74ec6b8545ed1d2da59d1d1e63e12975.svg" alt="Simple Facebook Icon" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                         </div>
                       </div>
@@ -176,7 +176,7 @@ export default function Contact() {
                   <a id="gbtF1459WpeGknaD" target="_blank" rel="noopener" href="https://instagram.com" style={{"pointerEvents":"all"}} data-interstitial-link="">
                     <div id="KkLkyrA2iAg7rg3M" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                       <div id="maqFnrV4PmxCTK1t" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                        <div id="sNW6UWnN3amQrWa9" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                        <div id="sNW6UWnN3amQrWa9" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                           <img src="/images/a5f675633ff811108876d1551a12079e.svg" alt="Simple Instagram Icon" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                         </div>
                       </div>
@@ -193,7 +193,7 @@ export default function Contact() {
                   <a id="Y4HN5kd3AdIkwFg1" target="_blank" rel="noopener" href="https://twitter.com" style={{"pointerEvents":"all"}} data-interstitial-link="">
                     <div id="xM8dZ5HkcAdKXzwO" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                       <div id="ooYC3KZzRO32xgJc" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                        <div id="bHiFEo6kF5CdPcxz" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                        <div id="bHiFEo6kF5CdPcxz" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                           <img src="/images/2e2df4068df235d087087c1872a7b1de.svg" alt="Twitter Logo" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                         </div>
                       </div>
@@ -264,7 +264,7 @@ export default function Contact() {
                 <AnimatedBlock animation="rise-LEFT-1d12bed9-71e0-45e9-afe6-e751d50e67b4 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="zGRgKuFTDdXGLYvA" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="Eybt1KYcoA3E1rJH" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="zkH0BljoBtd2k7Pu" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="zkH0BljoBtd2k7Pu" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/cd9be1bf1825d90196a68c69aa65fa1b.svg" alt="location glyph icon" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -305,7 +305,7 @@ export default function Contact() {
                 <AnimatedBlock animation="rise-LEFT-a5d11792-c034-45cf-8960-401be934b809 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="FtYZ0RNfYQ87qn8K" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="oCx4yxWMTUObgbAe" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="Mjz6b7uN0cs2Qne4" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="Mjz6b7uN0cs2Qne4" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/0bfd9601e3558f04c5a26db04e792688.svg" alt="Phone Call Glyph Icon" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>
@@ -346,7 +346,7 @@ export default function Contact() {
                 <AnimatedBlock animation="rise-LEFT-343f3f07-1b8f-456b-8ffa-b82246be4c57 833ms 100ms both paused, linear_fade 400ms linear both paused" style={{"width":"100%","height":"100%"}}>
                   <div id="fIJdmTzvP7ROzrRC" style={{"width":"100%","height":"100%","opacity":"1.0"}}>
                     <div id="fWRj1fbvsFfT5d0i" style={{"transform":"scale(1, 1)","width":"100%","height":"100%","overflow":"hidden","position":"relative"}}>
-                      <div id="RMbJ0SwyzAI10vjM" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0","animation":"pulse 1.5s ease-in-out infinite"}}>
+                      <div id="RMbJ0SwyzAI10vjM" style={{"width":"calc(100% * max(1, var(--scale-fill, 1)))","height":"calc(100% / min(1, var(--scale-fill, 1)))","position":"absolute","top":"50%","left":"50%","opacity":"1.0"}}>
                         <img src="/images/957b9c4d000919fda0fad512d9b1e7f6.svg" alt="email icon" loading="lazy" style={{"width":"100%","height":"100%","display":"block","objectFit":"cover","objectPosition":"50% 50%","transform":"translate(-50%, -50%) rotate(0deg)"}} />
                       </div>
                     </div>

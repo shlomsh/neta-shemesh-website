@@ -44,7 +44,11 @@ elements.forEach((el, index) => {
     let innerHTML = el.innerHTML;
     
     // Strip Canva's messy inline animations so we can replace them with a clean CSS class!
-    innerHTML = innerHTML.replace(/animation:[^"';]+;?/gi, '').replace(/opacity:\s*0(?![.0-9])\s*;?/gi, '');
+    innerHTML = innerHTML
+      .replace(/animation:\s*pulse[^"';]*;?/gi, '')
+      .replace(/animation-name:\s*pulse[^"';]*;?/gi, '')
+      .replace(/animation:[^"';]+;?/gi, '')
+      .replace(/opacity:\s*0(?![.0-9])\s*;?/gi, '');
 
     const id = el.id ? `id="${el.id}"` : '';
     const className = el.className ? `className="${el.className}"` : '';

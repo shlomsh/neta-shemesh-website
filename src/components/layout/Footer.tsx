@@ -15,7 +15,7 @@ export default function Footer() {
             <div id="qG0EaPuTEQFTyT0u" style={{ boxSizing: "border-box", width: "100%", height: "100%", transform: "rotate(0deg)" }}>
               <div id="QdqIi3OspupCRlKs" style={{ width: "100%", height: "100%", opacity: 1.0 }}>
                 <div id="e3b8H4SnJsbxAJvz" style={{ backgroundColor: "var(--color-white)", opacity: 1.0, transform: "scale(1, 1)", width: "100%", height: "100%", overflow: "hidden", position: "relative" }}>
-                  <div id="ugYkNy2OGpgkE51a" style={{ width: "calc(100% * max(1, var(--scale-fill, 1)))", height: "calc(118.50227865% / min(1, var(--scale-fill, 1)))", position: "absolute", top: "50%", left: "50%", opacity: 1.0, animation: "pulse 1.5s ease-in-out infinite" }}>
+                  <div id="ugYkNy2OGpgkE51a" style={{ width: "calc(100% * max(1, var(--scale-fill, 1)))", height: "calc(118.50227865% / min(1, var(--scale-fill, 1)))", position: "absolute", top: "50%", left: "50%", opacity: 1.0 }}>
                     <img src="images/c2507e38710af194875f96c8ec7aca70.jpg" loading="lazy" srcSet="images/c822b50a352f704e984f74cbc0420f43.jpg 1037w, images/c2507e38710af194875f96c8ec7aca70.jpg 2074w" sizes="(max-width: 375px) 314.93956691vw, (min-width: 375.05px) and (max-width: 480px) 258.04463724vw, (min-width: 480.05px) and (max-width: 768px) 172.10946643vw, (min-width: 768.05px) and (max-width: 1024px) 138.95670573vw, (min-width: 1024.05px) 100vw" style={{ width: "100%", height: "100%", display: "block", objectFit: "cover", objectPosition: "50% 50%", transform: "translate(-50%, -50%) rotate(0deg)" }} />
                   </div>
                 </div>

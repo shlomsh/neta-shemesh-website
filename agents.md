@@ -1,45 +1,182 @@
-# Project Context for AI Agents
+# Project Context for AI Agents — Canva → Next/React/Tailwind Migration
 
-Welcome, fellow AI Agent! This file contains critical context, guidelines, and learnings specific to this project to help you avoid past mistakes and understand the architecture.
+Single source of truth for this migration. **Supersedes** `REFACTOR_TASKS.md`, `TRACK_C_QA.md`,
+and `docs/canva-animation-learnings.md` (their durable learnings are folded in here — those files
+can be archived/deleted). `netta_voice.md` is still the reference for Hebrew copy tone.
 
-## Architecture & Stack
-- **Framework**: Next.js (App Router)
-- **Styling**: Tailwind CSS + raw CSS (from Canva)
-- **Testing**: Playwright (Visual Regression & DOM testing)
-- **Core Concept**: This project is a pixel-perfect migration of a static HTML/CSS website exported from Canva into a Next.js application.
+**Stack:** Next.js (App Router) · Tailwind v4 (`@theme` in `globals.css`, no `tailwind.config`) ·
+Playwright (visual + DOM regression). Site is **Hebrew / RTL**. Origin: a static Canva HTML export
+(~15k lines of absolute/`rem` CSS in `canva-source/styles.css`).
 
-## The Canva Migration Pipeline
-The original Canva export was massive (15,000+ lines of inline styles). To make it maintainable in Next.js:
-1. We run `tailwind-generator.js` (a custom Node script) to parse the original `canva-source/index.html`.
-2. It extracts structural styles, converts inline colors to Tailwind classes (e.g., `#F7E2D6` -> `bg-[#F7E2D6]`), and generates the final React component code in `src/app/page.tsx`.
-3. The original Canva HTML string is heavily utilized via `dangerouslySetInnerHTML`.
+---
 
-### ⚠️ CRITICAL RULE: `dangerouslySetInnerHTML`
-**NEVER** use regex to replace `class=` with `className=` inside raw HTML strings that are passed to `dangerouslySetInnerHTML`! React expects standard HTML syntax (`class="foo"`) for raw HTML injection. Converting it to `className=` will create invalid custom DOM attributes (`classname="foo"`) and destroy all CSS styling and JS selectors.
+## 0. Operating decision: Full Rebuild first, Pixel-Perfect second
 
-## Scroll Animations & IntersectionObserver
-Canva uses `.animation_container` and `.animated` classes with inline CSS animations (e.g., `animation: rise-LEFT ... both paused`).
+We are **rebuilding** each section into clean React + Tailwind (retiring `canva-source/styles.css` and
+its `rem`-poster engine), **then** doing a pixel-perfect pass against the Canva desktop template.
+These are two **separate, sequential** passes. Never mix them — mixing is what caused the spiral
+(§2). Do not start Phase 2 on a section until Phase 1 is committed and green.
 
-We implemented `ScrollAnimator.tsx` to unpause these animations as they scroll into view:
-1. **Layout Settle Delay**: We explicitly wait `500ms` before attaching the `IntersectionObserver`. **Do not remove this!** During the first render frame, absolutely positioned elements often stack at `top: 0` before CSS kicks in. Without the delay, the observer will fire for every element on the page instantly.
-2. **Artificial Batch Staggering**: Canva places every single element in its own `.animation_container`. To recreate their staggered waterfall cascade, `ScrollAnimator.tsx` intercepts the batch of elements entering the viewport simultaneously, sorts them by `boundingClientRect.top`, and dynamically assigns an increasing `animationDelay` (+150ms per element).
+### Phase 1 — Structural rebuild
+- Delete the section's `dangerouslySetInnerHTML` blob entirely; build semantic JSX with Tailwind
+  flex/grid that **reflows** (1-up mobile → multi-up desktop).
+- Use the mapped CSS variables (`var(--font-canva-primary)`, `var(--color-bg-light)`, etc.).
+- Animations via the **Client Leaf Pattern**: wrap small blocks in `ScrollReveal` (framer-motion),
+  pass stagger delay as a prop computed on the server (`index * 0.12`). Keep parent grids/sections as
+  server components (SEO-safe).
+- Goal = DOM cleanliness + correct responsive structure. **Do not chase pixels.** Do **not** run
+  `UPDATE_GOLDEN=1` to force green — see §3.
+- A section is only "done" with Phase 1 when it **no longer depends on `canva-source/styles.css`**.
+  A half-migrated section sits in two coordinate systems at once (§2) and will keep re-breaking.
 
-## Testing Guidelines (Playwright)
-- Playwright's `toBeVisible()` assertion considers elements with `opacity: 0` as visible because they still occupy space in the DOM.
-- When testing the visibility of elements that fade in via CSS animations, you **must** explicitly assert the computed CSS: `await expect(locator).toHaveCSS('opacity', '1')`.
-- All tests are located in `/tests/`. Before pushing changes, rebuild the project (`npm run build`) and run all Playwright tests (`npx playwright test`).
+### Phase 2 — Pixel-perfect match
+- Compare the rebuilt section to the template (serve it on `:8899`, `launch.json` `template`) at the
+  **reference desktop width (1280)** and at **375**. Measure, don't guess.
+- **Pixel-match at the reference width; stay fluid below it.** Express the target as
+  `clamp()`/ratios/`%`, anchored so the 1280 render equals the template. Do **NOT** hard-code raw
+  Canva px (`w-[260.58px]`, `h-[341.31px]`, `mt-[170px]`) as the *layout mechanism* — fixed px
+  satisfies exactly one width and re-introduces the short-blanket bug (§2). Fixed px is fine only for
+  things that are genuinely constant (a border radius, a max-width cap).
 
-## File Locations
-- **Generator**: `tailwind-generator.js`
-- **Main Page**: `src/app/page.tsx`
-- **Animations**: `src/components/ScrollAnimator.tsx`
-- **Tests**: `tests/` (Includes visual regression and staggered animation DOM checks)
-- **Original Source**: `canva-source/index.html` and `canva-source/styles.css`
-- **Netta's Voice**: `netta_voice.md` (Reference for Netta's writing style and tone)
+---
 
-## ⚠️ Critical Next.js & Vercel Gotchas
-1. **Never override `<head>` in `layout.tsx`**: In the Next.js App Router, manually defining a `<head>` wrapper around `<link>` tags will completely override Next.js's internal head injection. This instantly destroys `globals.css` loading, Tailwind, and React hydration scripts. Always rely on Next.js `import` statements or Metadata APIs.
-2. **CSS Import Order Specificity**: Canva's `styles.css` contains extreme specificity that can hide elements (e.g. `opacity: 0`). When importing stylesheets in `layout.tsx`, `import "./globals.css"` **MUST** come absolutely last so that our clean override animations (`cleanFadeUp`) win the specificity war.
-3. **Missing Fonts break Vercel Builds**: Canva's exported CSS contains hundreds of `url(fonts/...)` references. Because `public/fonts` is `.gitignore`d (to save space), Next.js's Webpack parser will crash with `Module not found` during the Vercel production build. Always use `sed` to strip broken font URLs from Canva CSS files before importing them.
-4. **Never run Playwright in Vercel Builds**: Vercel build containers lack the OS-level graphics dependencies (X11, etc.) required to launch Chromium. If you add `playwright test` to the `"build"` script in `package.json`, Vercel will crash. E2E tests must be run in GitHub Actions instead.
-5. **Canva Font Obfuscation**: Canva exports fonts using randomized IDs (e.g., `font-family: YAErUQDw3VY-0`) instead of semantic names. Do not try to visually guess the correct Google Font replacement! Instead, download the original Canva `.woff2` files and parse them using `fontkit` or `fonttools` to extract the true internal `font-family` name (e.g., finding out that `YAErUQDw3VY-0` is actually "Della Respira", not "Playfair Display"). Furthermore, because the raw IDs are hardcoded in the `dangerouslySetInnerHTML` strings, CSS variables (like `var(--font-canva-secondary)`) will be ignored unless you run a script to manually search-and-replace the Canva IDs inside the React components.
+## 1. The two AI-migration failure modes (and their fixes)
+
+### 1a. Spatial hallucination → Deterministic pre-processing (Math pass / Syntax pass)
+LLMs have no 2D rendering context. Given absolute `top/left`, they hallucinate groupings. **Never ask
+the AI to do spatial math.** Split it:
+1. **Math pass (deterministic Node script, e.g. `tailwind-generator.js`):** parse the HTML, read
+   bounding boxes, run clustering heuristics → emit a verified hierarchical JSON
+   (`section → row → card → {text,image}` nodes). Heuristics: new **section** at vertical gap >100px;
+   same **row** at <20px vertical proximity; **card** = enclosing bounding box; horizontal order by
+   left-coordinate (remember RTL flips reading order).
+2. **Syntax pass (AI):** feed the AI the *JSON tree*, not the raw HTML. Prompt becomes "convert this
+   verified layout tree into React + Tailwind," never "analyze this HTML and build a grid."
+
+### 1b. Blind baseline overwrite → Immutable baselines + structural guards
+The easy path during a DOM refactor is `npx playwright test --update-snapshots` to go green — which
+silently blesses regressions as the new truth. Prevent it:
+1. **Immutable Canva baselines:** keep original desktop exports in a read-only
+   `tests/baselines/canva-desktop/`; configure Playwright so `--update-snapshots` can never overwrite
+   that dir.
+2. **DOM invariants before screenshots** — structural asserts are solid where pixel snapshots are
+   fragile. Fail fast *before* the camera fires:
+   ```ts
+   await expect(page.locator('[id="cQd2ufFBWvr5c6ki"] .step-card')).toHaveCount(4);
+   await expect(page.getByRole('heading', { name: 'איך זה עובד?' })).toBeVisible();
+   ```
+3. **Two-step CI approval:** a PR that modifies any `.png` under the snapshot dirs auto-gets a
+   `Requires Design Review` label and is merge-blocked until a human verifies the diff.
+4. **Environment determinism** (kills false-positive diffs): `reducedMotion: 'reduce'` + wrap the app
+   in framer `MotionConfig`/`useReducedMotion()` forcing `0s` so screenshots snap to the final frame;
+   freeze scrollbars; settle to `networkidle`; mock lazy/network so the DOM is 100% stable.
+
+---
+
+## 2. Why we kept spiraling (read this before "fixing layout harder")
+
+Two **independent** axes of "wrong"; fixing one regresses the other unless you separate the passes:
+- **Mechanical** — does it reflow across widths? (hard-coded Canva px fails this — the *short
+  blanket*: fix mobile → desktop stagger breaks; fix desktop → mobile order/clip breaks.)
+- **Fidelity** — does it match the reference? (a free-hand "fluid" rebuild fails this — you draw your
+  own card, not the template's.)
+
+Compounding causes:
+- **Undecided target.** Template is dark / LTR / lorem; ours is cream / RTL / real copy. "Match the
+  template" is undefinable until someone decides, per token, what transfers vs what stays ours.
+- **Golden re-baseline destroys the net.** Re-snapshotting mid-rebuild makes the oracle record
+  whatever rendered → it can no longer tell intended redesign from regression → no convergence signal.
+- **Two coordinate systems.** While `canva-source/styles.css` is still imported, the global
+  `html { font-size: vw-scaled }` `rem` engine scales everything; new Tailwind px do not. A "fixed"
+  card inside a still-`rem`-scaled parent can't be reasoned about locally.
+- **Shared mutable foundation.** Editing globals/a primitive ripples through every half-migrated
+  section. Many consumers + mutable base = whack-a-mole.
+
+**The unlock:** before coding a section, write a **token sheet** (measured from the template: card
+aspect, gradient opacity, content alignment, number/type scale, spacing, background) and get the
+human to ratify the ambiguous calls (esp. **dark-vs-cream background**, **compact-vs-tall cards**).
+Then "done" is checkable. One section at a time, committed, fully off `canva-source`.
+
+---
+
+## 3. Test integrity rules
+- Tests exist to catch **Phase 2** visual regressions. Do **not** `UPDATE_GOLDEN=1` in Phase 1 to
+  force green; if structure legitimately changed, re-baseline **deliberately** and prove the diff is
+  scoped (e.g. desktop golden byte-identical when only mobile changed).
+- Build against a **production** server (`next start`), not dev. Beware a stale server on `:3000`
+  (Playwright reuses it) — run a fresh port and point `BASE_URL` at it.
+- The **layout-fit invariant** (`tests/layout-fit.spec.ts`) is implementation-independent (titles
+  on-screen + `fontSize ≥ 12px` at 375/768/1280) — it must stay green through any rebuild. The old
+  `responsive.spec.ts` only checks document `scrollWidth`, which `main{overflow:hidden}` **masks** —
+  it does not catch left-edge clipping. Trust `layout-fit`, not just `responsive`.
+- `toBeVisible()` treats `opacity:0` as visible. For fade-ins assert `toHaveCSS('opacity','1')`.
+
+---
+
+## 4. Hard-won technical gotchas (do not relearn these)
+
+**Layout / CSS**
+- **`rem` viewport-scaling invariant.** Canva builds on `1rem = min(1vw,13.66px)`, so the
+  `auto 100rem auto` grid is meant to equal the viewport. Two breaks caused the mobile clipping:
+  (a) `globals.css` had `--rfso: 1.1` — `--rfso` multiplies the *html* font-size, inflating every rem
+  10% → `100rem ≈ 110vw` → overflow. Keep only `--bfso: 1.1` (scales *body text* only, safe).
+  (b) the lost runtime that sets `--sbw`/`--minfs`/`--rzf` — restored in
+  `src/components/ViewportScale.tsx`. Relevant only while `canva-source/styles.css` is still imported;
+  once a section is fully rebuilt it no longer depends on this.
+- **`font-synthesis: none`** is set globally → `font-black`/bold does **nothing** on fonts without a
+  real heavy weight (Stanga). Card numbers rendered as thin outlines until forced to a real sans
+  (`font-family: ui-sans-serif…`). Pick a font that actually ships the weight.
+- **CSS import order:** `import "./globals.css"` **last** in `layout.tsx` so our overrides win against
+  Canva's high-specificity `styles.css`.
+- **Organic backgrounds:** render decorative SVGs as absolute layers (`z-0 pointer-events-none`) with
+  content stacked `z-10`. Watch `overflow-hidden` cropping circular avatars.
+
+**React / Next**
+- If you still use `dangerouslySetInnerHTML` (legacy/transition only): **never** regex `class=`→
+  `className=` inside the raw string — React wants literal `class=`; converting it yields
+  `classname="…"` and strips all styling + breaks `querySelectorAll`.
+- **Strangler-fig bug:** never close a `dangerouslySetInnerHTML` tag *inside* a parent grid container —
+  the browser auto-closes the parent div and destroys the grid context. Extract the parent grid to
+  pure JSX first, then place cleanly-closed `dangerouslySetInnerHTML` siblings inside it.
+- **Never** wrap `<link>`/`<head>` manually in `layout.tsx` — it overrides Next's head injection and
+  kills `globals.css`/Tailwind/hydration. Use `import` / Metadata API.
+- **Pulse bug:** Canva injects `"animation":"pulse …"` inside JSON style objects; when stripping, match
+  the quoted JSON key/value, not raw CSS.
+
+**Animations**
+- Two systems exist: legacy CSS (`.animation_container`/`.animated` + `ScrollAnimator.tsx`) and the new
+  framer-motion `ScrollReveal`. Phase-1 rebuilds use `ScrollReveal`. If touching `ScrollAnimator`: it
+  waits **500ms** before attaching the IntersectionObserver (absolute elements stack at `top:0` on the
+  first frame → without the delay every animation fires at once); and it batches intersecting elements,
+  sorts by `boundingClientRect.top`, and assigns increasing `animationDelay` (+150ms) to recreate
+  Canva's waterfall.
+
+**Fonts / Build**
+- **Canva font obfuscation:** font-families are random IDs (`YAErUQDw3VY-0`). Don't guess a Google
+  font — parse the original `.woff2` with `fontkit`/`fonttools` for the real name, and rely on the
+  mapped CSS variables (`--font-canva-primary` etc.), not new web fonts.
+- **Vercel:** Canva CSS has hundreds of `url(fonts/…)`; `public/fonts` is gitignored → Webpack crashes
+  with `Module not found`. Strip broken font URLs (`sed`) before importing. **Never** run Playwright in
+  the Vercel build (no Chromium deps) — E2E runs in GitHub Actions only.
+
+---
+
+## 5. Governance (process learnings — these prevented lost work)
+- **Manager owns all git/branch/worktree ops.** Engineers edit + test only. `main` is the single
+  source of truth; commit a **checkpoint after each validated section**.
+- **No destructive git** by engineers: never `stash` / `checkout .` / `clean` / `reset` / switch or
+  create branches. To isolate a diff, report `git diff -- <path>`. (Prior incidents wiped all
+  uncommitted work via a stray `stash -u` / branch op.)
+- **No scratch files in commits.** Keep `qa_*.png`, `*.log`, one-off codemods (`replace.js`) out of
+  the tree (gitignore or delete) — they leaked into `ac53cd7`.
+- Goldens can't see **masked inline edits** (an out-of-scope inline style hidden behind an
+  `!important` rule passes the golden, then detonates later when that rule is removed). The scope rule
+  ("only the intended files changed") is the guard that catches this — keep changes scoped.
+
+## File map
+- Generator (math pass): `tailwind-generator.js` · Page: `src/app/page.tsx` · Layout/CSS:
+  `src/app/layout.tsx`, `src/app/globals.css` · Viewport scaling: `src/components/ViewportScale.tsx`
+- Animations: `src/components/ScrollAnimator.tsx` (legacy), `src/components/ui/ScrollReveal.tsx` (new)
+- Primitives: `src/components/primitives/` · Sections: `src/components/layout/`
+- Tests: `tests/` · Goldens: `tests/__golden__/` · Template ground truth: `reference/template/…`
+- Copy tone: `netta_voice.md`
