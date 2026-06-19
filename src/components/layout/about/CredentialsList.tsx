@@ -9,14 +9,14 @@ export interface CredentialsListProps {
 
 export function CredentialsList({ items, checkIconSrc }: CredentialsListProps) {
   return (
-    <ul className="flex flex-col gap-[16px]" dir="rtl">
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-[32px] md:gap-[64px]" dir="rtl">
       {items.map((item, i) => (
-        <li key={i} className="flex items-center gap-[12px]">
+        <li key={i} className="flex flex-col items-center text-center">
           <img
             src={checkIconSrc}
             alt=""
             aria-hidden="true"
-            className="w-[28px] h-[28px] shrink-0"
+            className="w-[48px] h-[48px] shrink-0 mb-[16px]"
             loading="lazy"
           />
           <span
