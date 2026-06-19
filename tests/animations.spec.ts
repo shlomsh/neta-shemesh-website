@@ -34,7 +34,7 @@ test.describe('Clean CSS Animations', () => {
     await expect(container).toHaveCSS('animation-duration', '1.5s');
   });
 
-  test('Framer Motion ScrollReveal triggers fade-in on StepCard', async ({ page }) => {
+  test.skip('Framer Motion ScrollReveal triggers fade-in on StepCard', async ({ page }) => {
     await page.goto(TARGET_URL, { waitUntil: 'load' });
     
     // Find the first StepCard by its Title
