@@ -19,8 +19,8 @@
 ## 2. About
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| About | 1280 | **Hardcoded block width:** The text paragraph block doesn't match the template proportion exactly; it looks narrower. | Ours is pinned to `w-[450px]` (legacy Canva px), Template uses a flexible fluid ratio (~`40%` container width). | P2 | OPEN |
-| About | 768 | **Background SVG stacking:** The organic background blob overlaps the text layer slightly. | Z-index issue: SVG needs `z-0 pointer-events-none`, text needs `z-10`. | P2 | OPEN |
+| About | 1280 | **Hardcoded block width:** The text paragraph block doesn't match the template proportion exactly; it looks narrower. | Ours is pinned to `w-[450px]` (legacy Canva px), Template uses a flexible fluid ratio (~`40%` container width). | P2 | FIXED |
+| About | 768 | **Background SVG stacking:** The organic background blob overlaps the text layer slightly. | Z-index issue: SVG needs `z-0 pointer-events-none`, text needs `z-10`. | P2 | FIXED |
 
 ## 3. Expertise
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
@@ -50,7 +50,7 @@
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Footer | 1280 | **Layout collapse on re-render:** Footer elements shift drastically due to inline `gridArea` coupling. | Relies on `SectionBand` constraints. | P1 | FIXED-pending-visual-verify |
-| Footer | 375 | **Link touch targets too small:** Footer links are tightly clustered, violating mobile tap target heuristics. | Height `< 48px`. | P3 | OPEN |
+| Footer | 375 | **Link touch targets too small:** Footer links are tightly clustered, violating mobile tap target heuristics. | Height `< 48px`. | P3 | FIXED |
 
 ---
 
