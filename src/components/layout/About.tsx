@@ -98,11 +98,11 @@ export default function About() {
 
             {/* Text column */}
             <div
-              className="relative flex-[0_0_clamp(260px,42%,520px)] flex flex-col justify-center gap-[24px] z-[1]"
+              className="relative w-full lg:w-[40%] flex flex-col justify-center gap-[24px]"
             >
-              <OrganicBg className="opacity-60" />
+              <OrganicBg className="opacity-60 z-0 pointer-events-none" />
 
-              <ScrollReveal delay={0} className="relative z-[1]">
+              <ScrollReveal delay={0} className="relative z-10">
                 <h2
                   id="GDq1TYUPnp1UCFMP"
                   className="section-header on-dark"
@@ -111,7 +111,7 @@ export default function About() {
                 </h2>
               </ScrollReveal>
 
-              <ScrollReveal delay={0.12} className="relative z-[1]">
+              <ScrollReveal delay={0.12} className="relative z-10">
                 <div
                   className="flex flex-col gap-[1em] text-[var(--color-white)] font-[family-name:var(--font-canva-primary)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
                 >
