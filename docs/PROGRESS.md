@@ -60,6 +60,14 @@ afterwards."*
   stay byte-identical; swap AnimatedBlock/cleanFadeUp → ScrollReveal; drop empty
   `dangerouslySetInnerHTML`. Edit only `Services.tsx` + `StepCard.tsx`.
 
+## Consolidation directive (owner, 2026-06-19): at the NEXT checkpoint
+When the running executors land, **consolidate everything into `main`**: commit all working changes,
+then merge the rebuild worktree branches (`worktree-agent-abb7e86dc9a5577db` = Footer,
+`worktree-agent-ab5564e1e35b8691a` = Services) into `main`, then remove those worktrees + delete their
+branches. NOTE: agents don't commit, so their work is *uncommitted* inside the worktree — lead commits
+it on the branch (or applies the diff to main) before merging. **Do NOT** touch the foreign Gemini
+worktree/branch `subagent-Senior-Next-js-Architect-...-e7cfe458` (under `~/.gemini/`) — not ours; ask first.
+
 ## RESUME TOMORROW — exact next action
 Re-dispatch **Footer** (Track 1) and **Services** (Track 2) Phase-1 executors, **on `sonnet`**, each
 in an isolated worktree, background. The full prompts used this session are in the session transcript;

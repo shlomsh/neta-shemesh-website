@@ -63,3 +63,6 @@ qa_*.js
 replace.js
 _shot.js
 debug.js
+
+# Claude Code agent worktrees (never commit)
+.claude/worktrees/
