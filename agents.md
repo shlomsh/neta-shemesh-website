@@ -123,6 +123,25 @@ Then "done" is checkable. One section at a time, committed, fully off `canva-sou
   (b) the lost runtime that sets `--sbw`/`--minfs`/`--rzf` — restored in
   `src/components/ViewportScale.tsx`. Relevant only while `canva-source/styles.css` is still imported;
   once a section is fully rebuilt it no longer depends on this.
+- **`rem` utilities are silently coupled to the vw-engine — rebuilt sections must use px/clamp, not
+  Tailwind `rem` spacing.** `styles.css` sets `html { font-size: max(min(1vw,13.66px)·rfso, minfs) }`
+  and `globals.css` never resets it, so *every* Tailwind `rem` utility (`py-32`, `gap-6`, `max-w-6xl`,
+  `text-*`) is scaled by the Canva engine — at 1280, `1rem ≈ 12.8px`, not 16px. A section can be fully
+  structurally rebuilt (no SectionBand, no inline `gridArea`, no `rise-*`) and *still* be rem-coupled
+  this way — being off the grid is **not** the same as being off `styles.css`. So a "clean" rebuild
+  built with `rem` classes will jump **~+25%** the moment `styles.css` is removed. Build rebuilt
+  sections in `px`/`clamp()`/`%` so they're immune to the final `html` font-size flip. (The Services
+  rebuild violates this — it uses `py-32`/`max-w-6xl` and will need re-tuning at cutover.)
+- **Removing `styles.css` is a single atomic *final* step, not a per-section action — and it has a
+  hard ordering constraint.** The `SectionBand` sections (the `auto 100rem auto` grid) *require* the
+  vw-rem engine so that `100rem == 100vw` instead of `1600px`; you cannot reset `html` to 16px while
+  any of them still exist or they overflow massively. Therefore: migrate **every** SectionBand section
+  off the grid first, *then* in one commit — remove the `import "../../canva-source/styles.css"` line,
+  add `html { font-size: 16px }` to `globals.css`, delete `ViewportScale.tsx`, and re-tune/convert any
+  surviving `rem` dimensions. A section being "off `styles.css`" individually is necessary but the
+  import itself only drops at the very end. (State as of this writing: Services is structure-clean but
+  rem-coupled; Testimonials is least-migrated (4 raw blobs); Footer/Hero/Contact/About/Expertise are
+  JSX-ported but still SectionBand + inline `gridArea` + `rise-*` — transcribed, not migrated.)
 - **`font-synthesis: none`** is set globally → `font-black`/bold does **nothing** on fonts without a
   real heavy weight (Stanga). Card numbers rendered as thin outlines until forced to a real sans
   (`font-family: ui-sans-serif…`). Pick a font that actually ships the weight.
