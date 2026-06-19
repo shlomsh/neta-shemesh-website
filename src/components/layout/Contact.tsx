@@ -90,8 +90,7 @@ export default function Contact() {
             <ScrollReveal delay={0.1}>
               <h2
                 id="ZgJbejfHoeBrgmf7"
-                className="text-[var(--color-white)]"
-                style={{ fontFamily: 'var(--font-canva-secondary)' }}
+                className="text-[var(--color-white)] font-[family-name:var(--font-canva-secondary)]"
               >
                 {SOCIAL_HEADING}
               </h2>
@@ -99,8 +98,7 @@ export default function Contact() {
 
             <ScrollReveal delay={0.2}>
               <p
-                className="leading-[1.45] tracking-[0.012em]"
-                style={{ fontFamily: 'var(--font-canva-primary)', color: 'var(--color-white)' }}
+                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-primary)] text-[var(--color-white)]"
               >
                 {SOCIAL_BODY_START}
                 <strong>{SOCIAL_BODY_BOLD}</strong>
@@ -130,8 +128,7 @@ export default function Contact() {
             <ScrollReveal delay={0}>
               <h2
                 id="zNSWHTotP3XOaXao"
-                className="text-[var(--color-white)]"
-                style={{ fontFamily: 'var(--font-canva-secondary)' }}
+                className="text-[var(--color-white)] font-[family-name:var(--font-canva-secondary)]"
               >
                 {OFFICE_HEADING}
               </h2>
@@ -139,8 +136,7 @@ export default function Contact() {
 
             <ScrollReveal delay={0.1}>
               <p
-                className="leading-[1.45] tracking-[0.012em]"
-                style={{ fontFamily: 'var(--font-canva-primary)', color: 'var(--color-white)' }}
+                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-primary)] text-[var(--color-white)]"
               >
                 {OFFICE_BODY_START}
                 <strong>{OFFICE_BODY_BOLD}</strong>
@@ -169,8 +165,7 @@ export default function Contact() {
           <div className="flex flex-col gap-[24px] lg:flex-1">
             <ScrollReveal delay={0.1}>
               <h3
-                className="text-right text-[var(--color-white)]"
-                style={{ fontFamily: 'var(--font-canva-secondary)' }}
+                className="text-right text-[var(--color-white)] font-[family-name:var(--font-canva-secondary)]"
               >
                 שלחו הודעה
               </h3>

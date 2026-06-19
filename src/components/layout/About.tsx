@@ -72,12 +72,11 @@ export default function About() {
   return (
     <>
       {/* ── Section 1: Intro with photo collage + text ── */}
-      <div id="about" style={{ visibility: 'hidden' }} />
+      <div id="about" className="invisible" />
 
       <section
         dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-dark)]"
-        style={{ marginTop: '-1px' }}
+        className="relative overflow-hidden bg-[var(--color-dark)] -mt-px"
       >
         <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
           <div className="flex flex-col gap-[40px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
@@ -99,20 +98,14 @@ export default function About() {
 
             {/* Text column */}
             <div
-              className="relative flex-[0_0_clamp(260px,42%,520px)] flex flex-col justify-center gap-[24px]"
-              style={{ zIndex: 1 }}
+              className="relative flex-[0_0_clamp(260px,42%,520px)] flex flex-col justify-center gap-[24px] z-[1]"
             >
               <OrganicBg className="opacity-60" />
 
               <ScrollReveal delay={0} className="relative z-[1]">
                 <h2
                   id="GDq1TYUPnp1UCFMP"
-                  className="text-[var(--color-white)] leading-tight"
-                  style={{
-                    fontFamily: 'var(--font-canva-secondary)',
-                    fontSize: 'clamp(28px,3.5vw,48px)',
-                    textTransform: 'none',
-                  }}
+                  className="text-[var(--color-white)] leading-tight font-[family-name:var(--font-canva-secondary)] text-[clamp(28px,3.5vw,48px)] normal-case"
                 >
                   ליווי מקצועי לזוגות
                 </h2>
@@ -120,13 +113,7 @@ export default function About() {
 
               <ScrollReveal delay={0.12} className="relative z-[1]">
                 <div
-                  className="flex flex-col gap-[1em] text-[var(--color-white)]"
-                  style={{
-                    fontFamily: 'var(--font-canva-primary)',
-                    fontSize: 'clamp(15px,1.2vw,18px)',
-                    lineHeight: '1.453',
-                    letterSpacing: '0.012em',
-                  }}
+                  className="flex flex-col gap-[1em] text-[var(--color-white)] font-[family-name:var(--font-canva-primary)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
                 >
                   <p>
                     מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
@@ -146,12 +133,11 @@ export default function About() {
       </section>
 
       {/* ── Section 2: Quote block ── */}
-      <div id="page-3" style={{ visibility: 'hidden' }} />
+      <div id="page-3" className="invisible" />
 
       <section
         dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-dark)]"
-        style={{ marginTop: '-1px' }}
+        className="relative overflow-hidden bg-[var(--color-dark)] -mt-px"
       >
         <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(48px,7vw,100px)]">
           <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
@@ -159,20 +145,17 @@ export default function About() {
             {/* Profile circle photo */}
             <ScrollReveal delay={0} className="shrink-0 self-center lg:self-start">
               <div
-                className="relative overflow-hidden rounded-full"
-                style={{ width: 'clamp(96px,12vw,160px)', height: 'clamp(96px,12vw,160px)' }}
+                className="relative overflow-hidden rounded-full w-[clamp(96px,12vw,160px)] h-[clamp(96px,12vw,160px)]"
               >
                 <img
                   src={PROFILE_PHOTO}
                   alt="נטע שמש"
                   loading="lazy"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: '50% 38%' }}
+                  className="w-full h-full object-cover object-[50%_38%]"
                 />
                 {/* thin ring matching original stroke */}
                 <div
-                  className="absolute inset-0 rounded-full"
-                  style={{ boxShadow: '0 0 0 1.5px var(--color-text-muted)' }}
+                  className="absolute inset-0 rounded-full shadow-[0_0_0_1.5px_var(--color-text-muted)]"
                 />
               </div>
             </ScrollReveal>
@@ -185,7 +168,7 @@ export default function About() {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  style={{ width: 'clamp(40px,5.6vw,72px)', height: 'auto' }}
+                  className="w-[clamp(40px,5.6vw,72px)] h-auto"
                 />
               </ScrollReveal>
 
@@ -199,14 +182,7 @@ export default function About() {
 
               <ScrollReveal delay={0.36}>
                 <p
-                  className="text-[var(--color-white)]"
-                  style={{
-                    fontFamily: 'var(--font-canva-accent)',
-                    fontSize: 'clamp(28px,3vw,44px)',
-                    lineHeight: '1.095',
-                    letterSpacing: '-0.02em',
-                    textTransform: 'none',
-                  }}
+                  className="text-[var(--color-white)] font-[family-name:var(--font-canva-accent)] text-[clamp(28px,3vw,44px)] leading-[1.095] tracking-[-0.02em] normal-case"
                 >
                   נטע שמש
                 </p>
@@ -217,12 +193,11 @@ export default function About() {
       </section>
 
       {/* ── Section 3: Credentials list ── */}
-      <div id="page-4" style={{ visibility: 'hidden' }} />
+      <div id="page-4" className="invisible" />
 
       <section
         dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-white)]"
-        style={{ marginTop: '-1px' }}
+        className="relative overflow-hidden bg-[var(--color-white)] -mt-px"
       >
         {/* Subtle rays background at low opacity */}
         <img
@@ -230,8 +205,7 @@ export default function About() {
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-          style={{ opacity: 0.18, zIndex: 0 }}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.18] z-0"
         />
 
         <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
@@ -240,14 +214,8 @@ export default function About() {
             <ScrollReveal delay={0}>
               <h2
                 id="YoSfu967TqAAsgNM"
-                className="text-[var(--color-text-primary)] text-center"
-                style={{
-                  fontFamily: 'var(--font-canva-secondary)',
-                  fontSize: 'clamp(22px,3vw,42px)',
-                  lineHeight: '1.2',
-                  textTransform: 'none',
-                  direction: 'rtl',
-                }}
+                className="text-[var(--color-text-primary)] text-center font-[family-name:var(--font-canva-secondary)] text-[clamp(22px,3vw,42px)] leading-[1.2] normal-case"
+                dir="rtl"
               >
                 ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
               </h2>
@@ -261,12 +229,11 @@ export default function About() {
       </section>
 
       {/* ── Section 4: Re-ignite connection — photo gallery + heading ── */}
-      <div id="about-2" style={{ visibility: 'hidden' }} />
+      <div id="about-2" className="invisible" />
 
       <section
         dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-white)]"
-        style={{ marginTop: '-1px' }}
+        className="relative overflow-hidden bg-[var(--color-white)] -mt-px"
       >
         {/* White-rays decorative bg */}
         <img
@@ -274,8 +241,7 @@ export default function About() {
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-          style={{ opacity: 1, zIndex: 0 }}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-100 z-0"
         />
 
         <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
@@ -286,14 +252,8 @@ export default function About() {
               <ScrollReveal delay={0}>
                 <h2
                   id="JkkbI1eIj5p9V33T"
-                  className="text-[var(--color-text-primary)]"
-                  style={{
-                    fontFamily: 'var(--font-canva-primary)',
-                    fontSize: 'clamp(22px,3vw,42px)',
-                    lineHeight: '1.2',
-                    textTransform: 'none',
-                    direction: 'rtl',
-                  }}
+                  className="text-[var(--color-text-primary)] font-[family-name:var(--font-canva-primary)] text-[clamp(22px,3vw,42px)] leading-[1.2] normal-case"
+                  dir="rtl"
                 >
                   להצית מחדש את הקשר הזוגי
                 </h2>
@@ -301,14 +261,8 @@ export default function About() {
 
               <ScrollReveal delay={0.12}>
                 <p
-                  className="text-[var(--color-text-primary)] max-w-[640px]"
-                  style={{
-                    fontFamily: 'var(--font-canva-primary)',
-                    fontSize: 'clamp(15px,1.2vw,18px)',
-                    lineHeight: '1.453',
-                    letterSpacing: '0.012em',
-                    direction: 'rtl',
-                  }}
+                  className="text-[var(--color-text-primary)] max-w-[640px] font-[family-name:var(--font-canva-primary)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
+                  dir="rtl"
                 >
                   תמיכה והכוונה לבנייה מחדש של האמון וריפוי פצעים רגשיים בקשר.
                 </p>
@@ -320,14 +274,10 @@ export default function About() {
               {galleryPanels.map((panel, i) => (
                 <ScrollReveal key={i} delay={i * 0.12}>
                   <div
-                    className="relative overflow-hidden"
-                    style={{
-                      borderRadius: '4.3% / 2.82%',
-                      outline: '1.5px solid var(--color-black)',
-                    }}
+                    className="relative overflow-hidden rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)]"
                   >
                     {/* intrinsic aspect ratio 348:531 ≈ 152.5% */}
-                    <div style={{ paddingTop: '152.47%' }} />
+                    <div className="pt-[152.47%]" />
                     <img
                       src={panel.src}
                       alt=""
