@@ -6,13 +6,12 @@
   --color-canva-light: #C2ADBB;
   --color-canva-bg: #F7E2D6;
 
-  --font-dganit: var(--font-dganit), sans-serif;
   --font-elamy: var(--font-elamy), sans-serif;
   --font-stanga: var(--font-stanga), sans-serif;
 
   --font-canva-primary: var(--font-stanga), sans-serif;
-  --font-canva-secondary: var(--font-elamy), serif;
-  --font-canva-accent: var(--font-dganit), cursive;
+  --font-canva-secondary: var(--font-stanga), sans-serif;
+  --font-canva-accent: var(--font-elamy), cursive;
 }
 
 :root {

@@ -7,7 +7,7 @@ async function generate() {
   const page = await browser.newPage();
 
   // Font data
-  const fontPath = path.join(__dirname, '../public/fonts/Dganit-Medium.woff2');
+  const fontPath = path.join(__dirname, '../public/fonts/Elamy-Bold.woff2');
   const fontData = fs.readFileSync(fontPath).toString('base64');
   
   const htmlTemplate = (width, height, content, fontSize) => `
@@ -16,7 +16,7 @@ async function generate() {
     <head>
       <style>
         @font-face {
-          font-family: 'Dganit';
+          font-family: 'Elamy';
           src: url('data:font/woff2;base64,${fontData}') format('woff2');
         }
         body {
@@ -28,7 +28,7 @@ async function generate() {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Dganit', sans-serif;
+          font-family: 'Elamy', sans-serif;
           color: #4A3D4A;
         }
         .content {
