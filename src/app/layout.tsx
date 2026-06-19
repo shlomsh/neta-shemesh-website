@@ -33,6 +33,7 @@ const stanga = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nettashemesh.vercel.app'),
   title: "נטע שמש — טיפול זוגי ומשפחתי",
 };
 
