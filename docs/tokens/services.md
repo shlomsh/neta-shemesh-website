@@ -7,13 +7,15 @@ dependency is that its Tailwind **rem utilities** (`py-32`, `max-w-6xl`, `gap-12
 ~+25% at the final cutover. (`cleanFadeUp`/`AnimatedBlock` live in globals.css + the legacy
 `ScrollAnimator` runtime — independent of `styles.css`, but swapped for consistency.)
 
-## ✅ Team-lead decision (no human GATE-1 needed — de-coupling, not redesign)
-- **Do NOT redesign.** Keep the existing structure, card layout, stagger, gradients, copy.
-- **De-rem-couple:** replace every Tailwind rem spacing/size utility with **px/clamp**, engine-
-  independent. Anchor so the **1280 render is unchanged** (rem×12.8 = current rendered px at 1280),
-  so the **desktop golden stays byte-identical**. Reflow preserved below (keep `sm:`/`lg:` steps or
-  clamp). Mobile (375) may shift slightly as it becomes engine-independent — that is expected/desired
-  (engine-independence is the fix); prove `layout-fit` green and report any mobile golden diff.
+## ✅ Team-lead decision — BRUTAL REBUILD (updated 2026-06-19)
+Directive from owner: *"be brutal with the refactoring… short blanket is killing us! just rewrite.
+We'll go over the tests and fix them together."* So drop the timid render-neutral constraint.
+- **Rewrite clean.** Keep the (already good) structure/copy as the content spine, but build it
+  **properly fluid from scratch** — px/clamp/%, real reflow — don't try to reproduce the old vw-scaled
+  render. Match the token-sheet intent at 1280; reflow cleanly below.
+- **De-rem-couple completely:** zero Tailwind rem spacing/size utilities remain. Do NOT aim for
+  byte-identical desktop goldens — **goldens WILL change and that's fine.** Report the diffs;
+  the human re-baselines with the lead afterward. Executor must NOT run `UPDATE_GOLDEN`.
 - **Animations:** swap `AnimatedBlock` + `cleanFadeUp` → `ScrollReveal` (Client Leaf Pattern; stagger
   as a `delay = index*0.x` prop computed in the server parent). `StepCard` already uses `ScrollReveal`.
 - Remove the empty `dangerouslySetInnerHTML={{__html:''}}` on `#page-7`.

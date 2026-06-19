@@ -3,6 +3,31 @@
 Living status doc for the Canva→Next/Tailwind rebuild loop. Read this + `agents.md` to resume.
 Last updated: 2026-06-19 (end of session).
 
+## ⚡ Refactor stance: GROUND-UP REBUILD, SAME LOOK (owner directive 2026-06-19)
+*"Be brutal with the refactoring — we're stepping up to a rebuild, it'll be easier. Short blanket is
+killing us, just rewrite. The look and feel should be the exact same, but rebuild the components from
+the ground up — no local/global conflicts anymore. We'll fix and align to the tests and template
+afterwards."*
+- **Look & feel identical** — match the template/current appearance at 1280 and reflow below. This is a
+  re-implementation, NOT a redesign.
+- **Ground-up, self-contained components** — each section is a clean React+Tailwind component that does
+  NOT depend on `canva-source/styles.css`, the global rem/vw engine, global keyframes (`cleanFadeUp`),
+  or the SectionBand grid. End the two-coordinate-system conflict: styling is local px/clamp/%, immune
+  to the final `html{font-size:16px}` flip. Don't transcribe gridArea/cryptic IDs (keep only IDs needed
+  as link/anchor/test hooks).
+- **Tests + template alignment happen AFTERWARD, together — not a blocking gate.** Hard gates for
+  executors are only `next build` + `layout-fit.spec.ts` (375/768/1280) + structural asserts. Pixel/
+  DOM-fingerprint goldens are EXPECTED to change — executors report diffs and **never** `UPDATE_GOLDEN`;
+  lead + owner re-baseline the suite together after sections land.
+
+## Execution tempo: SWIFT, no mid-rewrite spiral (owner directive 2026-06-19)
+- Executors **loop to completion autonomously** — rebuild the whole section, don't stop to ask.
+- **Be swift. Just rebuild.** Do NOT over-engineer; no abstractions/options/edge-case gold-plating
+  beyond what the section needs to look the same and reflow.
+- **Do NOT run checks iteratively during the rewrite** (that's the spiral). Write the clean component
+  end-to-end, THEN run verification ONCE at the end: one `next build` + one `layout-fit` run +
+  structural asserts + before/after screenshots. Report; never `UPDATE_GOLDEN`.
+
 ## Operating model (as of this session)
 - **Team lead (orchestrator) makes ALL decisions and owns ALL git.** Executor subagents edit +
   test ONLY — no git ops of any kind. Lead reviews evidence at gates, merges, commits checkpoints.
