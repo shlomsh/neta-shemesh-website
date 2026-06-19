@@ -41,7 +41,7 @@ export function FooterCTA() {
       {/* CTA link */}
       <a
         href="#contact"
-        className="relative z-10 text-[color:var(--color-white)] font-[family-name:var(--font-canva-primary)] font-bold uppercase tracking-[0.138em] text-[clamp(15px,1.4vw,18px)] leading-[1.35] text-center"
+        className="relative z-10 text-[color:var(--color-white)] font-[family-name:var(--font-canva-primary)] font-bold uppercase tracking-[0.138em] text-[clamp(15px,1.4vw,18px)] leading-[1.35] text-center py-[14px] px-[24px] min-h-[48px] inline-flex items-center justify-center"
       >
         מוזמנים ליצור איתי קשר
       </a>

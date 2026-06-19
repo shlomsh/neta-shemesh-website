@@ -56,9 +56,9 @@ export default function Expertise() {
           {EXPERTISE_CARDS.map((card, index) => (
             <div 
               key={card.title} 
-              className="sticky top-0 lg:top-[10vh] h-[100dvh] lg:h-[80vh] w-full flex items-center justify-center p-[20px] lg:p-[40px]"
+              className="sticky top-0 lg:top-[10vh] h-[100dvh] w-full flex items-stretch justify-center"
             >
-              <div className="w-full h-full max-w-[1024px] mx-auto shadow-2xl">
+              <div className="w-full h-full max-w-[1024px] mx-auto shadow-2xl p-[20px] lg:p-[40px]">
                 <ExpertiseCard
                   {...card}
                   delay={0}

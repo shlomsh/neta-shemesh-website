@@ -24,7 +24,7 @@ export function StepCard({
   staggerClass = '',
 }: StepCardProps) {
   return (
-    <ScrollReveal delay={delay} className={staggerClass}>
+    <ScrollReveal delay={delay} className={`w-full h-full ${staggerClass}`}>
       <div className="relative w-full h-full overflow-hidden rounded-[28px] shadow-lg">
         <StepImage src={imageSrc} alt={title} />
 
