@@ -28,7 +28,7 @@ test.describe('Section Screenshots (Guard 6)', () => {
     await page.waitForTimeout(2000);
 
     // Get all sections
-    const sections = page.locator('main > div[style*="100rem"]');
+    const sections = page.locator('main > section');
     const count = await sections.count();
     
     expect(count).toBeGreaterThan(0);
