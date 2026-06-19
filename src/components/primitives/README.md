@@ -29,7 +29,7 @@ Renders `<p id className><span id={spanId}>{text}</span><br/></p>`.
 
 ### `<Prose …props>` (children or `text`)
 Body paragraph: `<p {...props}>{children ?? text}</p>`. Pass the Canva `id` and inline style
-(`font-family:var(--font-canva-primary)`, `line-height`, `letter-spacing`, `text-align`) verbatim.
+(`font-family:var(--font-stanga)`, `line-height`, `letter-spacing`, `text-align`) verbatim.
 
 ### `<AspectImage src alt? aspectPct objectPosition? fillId? imgId? fillStyle? imgStyle? children? style? …props>`
 The Canva `padding-top:%` aspect-ratio wrapper + absolute-fill image.

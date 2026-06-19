@@ -31,12 +31,12 @@ export function ContactDetails({
         </span>
         <div className="text-right">
           <p
-            className="font-bold leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-primary)] text-[color:var(--color-white)]"
+            className="font-bold leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[color:var(--color-white)]"
           >
             {addressStrong}
           </p>
           <p
-            className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-primary)] text-[color:var(--color-white)]"
+            className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[color:var(--color-white)]"
           >
             {addressLabel}
           </p>
@@ -56,12 +56,12 @@ export function ContactDetails({
         <div className="text-right">
           <a
             href={`tel:${phone.replace(/\s/g, '')}`}
-            className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-canva-primary)] text-[color:var(--color-white)]"
+            className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-[color:var(--color-white)]"
           >
             {phone}
           </a>
           <p
-            className="leading-[1.27] tracking-[0.05em] font-[family-name:var(--font-canva-primary)] text-[color:var(--color-white)]"
+            className="leading-[1.27] tracking-[0.05em] font-[family-name:var(--font-stanga)] text-[color:var(--color-white)]"
           >
             {phoneLabel}
           </p>
@@ -81,12 +81,12 @@ export function ContactDetails({
         <div className="text-right">
           <a
             href={`mailto:${email}`}
-            className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-canva-primary)] text-[color:var(--color-white)]"
+            className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-[color:var(--color-white)]"
           >
             {email}
           </a>
           <p
-            className="leading-[1.27] tracking-[0.05em] font-[family-name:var(--font-canva-primary)] text-[color:var(--color-white)]"
+            className="leading-[1.27] tracking-[0.05em] font-[family-name:var(--font-stanga)] text-[color:var(--color-white)]"
           >
             {emailLabel}
           </p>

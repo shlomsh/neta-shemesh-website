@@ -9,7 +9,7 @@ export function QuoteText({ text }: QuoteTextProps) {
     <p
       className="
         text-[var(--color-text-primary)]
-        font-[family-name:var(--font-canva-primary)]
+        font-[family-name:var(--font-canva-accent)]
         font-bold
         text-[clamp(16px,1.25vw,18px)]
         leading-[1.65]

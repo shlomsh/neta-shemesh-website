@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { Title } from '@/components/primitives/Title';
+import { Title } from "@/components/primitives/Title";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialCard } from './testimonials/TestimonialCard';
 import type { TestimonialData } from './testimonials/TestimonialCard';
 
@@ -48,14 +49,8 @@ export default function Testimonials() {
 
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
-            <Title
-              id="Dct2rK7XCXJaLA2e"
-              spanId="zxhh7nAzRvjXP5BT"
-              tier="section"
-              text="לקוחות ממליצים"
-              className="text-center mb-[16px]"
-            />
-            <p className="text-center font-[var(--font-canva-primary)] text-[var(--color-text-primary)] leading-[1.46] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto text-[clamp(15px,1.1vw,17px)]">
+            <SectionTitle id="Dct2rK7XCXJaLA2e" spanId="zxhh7nAzRvjXP5BT" className="text-center mb-[16px]">לקוחות ממליצים</SectionTitle>
+            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.46] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto text-[clamp(15px,1.1vw,17px)]">
               מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.
             </p>
           </ScrollReveal>
@@ -81,7 +76,7 @@ export default function Testimonials() {
                 height={48}
                 className="mb-[32px] opacity-80"
               />
-              <p className="text-[clamp(18px,1.6vw,22px)] text-[var(--color-text-primary)] font-[var(--font-canva-primary)] font-bold leading-[1.6] mb-[40px] text-right">
+              <p className="text-[clamp(18px,1.6vw,22px)] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
               </p>
               <div className="text-right">
@@ -125,15 +120,9 @@ export default function Testimonials() {
 
         <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center">
           <ScrollReveal delay={0.1}>
-            <Title
-              id="iVtldd7PMtN1BthG"
-              spanId="VqD8RL1Dlcv6nIpY"
-              tier="section"
-              onDark
-              text="קביעת פגישת ייעוץ"
-              className="mb-[24px] drop-shadow-md"
-            />
-            <p className="text-white font-[var(--font-canva-primary)] text-[clamp(16px,1.4vw,22px)] leading-[1.46] mb-[48px] max-w-[640px] mx-auto drop-shadow-md">
+            <SectionTitle id="iVtldd7PMtN1BthG" spanId="VqD8RL1Dlcv6nIpY" onDark
+              className="mb-[24px] drop-shadow-md">קביעת פגישת ייעוץ</SectionTitle>
+            <p className="text-white font-[var(--font-stanga)] text-[clamp(16px,1.4vw,22px)] leading-[1.46] mb-[48px] max-w-[640px] mx-auto drop-shadow-md">
               הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם.
             </p>
             <a
@@ -153,14 +142,8 @@ export default function Testimonials() {
       <section id="vln9V07dEMN7DyMa" className="bg-[var(--color-bg-light)] py-[clamp(48px,5vw,96px)]">
         <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)]">
           <ScrollReveal delay={0.1}>
-            <Title
-              id="T749khVkMfNluBNv"
-              spanId="y5TxhTV4Bys7XHFV"
-              tier="section"
-              text="טיפול זוגי לקשר בריא ותומך"
-              className="text-center mb-[24px]"
-            />
-            <p className="text-center font-[var(--font-canva-primary)] text-[var(--color-text-primary)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-[clamp(15px,1.1vw,18px)]">
+            <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
+            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-[clamp(15px,1.1vw,18px)]">
               השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
             </p>
           </ScrollReveal>

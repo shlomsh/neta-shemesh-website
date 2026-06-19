@@ -26,7 +26,7 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       dir="rtl"
       noValidate
-      className="flex flex-col gap-[24px] font-[family-name:var(--font-canva-primary)]"
+      className="flex flex-col gap-[24px] font-[family-name:var(--font-stanga)]"
     >
       {/* Name */}
       <div>

@@ -1,6 +1,7 @@
 'use client';
 
-import { ScrollReveal } from '../../ui/ScrollReveal';
+import { ScrollReveal } from "../../ui/ScrollReveal";
+import { SectionTitle } from "../../ui/SectionTitle";
 
 const VIDEO_SRC =
   'https://kromaticdesignstudio.my.canva.site/couples-therapist/videos/89bd97854bc9df2d72598489e7d46e4a.mp4';
@@ -13,12 +14,7 @@ export function SuccessStories() {
     >
       <div className="flex flex-col items-center text-center gap-[16px] max-w-[768px] mx-auto mb-[64px] px-[16px]">
         <ScrollReveal delay={0.1}>
-          <h2
-            id="eIrsfUtmMjgXi5KA"
-            className="font-[family-name:var(--font-canva-accent)] text-[clamp(32px,5vw,56px)] font-normal leading-tight text-white"
-          >
-            <span>סיפורי הצלחה</span>
-          </h2>
+          <SectionTitle id="eIrsfUtmMjgXi5KA" onDark>סיפורי הצלחה</SectionTitle>
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>

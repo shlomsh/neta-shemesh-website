@@ -2,7 +2,8 @@ import { ScrollReveal } from '../ui/ScrollReveal';
 import { SocialLinks } from './contact/SocialLinks';
 import { ContactDetails } from './contact/ContactDetails';
 import { MapEmbed } from './contact/MapEmbed';
-import { ContactForm } from './contact/ContactForm';
+import { SectionTitle } from "../ui/SectionTitle";
+import { ContactForm } from "./contact/ContactForm";
 
 // ─── Content ────────────────────────────────────────────────────────────────
 const SOCIAL_HEADING = 'עקבו אחריי';
@@ -88,17 +89,12 @@ export default function Contact() {
           {/* Right col on desktop: heading + body + social icons */}
           <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
             <ScrollReveal delay={0.1}>
-              <h2
-                id="ZgJbejfHoeBrgmf7"
-                className="section-header on-dark"
-              >
-                {SOCIAL_HEADING}
-              </h2>
+              <SectionTitle id="ZgJbejfHoeBrgmf7" onDark>{SOCIAL_HEADING}</SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <p
-                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-primary)] text-[var(--color-white)]"
+                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[var(--color-white)]"
               >
                 {SOCIAL_BODY_START}
                 <strong>{SOCIAL_BODY_BOLD}</strong>
@@ -126,17 +122,12 @@ export default function Contact() {
           {/* Right col on desktop: heading + body + details */}
           <div className="flex flex-col gap-[24px] text-right lg:w-[45%] shrink-0">
             <ScrollReveal delay={0}>
-              <h2
-                id="zNSWHTotP3XOaXao"
-                className="section-header on-dark"
-              >
-                {OFFICE_HEADING}
-              </h2>
+              <SectionTitle id="zNSWHTotP3XOaXao" onDark>{OFFICE_HEADING}</SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
               <p
-                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-primary)] text-[var(--color-white)]"
+                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[var(--color-white)]"
               >
                 {OFFICE_BODY_START}
                 <strong>{OFFICE_BODY_BOLD}</strong>
@@ -165,7 +156,7 @@ export default function Contact() {
           <div className="flex flex-col gap-[24px] lg:flex-1">
             <ScrollReveal delay={0.1}>
               <h3
-                className="text-right text-[var(--color-white)] font-[family-name:var(--font-canva-secondary)]"
+                className="text-right text-[var(--color-white)] font-[family-name:var(--font-stanga)]"
               >
                 שלחו הודעה
               </h3>

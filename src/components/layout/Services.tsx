@@ -1,3 +1,4 @@
+import { SectionTitle } from "../ui/SectionTitle";
 import { StepCard } from './services/StepCard';
 import { SuccessStories } from './services/SuccessStories';
 import type { Step } from './services/types';
@@ -57,12 +58,7 @@ export default function Services() {
 
           {/* Text column — sticky on desktop */}
           <div className="text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
-            <h2
-              id="pEc3w8pe4QAw5k7o"
-              className="font-[family-name:var(--font-stanga)] font-bold text-[clamp(32px,5vw,56px)] leading-tight text-canva-dark normal-case"
-            >
-              <span id="lEBZC8bpB2HUMalg">איך זה עובד?</span>
-            </h2>
+            <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg">איך זה עובד?</SectionTitle>
 
             <p className="mt-[24px] text-canva-dark text-[clamp(15px,1.6vw,18px)] leading-[1.6] tracking-[0.012em]">
               התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי.
