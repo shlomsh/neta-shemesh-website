@@ -51,24 +51,20 @@ export default function Expertise() {
           </div>
         </ScrollReveal>
 
-        {/* Cards grid: 1-up @375, 2-up @640, 4-up @1280 */}
-        <div
-          className="
-            grid
-            grid-cols-1
-            sm:grid-cols-2
-            xl:grid-cols-4
-            gap-[clamp(12px,2vw,24px)]
-            max-w-[1280px]
-            mx-auto
-          "
-        >
+        {/* Cards container: stacked vertically with sticky positioning */}
+        <div className="flex flex-col relative w-full pb-[10vh]">
           {EXPERTISE_CARDS.map((card, index) => (
-            <ExpertiseCard
-              key={card.title}
-              {...card}
-              delay={index * 0.12}
-            />
+            <div 
+              key={card.title} 
+              className="sticky top-0 lg:top-[10vh] h-[100dvh] lg:h-[80vh] w-full flex items-center justify-center p-[20px] lg:p-[40px]"
+            >
+              <div className="w-full h-full max-w-[1024px] mx-auto shadow-2xl">
+                <ExpertiseCard
+                  {...card}
+                  delay={0}
+                />
+              </div>
+            </div>
           ))}
         </div>
       </section>

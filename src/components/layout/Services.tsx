@@ -51,12 +51,12 @@ export default function Services() {
       <section
         id="cQd2ufFBWvr5c6ki"
         dir="rtl"
-        className="relative w-full bg-canva-bg px-[20px] py-[64px] sm:py-[96px] lg:py-[128px]"
+        className="relative w-full bg-canva-bg"
       >
-        <div className="mx-auto flex max-w-[1152px] flex-col gap-[48px] lg:flex-row lg:items-start lg:gap-[64px]">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col lg:flex-row lg:items-start lg:gap-[64px] px-[20px] lg:px-[64px] py-[64px]">
 
-          {/* Text column — first in DOM → right side in RTL */}
-          <div className="text-right lg:w-[360px] lg:shrink-0">
+          {/* Text column — sticky on desktop */}
+          <div className="text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
             <h2
               id="pEc3w8pe4QAw5k7o"
               className="font-[family-name:var(--font-canva-accent)] text-[clamp(32px,5vw,56px)] font-normal leading-tight text-canva-dark"
@@ -76,18 +76,22 @@ export default function Services() {
             </a>
           </div>
 
-          {/* Cards grid: 1-up on mobile, 2-up from ~1280px */}
-          <div className="grid flex-1 grid-cols-1 gap-[24px] min-[640px]:grid-cols-2 min-[640px]:gap-[28px]">
+          {/* Cards container: stacked vertically with sticky positioning */}
+          <div className="flex-1 flex flex-col relative w-full pb-[10vh]">
             {STEPS.map((step, i) => (
-              <StepCard
-                key={step.imageSrc}
-                imageSrc={step.imageSrc}
-                numberText={step.numberText}
-                title={step.title}
-                bullets={step.bullets}
-                delay={i * 0.12}
-                staggerClass={i % 2 === 1 ? 'sm:translate-y-12' : ''}
-              />
+              <div 
+                key={step.imageSrc} 
+                className="sticky top-0 lg:top-[10vh] h-[100dvh] lg:h-[80vh] w-full flex items-center justify-center shadow-2xl"
+              >
+                <StepCard
+                  imageSrc={step.imageSrc}
+                  numberText={step.numberText}
+                  title={step.title}
+                  bullets={step.bullets}
+                  delay={0}
+                  staggerClass="w-full h-full lg:max-w-[600px] mx-auto"
+                />
+              </div>
             ))}
           </div>
         </div>

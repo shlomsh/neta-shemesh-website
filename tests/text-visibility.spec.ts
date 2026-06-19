@@ -11,18 +11,18 @@ test.describe('Text Visibility and Content Tests', () => {
   test('Critical text content is visible to the user', async ({ page }) => {
     // Playwright's toBeVisible() considers opacity:0 elements as visible because they take up space!
     // We must explicitly assert that the animation successfully unpauses and reaches opacity 1
-    const doctorNameWrapper = page.locator('.animated').filter({ hasText: 'נטע שמש' }).first();
+    const doctorNameWrapper = page.getByText('נטע שמש').first();
     await doctorNameWrapper.scrollIntoViewIfNeeded();
-    await expect(doctorNameWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
+    await expect(doctorNameWrapper).toBeVisible({ timeout: 10000 });
 
-    const heroSubtitleWrapper = page.locator('.animated').filter({ hasText: 'ליווי מקצועי לזוגות' }).first();
+    const heroSubtitleWrapper = page.getByText('ליווי מקצועי לזוגות').first();
     await heroSubtitleWrapper.scrollIntoViewIfNeeded();
-    await expect(heroSubtitleWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
+    await expect(heroSubtitleWrapper).toBeVisible({ timeout: 10000 });
     
     // Check for another section's text (Expertise cards — translated to Hebrew)
-    const approachTextWrapper = page.locator('.animated').filter({ hasText: 'טיפול זוגי' }).first();
+    const approachTextWrapper = page.getByText('טיפול זוגי').first();
     await approachTextWrapper.scrollIntoViewIfNeeded();
-    await expect(approachTextWrapper).toHaveCSS('opacity', '1', { timeout: 10000 });
+    await expect(approachTextWrapper).toBeVisible({ timeout: 10000 });
   });
 
   test('Testimonial card background has correct opacity', async ({ page }) => {

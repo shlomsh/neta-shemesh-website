@@ -42,7 +42,7 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 375, height: 812 });
     
     // Check that the hero text doesn't flow off-screen
-    const heroTitle = page.locator('.animated').filter({ hasText: 'נטע שמש' }).first();
+    const heroTitle = page.getByText('נטע שמש').first();
     await heroTitle.scrollIntoViewIfNeeded();
     
     const isVisible = await heroTitle.isVisible();

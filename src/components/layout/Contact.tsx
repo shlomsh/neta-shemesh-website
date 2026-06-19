@@ -90,7 +90,7 @@ export default function Contact() {
             <ScrollReveal delay={0.1}>
               <h2
                 id="ZgJbejfHoeBrgmf7"
-                className="text-[var(--color-white)] font-[family-name:var(--font-canva-secondary)]"
+                className="section-header on-dark"
               >
                 {SOCIAL_HEADING}
               </h2>
@@ -128,7 +128,7 @@ export default function Contact() {
             <ScrollReveal delay={0}>
               <h2
                 id="zNSWHTotP3XOaXao"
-                className="text-[var(--color-white)] font-[family-name:var(--font-canva-secondary)]"
+                className="section-header on-dark"
               >
                 {OFFICE_HEADING}
               </h2>

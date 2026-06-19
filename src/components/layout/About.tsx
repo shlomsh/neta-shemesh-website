@@ -105,7 +105,7 @@ export default function About() {
               <ScrollReveal delay={0} className="relative z-[1]">
                 <h2
                   id="GDq1TYUPnp1UCFMP"
-                  className="text-[var(--color-white)] leading-tight font-[family-name:var(--font-canva-secondary)] text-[clamp(28px,3.5vw,48px)] normal-case"
+                  className="section-header on-dark"
                 >
                   ליווי מקצועי לזוגות
                 </h2>
@@ -214,7 +214,7 @@ export default function About() {
             <ScrollReveal delay={0}>
               <h2
                 id="YoSfu967TqAAsgNM"
-                className="text-[var(--color-text-primary)] text-center font-[family-name:var(--font-canva-secondary)] text-[clamp(22px,3vw,42px)] leading-[1.2] normal-case"
+                className="section-header text-center"
                 dir="rtl"
               >
                 ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
@@ -252,7 +252,7 @@ export default function About() {
               <ScrollReveal delay={0}>
                 <h2
                   id="JkkbI1eIj5p9V33T"
-                  className="text-[var(--color-text-primary)] font-[family-name:var(--font-canva-primary)] text-[clamp(22px,3vw,42px)] leading-[1.2] normal-case"
+                  className="section-header"
                   dir="rtl"
                 >
                   להצית מחדש את הקשר הזוגי
