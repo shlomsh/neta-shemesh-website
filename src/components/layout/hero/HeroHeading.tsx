@@ -1,7 +1,7 @@
 /**
- * HeroHeading — main hero title in Stanga Bold.
+ * HeroHeading — main hero title in Elamy Bold.
  *
- * The original Canva used var(--font-canva-secondary) = Stanga with no
+ * The original Canva used var(--font-canva-accent) = Stanga with no
  * explicit font-weight, causing it to fall through to the light/regular
  * face under font-synthesis:none.  Explicitly specifying font-weight:700
  * ensures Stanga-Bold.woff2 is used so the heading renders heavy.
@@ -17,7 +17,7 @@ export function HeroHeading() {
       dir="rtl"
       className="
         text-[var(--color-white)]
-        font-[family-name:var(--font-stanga)]
+        font-[family-name:var(--font-canva-accent)]
         font-bold
         text-[clamp(34px,5vw,64px)]
         leading-[1.1]

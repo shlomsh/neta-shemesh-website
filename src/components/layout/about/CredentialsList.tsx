@@ -20,7 +20,7 @@ export function CredentialsList({ items, checkIconSrc }: CredentialsListProps) {
             loading="lazy"
           />
           <span
-            className="text-[var(--color-text-primary)] leading-[1.08] tracking-[0.012em] text-center font-[family-name:var(--font-canva-primary)]"
+            className="text-[var(--color-text-primary)] leading-[1.08] tracking-[0.012em] text-center font-[family-name:var(--font-stanga)]"
           >
             {item.text}
           </span>

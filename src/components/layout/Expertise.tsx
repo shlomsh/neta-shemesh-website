@@ -1,4 +1,5 @@
-import { ScrollReveal } from '../ui/ScrollReveal';
+import { ScrollReveal } from "../ui/ScrollReveal";
+import { SectionTitle } from "../ui/SectionTitle";
 import { ExpertiseCard } from './expertise/ExpertiseCard';
 import { EXPERTISE_CARDS } from './expertise/expertiseData';
 
@@ -20,23 +21,10 @@ export default function Expertise() {
         {/* Section header */}
         <ScrollReveal delay={0}>
           <div className="text-center mb-[clamp(32px,5vw,64px)]">
-            <h2
-              id="vyKTmOw3YNYlJZPL"
-              className="
-                section-header on-dark
-                font-[var(--font-canva-secondary)]
-                text-[var(--color-white)]
-                text-[clamp(28px,4.375vw,56px)]
-                leading-[1.2]
-                tracking-[-0.01em]
-                mb-[clamp(12px,1.5vw,20px)]
-              "
-            >
-              מרחב בטוח לקשר שלכם
-            </h2>
+            <SectionTitle id="vyKTmOw3YNYlJZPL" onDark className="mb-[clamp(12px,1.5vw,20px)]">מרחב בטוח לקשר שלכם</SectionTitle>
             <p
               className="
-                font-[var(--font-canva-primary)]
+                font-[var(--font-stanga)]
                 text-[var(--color-white)]
                 text-[clamp(15px,1.4vw,19px)]
                 leading-[1.45]

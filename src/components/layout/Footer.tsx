@@ -30,7 +30,7 @@ export default function Footer() {
         {/* 1. Tagline */}
         <FooterReveal delay={0}>
           <p
-            className="text-[color:var(--color-white)] font-[family-name:var(--font-canva-secondary)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full"
+            className="text-[color:var(--color-white)] font-[family-name:var(--font-stanga)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full"
             dir="rtl"
           >
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.

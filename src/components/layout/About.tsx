@@ -1,6 +1,7 @@
 import { ScrollReveal } from '../ui/ScrollReveal';
 import { PhotoPanel } from './about/PhotoPanel';
-import { QuoteBlock } from './about/QuoteBlock';
+import { SectionTitle } from "../ui/SectionTitle";
+import { QuoteBlock } from "./about/QuoteBlock";
 import { CredentialsList } from './about/CredentialsList';
 import { OrganicBg } from './about/OrganicBg';
 import type { Credential } from './about/CredentialsList';
@@ -103,17 +104,13 @@ export default function About() {
               <OrganicBg className="opacity-60" />
 
               <ScrollReveal delay={0} className="relative z-[1]">
-                <h2
-                  id="GDq1TYUPnp1UCFMP"
-                  className="section-header on-dark"
-                >
-                  ליווי מקצועי לזוגות
-                </h2>
+                <SectionTitle id="GDq1TYUPnp1UCFMP" onDark>ליווי מקצועי לזוגות
+                </SectionTitle>
               </ScrollReveal>
 
               <ScrollReveal delay={0.12} className="relative z-[1]">
                 <div
-                  className="flex flex-col gap-[1em] text-[var(--color-white)] font-[family-name:var(--font-canva-primary)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
+                  className="flex flex-col gap-[1em] text-[var(--color-white)] font-[family-name:var(--font-stanga)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
                 >
                   <p>
                     מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
@@ -212,13 +209,8 @@ export default function About() {
           <div className="flex flex-col items-center gap-[40px]">
 
             <ScrollReveal delay={0}>
-              <h2
-                id="YoSfu967TqAAsgNM"
-                className="section-header text-center"
-                dir="rtl"
-              >
-                ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
-              </h2>
+              <SectionTitle id="YoSfu967TqAAsgNM" className="text-center" dir="rtl">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
+              </SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.12}>
@@ -250,18 +242,13 @@ export default function About() {
             {/* Heading + sub-text */}
             <div className="flex flex-col items-center gap-[16px] text-center">
               <ScrollReveal delay={0}>
-                <h2
-                  id="JkkbI1eIj5p9V33T"
-                  className="section-header"
-                  dir="rtl"
-                >
-                  להצית מחדש את הקשר הזוגי
-                </h2>
+                <SectionTitle id="JkkbI1eIj5p9V33T" dir="rtl">להצית מחדש את הקשר הזוגי
+                </SectionTitle>
               </ScrollReveal>
 
               <ScrollReveal delay={0.12}>
                 <p
-                  className="text-[var(--color-text-primary)] max-w-[640px] font-[family-name:var(--font-canva-primary)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
+                  className="text-[var(--color-text-primary)] max-w-[640px] font-[family-name:var(--font-stanga)] text-[clamp(15px,1.2vw,18px)] leading-[1.453] tracking-[0.012em]"
                   dir="rtl"
                 >
                   תמיכה והכוונה לבנייה מחדש של האמון וריפוי פצעים רגשיים בקשר.

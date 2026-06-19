@@ -97,7 +97,7 @@ test.describe('Track C — Section header size fidelity @1280', () => {
   });
 
   // ── Reignite — ungoverned outlier (currently 68px Elamy) ─────────────────
-  test('Reignite "להצית מחדש" is section-header sized, not Elamy', async ({ page }) => {
+  test('Reignite "להצית מחדש" is section-header sized, uses Elamy', async ({ page }) => {
     const result = await page.evaluate(() => {
       const el = document.getElementById('JkkbI1eIj5p9V33T');
       if (!el) return null;
@@ -107,7 +107,7 @@ test.describe('Track C — Section header size fidelity @1280', () => {
     expect(result, 'JkkbI element exists').not.toBeNull();
     expect(result!.fontSize, 'Reignite font-size').toBeGreaterThan(MIN_SECTION_PX);
     expect(result!.fontSize, 'Reignite font-size').toBeLessThan(MAX_SECTION_PX);
-    expect(result!.fontFamily, 'Reignite must not use Elamy').not.toContain('Elamy');
+    expect(result!.fontFamily, 'Reignite must use Elamy').toContain('Elamy');
   });
 
   // ── Hero stays larger than section headers ────────────────────────────────

@@ -19,7 +19,7 @@ export function CardLabel({ title, description }: CardLabelProps) {
       <span
         className="
           block
-          font-[var(--font-canva-primary)]
+          font-[var(--font-stanga)]
           text-[var(--color-white)]
           font-bold
           text-[clamp(14px,1.6vw,20px)]
@@ -33,7 +33,7 @@ export function CardLabel({ title, description }: CardLabelProps) {
         className="
           hidden
           sm:block
-          font-[var(--font-canva-primary)]
+          font-[var(--font-stanga)]
           text-[var(--color-white)]
           font-normal
           text-[clamp(11px,0.9vw,14px)]

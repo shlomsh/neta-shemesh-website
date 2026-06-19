@@ -38,7 +38,7 @@
   html, body {
     background-color: var(--color-canva-bg);
     color: var(--color-canva-dark);
-    font-family: var(--font-canva-primary);
+    font-family: var(--font-stanga);
     direction: rtl; /* Hebrew RTL */
   }
 }

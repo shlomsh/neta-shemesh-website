@@ -16,7 +16,7 @@ export function BrandLogo() {
       dir="rtl"
       className="
         text-[var(--color-white)]
-        font-[family-name:var(--font-elamy)]
+        font-[family-name:var(--font-canva-accent)]
         font-bold
         text-[clamp(28px,4vw,52px)]
         leading-[1.09]
