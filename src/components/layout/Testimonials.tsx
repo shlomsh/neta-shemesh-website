@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Title } from '@/components/primitives/Title';
 import { TestimonialCard } from './testimonials/TestimonialCard';
@@ -63,19 +64,22 @@ export default function Testimonials() {
           <div className="flex flex-col lg:flex-row items-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
             <ScrollReveal delay={0.2} className="w-full lg:w-1/2">
               <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden shadow-xl">
-                <img
+                <Image
                   src="/images/53a1f7530d2b45a3979a619311ec0dbf.jpg"
                   alt="זוג בטיפול"
-                  className="object-cover w-full h-full object-[50%_42%]"
+                  fill
+                  className="object-cover object-[50%_42%]"
                 />
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.3} className="w-full lg:w-1/2 flex flex-col justify-center">
-              <img
+              <Image
                 src="/images/1a0fad1200f4c50ec29a1572952d760f.svg"
                 alt="סימן ציטוט"
-                className="w-[48px] h-[48px] mb-[32px] opacity-80"
+                width={48}
+                height={48}
+                className="mb-[32px] opacity-80"
               />
               <p className="text-[clamp(18px,1.6vw,22px)] text-[var(--color-text-primary)] font-[var(--font-canva-primary)] font-bold leading-[1.6] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
@@ -110,9 +114,10 @@ export default function Testimonials() {
       {/* CTA Section */}
       <section id="afNbX7iGTuOdSbLC" className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)]">
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src="/images/311529093e852ce987bfa9b8b4953c4a.jpg"
-            className="w-full h-full object-cover opacity-90"
+            fill
+            className="object-cover opacity-90"
             alt=""
           />
           <div className="absolute inset-0 bg-black/20" />
@@ -172,12 +177,13 @@ export default function Testimonials() {
               <ScrollReveal
                 key={img}
                 delay={0.1 * (i + 1)}
-                className="w-full aspect-[4/3] lg:aspect-square overflow-hidden rounded-[12px] shadow-sm"
+                className="relative w-full aspect-[4/3] lg:aspect-square overflow-hidden rounded-[12px] shadow-sm"
               >
-                <img
+                <Image
                   src={`/images/${img}`}
                   alt=""
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
                 />
               </ScrollReveal>
             ))}
