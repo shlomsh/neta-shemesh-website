@@ -80,21 +80,41 @@ export default function About() {
         className="relative overflow-hidden bg-[var(--color-dark)] -mt-px"
       >
         <div className="relative mx-auto w-full max-w-[1280px] px-[clamp(24px,5vw,80px)] py-[clamp(56px,8vw,120px)]">
-          <div className="flex flex-col gap-[40px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
+          <div className="flex flex-col gap-[40px] lg:flex-row-reverse lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
             {/* Photo collage — left column on desktop, top on mobile */}
-            <div className="relative flex-1 min-w-0 flex flex-col gap-[16px]">
-              {photoPanels.map((panel, i) => (
-                <ScrollReveal key={i} delay={i * 0.12}>
+            <div className="relative flex-1 w-full lg:w-1/2 grid grid-cols-2 gap-[16px]">
+              <div className="flex flex-col gap-[16px]">
+                <ScrollReveal delay={0}>
                   <PhotoPanel
-                    src={panel.src}
-                    objectPosition={panel.objectPosition}
-                    aspectPct={panel.aspectPct}
-                    radiusX={panel.radiusX}
-                    radiusY={panel.radiusY}
+                    src={photoPanels[0].src}
+                    objectPosition={photoPanels[0].objectPosition}
+                    aspectPct={100}
+                    radiusX="8%"
+                    radiusY="8%"
                   />
                 </ScrollReveal>
-              ))}
+                <ScrollReveal delay={0.12}>
+                  <PhotoPanel
+                    src={photoPanels[1].src}
+                    objectPosition={photoPanels[1].objectPosition}
+                    aspectPct={100}
+                    radiusX="8%"
+                    radiusY="8%"
+                  />
+                </ScrollReveal>
+              </div>
+              <div className="h-full">
+                <ScrollReveal delay={0.24}>
+                  <PhotoPanel
+                    src={photoPanels[2].src}
+                    objectPosition={photoPanels[2].objectPosition}
+                    aspectPct={150}
+                    radiusX="4%"
+                    radiusY="2.6%"
+                  />
+                </ScrollReveal>
+              </div>
             </div>
 
             {/* Text column */}

@@ -1,0 +1,27 @@
+import { describe, it, expect } from 'vitest';
+import { render } from '@testing-library/react';
+import About from '../src/components/layout/About';
+
+describe('Masonry Collage (About Section 1)', () => {
+  it('should have flex-row-reverse on desktop', () => {
+    const { container } = render(<About />);
+    const wrapper = container.querySelector('.lg\\:flex-row-reverse');
+    expect(wrapper).not.toBeNull();
+  });
+
+  it('should render a grid with 2 columns', () => {
+    const { container } = render(<About />);
+    const grid = container.querySelector('.grid-cols-2');
+    expect(grid).not.toBeNull();
+    expect(grid?.className).toContain('grid');
+    expect(grid?.className).toContain('grid-cols-2');
+  });
+
+  it('should render exactly 3 PhotoPanels in the masonry grid', () => {
+    const { container } = render(<About />);
+    const grid = container.querySelector('.grid-cols-2');
+    expect(grid).not.toBeNull();
+    const images = grid?.querySelectorAll('img');
+    expect(images?.length).toBe(3);
+  });
+});
