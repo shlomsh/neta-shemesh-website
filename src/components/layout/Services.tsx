@@ -1,6 +1,11 @@
 import { SectionTitle } from "../ui/SectionTitle";
 import { StepCard } from './services/StepCard';
 import { SuccessStories } from './services/SuccessStories';
+import { Section } from '../primitives/layout/Section';
+import { Container } from '../primitives/layout/Container';
+import { Grid } from '../primitives/layout/Grid';
+import { BodyText } from '../primitives/ui/BodyText';
+import { ButtonLink } from '../primitives/ui/ButtonLink';
 import type { Step } from './services/types';
 
 const STEPS: Step[] = [
@@ -49,31 +54,26 @@ const STEPS: Step[] = [
 export default function Services() {
   return (
     <>
-      <section
-        id="cQd2ufFBWvr5c6ki"
-        dir="rtl"
-        className="relative w-full bg-canva-bg"
-      >
-        <div className="mx-auto flex w-full max-w-[1440px] flex-col lg:flex-row lg:items-start lg:gap-[64px] px-[20px] lg:px-[64px] py-[64px]">
+      <Section id="cQd2ufFBWvr5c6ki" bgVariant="light">
+        <Container maxWidth="none" className="max-w-[1440px] flex flex-col lg:flex-row lg:items-start lg:gap-[64px] py-[64px]">
 
-          {/* Text column — sticky on desktop */}
-          <div className="text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
-            <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg">איך זה עובד?</SectionTitle>
+          {/* Text column — centered on mobile, right-aligned sticky on desktop */}
+          <div className="text-center lg:text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
+            <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg" className="!text-[clamp(48px,8vw,96px)] !leading-[1.1] mb-[24px]">איך זה עובד?</SectionTitle>
 
-            <p className="mt-[24px] text-canva-dark text-[clamp(15px,1.6vw,18px)] leading-[1.6] tracking-[0.012em]">
+            <BodyText className="text-[clamp(18px,2vw,22px)] leading-[1.4]">
               התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי.
-            </p>
+            </BodyText>
 
-            <a
-              href="#contact"
-              className="mt-[32px] inline-flex items-center justify-center bg-canva-mid text-white font-bold py-[14px] px-[32px] text-[15px] tracking-[0.138em] uppercase"
-            >
-              צרו קשר
-            </a>
+            <div className="mt-[48px]">
+              <ButtonLink href="#contact" variant="secondary" className="w-full sm:w-auto text-[18px]">
+                צרו קשר
+              </ButtonLink>
+            </div>
           </div>
 
-          {/* Cards container: 2x2 grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(24px,4vw,64px)] w-full">
+          {/* Cards container: 2x2 grid on mobile and desktop! */}
+          <Grid colsMobile={2} colsTablet={2} colsDesktop={2}>
             {STEPS.map((step, i) => (
               <StepCard
                 key={step.imageSrc}
@@ -82,12 +82,12 @@ export default function Services() {
                 title={step.title}
                 bullets={step.bullets}
                 delay={0}
-                staggerClass="w-full h-full lg:max-w-[600px] mx-auto shadow-2xl aspect-[4/5] lg:aspect-[4/3]"
+                staggerClass={`w-full h-full lg:max-w-[480px] mx-auto shadow-2xl aspect-[4/5] ${i % 2 === 1 ? 'translate-y-[24px] md:translate-y-[48px] lg:translate-y-[64px]' : ''}`}
               />
             ))}
-          </div>
-        </div>
-      </section>
+          </Grid>
+        </Container>
+      </Section>
 
       <div id="page-8" />
 

@@ -63,6 +63,7 @@ export default function Testimonials() {
                   src="/images/53a1f7530d2b45a3979a619311ec0dbf.jpg"
                   alt="זוג בטיפול"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover object-[50%_42%]"
                 />
               </div>
@@ -74,7 +75,7 @@ export default function Testimonials() {
                 alt="סימן ציטוט"
                 width={48}
                 height={48}
-                className="mb-[32px] opacity-80"
+                className="mb-[32px] opacity-80 w-auto h-auto"
               />
               <p className="text-[clamp(18px,1.6vw,22px)] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
@@ -112,6 +113,7 @@ export default function Testimonials() {
           <Image
             src="/images/311529093e852ce987bfa9b8b4953c4a.jpg"
             fill
+            sizes="100vw"
             className="object-cover opacity-90"
             alt=""
           />
@@ -166,6 +168,7 @@ export default function Testimonials() {
                   src={`/images/${img}`}
                   alt=""
                   fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
                 />
               </ScrollReveal>

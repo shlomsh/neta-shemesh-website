@@ -1,0 +1,9 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      "/Users/sh/work/nsw-wt/jsdom/tests-unit/image-paths.test.ts"
+    ],
+    "ignoreValues": []
+  }
+}
