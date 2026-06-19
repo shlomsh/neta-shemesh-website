@@ -49,7 +49,7 @@ export default function Expertise() {
               <div className="w-full h-full max-w-[1024px] mx-auto shadow-2xl p-[20px] lg:p-[40px]">
                 <ExpertiseCard
                   {...card}
-                  delay={0}
+                  delay={index * 0.12}
                 />
               </div>
             </div>

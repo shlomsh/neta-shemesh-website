@@ -26,14 +26,14 @@
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Expertise | 1280 | **Card background color ambiguity:** The template uses a dark card background with light text, while ours uses a cream background with dark text. | *Note for Team Lead: Is this an intentional redesign decision for the Hebrew version?* | P2 | OPEN |
-| Expertise | 375 | **Missing animation stagger gaps:** The 4 cards load simultaneously on mobile without the waterfall effect present in the Canva build. | `ScrollReveal` index stagger missing. | P3 | OPEN |
+| Expertise | 375 | **Missing animation stagger gaps:** The 4 cards load simultaneously on mobile without the waterfall effect present in the Canva build. | `ScrollReveal` index stagger missing. | P3 | FIXED |
 | Expertise | 1280/768/375 | **"מרחב בטוח לקשר שלכם" header card broken:** The dark background blob/pill overlay is collapsed, severely misaligned, or missing entirely behind the text. | The `onDark={true}` prop makes the text white, which causes it to become invisible or low-contrast against the underlying cream body background since its own container block (`#d1eV7SLN4TcFxQyE` / `#quTDyco8dtY8jpt9`) has collapsed out of the grid flow. | P1 | FIXED-pending-visual-verify |
 
 ## 4. Services (איך זה עובד? + סיפורי הצלחה) `[rebuild-in-flight]`
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Services | 1280 | **Massive visual inflation (~25% larger):** The entire section appears blown up in proportion compared to the template. | `py-32` and `gap-6` are being scaled up by the legacy `html` vw-engine because `styles.css` is still active. | P1 | FIXED-pending-visual-verify |
-| Services | 375 | **Card grid reflow squish:** Cards do not reflow cleanly into 1-up, squishing content. | Needs clamp/flex-wrap tuning. | P2 | OPEN |
+| Services | 375 | **Card grid reflow squish:** Cards do not reflow cleanly into 1-up, squishing content. | Needs clamp/flex-wrap tuning. | P2 | FIXED |
 
 ## 5. Testimonials
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
