@@ -4,7 +4,7 @@ import type { Step } from './services/types';
 
 const STEPS: Step[] = [
   {
-    imageSrc: 'images/458a9d55ce04ee5d6ff51c404cdc915a.jpg',
+    imageSrc: '/images/458a9d55ce04ee5d6ff51c404cdc915a.jpg',
     numberText: '01.',
     title: 'הערכה ראשונית והגדרת מטרות',
     bullets: [
@@ -14,7 +14,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    imageSrc: 'images/0cfa79f0cdffa491b0ddde7da08ff582.jpg',
+    imageSrc: '/images/0cfa79f0cdffa491b0ddde7da08ff582.jpg',
     numberText: '02.',
     title: 'בניית יחסי אמון',
     bullets: [
@@ -24,7 +24,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    imageSrc: 'images/3d824070dc5563aa93f1a328eea2d93c.jpg',
+    imageSrc: '/images/3d824070dc5563aa93f1a328eea2d93c.jpg',
     numberText: '03.',
     title: 'חקירה והבנה זוגית',
     bullets: [
@@ -34,7 +34,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    imageSrc: 'images/2830fcad4852229bcdffb0a37956e095.jpg',
+    imageSrc: '/images/2830fcad4852229bcdffb0a37956e095.jpg',
     numberText: '04.',
     title: 'רכישת כלים ויישום',
     bullets: [
@@ -81,7 +81,7 @@ export default function Services() {
             {STEPS.map((step, i) => (
               <div 
                 key={step.imageSrc} 
-                className="sticky top-0 lg:top-[10vh] h-[100dvh] lg:h-[80vh] w-full flex items-center justify-center shadow-2xl"
+                className="sticky top-0 lg:top-[10vh] h-[100dvh] w-full flex items-stretch justify-center shadow-2xl"
               >
                 <StepCard
                   imageSrc={step.imageSrc}
