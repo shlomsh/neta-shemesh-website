@@ -16,10 +16,11 @@ const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
  */
 
 const FONTS = [
-  { name: 'Dganit-Medium',       path: '/fonts/Dganit-Medium.woff2' },
   { name: 'Elamy-Regular',       path: '/fonts/Elamy-Regular.woff2' },
   { name: 'Elamy-Bold',          path: '/fonts/Elamy-Bold.woff2' },
+  { name: 'Stanga-Light',        path: '/fonts/stanga-light-aaa.woff2' },
   { name: 'Stanga-Regular',      path: '/fonts/stanga-regular-aaa.woff2' },
+  { name: 'Stanga-Bold',         path: '/fonts/stanga-bold-aaa.woff2' },
 ];
 
 test.describe('Font File Availability', () => {
@@ -43,11 +44,10 @@ test.describe('Font File Availability', () => {
     const className = await html.getAttribute('class') ?? '';
 
     // Next.js localFont() generates hashed class names like:
-    //   "dganit_fcb43083-module__xszqaq__variable"
+    //   "elamy_fcb43083-module__xszqaq__variable"
     // The class starts with the variable name, not "--font-<name>".
-    expect(className, 'Missing dganit font class on <html> — is Dganit-Medium.woff2 committed to git?').toMatch(/\bdganit_/);
     expect(className, 'Missing elamy font class on <html>  — is Elamy-Regular/Bold.woff2 committed to git?').toMatch(/\belamy_/);
-    expect(className, 'Missing stanga font class on <html> — is stanga-regular-aaa.woff2 committed to git?').toMatch(/\bstanga_/);
+    expect(className, 'Missing stanga font class on <html> — is stanga-regular/bold/light.woff2 committed to git?').toMatch(/\bstanga_/);
   });
 
 });
