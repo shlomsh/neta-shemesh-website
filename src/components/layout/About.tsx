@@ -197,7 +197,7 @@ export default function About() {
 
       <section
         dir="rtl"
-        className="relative overflow-hidden bg-[var(--color-white)] -mt-px"
+        className="relative overflow-hidden bg-[var(--color-white)] -mt-px min-h-[100svh] flex flex-col justify-center"
       >
         {/* Subtle rays background at low opacity */}
         <img
