@@ -23,9 +23,8 @@ export default function Expertise() {
             <h2
               id="vyKTmOw3YNYlJZPL"
               className="
-                font-[family-name:var(--font-stanga)]
-                font-bold
-                normal-case
+                section-header on-dark
+                font-[var(--font-canva-secondary)]
                 text-[var(--color-white)]
                 text-[clamp(28px,4.375vw,56px)]
                 leading-[1.2]

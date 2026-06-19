@@ -59,7 +59,7 @@ export default function Services() {
           <div className="text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
             <h2
               id="pEc3w8pe4QAw5k7o"
-              className="font-[family-name:var(--font-stanga)] font-bold text-[clamp(32px,5vw,56px)] leading-tight text-canva-dark normal-case"
+              className="font-[family-name:var(--font-canva-accent)] text-[clamp(32px,5vw,56px)] font-normal leading-tight text-canva-dark"
             >
               <span id="lEBZC8bpB2HUMalg">איך זה עובד?</span>
             </h2>
