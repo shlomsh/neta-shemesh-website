@@ -38,7 +38,7 @@
 ## 5. Testimonials
 | Section | Width(s) | Issue Description (Ours vs Template) | Measurements / Notes | Severity | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Testimonials | 1280 | **Structure fragmentation:** Section still exists as 4 raw DOM blobs. Positioning is fragile and relies on absolute `top/left` values. | Legacy `dangerouslySetInnerHTML` artifact. Needs Phase 1 rebuild. | P1 | OPEN |
+| Testimonials | 1280 | **Structure fragmentation:** Section still exists as 4 raw DOM blobs. Positioning is fragile and relies on absolute `top/left` values. | Legacy `dangerouslySetInnerHTML` artifact. Needs Phase 1 rebuild. | P1 | FIXED |
 | Testimonials | 375 | **Typography weight failure:** Quotes appear extremely thin and don't match the Canva font weight. | `font-synthesis: none` is blocking `font-bold`. Requires true Stanga bold webfont. | P2 | FIXED-pending-visual-verify |
 
 ## 6. Contact
