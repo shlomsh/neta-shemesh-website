@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../../canva-source/canva-fonts.css";
-import "../../canva-source/styles.css";
 import "./globals.css";
 
 
@@ -48,14 +47,12 @@ export const metadata: Metadata = {
 };
 
 import ScrollAnimator from "@/components/ScrollAnimator";
-import ViewportScale from "@/components/ViewportScale";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl" className={`${elamy.variable} ${stanga.variable}`}>
       <body>
         {children}
-        <ViewportScale />
         <ScrollAnimator />
       </body>
     </html>

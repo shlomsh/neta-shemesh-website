@@ -26,21 +26,15 @@
   --color-text-secondary: var(--color-canva-mid);
   --color-bg-light: var(--color-canva-bg);
 
-  /* Scale up body text because Hebrew fonts appear smaller.
-     NOTE: only --bfso (body font-size) may be scaled. --rfso multiplies the
-     *html* font-size, which is the rem unit the Canva "auto 100rem auto" grid is
-     built on — inflating it makes 100rem > 100vw and clips the layout off-screen
-     on narrow viewports. Keep --rfso at its default (1). */
+  /* Scale up body text because Hebrew fonts appear smaller. */
   --bfso: 1.1;
 }
 
-@media (min-width: 1024.05px) {
-  :root {
-    --rfso: 1.1;
-  }
-}
-
 @layer base {
+  html {
+    font-size: 16px;
+  }
+
   html, body {
     background-color: var(--color-canva-bg);
     color: var(--color-canva-dark);
@@ -54,41 +48,11 @@
   }
 }
 
-
-
 /* Canva Styles */
 
 /* Prevent flicker on initial load before animation is applied */
 .animated {
   opacity: 0;
-}
-
-/* --- CLEAN FADE-UP ANIMATION SYSTEM --- */
-
-@keyframes cleanFadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animation_container {
-  opacity: 0; /* Keep everything invisible on initial paint to prevent flicker */
-}
-
-/* Triggered by ScrollAnimator.tsx */
-.animation_container.start-animation {
-  /* Increased duration from 0.8s to 1.5s and used ease-out for a gentler, slower float */
-  animation: cleanFadeUp 1.5s ease-out forwards;
-}
-
-/* Overriding any stray Canva opacities that might conflict with our master animation */
-.animation_container.start-animation .animated {
-  opacity: 1 !important; 
 }
 
 /* Align map in Contact section to have a left gutter in RTL desktop view */
@@ -98,33 +62,6 @@
     margin-left: auto !important;
     margin-right: 0 !important;
     width: 100% !important;
-  }
-}
-
-
-/* ==========================================================================
-   EXPERTISE SECTION — Card grid & badge styles
-   (previously inline <style> in Expertise.tsx — moved here per Tailwind best practice)
-   ========================================================================== */
-
-@layer components {
-  /* Description lines inside expertise card badges */
-  .expertise-desc {
-    display: block;
-    font-size: 0.72em;
-    font-weight: 400;
-    line-height: 1.5;
-    margin-top: 0.35em;
-    opacity: 0.85;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-
-  @media (max-width: 1024px) {
-    /* Description lines inside expertise card badges — hidden; title-only display */
-    .expertise-desc {
-      display: none !important;
-    }
   }
 }
 
@@ -140,56 +77,6 @@
   white-space: normal !important;
   word-break: keep-all !important;
 }
-
-
-
-
-/* Canva Styles */
-
-/* Prevent flicker on initial load before animation is applied */
-.animated {
-  opacity: 0;
-}
-
-/* --- CLEAN FADE-UP ANIMATION SYSTEM --- */
-
-@keyframes cleanFadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animation_container {
-  opacity: 0; /* Keep everything invisible on initial paint to prevent flicker */
-}
-
-/* Triggered by ScrollAnimator.tsx */
-.animation_container.start-animation {
-  /* Increased duration from 0.8s to 1.5s and used ease-out for a gentler, slower float */
-  animation: cleanFadeUp 1.5s ease-out forwards;
-}
-
-/* Overriding any stray Canva opacities that might conflict with our master animation */
-.animation_container.start-animation .animated {
-  opacity: 1 !important; 
-}
-
-/* Align map in Contact section to have a left gutter in RTL desktop view */
-@media (min-width: 1024.05px) {
-  #LW4zsSyHyezRncZj {
-    max-width: 600px !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-  }
-}
-
-
 
 @layer components {
   :root { --header-color: var(--color-canva-dark); }   /* default: dark plum, for light surfaces */
@@ -299,4 +186,3 @@
     }
   }
 }
-

@@ -20,6 +20,37 @@ afterwards."*
   DOM-fingerprint goldens are EXPECTED to change — executors report diffs and **never** `UPDATE_GOLDEN`;
   lead + owner re-baseline the suite together after sections land.
 
+## STYLING STANDARD: Tailwind classes, NOT inline CSS (owner directive 2026-06-19, emphatic — "the whole point")
+Cryptic IDs + inline `style={{}}` are the Canva antipattern; reproducing them as inline styles is NOT a
+migration. Every rebuilt section MUST be idiomatic Tailwind:
+- Style with Tailwind utility CLASSES. For engine-independent sizing use ARBITRARY-VALUE classes:
+  `p-[16px]`, `px-[clamp(16px,4vw,64px)]`, `gap-[19px]`, `text-[clamp(24px,4.4vw,56px)]`, `leading-[1.1]`,
+  `tracking-[-0.02em]`, `max-w-[922px]`, `min-h-[clamp(560px,56.25vw,720px)]`, `rounded-[28px]`.
+- DO NOT use Tailwind default rem-scale utilities (`p-4`, `gap-6`, `text-xl`, `max-w-6xl`) — they are
+  rem/vw-coupled.
+- DO NOT use inline `style={{}}` EXCEPT for genuinely dynamic per-instance values (a computed stagger
+  delay, a dynamic background-image URL, a per-index transform). No static styling via `style`.
+- NO cryptic 16-char IDs — semantic classNames only; keep ONLY the section id + heading id(s) needed for
+  anchors/tests.
+- Backward-compatible look & feel: pixels unchanged, just expressed in clean Tailwind.
+NOTE: Footer/Contact/Expertise already landed using inline styles — they need a Tailwind-class conversion
+pass (look-preserving) before #1 is considered done.
+
+## NO TESTS DURING THE REWRITE PHASE (owner directive 2026-06-19, emphatic)
+We are mid short-blanket. Do straightforward refactoring ONLY. Do NOT run Playwright / the test suite
+during the rewrite — that is the spiral. Tests get fixed/re-baselined ONLY AFTER every legacy piece is
+completely removed (all sections rebuilt + atomic styles.css cutover done). Agents may run a single
+`next build` sanity check; no test runs. Priority order stays: #1 remove all Canva → #2 tests → #3 QA
+bugs → #4 template match.
+
+### End-of-rewrite VALIDATION agent (owner-requested) — run AFTER cutover, BEFORE touching tests
+Dispatch one final sonnet agent to confirm NO loose ends remain: zero SectionBand/gridArea/AnimatedBlock/
+rise-*/linear_fade/pulse/dangerouslySetInnerHTML/cryptic-16-char-IDs/Tailwind-rem-utilities across all
+src/components/layout/*.tsx; `canva-source/styles.css` import gone from layout.tsx; ViewportScale deleted
+and unreferenced; globals.css free of orphaned Canva rules (cleanFadeUp, expertise-desc, vw-engine vars);
+no leftover legacy files/imports; `next build` green. It REPORTS a loose-ends list (read-only audit) — it
+does not fix. Lead then assigns any loose end to an agent. Only after this is clean do we start #2 (tests).
+
 ## Execution tempo: SWIFT, no mid-rewrite spiral (owner directive 2026-06-19)
 - Executors **loop to completion autonomously** — rebuild the whole section, don't stop to ask.
 - **Be swift. Just rebuild.** Do NOT over-engineer; no abstractions/options/edge-case gold-plating
@@ -59,6 +90,13 @@ afterwards."*
   Tailwind rem utilities → px/clamp anchored render-neutral at 1280 (rem×12.8); desktop golden must
   stay byte-identical; swap AnimatedBlock/cleanFadeUp → ScrollReveal; drop empty
   `dangerouslySetInnerHTML`. Edit only `Services.tsx` + `StepCard.tsx`.
+
+## Hero font fix (owner, 2026-06-19) — HARD requirement at the Hero gate
+The current hero renders the title ("מקום בטוח לצמוח בו ביחד.") and the top-right "נטע שמש" logo in the
+WRONG font (looks like a fallback / non-heavy face — likely the `font-synthesis: none` + missing Stanga
+heavy-weight gotcha, agents.md §4). After the Hero rebuild lands, dispatch a dedicated sonnet agent to
+fix the hero title font AND the "נטע שמש" logo font to match the template (:8899). Do NOT merge Hero to
+main until both fonts are correct. (Can't run in parallel with the Hero rebuild — same file.)
 
 ## Consolidation directive (owner, 2026-06-19): at the NEXT checkpoint
 When the running executors land, **consolidate everything into `main`**: commit all working changes,
