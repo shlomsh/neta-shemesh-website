@@ -86,7 +86,7 @@ export default function Contact() {
           </ScrollReveal>
 
           {/* Right col on desktop: heading + body + social icons */}
-          <div className="flex flex-col gap-[24px] text-right">
+          <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
             <ScrollReveal delay={0.1}>
               <h2
                 id="ZgJbejfHoeBrgmf7"

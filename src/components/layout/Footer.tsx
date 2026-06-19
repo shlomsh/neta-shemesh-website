@@ -28,9 +28,9 @@ export default function Footer() {
       <div className="relative z-10 flex flex-col items-center gap-[clamp(32px,6vw,90px)] w-full max-w-[894px] text-center">
 
         {/* 1. Tagline */}
-        <FooterReveal delay={0}>
+        <FooterReveal delay={0} className="h-full">
           <p
-            className="text-[color:var(--color-white)] font-[family-name:var(--font-canva-secondary)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full"
+            className="text-[color:var(--color-white)] font-[family-name:var(--font-canva-secondary)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full h-full flex items-center justify-center"
             dir="rtl"
           >
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
