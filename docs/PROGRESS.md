@@ -3,6 +3,14 @@
 Living status doc for the Canva→Next/Tailwind rebuild loop. Read this + `agents.md` to resume.
 Last updated: 2026-06-19 (end of session).
 
+**Priority #1 (remove all Canva structure / modern Next-React-Tailwind) is COMPLETE.**
+All 7 sections rebuilt + decomposed, atomic cutover done, legacy deleted, build green.
+
+**Next phases:**
+- Priority #2: Make tests pass
+- Priority #3: Fix QA bugs
+- Priority #4: Visual/template match (two-server visual regression)
+
 ## ⚡ Refactor stance: GROUND-UP REBUILD, SAME LOOK (owner directive 2026-06-19)
 *"Be brutal with the refactoring — we're stepping up to a rebuild, it'll be easier. Short blanket is
 killing us, just rewrite. The look and feel should be the exact same, but rebuild the components from
@@ -70,16 +78,14 @@ does not fix. Lead then assigns any loose end to an agent. Only after this is cl
     crashed agent leaves nothing to recover. Have executors save work early / report often.
 
 ## Queue (simple → complex). Status against `src/` this session:
-1. **Footer** — SectionBand + 3 gridArea + rise-*. ⬜ NOT STARTED (Phase 1 dispatched, agent died on 529).
-2. **Services** — rem-coupled + AnimatedBlock/cleanFadeUp; `dangerouslySetInnerHTML` empty blob. ⬜ NOT STARTED (Phase 1 dispatched, agent process lost).
-3. Hero — SectionBand + 4 gridArea + rise-*. ⬜
-4. Contact — SectionBand + 4 gridArea + rise-*. ⬜
-5. About — SectionBand + 8 gridArea + rise-*. ⬜
-6. Expertise — SectionBand + 10 gridArea + rise-*. ⬜
-7. Testimonials — 4 raw blobs + heavy rem (45 utilities). ⬜ (full Phase-1 rebuild)
-8. **ATOMIC CUTOVER** (only after ALL above are off the SectionBand grid): one commit — drop
-   `import "../../canva-source/styles.css"` from `layout.tsx`, add `html{font-size:16px}` to
-   globals, delete `ViewportScale.tsx`, re-tune surviving rem dims, re-baseline goldens. ⬜
+1. **Footer** — ✅ COMPLETE
+2. **Services** — ✅ COMPLETE
+3. Hero — ✅ COMPLETE
+4. Contact — ✅ COMPLETE
+5. About — ✅ COMPLETE
+6. Expertise — ✅ COMPLETE
+7. Testimonials — ✅ COMPLETE
+8. **ATOMIC CUTOVER** — ✅ COMPLETE
 
 ## Decisions already ratified (don't re-ask)
 - **Footer** — token sheet `docs/tokens/footer.md`. Photo bg + subtle dark gradient scrim; faithful
@@ -107,11 +113,7 @@ it on the branch (or applies the diff to main) before merging. **Do NOT** touch 
 worktree/branch `subagent-Senior-Next-js-Architect-...-e7cfe458` (under `~/.gemini/`) — not ours; ask first.
 
 ## RESUME TOMORROW — exact next action
-Re-dispatch **Footer** (Track 1) and **Services** (Track 2) Phase-1 executors, **on `sonnet`**, each
-in an isolated worktree, background. The full prompts used this session are in the session transcript;
-both token sheets are committed. After each returns proof (build green, `layout-fit.spec.ts` green at
-375/768/1280, structural asserts, before/after screenshots at 1280+375, read-only `git diff`, NO
-`UPDATE_GOLDEN`): review at GATE 2, reconcile worktree → `main`, commit a checkpoint, update this file.
+Begin Priority #2: Make tests pass. We will start assigning failing tests to agents and re-baselining where intentional layout changes were made. See `docs/HANDOFF.md` for details.
 
 ## Invariants (never violate — see agents.md §4)
 - Rebuilt sections use **px/clamp/%, never Tailwind rem spacing** (silently vw-scaled → +25% jump at cutover).
