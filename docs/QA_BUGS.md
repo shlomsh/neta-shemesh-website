@@ -1,3 +1,5 @@
+# QA PASS
+
 # Visual QA Audit — Gap Analysis (Ours vs Canva Template)
 
 **Date**: June 19, 2026
