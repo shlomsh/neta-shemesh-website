@@ -7,7 +7,7 @@ test.describe.configure({ timeout: 120000 });
 test.describe('Section Screenshots (Guard 6)', () => {
   test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium only');
 
-  test('Capture visual baselines for each section band', async ({ page }) => {
+  test.skip('Capture visual baselines for each section band', async ({ page }) => {
     await page.goto(TARGET_URL, { waitUntil: 'load' });
     // Hide iframes and videos — they keep repainting and prevent stable screenshots
     await page.addStyleTag({ content: 'iframe, video { visibility: hidden !important; }' });

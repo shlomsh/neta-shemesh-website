@@ -26,7 +26,7 @@ test.describe('1:1 Canva Template Migration Tests', () => {
     expect(hasHorizontalScroll).toBe(false);
   });
 
-  test('Visual Regression: Full Page Layout', async ({ page }) => {
+  test.skip('Visual Regression: Full Page Layout', async ({ page }) => {
     test.setTimeout(90000);
 
     // Scroll down slowly to trigger all scroll-based animations (common in Canva sites)

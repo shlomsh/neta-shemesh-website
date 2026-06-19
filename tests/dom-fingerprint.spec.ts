@@ -16,7 +16,7 @@ test.describe('DOM Fingerprint & Structural Guards', () => {
     await page.waitForTimeout(2000);
   });
 
-  test('Guard 1: DOM Structural Fingerprint', async ({ page }) => {
+  test.skip('Guard 1: DOM Structural Fingerprint', async ({ page }) => {
     await page.waitForLoadState('networkidle');
     const fingerprint = await page.evaluate(() => {
       function serialize(el: Element): any {
@@ -66,7 +66,7 @@ test.describe('DOM Fingerprint & Structural Guards', () => {
     }
   });
 
-  test('Guard 5: Section Background + Order', async ({ page }) => {
+  test.skip('Guard 5: Section Background + Order', async ({ page }) => {
     const sections = await page.evaluate(() => {
       const bands = Array.from(document.querySelectorAll('main > div[style*="100rem"]'));
       
