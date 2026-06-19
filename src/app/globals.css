@@ -41,18 +41,6 @@
     font-family: var(--font-canva-primary);
     direction: rtl; /* Hebrew RTL */
   }
-
-  /* Force Canva animations to run immediately since we aren't using their JS */
-  .animated {
-    animation-play-state: running !important;
-  }
-}
-
-/* Canva Styles */
-
-/* Prevent flicker on initial load before animation is applied */
-.animated {
-  opacity: 0;
 }
 
 /* Align map in Contact section to have a left gutter in RTL desktop view */
@@ -63,19 +51,6 @@
     margin-right: 0 !important;
     width: 100% !important;
   }
-}
-
-/* Allow badge labels to wrap for the description text */
-#iX1y60KQCFRO2tz7,
-#nvYoaDfEf8PYEUkZ,
-#UTWENAM2BndHWxTG,
-#C6kwWbyjvll4Onps,
-#S4Z6ufGypobah33q,
-#sxTQm2kdPRgTXj9F {
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  white-space: normal !important;
-  word-break: keep-all !important;
 }
 
 @layer components {
@@ -104,85 +79,4 @@
   .hero-title, .hero-title span     { font-size: clamp(34px, 4.95vw, 63.36px) !important; }
   .section-header, .section-header span { font-size: clamp(28px, 4.375vw, 56px) !important; }
   .sub-header, .sub-header span     { font-size: clamp(22px, 2.42vw, 30.98px) !important; }
-
-  #expertise-cards-grid {
-    display: contents !important;
-  }
-
-  @media (max-width: 1024px) {
-    /* === Expertise section: 4-card 2×2 responsive grid === */
-    #expertise-cards-grid {
-      display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: clamp(0.75rem, 2vw, 1.5rem) !important;
-      width: 100% !important;
-      grid-column: 1 / -1 !important;
-    }
-    /* Card slot wrappers: leave the Canva grid, become equal grid cells */
-    #sHUJhhWFDhXUmSDT,
-    #XEshIf5fwajEMP2Z,
-    #awRn04UDaDpf7GxJ,
-    #ZquWGg5T0ljh4eIn {
-      position: static !important;
-      grid-area: unset !important;
-      aspect-ratio: 1 !important;
-    }
-    /* Inner card grid containers: fill the slot */
-    #AD7MMYAF35qSLOcl,
-    #xGtB40uOcM5p0nyc,
-    #KqNNMB2rkkLy6oh4,
-    #z7NlTyk90OLtuAKv {
-      display: block !important;
-      width: 100% !important;
-      height: 100% !important;
-    }
-    /* Card content grids: block layout so children can be absolutely positioned */
-    #NZ7UR8piGxyHMS3h,
-    #C5eOBGwWLxFG35zZ,
-    #iPSXEt3sFDwNE8Uh,
-    #pwgXdtHaRUlJFSmJ {
-      display: block !important;
-      position: relative !important;
-      width: 100% !important;
-      height: 100% !important;
-    }
-    /* Image containers: absolute-fill the card */
-    #hLpe3RMUgrAsHytK,
-    #NSdaUueXWfadgQsT,
-    #PsoRfW8aflDwlPun,
-    #lQbbLGJjVzrxwsHy {
-      position: absolute !important;
-      inset: 0 !important;
-      grid-area: unset !important;
-      z-index: 1 !important;
-    }
-  }
-  @media (max-width: 1024px) {
-    /* Text overlay badges: vertically centered on card (matches mobile template layout) */
-    #lSLyIhGivSGNBVUN,
-    #YVXTfTS7xMuImRo0,
-    #fGDTVi1RNpwxygWJ,
-    #Ljo8rtgnn6TikpkH {
-      position: absolute !important;
-      grid-area: unset !important;
-      top: 50% !important;
-      bottom: unset !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: max-content !important;
-      max-width: 88% !important;
-      z-index: 5 !important;
-    }
-    /* Title text in expertise pill: larger, single-line treatment */
-    #PdbLfACdCMxc8hQc,
-    #Wzs500xhWj981bgF,
-    #pXmZZ5dck4nyz4Aw,
-    #omJ5m5WtvdZ7KhnW {
-      font-size: clamp(14px, 3vw, 18px) !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.04em !important;
-      line-height: 1.2 !important;
-      white-space: nowrap !important;
-    }
-  }
 }

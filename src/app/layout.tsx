@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "../../canva-source/canva-fonts.css";
 import "./globals.css";
 
 
@@ -46,14 +45,11 @@ export const metadata: Metadata = {
   title: "נטע שמש — טיפול זוגי ומשפחתי",
 };
 
-import ScrollAnimator from "@/components/ScrollAnimator";
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl" className={`${elamy.variable} ${stanga.variable}`}>
       <body>
         {children}
-        <ScrollAnimator />
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { AnimatedBlock } from './AnimatedBlock';
 
 interface BadgeProps {
   svgId: string;
