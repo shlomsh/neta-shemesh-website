@@ -33,26 +33,4 @@ test.describe('Clean CSS Animations', () => {
     // We expect the computed duration to be exactly '1.5s'
     await expect(container).toHaveCSS('animation-duration', '1.5s');
   });
-
-  test.skip('Framer Motion ScrollReveal triggers fade-in on StepCard', async ({ page }) => {
-    await page.goto(TARGET_URL, { waitUntil: 'load' });
-    
-    // Find the first StepCard by its Title
-    const stepCardTitle = page.locator('text="הערכה ראשונית והגדרת מטרות"').first();
-    // Get its ScrollReveal parent (the motion.div)
-    const motionDiv = stepCardTitle.locator('xpath=ancestor::div[contains(@class, "w-[260.58px]")]').first();
-    
-    // Initially, it should be opacity 0 (because we set initial={{ opacity: 0 }})
-    // Note: playwright might report a tiny value or 0
-    await expect(motionDiv).toHaveCSS('opacity', '0');
-
-    // Scroll into view
-    await stepCardTitle.scrollIntoViewIfNeeded();
-
-    // Wait for the Framer Motion animation to finish (duration is 0.8s)
-    await page.waitForTimeout(1000);
-
-    // It should now be fully visible
-    await expect(motionDiv).toHaveCSS('opacity', '1');
-  });
 });

@@ -37,7 +37,7 @@ test.describe('Computed Style Golden Oracle', () => {
   });
 
   for (const vp of VIEWPORTS) {
-    test.skip(`Capture and assert styles at ${vp.name}`, async ({ page }) => {
+    test(`Capture and assert styles at ${vp.name}`, async ({ page }) => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto(TARGET_URL, { waitUntil: 'load' });
 

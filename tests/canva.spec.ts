@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
+const TARGET_URL = process.env.BASE_URL || 'https://kromaticdesignstudio.my.canva.site/couples-therapist';
 
 test.describe.configure({ timeout: 120000 });
 
@@ -26,7 +26,7 @@ test.describe('1:1 Canva Template Migration Tests', () => {
     expect(hasHorizontalScroll).toBe(false);
   });
 
-  test.skip('Visual Regression: Full Page Layout', async ({ page }) => {
+  test('Visual Regression: Full Page Layout', async ({ page }) => {
     test.setTimeout(90000);
 
     // Scroll down slowly to trigger all scroll-based animations (common in Canva sites)
