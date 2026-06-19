@@ -22,9 +22,24 @@ const elamy = localFont({
 });
 
 const stanga = localFont({
-  src: "../../public/fonts/stanga-regular-aaa.woff2",
+  src: [
+    {
+      path: "../../public/fonts/stanga-light-aaa.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/stanga-regular-aaa.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/stanga-bold-aaa.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-stanga",
-  weight: "400",
 });
 
 export const metadata: Metadata = {
