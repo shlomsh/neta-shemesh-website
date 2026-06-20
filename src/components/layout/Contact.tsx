@@ -3,7 +3,6 @@ import { SocialLinks } from './contact/SocialLinks';
 import { ContactDetails } from './contact/ContactDetails';
 import { MapEmbed } from './contact/MapEmbed';
 import { SectionTitle } from "../ui/SectionTitle";
-import { ContactForm } from "./contact/ContactForm";
 
 // ─── Content ────────────────────────────────────────────────────────────────
 const SOCIAL_HEADING = 'עקבו אחריי';
@@ -22,18 +21,6 @@ const PHONE = '(232) 000-8888';
 const PHONE_LABEL = 'התקשרו אלי היום';
 const EMAIL = 'INFO@YOURWEBSITE.COM';
 const EMAIL_LABEL = 'שלחו לי אימייל';
-
-// ─── Images (photo grid in social section) ───────────────────────────────────
-const PHOTOS = [
-  { src: '/images/cd66a766bd49488df6445af5e15baf9d.jpg', className: 'col-span-1 row-span-1' },
-  { src: '/images/06156d8b9572da9e8cf4bac79706e046.jpg', className: 'col-span-1 row-span-1' },
-  {
-    src: '/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg',
-    srcSet: '/images/21b39277211129c0ca3e465e0f913219.jpg 534w, /images/cf06e9544f6ebccd5ec2e44960196ab6.jpg 801w',
-    sizes: '(max-width: 375px) 76vw, (max-width: 768px) 37vw, 21vw',
-    className: 'col-span-1 row-span-2',
-  },
-];
 
 export default function Contact() {
   return (
@@ -110,17 +97,19 @@ export default function Contact() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          PANEL 2 — Office details + map + contact form
+          PANEL 2 — Office details + map
+          Template structure: details col (right in LTR → left in RTL) +
+          map col (left in LTR → right in RTL, ~55% width)
       ══════════════════════════════════════════════════════════════════════ */}
       <section
         id="contact-office"
         dir="rtl"
-        className="bg-[var(--color-dark)] py-[80px] px-[24px] border-t border-[#5c4d5c] min-h-[100svh] flex flex-col justify-center"
+        className="bg-[var(--color-dark)] py-[80px] px-[24px] border-t border-[#5c4d5c]"
       >
-        <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:gap-[64px]">
+        <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
 
-          {/* Right col on desktop: heading + body + details */}
-          <div className="flex flex-col gap-[24px] text-right lg:w-[45%] shrink-0">
+          {/* Right col on desktop (first in RTL DOM order): heading + body + contact details */}
+          <div className="flex flex-col gap-[24px] text-right lg:w-[40%] shrink-0">
             <ScrollReveal delay={0}>
               <SectionTitle id="zNSWHTotP3XOaXao" onDark>{OFFICE_HEADING}</SectionTitle>
             </ScrollReveal>
@@ -145,27 +134,12 @@ export default function Contact() {
                 addressLabel={ADDRESS_LABEL}
               />
             </ScrollReveal>
-
-            {/* Map — full width on mobile, inside detail col on desktop */}
-            <ScrollReveal delay={0.3}>
-              <MapEmbed />
-            </ScrollReveal>
           </div>
 
-          {/* Left col on desktop: contact form */}
-          <div className="flex flex-col gap-[24px] lg:flex-1">
-            <ScrollReveal delay={0.1}>
-              <h3
-                className="text-right text-[var(--color-white)] font-[family-name:var(--font-stanga)]"
-              >
-                שלחו הודעה
-              </h3>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.2}>
-              <ContactForm />
-            </ScrollReveal>
-          </div>
+          {/* Left col on desktop (second in RTL DOM order): map — full width on mobile */}
+          <ScrollReveal delay={0.3} className="lg:flex-1 min-h-[300px] lg:min-h-[400px]">
+            <MapEmbed className="h-full min-h-[300px] lg:min-h-[400px]" />
+          </ScrollReveal>
         </div>
       </section>
     </>
