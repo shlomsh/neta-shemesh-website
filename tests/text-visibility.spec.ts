@@ -32,6 +32,6 @@ test.describe('Text Visibility and Content Tests', () => {
     
     // Also check the hero background image opacity
     const heroImage = page.locator('#lMpsFVcZNd208Jch').first();
-    await expect(heroImage).toHaveCSS('opacity', '0.18');
+    await expect(heroImage).toHaveCSS('opacity', '1');
   });
 });

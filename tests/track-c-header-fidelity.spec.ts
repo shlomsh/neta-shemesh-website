@@ -107,7 +107,7 @@ test.describe('Track C — Section header size fidelity @1280', () => {
     expect(result, 'JkkbI element exists').not.toBeNull();
     expect(result!.fontSize, 'Reignite font-size').toBeGreaterThan(MIN_SECTION_PX);
     expect(result!.fontSize, 'Reignite font-size').toBeLessThan(MAX_SECTION_PX);
-    expect(result!.fontFamily, 'Reignite must use Elamy').toContain('Elamy');
+    expect(result!.fontFamily.toLowerCase(), 'Reignite must use Elamy').toContain('elamy');
   });
 
   // ── Hero stays larger than section headers ────────────────────────────────

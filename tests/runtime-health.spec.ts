@@ -52,6 +52,13 @@ test.describe('Runtime Health Guards', () => {
 
     // Guard 3: Image Integrity
     const imageElements = await page.evaluate(() => {
+      const isElementHidden = (el: HTMLElement | null): boolean => {
+        if (!el) return false;
+        const style = window.getComputedStyle(el);
+        if (style.display === 'none') return true;
+        return isElementHidden(el.parentElement);
+      };
+
       return Array.from(document.querySelectorAll('img')).map(img => {
         const srcCandidates: string[] = [];
         if (img.currentSrc) {
@@ -78,7 +85,8 @@ test.describe('Runtime Health Guards', () => {
         return {
           src: img.src,
           candidates: Array.from(new Set(srcCandidates)),
-          naturalWidth: img.naturalWidth
+          naturalWidth: img.naturalWidth,
+          isHidden: isElementHidden(img)
         };
       });
     });
@@ -86,6 +94,8 @@ test.describe('Runtime Health Guards', () => {
     const brokenImages: string[] = [];
     
     for (const img of imageElements) {
+      if (img.isHidden) continue; // Skip hidden elements (like mobile images on desktop viewports)
+
       if (img.naturalWidth === 0) {
         brokenImages.push(`Zero-width image: ${img.src}`);
       }
