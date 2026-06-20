@@ -149,7 +149,7 @@ export default function About() {
       {/* ── Section 2: Quote block ── */}
       <ScrollAnchor id="page-3" />
 
-      <Section id="about-quote" bgVariant="cream" className="-mt-px py-[clamp(48px,7vw,100px)]">
+      <Section id="about-quote" bgVariant="cream" fullHeight className="-mt-px py-[clamp(48px,7vw,100px)]">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 

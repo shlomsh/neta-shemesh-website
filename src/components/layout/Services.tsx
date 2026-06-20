@@ -91,7 +91,7 @@ export default function Services() {
                 title={step.title}
                 bullets={step.bullets}
                 delay={0}
-                staggerClass={`w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-[360px] mx-auto shadow-2xl aspect-[4/5] ${i % 2 === 1 ? 'mt-[24px] md:mt-[40px] lg:mt-[53px]' : ''}`}
+                staggerClass={`w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-[360px] mx-auto shadow-2xl aspect-[4/5] ${i % 2 === 1 ? 'md:mt-[40px] lg:mt-[53px]' : ''}`}
               />
             ))}
           </Grid>
