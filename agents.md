@@ -1,12 +1,49 @@
-# Project Context for AI Agents — Canva → Next/React/Tailwind Migration
+# Project Context for AI Agents
 
-Single source of truth for this migration. **Supersedes** `REFACTOR_TASKS.md`, `TRACK_C_QA.md`,
-and `docs/canva-animation-learnings.md` (their durable learnings are folded in here — those files
-can be archived/deleted). `netta_voice.md` is still the reference for Hebrew copy tone.
+**Stack:** Next.js (App Router) · Tailwind v4 (`@theme` in `globals.css`, no `tailwind.config`) · Playwright (visual + DOM regression). Site is **Hebrew / RTL**.
 
-**Stack:** Next.js (App Router) · Tailwind v4 (`@theme` in `globals.css`, no `tailwind.config`) ·
-Playwright (visual + DOM regression). Site is **Hebrew / RTL**. Origin: a static Canva HTML export
-(~15k lines of absolute/`rem` CSS in `canva-source/styles.css`).
+---
+
+## 1. Architecture & Guidelines
+
+- **Next.js App Router:** This is NOT the old Next.js Pages router — APIs may differ. Read `node_modules/next/dist/docs/` before writing any code if unsure.
+- **Component Structure:** Pure React functional components. All styling is done via Tailwind v4 utility classes.
+- **RTL Support:** The site is Hebrew `dir="rtl"`. When positioning elements, use logical properties (`start-*`, `end-*`) where applicable, and test layouts to ensure they don't break in RTL context.
+- **Animations:** Use `ScrollReveal` (framer-motion). Pass stagger delay as a prop computed on the server (`index * 0.12`). Keep parent grids/sections as server components (SEO-safe).
+- **Typography:** 
+  - `var(--font-canva-accent)` (Elamy): Titles, quotes, logo, handwriting.
+  - `var(--font-stanga)`: Body text, subtext, nav links, CTA buttons.
+
+## 2. Client Persona & Voice
+
+Neta Shemesh is a couple and family therapist with **15+ years of clinical experience**. She is an M.S.W. clinical social worker. Her work centers on guiding people through change, crisis, and growth.
+
+- **Tone:** Warm, calm, safe. Not clinical or cold.
+- **Tagline:** "מקום בטוח לצמוח בו ביחד" (A safe place to grow together).
+- **Primary CTA:** "תיאום פגישת ייעוץ" (Schedule a consultation). Channel is WhatsApp.
+- **Voice Reference:** See `netta_voice.md` for extended articles written by Neta to capture her exact style.
+- **Website Goal:** A marketing site that makes a warm first impression, establishes trust, explains the four service areas (Couple therapy, Family therapy, Parenting guidance, Personal accompaniment), and converts visitors into a low-friction first contact.
+
+## 3. Test Integrity
+
+- **Visual Regressions:** Tests catch visual regressions. Do not update goldens blindly (`UPDATE_GOLDEN=1`); if structure legitimately changed, re-baseline deliberately and prove the diff is scoped.
+- **Environment Determinism:** Tests run with `reducedMotion: 'reduce'` forcing `0s` so screenshots snap to the final frame.
+- **Layout Fit:** The `layout-fit` invariant (`tests/layout-fit.spec.ts`) ensures titles remain on-screen and text sizing is legible across viewports.
+
+## 4. Known Gotchas
+
+- **Safari WebKit Clipping:** Absolute children inside `overflow-hidden` + `border-radius` containers bleed in Safari. Use the `@utility safari-clip` class (which applies a CSS mask) on the parent container.
+- **CSS Import Order:** `import "./globals.css"` must remain last in `layout.tsx` so overrides apply correctly.
+- **Organic Backgrounds:** Render decorative SVGs as absolute layers (`z-0 pointer-events-none`) with content stacked `z-10`.
+- **Faded Background Patterns:** To fade a background image correctly behind text, render the `<img>` at full opacity (`opacity-100`) and place an absolute background color overlay with opacity *on top* of it.
+
+## 5. Governance & File Map
+
+- `main` is the single source of truth. Do not commit scratch files or logs.
+- Page: `src/app/page.tsx`
+- Layout/CSS: `src/app/layout.tsx`, `src/app/globals.css`
+- Tests: `tests/`
+- Copy tone: `netta_voice.md`
 
 ---
 
