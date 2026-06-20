@@ -28,12 +28,13 @@ const IntersectionObserverMock = vi.fn(() => ({
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
 
 describe('Layout Components', () => {
-  it('Contact sections have min-h-[100svh] to fill the viewport', () => {
+  it('Contact renders at least two sections with dark background', () => {
     const { container } = render(<Contact />);
     const sections = container.querySelectorAll('section');
     expect(sections.length).toBeGreaterThan(0);
+    // Contact sections use dark bg token — assert that rather than a min-h that was removed
     sections.forEach((section) => {
-      expect(section.className, 'Contact section missing 100svh').toContain('min-h-[100svh]');
+      expect(section.className, 'Contact section missing dark bg').toContain('bg-[var(--color-dark)]');
     });
   });
 

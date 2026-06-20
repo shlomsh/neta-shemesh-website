@@ -26,10 +26,12 @@ describe('Expertise.tsx — Grid layout classes', () => {
 });
 
 describe('Services.tsx — Grid layout classes', () => {
-  it('contains the 2x2 grid container', () => {
+  it('contains the Grid primitive container (mobile-single-col, tablet/desktop 2-col)', () => {
     const { container } = render(<Services />);
-    const grid = container.querySelector('.grid.grid-cols-2');
-    expect(grid, 'Services missing grid layout').not.toBeNull();
+    // Services uses colsMobile={1} colsTablet={2} colsDesktop={2} — so at mobile
+    // the Grid renders grid-cols-1 (single column). Assert the full responsive class set.
+    const grid = container.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-2');
+    expect(grid, 'Services missing Grid primitive with grid-cols-1 md:grid-cols-2 lg:grid-cols-2').not.toBeNull();
   });
 
   it('contains aspect ratio classes on the StepCards to prevent 0px height collapse', () => {
