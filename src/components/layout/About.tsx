@@ -149,7 +149,7 @@ export default function About() {
       {/* ── Section 2: Quote block ── */}
       <ScrollAnchor id="page-3" />
 
-      <Section id="about-quote" bgVariant="mid" className="-mt-px py-[clamp(48px,7vw,100px)]">
+      <Section id="about-quote" bgVariant="cream" className="-mt-px py-[clamp(48px,7vw,100px)]">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
@@ -175,7 +175,8 @@ export default function About() {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="w-[clamp(40px,5.6vw,72px)] h-auto"
+                  className="w-[clamp(40px,5.6vw,72px)] h-auto opacity-30"
+                  style={{ filter: 'brightness(0) saturate(100%) invert(22%) sepia(18%) saturate(800%) hue-rotate(260deg) brightness(60%)' }}
                 />
               </ScrollReveal>
 
@@ -188,7 +189,7 @@ export default function About() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.36}>
-                <p className="text-[var(--color-white)] font-[family-name:var(--font-canva-accent)] text-[clamp(28px,3vw,44px)] leading-[1.095] tracking-[-0.02em] normal-case">
+                <p className="type-signature mt-[clamp(8px,1.5vw,16px)] tracking-[-0.02em]">
                   נטע שמש
                 </p>
               </ScrollReveal>

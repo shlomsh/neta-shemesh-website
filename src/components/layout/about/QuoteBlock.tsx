@@ -6,26 +6,20 @@ export interface QuoteBlockProps {
 
 export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) {
   return (
-    <div className="flex flex-col gap-[0.75em]" dir="rtl">
+    <div className="flex flex-col gap-[1.1em]" dir="rtl">
       {lines.map((line, i) => (
         <p
           key={i}
-          data-body-large="true"
-          className="text-[var(--color-white)] leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-accent)]"
+          className="type-quote tracking-[0.012em]"
         >
           {line}
         </p>
       ))}
-      <div className="mt-[0.5em]">
-        <p
-          className="text-[var(--color-white)] font-bold leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)]"
-        >
+      <div className="mt-[1.5em]">
+        <p className="type-lead font-bold">
           {authorName}
         </p>
-        <p
-          data-body-large="true"
-          className="text-[var(--color-white)] italic leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)]"
-        >
+        <p className="type-small italic opacity-80">
           {authorTitle}
         </p>
       </div>

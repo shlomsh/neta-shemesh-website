@@ -144,3 +144,76 @@
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   isolation: isolate;
 }
+
+@layer components {
+  /* ── Centralized responsive type scale ───────────────────────────────────
+   * Mobile-first fluid clamp utilities. Use these classes instead of
+   * ad-hoc font/size/weight combos throughout the site.
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  .type-display {
+    font-family: var(--font-canva-accent);
+    font-weight: 400;
+    font-size: clamp(40px, 9vw, 88px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .type-title {
+    font-family: var(--font-canva-accent);
+    font-weight: 400;
+    font-size: clamp(30px, 5vw, 52px);
+    line-height: 1.15;
+  }
+
+  .type-card-title {
+    font-family: var(--font-stanga);
+    font-weight: 700;
+    font-size: clamp(22px, 3vw, 30px);
+    line-height: 1.25;
+  }
+
+  .type-quote {
+    font-family: var(--font-stanga);
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.5;
+  }
+
+  .type-lead {
+    font-family: var(--font-stanga);
+    font-weight: 400;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.6;
+  }
+
+  .type-body {
+    font-family: var(--font-stanga);
+    font-weight: 400;
+    font-size: clamp(16px, 1.6vw, 18px);
+    line-height: 1.65;
+  }
+
+  .type-small {
+    font-family: var(--font-stanga);
+    font-weight: 400;
+    font-size: clamp(14px, 1.3vw, 16px);
+    line-height: 1.5;
+  }
+
+  .type-eyebrow {
+    font-family: var(--font-stanga);
+    font-weight: 600;
+    font-size: clamp(13px, 1.2vw, 14px);
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .type-signature {
+    font-family: var(--font-canva-accent);
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.1;
+  }
+}
