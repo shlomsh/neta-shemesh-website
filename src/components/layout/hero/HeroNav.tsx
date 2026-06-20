@@ -45,6 +45,7 @@ export function HeroNav() {
           inline-flex items-center justify-center
           bg-[var(--color-brand-primary)]/75
           hover:bg-[var(--color-brand-primary)]
+          rounded-2xl
           px-[clamp(16px,2.5vw,32px)]
           h-[clamp(44px,5.4vw,54px)]
           text-[var(--color-white)]

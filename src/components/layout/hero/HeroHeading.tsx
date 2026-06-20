@@ -25,9 +25,9 @@ export function HeroHeading() {
         w-full
       "
     >
-      מקום בטוח{' '}
+      מקום בטוח לצמוח בו{' '}
       <span className="relative whitespace-nowrap">
-        לצמוח
+        ביחד.
         {/* Highlight underline accent */}
         <span
           aria-hidden="true"
@@ -40,8 +40,7 @@ export function HeroHeading() {
             rotate-[-1.2deg]
           "
         />
-      </span>{' '}
-      בו ביחד.
+      </span>
     </h1>
   );
 }
