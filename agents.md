@@ -14,6 +14,37 @@
   - `var(--font-canva-accent)` (Elamy): Titles, quotes, logo, handwriting.
   - `var(--font-stanga)`: Body text, subtext, nav links, CTA buttons.
 
+### Color System & Card Rotation (locked decision — 2026-06-20)
+
+**The 4-color palette** (defined as `@theme` tokens in `globals.css`; these are the ONLY brand colors — do not introduce new hexes):
+
+| Token | Hex | Role |
+|---|---|---|
+| `--color-canva-dark` | `#574964` | Dark plum — dark surfaces / primary text |
+| `--color-canva-mid` | `#9F8383` | Mid mauve — accent / brand |
+| `--color-canva-light` | `#C8AAAA` | Light blush — soft accent |
+| `--color-canva-bg` | `#fff0e4` | Warm cream — light surfaces (note: `--color-white` is aliased to this cream, NOT `#ffffff`) |
+
+**Approved background → text contrast pairs** (never deviate):
+
+| Background | Text color | WCAG | Notes |
+|---|---|---|---|
+| Dark `#574964` | Cream `#fff0e4` | 7.4:1 ✅ AAA | strong pair |
+| Cream `#fff0e4` | Dark `#574964` | 7.4:1 ✅ AAA | strong pair |
+| Light `#C8AAAA` | Dark `#574964` | 3.9:1 ⚠️ | **large text only** |
+| Mid `#9F8383` | Cream `#fff0e4` | 3.1:1 ⚠️ | **large text only** |
+
+**Rule of thumb:** Dark & Mid backgrounds → cream text; Light & Cream backgrounds → dark text.
+
+**"Faithful + bump type" accessibility policy:** We keep the exact palette hexes. Because Mid and Light backgrounds only clear WCAG AA for *large* text, any body copy sitting **directly on a mid or light surface** must be rendered as large text: **≥ 18.67px AND bold (700)**, or **≥ 24px** at any weight. Text that sits on a nested photo/card surface (StepCard, ExpertiseCard, TestimonialCard) is exempt — judge by the *visible* background.
+
+**Card background rotation:** Cards are screen-height sections. The 11 **solid** cards rotate **darkest → lightest, one tone per card**: `Dark → Mid → Light → Cream → …`. The 3 **photo** cards (Hero, CTA band, Footer) are excluded from the rotation and keep their photographic treatment + dark overlay.
+
+**Implementation mechanism (do not reinvent):**
+- Background + text color + the large-text bump are all driven by a `data-bg-tone="dark|mid|light|cream"` attribute (CSS rules live in `globals.css`). The `Section` primitive (`bgVariant` prop) applies this; bespoke `<section>`s set `data-bg-tone` directly.
+- The large-text bump is the `[data-body-large="true"]` CSS rule — add that attribute to any on-surface text element (`<p>`, `<a>`, etc.) inside a mid/light card. The `BodyText` primitive already carries it.
+- When changing a card's tone, **sync its descendants' text color**: remove hardcoded `text-white`/`onDark` where the new tone needs dark text, and vice versa, so color inherits from the tone.
+
 ## 2. Client Persona & Voice
 
 Neta Shemesh is a couple and family therapist with **15+ years of clinical experience**. She is an M.S.W. clinical social worker. Her work centers on guiding people through change, crisis, and growth.
