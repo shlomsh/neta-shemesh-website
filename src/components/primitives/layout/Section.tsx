@@ -1,6 +1,27 @@
 import React from 'react';
 
-type BgVariant = 'white' | 'light' | 'dark' | 'transparent';
+/**
+ * All accepted bgVariant values.
+ *
+ * Canonical 4-tone names:
+ *   'dark'        → #574964  (bg) + cream text
+ *   'mid'         → #9F8383  (bg) + cream text
+ *   'light'       → #C8AAAA  (bg) + dark text   (body text auto-bumped to AA large)
+ *   'cream'       → #fff0e4  (bg) + dark text
+ *   'transparent' → no background
+ *
+ * Legacy aliases (kept for backward-compat, mapped to canonical tone):
+ *   'white'       → maps to 'cream' behavior
+ *
+ * Note: the old 'light' variant previously mapped to --color-bg-light (≡ cream).
+ * It now maps to the new canva-light (#C8AAAA) tone. Any callers that relied on
+ * the old 'light' === cream behavior should migrate to 'cream'.
+ * Currently the only caller of bgVariant="light" is Services.tsx — verify intent.
+ */
+type BgVariant = 'dark' | 'mid' | 'light' | 'cream' | 'white' | 'transparent';
+
+/** Which data-bg-tone attribute to set (drives CSS custom properties in globals.css) */
+type BgTone = 'dark' | 'mid' | 'light' | 'cream' | undefined;
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   id: string;
@@ -9,16 +30,28 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
 }
 
-const BG_MAP: Record<BgVariant, string> = {
-  white: 'bg-[var(--color-white)]',
-  light: 'bg-[var(--color-bg-light)]',
-  dark: 'bg-[var(--color-dark)]',
-  transparent: 'bg-transparent',
+/**
+ * Maps canonical variant name → data-bg-tone value.
+ * The CSS in globals.css uses [data-bg-tone="…"] to set bg-color,
+ * foreground color, --header-color, and --section-needs-large-text.
+ */
+const TONE_MAP: Record<BgVariant, BgTone> = {
+  dark:        'dark',
+  mid:         'mid',
+  light:       'light',
+  cream:       'cream',
+  white:       'cream',   // legacy alias
+  transparent: undefined,
 };
 
 /**
- * Universal wrapper for standard pages/slides. 
- * Enforces RTL by default, sets background, and optionally locks to 100svh.
+ * Universal wrapper for standard pages/slides.
+ * Enforces RTL by default, sets background via data-bg-tone, and
+ * optionally locks to 100svh.
+ *
+ * Background + text color are controlled entirely by globals.css
+ * [data-bg-tone] selectors — callers no longer need to pair
+ * bgVariant with onDark manually.
  */
 export function Section({
   id,
@@ -29,12 +62,14 @@ export function Section({
   ...props
 }: SectionProps) {
   const heightClass = fullHeight ? 'min-h-[100svh] flex flex-col justify-center' : '';
-  
+  const tone = TONE_MAP[bgVariant];
+
   return (
     <section
       id={id}
       dir="rtl"
-      className={`relative w-full overflow-hidden ${BG_MAP[bgVariant]} ${heightClass} ${className}`}
+      data-bg-tone={tone}
+      className={`relative w-full overflow-hidden ${heightClass} ${className}`}
       {...props}
     >
       {children}

@@ -57,6 +57,64 @@
   :root { --header-color: var(--color-canva-dark); }   /* default: dark plum, for light surfaces */
   .on-dark { --header-color: var(--color-white); }      /* cream, for titles on dark bands */
 
+  /* ── 4-tone section system ───────────────────────────────────────────────
+   * Each tone sets its own background, foreground text color, and
+   * --header-color so descendant title primitives auto-adjust.
+   * data-bg-tone is set by <Section bgVariant=…>.
+   * ──────────────────────────────────────────────────────────────────────── */
+
+  /* Dark (#574964) — cream text */
+  [data-bg-tone="dark"] {
+    background-color: var(--color-canva-dark);
+    color: var(--color-canva-bg);
+    --header-color: var(--color-canva-bg);
+  }
+
+  /* Mid (#9F8383) — cream text */
+  [data-bg-tone="mid"] {
+    background-color: var(--color-canva-mid);
+    color: var(--color-canva-bg);
+    --header-color: var(--color-canva-bg);
+  }
+
+  /* Light (#C8AAAA) — dark text */
+  [data-bg-tone="light"] {
+    background-color: var(--color-canva-light);
+    color: var(--color-canva-dark);
+    --header-color: var(--color-canva-dark);
+  }
+
+  /* Cream (#fff0e4) — dark text */
+  [data-bg-tone="cream"] {
+    background-color: var(--color-canva-bg);
+    color: var(--color-canva-dark);
+    --header-color: var(--color-canva-dark);
+  }
+
+  /* ── Large-text AA bump for Mid and Light sections ──────────────────────
+   * Mid contrast ~3.1:1, Light ~3.9:1 — both pass WCAG AA only for
+   * large text (≥18.66 px bold OR ≥24 px regular).
+   * .body-text-large is applied by BodyText when it detects the section
+   * tone via the inherited CSS custom property --section-needs-large-text.
+   * We set that property to 1 on Mid/Light, and BodyText reads it.
+   * ──────────────────────────────────────────────────────────────────────── */
+  [data-bg-tone="mid"],
+  [data-bg-tone="light"] {
+    --section-needs-large-text: 1;
+  }
+
+  [data-bg-tone="dark"],
+  [data-bg-tone="cream"] {
+    --section-needs-large-text: 0;
+  }
+
+  /* The actual size/weight bump — applied via data attribute on the <p>
+   * so it doesn't bleed into unrelated text nodes. */
+  p[data-body-large="true"] {
+    font-size: clamp(18.67px, 1.6vw, 22px) !important;
+    font-weight: 700 !important;
+  }
+
   .hero-title, .hero-title span,
   .section-header, .section-header span {
     font-family: var(--font-canva-accent) !important;
