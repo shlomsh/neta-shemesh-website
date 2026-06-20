@@ -259,7 +259,7 @@ export default function About() {
             <div className="grid grid-cols-1 gap-[16px] w-full sm:grid-cols-3">
               {galleryPanels.map((panel, i) => (
                 <ScrollReveal key={i} delay={i * 0.12}>
-                  <div className="relative overflow-hidden rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)]">
+                  <div className="relative overflow-hidden rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)] safari-clip">
                     {/* intrinsic aspect ratio 348:531 ≈ 152.5% */}
                     <div className="pt-[152.47%]" />
                     <img

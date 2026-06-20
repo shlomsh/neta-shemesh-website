@@ -58,7 +58,7 @@ export default function Testimonials() {
           {/* Featured quote with portrait */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
             <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
-              <div className="relative aspect-[2/3] rounded-[24px] overflow-hidden shadow-xl">
+              <div className="relative aspect-[2/3] rounded-[24px] overflow-hidden shadow-xl safari-clip">
                 <Image
                   src="/images/53a1f7530d2b45a3979a619311ec0dbf.jpg"
                   alt="זוג בטיפול"
@@ -77,12 +77,12 @@ export default function Testimonials() {
                 height={48}
                 className="mb-[32px] opacity-80 w-[48px] h-[48px]"
               />
-              <p className="text-lg md:text-[20px] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
+              <p className="text-lg md:text-[26px] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
               </p>
               <div className="text-right">
-                <p className="font-bold text-[var(--color-text-primary)] text-base md:text-[16px]">ויני ואלכסיי</p>
-                <p className="italic text-[var(--color-text-primary)] text-sm md:text-[14px]">נשואים באושר</p>
+                <p className="font-bold text-[var(--color-text-primary)] text-base md:text-[20px]">ויני ואלכסיי</p>
+                <p className="italic text-[var(--color-text-primary)] text-sm md:text-[20px]">נשואים באושר</p>
               </div>
             </ScrollReveal>
           </div>
@@ -162,7 +162,7 @@ export default function Testimonials() {
               <ScrollReveal
                 key={img}
                 delay={0.1 * (i + 1)}
-                className="relative w-full aspect-[4/3] lg:aspect-square overflow-hidden rounded-[12px] shadow-sm"
+                className="relative w-full aspect-[4/3] lg:aspect-square overflow-hidden rounded-[12px] shadow-sm safari-clip"
               >
                 <Image
                   src={`/images/${img}`}

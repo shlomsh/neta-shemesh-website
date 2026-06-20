@@ -12,7 +12,7 @@ export function Attribution({ name, role, avatarSrc }: AttributionProps) {
     <div className="flex items-center justify-between mt-auto">
       <Avatar src={avatarSrc} alt={name} />
       <div className="text-right flex-grow">
-        <p className="font-bold text-[var(--color-text-primary)] text-sm md:text-[14px] leading-[1.4]">
+        <p className="font-bold text-[var(--color-text-primary)] text-sm md:text-[20px] leading-[1.4]">
           {name}
         </p>
         <p className="text-xs md:text-[12px] text-[var(--color-text-secondary)] leading-[1.4]">

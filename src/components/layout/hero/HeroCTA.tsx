@@ -19,17 +19,18 @@ export function HeroCTA() {
         href="#contact"
         className="
           inline-flex items-center justify-center
-          bg-[var(--color-brand-primary)] opacity-75
+          bg-[var(--color-brand-primary)]/75
+          hover:bg-[var(--color-brand-primary)]
           px-[clamp(16px,2.5vw,32px)]
           h-[clamp(44px,5.4vw,54px)]
           text-[var(--color-white)]
           font-[family-name:var(--font-stanga)]
           font-bold
           text-[clamp(13px,1.4vw,17px)]
+          md:text-[20px]
           tracking-[0.138em]
           leading-[1.375]
-          hover:opacity-100
-          transition-opacity
+          transition-colors
           whitespace-nowrap
         "
       >

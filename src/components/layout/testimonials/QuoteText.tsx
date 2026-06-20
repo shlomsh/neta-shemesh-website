@@ -12,7 +12,7 @@ export function QuoteText({ text }: QuoteTextProps) {
         font-[family-name:var(--font-canva-primary)]
         font-bold
         text-base
-        md:text-[18px]
+        md:text-[20px]
         leading-[1.65]
         text-right
         mt-[64px]

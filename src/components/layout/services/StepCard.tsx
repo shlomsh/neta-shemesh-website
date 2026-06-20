@@ -25,7 +25,7 @@ export function StepCard({
 }: StepCardProps) {
   return (
     <ScrollReveal delay={delay} className={`w-full h-full ${staggerClass}`}>
-      <div className="relative w-full h-full overflow-hidden rounded-[28px] shadow-lg">
+      <div className="relative w-full h-full overflow-hidden rounded-[28px] shadow-lg safari-clip">
         <StepImage src={imageSrc} alt={title} />
 
         {/* Legibility gradient so white text reads on any photo */}

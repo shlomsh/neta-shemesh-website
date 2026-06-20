@@ -11,20 +11,23 @@
  */
 export function BrandLogo() {
   return (
-    <p
+    <div
       id="Fyf1hlFV3WFGVXJq"
       dir="rtl"
-      className="
-        text-[var(--color-white)]
-        font-[family-name:var(--font-canva-accent)]
-        font-bold
-        text-[clamp(28px,4vw,52px)]
-        leading-[1.09]
-        tracking-[-0.02em]
-        whitespace-nowrap
-      "
+      className="flex items-center"
     >
-      נטע שמש
-    </p>
+      <img
+        src="/images/logo-horizontal-light.png"
+        alt="נטע שמש — טיפול זוגי ומשפחתי"
+        width={1073}
+        height={320}
+        className="
+          h-[48px] sm:h-[58px] md:h-[68px]
+          w-auto
+          object-contain
+        "
+        loading="eager"
+      />
+    </div>
   );
 }
