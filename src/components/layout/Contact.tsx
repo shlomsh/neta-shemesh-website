@@ -34,24 +34,36 @@ export default function Contact() {
       <section
         id="contact-social"
         dir="rtl"
-        className="bg-[var(--color-dark)] py-[80px] px-[24px] min-h-[100svh] flex flex-col justify-center"
+        className="bg-[var(--color-dark)] py-[80px] px-[24px]"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
-          {/* Left col on desktop: photo grid */}
+          {/* Heading on mobile — shown above photos only on small screens */}
+          <div className="flex flex-col gap-[24px] text-right lg:hidden">
+            <ScrollReveal delay={0}>
+              <SectionTitle id="ZgJbejfHoeBrgmf7-mobile" onDark>{SOCIAL_HEADING}</SectionTitle>
+            </ScrollReveal>
+          </div>
+
+          {/* Photo mosaic grid — mosaic of 3 portraits */}
+          {/*
+            Desktop layout (RTL mirrored from template):
+              Col 1 (right, wider): photo1 top + photo2 bottom (stacked)
+              Col 2 (left, narrower): photo3 spanning both rows (tall portrait)
+            Mobile: single-column stack of all 3 photos
+          */}
           <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0">
-            <div className="grid grid-cols-2 grid-rows-2 gap-[12px]">
-              {/* top-right portrait */}
-              <div className="rounded-[8px] overflow-hidden aspect-[4/3]">
+            {/* Mobile: simple vertical stack */}
+            <div className="flex flex-col gap-[16px] lg:hidden">
+              <div className="overflow-hidden aspect-[4/5] w-full">
                 <img
                   src="/images/cd66a766bd49488df6445af5e15baf9d.jpg"
                   alt=""
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
-              {/* top-left portrait */}
-              <div className="rounded-[8px] overflow-hidden aspect-[4/3]">
+              <div className="overflow-hidden aspect-[4/5] w-full">
                 <img
                   src="/images/06156d8b9572da9e8cf4bac79706e046.jpg"
                   alt=""
@@ -59,12 +71,60 @@ export default function Contact() {
                   className="w-full h-full object-cover object-[30%_64%]"
                 />
               </div>
-              {/* bottom spanning portrait */}
-              <div className="col-span-2 rounded-[8px] overflow-hidden aspect-[2/1]">
+              <div className="overflow-hidden aspect-[2/3] w-full">
                 <img
                   src="/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg"
                   srcSet="/images/21b39277211129c0ca3e465e0f913219.jpg 534w, /images/cf06e9544f6ebccd5ec2e44960196ab6.jpg 801w"
-                  sizes="(max-width: 375px) 76vw, (max-width: 768px) 37vw, 21vw"
+                  sizes="100vw"
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Desktop/tablet: 2-column mosaic grid */}
+            <div
+              className="hidden lg:grid gap-[16px]"
+              style={{
+                gridTemplateColumns: '1fr 1fr',
+                gridTemplateRows: 'auto auto',
+                gridTemplateAreas: '"p1 p3" "p2 p3"',
+              }}
+            >
+              {/* Photo 1 — top of left column */}
+              <div
+                className="overflow-hidden aspect-[4/5]"
+                style={{ gridArea: 'p1' }}
+              >
+                <img
+                  src="/images/cd66a766bd49488df6445af5e15baf9d.jpg"
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              {/* Photo 2 — bottom of left column */}
+              <div
+                className="overflow-hidden aspect-[4/5]"
+                style={{ gridArea: 'p2' }}
+              >
+                <img
+                  src="/images/06156d8b9572da9e8cf4bac79706e046.jpg"
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover object-[30%_64%]"
+                />
+              </div>
+              {/* Photo 3 — tall portrait spanning full height of right column */}
+              <div
+                className="overflow-hidden"
+                style={{ gridArea: 'p3', gridRow: '1 / 3' }}
+              >
+                <img
+                  src="/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg"
+                  srcSet="/images/21b39277211129c0ca3e465e0f913219.jpg 534w, /images/cf06e9544f6ebccd5ec2e44960196ab6.jpg 801w"
+                  sizes="(max-width: 768px) 37vw, 21vw"
                   alt=""
                   loading="lazy"
                   className="w-full h-full object-cover"
@@ -73,9 +133,9 @@ export default function Contact() {
             </div>
           </ScrollReveal>
 
-          {/* Right col on desktop: heading + body + social icons */}
+          {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
           <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
-            <ScrollReveal delay={0.1}>
+            <ScrollReveal delay={0.1} className="hidden lg:block">
               <SectionTitle id="ZgJbejfHoeBrgmf7" onDark>{SOCIAL_HEADING}</SectionTitle>
             </ScrollReveal>
 
