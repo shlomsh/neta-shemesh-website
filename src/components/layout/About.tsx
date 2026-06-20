@@ -80,7 +80,7 @@ export default function About() {
       {/* ── Section 1: Intro with photo collage + text ── */}
       <ScrollAnchor id="about" />
 
-      <Section id="about-intro" bgVariant="dark" className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id="about-intro" bgVariant="mid" className="-mt-px py-[clamp(56px,8vw,120px)]">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] lg:flex-row-reverse lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
