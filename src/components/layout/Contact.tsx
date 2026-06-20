@@ -142,6 +142,7 @@ export default function Contact() {
 
             <ScrollReveal delay={0.2}>
               <p
+                data-body-large="true"
                 className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[var(--color-white)]"
               >
                 {SOCIAL_BODY_START}
@@ -178,6 +179,7 @@ export default function Contact() {
 
             <ScrollReveal delay={0.1}>
               <p
+                data-body-large="true"
                 className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)]"
               >
                 {OFFICE_BODY_START}

@@ -31,11 +31,13 @@ export function ContactDetails({
         </span>
         <div className="text-right">
           <p
+            data-body-large="true"
             className="font-bold leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-inherit"
           >
             {addressStrong}
           </p>
           <p
+            data-body-large="true"
             className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-inherit"
           >
             {addressLabel}
@@ -56,11 +58,13 @@ export function ContactDetails({
         <div className="text-right">
           <a
             href={`tel:${phone.replace(/\s/g, '')}`}
+            data-body-large="true"
             className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit"
           >
             {phone}
           </a>
           <p
+            data-body-large="true"
             className="leading-[1.27] tracking-[0.05em] font-[family-name:var(--font-stanga)] text-inherit"
           >
             {phoneLabel}
@@ -81,11 +85,13 @@ export function ContactDetails({
         <div className="text-right">
           <a
             href={`mailto:${email}`}
+            data-body-large="true"
             className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit"
           >
             {email}
           </a>
           <p
+            data-body-large="true"
             className="leading-[1.27] tracking-[0.05em] font-[family-name:var(--font-stanga)] text-inherit"
           >
             {emailLabel}

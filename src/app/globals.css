@@ -108,9 +108,9 @@
     --section-needs-large-text: 0;
   }
 
-  /* The actual size/weight bump — applied via data attribute on the <p>
-   * so it doesn't bleed into unrelated text nodes. */
-  p[data-body-large="true"] {
+  /* The actual size/weight bump — applied via data attribute on the element
+   * so it doesn't bleed into unrelated text nodes. Matches <p>, <a>, etc. */
+  [data-body-large="true"] {
     font-size: clamp(18.67px, 1.6vw, 22px) !important;
     font-weight: 700 !important;
   }

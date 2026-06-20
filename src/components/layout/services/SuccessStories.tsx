@@ -19,7 +19,7 @@ export function SuccessStories() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <p className="text-[clamp(15px,1.6vw,18px)] leading-[1.6] tracking-[0.012em]">
+          <p data-body-large="true" className="text-[clamp(15px,1.6vw,18px)] leading-[1.6] tracking-[0.012em]">
             הנה כמה זוגות שעברו את התהליך בקליניקה ויצרו מציאות חדשה ומקרבת בחייהם.
           </p>
         </ScrollReveal>

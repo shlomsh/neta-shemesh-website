@@ -10,6 +10,7 @@ export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) 
       {lines.map((line, i) => (
         <p
           key={i}
+          data-body-large="true"
           className="text-[var(--color-white)] leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-canva-accent)]"
         >
           {line}
@@ -22,6 +23,7 @@ export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) 
           {authorName}
         </p>
         <p
+          data-body-large="true"
           className="text-[var(--color-white)] italic leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)]"
         >
           {authorTitle}
