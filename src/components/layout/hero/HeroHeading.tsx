@@ -25,7 +25,23 @@ export function HeroHeading() {
         w-full
       "
     >
-      מקום בטוח לצמוח בו ביחד.
+      מקום בטוח{' '}
+      <span className="relative whitespace-nowrap">
+        לצמוח
+        {/* Highlight underline accent */}
+        <span
+          aria-hidden="true"
+          className="
+            absolute inset-x-0 bottom-[0.08em] -z-10
+            h-[0.16em]
+            bg-[var(--color-canva-light)]
+            opacity-[0.55]
+            rounded-[6px]
+            rotate-[-1.2deg]
+          "
+        />
+      </span>{' '}
+      בו ביחד.
     </h1>
   );
 }

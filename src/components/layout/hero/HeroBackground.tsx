@@ -1,26 +1,17 @@
 /**
- * HeroBackground — full-bleed background image, mirrored horizontally
- * to match the original Canva design (scale(-1,1) transform).
+ * HeroBackground — "05B Dark Ground" treatment.
+ *
+ * Replaces the original full-bleed photo with a solid deep-plum field
+ * (--color-canva-dark / #574964). All hero text and the line-art
+ * illustration sit on top of this in lighter palette tones.
  *
  * Server component; no interactivity needed.
  */
 export function HeroBackground() {
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      {/* Mirror horizontally to match original Canva design (scale(-1,1)) */}
-      <div className="w-full h-full [-webkit-transform:scaleX(-1)] [transform:scaleX(-1)]">
-        <img
-          id="lMpsFVcZNd208Jch"
-          src="/images/4211b13c2664ad402dce9a3e5740987d.jpg"
-          srcSet="/images/04d6ac1bed10e8d5307f9d0b9972e487.jpg 1248w, /images/4211b13c2664ad402dce9a3e5740987d.jpg 2496w"
-          sizes="(max-width: 375px) 100vw, (max-width: 768px) 100vw, 100vw"
-          loading="eager"
-          alt=""
-          className="w-full h-full object-cover [object-position:58.48%_46.89%]"
-        />
-      </div>
-      {/* Subtle dark overlay to ensure text legibility */}
-      <div className="absolute inset-0 bg-[var(--color-canva-dark)] opacity-30" />
-    </div>
+    <div
+      className="absolute inset-0 bg-[var(--color-canva-dark)]"
+      aria-hidden="true"
+    />
   );
 }

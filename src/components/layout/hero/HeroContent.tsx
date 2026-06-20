@@ -1,10 +1,13 @@
 /**
- * HeroContent — server component that composes the text layer of the hero.
+ * HeroContent — composes the "05B Dark Ground" hero.
  *
- * Stacks: BrandLogo + HeroNav (top bar) → HeroHeading → HeroSubtext → HeroCTA.
- * Each block is wrapped in ScrollReveal with a staggered delay computed here
- * in the server parent (index * 0.1s) — keeps the client leaf pattern: only
- * ScrollReveal itself is a client component.
+ * Top bar (logo + nav) is pinned at the top. Below it, two zones sit
+ * side-by-side on desktop and stack on mobile:
+ *   - Text block (right in RTL): heading → subtext → CTA
+ *   - Art block (left in RTL): floating line-art illustration over a blob
+ *
+ * Each block is wrapped in ScrollReveal with a staggered delay. Only
+ * ScrollReveal is a client component; everything else stays server-side.
  */
 
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
@@ -13,6 +16,7 @@ import { HeroNav } from './HeroNav';
 import { HeroHeading } from './HeroHeading';
 import { HeroSubtext } from './HeroSubtext';
 import { HeroCTA } from './HeroCTA';
+import { HeroArt } from './HeroArt';
 
 export function HeroContent() {
   return (
@@ -34,18 +38,33 @@ export function HeroContent() {
         <HeroNav />
       </ScrollReveal>
 
-      {/* Middle Block: heading + subtext + CTA */}
-      <div className="flex flex-col gap-[clamp(16px,2vw,28px)] my-auto max-w-[clamp(280px,60vw,720px)]">
-        <ScrollReveal delay={0.1}>
-          <HeroHeading />
-        </ScrollReveal>
+      {/* ── Two zones: text + art ── */}
+      <div
+        className="
+          flex flex-col lg:flex-row
+          items-center
+          gap-[clamp(32px,5vw,56px)]
+          my-auto w-full
+        "
+      >
+        {/* Text block */}
+        <div className="flex flex-col gap-[clamp(16px,2vw,28px)] w-full lg:flex-[0_0_520px] max-w-[560px]">
+          <ScrollReveal delay={0.1}>
+            <HeroHeading />
+          </ScrollReveal>
 
-        <ScrollReveal delay={0.2}>
-          <HeroSubtext />
-        </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <HeroSubtext />
+          </ScrollReveal>
 
-        <ScrollReveal delay={0.3}>
-          <HeroCTA />
+          <ScrollReveal delay={0.3}>
+            <HeroCTA />
+          </ScrollReveal>
+        </div>
+
+        {/* Art block */}
+        <ScrollReveal delay={0.2} className="w-full lg:flex-1">
+          <HeroArt />
         </ScrollReveal>
       </div>
     </div>

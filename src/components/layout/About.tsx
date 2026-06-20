@@ -129,12 +129,12 @@ export default function About() {
 
               <ScrollReveal delay={0.12} className="relative z-10">
                 <div className="flex flex-col gap-[1em]">
-                  <BodyText onDark>
+                  <BodyText onDark className="type-lead">
                     מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
                     השחיקה או המשברים מעלים בנו תחושות של ריחוק ובדידות, דווקא
                     בתוך הביחד.
                   </BodyText>
-                  <BodyText onDark>
+                  <BodyText onDark className="type-lead">
                     בקליניקה שלי, אני מציעה לכם מרחב בטוח ומקבל שבו נוכל
                     להניח את מנגנוני ההגנה, ללמוד להקשיב באמת זה לזו, ולמצוא
                     את הגשר חזרה לחיבור, קירבה וביטחון זוגי.
@@ -250,7 +250,7 @@ export default function About() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.12}>
-                <BodyText centered>
+                <BodyText centered className="type-lead">
                   תמיכה והכוונה לבנייה מחדש של האמון וריפוי פצעים רגשיים בקשר.
                 </BodyText>
               </ScrollReveal>

@@ -43,11 +43,13 @@ export function BodyText({
         : ''; // inherit from section tone
 
   const alignClass = centered ? 'text-center' : 'text-right';
+  // Don't add type-body if caller already supplies a type-* scale class — their
+  // class would lose to type-body due to CSS declaration order otherwise.
+  const sizeClass = /\btype-[a-z]/.test(className) ? '' : 'type-body';
 
   return (
     <p
-      data-body-large="true"
-      className={`font-[family-name:var(--font-stanga)] leading-[1.46] tracking-[0.012em] text-[clamp(15px,1.2vw,18px)] ${colorClass} ${alignClass} ${className}`}
+      className={`${sizeClass} font-[family-name:var(--font-stanga)] tracking-[0.012em] ${colorClass} ${alignClass} ${className}`}
       {...props}
     >
       {children}

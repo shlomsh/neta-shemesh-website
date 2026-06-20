@@ -51,7 +51,7 @@ export default function Testimonials() {
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
             <SectionTitle id="Dct2rK7XCXJaLA2e" spanId="zxhh7nAzRvjXP5BT" className="text-center mb-[16px]">לקוחות ממליצים</SectionTitle>
-            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.46] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto text-base md:text-[16px]">
+            <p className="type-lead text-center text-[var(--color-text-primary)] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto">
               מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.
             </p>
           </ScrollReveal>
@@ -78,7 +78,7 @@ export default function Testimonials() {
                 height={48}
                 className="mb-[32px] opacity-80 w-[48px] h-[48px]"
               />
-              <p className="text-lg md:text-[26px] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
+              <p className="type-quote text-[var(--color-text-primary)] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
               </p>
               <div className="text-right">
@@ -146,7 +146,7 @@ export default function Testimonials() {
         <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
           <ScrollReveal delay={0.1}>
             <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" onDark className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
-            <p className="text-center font-[var(--font-stanga)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-base md:text-[16px]">
+            <p className="type-lead text-center mb-[64px] max-w-[768px] mx-auto">
               השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
             </p>
           </ScrollReveal>

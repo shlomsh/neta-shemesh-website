@@ -10,7 +10,7 @@ export function HeroSubtext() {
     <p
       dir="rtl"
       className="
-        text-[var(--color-white)]
+        text-[var(--color-canva-light)]
         font-[family-name:var(--font-stanga)]
         font-normal
         text-[clamp(18px,4vw,24px)]

@@ -15,7 +15,7 @@ export function Attribution({ name, role, avatarSrc }: AttributionProps) {
         <p className="font-bold text-[var(--color-text-primary)] text-sm md:text-[20px] leading-[1.4]">
           {name}
         </p>
-        <p className="text-xs md:text-[12px] text-[var(--color-text-secondary)] leading-[1.4]">
+        <p className="type-small text-[var(--color-text-secondary)]">
           {role}
         </p>
       </div>
