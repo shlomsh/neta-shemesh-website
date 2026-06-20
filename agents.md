@@ -64,9 +64,10 @@ The legacy `[data-body-large]` bold-bump still exists in `globals.css` for cards
 **Card background sequence:** Cards are screen-height sections. Backgrounds still progress through the palette for rhythm, but tone is chosen **content-first** (per the rule above), not by a rigid darkest→lightest cycle. The 3 **photo** cards (Hero, CTA band, Footer) keep their photographic treatment + dark overlay and sit outside the sequence. *(Worked example: the About/Quote personal-statement card moved Mid→Cream so its quote + italic attribution caption render cleanly at high contrast.)*
 
 **Implementation mechanism (do not reinvent):**
-- Background + text color + the large-text bump are all driven by a `data-bg-tone="dark|mid|light|cream"` attribute (CSS rules live in `globals.css`). The `Section` primitive (`bgVariant` prop) applies this; bespoke `<section>`s set `data-bg-tone` directly.
-- The large-text bump is the `[data-body-large="true"]` CSS rule — add that attribute to any on-surface text element (`<p>`, `<a>`, etc.) inside a mid/light card. The `BodyText` primitive already carries it.
+- Background + text color are driven by a `data-bg-tone="dark|mid|light|cream"` attribute (CSS rules live in `globals.css`). The `Section` primitive (`bgVariant` prop) applies this; bespoke `<section>`s set `data-bg-tone` directly.
 - When changing a card's tone, **sync its descendants' text color**: remove hardcoded `text-white`/`onDark` where the new tone needs dark text, and vice versa, so color inherits from the tone.
+- `[data-body-large]` is **deprecated** — do not add it to new elements. Solve contrast via content-aware tone assignment instead.
+- See `CLAUDE.md` for the full typography + color guidelines.
 
 ## 2. Client Persona & Voice
 
