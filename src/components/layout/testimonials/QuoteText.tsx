@@ -11,7 +11,8 @@ export function QuoteText({ text }: QuoteTextProps) {
         text-[var(--color-text-primary)]
         font-[family-name:var(--font-canva-primary)]
         font-bold
-        text-[clamp(16px,1.25vw,18px)]
+        text-base
+        md:text-[18px]
         leading-[1.65]
         text-right
         mt-[64px]

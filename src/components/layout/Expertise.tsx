@@ -23,7 +23,7 @@ export default function Expertise() {
         {/* Section header */}
         <ScrollReveal delay={0}>
           <div className="text-center mb-[clamp(24px,4vw,48px)]">
-            <SectionTitle id="vyKTmOw3YNYlJZPL" onDark className="mb-[clamp(12px,1.5vw,20px)]">מרחב בטוח לקשר שלכם</SectionTitle>
+            <SectionTitle id="vyKTmOw3YNYlJZPL" onDark className="mb-[clamp(12px,1.5vw,20px)]">מקום בטוח לצמוח בו ביחד.</SectionTitle>
             <p
               className="
                 font-[var(--font-stanga)]

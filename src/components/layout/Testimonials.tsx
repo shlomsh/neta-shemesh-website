@@ -50,26 +50,26 @@ export default function Testimonials() {
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
             <SectionTitle id="Dct2rK7XCXJaLA2e" spanId="zxhh7nAzRvjXP5BT" className="text-center mb-[16px]">לקוחות ממליצים</SectionTitle>
-            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.46] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto text-[clamp(15px,1.1vw,17px)]">
+            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.46] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto text-base md:text-[16px]">
               מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.
             </p>
           </ScrollReveal>
 
           {/* Featured quote with portrait */}
-          <div className="flex flex-col lg:flex-row items-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
-            <ScrollReveal delay={0.2} className="w-full lg:w-1/2">
-              <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden shadow-xl">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
+            <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
+              <div className="relative aspect-[2/3] rounded-[24px] overflow-hidden shadow-xl">
                 <Image
                   src="/images/53a1f7530d2b45a3979a619311ec0dbf.jpg"
                   alt="זוג בטיפול"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 1024px) 100vw, 360px"
                   className="object-cover object-[50%_42%]"
                 />
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.3} className="w-full lg:w-1/2 flex flex-col justify-center">
+            <ScrollReveal delay={0.3} className="w-full lg:flex-1 flex flex-col justify-center">
               <Image
                 src="/images/1a0fad1200f4c50ec29a1572952d760f.svg"
                 alt="סימן ציטוט"
@@ -77,12 +77,12 @@ export default function Testimonials() {
                 height={48}
                 className="mb-[32px] opacity-80 w-auto h-auto"
               />
-              <p className="text-[clamp(18px,1.6vw,22px)] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
+              <p className="text-lg md:text-[20px] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
               </p>
               <div className="text-right">
-                <p className="font-bold text-[var(--color-text-primary)] text-[clamp(15px,1.1vw,18px)]">ויני ואלכסיי</p>
-                <p className="italic text-[var(--color-text-primary)] text-[clamp(13px,0.95vw,16px)]">נשואים באושר</p>
+                <p className="font-bold text-[var(--color-text-primary)] text-base md:text-[16px]">ויני ואלכסיי</p>
+                <p className="italic text-[var(--color-text-primary)] text-sm md:text-[14px]">נשואים באושר</p>
               </div>
             </ScrollReveal>
           </div>
@@ -145,7 +145,7 @@ export default function Testimonials() {
         <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
           <ScrollReveal delay={0.1}>
             <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
-            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-[clamp(15px,1.1vw,18px)]">
+            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-base md:text-[16px]">
               השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
             </p>
           </ScrollReveal>
