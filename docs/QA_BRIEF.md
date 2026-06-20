@@ -37,6 +37,11 @@ If a server is down: template → `python3 -m http.server 8899 --directory refer
   those bugs `[rebuild-in-flight]` so we don't double-handle.
 - Judge fidelity at **1280**. Below that, only flag genuine breakage (clipping, overlap, unreadable).
 
+### RECENT FINDINGS (Pay specific attention to these!):
+- **Cross-Section Typography Hierarchy:** We discovered that different sections (e.g., "How It Works?" vs "What We Can Work On") might use the exact same base font sizes in the original Canva template. When measuring font sizes, verify if Canva treats these titles identically. If so, flag any deviations in our app where one title has been artificially made larger than another.
+- **Element Misplacement (e.g., Header vs Hero):** Pay close attention to the structural location of UI elements. For example, the phone number CTA button (`+01 234 5678 90`) might belong in the sticky Header navigation, but was erroneously placed inside the Hero body in our app. 
+- **Mobile Vertical Spacing (Empty Space):** Scrutinize the vertical padding and flexbox alignment, especially in the Hero section on mobile (375px). Look for instances where our app pushes content too far down the screen compared to the centered, tighter layout of the Canva template.
+
 ## Sections to walk (top → bottom)
 Hero · About · Expertise · Services ("איך זה עובד?" + "סיפורי הצלחה" video band) · Testimonials ·
 Contact · Footer. For each: scroll both servers to the section, screenshot at 1280/768/375, compare,

@@ -32,9 +32,4 @@ describe('Services mobile and desktop layout', () => {
     expect(staggeredCard, 'Odd-indexed cards should be staggered down using translate-y').not.toBeNull();
   });
 
-  it('Services title should have an explicitly large clamped font size to match template', () => {
-    const { container } = render(<Services />);
-    const title = container.querySelector('h2');
-    expect(title?.className).toContain('!text-[clamp(48px,8vw,96px)]');
-  });
 });

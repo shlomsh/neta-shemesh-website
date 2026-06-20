@@ -19,7 +19,7 @@ export function HeroHeading() {
         text-[var(--color-white)]
         font-[family-name:var(--font-canva-accent)]
         font-bold
-        text-[clamp(34px,5vw,64px)]
+        text-[clamp(48px,12vw,72px)]
         leading-[1.1]
         tracking-[-0.02em]
         w-full

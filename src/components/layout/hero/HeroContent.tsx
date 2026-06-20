@@ -34,8 +34,8 @@ export function HeroContent() {
         <HeroNav />
       </ScrollReveal>
 
-      {/* ── Middle Block: heading + subtext + CTA ── */}
-      <div className="flex flex-col gap-[clamp(16px,2vw,28px)] mt-auto mb-[15vh] max-w-[clamp(280px,60vw,720px)]">
+      {/* Middle Block: heading + subtext + CTA */}
+      <div className="flex flex-col gap-[clamp(16px,2vw,28px)] my-auto max-w-[clamp(280px,60vw,720px)]">
         <ScrollReveal delay={0.1}>
           <HeroHeading />
         </ScrollReveal>

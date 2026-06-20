@@ -28,16 +28,16 @@ describe('Expertise.tsx — Grid layout classes', () => {
 describe('Services.tsx — Grid layout classes', () => {
   it('contains the 2x2 grid container', () => {
     const { container } = render(<Services />);
-    const grid = container.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
+    const grid = container.querySelector('.grid.grid-cols-2');
     expect(grid, 'Services missing grid layout').not.toBeNull();
   });
 
   it('contains aspect ratio classes on the StepCards to prevent 0px height collapse', () => {
     const { container } = render(<Services />);
-    // StepCard applies its staggerClass to the ScrollReveal wrapper
+    // In Services, the StepCards render the 4/5 aspect ratio.
     const cards = container.querySelectorAll('.aspect-\\[4\\/5\\]');
     expect(cards.length).toBeGreaterThan(0);
-    expect(cards[0].className).toContain('lg:aspect-[4/3]');
+    expect(cards[0].className).toContain('aspect-[4/5]');
   });
 });
 

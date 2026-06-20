@@ -13,7 +13,7 @@ export function HeroSubtext() {
         text-[var(--color-white)]
         font-[family-name:var(--font-stanga)]
         font-normal
-        text-[clamp(15px,1.6vw,20px)]
+        text-[clamp(18px,4vw,24px)]
         leading-[1.45]
         tracking-[0.012em]
         w-full

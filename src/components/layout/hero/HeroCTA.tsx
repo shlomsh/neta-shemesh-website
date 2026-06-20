@@ -35,25 +35,6 @@ export function HeroCTA() {
       >
         ייעוץ עם נטע שמש
       </a>
-
-      {/* Phone badge */}
-      <div
-        className="
-          inline-flex items-center justify-center
-          bg-[var(--color-brand-primary)]
-          px-[clamp(16px,2.5vw,32px)]
-          h-[clamp(44px,5.4vw,54px)]
-          text-[var(--color-white)]
-          font-[family-name:var(--font-stanga)]
-          font-bold
-          text-[clamp(13px,1.4vw,17px)]
-          tracking-[0.138em]
-          leading-[1.375]
-          whitespace-nowrap
-        "
-      >
-        +01 234 5678 90
-      </div>
     </div>
   );
 }

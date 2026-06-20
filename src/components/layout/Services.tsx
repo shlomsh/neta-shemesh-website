@@ -59,7 +59,7 @@ export default function Services() {
 
           {/* Text column — centered on mobile, right-aligned sticky on desktop */}
           <div className="text-center lg:text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
-            <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg" className="!text-[clamp(48px,8vw,96px)] !leading-[1.1] mb-[24px]">איך זה עובד?</SectionTitle>
+            <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg" className="mb-[24px]">איך זה עובד?</SectionTitle>
 
             <BodyText className="text-[clamp(18px,2vw,22px)] leading-[1.4]">
               התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי.
