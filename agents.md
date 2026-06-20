@@ -149,6 +149,8 @@ Then "done" is checkable. One section at a time, committed, fully off `canva-sou
   Canva's high-specificity `styles.css`.
 - **Organic backgrounds:** render decorative SVGs as absolute layers (`z-0 pointer-events-none`) with
   content stacked `z-10`. Watch `overflow-hidden` cropping circular avatars.
+- **Tailwind v4 clamp() limits:** `text-[clamp(...)]` fails silently in v4 if it doesn't map directly to a recognized length/size token, causing it to fall back to browser default sizes (e.g., `24px` for an `h2`). When needing fluid text, rely on defined CSS classes (like `.section-header` in `globals.css`) rather than inline arbitrary clamp utilities.
+- **Playwright BASE_URL Gotcha:** If Github Actions runs `BASE_URL=http://localhost:3000 npx playwright test` but the next server isn't already running in the background, Playwright's `webServer` block will automatically spin it up. However, if tests fall back to `https://kromaticdesignstudio.my.canva.site` when `process.env.BASE_URL` is empty locally, you will get confusing title mismatches. Always run `npm run start` explicitly or ensure `BASE_URL` is passed correctly in local environments.
 
 **React / Next**
 - If you still use `dangerouslySetInnerHTML` (legacy/transition only): **never** regex `class=`→
