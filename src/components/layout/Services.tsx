@@ -55,10 +55,16 @@ export default function Services() {
   return (
     <>
       <Section id="cQd2ufFBWvr5c6ki" bgVariant="light">
-        <Container maxWidth="none" className="max-w-[1440px] flex flex-col lg:flex-row lg:items-start lg:gap-[64px] py-[64px]">
+        {/*
+          P1 fix: replaced translate-y stagger with margin-top on even cards so the
+          container grows naturally (translate-y is out-of-flow and gets clipped by
+          Section overflow-hidden). pb-[96px] gives ~90px gap below card-4 at 1280.
+          P2 fix: md:flex-row makes tablet side-by-side (text col + 2-col card grid).
+        */}
+        <Container maxWidth="none" className="max-w-[1440px] flex flex-col md:flex-row md:items-start md:gap-[48px] lg:flex-row lg:items-start lg:gap-[64px] pt-[64px] pb-[96px]">
 
           {/* Text column — centered on mobile, right-aligned sticky on desktop */}
-          <div className="text-center lg:text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] lg:mb-0">
+          <div className="text-center md:text-right md:w-[320px] md:shrink-0 lg:text-right lg:w-[400px] lg:shrink-0 lg:sticky lg:top-[20vh] z-10 mb-[48px] md:mb-0 lg:mb-0">
             <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg" className="mb-[24px]">איך זה עובד?</SectionTitle>
 
             <BodyText className="text-[clamp(18px,2vw,22px)] leading-[1.4]">
@@ -72,8 +78,11 @@ export default function Services() {
             </div>
           </div>
 
-          {/* Cards container: 2x2 grid on mobile and desktop! */}
-          <Grid colsMobile={2} colsTablet={2} colsDesktop={2}>
+          {/*
+            P2 fix: colsMobile={1} → single column at 375px.
+            P3 fix: reduced gap to ~30px, stagger reduced to ~53px, max-width reduced to ~360px.
+          */}
+          <Grid colsMobile={1} colsTablet={2} colsDesktop={2} className="gap-x-[30px] gap-y-[30px]">
             {STEPS.map((step, i) => (
               <StepCard
                 key={step.imageSrc}
@@ -82,7 +91,7 @@ export default function Services() {
                 title={step.title}
                 bullets={step.bullets}
                 delay={0}
-                staggerClass={`w-full h-full lg:max-w-[480px] mx-auto shadow-2xl aspect-[4/5] ${i % 2 === 1 ? 'translate-y-[24px] md:translate-y-[48px] lg:translate-y-[64px]' : ''}`}
+                staggerClass={`w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-[360px] mx-auto shadow-2xl aspect-[4/5] ${i % 2 === 1 ? 'mt-[24px] md:mt-[40px] lg:mt-[53px]' : ''}`}
               />
             ))}
           </Grid>
