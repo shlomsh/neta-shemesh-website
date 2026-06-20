@@ -75,7 +75,7 @@ export default function Testimonials() {
                 alt="סימן ציטוט"
                 width={48}
                 height={48}
-                className="mb-[32px] opacity-80 w-auto h-auto"
+                className="mb-[32px] opacity-80 w-[48px] h-[48px]"
               />
               <p className="text-lg md:text-[20px] text-[var(--color-text-primary)] font-[var(--font-canva-accent)] font-bold leading-[1.6] mb-[40px] text-right">
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
