@@ -11,8 +11,26 @@
 - **RTL Support:** The site is Hebrew `dir="rtl"`. When positioning elements, use logical properties (`start-*`, `end-*`) where applicable, and test layouts to ensure they don't break in RTL context.
 - **Animations:** Use `ScrollReveal` (framer-motion). Pass stagger delay as a prop computed on the server (`index * 0.12`). Keep parent grids/sections as server components (SEO-safe).
 - **Typography:** 
-  - `var(--font-canva-accent)` (Elamy): Titles, quotes, logo, handwriting.
-  - `var(--font-stanga)`: Body text, subtext, nav links, CTA buttons.
+  - `var(--font-canva-accent)` (Elamy): a **decorative handwriting/display** font. Use ONLY for hero/section display titles, short quotes-as-display, the logo, and signatures. **Never for body paragraphs** (it is unreadable as running text, especially RTL Hebrew — this was a real bug).
+  - `var(--font-stanga)`: the clean body font — all paragraphs, body, captions, names, labels, nav, CTA.
+
+### Responsive Type Scale (canonical — added 2026-06-20)
+
+Sizing is centralized as fluid `clamp()` utility classes in `globals.css`. **Use these classes; do not hardcode ad-hoc `text-[..px]` / weights per section** (the original Canva-imported sizes were random — 13/15/16/18.67/28/31px with inconsistent weights). Mobile-first; body never below 16px.
+
+| Class | Size (mobile → desktop) | Font / Weight | LH | Use for |
+|---|---|---|---|---|
+| `.type-display` | `clamp(40px,9vw,88px)` | accent / 400 | 1.05 | Hero title |
+| `.type-title` | `clamp(30px,5vw,52px)` | accent / 400 | 1.15 | Section H2 |
+| `.type-card-title` | `clamp(22px,3vw,30px)` | body / 700 | 1.25 | Card/sub headings |
+| `.type-quote` | `clamp(24px,3vw,32px)` | body / 400 | 1.5 | Pull-quotes, personal statement |
+| `.type-lead` | `clamp(18px,2vw,22px)` | body / 400 | 1.6 | Intro/lead paragraph |
+| `.type-body` | `clamp(16px,1.6vw,18px)` | body / 400 | 1.65 | Default paragraph |
+| `.type-small` | `clamp(14px,1.3vw,16px)` | body / 400 | 1.5 | Captions, attribution title |
+| `.type-eyebrow` | `clamp(13px,1.2vw,14px)` | body / 600, +0.08em, upper | 1.4 | Labels/eyebrows (Latin only) |
+| `.type-signature` | `clamp(32px,5vw,56px)` | accent / 400 | 1.1 | Handwritten signature |
+
+Best-practice rules: max two weights per font family; line length ~65ch max; comfortable line-height (1.6–1.7 body, 1.1–1.2 display); build hierarchy with **size + the body/accent font split**, not by bolding everything.
 
 ### Color System & Card Rotation (locked decision — 2026-06-20)
 
@@ -36,9 +54,14 @@
 
 **Rule of thumb:** Dark & Mid backgrounds → cream text; Light & Cream backgrounds → dark text.
 
-**"Faithful + bump type" accessibility policy:** We keep the exact palette hexes. Because Mid and Light backgrounds only clear WCAG AA for *large* text, any body copy sitting **directly on a mid or light surface** must be rendered as large text: **≥ 18.67px AND bold (700)**, or **≥ 24px** at any weight. Text that sits on a nested photo/card surface (StepCard, ExpertiseCard, TestimonialCard) is exempt — judge by the *visible* background.
+**Accessibility — content-aware color assignment (SUPERSEDES the earlier "bump to bold 700" rule, 2026-06-20):** We keep the exact palette hexes. Because Mid and Light only clear WCAG AA for *large* text, **do not force body copy bold to compensate** — that flattens typography (it ruined the About/Quote card). Instead, **assign tone by content**:
+- **Paragraph- or detail-heavy cards** (running body text, small captions, contact details, forms) → **Dark or Cream** (7.4:1, full type freedom at any size/weight).
+- **Mid / Light** → reserved for cards whose on-surface text is **display/quote-scale only** (`.type-title` / `.type-quote`, i.e. ≥24px regular or genuinely large), or image-dominant cards with minimal text.
+- Text on a nested photo/card surface (StepCard, ExpertiseCard, TestimonialCard) is judged by its *own visible* background, not the parent tone.
 
-**Card background rotation:** Cards are screen-height sections. The 11 **solid** cards rotate **darkest → lightest, one tone per card**: `Dark → Mid → Light → Cream → …`. The 3 **photo** cards (Hero, CTA band, Footer) are excluded from the rotation and keep their photographic treatment + dark overlay.
+The legacy `[data-body-large]` bold-bump still exists in `globals.css` for cards not yet migrated, but it is **deprecated** — prefer moving the card's tone over bolding its text.
+
+**Card background sequence:** Cards are screen-height sections. Backgrounds still progress through the palette for rhythm, but tone is chosen **content-first** (per the rule above), not by a rigid darkest→lightest cycle. The 3 **photo** cards (Hero, CTA band, Footer) keep their photographic treatment + dark overlay and sit outside the sequence. *(Worked example: the About/Quote personal-statement card moved Mid→Cream so its quote + italic attribution caption render cleanly at high contrast.)*
 
 **Implementation mechanism (do not reinvent):**
 - Background + text color + the large-text bump are all driven by a `data-bg-tone="dark|mid|light|cream"` attribute (CSS rules live in `globals.css`). The `Section` primitive (`bgVariant` prop) applies this; bespoke `<section>`s set `data-bg-tone` directly.
