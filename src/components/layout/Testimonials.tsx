@@ -43,7 +43,8 @@ export default function Testimonials() {
       <section
         id="DaRRC8Qhxc8unVfz"
         dir="rtl"
-        className="bg-[var(--color-white)] relative overflow-hidden py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center"
+        data-bg-tone="cream"
+        className="relative overflow-hidden py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center"
       >
         <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
 
@@ -141,11 +142,11 @@ export default function Testimonials() {
       <div id="gallery" aria-hidden="true" />
 
       {/* Gallery Section */}
-      <section id="vln9V07dEMN7DyMa" className="bg-[var(--color-bg-light)] py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center">
+      <section id="vln9V07dEMN7DyMa" data-bg-tone="dark" className="py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center">
         <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
           <ScrollReveal delay={0.1}>
-            <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
-            <p className="text-center font-[var(--font-stanga)] text-[var(--color-text-primary)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-base md:text-[16px]">
+            <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" onDark className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
+            <p className="text-center font-[var(--font-stanga)] leading-[1.45] mb-[64px] max-w-[768px] mx-auto text-base md:text-[16px]">
               השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
             </p>
           </ScrollReveal>

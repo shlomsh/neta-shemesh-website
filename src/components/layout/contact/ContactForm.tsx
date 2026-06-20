@@ -14,12 +14,12 @@ export function ContactForm() {
 
   const fieldClass =
     'w-full rounded-[6px] px-[16px] py-[12px] text-right ' +
-    'bg-[#5c4d5c] text-[var(--color-white)] placeholder:text-[#c2adbb] ' +
-    'border border-[#7a697a] focus:outline-none focus:border-[var(--color-canva-light)] ' +
+    'bg-[var(--color-canva-bg)] text-[var(--color-canva-dark)] placeholder:text-[var(--color-canva-mid)] ' +
+    'border border-[var(--color-canva-mid)] focus:outline-none focus:border-[var(--color-canva-dark)] ' +
     'transition-colors';
 
   const labelClass =
-    'block text-right mb-[6px] text-[var(--color-white)] tracking-[0.012em]';
+    'block text-right mb-[6px] text-[var(--color-canva-dark)] tracking-[0.012em]';
 
   return (
     <form

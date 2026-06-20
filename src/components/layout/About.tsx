@@ -149,7 +149,7 @@ export default function About() {
       {/* ── Section 2: Quote block ── */}
       <ScrollAnchor id="page-3" />
 
-      <Section id="about-quote" bgVariant="dark" className="-mt-px py-[clamp(48px,7vw,100px)]">
+      <Section id="about-quote" bgVariant="mid" className="-mt-px py-[clamp(48px,7vw,100px)]">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
@@ -200,7 +200,7 @@ export default function About() {
       {/* ── Section 3: Credentials list ── */}
       <ScrollAnchor id="page-4" />
 
-      <Section id="about-credentials" bgVariant="white" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id="about-credentials" bgVariant="light" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
         {/* Subtle rays background at low opacity */}
         <img
           src={RAYS_BG}

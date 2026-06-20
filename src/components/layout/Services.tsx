@@ -54,7 +54,7 @@ const STEPS: Step[] = [
 export default function Services() {
   return (
     <>
-      <Section id="cQd2ufFBWvr5c6ki" bgVariant="light">
+      <Section id="cQd2ufFBWvr5c6ki" bgVariant="mid">
         {/*
           P1 fix: replaced translate-y stagger with margin-top on even cards so the
           container grows naturally (translate-y is out-of-flow and gets clipped by

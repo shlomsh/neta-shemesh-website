@@ -11,9 +11,9 @@ export default function Expertise() {
 
       <section
         dir="rtl"
+        data-bg-tone="dark"
         className="
           w-full
-          bg-[var(--color-dark)]
           py-[clamp(32px,5vw,64px)]
           px-[clamp(16px,5vw,80px)]
           min-h-[100svh]

@@ -34,7 +34,8 @@ export default function Contact() {
       <section
         id="contact-social"
         dir="rtl"
-        className="bg-[var(--color-dark)] py-[80px] px-[24px]"
+        data-bg-tone="mid"
+        className="py-[80px] px-[24px]"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
@@ -164,19 +165,20 @@ export default function Contact() {
       <section
         id="contact-office"
         dir="rtl"
-        className="bg-[var(--color-dark)] py-[80px] px-[24px] border-t border-[#5c4d5c]"
+        data-bg-tone="light"
+        className="py-[80px] px-[24px] border-t border-[var(--color-canva-mid)]"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
 
           {/* Right col on desktop (first in RTL DOM order): heading + body + contact details */}
           <div className="flex flex-col gap-[24px] text-right lg:w-[40%] shrink-0">
             <ScrollReveal delay={0}>
-              <SectionTitle id="zNSWHTotP3XOaXao" onDark>{OFFICE_HEADING}</SectionTitle>
+              <SectionTitle id="zNSWHTotP3XOaXao">{OFFICE_HEADING}</SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
               <p
-                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[var(--color-white)]"
+                className="leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)]"
               >
                 {OFFICE_BODY_START}
                 <strong>{OFFICE_BODY_BOLD}</strong>
