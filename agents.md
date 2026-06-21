@@ -71,7 +71,7 @@ The legacy `[data-body-large]` bold-bump still exists in `globals.css` for cards
 
 ## 2. Client Persona & Voice
 
-Neta Shemesh is a couple and family therapist with **15+ years of clinical experience**. She is an M.S.W. clinical social worker. Her work centers on guiding people through change, crisis, and growth.
+Neta Shemesh is a couple and family therapist with **14 years of clinical experience**. She is an M.S.W. clinical social worker. Her work centers on guiding people through change, crisis, and growth.
 
 - **Tone:** Warm, calm, safe. Not clinical or cold.
 - **Tagline:** "מקום בטוח לצמוח בו ביחד" (A safe place to grow together).

@@ -18,6 +18,7 @@ const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
 const TITLE_IDS = [
   'yWav85A872J3eebD', // Hero
   'GDq1TYUPnp1UCFMP', // About-Intro-Dark
+  'about-me-title',   // About-Me-Cream
   'YoSfu967TqAAsgNM', // About-Light
   'JkkbI1eIj5p9V33T', // Reignite
   'vyKTmOw3YNYlJZPL', // SafeSpace

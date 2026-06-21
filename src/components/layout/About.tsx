@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ScrollReveal } from '../ui/ScrollReveal';
 import { ParallaxFrame } from '../ui/ParallaxFrame';
 import { PhotoPanel } from './about/PhotoPanel';
@@ -59,7 +60,7 @@ const quoteLines = [
 ];
 
 const credentials: Credential[] = [
-  { text: '15 שנות ניסיון קליני' },
+  { text: '14 שנות ניסיון קליני' },
   { text: 'מטפלת זוגית ומשפחתית' },
   { text: 'הדרכת הורים' },
   { text: 'M.S.W. עובדת סוציאלית קלינית' },
@@ -146,56 +147,92 @@ export default function About() {
         </Container>
       </Section>
 
-      {/* ── Section 2: Quote block ── */}
-      <ScrollAnchor id="page-3" />
+      {/* ── Section 2: Merged About Me (Introduction, Quote, Photo & Signature) ── */}
+      <ScrollAnchor id="about-me" />
 
-      <Section id="about-quote" bgVariant="cream" fullHeight className="-mt-px py-[clamp(48px,7vw,100px)]">
-        <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
-          <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
+      <Section id="about-me-section" bgVariant="cream" className="-mt-px py-[clamp(56px,8vw,120px)]">
+        <Container maxWidth="2xl" className="relative z-10 px-[clamp(24px,5vw,80px)]">
+          <div className="flex flex-col gap-[48px] lg:flex-row lg:items-start lg:gap-[clamp(40px,6vw,80px)]">
 
-            {/* Profile circle photo */}
-            <ScrollReveal delay={0} className="shrink-0 self-center lg:self-start">
-              <div className="relative overflow-hidden rounded-full w-[clamp(96px,12vw,160px)] h-[clamp(96px,12vw,160px)]">
-                <img
-                  src={PROFILE_PHOTO}
-                  alt="נטע שמש"
-                  loading="lazy"
-                  className="w-full h-full object-cover object-[50%_38%]"
-                />
-                {/* thin ring matching original stroke */}
-                <div className="absolute inset-0 rounded-full shadow-[0_0_0_1.5px_var(--color-text-muted)]" />
-              </div>
-            </ScrollReveal>
-
-            {/* Quote content */}
-            <div className="flex flex-col gap-[20px] flex-1 min-w-0">
-              <ScrollReveal delay={0.12}>
-                <img
-                  src={QUOTE_ICON}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  className="w-[clamp(40px,5.6vw,72px)] h-auto opacity-30"
-                  style={{ filter: 'brightness(0) saturate(100%) invert(22%) sepia(18%) saturate(800%) hue-rotate(260deg) brightness(60%)' }}
-                />
+            {/* Right Column: Narrative Text */}
+            <div className="w-full lg:w-[60%] flex flex-col gap-[28px]">
+              
+              {/* Title */}
+              <ScrollReveal delay={0}>
+                <SectionTitle id="about-me-title" dir="rtl">קצת עלי</SectionTitle>
               </ScrollReveal>
 
-              <ScrollReveal delay={0.24}>
-                <QuoteBlock
-                  lines={quoteLines}
-                  authorTitle="עו״ס קלינית"
-                />
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.36}>
-                <p className="type-signature mt-[clamp(8px,1.5vw,16px)] tracking-[-0.02em]">
-                  נטע שמש
+              {/* Introduction/Bio Narrative */}
+              <ScrollReveal delay={0.12} className="flex flex-col gap-[16px]">
+                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                  נעים להכיר, אני נטע.
+                </p>
+                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                  אני עובדת סוציאלית קלינית (M.S.W) ומטפלת מוסמכת לטיפול זוגי ומשפחתי, בעלת 14 שנות ניסיון בליווי אנשים, זוגות ומשפחות בתהליכי שינוי, משבר וצמיחה.
+                </p>
+                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                  הדרך המקצועית שלי נבנתה מתוך שטח מגוון ומאתגר – במערכות הציבוריות ובקליניקה הפרטית, שם ליוויתי משפחות מתחילת דרכן ועד גיל ההתבגרות, נשים יוצאות מקלט ומשפחות אומנה. כיום, אני מטפלת בתחנה לטיפול זוגי ומשפחתי בלב השרון, ומקבלת בקליניקה הפרטית שלי בשכונת פולג בנתניה.
+                </p>
+                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                  בקליניקה אני שואפת ליצור מרחב בטוח, אמפתי ומכיל בגובה העיניים. מקום שבו אפשר להניח את מנגנוני ההגנה, לעבד את הרגשות ולחזק את כוחות הנפש. הגישה שלי משלבת הבנה פסיכודינמית עמוקה וראייה מערכתית, לצד חשיבה פרקטית שמכוונת ליצירת שינוי יציב.
+                </p>
+                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                  אני מאמינה שחיבור אנושי חם, יחד עם מקצועיות ללא פשרות, הם הבסיס לכל תהליך ריפוי והתפתחות משמעותי.
                 </p>
               </ScrollReveal>
+
             </div>
+
+            {/* Left Column: Personal Photo, Quote & Signature */}
+            <div className="w-full lg:w-[40%] flex flex-col gap-[32px] lg:sticky lg:top-[120px]">
+              
+              {/* Personal Photo */}
+              <ScrollReveal delay={0.24} className="w-full flex justify-start">
+                <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-[24px] outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(87,73,100,0.3)] safari-clip">
+                  <Image
+                    src={PROFILE_PHOTO}
+                    alt="נטע שמש"
+                    fill
+                    sizes="(max-width: 1024px) 320px, 320px"
+                    className="object-cover object-[50%_35%]"
+                    loading="lazy"
+                  />
+                </div>
+              </ScrollReveal>
+
+              {/* Quote Block & Signature */}
+              <div className="flex flex-col gap-[16px] relative mt-[8px]">
+                <ScrollReveal delay={0.28} className="absolute -top-[24px] start-0">
+                  <img
+                    src={QUOTE_ICON}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="w-[clamp(28px,3.5vw,40px)] h-auto opacity-20"
+                    style={{ filter: 'brightness(0) saturate(100%) invert(22%) sepia(18%) saturate(800%) hue-rotate(260deg) brightness(60%)' }}
+                  />
+                </ScrollReveal>
+
+                <ScrollReveal delay={0.32} className="pt-[16px]">
+                  <QuoteBlock
+                    lines={quoteLines}
+                    authorTitle="עו״ס קלינית ומטפלת זוגית ומשפחתית"
+                  />
+                </ScrollReveal>
+
+                <ScrollReveal delay={0.36}>
+                  <p className="type-signature mt-[clamp(4px,1vw,8px)] tracking-[-0.02em] font-normal text-[var(--color-plum)]">
+                    נטע שמש
+                  </p>
+                </ScrollReveal>
+              </div>
+
+            </div>
+
           </div>
         </Container>
       </Section>
+
 
       {/* ── Section 3: Credentials list ── */}
       <ScrollAnchor id="page-4" />

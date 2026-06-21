@@ -5,20 +5,20 @@
 
 ## Who she is
 
-Neta Shemesh is a couple and family therapist with **15+ years of clinical
+Neta Shemesh is a couple and family therapist with **14 years of clinical
 experience**. She is an **M.S.W. clinical social worker** and a member of the
 Israeli association for couple and family therapy.
 
 Her work centers on guiding people through **change, crisis, and growth** —
-within couples, within families, and within themselves. Her guiding belief:
-
-> "I believe the therapeutic relationship itself is the most meaningful tool for
-> healing."
+within couples, within families, and within themselves. Her therapeutic approach
+combines **psychodynamic, systemic, and trauma-informed perspectives**.
 
 ### Professional background
-- Social services, Ra'anana municipality.
-- Foster-family guidance at the "Shachar" organization.
-- Current practice: a regional council role + a private clinic.
+- **Social Services Department** (Ra'anana municipality and others): Diverse roles including family social worker (from infancy to adolescence), social worker for women leaving shelters, clubhouses social worker, and "The New Way" (הדרך החדשה) social worker.
+- **Group Facilitation**: Led parenting guidance groups and therapeutic styling groups.
+- **"Shachar" Organization**: Guided foster families and conducted family assessments for the Ministry of Welfare.
+- **Current Practice**: Couple and family therapist at the Couple and Family Therapy Station in the Lev HaSharon Regional Council, and owner of a private clinic in Netanya (Poleg neighborhood).
+
 
 ### Tone & brand voice
 - **Warm, calm, safe.** Not clinical or cold.
