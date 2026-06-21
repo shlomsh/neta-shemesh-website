@@ -1,6 +1,6 @@
 export interface QuoteBlockProps {
   lines: string[];
-  authorName: string;
+  authorName?: string;
   authorTitle: string;
 }
 
@@ -16,9 +16,11 @@ export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) 
         </p>
       ))}
       <div className="mt-[1.5em]">
-        <p className="type-lead font-bold">
-          {authorName}
-        </p>
+        {authorName && (
+          <p className="type-lead font-bold">
+            {authorName}
+          </p>
+        )}
         <p className="type-small italic opacity-80">
           {authorTitle}
         </p>

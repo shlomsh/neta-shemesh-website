@@ -31,9 +31,9 @@ describe('Expertise — card titles present', () => {
     expect(container.textContent).toContain('טיפול זוגי');
   });
 
-  it('renders section heading "טיפול זוגי ומשפחתי בכפר יעבץ"', () => {
-    // Heading text was updated to "טיפול זוגי ומשפחתי בכפר יעבץ"
+  it('renders section heading "טיפול זוגי ומשפחתי בנתניה"', () => {
+    // Heading text was updated to "טיפול זוגי ומשפחתי בנתניה"
     const { container } = render(<Expertise />);
-    expect(container.textContent).toContain('טיפול זוגי ומשפחתי בכפר יעבץ');
+    expect(container.textContent).toContain('טיפול זוגי ומשפחתי בנתניה');
   });
 });

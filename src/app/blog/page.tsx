@@ -12,7 +12,7 @@ import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
 export const metadata: Metadata = {
   title: 'מאמרים | נטע שמש — טיפול זוגי ומשפחתי',
   description:
-    'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה — סדרת מאמרים מאת נטע שמש, מטפלת זוגית ומשפחתית בכפר יעבץ.',
+    'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה — סדרת מאמרים מאת נטע שמש, מטפלת זוגית ומשפחתית בנתניה.',
   alternates: { canonical: 'https://nettashemesh.vercel.app/blog' },
   openGraph: {
     type: 'website',

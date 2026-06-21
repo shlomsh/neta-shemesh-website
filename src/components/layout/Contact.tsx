@@ -17,9 +17,9 @@ const OFFICE_BODY_START = 'קליניקה נעימה ובטוחה, מרחב שב
 const OFFICE_BODY_BOLD = 'עטופים, מובנים';
 const OFFICE_BODY_END = ' ומקובלים.';
 
-const ADDRESS_STRONG = 'שביל המוביל, כפר יעבץ';
+const ADDRESS_STRONG = 'רחוב אמנון ותמר 6, נתניה';
 const PHONE = '054-571-1060';
-const EMAIL = 'INFO@YOURWEBSITE.COM';
+const EMAIL = 'nettabe@gmail.com';
 
 export default function Contact() {
   return (

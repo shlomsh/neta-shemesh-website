@@ -60,10 +60,10 @@ const quoteLines = [
 
 const credentials: Credential[] = [
   { text: '15 שנות ניסיון קליני' },
-  { text: 'חברה באגודה לטיפול זוגי ומשפחתי' },
-  { text: 'עובדת סוציאלית קלינית' },
+  { text: 'מטפלת זוגית ומשפחתית' },
+  { text: 'הדרכת הורים' },
   { text: 'M.S.W. עובדת סוציאלית קלינית' },
-  { text: 'פרס מנטור מצטיין ABCT' },
+  { text: 'מנחת קבוצות' },
   { text: 'דירוג 5 כוכבים עקבי מלקוחות' },
 ];
 
@@ -183,8 +183,7 @@ export default function About() {
               <ScrollReveal delay={0.24}>
                 <QuoteBlock
                   lines={quoteLines}
-                  authorName="נטע שמש"
-                  authorTitle="פסיכולוגית קלינית"
+                  authorTitle="מטפלת זוגית ומשפחתית מוסמכת"
                 />
               </ScrollReveal>
 

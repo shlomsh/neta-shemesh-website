@@ -25,7 +25,7 @@ export function AuthorCard() {
           על הכותבת
         </span>
         <p className="type-card-title text-[var(--color-plum)]">נטע שמש</p>
-        <p className="type-small text-[var(--color-mauve)]">מטפלת זוגית ומשפחתית · כפר יעבץ</p>
+        <p className="type-small text-[var(--color-mauve)]">מטפלת זוגית ומשפחתית · נתניה</p>
         <p className="type-body text-[color:color-mix(in_srgb,var(--color-plum)_82%,transparent)]">
           מלווה זוגות, הורים ומשפחות בתהליכי שינוי, משבר וצמיחה — מתוך אמונה שכל
           קשר יכול למצוא מחדש את הדרך אל הקרבה והביטחון.

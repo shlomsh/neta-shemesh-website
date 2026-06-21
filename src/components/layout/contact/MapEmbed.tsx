@@ -11,7 +11,7 @@ export function MapEmbed({ className }: MapEmbedProps) {
   return (
     <div className={wrapperClass}>
       <iframe
-        src="https://maps.google.com/maps?q=Kfar+Yavetz&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        src="https://maps.google.com/maps?q=Amnon+ve-Tamar+6,+Netanya&t=&z=15&ie=UTF8&iwloc=&output=embed"
         title="מיקום הקליניקה"
         className="w-full h-full border-0"
         allowFullScreen
