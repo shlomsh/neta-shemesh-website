@@ -1,4 +1,27 @@
 User-agent: *
 Allow: /
 
+# AI crawlers — allowed intentionally (AI citation benefits local therapy practice visibility)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://nettashemesh.vercel.app/sitemap.xml
+IndexNow: https://nettashemesh.vercel.app/c3e73d9f77ad4e8992f89fff10073308.txt

@@ -35,7 +35,7 @@ export function HeroArt() {
 
       {/* Line-art couple illustration */}
       <img
-        src="/images/couple-creme.png"
+        src="/images/couple-creme.webp"
         alt="זוג — ציור קו"
         className="
           relative
@@ -44,6 +44,7 @@ export function HeroArt() {
           hero-floaty
         "
         loading="eager"
+        fetchPriority="high"
       />
     </div>
   );
