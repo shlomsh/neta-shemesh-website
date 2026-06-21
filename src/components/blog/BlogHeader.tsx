@@ -10,7 +10,7 @@ import { HeroNav } from '@/components/layout/hero/HeroNav';
 export function BlogHeader() {
   return (
     <header dir="rtl" className="w-full bg-[var(--color-plum)]">
-      <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-[16px] px-[clamp(20px,5vw,80px)] py-[clamp(32px,4vw,56px)]">
+      <div className="flex w-full items-center justify-between gap-[16px] px-[clamp(20px,5vw,80px)] py-[clamp(14px,2vw,22px)]">
         <BrandLogo />
         <HeroNav basePath="/" />
       </div>
