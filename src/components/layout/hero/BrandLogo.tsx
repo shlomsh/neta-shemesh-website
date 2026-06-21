@@ -13,7 +13,7 @@ export function BrandLogo() {
   return (
     <a
       id="Fyf1hlFV3WFGVXJq"
-      href="/#page-1"
+      href="/"
       dir="rtl"
       aria-label="לעמוד הבית"
       className="flex items-center"
