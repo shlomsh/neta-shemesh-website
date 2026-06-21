@@ -164,7 +164,7 @@ export default function About() {
 
               {/* Introduction/Bio Narrative */}
               <ScrollReveal delay={0.12} className="flex flex-col gap-[16px]">
-                <p className="type-lead mb-[8px] text-[var(--color-plum)]">
+                <p className="type-lead mt-[12px] mb-[8px] text-[var(--color-plum)]">
                   נעים להכיר, אני נטע.
                 </p>
                 <BodyText className="type-lead leading-[1.65]">
@@ -219,7 +219,7 @@ export default function About() {
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.36}>
-                  <p className="type-signature mt-[clamp(4px,1vw,8px)] tracking-[-0.02em] font-normal text-[var(--color-plum)]">
+                  <p className="type-quote mt-[clamp(4px,1vw,8px)] tracking-[-0.02em] text-[var(--color-plum)] ps-[16px] text-start">
                     נטע
                   </p>
                 </ScrollReveal>
