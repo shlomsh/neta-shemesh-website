@@ -7,7 +7,7 @@
  *
  * Architecture: this file is intentionally thin — it owns the section shell
  * and delegates all sub-regions to named components in ./hero/.
- * No Canva primitives (SectionBand, AnimatedBlock, Badge, etc.),
+ * No template primitives (SectionBand, AnimatedBlock, Badge, etc.),
  * no inline style={{ }}, no cryptic IDs, no rem-scale Tailwind utilities.
  */
 

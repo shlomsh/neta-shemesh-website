@@ -1,7 +1,7 @@
 /**
  * HeroHeading — main hero title in Elamy Bold.
  *
- * The original Canva used var(--font-display) = Stanga with no
+ * The original template used var(--font-display) = Stanga with no
  * explicit font-weight, causing it to fall through to the light/regular
  * face under font-synthesis:none.  Explicitly specifying font-weight:700
  * ensures Stanga-Bold.woff2 is used so the heading renders heavy.

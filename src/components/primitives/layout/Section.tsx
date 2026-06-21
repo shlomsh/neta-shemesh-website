@@ -14,7 +14,7 @@ import React from 'react';
  *   'white'       → maps to 'cream' behavior
  *
  * Note: the old 'light' variant previously mapped to --color-bg-light (≡ cream).
- * It now maps to the new canva-light (#C8AAAA) tone. Any callers that relied on
+ * It now maps to the new blush (#C8AAAA) tone. Any callers that relied on
  * the old 'light' === cream behavior should migrate to 'cream'.
  * Currently the only caller of bgVariant="light" is Services.tsx — verify intent.
  */

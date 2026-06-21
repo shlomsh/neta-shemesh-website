@@ -3,7 +3,7 @@
  *   1. A contact pill ("ייעוץ עם נטע שמש" → #contact) with brand-primary fill
  *   2. A phone badge ("+01 234 5678 90") with solid brand-primary fill
  *
- * Both match the original Canva badge shapes (solid coloured rectangles
+ * Both match the original template badge shapes (solid coloured rectangles
  * with centred bold text). The opacity-75 on the CTA pill matches the
  * original 0.75 opacity on its SVG fill.
  * Server component.

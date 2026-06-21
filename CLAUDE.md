@@ -10,7 +10,7 @@
 
 | Token | Family | Role |
 |---|---|---|
-| `var(--font-canva-accent)` | Elamy (handwriting/display) | Hero title, section H2, signature only |
+| `var(--font-display)` | Elamy (handwriting/display) | Hero title, section H2, signature only |
 | `var(--font-stanga)` | Stanga (clean sans) | Everything else — paragraphs, names, labels, nav, CTA |
 
 **Elamy is a decorative script. Never use it for body paragraphs.** It is illegible as running text, especially in Hebrew RTL. This was a real production bug.
@@ -19,7 +19,7 @@
 
 ### The Type Scale — use these classes, nothing else
 
-All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or ad-hoc weights.** The random sizes from the original Canva export (13/15/16/18.67/28/31px) have been replaced with this canonical scale.
+All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or ad-hoc weights.** The random sizes from the original template export (13/15/16/18.67/28/31px) have been replaced with this canonical scale.
 
 | Class | Mobile → Desktop | Font | Weight | Line-height | Use for |
 |---|---|---|---|---|---|
@@ -63,10 +63,10 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 
 | Token | Hex | Role |
 |---|---|---|
-| `--color-canva-dark` | `#574964` | Dark plum — dark card bg / primary text on light |
-| `--color-canva-mid` | `#9F8383` | Mid mauve — accent card bg / brand |
-| `--color-canva-light` | `#C8AAAA` | Light blush — soft accent card bg |
-| `--color-canva-bg` | `#fff0e4` | Warm cream — light card bg / page bg |
+| `--color-plum` | `#574964` | Dark plum — dark card bg / primary text on light |
+| `--color-mauve` | `#9F8383` | Mid mauve — accent card bg / brand |
+| `--color-blush` | `#C8AAAA` | Light blush — soft accent card bg |
+| `--color-cream` | `#fff0e4` | Warm cream — light card bg / page bg |
 
 > `--color-white` is aliased to `#fff0e4` (the cream), **not** `#ffffff`. Never use `bg-white` for a brand surface — it gives pure white, not the brand cream.
 

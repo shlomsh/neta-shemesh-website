@@ -2,7 +2,7 @@
  * HeroSubtext — supporting body copy beneath the main heading.
  *
  * Two lines of Hebrew body text in Stanga Regular (weight 400),
- * matching the original letter-spacing and line-height from the Canva source.
+ * matching the original letter-spacing and line-height from the template source.
  * Server component.
  */
 export function HeroSubtext() {
