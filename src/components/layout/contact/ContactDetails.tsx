@@ -63,7 +63,7 @@ export function ContactDetails({
             href={`tel:${phone.replace(/[\s-]/g, '')}`}
             dir="ltr"
             data-body-large="true"
-            className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit inline-block"
+            className="font-bold hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit inline-block"
           >
             {phone}
           </a>
@@ -90,7 +90,7 @@ export function ContactDetails({
           <a
             href={`mailto:${email}`}
             dir="ltr"
-            className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit inline-block contact-email-link"
+            className="font-bold hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit inline-block contact-email-link"
           >
             {hasAt ? (
               <>
