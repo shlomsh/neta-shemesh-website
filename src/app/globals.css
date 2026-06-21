@@ -214,6 +214,25 @@
     line-height: 1.5;
   }
 
+  /* ── Long-form article reading sizes ─────────────────────────────────────
+   * type-body (max 18px) reads too small inside a narrow article column on
+   * large desktops. These read-* sizes scale higher (body→21px, lead→25px)
+   * for comfortable sustained reading. Used only by the blog PostBody.
+   * ──────────────────────────────────────────────────────────────────────── */
+  .type-read {
+    font-family: var(--font-stanga);
+    font-weight: 400;
+    font-size: clamp(17px, 1.45vw, 21px);
+    line-height: 1.85;
+  }
+
+  .type-read-lead {
+    font-family: var(--font-stanga);
+    font-weight: 400;
+    font-size: clamp(19px, 1.7vw, 25px);
+    line-height: 1.7;
+  }
+
   .type-eyebrow {
     font-family: var(--font-stanga);
     font-weight: 600;

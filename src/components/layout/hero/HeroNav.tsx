@@ -1,16 +1,31 @@
+import Link from 'next/link';
+
 /**
- * HeroNav — top-of-hero navigation pill with three anchor links.
+ * HeroNav — top-of-hero navigation pill with section + blog links.
  *
- * Original had three animated text links: קצת עליי (#about),
- * התמחות (#expertise), יצירת קשר (#contact).
+ * Same-page anchors (#about, #expertise, #contact) use plain <a>; the blog
+ * route (/blog) uses next/link for client-side navigation.
  * Server component; no client-side state needed.
  */
 export function HeroNav() {
   const links = [
     { href: '#about',     label: 'קצת עליי' },
     { href: '#expertise', label: 'התמחות' },
+    { href: '/blog',      label: 'מאמרים' },
     { href: '#contact',   label: 'יצירת קשר' },
   ];
+
+  const linkClass = `
+    text-[var(--color-white)]
+    font-[family-name:var(--font-stanga)]
+    font-bold
+    text-[clamp(13px,1.4vw,18px)]
+    md:text-[20px]
+    leading-[1.5]
+    tracking-[0.047em]
+    transition-opacity
+    hover:opacity-75
+  `;
 
   return (
     <nav
@@ -18,25 +33,17 @@ export function HeroNav() {
       aria-label="ניווט ראשי"
       className="flex items-center justify-center gap-[clamp(24px,4vw,56px)]"
     >
-      {links.map(({ href, label }) => (
-        <a
-          key={href}
-          href={href}
-          className="
-            text-[var(--color-white)]
-            font-[family-name:var(--font-stanga)]
-            font-bold
-            text-[clamp(13px,1.4vw,18px)]
-            md:text-[20px]
-            leading-[1.5]
-            tracking-[0.047em]
-            transition-opacity
-            hover:opacity-75
-          "
-        >
-          {label}
-        </a>
-      ))}
+      {links.map(({ href, label }) =>
+        href.startsWith('/') ? (
+          <Link key={href} href={href} className={linkClass}>
+            {label}
+          </Link>
+        ) : (
+          <a key={href} href={href} className={linkClass}>
+            {label}
+          </a>
+        ),
+      )}
 
       {/* Phone badge */}
       <a
