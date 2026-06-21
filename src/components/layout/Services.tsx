@@ -1,6 +1,5 @@
 import { SectionTitle } from "../ui/SectionTitle";
 import { StepCard } from './services/StepCard';
-import { SuccessStories } from './services/SuccessStories';
 import { Section } from '../primitives/layout/Section';
 import { Container } from '../primitives/layout/Container';
 import { Grid } from '../primitives/layout/Grid';
@@ -98,9 +97,6 @@ export default function Services() {
         </Container>
       </Section>
 
-      <div id="page-8" />
-
-      <SuccessStories />
     </>
   );
 }
