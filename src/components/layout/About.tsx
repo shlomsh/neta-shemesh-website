@@ -66,7 +66,7 @@ const credentials: Credential[] = [
   { text: 'דירוג 5 כוכבים עקבי מלקוחות' },
 ];
 
-const CHECK_ICON = '/images/4e3686725d22ef08df30137416c9368d.svg';
+const CHECK_ICONS = ['/images/jigsaw-puzzle-6.png', '/images/jigsaw-puzzle-7.png'];
 const QUOTE_ICON = '/images/42fd096b86fdf26f4525532e1d5bbd85.svg';
 const PROFILE_PHOTO = '/images/9af276f56eebc541c83057d036de0714.jpg';
 const RAYS_BG = '/images/d06ba91ec14a00cf227ed30587771514.jpg';
@@ -212,7 +212,7 @@ export default function About() {
         />
 
         <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
-          <div className="flex flex-col items-center gap-[40px]">
+          <div className="flex flex-col items-center gap-[clamp(56px,8vw,100px)]">
 
             <ScrollReveal delay={0}>
               <SectionTitle id="YoSfu967TqAAsgNM" className="text-center" dir="rtl">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
@@ -220,7 +220,7 @@ export default function About() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.12}>
-              <CredentialsList items={credentials} checkIconSrc={CHECK_ICON} />
+              <CredentialsList items={credentials} checkIconSrc={CHECK_ICONS} />
             </ScrollReveal>
           </div>
         </Container>

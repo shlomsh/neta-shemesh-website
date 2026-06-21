@@ -35,7 +35,7 @@ export function HeroArt() {
 
       {/* Line-art couple illustration */}
       <img
-        src="/images/couple3-cream.png"
+        src="/images/couple-creme.png"
         alt="זוג — ציור קו"
         className="
           relative

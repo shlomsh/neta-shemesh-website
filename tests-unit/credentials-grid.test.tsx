@@ -22,6 +22,6 @@ test('CredentialsList uses a grid layout with 3 columns on desktop', () => {
   // Verify icon classes
   const icon = container.querySelector('img');
   expect(icon?.className).toContain('mb-[16px]');
-  expect(icon?.className).toContain('w-[48px]');
-  expect(icon?.className).toContain('h-[48px]');
+  expect(icon?.className).toContain('w-[96px]');
+  expect(icon?.className).toContain('h-auto');
 });

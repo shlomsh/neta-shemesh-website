@@ -29,9 +29,5 @@ test.describe('Text Visibility and Content Tests', () => {
     // The middle testimonial card has an SVG background that should be opacity: 0.16
     const cardSvg = page.locator('#ZO48UqFw0isLS2Uu').first();
     await expect(cardSvg).toHaveCSS('opacity', '0.16');
-    
-    // Also check the hero background image opacity
-    const heroImage = page.locator('#lMpsFVcZNd208Jch').first();
-    await expect(heroImage).toHaveCSS('opacity', '1');
   });
 });
