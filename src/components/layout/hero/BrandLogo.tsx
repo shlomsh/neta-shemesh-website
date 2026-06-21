@@ -11,9 +11,11 @@
  */
 export function BrandLogo() {
   return (
-    <div
+    <a
       id="Fyf1hlFV3WFGVXJq"
+      href="/#page-1"
       dir="rtl"
+      aria-label="לעמוד הבית"
       className="flex items-center"
     >
       <img
@@ -28,6 +30,6 @@ export function BrandLogo() {
         "
         loading="eager"
       />
-    </div>
+    </a>
   );
 }

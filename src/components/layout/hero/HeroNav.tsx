@@ -1,18 +1,22 @@
 import Link from 'next/link';
 
 /**
- * HeroNav — top-of-hero navigation pill with section + blog links.
+ * HeroNav — navigation pill used both in the hero and the blog header.
  *
- * Same-page anchors (#about, #expertise, #contact) use plain <a>; the blog
- * route (/blog) uses next/link for client-side navigation.
- * Server component; no client-side state needed.
+ * basePath: prefix for hash anchors. Default '' works on the homepage
+ * (#about scrolls in-page). Pass '/' from blog pages so the links become
+ * /#about (full-document navigation, avoids App Router hash-stacking bug).
+ *
+ * Rule: use <Link> only for hash-free routes (/blog, /). Hash links — even
+ * cross-route ones like /#about — always use plain <a> so the browser does
+ * a full navigation that reliably replaces the fragment.
  */
-export function HeroNav() {
+export function HeroNav({ basePath = '' }: { basePath?: string }) {
   const links = [
-    { href: '#about',     label: 'קצת עליי' },
-    { href: '#expertise', label: 'התמחות' },
-    { href: '/blog',      label: 'מאמרים' },
-    { href: '#contact',   label: 'יצירת קשר' },
+    { href: `${basePath}#about`,     label: 'קצת עליי' },
+    { href: `${basePath}#expertise`, label: 'התמחות' },
+    { href: '/blog',                  label: 'מאמרים' },
+    { href: `${basePath}#contact`,   label: 'יצירת קשר' },
   ];
 
   const linkClass = `
@@ -34,7 +38,7 @@ export function HeroNav() {
       className="flex items-center justify-center gap-[clamp(24px,4vw,56px)]"
     >
       {links.map(({ href, label }) =>
-        href.startsWith('/') ? (
+        href.startsWith('/') && !href.includes('#') ? (
           <Link key={href} href={href} className={linkClass}>
             {label}
           </Link>

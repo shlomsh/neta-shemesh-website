@@ -23,9 +23,6 @@ const EMAIL = 'INFO@YOURWEBSITE.COM';
 export default function Contact() {
   return (
     <>
-      {/* ── Anchor ────────────────────────────────────────────────────────── */}
-      <div id="contact" className="invisible h-0" />
-
       {/* ══════════════════════════════════════════════════════════════════════
           PANEL 1 — Follow me on social
       ══════════════════════════════════════════════════════════════════════ */}
@@ -156,6 +153,9 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      {/* ── Anchor ────────────────────────────────────────────────────────── */}
+      <div id="contact" className="invisible h-0" />
 
       {/* ══════════════════════════════════════════════════════════════════════
           PANEL 2 — Office details + map

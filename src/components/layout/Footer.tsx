@@ -17,7 +17,6 @@ import { FooterReveal } from './footer/FooterReveal';
 export default function Footer() {
   return (
     <footer
-      id="contact"
       dir="rtl"
       className="relative w-full overflow-hidden flex flex-col items-center justify-between px-6 py-[clamp(48px,6vw,96px)] min-h-[100svh]"
     >
