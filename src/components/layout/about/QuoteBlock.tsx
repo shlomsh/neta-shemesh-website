@@ -1,7 +1,7 @@
 export interface QuoteBlockProps {
   lines: string[];
   authorName?: string;
-  authorTitle: string;
+  authorTitle?: string;
 }
 
 export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) {
@@ -15,16 +15,20 @@ export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) 
           {line}
         </p>
       ))}
-      <div className="mt-[1.5em]">
-        {authorName && (
-          <p className="type-lead font-bold">
-            {authorName}
-          </p>
-        )}
-        <p className="type-small italic opacity-80">
-          {authorTitle}
-        </p>
-      </div>
+      {(authorName || authorTitle) && (
+        <div className="mt-[1.5em]">
+          {authorName && (
+            <p className="type-lead font-bold">
+              {authorName}
+            </p>
+          )}
+          {authorTitle && (
+            <p className="type-small italic opacity-80">
+              {authorTitle}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

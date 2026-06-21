@@ -164,21 +164,21 @@ export default function About() {
 
               {/* Introduction/Bio Narrative */}
               <ScrollReveal delay={0.12} className="flex flex-col gap-[16px]">
-                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                <p className="type-lead mb-[8px] text-[var(--color-plum)]">
                   נעים להכיר, אני נטע.
                 </p>
-                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                <BodyText className="type-lead leading-[1.65]">
                   אני עובדת סוציאלית קלינית (M.S.W) ומטפלת מוסמכת לטיפול זוגי ומשפחתי, בעלת 14 שנות ניסיון בליווי אנשים, זוגות ומשפחות בתהליכי שינוי, משבר וצמיחה.
-                </p>
-                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                </BodyText>
+                <BodyText className="type-lead leading-[1.65]">
                   הדרך המקצועית שלי נבנתה מתוך שטח מגוון ומאתגר – במערכות הציבוריות ובקליניקה הפרטית, שם ליוויתי משפחות מתחילת דרכן ועד גיל ההתבגרות, נשים יוצאות מקלט ומשפחות אומנה. כיום, אני מטפלת בתחנה לטיפול זוגי ומשפחתי בלב השרון, ומקבלת בקליניקה הפרטית שלי בשכונת פולג בנתניה.
-                </p>
-                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                </BodyText>
+                <BodyText className="type-lead leading-[1.65]">
                   בקליניקה אני שואפת ליצור מרחב בטוח, אמפתי ומכיל בגובה העיניים. מקום שבו אפשר להניח את מנגנוני ההגנה, לעבד את הרגשות ולחזק את כוחות הנפש. הגישה שלי משלבת הבנה פסיכודינמית עמוקה וראייה מערכתית, לצד חשיבה פרקטית שמכוונת ליצירת שינוי יציב.
-                </p>
-                <p className="font-[family:var(--font-display)] font-normal text-[clamp(22px,2.5vw,28px)] leading-[1.6] text-[var(--color-plum)]">
+                </BodyText>
+                <BodyText className="type-lead leading-[1.65]">
                   אני מאמינה שחיבור אנושי חם, יחד עם מקצועיות ללא פשרות, הם הבסיס לכל תהליך ריפוי והתפתחות משמעותי.
-                </p>
+                </BodyText>
               </ScrollReveal>
 
             </div>
@@ -204,25 +204,23 @@ export default function About() {
               <div className="flex flex-col gap-[16px] relative mt-[8px]">
                 <ScrollReveal delay={0.28} className="absolute -top-[24px] start-0">
                   <img
-                    src={QUOTE_ICON}
+                    src={`${QUOTE_ICON}?v=2`}
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
-                    className="w-[clamp(28px,3.5vw,40px)] h-auto opacity-20"
-                    style={{ filter: 'brightness(0) saturate(100%) invert(22%) sepia(18%) saturate(800%) hue-rotate(260deg) brightness(60%)' }}
+                    className="w-[clamp(28px,3.5vw,40px)] h-auto"
                   />
                 </ScrollReveal>
 
-                <ScrollReveal delay={0.32} className="pt-[16px]">
+                <ScrollReveal delay={0.32} className="relative z-10 pt-[12px] ps-[16px]">
                   <QuoteBlock
                     lines={quoteLines}
-                    authorTitle="עו״ס קלינית ומטפלת זוגית ומשפחתית"
                   />
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.36}>
                   <p className="type-signature mt-[clamp(4px,1vw,8px)] tracking-[-0.02em] font-normal text-[var(--color-plum)]">
-                    נטע שמש
+                    נטע
                   </p>
                 </ScrollReveal>
               </div>
