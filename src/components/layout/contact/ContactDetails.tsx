@@ -18,17 +18,23 @@ export function ContactDetails({
   addressLabel,
 }: ContactDetailsProps) {
   return (
-    <ul className="flex flex-col gap-[24px] mt-[24px] list-none">
+    <ul className="flex flex-col gap-[24px] list-none">
       {/* Address */}
-      <li className="flex items-center gap-[16px] flex-row-reverse">
-        <span className="flex-shrink-0 w-[24px] h-[24px]">
-          <img
-            src="/images/contact-icon-location.svg"
-            alt="location glyph icon"
-            loading="lazy"
-            className="w-full h-full object-contain"
-          />
-        </span>
+      <li className="flex items-start gap-[16px]">
+        <span
+          className="flex-shrink-0 w-[24px] h-[24px]"
+          style={{
+            backgroundColor: 'currentColor',
+            WebkitMaskImage: 'url(/images/contact-icon-location.svg)',
+            maskImage: 'url(/images/contact-icon-location.svg)',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+          }}
+        />
         <div className="text-right">
           <p
             data-body-large="true"
@@ -46,15 +52,21 @@ export function ContactDetails({
       </li>
 
       {/* Phone */}
-      <li className="flex items-center gap-[16px] flex-row-reverse">
-        <span className="flex-shrink-0 w-[24px] h-[24px]">
-          <img
-            src="/images/contact-icon-phone.svg"
-            alt="Phone Call Glyph Icon"
-            loading="lazy"
-            className="w-full h-full object-contain"
-          />
-        </span>
+      <li className="flex items-start gap-[16px]">
+        <span
+          className="flex-shrink-0 w-[24px] h-[24px]"
+          style={{
+            backgroundColor: 'currentColor',
+            WebkitMaskImage: 'url(/images/contact-icon-phone.svg)',
+            maskImage: 'url(/images/contact-icon-phone.svg)',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+          }}
+        />
         <div className="text-right">
           <a
             href={`tel:${phone.replace(/[\s-]/g, '')}`}
@@ -73,15 +85,21 @@ export function ContactDetails({
       </li>
 
       {/* Email */}
-      <li className="flex items-center gap-[16px] flex-row-reverse">
-        <span className="flex-shrink-0 w-[24px] h-[24px]">
-          <img
-            src="/images/contact-icon-email.svg"
-            alt="email icon"
-            loading="lazy"
-            className="w-full h-full object-contain"
-          />
-        </span>
+      <li className="flex items-start gap-[16px]">
+        <span
+          className="flex-shrink-0 w-[24px] h-[24px]"
+          style={{
+            backgroundColor: 'currentColor',
+            WebkitMaskImage: 'url(/images/contact-icon-email.svg)',
+            maskImage: 'url(/images/contact-icon-email.svg)',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+          }}
+        />
         <div className="text-right">
           <a
             href={`mailto:${email}`}

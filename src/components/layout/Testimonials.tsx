@@ -151,7 +151,7 @@ export default function Testimonials() {
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)]">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)] lg:grid-rows-2 lg:h-[calc(100svh-370px)]">
             {[
               'gallery-item-1.webp',
               'gallery-item-2.webp',
@@ -163,7 +163,7 @@ export default function Testimonials() {
               <ScrollReveal
                 key={img}
                 delay={0.1 * (i + 1)}
-                className="relative w-full aspect-[4/3] lg:aspect-square overflow-hidden rounded-[12px] shadow-sm safari-clip"
+                className="relative w-full aspect-[4/3] lg:aspect-auto overflow-hidden rounded-[12px] shadow-sm safari-clip"
               >
                 <Image
                   src={`/images/${img}`}

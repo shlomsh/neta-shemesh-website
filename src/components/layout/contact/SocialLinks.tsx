@@ -30,7 +30,7 @@ const SOCIAL_LINKS: SocialLink[] = [
 
 export function SocialLinks() {
   return (
-    <div className="flex flex-row-reverse gap-[24px] mt-[24px]">
+    <div className="flex gap-[24px]">
       {SOCIAL_LINKS.map((link) => (
         <a
           key={link.href}
@@ -39,14 +39,18 @@ export function SocialLinks() {
           rel="noopener noreferrer"
           aria-label={link.label}
           className="w-[44px] h-[44px] flex-shrink-0 hover:opacity-80 transition-opacity"
-        >
-          <img
-            src={link.iconSrc}
-            alt={link.iconAlt}
-            loading="lazy"
-            className="w-full h-full object-contain"
-          />
-        </a>
+          style={{
+            backgroundColor: 'currentColor',
+            WebkitMaskImage: `url(${link.iconSrc})`,
+            maskImage: `url(${link.iconSrc})`,
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+          }}
+        />
       ))}
     </div>
   );

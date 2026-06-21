@@ -1,382 +1,227 @@
 # SEO Action Plan — נטע שמש
-**Generated:** 2026-06-21  
+**Updated:** 2026-06-21 (v2)  
 **Site:** https://nettashemesh.vercel.app  
-**Current score:** 36/100 → **Target after Critical fixes: ~65/100**
+**Current score:** 65/100 → **Target after remaining fixes: ~82/100**
 
 ---
 
-## CRITICAL — Fix immediately (blocks trust & indexing)
+## Status: What's Done ✅
 
-### C1 — Replace all placeholder contact & social data
-**Effort:** 15 min | **Impact:** Trust, local SEO, click-through, real conversions
+| Item | Done |
+|---|---|
+| Meta description | ✅ |
+| Title with location | ✅ |
+| robots.txt (with AI crawler allowlist) | ✅ |
+| sitemap.xml | ✅ |
+| JSON-LD schema (LocalBusiness + Person + 4 Services) | ✅ |
+| Open Graph + Twitter Card | ✅ |
+| Canonical + hreflang he-IL | ✅ |
+| Security headers (X-Frame, CSP, HSTS, etc.) | ✅ |
+| Expertise H2 → local keyword | ✅ |
+| Contact image alt text | ✅ |
+| Font display: swap + preload | ✅ |
+| Phone → +972 54-571-1060 | ✅ |
+| WhatsApp link | ✅ |
+| Image cache headers | ✅ |
 
-Replace in `src/components/layout/Contact.tsx`:
+---
+
+## CRITICAL — None remaining ✅
+
+---
+
+## HIGH — Fix this week
+
+### H-A — Replace email placeholder
+**Effort:** 2 min | **File:** `src/components/layout/Contact.tsx:22`
+
 ```tsx
-const PHONE = '(232) 000-8888'     // → Netta's real number
-const EMAIL = 'INFO@YOURWEBSITE.COM' // → Netta's real email
+const EMAIL = 'INFO@YOURWEBSITE.COM'  // → netta@[realdomain].com
 ```
 
-Replace in `src/components/layout/contact/SocialLinks.tsx`:
+This is the last placeholder in the contact section. One line change.
+
+---
+
+### H-B — Add real social links
+**Effort:** 5 min | **Files:** `SocialLinks.tsx` + `layout.tsx`
+
+In `src/components/layout/contact/SocialLinks.tsx`:
 ```tsx
-{ href: 'https://facebook.com', ... }    // → https://facebook.com/[real-page]
-{ href: 'https://instagram.com', ... }   // → https://instagram.com/[real-handle]
+{ href: 'https://www.facebook.com/[netta-real-page]', ... }
+{ href: 'https://www.instagram.com/[netta-handle]/', ... }
 ```
 
-Also fix the Hero CTA tel links in `HeroCTA.tsx` / `HeroSubtext.tsx` (found `tel:+01234567890` and `tel:+012345678`).
-
----
-
-### C2 — Replace Lorem Ipsum testimonials with real ones
-**Effort:** 30 min (content) + 10 min (code) | **Impact:** E-E-A-T, conversion rate, Review schema eligibility
-
-In `src/components/layout/Testimonials.tsx`, replace all 3 `quote` strings and the `name`/`role` values with real client testimonials. Use initials or first names if full names aren't available. The existing structure handles everything — content is the only blocker.
-
----
-
-### C3 — Add meta description
-**Effort:** 5 min | **Impact:** Click-through rate from search results
-
-In `src/app/layout.tsx`:
-```tsx
-export const metadata: Metadata = {
-  metadataBase: new URL('https://nettashemesh.vercel.app'),
-  title: 'נטע שמש | טיפול זוגי ומשפחתי — כפר יעבץ',
-  description: 'מטפלת זוגית ומשפחתית מוסמכת בכפר יעבץ. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
-};
-```
-
----
-
-### C4 — Create robots.txt
-**Effort:** 5 min | **Impact:** Crawler guidance, sitemap discovery
-
-Create `/public/robots.txt`:
-```
-User-agent: *
-Allow: /
-
-Sitemap: https://nettashemesh.vercel.app/sitemap.xml
-```
-
----
-
-### C5 — Create sitemap.xml
-**Effort:** 15 min | **Impact:** URL discovery, indexation speed
-
-Create `/src/app/sitemap.ts` (Next.js auto-serves at `/sitemap.xml`):
+In `src/app/layout.tsx` — update `sameAs`:
 ```ts
-import type { MetadataRoute } from 'next';
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://nettashemesh.vercel.app',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-  ];
-}
+sameAs: [
+  'https://www.facebook.com/[netta-real-page]',
+  'https://www.instagram.com/[netta-handle]/',
+],
 ```
+
+Connecting the business entity to real social profiles is a meaningful Google Knowledge Graph signal.
 
 ---
 
-### C6 — Add LocalBusiness + Person JSON-LD schema
-**Effort:** 20 min | **Impact:** Rich results eligibility, local knowledge panel, AI citability
+### H-C — Replace Lorem Ipsum testimonials
+**Effort:** 10 min (code) + content from Netta | **File:** `src/components/layout/Testimonials.tsx`
 
-In `src/app/layout.tsx`, add a `<Script>` tag (or use Next.js metadata `other` for JSON-LD):
-```tsx
-// In the <head> via layout.tsx
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': ['LocalBusiness', 'HealthAndBeautyBusiness'],
-      '@id': 'https://nettashemesh.vercel.app/#business',
-      name: 'נטע שמש — טיפול זוגי ומשפחתי',
-      description: 'מטפלת זוגית ומשפחתית מוסמכת',
-      url: 'https://nettashemesh.vercel.app',
-      telephone: '[REAL_PHONE]',
-      email: '[REAL_EMAIL]',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'שביל המוביל',
-        addressLocality: 'כפר יעבץ',
-        addressCountry: 'IL',
-      },
-      sameAs: ['[REAL_FB_URL]', '[REAL_IG_URL]'],
-    },
-    {
-      '@type': 'Person',
-      '@id': 'https://nettashemesh.vercel.app/#netta',
-      name: 'נטע שמש',
-      jobTitle: 'מטפלת זוגית ומשפחתית',
-      worksFor: { '@id': 'https://nettashemesh.vercel.app/#business' },
-      url: 'https://nettashemesh.vercel.app',
-    },
-  ],
-};
+Replace each `quote`, `name`, and `role` with real content. First names / initials are fine. Even brief quotes ("השיחות עם נטע עזרו לנו לפתח שפה משותפת") are far better than Lorem Ipsum.
 
-// In RootLayout JSX:
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-/>
-```
+Once real quotes exist, add Review schema to the `@graph` in `layout.tsx`.
 
 ---
 
-## HIGH — Fix within 1 week
-
-### H1 — Add Open Graph + Twitter Card metadata
-**Effort:** 10 min | **Impact:** WhatsApp/Facebook link previews, social sharing appearance
-
-In `src/app/layout.tsx`, extend the metadata export:
-```tsx
-export const metadata: Metadata = {
-  // ...existing...
-  openGraph: {
-    type: 'website',
-    url: 'https://nettashemesh.vercel.app',
-    title: 'נטע שמש | טיפול זוגי ומשפחתי',
-    description: 'מטפלת זוגית ומשפחתית מוסמכת בכפר יעבץ. ליווי לזוגות ומשפחות בתהליכי שינוי וצמיחה.',
-    locale: 'he_IL',
-    siteName: 'נטע שמש',
-    // og:image is auto-provided by opengraph-image.tsx ✅
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'נטע שמש | טיפול זוגי ומשפחתי',
-    description: 'מטפלת זוגית ומשפחתית מוסמכת בכפר יעבץ.',
-  },
-};
-```
-
----
-
-### H2 — Add canonical URL to metadata
-**Effort:** 2 min | **Impact:** Prevents duplicate content issues
-
-```tsx
-alternates: {
-  canonical: 'https://nettashemesh.vercel.app',
-},
-```
-
----
-
-### H3 — Add hreflang for Hebrew/Israel targeting
-**Effort:** 5 min | **Impact:** Correct geo targeting for Hebrew speakers in Israel
-
-Add to `alternates` in metadata:
-```tsx
-alternates: {
-  canonical: 'https://nettashemesh.vercel.app',
-  languages: {
-    'he-IL': 'https://nettashemesh.vercel.app',
-  },
-},
-```
-
----
-
-### H4 — Differentiate Expertise section H2 for local keyword
-**Effort:** 5 min | **Impact:** Keyword diversity, local targeting
-
-`Expertise.tsx` currently uses `"מקום בטוח לצמוח בו ביחד"` as its H2 — identical to the H1. Change it to a keyword-rich alternative:
-
-```tsx
-// In Expertise.tsx — replace the SectionTitle text:
-<SectionTitle ...>טיפול זוגי ומשפחתי בכפר יעבץ</SectionTitle>
-// or: "תחומי המומחיות שלי" / "מה אני מציעה"
-```
-
----
-
-### H5 — Add security headers to next.config.ts
-**Effort:** 20 min | **Impact:** Security, trust signals, OWASP compliance
+### H-D — Fix sitemap lastModified to be dynamic
+**Effort:** 1 min | **File:** `src/app/sitemap.ts:6`
 
 ```ts
-async headers() {
-  return [
-    {
-      source: '/(.*)',
-      headers: [
-        { key: 'X-Frame-Options', value: 'DENY' },
-        { key: 'X-Content-Type-Options', value: 'nosniff' },
-        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-        { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-      ],
-    },
-  ];
-},
+// CURRENT — hardcoded past date:
+lastModified: new Date('2025-06-01'),
+
+// FIX — always reflects actual current date:
+lastModified: new Date(),
 ```
 
----
-
-### H6a — Add WhatsApp contact button
-**Effort:** 15 min | **Impact:** Conversion — WhatsApp is the primary contact channel in Israel
-
-Add a WhatsApp CTA button alongside (or replacing) the phone link in `HeroNav.tsx` and `ContactDetails.tsx`. Use `https://wa.me/972545711060` with an optional pre-filled message via `?text=שלום+נטע,+אשמח+לשמוע+קצת+יותר+פרטים`.
-
-Placement options:
-- **HeroNav** — secondary pill button next to the existing phone pill, with WhatsApp icon
-- **ContactDetails** — additional row in the contact list using the WhatsApp icon SVG
-- **Floating button** — fixed bottom-left FAB visible on all sections (high visibility, common pattern for therapy sites in IL)
-
-The floating FAB is highest-impact for conversion; the nav pill is highest-visibility. Recommend both.
+Googlebot uses this signal to prioritize recrawls. A stale 2025 date signals "nothing changed, skip."
 
 ---
 
-### H6 — Fix contact images missing alt text
-**Effort:** 10 min | **Impact:** Accessibility (WCAG 2.1 AA), image SEO
+### H-E — Set up Google Search Console
+**Effort:** 30 min (one-time) | **Impact:** Indexation monitoring, real CWV, crawl error alerts
 
-In `src/components/layout/Contact.tsx`, all 3 mosaic photos have `alt=""`. Add descriptive alt text:
-```tsx
-alt="נטע שמש — תמונה מהקליניקה"
-alt="נטע שמש בפגישת ייעוץ"
-alt="אווירת הקליניקה של נטע שמש"
-```
-
----
-
-### H7 — Add font-display: swap and preload critical font
-**Effort:** 10 min | **Impact:** LCP, visual stability, CWV
-
-In `src/app/layout.tsx`, update font declarations:
-```tsx
-const stanga = localFont({
-  src: [...],
-  variable: '--font-stanga',
-  display: 'swap',  // ADD THIS
-  preload: true,    // ADD THIS (preloads stanga-regular only)
-});
-
-const elamy = localFont({
-  src: [...],
-  variable: '--font-elamy',
-  display: 'swap',  // ADD THIS
-});
-```
-
----
-
-### H8 — Set up Google Search Console
-**Effort:** 30 min (one-time) | **Impact:** Real crawl data, indexation status, CWV field data
-
-1. Go to search.google.com/search-console
-2. Add property for `https://nettashemesh.vercel.app`
-3. Add DNS TXT record or HTML meta verification tag via `layout.tsx` metadata:
+1. Go to search.google.com/search-console → Add property → `https://nettashemesh.vercel.app`
+2. Choose DNS or HTML tag verification. For HTML tag, add to `layout.tsx`:
    ```tsx
-   verification: { google: '[GSC_VERIFICATION_CODE]' }
+   verification: { google: 'YOUR_VERIFICATION_CODE' }
    ```
-4. Submit sitemap once C5 is done.
+3. Submit sitemap: `https://nettashemesh.vercel.app/sitemap.xml`
+4. Check URL inspection for the homepage — confirm it's indexed
 
 ---
 
 ## MEDIUM — Fix within 1 month
 
-### M1 — Add priority prop to Hero LCP image
-**Effort:** 5 min | **Impact:** LCP score, Core Web Vitals
+### M-A — Add "קצת עלי" About Me section ⭐ Highest content impact
+**Effort:** 1 hr dev + bio content from Netta | **Impact:** E-E-A-T, AI citability, conversion
 
-In `src/components/layout/hero/HeroBackground.tsx`, find the main hero image and add `priority`:
-```tsx
-<Image src="..." alt="..." priority /> // Tells Next.js to preload this image
+A practitioner bio is the #2 most-read section on therapy sites. Its absence means:
+- Google has no credentials to evaluate for E-E-A-T
+- AI assistants (ChatGPT, Perplexity) have nothing to cite when answering "מטפלת זוגית כפר יעבץ"
+- Prospective clients can't confirm they're in the right hands
+
+**What the bio should contain** (see the full brief sent to Netta):
+- Training & certification body
+- Years of experience
+- Therapeutic approach / modalities used
+- Who she works with
+- Personal "why" — what drew her to couples/family work
+
+**SEO keywords to weave in naturally** (one use each):
+- טיפול זוגי
+- טיפול משפחתי
+- מטפלת מוסמכת
+- כפר יעבץ
+
+---
+
+### M-B — Verify IndexNow key file exists
+**Effort:** 2 min | **File:** `/public/c3e73d9f77ad4e8992f89fff10073308.txt`
+
+`robots.txt` references this file. Confirm it exists:
+```bash
+ls public/c3e73d9f77ad4e8992f89fff10073308.txt
+```
+If missing, create it with the key as its sole content:
+```
+c3e73d9f77ad4e8992f89fff10073308
 ```
 
 ---
 
-### M2 — Replace raw `<img>` with `next/image` in Contact section
-**Effort:** 30 min | **Impact:** Performance, WebP/AVIF delivery, bandwidth
+### M-C — Add hero image `priority` prop
+**Effort:** 5 min | **File:** `src/components/layout/hero/HeroBackground.tsx`
 
-The 3 mosaic photos in `Contact.tsx` use raw `<img>` tags. Replace with `<Image>` from `next/image` for automatic optimization.
-
----
-
-### M3 — Add Service schema for each expertise area
-**Effort:** 20 min | **Impact:** Rich results for specific therapy services
-
-Add 4 `Service` schema entries under the LocalBusiness for: טיפול זוגי, טיפול משפחתי, הדרכת הורים, ליווי אישי.
+Find the main hero image/background and ensure it has `priority` on any `<Image>` component, or a `<link rel="preload">` if it's a CSS background. This is the LCP element on almost every device.
 
 ---
 
-### M4 — Add FAQ section with FAQ schema
-**Effort:** 1–2 hrs | **Impact:** FAQ rich results, AI citability, conversion
+### M-D — Add FAQ section with FAQPage schema
+**Effort:** 2 hrs | **Impact:** FAQ rich results, AI Q&A, conversion
 
-Common questions for therapy practices:
-- כמה עולה פגישה?
-- כמה פגישות צריך?
-- האם הפגישות חסויות?
-- האם אתם עובדים עם ביטוחים?
+Suggested questions (all high-intent, commonly searched):
+1. כמה עולה פגישת טיפול זוגי?
+2. כמה פגישות בדרך כלל נדרשות?
+3. האם הפגישות חסויות?
+4. האם ניתן לקבל טיפול גם אונליין?
+5. מתי כדאי לפנות לטיפול זוגי?
 
-Add as visible content + FAQPage JSON-LD.
-
----
-
-### M5 — Set up Google Business Profile (GBP)
-**Effort:** 1–2 hrs | **Impact:** Maps ranking, "near me" searches, phone/direction clicks
-
-1. Create/claim GBP listing for "נטע שמש טיפול זוגי"
-2. Add address, phone, hours, photos
-3. Link to the website
-4. Start collecting real reviews (send review link to past clients)
+Add as a visible accordion or Q&A section + FAQPage JSON-LD in `layout.tsx`.
 
 ---
 
-### M6 — Add Google Analytics / privacy-respecting analytics
-**Effort:** 30 min | **Impact:** Understanding traffic, conversion tracking
+### M-E — Set up analytics (privacy-first)
+**Effort:** 30 min | **Impact:** Measure SEO ROI, track conversions
 
-Add to `layout.tsx` or via Next.js Script component. Consider Plausible or Fathom for GDPR-friendlier analytics (no cookie consent banner needed).
+Options (no cookie banner needed):
+- **Plausible** — €9/mo, GDPR-compliant, no cookies
+- **Fathom** — similar, slightly cheaper
+- **Vercel Analytics** — free tier, built-in for Vercel deployments (easiest)
+
+For Vercel Analytics — just enable in Vercel dashboard, then add `<Analytics />` from `@vercel/analytics/react` to `layout.tsx`.
 
 ---
 
-### M7 — Rename image files to descriptive names
-**Effort:** 2–3 hrs | **Impact:** Image search visibility
+### M-F — Replace raw `<img>` with `<Image>` in Contact section
+**Effort:** 30 min | **File:** `src/components/layout/Contact.tsx`
 
-Current: `cd66a766bd49488df6445af5e15baf9d.jpg`  
-Target: `netta-shemesh-couples-therapy-session.jpg`
-
-This requires updating all import/src references and running through the public/ folder.
+The 3 mosaic photos use raw `<img>` — no WebP/AVIF conversion, no lazy-load optimization, no responsive sizes. Replacing with Next.js `<Image>` gives automatic format conversion and ~40% smaller file sizes.
 
 ---
 
 ## LOW — Backlog
 
-### L0 — Add FAQ section with FAQ schema
-**Effort:** 1–2 hrs | **Impact:** FAQ rich results, AI citability, conversion
-Common questions: כמה עולה פגישה? כמה פגישות צריך? האם הפגישות חסויות? האם עובדים עם ביטוחים?
-Add as visible content + `FAQPage` JSON-LD. Postponed — implement after core content is live.
+### L-A — Remove unused Dganit font
+**File:** `/public/fonts/Dganit-Medium.woff2`  
+Not loaded in `layout.tsx`. Delete to save ~50KB per page.
 
-### L1 — Add llms.txt for AI crawler guidance
-Create `/public/llms.txt` following the llms.txt spec to guide AI crawlers on citability.
+### L-B — Add llms.txt
+Create `/public/llms.txt` following the llms.txt spec. Signals AI crawlers how to cite this practice. Low but free.
 
-### L2 — Consider adding a blog / resource section
-Even 4–6 articles (e.g., "5 סימנים שהגיע הזמן לטיפול זוגי") would dramatically increase keyword surface area and E-E-A-T signals.
+### L-C — Add custom .co.il domain
+An Israeli domain strengthens geo-targeting. Low urgency until content is complete.
 
-### L3 — Remove Dganit-Medium.woff2 if unused
-The font file exists in `/public/fonts/` but is not referenced in `layout.tsx`. Dead weight (~50KB).
+### L-D — Rename image files to descriptive names
+Replace MD5 hashes with meaningful names for image search visibility.
 
-### L4 — Add breadcrumb schema if pages are added
-Premature now, but important if a blog or subpages are added.
-
-### L5 — Custom domain
-`nettashemesh.vercel.app` is functional but a `.co.il` domain (e.g., `nettashemesh.co.il`) signals Israeli local relevance more strongly to Google.
+### L-E — Add Review schema once real testimonials exist
+Template ready in audit report. Can be added to `@graph` in `layout.tsx` as soon as H-C (real testimonials) is done.
 
 ---
 
-## Implementation Order (Recommended Sprint)
+## Revised Sprint Plan
 
-**Day 1 (2 hrs) — Foundation:**
-C1 (placeholder data) → C3 (meta description) → C4 (robots.txt) → C5 (sitemap) → C6 (JSON-LD)
+**Today (30 min) — Quick unblocks:**
+H-A (email) → H-B (social links) → H-D (sitemap date)
 
-**Day 2 (1.5 hrs) — Polish:**  
-H1 (Open Graph) → H2 (canonical) → H3 (hreflang) → H4 (Expertise H2 keyword) → H6 (image alt text)
+**This week:**
+H-C (real testimonials from Netta) → H-E (GSC setup) → M-B (IndexNow file check)
 
-**Day 3 (1 hr) — Infra:**  
-H5 (security headers) → H7 (font display) → H8 (GSC setup + submit sitemap)
+**Next 2 weeks:**
+M-A (About Me bio — waiting on Netta's text) → M-C (hero priority prop) → M-D (FAQ section)
 
-**Week 2:**  
-C2 (real testimonials) → M1 (LCP priority) → M2 (next/image in Contact) → M5 (GBP)
+**Month 2:**
+M-E (Analytics) → M-F (next/image in Contact) → L-A (remove Dganit) → L-B (llms.txt)
 
-**Month 2:**  
-M3 (Service schema) → M4 (FAQ) → M6 (Analytics) → L1 (llms.txt)
+---
+
+## Score Projection
+
+| Milestone | Score |
+|---|---|
+| Now (v2) | 65 |
+| After H-A, H-B, H-C, H-D | ~72 |
+| After M-A (About Me) + M-D (FAQ) | ~80 |
+| After GSC + Analytics + GBP | ~85 |
+| After custom domain + blog | 90+ |

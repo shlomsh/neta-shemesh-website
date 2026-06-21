@@ -36,7 +36,7 @@ export default function Contact() {
         id="contact-social"
         dir="rtl"
         data-bg-tone="mid"
-        className="py-[80px] px-[24px]"
+        className="py-[80px] px-[24px] lg:min-h-[100svh] lg:flex lg:flex-col lg:justify-center"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
@@ -54,7 +54,7 @@ export default function Contact() {
               Col 2 (left, narrower): photo3 spanning both rows (tall portrait)
             Mobile: single-column stack of all 3 photos
           */}
-          <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0">
+          <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-160px)]">
             {/* Mobile: simple vertical stack */}
             <div className="flex flex-col gap-[16px] lg:hidden">
               <div className="relative overflow-hidden aspect-[4/5] w-full">
@@ -88,16 +88,16 @@ export default function Contact() {
 
             {/* Desktop/tablet: 2-column mosaic grid */}
             <div
-              className="hidden lg:grid gap-[16px]"
+              className="hidden lg:grid gap-[16px] h-full"
               style={{
                 gridTemplateColumns: '1fr 1fr',
-                gridTemplateRows: 'auto auto',
+                gridTemplateRows: '1fr 1fr',
                 gridTemplateAreas: '"p1 p3" "p2 p3"',
               }}
             >
               {/* Photo 1 — top of left column */}
               <div
-                className="relative overflow-hidden aspect-[4/5]"
+                className="relative overflow-hidden min-h-0"
                 style={{ gridArea: 'p1' }}
               >
                 <Image
@@ -110,7 +110,7 @@ export default function Contact() {
               </div>
               {/* Photo 2 — bottom of left column */}
               <div
-                className="relative overflow-hidden aspect-[4/5]"
+                className="relative overflow-hidden min-h-0"
                 style={{ gridArea: 'p2' }}
               >
                 <Image
@@ -123,7 +123,7 @@ export default function Contact() {
               </div>
               {/* Photo 3 — tall portrait spanning full height of right column */}
               <div
-                className="relative overflow-hidden"
+                className="relative overflow-hidden min-h-0"
                 style={{ gridArea: 'p3', gridRow: '1 / 3' }}
               >
                 <Image
@@ -169,7 +169,7 @@ export default function Contact() {
         id="contact-office"
         dir="rtl"
         data-bg-tone="light"
-        className="py-[80px] px-[24px] border-t border-[var(--color-mauve)]"
+        className="py-[80px] px-[24px] border-t border-[var(--color-mauve)] lg:min-h-[100svh] lg:flex lg:flex-col lg:justify-center"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
 
