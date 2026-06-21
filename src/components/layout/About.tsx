@@ -183,7 +183,7 @@ export default function About() {
               <ScrollReveal delay={0.24}>
                 <QuoteBlock
                   lines={quoteLines}
-                  authorTitle="מטפלת זוגית ומשפחתית מוסמכת"
+                  authorTitle="עו״ס קלינית"
                 />
               </ScrollReveal>
 
