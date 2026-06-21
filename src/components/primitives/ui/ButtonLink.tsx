@@ -22,7 +22,7 @@ export function ButtonLink({
   
   const variants = {
     primary: 'bg-[var(--color-brand-primary)] text-white py-[20px] px-[48px]',
-    secondary: 'bg-[var(--color-canva-mid)] text-white py-[14px] px-[32px]',
+    secondary: 'bg-[var(--color-mauve)] text-white py-[14px] px-[32px]',
   };
 
   return (

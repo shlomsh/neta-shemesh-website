@@ -10,7 +10,7 @@
 export function HeroBackground() {
   return (
     <div
-      className="absolute inset-0 bg-[var(--color-canva-dark)]"
+      className="absolute inset-0 bg-[var(--color-plum)]"
       aria-hidden="true"
     />
   );

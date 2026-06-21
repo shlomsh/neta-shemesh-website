@@ -6,7 +6,7 @@ describe('Typography Overhaul', () => {
   it('SectionTitle renders with Elamy font', () => {
     render(<SectionTitle id="test-id" spanId="span-id">Test Title</SectionTitle>);
     const heading = screen.getByRole('heading', { level: 2 });
-    expect(heading.className).toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(heading.className).toContain('font-[family-name:var(--font-display)]');
   });
 
   it('SectionTitle applies span inside if spanId is provided', () => {

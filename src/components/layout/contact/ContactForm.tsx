@@ -14,12 +14,12 @@ export function ContactForm() {
 
   const fieldClass =
     'w-full rounded-[6px] px-[16px] py-[12px] text-right ' +
-    'bg-[var(--color-canva-bg)] text-[var(--color-canva-dark)] placeholder:text-[var(--color-canva-mid)] ' +
-    'border border-[var(--color-canva-mid)] focus:outline-none focus:border-[var(--color-canva-dark)] ' +
+    'bg-[var(--color-cream)] text-[var(--color-plum)] placeholder:text-[var(--color-mauve)] ' +
+    'border border-[var(--color-mauve)] focus:outline-none focus:border-[var(--color-plum)] ' +
     'transition-colors';
 
   const labelClass =
-    'block text-right mb-[6px] text-[var(--color-canva-dark)] tracking-[0.012em]';
+    'block text-right mb-[6px] text-[var(--color-plum)] tracking-[0.012em]';
 
   return (
     <form
@@ -98,8 +98,8 @@ export function ContactForm() {
           'w-full rounded-[6px] py-[14px] px-[24px] font-bold tracking-[0.05em]',
           'transition-opacity',
           status === 'idle'
-            ? 'bg-[var(--color-canva-light)] text-[var(--color-dark)] hover:opacity-90'
-            : 'bg-[var(--color-canva-light)] text-[var(--color-dark)] opacity-60 cursor-not-allowed',
+            ? 'bg-[var(--color-blush)] text-[var(--color-dark)] hover:opacity-90'
+            : 'bg-[var(--color-blush)] text-[var(--color-dark)] opacity-60 cursor-not-allowed',
         ].join(' ')}
       >
         {status === 'sent' ? 'ההודעה נשלחה!' : status === 'sending' ? 'שולח...' : 'שלחו הודעה'}

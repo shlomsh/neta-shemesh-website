@@ -9,7 +9,7 @@ import type { Step } from './services/types';
 
 const STEPS: Step[] = [
   {
-    imageSrc: '/images/458a9d55ce04ee5d6ff51c404cdc915a.webp',
+    imageSrc: '/images/service-step-1.webp',
     numberText: '01.',
     title: 'הערכה ראשונית והגדרת מטרות',
     bullets: [
@@ -19,7 +19,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    imageSrc: '/images/0cfa79f0cdffa491b0ddde7da08ff582.webp',
+    imageSrc: '/images/service-step-2.webp',
     numberText: '02.',
     title: 'בניית יחסי אמון',
     bullets: [
@@ -29,7 +29,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    imageSrc: '/images/3d824070dc5563aa93f1a328eea2d93c.webp',
+    imageSrc: '/images/service-step-3.webp',
     numberText: '03.',
     title: 'חקירה והבנה זוגית',
     bullets: [
@@ -39,7 +39,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    imageSrc: '/images/2830fcad4852229bcdffb0a37956e095.webp',
+    imageSrc: '/images/service-step-4.webp',
     numberText: '04.',
     title: 'רכישת כלים ויישום',
     bullets: [

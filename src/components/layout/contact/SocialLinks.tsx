@@ -11,19 +11,19 @@ const SOCIAL_LINKS: SocialLink[] = [
   {
     href: 'https://facebook.com',
     label: 'Facebook',
-    iconSrc: '/images/74ec6b8545ed1d2da59d1d1e63e12975.svg',
+    iconSrc: '/images/social-icon-facebook.svg',
     iconAlt: 'Simple Facebook Icon',
   },
   {
     href: 'https://instagram.com',
     label: 'Instagram',
-    iconSrc: '/images/a5f675633ff811108876d1551a12079e.svg',
+    iconSrc: '/images/social-icon-instagram.svg',
     iconAlt: 'Simple Instagram Icon',
   },
   {
     href: 'https://twitter.com',
     label: 'Twitter',
-    iconSrc: '/images/2e2df4068df235d087087c1872a7b1de.svg',
+    iconSrc: '/images/social-icon-twitter.svg',
     iconAlt: 'Twitter Logo',
   },
 ];

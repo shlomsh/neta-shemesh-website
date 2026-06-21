@@ -1,30 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-canva-dark: #574964;
-  --color-canva-mid: #9F8383;
-  --color-canva-light: #C8AAAA;
-  --color-canva-bg: #fff0e4;
+  --color-plum: #574964;
+  --color-mauve: #9F8383;
+  --color-blush: #C8AAAA;
+  --color-cream: #fff0e4;
 
   --font-elamy: var(--font-elamy), sans-serif;
   --font-stanga: var(--font-stanga), sans-serif;
 
-  --font-canva-primary: var(--font-stanga), sans-serif;
-  --font-canva-secondary: var(--font-stanga), sans-serif;
-  --font-canva-accent: var(--font-elamy), cursive;
+  --font-body: var(--font-stanga), sans-serif;
+  --font-display: var(--font-elamy), cursive;
 }
 
 :root {
-  --color-dark: var(--color-canva-dark);
+  --color-dark: var(--color-plum);
   --color-white: #fff0e4;
-  --color-text-muted: var(--color-canva-dark);
-  --color-text-primary: var(--color-canva-dark);
+  --color-text-muted: var(--color-plum);
+  --color-text-primary: var(--color-plum);
   --color-black: #000000;
-  --color-brand-primary: var(--color-canva-mid);
-  --color-brand-secondary: var(--color-canva-light);
-  --color-brand-dark: var(--color-canva-dark);
-  --color-text-secondary: var(--color-canva-mid);
-  --color-bg-light: var(--color-canva-bg);
+  --color-brand-primary: var(--color-mauve);
+  --color-brand-secondary: var(--color-blush);
+  --color-brand-dark: var(--color-plum);
+  --color-text-secondary: var(--color-mauve);
+  --color-bg-light: var(--color-cream);
 
   /* Scale up body text because Hebrew fonts appear smaller. */
   --bfso: 1.1;
@@ -36,8 +35,8 @@
   }
 
   html, body {
-    background-color: var(--color-canva-bg);
-    color: var(--color-canva-dark);
+    background-color: var(--color-cream);
+    color: var(--color-plum);
     font-family: var(--font-stanga);
     direction: rtl; /* Hebrew RTL */
   }
@@ -54,7 +53,7 @@
 }
 
 @layer components {
-  :root { --header-color: var(--color-canva-dark); }   /* default: dark plum, for light surfaces */
+  :root { --header-color: var(--color-plum); }   /* default: dark plum, for light surfaces */
   .on-dark { --header-color: var(--color-white); }      /* cream, for titles on dark bands */
 
   /* ── 4-tone section system ───────────────────────────────────────────────
@@ -65,30 +64,30 @@
 
   /* Dark (#574964) — cream text */
   [data-bg-tone="dark"] {
-    background-color: var(--color-canva-dark);
-    color: var(--color-canva-bg);
-    --header-color: var(--color-canva-bg);
+    background-color: var(--color-plum);
+    color: var(--color-cream);
+    --header-color: var(--color-cream);
   }
 
   /* Mid (#9F8383) — cream text */
   [data-bg-tone="mid"] {
-    background-color: var(--color-canva-mid);
-    color: var(--color-canva-bg);
-    --header-color: var(--color-canva-bg);
+    background-color: var(--color-mauve);
+    color: var(--color-cream);
+    --header-color: var(--color-cream);
   }
 
   /* Light (#C8AAAA) — dark text */
   [data-bg-tone="light"] {
-    background-color: var(--color-canva-light);
-    color: var(--color-canva-dark);
-    --header-color: var(--color-canva-dark);
+    background-color: var(--color-blush);
+    color: var(--color-plum);
+    --header-color: var(--color-plum);
   }
 
   /* Cream (#fff0e4) — dark text */
   [data-bg-tone="cream"] {
-    background-color: var(--color-canva-bg);
-    color: var(--color-canva-dark);
-    --header-color: var(--color-canva-dark);
+    background-color: var(--color-cream);
+    color: var(--color-plum);
+    --header-color: var(--color-plum);
   }
 
   /* ── Large-text AA bump for Mid and Light sections ──────────────────────
@@ -117,7 +116,7 @@
 
   .hero-title, .hero-title span,
   .section-header, .section-header span {
-    font-family: var(--font-canva-accent) !important;
+    font-family: var(--font-display) !important;
     font-style: normal !important;
     font-weight: 700 !important;
     line-height: 1.2em !important;
@@ -126,7 +125,7 @@
     color: var(--header-color) !important;
   }
   .sub-header, .sub-header span {
-    font-family: var(--font-canva-accent) !important;
+    font-family: var(--font-display) !important;
     font-style: normal !important;
     font-weight: 700 !important;
     line-height: 1.3em !important;
@@ -166,7 +165,7 @@
    * ──────────────────────────────────────────────────────────────────────── */
 
   .type-display {
-    font-family: var(--font-canva-accent);
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(40px, 9vw, 88px);
     line-height: 1.05;
@@ -174,7 +173,7 @@
   }
 
   .type-title {
-    font-family: var(--font-canva-accent);
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(30px, 5vw, 52px);
     line-height: 1.15;
@@ -225,7 +224,7 @@
   }
 
   .type-signature {
-    font-family: var(--font-canva-accent);
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1.1;

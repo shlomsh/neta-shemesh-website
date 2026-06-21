@@ -31,9 +31,9 @@ describe('Expertise — card titles present', () => {
     expect(container.textContent).toContain('טיפול זוגי');
   });
 
-  it('renders section heading "מקום בטוח לצמוח בו ביחד."', () => {
-    // Heading text was updated from "מרחב בטוח לקשר שלכם" to "מקום בטוח לצמוח בו ביחד."
+  it('renders section heading "טיפול זוגי ומשפחתי בכפר יעבץ"', () => {
+    // Heading text was updated to "טיפול זוגי ומשפחתי בכפר יעבץ"
     const { container } = render(<Expertise />);
-    expect(container.textContent).toContain('מקום בטוח לצמוח בו ביחד.');
+    expect(container.textContent).toContain('טיפול זוגי ומשפחתי בכפר יעבץ');
   });
 });

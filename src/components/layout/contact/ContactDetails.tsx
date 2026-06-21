@@ -23,7 +23,7 @@ export function ContactDetails({
       <li className="flex items-center gap-[16px] flex-row-reverse">
         <span className="flex-shrink-0 w-[24px] h-[24px]">
           <img
-            src="/images/cd9be1bf1825d90196a68c69aa65fa1b.svg"
+            src="/images/contact-icon-location.svg"
             alt="location glyph icon"
             loading="lazy"
             className="w-full h-full object-contain"
@@ -49,7 +49,7 @@ export function ContactDetails({
       <li className="flex items-center gap-[16px] flex-row-reverse">
         <span className="flex-shrink-0 w-[24px] h-[24px]">
           <img
-            src="/images/0bfd9601e3558f04c5a26db04e792688.svg"
+            src="/images/contact-icon-phone.svg"
             alt="Phone Call Glyph Icon"
             loading="lazy"
             className="w-full h-full object-contain"
@@ -76,7 +76,7 @@ export function ContactDetails({
       <li className="flex items-center gap-[16px] flex-row-reverse">
         <span className="flex-shrink-0 w-[24px] h-[24px]">
           <img
-            src="/images/957b9c4d000919fda0fad512d9b1e7f6.svg"
+            src="/images/contact-icon-email.svg"
             alt="email icon"
             loading="lazy"
             className="w-full h-full object-contain"

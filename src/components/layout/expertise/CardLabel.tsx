@@ -19,7 +19,7 @@ export function CardLabel({ title, description }: CardLabelProps) {
       <span
         className="
           block
-          font-[family-name:var(--font-canva-primary)]
+          font-[family-name:var(--font-body)]
           text-[var(--color-white)]
           font-bold
           text-[clamp(14px,1.6vw,18px)]

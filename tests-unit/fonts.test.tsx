@@ -19,14 +19,14 @@ import React from 'react';
 import About from '@/components/layout/About';
 
 describe('About.tsx — h2 headings use Elamy/Accent font class', () => {
-  it('renders all three h2 headings with font-[family-name:var(--font-canva-accent)]', () => {
+  it('renders all three h2 headings with font-[family-name:var(--font-display)]', () => {
     const { container } = render(<About />);
     const headings = container.querySelectorAll('h2');
     expect(headings.length).toBeGreaterThanOrEqual(3);
 
-    const ACCENT = 'font-[family-name:var(--font-canva-accent)]';
+    const ACCENT = 'font-[family-name:var(--font-display)]';
     const BAD_STANGA = 'font-[family-name:var(--font-stanga)]';
-    const BAD_BARE = 'font-[var(--font-canva-accent)]';
+    const BAD_BARE = 'font-[var(--font-display)]';
     // NOTE: `section-header` is an intentional design-token class applied by
     // SectionTitle — do NOT assert its absence. Assert the font is set instead.
 
@@ -43,11 +43,11 @@ describe('About.tsx — h2 headings use Elamy/Accent font class', () => {
 import Expertise from '@/components/layout/Expertise';
 
 describe('Expertise.tsx — section h2 uses Elamy/Accent font class', () => {
-  it('renders h2 "מקום בטוח לצמוח בו ביחד." with font-[family-name:var(--font-canva-accent)]', () => {
+  it('renders h2 "מקום בטוח לצמוח בו ביחד." with font-[family-name:var(--font-display)]', () => {
     const { container } = render(<Expertise />);
     const h2 = container.querySelector('h2#vyKTmOw3YNYlJZPL');
     expect(h2, 'Expertise h2 not found by id').toBeTruthy();
-    expect(h2!.className).toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(h2!.className).toContain('font-[family-name:var(--font-display)]');
     expect(h2!.className).not.toContain('font-[family-name:var(--font-stanga)]');
     // section-header is an intentional SectionTitle design-token class — not a bug
   });
@@ -57,11 +57,11 @@ describe('Expertise.tsx — section h2 uses Elamy/Accent font class', () => {
 import Services from '@/components/layout/Services';
 
 describe('Services.tsx — section h2 uses Elamy/Accent font class', () => {
-  it('renders h2 "איך זה עובד?" with font-[family-name:var(--font-canva-accent)]', () => {
+  it('renders h2 "איך זה עובד?" with font-[family-name:var(--font-display)]', () => {
     const { container } = render(<Services />);
     const h2 = container.querySelector('h2#pEc3w8pe4QAw5k7o');
     expect(h2, 'Services h2 not found by id').toBeTruthy();
-    expect(h2!.className).toContain('font-[family-name:var(--font-canva-accent)]');
+    expect(h2!.className).toContain('font-[family-name:var(--font-display)]');
     expect(h2!.className).not.toContain('font-[family-name:var(--font-stanga)]');
     // section-header is an intentional SectionTitle design-token class — not a bug
   });
@@ -71,16 +71,16 @@ describe('Services.tsx — section h2 uses Elamy/Accent font class', () => {
 import { CardLabel } from '@/components/layout/expertise/CardLabel';
 
 describe('CardLabel.tsx — title span uses correct font-family syntax', () => {
-  it('uses font-[family-name:var(--font-canva-primary)] (NOT bare font-[var(...)])', () => {
+  it('uses font-[family-name:var(--font-body)] (NOT bare font-[var(...)])', () => {
     const { container } = render(
       <CardLabel title="טיפול זוגי" description="test description" />
     );
     // First span is the title
     const titleSpan = container.querySelector('span');
     expect(titleSpan, 'title span not found').toBeTruthy();
-    expect(titleSpan!.className).toContain('font-[family-name:var(--font-canva-primary)]');
+    expect(titleSpan!.className).toContain('font-[family-name:var(--font-body)]');
     // Must NOT use the broken bare syntax
-    expect(titleSpan!.className).not.toContain('font-[var(--font-canva-primary)]');
+    expect(titleSpan!.className).not.toContain('font-[var(--font-body)]');
   });
 });
 
@@ -88,11 +88,11 @@ describe('CardLabel.tsx — title span uses correct font-family syntax', () => {
 import { QuoteText } from '@/components/layout/testimonials/QuoteText';
 
 describe('QuoteText.tsx — uses correct font-family syntax', () => {
-  it('uses font-[family-name:var(--font-canva-primary)] (NOT bare font-[var(...)])', () => {
+  it('uses font-[family-name:var(--font-body)] (NOT bare font-[var(...)])', () => {
     const { container } = render(<QuoteText text="some testimonial text" />);
     const p = container.querySelector('p');
     expect(p, 'QuoteText <p> not found').toBeTruthy();
-    expect(p!.className).toContain('font-[family-name:var(--font-canva-primary)]');
-    expect(p!.className).not.toContain('font-[var(--font-canva-primary)]');
+    expect(p!.className).toContain('font-[family-name:var(--font-body)]');
+    expect(p!.className).not.toContain('font-[var(--font-body)]');
   });
 });

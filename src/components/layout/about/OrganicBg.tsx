@@ -12,7 +12,7 @@ export function OrganicBg({ className = '' }: { className?: string }) {
         cy="300"
         rx="280"
         ry="260"
-        fill="var(--color-canva-light)"
+        fill="var(--color-blush)"
         opacity="0.18"
         transform="rotate(-15 300 300)"
       />
@@ -21,7 +21,7 @@ export function OrganicBg({ className = '' }: { className?: string }) {
         cy="290"
         rx="200"
         ry="230"
-        fill="var(--color-canva-mid)"
+        fill="var(--color-mauve)"
         opacity="0.10"
         transform="rotate(20 320 290)"
       />

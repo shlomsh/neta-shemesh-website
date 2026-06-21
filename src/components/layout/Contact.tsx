@@ -59,7 +59,7 @@ export default function Contact() {
             <div className="flex flex-col gap-[16px] lg:hidden">
               <div className="relative overflow-hidden aspect-[4/5] w-full">
                 <Image
-                  src="/images/cd66a766bd49488df6445af5e15baf9d.webp"
+                  src="/images/contact-clinic-portrait.webp"
                   alt="נטע שמש — תמונה מהקליניקה"
                   fill
                   sizes="100vw"
@@ -68,7 +68,7 @@ export default function Contact() {
               </div>
               <div className="relative overflow-hidden aspect-[4/5] w-full">
                 <Image
-                  src="/images/06156d8b9572da9e8cf4bac79706e046.webp"
+                  src="/images/contact-consultation.webp"
                   alt="נטע שמש בפגישת ייעוץ"
                   fill
                   sizes="100vw"
@@ -77,7 +77,7 @@ export default function Contact() {
               </div>
               <div className="relative overflow-hidden aspect-[2/3] w-full">
                 <Image
-                  src="/images/cf06e9544f6ebccd5ec2e44960196ab6.webp"
+                  src="/images/contact-clinic-atmosphere.webp"
                   alt="אווירת הקליניקה של נטע שמש"
                   fill
                   sizes="100vw"
@@ -101,7 +101,7 @@ export default function Contact() {
                 style={{ gridArea: 'p1' }}
               >
                 <Image
-                  src="/images/cd66a766bd49488df6445af5e15baf9d.webp"
+                  src="/images/contact-clinic-portrait.webp"
                   alt="נטע שמש — תמונה מהקליניקה"
                   fill
                   sizes="(max-width: 1024px) 50vw, 28vw"
@@ -114,7 +114,7 @@ export default function Contact() {
                 style={{ gridArea: 'p2' }}
               >
                 <Image
-                  src="/images/06156d8b9572da9e8cf4bac79706e046.webp"
+                  src="/images/contact-consultation.webp"
                   alt="נטע שמש בפגישת ייעוץ"
                   fill
                   sizes="(max-width: 1024px) 50vw, 28vw"
@@ -127,7 +127,7 @@ export default function Contact() {
                 style={{ gridArea: 'p3', gridRow: '1 / 3' }}
               >
                 <Image
-                  src="/images/cf06e9544f6ebccd5ec2e44960196ab6.webp"
+                  src="/images/contact-clinic-atmosphere.webp"
                   alt="אווירת הקליניקה של נטע שמש"
                   fill
                   sizes="(max-width: 768px) 37vw, 21vw"
@@ -169,7 +169,7 @@ export default function Contact() {
         id="contact-office"
         dir="rtl"
         data-bg-tone="light"
-        className="py-[80px] px-[24px] border-t border-[var(--color-canva-mid)]"
+        className="py-[80px] px-[24px] border-t border-[var(--color-mauve)]"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
 

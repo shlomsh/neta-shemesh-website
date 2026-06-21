@@ -10,7 +10,7 @@ export function QuoteText({ text }: QuoteTextProps) {
       className="
         type-quote
         text-[var(--color-text-primary)]
-        font-[family-name:var(--font-canva-primary)]
+        font-[family-name:var(--font-body)]
         text-right
         mt-[64px]
         mb-[32px]
