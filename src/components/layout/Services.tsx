@@ -71,7 +71,7 @@ export default function Services() {
             </BodyText>
 
             <div className="mt-[48px]">
-              <ButtonLink href="#contact" variant="secondary" className="w-full sm:w-auto text-[18px]">
+              <ButtonLink href="#contact" variant="primary" className="w-full sm:w-auto text-[16px]">
                 צרו קשר
               </ButtonLink>
             </div>

@@ -115,7 +115,8 @@ For bespoke `<section>` elements that don't use the primitive, add `data-bg-tone
 
 ## Layout
 
-- **Every solid card must fill 100svh on desktop.** Use `fullHeight` on the `Section` primitive or `min-h-[100svh] flex flex-col justify-center` on bespoke sections.
+- **Every solid card must fill at least 100svh on _all_ breakpoints (mobile included).** Use `fullHeight` on the `Section` primitive (it applies `min-h-[100svh]` at every width — do **not** gate it behind `lg:`) or `min-h-[100svh] flex flex-col justify-center` on bespoke sections. Cards whose content is taller than the viewport simply grow past 100svh, which is fine.
 - **Photo cards** (Hero, CTA band, Footer) are exempt — their height is controlled by their photographic content.
-- **Mobile:** all cards reflow to single-column. Test at 375px. Body text at 375px uses the clamp minimum — ensure it's comfortable (`.type-body` floor is 16px, `.type-lead` floor is 18px).
+- **Mobile:** all cards reflow to single-column. Test at 375px. Body text at 375px uses the clamp minimum — ensure it's comfortable (`.type-body` floor is 16px, `.type-lead` floor is 18px, blog `.type-read` floor is 18px / `.type-read-lead` 20px).
+- **Header/nav:** below `md` the nav collapses to a hamburger that opens a full-screen overlay menu (`HeroNav`); the inline link row is `hidden md:flex`. Don't reintroduce a squeezed inline nav on mobile. The overlay is portaled to `document.body` because framer-motion's `will-change` on `ScrollReveal` would otherwise trap `position:fixed`.
 - **No horizontal overflow.** Check `document.documentElement.scrollWidth > document.documentElement.clientWidth` after any layout change.

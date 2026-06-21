@@ -1,4 +1,5 @@
 import { ScrollReveal } from '../ui/ScrollReveal';
+import { ParallaxFrame } from '../ui/ParallaxFrame';
 import { PhotoPanel } from './about/PhotoPanel';
 import { SectionTitle } from "../ui/SectionTitle";
 import { QuoteBlock } from "./about/QuoteBlock";
@@ -79,7 +80,7 @@ export default function About() {
       {/* ── Section 1: Intro with photo collage + text ── */}
       <ScrollAnchor id="about" />
 
-      <Section id="about-intro" bgVariant="mid" className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id="about-intro" bgVariant="mid" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] lg:flex-row-reverse lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
@@ -250,9 +251,11 @@ export default function About() {
             <div className="grid grid-cols-1 gap-[16px] w-full sm:grid-cols-3">
               {galleryPanels.map((panel, i) => (
                 <ScrollReveal key={i} delay={i * 0.12}>
-                  <div className="relative overflow-hidden rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)] safari-clip">
-                    {/* intrinsic aspect ratio 348:531 ≈ 152.5% */}
-                    <div className="pt-[152.47%]" />
+                  {/* intrinsic aspect ratio 348:531 ≈ 152.5%; photo drifts within the frame */}
+                  <ParallaxFrame
+                    className="aspect-[348/531] rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)] safari-clip"
+                    amount={9}
+                  >
                     <img
                       src={panel.src}
                       alt=""
@@ -260,7 +263,7 @@ export default function About() {
                       className="absolute inset-0 w-full h-full object-cover"
                       style={{ objectPosition: panel.objectPosition }}
                     />
-                  </div>
+                  </ParallaxFrame>
                 </ScrollReveal>
               ))}
             </div>

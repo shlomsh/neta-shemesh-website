@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ScrollReveal } from '../ui/ScrollReveal';
+import { ParallaxFrame } from '../ui/ParallaxFrame';
 import { SocialLinks } from './contact/SocialLinks';
 import { ContactDetails } from './contact/ContactDetails';
 import { MapEmbed } from './contact/MapEmbed';
@@ -30,7 +31,7 @@ export default function Contact() {
         id="contact-social"
         dir="rtl"
         data-bg-tone="mid"
-        className="py-[80px] px-[24px] lg:min-h-[100svh] lg:flex lg:flex-col lg:justify-center"
+        className="py-[80px] px-[24px] min-h-[100svh] flex flex-col justify-center"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
@@ -51,7 +52,7 @@ export default function Contact() {
           <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-160px)]">
             {/* Mobile: simple vertical stack */}
             <div className="flex flex-col gap-[16px] lg:hidden">
-              <div className="relative overflow-hidden aspect-[4/5] w-full">
+              <ParallaxFrame className="aspect-[4/5] w-full" amount={9}>
                 <Image
                   src="/images/contact-clinic-portrait.webp"
                   alt="נטע שמש — תמונה מהקליניקה"
@@ -59,8 +60,8 @@ export default function Contact() {
                   sizes="100vw"
                   className="object-cover object-center"
                 />
-              </div>
-              <div className="relative overflow-hidden aspect-[4/5] w-full">
+              </ParallaxFrame>
+              <ParallaxFrame className="aspect-[4/5] w-full" amount={9}>
                 <Image
                   src="/images/contact-consultation.webp"
                   alt="נטע שמש בפגישת ייעוץ"
@@ -68,8 +69,8 @@ export default function Contact() {
                   sizes="100vw"
                   className="object-cover object-[30%_64%]"
                 />
-              </div>
-              <div className="relative overflow-hidden aspect-[2/3] w-full">
+              </ParallaxFrame>
+              <ParallaxFrame className="aspect-[2/3] w-full" amount={9}>
                 <Image
                   src="/images/contact-clinic-atmosphere.webp"
                   alt="אווירת הקליניקה של נטע שמש"
@@ -77,7 +78,7 @@ export default function Contact() {
                   sizes="100vw"
                   className="object-cover"
                 />
-              </div>
+              </ParallaxFrame>
             </div>
 
             {/* Desktop/tablet: 2-column mosaic grid */}
@@ -90,10 +91,7 @@ export default function Contact() {
               }}
             >
               {/* Photo 1 — top of left column */}
-              <div
-                className="relative overflow-hidden min-h-0"
-                style={{ gridArea: 'p1' }}
-              >
+              <ParallaxFrame className="min-h-0" style={{ gridArea: 'p1' }} amount={9}>
                 <Image
                   src="/images/contact-clinic-portrait.webp"
                   alt="נטע שמש — תמונה מהקליניקה"
@@ -101,12 +99,9 @@ export default function Contact() {
                   sizes="(max-width: 1024px) 50vw, 28vw"
                   className="object-cover object-center"
                 />
-              </div>
+              </ParallaxFrame>
               {/* Photo 2 — bottom of left column */}
-              <div
-                className="relative overflow-hidden min-h-0"
-                style={{ gridArea: 'p2' }}
-              >
+              <ParallaxFrame className="min-h-0" style={{ gridArea: 'p2' }} amount={9}>
                 <Image
                   src="/images/contact-consultation.webp"
                   alt="נטע שמש בפגישת ייעוץ"
@@ -114,12 +109,9 @@ export default function Contact() {
                   sizes="(max-width: 1024px) 50vw, 28vw"
                   className="object-cover object-[30%_64%]"
                 />
-              </div>
+              </ParallaxFrame>
               {/* Photo 3 — tall portrait spanning full height of right column */}
-              <div
-                className="relative overflow-hidden min-h-0"
-                style={{ gridArea: 'p3', gridRow: '1 / 3' }}
-              >
+              <ParallaxFrame className="min-h-0" style={{ gridArea: 'p3', gridRow: '1 / 3' }} amount={9}>
                 <Image
                   src="/images/contact-clinic-atmosphere.webp"
                   alt="אווירת הקליניקה של נטע שמש"
@@ -127,7 +119,7 @@ export default function Contact() {
                   sizes="(max-width: 768px) 37vw, 21vw"
                   className="object-cover"
                 />
-              </div>
+              </ParallaxFrame>
             </div>
           </ScrollReveal>
 
@@ -166,7 +158,7 @@ export default function Contact() {
         id="contact-office"
         dir="rtl"
         data-bg-tone="light"
-        className="py-[80px] px-[24px] border-t border-[var(--color-mauve)] lg:min-h-[100svh] lg:flex lg:flex-col lg:justify-center"
+        className="py-[80px] px-[24px] border-t border-[var(--color-mauve)] min-h-[100svh] flex flex-col justify-center"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
 

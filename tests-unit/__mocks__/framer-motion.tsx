@@ -57,7 +57,7 @@ export const useAnimation = () => ({
 });
 
 export const useInView = () => true;
-export const useScroll = () => ({ scrollY: { get: () => 0 } });
+export const useScroll = () => ({ scrollY: { get: () => 0 }, scrollYProgress: { get: () => 0 } });
 export const useTransform = (v: unknown, _: unknown, __: unknown) => v;
 export const useSpring = (v: unknown) => v;
 export const useMotionValue = (initial: unknown) => ({
@@ -65,3 +65,4 @@ export const useMotionValue = (initial: unknown) => ({
   set: () => {},
   onChange: () => () => {},
 });
+export const useReducedMotion = () => false;

@@ -149,7 +149,7 @@ export default async function BlogPostPage(
             <p className="type-quote mx-auto max-w-[55ch] text-[var(--color-cream)]">
               {post.cta.text}
             </p>
-            <ButtonLink href={post.cta.href}>{post.cta.buttonLabel}</ButtonLink>
+            <ButtonLink href={post.cta.href} variant="secondary">{post.cta.buttonLabel}</ButtonLink>
           </div>
         </Container>
       </Section>
