@@ -40,7 +40,7 @@ export function HeroNav() {
 
       {/* Phone badge */}
       <a
-        href="tel:+01234567890"
+        href="tel:+972545711060"
         className="
           inline-flex items-center justify-center
           bg-[var(--color-brand-primary)]/75
@@ -59,7 +59,7 @@ export function HeroNav() {
           whitespace-nowrap
         "
       >
-        +01 234 5678 90
+        054-571-1060
       </a>
     </nav>
   );

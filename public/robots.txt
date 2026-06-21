@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nettashemesh.vercel.app/sitemap.xml

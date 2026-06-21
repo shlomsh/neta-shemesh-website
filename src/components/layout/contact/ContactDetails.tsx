@@ -57,7 +57,7 @@ export function ContactDetails({
         </span>
         <div className="text-right">
           <a
-            href={`tel:${phone.replace(/\s/g, '')}`}
+            href={`tel:${phone.replace(/[\s-]/g, '')}`}
             data-body-large="true"
             className="font-bold uppercase hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit"
           >

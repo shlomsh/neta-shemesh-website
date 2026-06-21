@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ScrollReveal } from '../ui/ScrollReveal';
 import { SocialLinks } from './contact/SocialLinks';
 import { ContactDetails } from './contact/ContactDetails';
@@ -17,7 +18,7 @@ const OFFICE_BODY_END = ' ומקובלים.';
 
 const ADDRESS_STRONG = 'שביל המוביל, כפר יעבץ';
 const ADDRESS_LABEL = 'הגיעו אלי';
-const PHONE = '(232) 000-8888';
+const PHONE = '+972 54-571-1060';
 const PHONE_LABEL = 'התקשרו אלי היום';
 const EMAIL = 'INFO@YOURWEBSITE.COM';
 const EMAIL_LABEL = 'שלחו לי אימייל';
@@ -56,30 +57,31 @@ export default function Contact() {
           <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0">
             {/* Mobile: simple vertical stack */}
             <div className="flex flex-col gap-[16px] lg:hidden">
-              <div className="overflow-hidden aspect-[4/5] w-full">
-                <img
+              <div className="relative overflow-hidden aspect-[4/5] w-full">
+                <Image
                   src="/images/cd66a766bd49488df6445af5e15baf9d.jpg"
-                  alt=""
-                  loading="lazy"
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-              <div className="overflow-hidden aspect-[4/5] w-full">
-                <img
-                  src="/images/06156d8b9572da9e8cf4bac79706e046.jpg"
-                  alt=""
-                  loading="lazy"
-                  className="w-full h-full object-cover object-[30%_64%]"
-                />
-              </div>
-              <div className="overflow-hidden aspect-[2/3] w-full">
-                <img
-                  src="/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg"
-                  srcSet="/images/21b39277211129c0ca3e465e0f913219.jpg 534w, /images/cf06e9544f6ebccd5ec2e44960196ab6.jpg 801w"
+                  alt="נטע שמש — תמונה מהקליניקה"
+                  fill
                   sizes="100vw"
-                  alt=""
-                  loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="object-cover object-center"
+                />
+              </div>
+              <div className="relative overflow-hidden aspect-[4/5] w-full">
+                <Image
+                  src="/images/06156d8b9572da9e8cf4bac79706e046.jpg"
+                  alt="נטע שמש בפגישת ייעוץ"
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-[30%_64%]"
+                />
+              </div>
+              <div className="relative overflow-hidden aspect-[2/3] w-full">
+                <Image
+                  src="/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg"
+                  alt="אווירת הקליניקה של נטע שמש"
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -95,40 +97,41 @@ export default function Contact() {
             >
               {/* Photo 1 — top of left column */}
               <div
-                className="overflow-hidden aspect-[4/5]"
+                className="relative overflow-hidden aspect-[4/5]"
                 style={{ gridArea: 'p1' }}
               >
-                <img
+                <Image
                   src="/images/cd66a766bd49488df6445af5e15baf9d.jpg"
-                  alt=""
-                  loading="lazy"
-                  className="w-full h-full object-cover object-center"
+                  alt="נטע שמש — תמונה מהקליניקה"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 28vw"
+                  className="object-cover object-center"
                 />
               </div>
               {/* Photo 2 — bottom of left column */}
               <div
-                className="overflow-hidden aspect-[4/5]"
+                className="relative overflow-hidden aspect-[4/5]"
                 style={{ gridArea: 'p2' }}
               >
-                <img
+                <Image
                   src="/images/06156d8b9572da9e8cf4bac79706e046.jpg"
-                  alt=""
-                  loading="lazy"
-                  className="w-full h-full object-cover object-[30%_64%]"
+                  alt="נטע שמש בפגישת ייעוץ"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 28vw"
+                  className="object-cover object-[30%_64%]"
                 />
               </div>
               {/* Photo 3 — tall portrait spanning full height of right column */}
               <div
-                className="overflow-hidden"
+                className="relative overflow-hidden"
                 style={{ gridArea: 'p3', gridRow: '1 / 3' }}
               >
-                <img
+                <Image
                   src="/images/cf06e9544f6ebccd5ec2e44960196ab6.jpg"
-                  srcSet="/images/21b39277211129c0ca3e465e0f913219.jpg 534w, /images/cf06e9544f6ebccd5ec2e44960196ab6.jpg 801w"
+                  alt="אווירת הקליניקה של נטע שמש"
+                  fill
                   sizes="(max-width: 768px) 37vw, 21vw"
-                  alt=""
-                  loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="object-cover"
                 />
               </div>
             </div>

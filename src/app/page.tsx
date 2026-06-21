@@ -5,6 +5,7 @@ import Services from '@/components/layout/Services';
 import Testimonials from '@/components/layout/Testimonials';
 import Contact from '@/components/layout/Contact';
 import Footer from '@/components/layout/Footer';
+import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Testimonials />
       <Contact />
       <Footer />
+      <WhatsAppFAB />
     </main>
   );
 }
