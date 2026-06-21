@@ -17,7 +17,7 @@ export function BrandLogo() {
       className="flex items-center"
     >
       <img
-        src="/images/logo-horizontal-light.png"
+        src="/images/logo-horizontal-light.webp"
         alt="נטע שמש — טיפול זוגי ומשפחתי"
         width={1073}
         height={320}

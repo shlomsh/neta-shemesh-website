@@ -13,7 +13,7 @@ const TESTIMONIALS: TestimonialData[] = [
       'נמו אנים איפסם וולופטטם קוויה וולופטאס סיט אספרנאטור אאוט אודיט אאוט פוגיט, סד קוויה קונסקוואנטור מגני דולורס אאוס קווי רציונה וולופטטם סקווי נסקיונט.',
     name: 'אגריפינה ואמרה',
     role: 'לקוחה',
-    avatarSrc: '/images/9cc69075ddf28d5468081b32eec634a9.jpg',
+    avatarSrc: '/images/9cc69075ddf28d5468081b32eec634a9.webp',
     variant: 'default',
   },
   {
@@ -22,7 +22,7 @@ const TESTIMONIALS: TestimonialData[] = [
       'נמו אנים איפסם וולופטטם קוויה וולופטאס סיט אספרנאטור אאוט אודיט אאוט פוגיט, סד קוויה קונסקוואנטור מגני דולורס אאוס קווי רציונה וולופטטם סקווי נסקיונט.',
     name: 'סאדב לריסה',
     role: 'יזמית',
-    avatarSrc: '/images/8405d8513ca5e9ef8a3f4dcf78a812b8.jpg',
+    avatarSrc: '/images/8405d8513ca5e9ef8a3f4dcf78a812b8.webp',
     variant: 'highlighted',
   },
   {
@@ -31,7 +31,7 @@ const TESTIMONIALS: TestimonialData[] = [
       'נמו אנים איפסם וולופטטם קוויה וולופטאס סיט אספרנאטור אאוט אודיט אאוט פוגיט, סד קוויה קונסקוואנטור מגני דולורס אאוס קווי רציונה וולופטטם סקווי נסקיונט.',
     name: 'אלה פריץ',
     role: 'אשת עסקים',
-    avatarSrc: '/images/86e8055f5df603f4d38b578fc4485055.jpg',
+    avatarSrc: '/images/86e8055f5df603f4d38b578fc4485055.webp',
     variant: 'default',
   },
 ];
@@ -61,7 +61,7 @@ export default function Testimonials() {
             <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
               <div className="relative aspect-[2/3] rounded-[24px] overflow-hidden shadow-xl safari-clip">
                 <Image
-                  src="/images/53a1f7530d2b45a3979a619311ec0dbf.jpg"
+                  src="/images/53a1f7530d2b45a3979a619311ec0dbf.webp"
                   alt="זוג בטיפול"
                   fill
                   sizes="(max-width: 1024px) 100vw, 360px"
@@ -112,7 +112,7 @@ export default function Testimonials() {
       <section id="afNbX7iGTuOdSbLC" className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)] min-h-[100svh]">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/311529093e852ce987bfa9b8b4953c4a.jpg"
+            src="/images/311529093e852ce987bfa9b8b4953c4a.webp"
             fill
             sizes="100vw"
             className="object-cover opacity-90"
@@ -153,12 +153,12 @@ export default function Testimonials() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)]">
             {[
-              'ed8e5945d4d32bb77122e047516d0127.jpg',
-              '8dd392447e30a059d68af3dd1822861c.jpg',
-              '96be0cab3c596e6c5f381573217388be.jpg',
-              '68f4ad2c2fc9f71c45341466dc74b73b.jpg',
-              'd38f42a73c82a810716e2c763cb110bf.jpg',
-              '7f063d13b9af3abb89beceffe609485f.jpg',
+              'ed8e5945d4d32bb77122e047516d0127.webp',
+              '8dd392447e30a059d68af3dd1822861c.webp',
+              '96be0cab3c596e6c5f381573217388be.webp',
+              '68f4ad2c2fc9f71c45341466dc74b73b.webp',
+              'd38f42a73c82a810716e2c763cb110bf.webp',
+              '7f063d13b9af3abb89beceffe609485f.webp',
             ].map((img, i) => (
               <ScrollReveal
                 key={img}

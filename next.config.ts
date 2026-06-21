@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: '/images/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
+      },
+      {
         source: '/(.*)',
         headers: [
           { key: 'X-Frame-Options', value: 'DENY' },
@@ -28,9 +34,10 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               isDev ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'" : "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data:",
+              "img-src 'self' data: https://kromaticdesignstudio.my.canva.site https://*.canva.site",
               "font-src 'self'",
-              "frame-src https://maps.google.com",
+              "frame-src 'self' https://maps.google.com https://www.google.com https://*.google.com",
+              "media-src 'self' https://kromaticdesignstudio.my.canva.site https://*.canva.site",
               "connect-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",

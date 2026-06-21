@@ -9,7 +9,7 @@ export function FooterBackground() {
     <div className="absolute inset-0 overflow-hidden">
       {/* Photo */}
       <Image
-        src="/images/c2507e38710af194875f96c8ec7aca70.jpg"
+        src="/images/c2507e38710af194875f96c8ec7aca70.webp"
         alt=""
         fill
         sizes="(max-width: 375px) 315vw, (max-width: 480px) 258vw, (max-width: 768px) 172vw, (max-width: 1024px) 139vw, 100vw"

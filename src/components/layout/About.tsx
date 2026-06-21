@@ -15,21 +15,21 @@ import { BodyText } from '@/components/primitives/ui/BodyText';
 
 const photoPanels = [
   {
-    src: '/images/17bebae32af462ae5e9c2885c4f1750c.jpg',
+    src: '/images/17bebae32af462ae5e9c2885c4f1750c.webp',
     objectPosition: '50% 50%',
     aspectPct: 87.06,
     radiusX: '9%',
     radiusY: '10.4%',
   },
   {
-    src: '/images/1c2a7477c15666cecc2b164c84a0bed8.jpg',
+    src: '/images/1c2a7477c15666cecc2b164c84a0bed8.webp',
     objectPosition: '48.1% 47.7%',
     aspectPct: 87.06,
     radiusX: '9%',
     radiusY: '10.4%',
   },
   {
-    src: '/images/6f51fa01092daf6b558e0ff274debe53.jpg',
+    src: '/images/6f51fa01092daf6b558e0ff274debe53.webp',
     objectPosition: '55.3% 50%',
     aspectPct: 93.07,
     radiusX: '4.5%',
@@ -39,15 +39,15 @@ const photoPanels = [
 
 const galleryPanels = [
   {
-    src: '/images/e32becfeb791b0a6bcc85c45a0e6fa51.jpg',
+    src: '/images/e32becfeb791b0a6bcc85c45a0e6fa51.webp',
     objectPosition: '50% 50%',
   },
   {
-    src: '/images/96be0cab3c596e6c5f381573217388be.jpg',
+    src: '/images/96be0cab3c596e6c5f381573217388be.webp',
     objectPosition: '50% 50%',
   },
   {
-    src: '/images/996bfa8eae734c587f45d866d0e7a3e1.jpg',
+    src: '/images/996bfa8eae734c587f45d866d0e7a3e1.webp',
     objectPosition: '50% 50%',
   },
 ] as const;
@@ -66,11 +66,11 @@ const credentials: Credential[] = [
   { text: 'דירוג 5 כוכבים עקבי מלקוחות' },
 ];
 
-const CHECK_ICONS = ['/images/jigsaw-puzzle-6.png', '/images/jigsaw-puzzle-7.png'];
+const CHECK_ICONS = ['/images/jigsaw-puzzle-6.webp', '/images/jigsaw-puzzle-7.webp'];
 const QUOTE_ICON = '/images/42fd096b86fdf26f4525532e1d5bbd85.svg';
-const PROFILE_PHOTO = '/images/9af276f56eebc541c83057d036de0714.jpg';
-const RAYS_BG = '/images/d06ba91ec14a00cf227ed30587771514.jpg';
-const WHITE_RAYS_BG = '/images/b43948bd4c0a0535200651858e1e4708.jpg';
+const PROFILE_PHOTO = '/images/9af276f56eebc541c83057d036de0714.webp';
+const RAYS_BG = '/images/d06ba91ec14a00cf227ed30587771514.webp';
+const WHITE_RAYS_BG = '/images/b43948bd4c0a0535200651858e1e4708.webp';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
