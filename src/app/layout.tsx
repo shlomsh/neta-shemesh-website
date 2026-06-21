@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AUTHOR_NAME, AUTHOR_TITLE } from '@/config/constants';
 
 const elamy = localFont({
   src: [
@@ -99,8 +100,8 @@ const jsonLd = {
     {
       '@type': 'Person',
       '@id': 'https://nettashemesh.vercel.app/#netta',
-      name: 'נטע שמש',
-      jobTitle: 'מטפלת זוגית ומשפחתית',
+      name: AUTHOR_NAME,
+      jobTitle: AUTHOR_TITLE,
       email: 'nettabe@gmail.com',
       worksFor: { '@id': 'https://nettashemesh.vercel.app/#business' },
       url: 'https://nettashemesh.vercel.app',

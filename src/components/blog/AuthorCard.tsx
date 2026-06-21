@@ -1,3 +1,5 @@
+import { AUTHOR_NAME, AUTHOR_TITLE, CLINIC_LOCATION } from '@/config/constants';
+
 /**
  * AuthorCard — compact bio shown at the foot of each article, echoing the
  * physio-site author card. Profile photo + name + role + one-line bio.
@@ -24,8 +26,8 @@ export function AuthorCard() {
         <span className="type-eyebrow uppercase tracking-[0.08em] text-[var(--color-mauve)]">
           על הכותבת
         </span>
-        <p className="type-card-title text-[var(--color-plum)]">נטע שמש</p>
-        <p className="type-small text-[var(--color-mauve)]">מטפלת זוגית ומשפחתית · נתניה</p>
+        <p className="type-card-title text-[var(--color-plum)]">{AUTHOR_NAME}</p>
+        <p className="type-small text-[var(--color-mauve)]">{AUTHOR_TITLE} &middot; {CLINIC_LOCATION}</p>
         <p className="type-body text-[color:color-mix(in_srgb,var(--color-plum)_82%,transparent)]">
           מלווה זוגות, הורים ומשפחות בתהליכי שינוי, משבר וצמיחה — מתוך אמונה שכל
           קשר יכול למצוא מחדש את הדרך אל הקרבה והביטחון.
