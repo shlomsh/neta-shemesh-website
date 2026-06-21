@@ -69,8 +69,7 @@ const credentials: Credential[] = [
 const CHECK_ICONS = ['/images/jigsaw-puzzle-6.webp', '/images/jigsaw-puzzle-7.webp'];
 const QUOTE_ICON = '/images/about-quote-mark.svg';
 const PROFILE_PHOTO = '/images/about-profile-neta.webp';
-const RAYS_BG = '/images/about-rays-bg-dark.webp';
-const WHITE_RAYS_BG = '/images/about-rays-bg-light.webp';
+const CREDENTIALS_ART = '/images/about-credentials-art.webp';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -202,13 +201,13 @@ export default function About() {
       <ScrollAnchor id="page-4" />
 
       <Section id="about-credentials" bgVariant="light" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
-        {/* Subtle rays background at low opacity */}
+        {/* Subtle couple line-art background at low opacity */}
         <img
-          src={RAYS_BG}
+          src={CREDENTIALS_ART}
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-[0.18] z-0"
+          className="absolute bottom-0 left-0 w-[65%] h-[65%] object-contain object-bottom-left pointer-events-none select-none opacity-[0.18] z-0"
         />
 
         <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
@@ -229,16 +228,7 @@ export default function About() {
       {/* ── Section 4: Re-ignite connection — photo gallery + heading ── */}
       <ScrollAnchor id="about-2" />
 
-      <Section id="about-gallery" bgVariant="white" className="-mt-px py-[clamp(56px,8vw,120px)]">
-        {/* White-rays decorative bg */}
-        <img
-          src={WHITE_RAYS_BG}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-100 z-0"
-        />
-
+      <Section id="about-gallery" bgVariant="cream" className="-mt-px py-[clamp(56px,8vw,120px)]">
         <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] items-center">
 

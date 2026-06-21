@@ -229,4 +229,8 @@
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1.1;
   }
+
+  .contact-email-link {
+    font-size: clamp(14.5px, 1.3vw, 16.5px);
+  }
 }

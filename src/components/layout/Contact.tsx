@@ -17,11 +17,8 @@ const OFFICE_BODY_BOLD = 'עטופים, מובנים';
 const OFFICE_BODY_END = ' ומקובלים.';
 
 const ADDRESS_STRONG = 'שביל המוביל, כפר יעבץ';
-const ADDRESS_LABEL = 'הגיעו אלי';
-const PHONE = '+972 54-571-1060';
-const PHONE_LABEL = 'התקשרו אלי היום';
+const PHONE = '054-571-1060';
 const EMAIL = 'INFO@YOURWEBSITE.COM';
-const EMAIL_LABEL = 'שלחו לי אימייל';
 
 export default function Contact() {
   return (
@@ -192,11 +189,8 @@ export default function Contact() {
             <ScrollReveal delay={0.2}>
               <ContactDetails
                 phone={PHONE}
-                phoneLabel={PHONE_LABEL}
                 email={EMAIL}
-                emailLabel={EMAIL_LABEL}
                 addressStrong={ADDRESS_STRONG}
-                addressLabel={ADDRESS_LABEL}
               />
             </ScrollReveal>
           </div>
