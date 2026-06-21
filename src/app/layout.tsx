@@ -77,13 +77,23 @@ const jsonLd = {
       description: 'מטפלת זוגית ומשפחתית מוסמכת בכפר יעבץ',
       url: 'https://nettashemesh.vercel.app',
       telephone: '+972545711060',
+      image: 'https://nettashemesh.vercel.app/opengraph-image',
+      priceRange: '₪₪₪',
+      openingHours: ['Su-Th 09:00-19:00'],
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'שביל המוביל',
         addressLocality: 'כפר יעבץ',
+        addressRegion: 'מרכז',
+        postalCode: '4584500',
         addressCountry: 'IL',
       },
-      // sameAs: ['[REAL_FB_URL]', '[REAL_IG_URL]'],  — fill in when social URLs are confirmed
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 32.2167,
+        longitude: 34.9333,
+      },
+      sameAs: [],
     },
     {
       '@type': 'Person',
