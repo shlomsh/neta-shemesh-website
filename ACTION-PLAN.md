@@ -342,6 +342,11 @@ This requires updating all import/src references and running through the public/
 
 ## LOW — Backlog
 
+### L0 — Add FAQ section with FAQ schema
+**Effort:** 1–2 hrs | **Impact:** FAQ rich results, AI citability, conversion
+Common questions: כמה עולה פגישה? כמה פגישות צריך? האם הפגישות חסויות? האם עובדים עם ביטוחים?
+Add as visible content + `FAQPage` JSON-LD. Postponed — implement after core content is live.
+
 ### L1 — Add llms.txt for AI crawler guidance
 Create `/public/llms.txt` following the llms.txt spec to guide AI crawlers on citability.
 
