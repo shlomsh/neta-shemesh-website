@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
               isDev ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'" : "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https://kromaticdesignstudio.my.canva.site https://*.canva.site",
-              "font-src 'self'",
+              "font-src 'self' https://fonts.gstatic.com",
               "frame-src 'self' https://maps.google.com https://www.google.com https://*.google.com",
               "media-src 'self' https://kromaticdesignstudio.my.canva.site https://*.canva.site",
               "connect-src 'self'",
