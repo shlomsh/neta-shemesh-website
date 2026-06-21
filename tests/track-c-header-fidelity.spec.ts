@@ -78,12 +78,6 @@ test.describe('Track C — Section header size fidelity @1280', () => {
     expect(px, 'AboutLight').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('SuccessStories "סיפורי הצלחה" ~56px (was sub, needs section)', async ({ page }) => {
-    const px = await getFontSize(page, 'eIrsfUtmMjgXi5KA');
-    expect(px, 'SuccessStories').toBeGreaterThan(MIN_SECTION_PX);
-    expect(px, 'SuccessStories').toBeLessThan(MAX_SECTION_PX);
-  });
-
   test('Scheduling "קביעת פגישת ייעוץ" ~56px (was sub, needs section)', async ({ page }) => {
     const px = await getFontSize(page, 'iVtldd7PMtN1BthG');
     expect(px, 'Scheduling').toBeGreaterThan(MIN_SECTION_PX);

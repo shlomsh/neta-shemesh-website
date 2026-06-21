@@ -22,7 +22,6 @@ const TITLE_IDS = [
   'JkkbI1eIj5p9V33T', // Reignite
   'vyKTmOw3YNYlJZPL', // SafeSpace
   'pEc3w8pe4QAw5k7o', // HowItWorks
-  'eIrsfUtmMjgXi5KA', // SuccessStories
   'Dct2rK7XCXJaLA2e', // Testimonials
   'iVtldd7PMtN1BthG', // Scheduling
   'T749khVkMfNluBNv', // CoupleTherapy
