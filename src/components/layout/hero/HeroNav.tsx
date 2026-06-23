@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 
@@ -16,39 +16,88 @@ import Link from 'next/link';
  *                  tap target instead.
  *
  * basePath: prefix for hash anchors. Default '' works on the homepage
- * (#about scrolls in-page). Pass '/' from blog pages so the links become
- * /#about (full-document navigation, avoids App Router hash-stacking bug).
+ * (#about-me scrolls in-page). Pass '/' from blog pages so the links become
+ * /#about-me (full-document navigation, avoids App Router hash-stacking bug).
  *
  * Rule: use <Link> only for hash-free routes (/blog, /). Hash links — even
- * cross-route ones like /#about — always use plain <a> so the browser does
+ * cross-route ones like /#about-me — always use plain <a> so the browser does
  * a full navigation that reliably replaces the fragment.
  */
 export function HeroNav({ basePath = '' }: { basePath?: string }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
 
   useEffect(() => setMounted(true), []);
 
   const links = [
-    { href: `${basePath}#about`,     label: 'קצת עליי' },
+    { href: `${basePath}#about-me`,  label: 'קצת עליי' },
     { href: `${basePath}#expertise`, label: 'התמחות' },
     { href: '/blog',                  label: 'מאמרים' },
     { href: `${basePath}#contact`,   label: 'יצירת קשר' },
   ];
 
-  // Lock body scroll + close on Escape while the overlay is open.
+  // Lock body scroll, focus the close button, and handle keyboard while overlay is open.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    document.addEventListener('keydown', onKey);
+
+    // Move focus into the overlay as soon as it's rendered.
+    closeButtonRef.current?.focus();
+
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+
+      // Focus trap: cycle Tab / Shift+Tab within the overlay.
+      if (e.key !== 'Tab') return;
+      const overlay = overlayRef.current;
+      if (!overlay) return;
+
+      const focusable = Array.from(
+        overlay.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => !el.hasAttribute('disabled'));
+
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
     };
+  }, [open]);
+
+  // Return focus to the hamburger button when the overlay closes (not on initial mount).
+  useEffect(() => {
+    if (open) {
+      wasOpenRef.current = true;
+    } else if (wasOpenRef.current) {
+      hamburgerRef.current?.focus();
+    }
   }, [open]);
 
   const desktopLinkClass = `
@@ -61,6 +110,10 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
     tracking-[0.047em]
     transition-opacity
     hover:opacity-75
+    focus-visible:outline-none
+    focus-visible:ring-2
+    focus-visible:ring-[var(--color-white)]
+    rounded-sm
   `;
 
   const renderLink = (
@@ -113,6 +166,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
 
       {/* ── Mobile hamburger (below md) ── */}
       <button
+        ref={hamburgerRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-label="פתיחת תפריט"
@@ -133,6 +187,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
           this position:fixed overlay inside the top bar. */}
       {mounted && open && createPortal(
         <div
+          ref={overlayRef}
           id="mobile-menu"
           role="dialog"
           aria-modal="true"
@@ -142,6 +197,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
         >
           <div className="flex items-center justify-end px-[clamp(20px,5vw,40px)] py-[clamp(20px,4vw,32px)]">
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={() => setOpen(false)}
               aria-label="סגירת תפריט"

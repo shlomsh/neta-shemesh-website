@@ -57,6 +57,7 @@ const galleryPanels = [
 const quoteLines = [
   'הטיפול הזוגי מספק לכם מרחב מוגן, בו תוכלו לפרק את השתיקות, ללמוד להקשיב ולהתחיל לבנות מחדש את הקשר.',
   'יחד, נלמד לזהות את הדינמיקה הזוגית ולייצר שפה משותפת שמחזירה את הקרבה הביתה.',
+  '- נטע'
 ];
 
 const credentials: Credential[] = [
@@ -75,13 +76,13 @@ const CREDENTIALS_ART = '/images/about-credentials-art.webp';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
-export default function About() {
+export function AboutIntro() {
   return (
     <>
       {/* ── Section 1: Intro with photo collage + text ── */}
       <ScrollAnchor id="about" />
 
-      <Section id="about-intro" bgVariant="mid" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id="about-intro" bgVariant="cream" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] lg:flex-row-reverse lg:items-start lg:gap-[clamp(40px,5vw,80px)]">
 
@@ -125,17 +126,17 @@ export default function About() {
               <OrganicBg className="opacity-60 z-0 pointer-events-none" />
 
               <ScrollReveal delay={0} className="relative z-10">
-                <SectionTitle id="GDq1TYUPnp1UCFMP" onDark>ליווי מקצועי לזוגות</SectionTitle>
+                <SectionTitle id="GDq1TYUPnp1UCFMP">ליווי מקצועי לזוגות</SectionTitle>
               </ScrollReveal>
 
               <ScrollReveal delay={0.12} className="relative z-10">
                 <div className="flex flex-col gap-[1em]">
-                  <BodyText onDark className="type-lead">
+                  <BodyText className="type-lead">
                     מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
                     השחיקה או המשברים מעלים בנו תחושות של ריחוק ובדידות, דווקא
                     בתוך הביחד.
                   </BodyText>
-                  <BodyText onDark className="type-lead">
+                  <BodyText className="type-lead">
                     בקליניקה שלי, אני מציעה לכם מרחב בטוח ומקבל שבו נוכל
                     להניח את מנגנוני ההגנה, ללמוד להקשיב באמת זה לזו, ולמצוא
                     את הגשר חזרה לחיבור, קירבה וביטחון זוגי.
@@ -146,7 +147,13 @@ export default function About() {
           </div>
         </Container>
       </Section>
+    </>
+  );
+}
 
+export function AboutBio() {
+  return (
+    <>
       {/* ── Section 2: Merged About Me (Introduction, Quote, Photo & Signature) ── */}
       <ScrollAnchor id="about-me" />
 
@@ -163,10 +170,10 @@ export default function About() {
               </ScrollReveal>
 
               {/* Introduction/Bio Narrative */}
-              <ScrollReveal delay={0.12} className="flex flex-col gap-[16px]">
-                <p className="type-lead mt-[12px] mb-[8px] text-[var(--color-plum)]">
+              <ScrollReveal delay={0.24} className="flex flex-col gap-[16px]">
+                <BodyText className="type-lead leading-[1.65]">
                   נעים להכיר, אני נטע.
-                </p>
+                </BodyText>
                 <BodyText className="type-lead leading-[1.65]">
                   אני עובדת סוציאלית קלינית (M.S.W) ומטפלת מוסמכת לטיפול זוגי ומשפחתי, בעלת 14 שנות ניסיון בליווי אנשים, זוגות ומשפחות בתהליכי שינוי, משבר וצמיחה.
                 </BodyText>
@@ -212,16 +219,10 @@ export default function About() {
                   />
                 </ScrollReveal>
 
-                <ScrollReveal delay={0.32} className="relative z-10 pt-[12px] ps-[16px]">
+                <ScrollReveal delay={0.36} className="relative z-10 pt-[12px] ps-[16px]">
                   <QuoteBlock
                     lines={quoteLines}
                   />
-                </ScrollReveal>
-
-                <ScrollReveal delay={0.36}>
-                  <p className="type-quote mt-[clamp(4px,1vw,8px)] tracking-[-0.02em] text-[var(--color-plum)] ps-[16px] text-start">
-                    נטע
-                  </p>
                 </ScrollReveal>
               </div>
 
@@ -230,12 +231,17 @@ export default function About() {
           </div>
         </Container>
       </Section>
+    </>
+  );
+}
 
-
+export function AboutCredentials() {
+  return (
+    <>
       {/* ── Section 3: Credentials list ── */}
       <ScrollAnchor id="page-4" />
 
-      <Section id="about-credentials" bgVariant="light" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id="about-credentials" bgVariant="dark" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
         {/* Subtle couple line-art background at low opacity */}
         <img
           src={CREDENTIALS_ART}
@@ -254,16 +260,22 @@ export default function About() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.12}>
-              <CredentialsList items={credentials} checkIconSrc={CHECK_ICONS} />
+              <CredentialsList items={credentials} checkIconSrc={CHECK_ICONS} onDark />
             </ScrollReveal>
           </div>
         </Container>
       </Section>
+    </>
+  );
+}
 
+export function AboutGallery() {
+  return (
+    <>
       {/* ── Section 4: Re-ignite connection — photo gallery + heading ── */}
       <ScrollAnchor id="about-2" />
 
-      <Section id="about-gallery" bgVariant="cream" className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id="about-gallery" bgVariant="light" className="-mt-px py-[clamp(56px,8vw,120px)]">
         <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[40px] items-center">
 
@@ -304,6 +316,17 @@ export default function About() {
           </div>
         </Container>
       </Section>
+    </>
+  );
+}
+
+export default function About() {
+  return (
+    <>
+      <AboutIntro />
+      <AboutBio />
+      <AboutCredentials />
+      <AboutGallery />
     </>
   );
 }

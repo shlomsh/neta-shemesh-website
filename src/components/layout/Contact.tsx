@@ -157,7 +157,7 @@ export default function Contact() {
       <section
         id="contact-office"
         dir="rtl"
-        data-bg-tone="light"
+        data-bg-tone="cream"
         className="py-[80px] px-[24px] border-t border-[var(--color-mauve)] min-h-[100svh] flex flex-col justify-center"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
