@@ -33,7 +33,7 @@ describe('Layout Components', () => {
     const sections = container.querySelectorAll('section');
     expect(sections.length).toBe(2);
     expect(sections[0].getAttribute('data-bg-tone')).toBe('mid');
-    expect(sections[1].getAttribute('data-bg-tone')).toBe('light');
+    expect(sections[1].getAttribute('data-bg-tone')).toBe('cream');
   });
 
   it('Footer has h-full on the tagline container', () => {
