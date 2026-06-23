@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -25,8 +27,14 @@ jobs:
     - name: Build Next.js app for testing
       run: npm run build
 
-    - name: Run Playwright tests
-      run: BASE_URL=http://localhost:3000 npx playwright test
+    - name: Run Playwright tests and update snapshots
+      run: BASE_URL=http://localhost:3000 npx playwright test --update-snapshots
+    - name: Commit updated snapshots
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add 'tests/**/*.png'
+        git diff --cached --quiet || (git commit -m "ci: update linux playwright snapshots [skip ci]" && git push)
     - uses: actions/upload-artifact@v4
       if: always()
       with:
