@@ -66,9 +66,6 @@ export const metadata: Metadata = {
     title: 'נטע שמש | טיפול זוגי ומשפחתי',
     description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה.',
   },
-  verification: {
-    google: 'XYNjuSjGedeDkFB6xNP-6wCt-T64Lli0o3UoOsHApK4',
-  },
 };
 
 const jsonLd = {
