@@ -107,11 +107,11 @@ Googlebot uses this signal to prioritize recrawls. A stale 2025 date signals "no
 ### M-A — Add "קצת עלי" About Me section ⭐ Highest content impact — ✅ DONE
 **Effort:** 1 hr dev + bio content from Netta | **Impact:** E-E-A-T, AI citability, conversion
 
-**Status:** ✅ Live in `src/components/layout/About.tsx` (`AboutBio`). Bio merges Netta's own voice with her credentials (M.S.W, מטפלת מוסמכת, 14 yrs) and weaves the SEO keywords incl. כפר יעבץ (home/geo) + נתניה clinic location. Voice reference saved in `netta_voice.md`.
+**Status:** ✅ Live in `src/components/layout/About.tsx` (`AboutBio`). Bio merges Netta's own voice with her credentials (M.S.W, מטפלת מוסמכת, 14 yrs) and weaves the SEO keywords and the נתניה clinic location. Voice reference saved in `netta_voice.md`.
 
 A practitioner bio is the #2 most-read section on therapy sites. Its absence means:
 - Google has no credentials to evaluate for E-E-A-T
-- AI assistants (ChatGPT, Perplexity) have nothing to cite when answering "מטפלת זוגית כפר יעבץ"
+- AI assistants (ChatGPT, Perplexity) have nothing to cite when answering "מטפלת זוגית נתניה"
 - Prospective clients can't confirm they're in the right hands
 
 **What the bio should contain** (see the full brief sent to Netta):
@@ -125,7 +125,7 @@ A practitioner bio is the #2 most-read section on therapy sites. Its absence mea
 - טיפול זוגי
 - טיפול משפחתי
 - מטפלת מוסמכת
-- כפר יעבץ
+- נתניה
 
 ---
 

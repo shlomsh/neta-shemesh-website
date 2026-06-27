@@ -29,18 +29,18 @@
 
 | Item | What was done |
 |---|---|
-| **C3** Meta description | Added in `layout.tsx`: "מטפלת זוגית ומשפחתית מוסמכת בכפר יעבץ..." |
+| **C3** Meta description | Added in `layout.tsx`: "מטפלת זוגית ומשפחתית מוסמכת בנתניה..." |
 | **C4** robots.txt | Created with full AI crawler allowlist (GPTBot, ClaudeBot, PerplexityBot, etc.) + Sitemap + IndexNow |
 | **C5** sitemap.xml | `src/app/sitemap.ts` created, serving at `/sitemap.xml` |
 | **C6** JSON-LD schema | Full `@graph` in `layout.tsx`: LocalBusiness, HealthAndBeautyBusiness, Person, 4× Service |
 | **H1** Open Graph | og:title, og:description, og:type, og:url, og:locale all set |
 | **H2** Canonical | `alternates.canonical` set |
 | **H3** hreflang | `he-IL` alternate set |
-| **H4** Expertise H2 | Changed from "מקום בטוח לצמוח בו ביחד" → "טיפול זוגי ומשפחתי בכפר יעבץ" (local keyword) |
+| **H4** Expertise H2 | Changed from "מקום בטוח לצמוח בו ביחד" → "טיפול זוגי ומשפחתי בנתניה" (local keyword) |
 | **H5** Security headers | Full suite: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, HSTS, CSP |
 | **H6** Contact image alts | All 3 mosaic photos now have descriptive Hebrew alt text |
 | **H7** Font display | `display: 'swap'` + `preload: true` on Stanga; `display: 'swap'` on Elamy |
-| **Title** | Updated to "נטע שמש | טיפול זוגי ומשפחתי — כפר יעבץ" |
+| **Title** | Updated to "נטע שמש | טיפול זוגי ומשפחתי — נתניה" |
 | **Phone** | Updated to `+972 54-571-1060` throughout |
 | **WhatsApp** | `wa.me/972545711060` link added to site |
 | **C1 partial** | Phone fixed; image cache headers added |
@@ -87,7 +87,7 @@ lastModified: new Date(),
 
 #### M-A — About Me / "קצת עלי" section — ✅ RESOLVED
 **Impact:** E-E-A-T, AI citability, conversion  
-A full bio is now live (`AboutBio` in `src/components/layout/About.tsx`): credentials (M.S.W, מטפלת מוסמכת), 14 years' experience, career path, therapeutic approach, and geo signals (כפר יעבץ + נתניה clinic). Written in Netta's own voice — merges her approach text with the credential-rich version.
+A full bio is now live (`AboutBio` in `src/components/layout/About.tsx`): credentials (M.S.W, מטפלת מוסמכת), 14 years' experience, career path, therapeutic approach, and geo signals (נתניה). Written in Netta's own voice — merges her approach text with the credential-rich version.
 
 #### M-B — `sameAs` in JSON-LD is empty array
 **File:** `src/app/layout.tsx:96`  
@@ -167,11 +167,11 @@ All content images use hash filenames (`cd66a766....jpg`). Not indexed by Google
 ## On-Page SEO
 
 ### Title
-`נטע שמש | טיפול זוגי ומשפחתי — כפר יעבץ` ✅  
+`נטע שמש | טיפול זוגי ומשפחתי — נתניה` ✅  
 Includes: brand name, service type, location. ~47 chars — good length.
 
 ### Meta Description
-`מטפלת זוגית ומשפחתית מוסמכת בכפר יעבץ. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.` ✅  
+`מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.` ✅  
 Includes CTA, location, service type. ~138 chars — good length.
 
 ### Open Graph
@@ -196,7 +196,7 @@ Includes CTA, location, service type. ~138 chars — good length.
 | Tag | Text | Status |
 |---|---|---|
 | H1 | מקום בטוח לצמוח בו ביחד | ✅ Single, in Hero |
-| H2 | טיפול זוגי ומשפחתי בכפר יעבץ | ✅ Now geo-targeted (was duplicate of H1) |
+| H2 | טיפול זוגי ומשפחתי בנתניה | ✅ Now geo-targeted (was duplicate of H1) |
 | H2 | ליווי מקצועי לזוגות | ✅ |
 | H2 | להצית מחדש את הקשר הזוגי | ✅ |
 | H2 | איך זה עובד? | ✅ |
@@ -236,7 +236,7 @@ Full `@graph` implemented in `layout.tsx`:
 | Real social profiles | ❌ Generic links |
 | Bio / credentials | ✅ Live — About Me bio with M.S.W, license, 14 yrs |
 | Real testimonials | ❌ Lorem Ipsum |
-| Physical address | ⚠️ שביל המוביל, כפר יעבץ — no street number |
+| Physical address | ✅ רחוב אמנון ותמר 6, נתניה (matches LocalBusiness schema) |
 
 ### Placeholder Data Still Live
 | Field | Current Value | Needed |
