@@ -23,6 +23,7 @@
 | Phone → +972 54-571-1060 | ✅ |
 | WhatsApp link | ✅ |
 | Image cache headers | ✅ |
+| Email placeholder replaced (H-A) | ✅ |
 
 ---
 
@@ -103,8 +104,10 @@ Googlebot uses this signal to prioritize recrawls. A stale 2025 date signals "no
 
 ## MEDIUM — Fix within 1 month
 
-### M-A — Add "קצת עלי" About Me section ⭐ Highest content impact
+### M-A — Add "קצת עלי" About Me section ⭐ Highest content impact — ✅ DONE
 **Effort:** 1 hr dev + bio content from Netta | **Impact:** E-E-A-T, AI citability, conversion
+
+**Status:** ✅ Live in `src/components/layout/About.tsx` (`AboutBio`). Bio merges Netta's own voice with her credentials (M.S.W, מטפלת מוסמכת, 14 yrs) and weaves the SEO keywords incl. כפר יעבץ (home/geo) + נתניה clinic location. Voice reference saved in `netta_voice.md`.
 
 A practitioner bio is the #2 most-read section on therapy sites. Its absence means:
 - Google has no credentials to evaluate for E-E-A-T
@@ -209,7 +212,7 @@ H-A (email) → H-B (social links) → H-D (sitemap date)
 H-C (real testimonials from Netta) → H-E (GSC setup) → M-B (IndexNow file check)
 
 **Next 2 weeks:**
-M-A (About Me bio — waiting on Netta's text) → M-C (hero priority prop) → M-D (FAQ section)
+M-A (About Me bio — ✅ done) → M-C (hero priority prop) → M-D (FAQ section)
 
 **Month 2:**
 M-E (Analytics) → M-F (next/image in Contact) → L-A (remove Dganit) → L-B (llms.txt)

@@ -19,7 +19,7 @@
 | Images | 5% | 52 | 67 | +15 ✅ |
 | **Total** | **100%** | **36** | **65** | **+29** |
 
-> The predicted score of ~65 after Critical fixes was accurate. All 6 Critical items and most High items from v1 are resolved. The remaining gap to 80+ is primarily content (real testimonials, real social links, About Me bio).
+> The predicted score of ~65 after Critical fixes was accurate. All 6 Critical items and most High items from v1 are resolved. The remaining gap to 80+ is primarily content (real testimonials, real social links). About Me bio is now done.
 
 ---
 
@@ -85,9 +85,9 @@ lastModified: new Date(),
 
 ### MEDIUM
 
-#### M-A — About Me / "קצת עלי" section missing
+#### M-A — About Me / "קצת עלי" section — ✅ RESOLVED
 **Impact:** E-E-A-T, AI citability, conversion  
-No biographical section exists for Netta — no credentials, training institution, years of experience, or therapeutic approach statement. For a therapy practice, this is the second most-read section after the hero. Its absence leaves Google with no authority signals about the practitioner.
+A full bio is now live (`AboutBio` in `src/components/layout/About.tsx`): credentials (M.S.W, מטפלת מוסמכת), 14 years' experience, career path, therapeutic approach, and geo signals (כפר יעבץ + נתניה clinic). Written in Netta's own voice — merges her approach text with the credential-rich version.
 
 #### M-B — `sameAs` in JSON-LD is empty array
 **File:** `src/app/layout.tsx:96`  
@@ -234,7 +234,7 @@ Full `@graph` implemented in `layout.tsx`:
 | Real phone | ✅ +972 54-571-1060 |
 | Real email | ❌ INFO@YOURWEBSITE.COM |
 | Real social profiles | ❌ Generic links |
-| Bio / credentials | ❌ Missing — no About Me section |
+| Bio / credentials | ✅ Live — About Me bio with M.S.W, license, 14 yrs |
 | Real testimonials | ❌ Lorem Ipsum |
 | Physical address | ⚠️ שביל המוביל, כפר יעבץ — no street number |
 
@@ -259,7 +259,7 @@ Full `@graph` implemented in `layout.tsx`:
 | Service schema × 4 | ✅ |
 | FAQ content | ❌ |
 | llms.txt | ❌ |
-| About Me / bio | ❌ |
+| About Me / bio | ✅ |
 | Real authority signals | ❌ No external citations, no GBP, no reviews |
 
 ---
