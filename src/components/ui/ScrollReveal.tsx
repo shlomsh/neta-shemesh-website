@@ -9,20 +9,12 @@ interface ScrollRevealProps {
   className?: string;
 }
 
-/**
- * ScrollReveal — entrance animation as an element scrolls into view.
- *
- * Refined choreography: a short rise paired with a soft blur-in on a gentle
- * ease-out, so content resolves into focus rather than just sliding. Reveals
- * once, then stays put.
- *
- * Honours `prefers-reduced-motion`: renders children immediately with no
- * transform, blur, or fade.
- */
+const isInIframe = typeof window !== 'undefined' && window.self !== window.top;
+
 export function ScrollReveal({ children, delay = 0, className = '' }: ScrollRevealProps) {
   const prefersReducedMotion = useReducedMotion();
 
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion || isInIframe) {
     return <div className={className}>{children}</div>;
   }
 
