@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-plum: #574964;
-  --color-mauve: #9F8383;
-  --color-blush: #C8AAAA;
-  --color-cream: #fff0e4;
+  --color-plum: #7A5978;
+  --color-mauve: #C49AB8;
+  --color-blush: #ECC8CE;
+  --color-cream: #FFF5F0;
 
   --font-elamy: var(--font-elamy), sans-serif;
   --font-stanga: var(--font-stanga), sans-serif;
@@ -15,7 +15,7 @@
 
 :root {
   --color-dark: var(--color-plum);
-  --color-white: #fff0e4;
+  --color-white: #FFF5F0;
   --color-text-muted: var(--color-plum);
   --color-text-primary: var(--color-plum);
   --color-black: #000000;
