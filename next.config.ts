@@ -23,7 +23,6 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
-          { key: 'X-Frame-Options', value: 'DENY' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
@@ -37,6 +36,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data:",
               "font-src 'self' https://fonts.gstatic.com",
               "frame-src 'self' https://maps.google.com https://www.google.com https://*.google.com",
+              "frame-ancestors 'self' https://web.ruttl.com",
               "media-src 'self'",
               "connect-src 'self'",
               "object-src 'none'",
