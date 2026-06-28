@@ -14,7 +14,11 @@ export function ScrollReveal({ children, delay = 0, className = '' }: ScrollReve
   const [inIframe, setInIframe] = useState(false);
 
   useEffect(() => {
-    setInIframe(window.self !== window.top);
+    try {
+      setInIframe(window.self !== window.top);
+    } catch {
+      setInIframe(true);
+    }
   }, []);
 
   if (prefersReducedMotion || inIframe) {
