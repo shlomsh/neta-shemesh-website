@@ -19,7 +19,7 @@ const palettes: PaletteOption[] = [
     label: 'Heather, lifted',
     subtitle: 'Conservative evolution',
     colors: {
-      dark: '#6F5867',
+      dark: '#8A7082',
       mid: '#A98B98',
       light: '#D9C3CC',
       cream: '#fff0e4',
@@ -32,7 +32,7 @@ const palettes: PaletteOption[] = [
     label: 'Rosé',
     subtitle: 'Warm & romantic',
     colors: {
-      dark: '#834E5E',
+      dark: '#9E6878',
       mid: '#BC8595',
       light: '#E8C9D2',
       cream: '#fff0e4',
@@ -45,7 +45,7 @@ const palettes: PaletteOption[] = [
     label: 'Mauve & honey',
     subtitle: 'Warm/cool contrast',
     colors: {
-      dark: '#5E4B57',
+      dark: '#796271',
       mid: '#9D8597',
       light: '#D8B79E',
       cream: '#fff0e4',
