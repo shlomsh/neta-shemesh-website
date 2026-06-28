@@ -7,8 +7,10 @@ export const alt = 'נטע שמש — טיפול זוגי ומשפחתי';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
+const rtl = (s: string) => s.split('').reverse().join('');
+
 export default async function Image() {
-  const logoData = readFileSync(join(process.cwd(), 'public/images/logo-horizontal-light.webp'));
+  const logoData = readFileSync(join(process.cwd(), 'public/images/logo-horizontal-light.png'));
   const logoSrc = `data:image/png;base64,${logoData.toString('base64')}`;
 
   return new ImageResponse(
@@ -51,18 +53,21 @@ export default async function Image() {
         {/* Divider */}
         <div style={{ width: 64, height: 2, background: '#C8AAAA', opacity: 0.6, borderRadius: 2 }} />
 
-        {/* Tagline — system Hebrew font fallback, branding is in the logo PNG */}
+        {/* Tagline */}
         <div
+          dir="rtl"
           style={{
             fontFamily: 'system-ui, sans-serif',
             fontSize: 32,
             color: '#C8AAAA',
             letterSpacing: '0.02em',
             direction: 'rtl',
+            textAlign: 'center',
           }}
         >
-          טיפול זוגי ומשפחתי
+          {rtl('טיפול זוגי ומשפחתי')}
         </div>
+
       </div>
     ),
     { ...size }

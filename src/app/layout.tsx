@@ -45,7 +45,7 @@ const stanga = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nettashemesh.vercel.app'),
-  title: 'נטע שמש | טיפול זוגי ומשפחתי — נתניה',
+  title: 'נטע שמש | טיפול זוגי ומשפחתי - נתניה',
   description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
   alternates: {
     canonical: 'https://nettashemesh.vercel.app',
@@ -74,7 +74,7 @@ const jsonLd = {
     {
       '@type': ['LocalBusiness', 'HealthAndBeautyBusiness'],
       '@id': 'https://nettashemesh.vercel.app/#business',
-      name: 'נטע שמש — טיפול זוגי ומשפחתי',
+      name: 'נטע שמש - טיפול זוגי ומשפחתי',
       description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה',
       url: 'https://nettashemesh.vercel.app',
       telephone: '+972545711060',
@@ -137,7 +137,7 @@ const jsonLd = {
       '@type': 'Service',
       '@id': 'https://nettashemesh.vercel.app/#service-personal',
       name: 'ליווי אישי',
-      description: 'מרחב אישי לעיבוד רגשי, לצמיחה ולבחינה של צמתים משמעותיים בחיים — קריירה, זוגיות, הורות.',
+      description: 'מרחב אישי לעיבוד רגשי, לצמיחה ולבחינה של צמתים משמעותיים בחיים - קריירה, זוגיות, הורות.',
       provider: { '@id': 'https://nettashemesh.vercel.app/#business' },
       areaServed: { '@type': 'Place', name: 'נתניה, ישראל' },
       url: 'https://nettashemesh.vercel.app/#expertise',
