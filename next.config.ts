@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data:",
               "font-src 'self' https://fonts.gstatic.com",
               "frame-src 'self' https://maps.google.com https://www.google.com https://*.google.com",
-              "frame-ancestors 'self' https://web.ruttl.com",
+              "frame-ancestors 'none'",
               "media-src 'self'",
               "connect-src 'self'",
               "object-src 'none'",

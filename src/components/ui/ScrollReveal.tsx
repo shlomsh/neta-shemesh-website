@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 interface ScrollRevealProps {
@@ -11,17 +11,8 @@ interface ScrollRevealProps {
 
 export function ScrollReveal({ children, delay = 0, className = '' }: ScrollRevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const [inIframe, setInIframe] = useState(false);
 
-  useEffect(() => {
-    try {
-      setInIframe(window.self !== window.top);
-    } catch {
-      setInIframe(true);
-    }
-  }, []);
-
-  if (prefersReducedMotion || inIframe) {
+  if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
   }
 
