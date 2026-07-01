@@ -120,3 +120,16 @@ For bespoke `<section>` elements that don't use the primitive, add `data-bg-tone
 - **Mobile:** all cards reflow to single-column. Test at 375px. Body text at 375px uses the clamp minimum — ensure it's comfortable (`.type-body` floor is 16px, `.type-lead` floor is 18px, blog `.type-read` floor is 18px / `.type-read-lead` 20px).
 - **Header/nav:** below `md` the nav collapses to a hamburger that opens a full-screen overlay menu (`HeroNav`); the inline link row is `hidden md:flex`. Don't reintroduce a squeezed inline nav on mobile. The overlay is portaled to `document.body` because framer-motion's `will-change` on `ScrollReveal` would otherwise trap `position:fixed`.
 - **No horizontal overflow.** Check `document.documentElement.scrollWidth > document.documentElement.clientWidth` after any layout change.
+
+---
+
+## Client review / feedback tool
+
+**Pastel** (usepastel.com) is used for Netta to leave comments on the live site — free plan, no code changes needed (works by URL, not a script embed).
+
+Why not the alternatives:
+- **Vercel Comments** requires a Pro plan; this project is on Vercel Hobby (free).
+- **Ruttl** was tried first but its free plan only offers URL-based iframe embedding, and the site's `X-Frame-Options: DENY` header blocked it. Allowing it required CSP changes (`frame-ancestors`) plus a fix to `ScrollReveal.tsx` to skip `framer-motion`'s `whileInView` animations inside an iframe (IntersectionObserver doesn't fire reliably there, leaving content stuck at `opacity: 0`). Even after both fixes, Ruttl's iframe still didn't render the page reliably, so it was abandoned and all related code changes were reverted (commit `c95a8e0`).
+- **Marker.io** has no free tier (starts at $59/mo).
+
+If reviving an iframe-embed tool later, expect the same two obstacles: the CSP `frame-ancestors` directive (`next.config.ts`) and `ScrollReveal`'s `whileInView` animations.
