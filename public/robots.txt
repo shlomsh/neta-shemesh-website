@@ -23,5 +23,5 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://nettashemesh.vercel.app/sitemap.xml
-IndexNow: https://nettashemesh.vercel.app/c3e73d9f77ad4e8992f89fff10073308.txt
+Sitemap: https://www.netashemesh.co.il/sitemap.xml
+IndexNow: https://www.netashemesh.co.il/c3e73d9f77ad4e8992f89fff10073308.txt

@@ -13,8 +13,7 @@ import { AuthorCard } from '@/components/blog/AuthorCard';
 import { getAllPosts, getPostBySlug, getOtherPosts } from '@/content/posts';
 import Footer from '@/components/layout/Footer';
 import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
-
-const SITE = 'https://nettashemesh.vercel.app';
+import { SITE_URL as SITE } from '@/config/constants';
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));

@@ -8,15 +8,16 @@ import { PostCard } from '@/components/blog/PostCard';
 import { getAllPosts } from '@/content/posts';
 import Footer from '@/components/layout/Footer';
 import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
+import { SITE_URL } from '@/config/constants';
 
 export const metadata: Metadata = {
   title: 'מאמרים | נטע שמש — טיפול זוגי ומשפחתי',
   description:
     'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה — סדרת מאמרים מאת נטע שמש, מטפלת זוגית ומשפחתית בנתניה.',
-  alternates: { canonical: 'https://nettashemesh.vercel.app/blog' },
+  alternates: { canonical: `${SITE_URL}/blog` },
   openGraph: {
     type: 'website',
-    url: 'https://nettashemesh.vercel.app/blog',
+    url: `${SITE_URL}/blog`,
     title: 'מאמרים | נטע שמש',
     description: 'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה.',
     locale: 'he_IL',

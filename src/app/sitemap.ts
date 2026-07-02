@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/content/posts';
-
-const SITE = 'https://nettashemesh.vercel.app';
+import { SITE_URL as SITE } from '@/config/constants';
 
 // lastmod in date-only (YYYY-MM-DD) W3C format — the conventional, least-fussy
 // form for crawlers. Passing a Date would serialize to full ISO with millis.

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { AUTHOR_NAME, AUTHOR_TITLE } from '@/config/constants';
+import { AUTHOR_NAME, AUTHOR_TITLE, SITE_URL } from '@/config/constants';
 
 const elamy = localFont({
   src: [
@@ -44,18 +44,18 @@ const stanga = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nettashemesh.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: 'נטע שמש | טיפול זוגי ומשפחתי - נתניה',
   description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
   alternates: {
-    canonical: 'https://nettashemesh.vercel.app',
+    canonical: SITE_URL,
     languages: {
-      'he-IL': 'https://nettashemesh.vercel.app',
+      'he-IL': SITE_URL,
     },
   },
   openGraph: {
     type: 'website',
-    url: 'https://nettashemesh.vercel.app',
+    url: SITE_URL,
     title: 'נטע שמש | טיפול זוגי ומשפחתי',
     description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי לזוגות ומשפחות בתהליכי שינוי וצמיחה.',
     locale: 'he_IL',
@@ -73,13 +73,13 @@ const jsonLd = {
   '@graph': [
     {
       '@type': ['LocalBusiness', 'HealthAndBeautyBusiness'],
-      '@id': 'https://nettashemesh.vercel.app/#business',
+      '@id': `${SITE_URL}/#business`,
       name: 'נטע שמש - טיפול זוגי ומשפחתי',
       description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה',
-      url: 'https://nettashemesh.vercel.app',
+      url: SITE_URL,
       telephone: '+972545711060',
       email: 'nettabe@gmail.com',
-      image: 'https://nettashemesh.vercel.app/opengraph-image',
+      image: `${SITE_URL}/opengraph-image`,
       priceRange: '₪₪₪',
       openingHours: ['Su-Th 09:00-19:00'],
       address: {
@@ -99,48 +99,48 @@ const jsonLd = {
     },
     {
       '@type': 'Person',
-      '@id': 'https://nettashemesh.vercel.app/#netta',
+      '@id': `${SITE_URL}/#netta`,
       name: AUTHOR_NAME,
       jobTitle: AUTHOR_TITLE,
       email: 'nettabe@gmail.com',
-      worksFor: { '@id': 'https://nettashemesh.vercel.app/#business' },
-      url: 'https://nettashemesh.vercel.app',
+      worksFor: { '@id': `${SITE_URL}/#business` },
+      url: SITE_URL,
     },
     {
       '@type': 'Service',
-      '@id': 'https://nettashemesh.vercel.app/#service-couples',
+      '@id': `${SITE_URL}/#service-couples`,
       name: 'טיפול זוגי',
       description: 'עבודה משותפת על הדינאמיקה הזוגית, דפוסי תקשורת, קרבה רגשית ובניית אמון מחדש. שיטות מבוססות מחקר ליצירת שינוי אמיתי.',
-      provider: { '@id': 'https://nettashemesh.vercel.app/#business' },
+      provider: { '@id': `${SITE_URL}/#business` },
       areaServed: { '@type': 'Place', name: 'נתניה, ישראל' },
-      url: 'https://nettashemesh.vercel.app/#expertise',
+      url: `${SITE_URL}/#expertise`,
     },
     {
       '@type': 'Service',
-      '@id': 'https://nettashemesh.vercel.app/#service-family',
+      '@id': `${SITE_URL}/#service-family`,
       name: 'טיפול משפחתי',
       description: 'חיזוק הקשרים בתוך המשפחה, הבנת הדינמיקה המשפחתית ומציאת דרכים חדשות להתמודד עם אתגרים יחד.',
-      provider: { '@id': 'https://nettashemesh.vercel.app/#business' },
+      provider: { '@id': `${SITE_URL}/#business` },
       areaServed: { '@type': 'Place', name: 'נתניה, ישראל' },
-      url: 'https://nettashemesh.vercel.app/#expertise',
+      url: `${SITE_URL}/#expertise`,
     },
     {
       '@type': 'Service',
-      '@id': 'https://nettashemesh.vercel.app/#service-parenting',
+      '@id': `${SITE_URL}/#service-parenting`,
       name: 'הדרכת הורים',
       description: 'כלים מעשיים להורות מיטבית, התמודדות עם אתגרי הגיל, תקשורת עם ילדים ובני נוער וחיזוק הביטחון ההורי.',
-      provider: { '@id': 'https://nettashemesh.vercel.app/#business' },
+      provider: { '@id': `${SITE_URL}/#business` },
       areaServed: { '@type': 'Place', name: 'נתניה, ישראל' },
-      url: 'https://nettashemesh.vercel.app/#expertise',
+      url: `${SITE_URL}/#expertise`,
     },
     {
       '@type': 'Service',
-      '@id': 'https://nettashemesh.vercel.app/#service-personal',
+      '@id': `${SITE_URL}/#service-personal`,
       name: 'ליווי אישי',
       description: 'מרחב אישי לעיבוד רגשי, לצמיחה ולבחינה של צמתים משמעותיים בחיים - קריירה, זוגיות, הורות.',
-      provider: { '@id': 'https://nettashemesh.vercel.app/#business' },
+      provider: { '@id': `${SITE_URL}/#business` },
       areaServed: { '@type': 'Place', name: 'נתניה, ישראל' },
-      url: 'https://nettashemesh.vercel.app/#expertise',
+      url: `${SITE_URL}/#expertise`,
     },
   ],
 };
