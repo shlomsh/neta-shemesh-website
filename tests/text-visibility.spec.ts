@@ -25,7 +25,9 @@ test.describe('Text Visibility and Content Tests', () => {
     await expect(approachTextWrapper).toBeVisible({ timeout: 10000 });
   });
 
-  test('Testimonial card background has correct opacity', async ({ page }) => {
+  // Skipped: the testimonials section is hidden behind the SHOW_TESTIMONIALS flag
+  // in Testimonials.tsx (awaiting real client testimonials).
+  test.skip('Testimonial card background has correct opacity', async ({ page }) => {
     // The middle testimonial card has an SVG background that should be opacity: 0.16
     const cardSvg = page.locator('#ZO48UqFw0isLS2Uu').first();
     await expect(cardSvg).toHaveCSS('opacity', '0.16');
