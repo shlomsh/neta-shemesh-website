@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/content/posts';
 import { SITE_URL as SITE } from '@/config/constants';
 
+// Required for `output: export` (Azure Static Web Apps) — prerender at build time.
+export const dynamic = 'force-static';
+
 // lastmod in date-only (YYYY-MM-DD) W3C format — the conventional, least-fussy
 // form for crawlers. Passing a Date would serialize to full ISO with millis.
 const ymd = (d: Date) => d.toISOString().slice(0, 10);
