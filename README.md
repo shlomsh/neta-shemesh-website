@@ -59,7 +59,7 @@ For the curious: this site is built with some of the most modern web technology 
 
 ### SEO & discoverability
 
-- **Dynamic Open Graph image** — when the link is shared on WhatsApp, iMessage, or social media, a branded preview card is generated on the server using Next.js's image generation API. No static image to keep manually up to date.
+- **Open Graph preview card** — when the link is shared on WhatsApp, iMessage, or social media, it shows a branded 1200×630 card. This is a committed image at `src/app/opengraph-image.png`, **not** generated at build time, so it needs updating by hand if the branding or the wording on it changes. (It was previously generated from JSX, but that version hardcoded its Hebrew and faked RTL by reversing characters, which corrupts any mixed Hebrew/Latin text. A static asset is more predictable, and it also serves with the correct `image/png` type on Azure Static Web Apps, which the generated route did not.)
 - **Auto-generated sitemap** at `/sitemap.xml` and a `robots.txt`, so search engines always have an up-to-date map of the site.
 - Server-side rendering means every page is fully readable by Google without JavaScript.
 

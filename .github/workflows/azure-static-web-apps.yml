@@ -29,13 +29,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Deploying without running these means a change that compiles but breaks
+      # behaviour still ships to Azure.
+      - name: Unit tests
+        run: npm run test:unit
+
       - name: Build static export
         run: npm run build
         env:
           BUILD_STATIC_EXPORT: 'true'
           # POC: point OG/canonical tags at the Azure host so social previews work
-          # on the *.azurestaticapps.net URL. Once the custom domain (netashemesh.co.il)
-          # is moved onto Azure, change this to the production domain or remove it.
+          # on the *.azurestaticapps.net URL.
+          #
+          # ⚠ CUTOVER CHECKLIST — these two must change together:
+          #   1. this NEXT_PUBLIC_SITE_URL -> https://www.netashemesh.co.il (or remove it)
+          #   2. the "X-Robots-Tag" line in public/staticwebapp.config.json -> delete it
+          #
+          # While this points at the Azure host, every page canonicalises to
+          # *.azurestaticapps.net. That is a full duplicate of production, so the
+          # staticwebapp.config.json noindex header is what stops Google indexing
+          # it. Removing one without the other either de-indexes the real site or
+          # publishes a competing copy of it.
           NEXT_PUBLIC_SITE_URL: 'https://yellow-tree-0d5623803.7.azurestaticapps.net'
 
       - name: Deploy to Azure Static Web Apps
