@@ -6,6 +6,10 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialCard } from './testimonials/TestimonialCard';
 import type { TestimonialData } from './testimonials/TestimonialCard';
 
+// Toggle to re-enable the "לקוחות ממליצים" recommendations section.
+// Kept in code but hidden until we have real client testimonials.
+const SHOW_TESTIMONIALS = false;
+
 const TESTIMONIALS: TestimonialData[] = [
   {
     id: 'card-1',
@@ -40,6 +44,7 @@ export default function Testimonials() {
   return (
     <>
       {/* Testimonials Section */}
+      {SHOW_TESTIMONIALS && (
       <section
         id="DaRRC8Qhxc8unVfz"
         dir="rtl"
@@ -107,6 +112,7 @@ export default function Testimonials() {
           </div>
         </div>
       </section>
+      )}
 
       {/* CTA Section */}
       <section id="afNbX7iGTuOdSbLC" className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)] min-h-[100svh]">

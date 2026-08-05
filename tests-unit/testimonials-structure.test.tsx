@@ -14,7 +14,9 @@ window.IntersectionObserver = vi.fn(() => ({
 })) as any;
 
 describe('Testimonials Structure', () => {
-  it('renders clean grid layout without legacy raw DOM blobs', () => {
+  // Skipped: the "לקוחות ממליצים" section is currently hidden behind the
+  // SHOW_TESTIMONIALS flag in Testimonials.tsx (awaiting real client testimonials).
+  it.skip('renders clean grid layout without legacy raw DOM blobs', () => {
     const { container } = render(<Testimonials />);
 
     // Ignore next/image which uses absolute positioning internally

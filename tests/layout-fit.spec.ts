@@ -23,7 +23,7 @@ const TITLE_IDS = [
   'JkkbI1eIj5p9V33T', // Reignite
   'vyKTmOw3YNYlJZPL', // SafeSpace
   'pEc3w8pe4QAw5k7o', // HowItWorks
-  'Dct2rK7XCXJaLA2e', // Testimonials
+  // 'Dct2rK7XCXJaLA2e', // Testimonials — hidden behind SHOW_TESTIMONIALS flag
   'iVtldd7PMtN1BthG', // Scheduling
   'T749khVkMfNluBNv', // CoupleTherapy
   'ZgJbejfHoeBrgmf7', // Contact-Follow
