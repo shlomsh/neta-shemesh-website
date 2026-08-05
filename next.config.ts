@@ -1,8 +1,12 @@
 import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === 'development';
+// Static export is only enabled when BUILD_STATIC_EXPORT=true (used for Azure
+// Static Web Apps). Vercel builds without this env, keeping full SSR/image support.
+const isStaticExport = process.env.BUILD_STATIC_EXPORT === 'true';
 
 const nextConfig: NextConfig = {
+  ...(isStaticExport ? { output: 'export' as const, images: { unoptimized: true } } : {}),
   async redirects() {
     return [
       {
