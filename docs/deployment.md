@@ -81,6 +81,40 @@ publishes a competing copy; step 1 without step 2 de-indexes the real site.
 
 ---
 
+## What triggers a production deploy
+
+Vercel attributes every deployment to the **commit author** and checks that
+identity has access to the project. On a personal plan only the account owner
+qualifies, so a push authored by anyone else produces no deployment — and it
+fails silently rather than erroring.
+
+This bit us implicitly: the Azure work (`4f1846d`) was authored by a second
+contributor and only reached `main` inside merge commit `21beb86`, which GitHub
+attributed to the account owner. That is the only reason it deployed.
+
+`.github/workflows/vercel-deploy.yml` removes the dependency on authorship by
+POSTing to a **Vercel Deploy Hook**, which carries no author attribution.
+
+Setup (one-time, needs Vercel dashboard access):
+
+1. Vercel → Project → Settings → Git → **Deploy Hooks** → create one for branch
+   `main`, copy the URL.
+2. GitHub → Settings → Secrets and variables → Actions → add
+   **`VERCEL_DEPLOY_HOOK`** with that URL.
+3. Vercel → Settings → Git → turn **off** automatic production deployments.
+
+> Step 3 is not optional. With both Vercel's Git trigger and this workflow
+> active, every owner-authored push deploys twice.
+
+Until step 2 is done the workflow skips with a warning instead of failing. Note
+that with Vercel's own trigger disabled this workflow is the only path to
+production, which is why it runs the unit suite before firing the hook.
+
+Azure has no equivalent problem: its workflow authenticates with a repository
+secret, so it deploys on any push from any author.
+
+---
+
 ## The gap: image optimization
 
 **This is the one difference a visitor feels, and it is unresolved.**

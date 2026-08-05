@@ -1,0 +1,66 @@
+name: Deploy to Vercel
+
+# Why this exists instead of Vercel's built-in Git integration:
+#
+# Vercel attributes each deployment to the commit author and checks that the
+# identity has access to the project. On a personal plan only the account owner
+# qualifies, so a push authored by anyone else produces no deployment — and it
+# fails quietly, which is the dangerous kind.
+#
+# A Deploy Hook carries no author attribution, so this path works regardless of
+# who wrote or pushed the commit.
+#
+# SETUP (see docs/deployment.md):
+#   1. Vercel -> Project -> Settings -> Git -> Deploy Hooks: create one for
+#      branch `main`, copy the URL.
+#   2. GitHub -> Settings -> Secrets and variables -> Actions:
+#      add secret VERCEL_DEPLOY_HOOK with that URL.
+#   3. Vercel -> Settings -> Git: turn OFF automatic production deployments,
+#      or every push from the owner deploys twice.
+#
+# Until step 2 is done this workflow skips with a warning rather than failing.
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - 'tests/**'
+      - 'tests-unit/**'
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Trigger Vercel production deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      # With Vercel's own Git trigger disabled, this workflow is the only path
+      # to production. Gate it so a commit that breaks the suite cannot ship.
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Trigger deploy
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning title=Deploy skipped::VERCEL_DEPLOY_HOOK is not set. See the setup steps in this file."
+            exit 0
+          fi
+          echo "Triggering Vercel deploy for ${GITHUB_SHA:0:7}…"
+          # -f so a non-2xx is a job failure rather than a silent no-op.
+          response=$(curl -fsS -X POST "$HOOK")
+          echo "Vercel responded: $response"
