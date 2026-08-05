@@ -24,4 +24,5 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://www.netashemesh.co.il/sitemap.xml
-IndexNow: https://www.netashemesh.co.il/c3e73d9f77ad4e8992f89fff10073308.txt
+# IndexNow key is published at /c3e73d9f77ad4e8992f89fff10073308.txt
+# (not a robots.txt directive — Google reports "Syntax not understood" for it)
