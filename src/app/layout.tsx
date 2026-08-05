@@ -43,8 +43,24 @@ const stanga = localFont({
   preload: true,
 });
 
+// Any build not pointed at the production domain is a staging copy (Azure SWA
+// via NEXT_PUBLIC_SITE_URL, a preview deploy, a tunnel). Those self-canonicalise
+// to their own host, which makes them a crawlable duplicate of the real site, so
+// they must not be indexed.
+//
+// Deriving this from SITE_URL rather than a per-host config means the robots
+// directive and the canonical can never disagree, and indexing switches back on
+// by itself the moment a build points at production — no cutover checklist.
+//
+// Note: do NOT also add `Disallow: /` to robots.txt on those hosts. Disallow
+// blocks crawling, not indexing — Google can still index an uncrawlable URL it
+// finds linked, and if it cannot fetch the page it never sees this noindex.
+// Crawlable + noindex is the combination that actually de-indexes.
+const IS_PRODUCTION_HOST = SITE_URL === 'https://www.netashemesh.co.il';
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  ...(IS_PRODUCTION_HOST ? {} : { robots: { index: false, follow: false } }),
   title: 'נטע שמש | טיפול זוגי ומשפחתי - נתניה',
   description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
   alternates: {
@@ -79,7 +95,10 @@ const jsonLd = {
       url: SITE_URL,
       telephone: '+972545711060',
       email: 'nettabe@gmail.com',
-      image: `${SITE_URL}/opengraph-image`,
+      // Must carry the .png extension: the OG card is a committed static asset
+      // (src/app/opengraph-image.png), not the generated route it used to be.
+      // The extensionless path 404s.
+      image: `${SITE_URL}/opengraph-image.png`,
       priceRange: '₪₪₪',
       openingHours: ['Su-Th 09:00-19:00'],
       address: {
