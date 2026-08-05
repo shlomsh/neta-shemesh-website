@@ -95,20 +95,51 @@ attributed to the account owner. That is the only reason it deployed.
 `.github/workflows/vercel-deploy.yml` removes the dependency on authorship by
 POSTing to a **Vercel Deploy Hook**, which carries no author attribution.
 
-Setup (one-time, needs Vercel dashboard access):
+**This is already configured.** Recorded here so it can be rebuilt — notably
+after a change of project ownership.
 
-1. Vercel → Project → Settings → Git → **Deploy Hooks** → create one for branch
-   `main`, copy the URL.
-2. GitHub → Settings → Secrets and variables → Actions → add
-   **`VERCEL_DEPLOY_HOOK`** with that URL.
-3. Vercel → Settings → Git → turn **off** automatic production deployments.
+The whole setup is doable from the CLI; no dashboard needed:
 
-> Step 3 is not optional. With both Vercel's Git trigger and this workflow
-> active, every owner-authored push deploys twice.
+```bash
+vercel deploy-hooks list                              # hook: github-actions-main, ref main
+vercel deploy-hooks create <name> --ref main          # if it needs recreating
+```
 
-Until step 2 is done the workflow skips with a warning instead of failing. Note
-that with Vercel's own trigger disabled this workflow is the only path to
-production, which is why it runs the unit suite before firing the hook.
+To store the URL without it landing in a terminal transcript:
+
+```bash
+url=$(vercel deploy-hooks list | sed -n '/^{/,$p' | jq -r '.hooks[0].url')
+printf '%s' "$url" | gh secret set VERCEL_DEPLOY_HOOK --repo <owner>/<repo>
+```
+
+Vercel's own Git trigger is disabled in **`vercel.json`**, not via the dashboard
+toggle:
+
+```json
+"git": { "deploymentEnabled": { "main": false } }
+```
+
+Version-controlled on purpose: it is reviewable, and it survives a change of
+project ownership. Without it, every owner-authored push deploys twice — once
+from Git, once from the hook. `deploymentEnabled` gates **Git events only**;
+deploy hooks are a separate trigger and keep working. Verified by firing the
+workflow with no push and watching a deployment appear.
+
+With Vercel's trigger off, this workflow is the **only** path to production,
+which is why it runs the unit suite before firing the hook. It skips with a
+warning rather than failing if `VERCEL_DEPLOY_HOOK` is missing.
+
+### If ownership of the Vercel project changes
+
+The Git-author check inverts: the previous owner becomes the unauthorized
+author. The hook is what makes this a non-event, because it carries no author
+attribution. After any transfer:
+
+1. `vercel deploy-hooks list` — confirm the hook still exists. A transfer can
+   reset Git integration.
+2. If it is gone, recreate it and re-set the `VERCEL_DEPLOY_HOOK` secret.
+3. `gh workflow run "Deploy to Vercel"` and confirm a new deployment appears.
+4. Check the custom domain is still attached to the project.
 
 Azure has no equivalent problem: its workflow authenticates with a repository
 secret, so it deploys on any push from any author.
