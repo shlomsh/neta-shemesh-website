@@ -53,9 +53,9 @@ For the curious: this site is built with some of the most modern web technology 
 
 - **[Framer Motion v12](https://www.framer.com/motion/)** — scroll-triggered animations that reveal sections as visitors scroll down. Respects the operating system's "reduce motion" accessibility preference.
 
-### Internationalization
+### Hebrew & RTL
 
-- **[next-intl v4](https://next-intl-docs.vercel.app/)** — handles Hebrew RTL locale support cleanly within the Next.js App Router.
+- The site is **single-locale Hebrew**. Right-to-left layout comes from `lang="he" dir="rtl"` on the root `<html>` element (`src/app/layout.tsx`) — Tailwind's logical properties handle the rest. No internationalization library is needed, and none is installed.
 
 ### SEO & discoverability
 

@@ -1,6 +1,6 @@
 # Netta Shemesh Website — Design Guidelines
 
-> Full project context: see `AGENTS.md`. This file focuses on **design system rules** — typography, color, and layout — that every agent must follow before touching any visual code.
+> Full project context: see `agents.md`. This file focuses on **design system rules** — typography, color, and layout — that every agent must follow before touching any visual code.
 
 ---
 
@@ -123,13 +123,11 @@ For bespoke `<section>` elements that don't use the primitive, add `data-bg-tone
 
 ---
 
-## Client review / feedback tool
+## Embedding the site in an iframe
 
-**Pastel** (usepastel.com) is used for Netta to leave comments on the live site — free plan, no code changes needed (works by URL, not a script embed).
+The site is not iframe-embeddable by design (`frame-ancestors 'none'` in the CSP, `next.config.ts`). If that ever needs to change, expect **two** obstacles, not one:
 
-Why not the alternatives:
-- **Vercel Comments** requires a Pro plan; this project is on Vercel Hobby (free).
-- **Ruttl** was tried first but its free plan only offers URL-based iframe embedding, and the site's `X-Frame-Options: DENY` header blocked it. Allowing it required CSP changes (`frame-ancestors`) plus a fix to `ScrollReveal.tsx` to skip `framer-motion`'s `whileInView` animations inside an iframe (IntersectionObserver doesn't fire reliably there, leaving content stuck at `opacity: 0`). Even after both fixes, Ruttl's iframe still didn't render the page reliably, so it was abandoned and all related code changes were reverted (commit `c95a8e0`).
-- **Marker.io** has no free tier (starts at $59/mo).
+1. Relaxing the CSP `frame-ancestors` directive.
+2. `ScrollReveal.tsx` — `framer-motion`'s `whileInView` must be skipped inside an iframe. IntersectionObserver doesn't fire reliably there, leaving content stuck at `opacity: 0`.
 
-If reviving an iframe-embed tool later, expect the same two obstacles: the CSP `frame-ancestors` directive (`next.config.ts`) and `ScrollReveal`'s `whileInView` animations.
+This was learned the hard way; a previous attempt needed both fixes and still didn't render reliably (reverted in `c95a8e0`).

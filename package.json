@@ -7,13 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "compare:deploys": "bash scripts/compare-deploys.sh"
   },
   "dependencies": {
-    "fontkit": "^2.0.4",
     "framer-motion": "^12.40.0",
     "next": "16.2.9",
-    "next-intl": "^4.13.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -28,6 +27,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "fontkit": "^2.0.4",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4",
     "typescript": "^5",

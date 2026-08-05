@@ -1,3 +1,8 @@
+> **ARCHIVED — point-in-time record, not current status.**
+> Written 2026-06-21 against the old preview domain, before the site launched
+> on `https://www.netashemesh.co.il`. The scores and open items below are
+> stale. Kept for history; do not act on it without re-verifying.
+
 # SEO Action Plan — נטע שמש
 **Updated:** 2026-06-21 (v2)  
 **Site:** https://nettashemesh.vercel.app  
