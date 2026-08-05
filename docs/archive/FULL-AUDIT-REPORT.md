@@ -1,3 +1,13 @@
+> **ARCHIVED — point-in-time record, not current status.**
+> Audited 2026-06-21 against the old preview domain, before the site launched
+> on `https://www.netashemesh.co.il`. Kept for history; do not act on it
+> without re-verifying.
+>
+> Known inaccuracy: the security-header tables below list
+> `X-Frame-Options: DENY` as present. It is not, and was not — the site has
+> never sent that header. Framing is blocked by `frame-ancestors 'none'` in
+> the CSP (`next.config.ts`). Verified against the live site 2026-08-05.
+
 # Full SEO Audit Report — נטע שמש
 **Site:** https://nettashemesh.vercel.app  
 **Business type:** Local service — couples & family therapy practice (Hebrew / RTL, Israel)  

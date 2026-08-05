@@ -1,6 +1,6 @@
 # Netta Shemesh Website — Design Guidelines
 
-> Full project context: see `AGENTS.md`. This file focuses on **design system rules** — typography, color, and layout — that every agent must follow before touching any visual code.
+> Full project context: see `agents.md`. This file focuses on **design system rules** — typography, color, and layout — that every agent must follow before touching any visual code.
 
 ---
 
