@@ -71,7 +71,10 @@ For the curious: this site is built with some of the most modern web technology 
 
 ### Deployment
 
-- **[Vercel](https://vercel.com/)** — the site deploys automatically on every merge to the main branch. Each pull request gets its own preview URL for review before anything goes public.
+- **[Vercel](https://vercel.com/)** — production. The site deploys automatically on every merge to the main branch, and each pull request gets its own preview URL for review before anything goes public.
+- **[Azure Static Web Apps](https://azure.microsoft.com/products/app-service/static)** — a second, parallel deploy running from the same commits while a possible move off Vercel is evaluated. It is **not** indexable by search engines, and it serves images unoptimized, so it is slower than production by design.
+
+> Both hosts build from one codebase, switched by two environment variables. Before changing `next.config.ts`, `public/staticwebapp.config.json`, or anything touching canonical URLs, read **[docs/deployment.md](docs/deployment.md)** — it covers the env guard, the cutover checklist, the known image-optimization gap, and `npm run compare:deploys` for verifying the two hosts still agree.
 
 ---
 

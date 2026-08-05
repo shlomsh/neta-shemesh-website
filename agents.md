@@ -296,3 +296,10 @@ Then "done" is checkable. One section at a time, committed, fully off `canva-sou
 - Primitives: `src/components/primitives/` · Sections: `src/components/layout/`
 - Tests: `tests/` · Goldens: `tests/__golden__/` · Template ground truth: `reference/template/…`
 - Copy tone: `netta_voice.md`
+- **Deployment: `docs/deployment.md`** — the site ships to Vercel *and* Azure SWA
+  from the same commits, switched by `BUILD_STATIC_EXPORT` and
+  `NEXT_PUBLIC_SITE_URL`. Read it before touching `next.config.ts`,
+  `public/staticwebapp.config.json`, canonical URLs, or anything image-related:
+  the two hosts hold the same header policy in two files that drift silently,
+  and the Azure copy must stay non-indexable. `npm run compare:deploys` checks
+  that they still agree.
