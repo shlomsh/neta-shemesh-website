@@ -6,7 +6,17 @@ const isDev = process.env.NODE_ENV === 'development';
 const isStaticExport = process.env.BUILD_STATIC_EXPORT === 'true';
 
 const nextConfig: NextConfig = {
-  ...(isStaticExport ? { output: 'export' as const, images: { unoptimized: true } } : {}),
+  ...(isStaticExport ? { output: 'export' as const } : {}),
+  // Kept as one conditional key rather than folded into the spread above: a
+  // second `images` key after the spread would silently override it and break
+  // the static export.
+  //
+  // Static export has no optimizer, so images ship as-is. Everywhere else,
+  // offer AVIF ahead of WebP — Next's default is WebP-only, and measurement
+  // against production showed AVIF was never being served.
+  images: isStaticExport
+    ? { unoptimized: true }
+    : { formats: ['image/avif' as const, 'image/webp' as const] },
   async redirects() {
     return [
       {
