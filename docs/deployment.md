@@ -139,10 +139,65 @@ attribution. After any transfer:
    reset Git integration.
 2. If it is gone, recreate it and re-set the `VERCEL_DEPLOY_HOOK` secret.
 3. `gh workflow run "Deploy to Vercel"` and confirm a new deployment appears.
-4. Check the custom domain is still attached to the project.
+4. Rebuild the domain configuration — see **Domains and DNS** below. It is more
+   than re-adding a hostname.
 
 Azure has no equivalent problem: its workflow authenticates with a repository
 secret, so it deploys on any push from any author.
+
+---
+
+## Domains and DNS
+
+Responsibility is split, and the split is the thing people get wrong:
+
+- **Vercel** decides which hostnames route to the project, and holds the
+  apex→www redirect. It does **not** host DNS for this domain.
+- **MyNames** (`ns1.mynames.co.il`, `ns2.mynames.co.il`) is authoritative for
+  `netashemesh.co.il` and holds the actual records and their TTLs.
+
+Vercel's Domains page shows the record *values it expects* and whether what is
+published matches. `vercel dns ls` returns *"You don't have permission to list
+the domain record"* — that is Vercel confirming it does not manage this zone,
+not an access problem.
+
+### Target state (Project → Settings → Domains)
+
+| Hostname | Role |
+|---|---|
+| `www.netashemesh.co.il` | Production |
+| `netashemesh.co.il` | **308 redirect → `www.netashemesh.co.il`** |
+| `netashemesh.vercel.app` | auto-assigned by Vercel; changes on transfer, ignore |
+
+> **The apex→www 308 is Vercel configuration, not a DNS record.** It does not
+> travel with the domain and it is not in this repo. Re-adding the hostnames on
+> another account without recreating it leaves apex and www both serving, which
+> splits the canonical signal — bad at any time, worse while the site is still
+> establishing itself with Google.
+
+`nettashemesh.co.il` (double `t`) is an old typo domain. It resolves to nothing
+and is deliberately not attached.
+
+### DNS records
+
+Published at MyNames, not here:
+
+- `www` → **CNAME** → a `*.vercel-dns-*.com` target. **The hostname is
+  account-specific**, so it changes if the project moves to another Vercel
+  account.
+- apex → **A** → a Vercel anycast address. The value rotates between lookups;
+  that is normal. Always copy what Vercel's Domains page asks for rather than
+  whatever `dig` returned a moment ago.
+
+### Before any cutover or transfer
+
+TTL is **3600s**, so a bad moment costs up to an hour of downtime. Lower both
+records to **300s at least an hour beforehand** — resolvers cache the old value
+until it expires, so doing it at the same time as the switch achieves nothing.
+
+```bash
+dig +noall +answer www.netashemesh.co.il   # confirm the TTL actually dropped
+```
 
 ---
 
