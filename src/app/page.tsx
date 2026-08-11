@@ -6,6 +6,7 @@ import Testimonials from '@/components/layout/Testimonials';
 import Contact from '@/components/layout/Contact';
 import Footer from '@/components/layout/Footer';
 import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
+import { PhoneFAB } from '@/components/ui/PhoneFAB';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <Contact />
       <Footer />
       <WhatsAppFAB />
+      <PhoneFAB />
     </main>
   );
 }

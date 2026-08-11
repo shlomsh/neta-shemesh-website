@@ -13,6 +13,7 @@ import { AuthorCard } from '@/components/blog/AuthorCard';
 import { getAllPosts, getPostBySlug, getOtherPosts } from '@/content/posts';
 import Footer from '@/components/layout/Footer';
 import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
+import { PhoneFAB } from '@/components/ui/PhoneFAB';
 import { SITE_URL as SITE } from '@/config/constants';
 
 export function generateStaticParams() {
@@ -173,6 +174,7 @@ export default async function BlogPostPage(
 
       <Footer />
       <WhatsAppFAB />
+      <PhoneFAB />
     </main>
   );
 }
