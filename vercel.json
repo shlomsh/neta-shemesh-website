@@ -4,5 +4,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "outputDirectory": ".next",
-  "env": {}
+  "env": {},
+  "ignoreCommand": "bash scripts/vercel-ignore-build.sh"
 }
