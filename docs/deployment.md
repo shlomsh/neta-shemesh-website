@@ -138,10 +138,35 @@ transfer:
 Azure has no equivalent problem: its workflow authenticates with a repository
 secret, so it deploys on any push from any author.
 
-> **There is no longer a test gate in front of production.** The old deploy
-> workflow ran the unit suite before firing the hook; Vercel's Git trigger runs
-> the build only. `playwright.yml` still runs on push, but Vercel does not wait
-> for it — a green deploy does not mean the suite passed.
+### The test gate
+
+Vercel does not wait for GitHub Actions, so a red `playwright.yml` run cannot
+stop a deploy on its own. The gate is instead **`vercel.json` →
+`ignoreCommand`**, which runs `scripts/vercel-ignore-build.sh` before every
+build. Failing unit tests skip the build and production keeps serving the
+previous deploy.
+
+**Its exit codes are inverted, and this is the thing to remember:**
+
+| Exit | Meaning |
+|---|---|
+| `1` | tests passed → **build proceeds** |
+| `0` | tests failed → **build skipped** |
+
+The script fails **open** on infrastructure problems (dependencies won't
+install, runner missing) and **closed** on genuine test failures. That
+asymmetry is deliberate: a suite that cannot run should not silently freeze the
+site the way the old deploy hook did. Playwright in Actions is the backstop.
+
+> **A skipped build still reports green on GitHub.** The commit status reads
+> `success` with the description *"Canceled by Ignored Build Step"*, and the
+> deployment shows as `Canceled`. Do not read a green check as "it shipped" —
+> check the description, or the deployment list. The failing test itself does
+> show red via `playwright.yml`.
+
+Verified in both directions on a branch: a passing suite built to `● Ready`; a
+deliberately failing test produced `Canceled by Ignored Build Step` with
+`[test-gate] FAIL` in the build logs.
 
 ---
 
