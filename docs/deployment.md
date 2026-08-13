@@ -83,67 +83,65 @@ publishes a competing copy; step 1 without step 2 de-indexes the real site.
 
 ## What triggers a production deploy
 
+Vercel's standard Git integration: a push to `main` deploys to production. No
+workflow, no hook, no token.
+
+That is only true because **the repository is public**, and it is the whole
+reason it is public.
+
+### Why the repo is public
+
 Vercel attributes every deployment to the **commit author** and checks that
-identity has access to the project. On a personal plan only the account owner
-qualifies, so a push authored by anyone else produces no deployment — and it
-fails silently rather than erroring.
+identity has access to the project. On the Hobby plan, collaboration is not
+supported for *private* repositories — so a push authored by anyone other than
+the account owner is refused with *"Deployment was blocked"*.
 
-This bit us implicitly: the Azure work (`4f1846d`) was authored by a second
-contributor and only reached `main` inside merge commit `21beb86`, which GitHub
-attributed to the account owner. That is the only reason it deployed.
+This bit us twice:
 
-`.github/workflows/vercel-deploy.yml` removes the dependency on authorship by
-POSTing to a **Vercel Deploy Hook**, which carries no author attribution.
+1. The Azure work (`4f1846d`) was authored by a second contributor and only
+   reached `main` inside merge commit `21beb86`, which GitHub attributed to the
+   account owner. That is the only reason it deployed.
+2. Eran's commits (`61df089`, `44c0b79`) were blocked outright. `44c0b79` sat
+   undeployed for two days while production served stale code.
 
-**This is already configured.** Recorded here so it can be rebuilt — notably
-after a change of project ownership.
+> **A Deploy Hook does _not_ dodge this check.** We tried exactly that, and it
+> failed. A hook deploys the linked Git branch, so Vercel still resolves the
+> branch head's commit author and still blocks it. Worse, it fails *silently
+> from CI's point of view*: the `curl` POST returns `2xx` and the workflow goes
+> green while Vercel discards the deployment. Do not reintroduce it.
 
-The whole setup is doable from the CLI; no dashboard needed:
+Making the repo public lifts the restriction — collaboration is free for public
+repositories, on any plan. Verified empirically, not from the docs: a commit
+authored by Eran (cherry-picked to a fresh SHA so Vercel could not deduplicate
+against the blocked one) was pushed to a branch and built to `● Ready`, where
+the identical commit had been blocked while the repo was private.
 
-```bash
-vercel deploy-hooks list                              # hook: github-actions-main, ref main
-vercel deploy-hooks create <name> --ref main          # if it needs recreating
-```
+The alternatives, if the repo ever has to go private again:
 
-To store the URL without it landing in a terminal transcript:
-
-```bash
-url=$(vercel deploy-hooks list | sed -n '/^{/,$p' | jq -r '.hooks[0].url')
-printf '%s' "$url" | gh secret set VERCEL_DEPLOY_HOOK --repo <owner>/<repo>
-```
-
-Vercel's own Git trigger is disabled in **`vercel.json`**, not via the dashboard
-toggle:
-
-```json
-"git": { "deploymentEnabled": { "main": false } }
-```
-
-Version-controlled on purpose: it is reviewable, and it survives a change of
-project ownership. Without it, every owner-authored push deploys twice — once
-from Git, once from the hook. `deploymentEnabled` gates **Git events only**;
-deploy hooks are a separate trigger and keep working. Verified by firing the
-workflow with no push and watching a deployment appear.
-
-With Vercel's trigger off, this workflow is the **only** path to production,
-which is why it runs the unit suite before firing the hook. It skips with a
-warning rather than failing if `VERCEL_DEPLOY_HOOK` is missing.
+- **Pro plan** (~$20/user/month) — add contributors as team members. The only
+  option the docs state unambiguously.
+- **GitHub Actions + `vercel deploy` with a token** — note that a *team-scoped*
+  token does **not** work: the Vercel CLI resolves the personal account first
+  and dies with `User not found`. It needs a full-account token.
 
 ### If ownership of the Vercel project changes
 
 The Git-author check inverts: the previous owner becomes the unauthorized
-author. The hook is what makes this a non-event, because it carries no author
-attribution. After any transfer:
+author. Public repo visibility is what makes this a non-event. After any
+transfer:
 
-1. `vercel deploy-hooks list` — confirm the hook still exists. A transfer can
-   reset Git integration.
-2. If it is gone, recreate it and re-set the `VERCEL_DEPLOY_HOOK` secret.
-3. `gh workflow run "Deploy to Vercel"` and confirm a new deployment appears.
-4. Rebuild the domain configuration — see **Domains and DNS** below. It is more
+1. Confirm the repo is still public.
+2. Push any commit and confirm a production deployment appears.
+3. Rebuild the domain configuration — see **Domains and DNS** below. It is more
    than re-adding a hostname.
 
 Azure has no equivalent problem: its workflow authenticates with a repository
 secret, so it deploys on any push from any author.
+
+> **There is no longer a test gate in front of production.** The old deploy
+> workflow ran the unit suite before firing the hook; Vercel's Git trigger runs
+> the build only. `playwright.yml` still runs on push, but Vercel does not wait
+> for it — a green deploy does not mean the suite passed.
 
 ---
 
