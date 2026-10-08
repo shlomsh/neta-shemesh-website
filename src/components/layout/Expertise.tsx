@@ -1,13 +1,15 @@
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { SectionTitle } from "../ui/SectionTitle";
 import { ExpertiseCard } from './expertise/ExpertiseCard';
-import { EXPERTISE_CARDS } from './expertise/expertiseData';
+import { EXPERTISE_CARDS } from '@/content/home/expertise';
+import { ANCHOR, ID } from '@/content/ids';
+import { stagger } from '@/lib/motion';
 
 export default function Expertise() {
   return (
     <>
       {/* Anchor target — keep id so layout/nav tests resolve */}
-      <div id="expertise" aria-hidden="true" />
+      <div id={ANCHOR.expertise} aria-hidden="true" />
 
       <section
         dir="rtl"
@@ -21,9 +23,9 @@ export default function Expertise() {
         "
       >
         {/* Section header */}
-        <ScrollReveal delay={0}>
+        <ScrollReveal>
           <div className="text-center mb-[clamp(24px,4vw,48px)] lg:mb-9">
-            <SectionTitle id="vyKTmOw3YNYlJZPL">טיפול זוגי ומשפחתי בנתניה</SectionTitle>
+            <SectionTitle id={ID.expertiseTitle}>טיפול זוגי ומשפחתי בנתניה</SectionTitle>
             {/* Blush section (plum = 3.89:1, AA large only): paragraph at the quote scale (>=24px). */}
             <p
               className="
@@ -40,14 +42,14 @@ export default function Expertise() {
 
         {/* Cards container: stacked below lg; at lg a 2x2 grid (4 cards, mostly landscape photos) that fills the remaining height of the 100svh section (photos crop, nothing overflows) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2 gap-[clamp(16px,3vw,32px)] max-w-[640px] lg:max-w-[1000px] mx-auto w-full lg:flex-1 lg:min-h-[320px]">
-          {EXPERTISE_CARDS.map((card, index) => (
+          {EXPERTISE_CARDS.map(({ slug, ...card }, index) => (
             <div
-              key={card.title}
+              key={slug}
               className="w-full h-full aspect-[4/5] lg:aspect-auto lg:min-h-0 rounded-card safari-clip"
             >
               <ExpertiseCard
                 {...card}
-                delay={index * 0.12}
+                delay={stagger(index)}
               />
             </div>
           ))}

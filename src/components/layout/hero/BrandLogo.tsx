@@ -1,17 +1,19 @@
 import Link from 'next/link';
+import { ID } from '@/content/ids';
+import { SITE } from '@/content/site';
 
 /**
  * BrandLogo — "נטע שמש" logotype. The wordmark is a pre-rendered image
  * (public/images/logo-horizontal-light.webp, Elamy Bold baked in), so no font
  * is involved here.
  *
- * Keeps id="Fyf1hlFV3WFGVXJq" for test selectors.
+ * Keeps ID.brandLogo (content/ids.ts) for test selectors.
  * Server component.
  */
 export function BrandLogo() {
   return (
     <Link
-      id="Fyf1hlFV3WFGVXJq"
+      id={ID.brandLogo}
       href="/"
       dir="rtl"
       aria-label="לעמוד הבית"
@@ -19,7 +21,7 @@ export function BrandLogo() {
     >
       <img
         src="/images/logo-horizontal-light.webp"
-        alt="נטע שמש — טיפול זוגי ומשפחתי"
+        alt={`${SITE.name} — ${SITE.tagline}`}
         width={1073}
         height={320}
         className="

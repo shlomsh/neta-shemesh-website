@@ -201,9 +201,9 @@ export function isOneScreen(el: Element): boolean {
 export interface SectionSpec {
   name: string;
   /**
-   * DOM ids, current one FIRST. A refactor may introduce readable ids (e.g. `services`): add them
-   * after the current one rather than replacing it. When no id matches, the section is found by
-   * `heading` (its first h1/h2 text), which is the stable content identity.
+   * DOM ids, current one FIRST (literal strings on purpose, NOT imported from content/ids.ts: a wrong
+   * rename in ids.ts must fail here instead of being echoed back). When a rename leaves no id matching,
+   * the section is still found by `heading` (its first h1/h2 text), which is the stable content identity.
    */
   ids: string[];
   heading?: string;
@@ -212,15 +212,15 @@ export interface SectionSpec {
 }
 
 export const EXPECTED_SECTIONS: SectionSpec[] = [
-  { name: 'hero', ids: ['vcPAqaHkkrFaQQwh'], heading: 'מקום בטוח לצמוח בו ביחד.', kind: 'photo' },
+  { name: 'hero', ids: ['hero'], heading: 'מקום בטוח לצמוח בו ביחד.', kind: 'photo' },
   { name: 'about-intro', ids: ['about-intro'], heading: 'ליווי מקצועי לזוגות', kind: 'mid' },
   { name: 'expertise', ids: [], heading: 'טיפול זוגי ומשפחתי בנתניה', kind: 'light' },
   { name: 'about-me', ids: ['about-me-section'], heading: 'קצת עלי', kind: 'cream' },
   { name: 'about-credentials', ids: ['about-credentials'], heading: 'ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג', kind: 'dark' },
   { name: 'about-gallery', ids: ['about-gallery'], heading: 'להצית מחדש את הקשר הזוגי', kind: 'mid' },
-  { name: 'services', ids: ['cQd2ufFBWvr5c6ki'], heading: 'איך זה עובד?', kind: 'light' },
-  { name: 'cta-band', ids: ['afNbX7iGTuOdSbLC'], heading: 'קביעת פגישת ייעוץ', kind: 'photo' },
-  { name: 'testimonials-gallery', ids: ['vln9V07dEMN7DyMa'], heading: 'טיפול זוגי לקשר בריא ותומך', kind: 'cream' },
+  { name: 'services', ids: ['services'], heading: 'איך זה עובד?', kind: 'light' },
+  { name: 'cta-band', ids: ['cta-band'], heading: 'קביעת פגישת ייעוץ', kind: 'photo' },
+  { name: 'testimonials-gallery', ids: ['photo-gallery'], heading: 'טיפול זוגי לקשר בריא ותומך', kind: 'cream' },
   { name: 'contact-social', ids: ['contact-social'], heading: 'עקבו אחריי', kind: 'dark' },
   { name: 'contact-office', ids: ['contact-office'], heading: 'המשרד שלי', kind: 'mid' },
   { name: 'footer', ids: [], kind: 'photo' },
@@ -437,6 +437,8 @@ export const SCAN_RULES: ScanRule[] = [
     bad: ['h-[100svh]', 'flex h-[100svh] w-full'], good: ['lg:h-[100svh]', 'min-h-[100svh]', 'lg:min-h-[100svh]', 'lg:h-[max(100svh,720px)]'] },
   { id: 'main-overflow-hidden', label: '<main> with overflow-hidden', re: /<main\b[^>]*\boverflow-hidden/,
     bad: ['<main className="relative w-full overflow-hidden" style={{}}>'], good: ['<main className="relative w-full overflow-clip">', '<section className="overflow-hidden">'] },
+  { id: 'pageshell-overflow-hidden', label: '<PageShell overflow="hidden"> (the PageShell form of <main overflow-hidden>)', re: /<PageShell\b[^>]*\boverflow=\{?["']hidden/,
+    bad: ['<PageShell overflow="hidden" surface="cream">', "<PageShell surface=\"cream\" overflow={'hidden'}>"], good: ['<PageShell overflow="clip" surface="bg-light">', '<PageShell overflow="clip" surface="cream">'] },
   { id: 'google-fonts', label: 'Google Fonts fetch (breaks the Vercel prod build)', re: /next\/font\/google|fonts\.googleapis|fonts\.gstatic/,
     bad: ['import { Roboto } from "next/font/google"', 'https://fonts.googleapis.com/css'], good: ['next/font/local'] },
   { id: 'display-font-in-component', label: 'Elamy / display font set directly on a component', re: /(?<![\w-])font-(?:display|elamy)(?![\w-])|family-name:var\(--font-(?:display|elamy)\)|font-\[var\(--font-(?:display|elamy)\)\]|\bfontFamily\b/,

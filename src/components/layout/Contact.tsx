@@ -5,21 +5,8 @@ import { SocialLinks } from './contact/SocialLinks';
 import { ContactDetails } from './contact/ContactDetails';
 import { MapEmbed } from './contact/MapEmbed';
 import { SectionTitle } from "../ui/SectionTitle";
-
-// ─── Content ────────────────────────────────────────────────────────────────
-const SOCIAL_HEADING = 'עקבו אחריי';
-const SOCIAL_BODY_START = 'בואו נשמור על קשר גם ברשתות החברתיות. שם אני משתפת תובנות, כלים ומחשבות על ';
-const SOCIAL_BODY_BOLD = 'זוגיות, הורות';
-const SOCIAL_BODY_END = ' וצמיחה אישית.';
-
-const OFFICE_HEADING = 'המשרד שלי';
-const OFFICE_BODY_START = 'קליניקה נעימה ובטוחה, מרחב שבו תרגישו ';
-const OFFICE_BODY_BOLD = 'עטופים, מובנים';
-const OFFICE_BODY_END = ' ומקובלים.';
-
-const ADDRESS_STRONG = 'רחוב אמנון ותמר 6, נתניה';
-const PHONE = '054-571-1060';
-const EMAIL = 'nettabe@gmail.com';
+import { CONTACT_PHOTOS, OFFICE_PANEL, SOCIAL_PANEL } from '@/content/home/contact';
+import { ANCHOR, ID } from '@/content/ids';
 
 export default function Contact() {
   return (
@@ -28,7 +15,7 @@ export default function Contact() {
           PANEL 1 — Follow me on social
       ══════════════════════════════════════════════════════════════════════ */}
       <section
-        id="contact-social"
+        id={ID.contactSocial}
         dir="rtl"
         data-bg-tone="dark"
         className="py-[80px] px-[24px] min-h-[100svh] flex flex-col justify-center"
@@ -37,8 +24,8 @@ export default function Contact() {
 
           {/* Heading on mobile — shown above photos only on small screens */}
           <div className="flex flex-col gap-[24px] text-right lg:hidden">
-            <ScrollReveal delay={0}>
-              <SectionTitle id="ZgJbejfHoeBrgmf7-mobile">{SOCIAL_HEADING}</SectionTitle>
+            <ScrollReveal>
+              <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
             </ScrollReveal>
           </div>
 
@@ -49,36 +36,18 @@ export default function Contact() {
               Col 2 (left, narrower): photo3 spanning both rows (tall portrait)
             Mobile: single-column stack of all 3 photos
           */}
-          <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-160px)]">
+          <ScrollReveal className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-160px)]">
             {/* Mobile: simple vertical stack */}
             <div className="flex flex-col gap-[16px] lg:hidden">
-              <ParallaxFrame className="aspect-[4/5] w-full rounded-card safari-clip" amount={9}>
-                <Image
-                  src="/images/contact-clinic-portrait.webp"
-                  alt="נטע שמש — תמונה מהקליניקה"
-                  fill
-                  sizes="100vw"
-                  className="object-cover object-center"
-                />
-              </ParallaxFrame>
-              <ParallaxFrame className="aspect-[4/5] w-full rounded-card safari-clip" amount={9}>
-                <Image
-                  src="/images/contact-consultation.webp"
-                  alt="נטע שמש בפגישת ייעוץ"
-                  fill
-                  sizes="100vw"
-                  className="object-cover object-[30%_64%]"
-                />
-              </ParallaxFrame>
-              <ParallaxFrame className="aspect-[2/3] w-full rounded-card safari-clip" amount={9}>
-                <Image
-                  src="/images/contact-clinic-atmosphere.webp"
-                  alt="אווירת הקליניקה של נטע שמש"
-                  fill
-                  sizes="100vw"
-                  className="object-cover"
-                />
-              </ParallaxFrame>
+              {CONTACT_PHOTOS.map((photo) => (
+                <ParallaxFrame
+                  key={photo.src}
+                  className={`${photo.mobile.aspectClass} w-full rounded-card safari-clip`}
+                  amount={9}
+                >
+                  <Image src={photo.src} alt={photo.alt} fill sizes="100vw" className={photo.imageClass} />
+                </ParallaxFrame>
+              ))}
             </div>
 
             {/* Desktop/tablet: 2-column mosaic grid */}
@@ -90,52 +59,32 @@ export default function Contact() {
                 gridTemplateAreas: '"p1 p3" "p2 p3"',
               }}
             >
-              {/* Photo 1 — top of left column */}
-              <ParallaxFrame className="min-h-0 rounded-card safari-clip" style={{ gridArea: 'p1' }} amount={9}>
-                <Image
-                  src="/images/contact-clinic-portrait.webp"
-                  alt="נטע שמש — תמונה מהקליניקה"
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 28vw"
-                  className="object-cover object-center"
-                />
-              </ParallaxFrame>
-              {/* Photo 2 — bottom of left column */}
-              <ParallaxFrame className="min-h-0 rounded-card safari-clip" style={{ gridArea: 'p2' }} amount={9}>
-                <Image
-                  src="/images/contact-consultation.webp"
-                  alt="נטע שמש בפגישת ייעוץ"
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 28vw"
-                  className="object-cover object-[30%_64%]"
-                />
-              </ParallaxFrame>
-              {/* Photo 3 — tall portrait spanning full height of right column */}
-              <ParallaxFrame className="min-h-0 rounded-card safari-clip" style={{ gridArea: 'p3', gridRow: '1 / 3' }} amount={9}>
-                <Image
-                  src="/images/contact-clinic-atmosphere.webp"
-                  alt="אווירת הקליניקה של נטע שמש"
-                  fill
-                  sizes="(max-width: 768px) 37vw, 21vw"
-                  className="object-cover"
-                />
-              </ParallaxFrame>
+              {CONTACT_PHOTOS.map((photo) => (
+                <ParallaxFrame
+                  key={photo.src}
+                  className="min-h-0 rounded-card safari-clip"
+                  style={{ gridArea: photo.desktop.area, ...photo.desktop.extraStyle }}
+                  amount={9}
+                >
+                  <Image src={photo.src} alt={photo.alt} fill sizes={photo.desktop.sizes} className={photo.imageClass} />
+                </ParallaxFrame>
+              ))}
             </div>
           </ScrollReveal>
 
           {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
           <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
             <ScrollReveal delay={0.1} className="hidden lg:block">
-              <SectionTitle id="ZgJbejfHoeBrgmf7">{SOCIAL_HEADING}</SectionTitle>
+              <SectionTitle id={ID.contactSocialTitle}>{SOCIAL_PANEL.heading}</SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <p
                 className="type-lead"
               >
-                {SOCIAL_BODY_START}
-                <strong>{SOCIAL_BODY_BOLD}</strong>
-                {SOCIAL_BODY_END}
+                {SOCIAL_PANEL.body.start}
+                <strong>{SOCIAL_PANEL.body.bold}</strong>
+                {SOCIAL_PANEL.body.end}
               </p>
             </ScrollReveal>
 
@@ -147,7 +96,7 @@ export default function Contact() {
       </section>
 
       {/* ── Anchor ────────────────────────────────────────────────────────── */}
-      <div id="contact" className="invisible h-0" />
+      <div id={ANCHOR.contact} className="invisible h-0" />
 
       {/* ══════════════════════════════════════════════════════════════════════
           PANEL 2 — Office details + map
@@ -155,7 +104,7 @@ export default function Contact() {
           map col (left in LTR → right in RTL, ~55% width)
       ══════════════════════════════════════════════════════════════════════ */}
       <section
-        id="contact-office"
+        id={ID.contactOffice}
         dir="rtl"
         data-bg-tone="mid"
         className="py-[80px] lg:py-12 px-[24px] min-h-[100svh] lg:h-[max(100svh,720px)] flex flex-col justify-center"
@@ -163,8 +112,8 @@ export default function Contact() {
         <div className="max-w-[1100px] mx-auto w-full flex flex-col">
 
           {/* Title row: above the card, right-aligned (RTL) on the mauve */}
-          <ScrollReveal delay={0} className="mb-8 md:mb-12 text-right">
-            <SectionTitle id="zNSWHTotP3XOaXao">{OFFICE_HEADING}</SectionTitle>
+          <ScrollReveal className="mb-8 md:mb-12 text-right">
+            <SectionTitle id={ID.contactOfficeTitle}>{OFFICE_PANEL.heading}</SectionTitle>
           </ScrollReveal>
 
           {/* One cream card frames both details and map. Mauve fails contrast for any text
@@ -183,16 +132,12 @@ export default function Contact() {
                   <p
                     className="type-lead"
                   >
-                    {OFFICE_BODY_START}
-                    <strong>{OFFICE_BODY_BOLD}</strong>
-                    {OFFICE_BODY_END}
+                    {OFFICE_PANEL.body.start}
+                    <strong>{OFFICE_PANEL.body.bold}</strong>
+                    {OFFICE_PANEL.body.end}
                   </p>
 
-                  <ContactDetails
-                    phone={PHONE}
-                    email={EMAIL}
-                    addressStrong={ADDRESS_STRONG}
-                  />
+                  <ContactDetails />
                 </div>
 
                 {/* Left cell: map, 260px on mobile, matches the details height at lg */}

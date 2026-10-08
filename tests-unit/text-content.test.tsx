@@ -4,7 +4,6 @@
  */
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import React from 'react';
 
 import { HeroHeading } from '@/components/layout/hero/HeroHeading';
 import Services from '@/components/layout/Services';
@@ -27,7 +26,7 @@ describe('Services — key Hebrew strings present', () => {
 describe('Expertise — card titles present', () => {
   it('renders at least one expertise card title from EXPERTISE_CARDS', () => {
     const { container } = render(<Expertise />);
-    // 'טיפול זוגי' is the first card title in expertiseData.ts
+    // 'טיפול זוגי' is the first card title in content/home/expertise.ts
     expect(container.textContent).toContain('טיפול זוגי');
   });
 

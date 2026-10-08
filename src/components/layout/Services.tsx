@@ -5,50 +5,8 @@ import { Container } from '../primitives/layout/Container';
 import { Grid } from '../primitives/layout/Grid';
 import { BodyText } from '../primitives/ui/BodyText';
 import { ButtonLink } from '../primitives/ui/ButtonLink';
-import type { Step } from './services/types';
-
-const STEPS: Step[] = [
-  {
-    imageSrc: '/images/service-step-1.webp',
-    numberText: '01.',
-    title: 'הערכה ראשונית והגדרת מטרות',
-    bullets: [
-      'הבנת הרקע והקשיים הייחודיים שלכם',
-      'הגדרת יעדים זוגיים ברורים לטיפול',
-      'יצירת מפת דרכים מותאמת אישית',
-    ],
-  },
-  {
-    imageSrc: '/images/service-step-2.webp',
-    numberText: '02.',
-    title: 'בניית יחסי אמון',
-    bullets: [
-      'יצירת מרחב בטוח ומכיל עבורכם',
-      'הקשבה אמפתית ומקרבת ללא שיפוטיות',
-      'ביסוס ביטחון ראשוני בתוך הטיפול',
-    ],
-  },
-  {
-    imageSrc: '/images/service-step-3.webp',
-    numberText: '03.',
-    title: 'חקירה והבנה זוגית',
-    bullets: [
-      'זיהוי דפוסי התקשורת החוזרים שלכם',
-      'הבנת הצרכים הרגשיים העמוקים',
-      'חשיפת מעגלי הפגיעות והתקיעות',
-    ],
-  },
-  {
-    imageSrc: '/images/service-step-4.webp',
-    numberText: '04.',
-    title: 'רכישת כלים ויישום',
-    bullets: [
-      'למידת כלים פרקטיים לתקשורת מקרבת',
-      'פתרון קונפליקטים וחיבור מחדש',
-      'תרגול ויישום בחיי היומיום שלכם',
-    ],
-  },
-];
+import { STEPS } from '@/content/home/steps';
+import { ANCHOR, ID, anchorHref } from '@/content/ids';
 
 export default function Services() {
   return (
@@ -56,7 +14,7 @@ export default function Services() {
       {/* lg+: exactly one screen (100svh; floor 720px so a short viewport grows rather than clips).
           Flex chain Section -> Container -> Grid hands the remaining height to the 2x2 step
           grid, so the cards size from the available height instead of an aspect ratio. */}
-      <Section id="cQd2ufFBWvr5c6ki" bgVariant="light" fullHeight className="lg:h-[max(100svh,720px)] lg:py-12">
+      <Section id={ID.services} bgVariant="light" fullHeight className="lg:h-[max(100svh,720px)] lg:py-12">
         {/*
           P1 fix: replaced translate-y stagger with margin-top on even cards so the
           container grows naturally (translate-y is out-of-flow and gets clipped by
@@ -67,7 +25,7 @@ export default function Services() {
 
           {/* Text column — centered on mobile, right-aligned sticky on desktop */}
           <div className="text-center md:text-right md:w-[320px] md:shrink-0 lg:text-right lg:w-[400px] lg:shrink-0 lg:self-center z-10 mb-[48px] md:mb-0 lg:mb-0">
-            <SectionTitle id="pEc3w8pe4QAw5k7o" spanId="lEBZC8bpB2HUMalg">איך זה עובד?</SectionTitle>
+            <SectionTitle id={ID.servicesTitle}>איך זה עובד?</SectionTitle>
 
             {/* Section is blush (plum text = 3.89:1, AA large only), so the paragraph is
                 set at the quote scale (>=24px). */}
@@ -76,7 +34,7 @@ export default function Services() {
             </BodyText>
 
             <div className="mt-[48px]">
-              <ButtonLink href="#contact" variant="primary" className="w-full sm:w-auto">
+              <ButtonLink href={anchorHref(ANCHOR.contact)} variant="primary" className="w-full sm:w-auto">
                 צרו קשר
               </ButtonLink>
             </div>

@@ -108,7 +108,10 @@ describe('C11: no ad-hoc type sizes, weights or removed classes in src', () => {
 
   it('<main> never has overflow-hidden on the home page (it must clip); the blog pages are the only tolerated main with it', () => {
     // Blog pages do not mount SoftSnap, so their <main overflow-hidden> cannot break snapping.
-    const hits = scan(sources, rule('main-overflow-hidden').re).filter((h) => !h.includes('/blog/'));
+    // The three pages share <PageShell> (components/site/PageShell.tsx), which builds the <main> class from
+    // its `overflow` prop, so the page-level form is `<PageShell overflow="hidden">`: scan both spellings.
+    const hits = [...scan(sources, rule('main-overflow-hidden').re), ...scan(sources, rule('pageshell-overflow-hidden').re)]
+      .filter((h) => !h.includes('/blog/'));
     expectNone(hits, '<main> with overflow-hidden outside the blog (kills soft snap)');
   });
 
@@ -120,8 +123,9 @@ describe('C11: no ad-hoc type sizes, weights or removed classes in src', () => {
   });
 });
 
-describe('C17: fonts in layout.tsx', () => {
-  const layout = sourceNamed('app/layout.tsx').text;
+describe('C17: fonts (declared in app/fonts.ts, applied in app/layout.tsx)', () => {
+  const layout = sourceNamed('app/fonts.ts').text;
+  const root = sourceNamed('app/layout.tsx').text;
   const blocks = [...layout.matchAll(/const (\w+) = localFont\(\{([\s\S]*?)\n\}\);/g)].map((m) => ({ name: m[1], body: m[2] }));
   const block = (name: string) => blocks.find((b) => b.name === name)?.body ?? '';
   const weights = (body: string) => [...body.matchAll(/weight:\s*"(\d+)"/g)].map((m) => m[1]);
@@ -157,7 +161,13 @@ describe('C17: fonts in layout.tsx', () => {
     expectNone(scan(sources, rule('google-fonts').re), 'Google Fonts fetch in src (breaks the Vercel prod build)');
   });
 
-  it('every woff2 referenced by layout.tsx is shipped in public/fonts', () => {
+  it('layout.tsx applies all three font variables to <html> and imports globals.css after the fonts', () => {
+    for (const f of ['elamy', 'stanga', 'latin']) expect(root, `${f}.variable on <html>`).toContain(`\${${f}.variable}`);
+    expect(root.indexOf('from "./fonts"'), 'fonts imported').toBeGreaterThan(-1);
+    expect(root.indexOf('import "./globals.css"'), 'globals.css imported after ./fonts so our rules win').toBeGreaterThan(root.indexOf('from "./fonts"'));
+  });
+
+  it('every woff2 referenced by fonts.ts is shipped in public/fonts', () => {
     const files = [...layout.matchAll(/public\/fonts\/([\w.-]+\.woff2)/g)].map((m) => m[1]);
     expect(files.length).toBe(6);
     for (const f of files) expect(existsSync(join(ROOT, 'public/fonts', f)), `public/fonts/${f}`).toBe(true);

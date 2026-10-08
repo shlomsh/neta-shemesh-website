@@ -4,6 +4,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
+import { ID } from '../src/content/ids';
 import Contact from '../src/components/layout/Contact';
 import Footer from '../src/components/layout/Footer';
 
@@ -18,7 +19,7 @@ describe('Contact', () => {
 
   it('office: the cream card is a large radius that hugs its content; the map frame uses the smaller tile radius in a 1fr/1.2fr grid', () => {
     const { container } = render(<Contact />);
-    const section = container.querySelector('#contact-office')!;
+    const section = container.querySelector(`#${ID.contactOffice}`)!;
     const card = section.querySelector('[data-bg-tone="cream"]')!;
     expect(card.className).toContain('rounded-card');
     expect(card.className).not.toContain('h-full');

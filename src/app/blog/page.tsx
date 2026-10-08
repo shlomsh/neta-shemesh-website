@@ -6,36 +6,34 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostCard } from '@/components/blog/PostCard';
 import { getAllPosts } from '@/content/posts';
-import Footer from '@/components/layout/Footer';
-import { ContactFAB } from '@/components/ui/ContactFAB';
-import { SITE_URL } from '@/config/constants';
+import { PageShell } from '@/components/site/PageShell';
+import { SITE } from '@/content/site';
+import { ID } from '@/content/ids';
+import { stagger } from '@/lib/motion';
+import { pageMeta } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
-  title: 'מאמרים | נטע שמש — טיפול זוגי ומשפחתי',
-  description:
-    'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה — סדרת מאמרים מאת נטע שמש, מטפלת זוגית ומשפחתית בנתניה.',
-  alternates: { canonical: `${SITE_URL}/blog` },
-  openGraph: {
-    type: 'website',
-    url: `${SITE_URL}/blog`,
-    title: 'מאמרים | נטע שמש',
+// No `twitter` block on purpose: the index inherits the site-wide card from the root layout.
+export const metadata: Metadata = pageMeta({
+  title: `מאמרים | ${SITE.name} — ${SITE.tagline}`,
+  description: `מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה — סדרת מאמרים מאת ${SITE.name}, מטפלת זוגית ומשפחתית ב${SITE.city}.`,
+  path: '/blog',
+  og: {
+    title: `מאמרים | ${SITE.name}`,
     description: 'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה.',
-    locale: 'he_IL',
-    siteName: 'נטע שמש',
   },
-};
+});
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();
 
   return (
-    <main className="relative w-full overflow-hidden" style={{ backgroundColor: 'var(--color-cream)' }}>
+    <PageShell overflow="hidden" surface="cream">
       <BlogHeader />
 
       {/* Intro band */}
-      <Section id="blog-intro" bgVariant="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
+      <Section id={ID.blogIntro} bgVariant="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
         <Container maxWidth="lg" className="text-center">
-          <ScrollReveal delay={0} className="flex flex-col items-center gap-[clamp(14px,2vw,22px)]">
+          <ScrollReveal className="flex flex-col items-center gap-[clamp(14px,2vw,22px)]">
             <span className="type-eyebrow text-[var(--color-blush)]">
               הבלוג
             </span>
@@ -51,20 +49,17 @@ export default function BlogIndexPage() {
       </Section>
 
       {/* Posts grid */}
-      <Section id="blog-posts" bgVariant="cream" className="py-[clamp(48px,7vw,96px)]">
+      <Section id={ID.blogPosts} bgVariant="cream" className="py-[clamp(48px,7vw,96px)]">
         <Container maxWidth="2xl">
           <div className="grid grid-cols-1 gap-[clamp(24px,3vw,40px)] md:grid-cols-2">
             {posts.map((post, i) => (
-              <ScrollReveal key={post.slug} delay={(i % 2) * 0.12} className="h-full">
+              <ScrollReveal key={post.slug} delay={stagger(i % 2)} className="h-full">
                 <PostCard post={post} priority={i < 2} />
               </ScrollReveal>
             ))}
           </div>
         </Container>
       </Section>
-
-      <Footer />
-      <ContactFAB />
-    </main>
+    </PageShell>
   );
 }

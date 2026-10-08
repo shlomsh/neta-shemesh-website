@@ -34,7 +34,9 @@ The only button-shaped link. Always a pill (`rounded-full`) with a lift-on-hover
 
 ## Related (outside `primitives/`)
 - `ui/SectionTitle` is the section `<h2>` (`type-title`, bold, colour from `--header-color`; `onDark` for titles on photo bands).
-- `ui/ScrollReveal`, `ui/ParallaxFrame`, `ui/SoftSnap` are the motion pieces; `ui/ContactFAB` is the contact pill.
+- `ui/ScrollReveal`, `ui/ParallaxFrame`, `ui/SoftSnap` are the motion pieces; `ui/ContactFAB` is the contact pill. Reveal delays come from `lib/motion.ts` (`stagger(i)`); do not pass `delay={0}`.
+- `site/PageShell` is the `<main>` shell shared by the home page and both blog pages (`overflow` is a required prop: `clip` for home, `hidden` for blog); `site/JsonLd` renders a JSON-LD script.
+- `primitives/ui/maskIcon.ts` (`maskIconStyle(src)`) is the style for single-colour SVG icons painted as a `currentColor` mask (contact rows, social links).
 
 ## Radius scale
 Defined in `@theme` in `globals.css`: `rounded-tile` (12px: gallery cells, map, inputs, thumbnails), `rounded-card` (24px: cards, photo frames, panels) and the built-in `rounded-full` (pills, buttons, avatars). Do not use `rounded-[Npx]` or `%` radii.

@@ -1,4 +1,4 @@
-import { AUTHOR_NAME, AUTHOR_TITLE, CLINIC_LOCATION } from '@/config/constants';
+import { SITE } from '@/content/site';
 
 /**
  * AuthorCard — compact bio shown at the foot of each article, echoing the
@@ -15,7 +15,7 @@ export function AuthorCard() {
       <div className="relative shrink-0 overflow-hidden rounded-full w-[clamp(84px,11vw,116px)] h-[clamp(84px,11vw,116px)]">
         <img
           src="/images/about-profile-neta.webp"
-          alt="נטע שמש"
+          alt={SITE.name}
           loading="lazy"
           className="h-full w-full object-cover object-[50%_38%]"
         />
@@ -26,8 +26,8 @@ export function AuthorCard() {
         <span className="type-eyebrow text-[var(--color-mauve)]">
           על הכותבת
         </span>
-        <p className="type-card-title text-[var(--color-plum)]">{AUTHOR_NAME}</p>
-        <p className="type-small text-[var(--color-mauve)]">{AUTHOR_TITLE} &middot; {CLINIC_LOCATION}</p>
+        <p className="type-card-title text-[var(--color-plum)]">{SITE.name}</p>
+        <p className="type-small text-[var(--color-mauve)]">{SITE.jobTitle} &middot; {SITE.city}</p>
         <p className="type-body text-[color:color-mix(in_srgb,var(--color-plum)_82%,transparent)]">
           מלווה זוגות, הורים ומשפחות בתהליכי שינוי, משבר וצמיחה — מתוך אמונה שכל
           קשר יכול למצוא מחדש את הדרך אל הקרבה והביטחון.

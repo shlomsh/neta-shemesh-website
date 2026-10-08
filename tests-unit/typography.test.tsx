@@ -4,10 +4,11 @@ import { SectionTitle } from '../src/components/ui/SectionTitle';
 
 // Title class/weight rules live in sanity/type-usage.test.tsx (C16).
 describe('SectionTitle', () => {
-  it('wraps its text in a span with spanId when one is provided', () => {
-    render(<SectionTitle id="test-id" spanId="span-id">Test Title</SectionTitle>);
-    const span = document.getElementById('span-id');
-    expect(span).not.toBeNull();
-    expect(span?.textContent).toBe('Test Title');
+  it('renders an h2 carrying the given id, with its text as a direct child (no id-only wrapper span)', () => {
+    const { container } = render(<SectionTitle id="test-id">Test Title</SectionTitle>);
+    const h2 = container.querySelector('h2#test-id');
+    expect(h2).not.toBeNull();
+    expect(h2?.textContent).toBe('Test Title');
+    expect(h2?.querySelector('span'), 'the Canva-era id-only <span> wrapper is gone').toBeNull();
   });
 });

@@ -4,13 +4,13 @@ import Expertise from '@/components/layout/Expertise';
 import Services from '@/components/layout/Services';
 import Testimonials from '@/components/layout/Testimonials';
 import Contact from '@/components/layout/Contact';
-import Footer from '@/components/layout/Footer';
-import { ContactFAB } from '@/components/ui/ContactFAB';
+import { PageShell } from '@/components/site/PageShell';
 import SoftSnap from '@/components/ui/SoftSnap';
 
 export default function Home() {
   return (
-    <main className="relative w-full overflow-clip" style={{ backgroundColor: 'var(--color-bg-light)' }}>
+    // overflow 'clip', never 'hidden': SoftSnap and sticky need <main> not to be a scroll container.
+    <PageShell overflow="clip" surface="bg-light" behaviors={<SoftSnap />}>
       <Hero />
       <AboutIntro />
       <Expertise />
@@ -20,9 +20,6 @@ export default function Home() {
       <Services />
       <Testimonials />
       <Contact />
-      <Footer />
-      <ContactFAB />
-      <SoftSnap />
-    </main>
+    </PageShell>
   );
 }

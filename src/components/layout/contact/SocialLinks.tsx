@@ -1,30 +1,5 @@
-interface SocialLink {
-  href: string;
-  label: string;
-  iconSrc: string;
-  iconAlt: string;
-}
-
-const SOCIAL_LINKS: SocialLink[] = [
-  {
-    href: 'https://facebook.com',
-    label: 'Facebook',
-    iconSrc: '/images/social-icon-facebook.svg',
-    iconAlt: 'Simple Facebook Icon',
-  },
-  {
-    href: 'https://instagram.com',
-    label: 'Instagram',
-    iconSrc: '/images/social-icon-instagram.svg',
-    iconAlt: 'Simple Instagram Icon',
-  },
-  {
-    href: 'https://twitter.com',
-    label: 'Twitter',
-    iconSrc: '/images/social-icon-twitter.svg',
-    iconAlt: 'Twitter Logo',
-  },
-];
+import { maskIconStyle } from '@/components/primitives/ui/maskIcon';
+import { SOCIAL_LINKS } from '@/content/home/social';
 
 export function SocialLinks() {
   return (
@@ -37,17 +12,7 @@ export function SocialLinks() {
           rel="noopener noreferrer"
           aria-label={link.label}
           className="w-[44px] h-[44px] flex-shrink-0 hover:opacity-80 transition-opacity"
-          style={{
-            backgroundColor: 'currentColor',
-            WebkitMaskImage: `url(${link.iconSrc})`,
-            maskImage: `url(${link.iconSrc})`,
-            WebkitMaskSize: 'contain',
-            maskSize: 'contain',
-            WebkitMaskRepeat: 'no-repeat',
-            maskRepeat: 'no-repeat',
-            WebkitMaskPosition: 'center',
-            maskPosition: 'center',
-          }}
+          style={maskIconStyle(link.iconSrc)}
         />
       ))}
     </div>

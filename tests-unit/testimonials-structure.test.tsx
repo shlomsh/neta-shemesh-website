@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
+import { ID } from '../src/content/ids';
 import Testimonials from '../src/components/layout/Testimonials';
 
 describe('Testimonials Structure', () => {
@@ -21,7 +22,7 @@ describe('Testimonials Structure', () => {
     });
 
     // Verify grid layout structure
-    const gridContainer = container.querySelector('#GEF7BLoFlyc3GavU');
+    const gridContainer = container.querySelector(`#${ID.testimonialsGrid}`);
     expect(gridContainer).toBeTruthy();
     expect(gridContainer?.className).toContain('grid');
     expect(gridContainer?.className).toContain('md:grid-cols-3');

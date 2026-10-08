@@ -22,7 +22,7 @@ Source: read-only audit of the running site, 2026-10-08.
 
 ### Faces
 
-`src/app/layout.tsx` declares, via `next/font/local`:
+`src/app/fonts.ts` declares, via `next/font/local`:
 
 - `--font-stanga` = `"stanga", "stanga Fallback"`
 - `--font-elamy` = `"elamy", "elamy Fallback"`

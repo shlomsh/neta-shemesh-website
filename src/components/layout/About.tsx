@@ -6,64 +6,24 @@ import { SectionTitle } from "../ui/SectionTitle";
 import { QuoteBlock } from "./about/QuoteBlock";
 import { CredentialsList } from './about/CredentialsList';
 import { OrganicBg } from './about/OrganicBg';
-import type { Credential } from './about/CredentialsList';
 
 import { ScrollAnchor } from '@/components/primitives/layout/ScrollAnchor';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { BodyText } from '@/components/primitives/ui/BodyText';
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const photoPanels = [
-  {
-    src: '/images/about-collage-1.webp',
-    objectPosition: '50% 50%',
-  },
-  {
-    src: '/images/about-collage-2.webp',
-    objectPosition: '48.1% 47.7%',
-  },
-  {
-    src: '/images/about-collage-3.webp',
-    objectPosition: '55.3% 50%',
-  },
-] as const;
-
-const galleryPanels = [
-  {
-    src: '/images/about-gallery-1.webp',
-    objectPosition: '50% 50%',
-  },
-  {
-    src: '/images/gallery-item-3.webp',
-    objectPosition: '50% 50%',
-  },
-  {
-    src: '/images/about-gallery-3.webp',
-    objectPosition: '50% 50%',
-  },
-] as const;
-
-const quoteLines = [
-  'הטיפול הזוגי מספק לכם מרחב מוגן, בו תוכלו לפרק את השתיקות, ללמוד להקשיב ולהתחיל לבנות מחדש את הקשר.',
-  'יחד, נלמד לזהות את הדינמיקה הזוגית ולייצר שפה משותפת שמחזירה את הקרבה הביתה.',
-  '- נטע'
-];
-
-const credentials: Credential[] = [
-  { text: '14 שנות ניסיון קליני' },
-  { text: 'מטפלת זוגית ומשפחתית' },
-  { text: 'הדרכת הורים' },
-  { text: 'M.S.W. עובדת סוציאלית קלינית' },
-  { text: 'מנחת קבוצות' },
-  { text: 'דירוג 5 כוכבים עקבי מלקוחות' },
-];
-
-const CHECK_ICONS = ['/images/jigsaw-puzzle-6.webp', '/images/jigsaw-puzzle-7.webp'];
-const QUOTE_ICON = '/images/about-quote-mark.svg';
-const PROFILE_PHOTO = '/images/about-profile-neta.webp';
-const CREDENTIALS_ART = '/images/about-credentials-art.webp';
+import { ANCHOR, ID } from '@/content/ids';
+import { SITE } from '@/content/site';
+import { stagger } from '@/lib/motion';
+import {
+  BIO_QUOTE_LINES,
+  CREDENTIALS,
+  CREDENTIAL_ICONS,
+  CREDENTIALS_ART,
+  INTRO_PHOTOS,
+  PROFILE_PHOTO,
+  QUOTE_ICON,
+  REIGNITE_PHOTOS,
+} from '@/content/home/about';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -71,32 +31,32 @@ export function AboutIntro() {
   return (
     <>
       {/* ── Section 1: Intro with photo collage + text ── */}
-      <ScrollAnchor id="about" />
+      <ScrollAnchor id={ANCHOR.about} />
 
-      <Section id="about-intro" bgVariant="mid" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)] lg:h-[max(100svh,720px)] lg:py-12">
+      <Section id={ID.aboutIntro} bgVariant="mid" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)] lg:h-[max(100svh,720px)] lg:py-12">
         <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)] lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
           <div className="flex flex-col gap-[40px] lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[1fr_1.25fr] lg:gap-[clamp(40px,5vw,80px)]">
 
             {/* Photo collage — left column on desktop (wider, height-driven to the section), top on mobile */}
             <div className="relative w-full grid grid-cols-2 gap-[16px] lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">
-              <ScrollReveal delay={0} className="lg:min-h-0">
+              <ScrollReveal className="lg:min-h-0">
                 <PhotoPanel
-                  src={photoPanels[0].src}
-                  objectPosition={photoPanels[0].objectPosition}
+                  src={INTRO_PHOTOS[0].src}
+                  objectPosition={INTRO_PHOTOS[0].objectPosition}
                   className="aspect-square lg:aspect-auto lg:h-full"
                 />
               </ScrollReveal>
               <ScrollReveal delay={0.24} className="row-span-2 lg:min-h-0">
                 <PhotoPanel
-                  src={photoPanels[2].src}
-                  objectPosition={photoPanels[2].objectPosition}
+                  src={INTRO_PHOTOS[2].src}
+                  objectPosition={INTRO_PHOTOS[2].objectPosition}
                   className="h-full"
                 />
               </ScrollReveal>
               <ScrollReveal delay={0.12} className="lg:min-h-0">
                 <PhotoPanel
-                  src={photoPanels[1].src}
-                  objectPosition={photoPanels[1].objectPosition}
+                  src={INTRO_PHOTOS[1].src}
+                  objectPosition={INTRO_PHOTOS[1].objectPosition}
                   className="aspect-square lg:aspect-auto lg:h-full"
                 />
               </ScrollReveal>
@@ -106,8 +66,8 @@ export function AboutIntro() {
             <div className="relative w-full flex flex-col justify-center gap-[24px] lg:order-1 lg:self-center">
               <OrganicBg className="opacity-60 z-0 pointer-events-none" />
 
-              <ScrollReveal delay={0} className="relative z-10">
-                <SectionTitle id="GDq1TYUPnp1UCFMP">ליווי מקצועי לזוגות</SectionTitle>
+              <ScrollReveal className="relative z-10">
+                <SectionTitle id={ID.aboutIntroTitle}>ליווי מקצועי לזוגות</SectionTitle>
               </ScrollReveal>
 
               <ScrollReveal delay={0.12} className="relative z-10">
@@ -141,11 +101,11 @@ export function AboutBio() {
   return (
     <>
       {/* ── Section 2: Merged About Me (Introduction, Quote, Photo & Signature) ── */}
-      <ScrollAnchor id="about-me" />
+      <ScrollAnchor id={ANCHOR.aboutMe} />
 
       {/* lg+: one screen (min 100svh; floor 720px) with the bio vertically centred. min-h (not h)
           so a short viewport grows the section rather than clipping the running text. */}
-      <Section id="about-me-section" bgVariant="cream" className="-mt-px py-[clamp(56px,8vw,120px)] min-h-[100svh] flex flex-col justify-center lg:min-h-[max(100svh,720px)] lg:py-12">
+      <Section id={ID.aboutMeSection} bgVariant="cream" className="-mt-px py-[clamp(56px,8vw,120px)] min-h-[100svh] flex flex-col justify-center lg:min-h-[max(100svh,720px)] lg:py-12">
         <Container maxWidth="2xl" className="relative z-10 px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col gap-[48px] lg:flex-row lg:items-start lg:gap-[clamp(40px,6vw,80px)]">
 
@@ -153,8 +113,8 @@ export function AboutBio() {
             <div className="w-full lg:w-[60%] flex flex-col gap-[28px]">
               
               {/* Title */}
-              <ScrollReveal delay={0}>
-                <SectionTitle id="about-me-title" dir="rtl">קצת עלי</SectionTitle>
+              <ScrollReveal>
+                <SectionTitle id={ID.aboutMeTitle} dir="rtl">קצת עלי</SectionTitle>
               </ScrollReveal>
 
               {/* Introduction/Bio Narrative */}
@@ -186,7 +146,7 @@ export function AboutBio() {
                 <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-card outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)] safari-clip">
                   <Image
                     src={PROFILE_PHOTO}
-                    alt="נטע שמש"
+                    alt={SITE.name}
                     fill
                     sizes="(max-width: 1024px) 320px, 320px"
                     className="object-cover object-[50%_35%]"
@@ -209,7 +169,7 @@ export function AboutBio() {
 
                 <ScrollReveal delay={0.36} className="relative z-10 pt-[12px] ps-[16px]">
                   <QuoteBlock
-                    lines={quoteLines}
+                    lines={BIO_QUOTE_LINES}
                   />
                 </ScrollReveal>
               </div>
@@ -227,9 +187,9 @@ export function AboutCredentials() {
   return (
     <>
       {/* ── Section 3: Credentials list ── */}
-      <ScrollAnchor id="page-4" />
+      <ScrollAnchor id={ANCHOR.credentials} />
 
-      <Section id="about-credentials" bgVariant="dark" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id={ID.aboutCredentials} bgVariant="dark" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
         {/* Subtle couple line-art background at low opacity */}
         <img
           src={CREDENTIALS_ART}
@@ -242,13 +202,13 @@ export function AboutCredentials() {
         <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
           <div className="flex flex-col items-center gap-[clamp(56px,8vw,100px)]">
 
-            <ScrollReveal delay={0}>
-              <SectionTitle id="YoSfu967TqAAsgNM" className="text-center" dir="rtl">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
+            <ScrollReveal>
+              <SectionTitle id={ID.aboutCredentialsTitle} className="text-center" dir="rtl">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
               </SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.12}>
-              <CredentialsList items={credentials} checkIconSrc={CHECK_ICONS} onDark />
+              <CredentialsList items={CREDENTIALS} checkIconSrc={CREDENTIAL_ICONS} onDark />
             </ScrollReveal>
           </div>
         </Container>
@@ -261,13 +221,13 @@ export function AboutGallery() {
   return (
     <>
       {/* ── Section 4: Re-ignite connection — photo gallery + heading ── */}
-      <ScrollAnchor id="about-2" />
+      <ScrollAnchor id={ANCHOR.reignite} />
 
       {/* lg+: exactly one screen (100svh; floor 720px so a short viewport grows rather than clips).
           Flex chain Section -> Container -> wrapper -> grid hands the remaining height to the
           photo grid, so the frames crop (object-cover) instead of overflowing. */}
       <Section
-        id="about-gallery"
+        id={ID.aboutGallery}
         bgVariant="mid"
         className="-mt-px py-[clamp(56px,8vw,120px)] min-h-[100svh] flex flex-col justify-center lg:h-[max(100svh,720px)] lg:py-12"
       >
@@ -276,8 +236,8 @@ export function AboutGallery() {
 
             {/* Heading + sub-text */}
             <div className="flex flex-col items-center text-center">
-              <ScrollReveal delay={0}>
-                <SectionTitle id="JkkbI1eIj5p9V33T" dir="rtl">להצית מחדש את הקשר הזוגי
+              <ScrollReveal>
+                <SectionTitle id={ID.aboutGalleryTitle} dir="rtl">להצית מחדש את הקשר הזוגי
                 </SectionTitle>
               </ScrollReveal>
 
@@ -292,8 +252,8 @@ export function AboutGallery() {
 
             {/* Gallery row — three portrait photos with rounded corners + dark border */}
             <div className="grid grid-cols-1 gap-[16px] w-full sm:grid-cols-3 lg:flex-1 lg:min-h-[320px] lg:grid-rows-1">
-              {galleryPanels.map((panel, i) => (
-                <ScrollReveal key={i} delay={i * 0.12} className="lg:h-full lg:min-h-0">
+              {REIGNITE_PHOTOS.map((panel, i) => (
+                <ScrollReveal key={i} delay={stagger(i)} className="lg:h-full lg:min-h-0">
                   {/* below lg: intrinsic aspect 348:531; lg+: frame fills the grid's remaining
                       height and the photo crops (object-cover) while drifting within it */}
                   <ParallaxFrame

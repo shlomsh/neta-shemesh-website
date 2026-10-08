@@ -1,15 +1,15 @@
 /**
  * Hero — server component entry point.
  *
- * Keeps two ids that tests and layout checks select on:
- *   - id="page-1"            (zero-height anchor above the section)
- *   - id="vcPAqaHkkrFaQQwh"  (the section; a legacy export id, to be renamed
- *                             together with the other such ids in tech-debt batch 2)
+ * Keeps two ids that tests and layout checks select on (content/ids.ts):
+ *   - ANCHOR.pageTop  (zero-height anchor above the section)
+ *   - ID.hero         (the section)
  *
  * Architecture: this file is intentionally thin — it owns the section shell
  * and delegates all sub-regions to named components in ./hero/.
  */
 
+import { ANCHOR, ID } from '@/content/ids';
 import { HeroBackground } from './hero/HeroBackground';
 import { HeroContent } from './hero/HeroContent';
 
@@ -17,10 +17,10 @@ export default function Hero() {
   return (
     <>
       {/* Anchor preserved for scroll-to-top and test selectors */}
-      <div id="page-1" aria-hidden="true" className="invisible absolute" />
+      <div id={ANCHOR.pageTop} aria-hidden="true" className="invisible absolute" />
 
       <section
-        id="vcPAqaHkkrFaQQwh"
+        id={ID.hero}
         dir="rtl"
         aria-label="כותרת ראשית"
         className="

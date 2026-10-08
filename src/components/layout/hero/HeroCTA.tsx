@@ -5,6 +5,7 @@
  * Server component.
  */
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
+import { ANCHOR, anchorHref } from '@/content/ids';
 
 export function HeroCTA() {
   return (
@@ -13,7 +14,7 @@ export function HeroCTA() {
       className="flex flex-col items-start gap-[clamp(12px,1.5vw,20px)] w-full"
     >
       {/* Primary CTA → contact section */}
-      <ButtonLink href="#contact" variant="secondary" size="sm">
+      <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary" size="sm">
         ייעוץ עם נטע שמש
       </ButtonLink>
     </div>

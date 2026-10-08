@@ -6,6 +6,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
+import { ID } from '@/content/ids';
 import Expertise from '@/components/layout/Expertise';
 import Services from '@/components/layout/Services';
 import Contact from '@/components/layout/Contact';
@@ -24,15 +25,15 @@ describe('copy inherits its colour from the tone', () => {
 
   it('Testimonials gallery (cream): titles are not on-dark and the subtitle has no hardcoded colour; the CTA band stays a photo card', () => {
     const { container } = render(<Testimonials />);
-    const section = container.querySelector('#vln9V07dEMN7DyMa')!;
+    const section = container.querySelector(`#${ID.photoGallery}`)!;
     expect(section.querySelector('h2')!.className).not.toContain('on-dark');
     expect(section.querySelector('p')!.className).not.toContain('text-[var(--color-');
-    expect(container.querySelector('#afNbX7iGTuOdSbLC')!.hasAttribute('data-bg-tone')).toBe(false);
+    expect(container.querySelector(`#${ID.ctaBand}`)!.hasAttribute('data-bg-tone')).toBe(false);
   });
 
   it('Services (blush): the intro paragraph has no cream background class and the CTA is a plum button', () => {
     const { container } = render(<Services />);
-    const section = container.querySelector('#cQd2ufFBWvr5c6ki')!;
+    const section = container.querySelector(`#${ID.services}`)!;
     expect(section.className).not.toContain('bg-[var(--color-cream)]');
     expect(section.querySelector('div[data-bg-tone]'), 'no nested tone card').toBeNull();
     const para = Array.from(section.querySelectorAll('p')).find(p => p.textContent?.includes('התהליך בקליניקה'));
@@ -45,7 +46,7 @@ describe('copy inherits its colour from the tone', () => {
 
   it('Contact social (plum): lead copy sits directly on it with no hardcoded colour and no nested tone card', () => {
     const { container } = render(<Contact />);
-    const section = container.querySelector('#contact-social')!;
+    const section = container.querySelector(`#${ID.contactSocial}`)!;
     expect(section.querySelector('div[data-bg-tone]'), 'no nested tone card').toBeNull();
     const para = Array.from(section.querySelectorAll('p')).find(p => p.textContent?.includes('בואו נשמור על קשר'));
     expect(para, 'social paragraph').toBeDefined();

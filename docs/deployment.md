@@ -31,7 +31,7 @@ const isStaticExport = process.env.BUILD_STATIC_EXPORT === 'true';
   `images: { unoptimized: true }`, because a static export has no server to
   optimize on.
 
-`src/config/constants.ts` keys off `NEXT_PUBLIC_SITE_URL`, falling back to the
+`src/content/site.ts` (`SITE.url`) keys off `NEXT_PUBLIC_SITE_URL`, falling back to the
 production domain. It drives the canonical, `og:url`, the sitemap, and the
 JSON-LD `@id`s.
 
@@ -58,7 +58,7 @@ site. Left open, Google can index it in competition with production.
 Two independent guards:
 
 1. **`layout.tsx`** emits `robots: { index: false, follow: false }` whenever
-   `SITE_URL` is not the production domain. This covers *any* non-production
+   `SITE.url` is not the production domain. This covers *any* non-production
    host and re-enables itself automatically when a build points at production.
 2. **`public/staticwebapp.config.json`** sends `X-Robots-Tag: noindex, nofollow`
    as a global header.

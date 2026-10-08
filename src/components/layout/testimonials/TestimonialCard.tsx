@@ -2,14 +2,8 @@ import { QuoteIcon } from './QuoteIcon';
 import { QuoteText } from './QuoteText';
 import { Attribution } from './Attribution';
 
-export interface TestimonialData {
-  id: string;
-  quote: string;
-  name: string;
-  role: string;
-  avatarSrc: string;
-  variant: 'default' | 'highlighted';
-}
+import type { TestimonialData } from '@/content/types';
+import { ID } from '@/content/ids';
 
 interface TestimonialCardProps {
   testimonial: TestimonialData;
@@ -23,7 +17,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
       <div className="flex flex-col justify-between p-[32px] relative rounded-card bg-[var(--color-bg-light)] min-h-[350px] overflow-hidden">
         {/* Decorative SVG background — id preserved for test selector */}
         <svg
-          id="ZO48UqFw0isLS2Uu"
+          id={ID.testimonialCardArt}
           viewBox="0 0 108.4981 120.122"
           preserveAspectRatio="none"
           aria-hidden="true"

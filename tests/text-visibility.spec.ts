@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { ID } from '../src/content/ids';
 
 test.describe('Text Visibility and Content Tests', () => {
 
@@ -27,7 +28,7 @@ test.describe('Text Visibility and Content Tests', () => {
   // in Testimonials.tsx (awaiting real client testimonials).
   test.skip('Testimonial card background has correct opacity', async ({ page }) => {
     // The middle testimonial card has an SVG background that should be opacity: 0.16
-    const cardSvg = page.locator('#ZO48UqFw0isLS2Uu').first();
+    const cardSvg = page.locator(`#${ID.testimonialCardArt}`).first();
     await expect(cardSvg).toHaveCSS('opacity', '0.16');
   });
 });

@@ -4,6 +4,9 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
+import { NAV_LINKS } from '@/content/home/nav';
+import { anchorHref, ID } from '@/content/ids';
+import { SITE, telHref } from '@/content/site';
 
 /**
  * HeroNav — navigation used both in the hero and the blog header.
@@ -36,12 +39,10 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
 
-  const links = [
-    { href: `${basePath}#about-me`,  label: 'קצת עליי' },
-    { href: `${basePath}#expertise`, label: 'התמחות' },
-    { href: '/blog',                  label: 'מאמרים' },
-    { href: `${basePath}#contact`,   label: 'יצירת קשר' },
-  ];
+  const links = NAV_LINKS.map((link) => ({
+    label: link.label,
+    href: link.anchor !== undefined ? anchorHref(link.anchor, basePath) : link.route,
+  }));
 
   // Lock body scroll, focus the close button, and handle keyboard while overlay is open.
   useEffect(() => {
@@ -141,8 +142,8 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
       >
         {links.map(({ href, label }) => renderLink(href, label, desktopLinkClass))}
 
-        <ButtonLink href="tel:+972545711060" variant="secondary" size="sm">
-          <span className="font-latin">054-571-1060</span>
+        <ButtonLink href={telHref()} variant="secondary" size="sm">
+          <span className="font-latin">{SITE.phone.display}</span>
         </ButtonLink>
       </nav>
 
@@ -153,7 +154,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
         onClick={() => setOpen(true)}
         aria-label="פתיחת תפריט"
         aria-expanded={open}
-        aria-controls="mobile-menu"
+        aria-controls={ID.mobileMenu}
         className="md:hidden inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
       >
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -170,7 +171,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
       {mounted && open && createPortal(
         <div
           ref={overlayRef}
-          id="mobile-menu"
+          id={ID.mobileMenu}
           role="dialog"
           aria-modal="true"
           aria-label="תפריט ניווט"
@@ -206,12 +207,12 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
             )}
 
             <ButtonLink
-              href="tel:+972545711060"
+              href={telHref()}
               variant="secondary"
               onClick={() => setOpen(false)}
               className="mt-[clamp(12px,4vw,24px)]"
             >
-              <span className="font-latin">054-571-1060</span>
+              <span className="font-latin">{SITE.phone.display}</span>
             </ButtonLink>
           </nav>
         </div>,

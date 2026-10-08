@@ -1,43 +1,16 @@
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { stagger } from '@/lib/motion';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialCard } from './testimonials/TestimonialCard';
-import type { TestimonialData } from './testimonials/TestimonialCard';
+import { TESTIMONIALS } from '@/content/home/testimonials';
+import { GALLERY_IMAGES } from '@/content/home/gallery';
+import { ANCHOR, ID, anchorHref } from '@/content/ids';
 
 // Toggle to re-enable the "לקוחות ממליצים" recommendations section.
 // Kept in code but hidden until we have real client testimonials.
 const SHOW_TESTIMONIALS = false;
-
-const TESTIMONIALS: TestimonialData[] = [
-  {
-    id: 'card-1',
-    quote:
-      'נמו אנים איפסם וולופטטם קוויה וולופטאס סיט אספרנאטור אאוט אודיט אאוט פוגיט, סד קוויה קונסקוואנטור מגני דולורס אאוס קווי רציונה וולופטטם סקווי נסקיונט.',
-    name: 'אגריפינה ואמרה',
-    role: 'לקוחה',
-    avatarSrc: '/images/testimonial-avatar-1.webp',
-    variant: 'default',
-  },
-  {
-    id: 'card-2',
-    quote:
-      'נמו אנים איפסם וולופטטם קוויה וולופטאס סיט אספרנאטור אאוט אודיט אאוט פוגיט, סד קוויה קונסקוואנטור מגני דולורס אאוס קווי רציונה וולופטטם סקווי נסקיונט.',
-    name: 'סאדב לריסה',
-    role: 'יזמית',
-    avatarSrc: '/images/testimonial-avatar-2.webp',
-    variant: 'highlighted',
-  },
-  {
-    id: 'card-3',
-    quote:
-      'נמו אנים איפסם וולופטטם קוויה וולופטאס סיט אספרנאטור אאוט אודיט אאוט פוגיט, סד קוויה קונסקוואנטור מגני דולורס אאוס קווי רציונה וולופטטם סקווי נסקיונט.',
-    name: 'אלה פריץ',
-    role: 'אשת עסקים',
-    avatarSrc: '/images/testimonial-avatar-3.webp',
-    variant: 'default',
-  },
-];
 
 export default function Testimonials() {
   return (
@@ -45,7 +18,7 @@ export default function Testimonials() {
       {/* Testimonials Section */}
       {SHOW_TESTIMONIALS && (
       <section
-        id="DaRRC8Qhxc8unVfz"
+        id={ID.testimonials}
         dir="rtl"
         data-bg-tone="cream"
         className="relative overflow-hidden py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center"
@@ -54,7 +27,7 @@ export default function Testimonials() {
 
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
-            <SectionTitle id="Dct2rK7XCXJaLA2e" spanId="zxhh7nAzRvjXP5BT" className="text-center">לקוחות ממליצים</SectionTitle>
+            <SectionTitle id={ID.testimonialsTitle} className="text-center">לקוחות ממליצים</SectionTitle>
             <p className="type-quote text-center text-[var(--color-text-primary)] mt-3 md:mt-4 mb-[clamp(48px,6vw,96px)] max-w-[65ch] mx-auto">
               מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.
             </p>
@@ -94,13 +67,13 @@ export default function Testimonials() {
 
           {/* Three-card grid */}
           <div
-            id="GEF7BLoFlyc3GavU"
+            id={ID.testimonialsGrid}
             className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(16px,2vw,32px)] max-w-[1200px] mx-auto"
           >
             {TESTIMONIALS.map((testimonial, index) => (
               <ScrollReveal
                 key={testimonial.id}
-                delay={0.2 + index * 0.12}
+                delay={stagger(index, 0.2)}
                 className="flex"
               >
                 <div className="w-full">
@@ -114,7 +87,7 @@ export default function Testimonials() {
       )}
 
       {/* CTA Section */}
-      <section id="afNbX7iGTuOdSbLC" className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)] min-h-[100svh]">
+      <section id={ID.ctaBand} className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)] min-h-[100svh]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/cta-background.webp"
@@ -128,12 +101,12 @@ export default function Testimonials() {
 
         <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center w-full">
           <ScrollReveal delay={0.1}>
-            <SectionTitle id="iVtldd7PMtN1BthG" spanId="VqD8RL1Dlcv6nIpY" onDark
+            <SectionTitle id={ID.ctaBandTitle} onDark
               className="drop-shadow-md">קביעת פגישת ייעוץ</SectionTitle>
             <p className="type-quote text-white mt-3 md:mt-4 mb-[48px] max-w-[65ch] mx-auto drop-shadow-md">
               הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם.
             </p>
-            <ButtonLink href="#contact" variant="secondary">
+            <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary">
               מוזמנים ליצור קשר
             </ButtonLink>
           </ScrollReveal>
@@ -141,29 +114,22 @@ export default function Testimonials() {
       </section>
 
       {/* Anchor preserved for layout tests */}
-      <div id="gallery" aria-hidden="true" />
+      <div id={ANCHOR.gallery} aria-hidden="true" />
 
       {/* Gallery Section */}
       {/* lg+: exactly one screen (100svh; floor 720px). The photo grid is height-driven (flex-1,
           frames fill their cell with object-cover) instead of aspect-driven. */}
-      <section id="vln9V07dEMN7DyMa" data-bg-tone="cream" className="py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center lg:h-[max(100svh,720px)] lg:py-12">
+      <section id={ID.photoGallery} data-bg-tone="cream" className="py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center lg:h-[max(100svh,720px)] lg:py-12">
         <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
           <ScrollReveal delay={0.1}>
-            <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" className="text-center">טיפול זוגי לקשר בריא ותומך</SectionTitle>
+            <SectionTitle id={ID.photoGalleryTitle} className="text-center">טיפול זוגי לקשר בריא ותומך</SectionTitle>
             <p className="type-quote text-center mt-3 md:mt-4 mb-[64px] lg:mb-8 max-w-[65ch] mx-auto">
               השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
             </p>
           </ScrollReveal>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)] lg:grid-rows-2 lg:flex-1 lg:min-h-[320px]">
-            {[
-              'gallery-item-1.webp',
-              'gallery-item-2.webp',
-              'gallery-item-3.webp',
-              'gallery-item-4.webp',
-              'gallery-item-5.webp',
-              'gallery-item-6.webp',
-            ].map((img, i) => (
+            {GALLERY_IMAGES.map((img, i) => (
               <ScrollReveal
                 key={img}
                 delay={0.1 * (i + 1)}

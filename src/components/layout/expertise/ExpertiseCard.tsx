@@ -2,14 +2,9 @@ import { ScrollReveal } from '../../ui/ScrollReveal';
 import { CardImage } from './CardImage';
 import { CardLabel } from './CardLabel';
 
-export interface ExpertiseCardData {
-  title: string;
-  description: string;
-  imageSrc: string;
-  imageAlt: string;
-}
+import type { ExpertiseCardData } from '@/content/types';
 
-interface ExpertiseCardProps extends ExpertiseCardData {
+interface ExpertiseCardProps extends Omit<ExpertiseCardData, 'slug'> {
   delay: number;
 }
 

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/content/posts';
-import { SITE_URL as SITE } from '@/config/constants';
+import { SITE } from '@/content/site';
 
 // Required for `output: export` (Azure Static Web Apps) — prerender at build time.
 export const dynamic = 'force-static';
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const today = ymd(new Date());
 
   const posts = getAllPosts().map((post) => ({
-    url: `${SITE}/blog/${post.slug}`,
+    url: `${SITE.url}/blog/${post.slug}`,
     lastModified: ymd(new Date(post.date)),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
@@ -21,13 +21,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: `${SITE}/`,
+      url: `${SITE.url}/`,
       lastModified: today,
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: `${SITE}/blog`,
+      url: `${SITE.url}/blog`,
       lastModified: today,
       changeFrequency: 'weekly',
       priority: 0.8,

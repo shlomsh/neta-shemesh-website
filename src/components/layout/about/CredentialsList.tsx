@@ -1,6 +1,4 @@
-export interface Credential {
-  text: string;
-}
+import type { Credential } from '@/content/types';
 
 export interface CredentialsListProps {
   items: Credential[];

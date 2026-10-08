@@ -1,3 +1,4 @@
+import { ID } from '../src/content/ids';
 import { test, expect } from '@playwright/test';
 
 /**
@@ -15,18 +16,18 @@ import { test, expect } from '@playwright/test';
 // Section title ids. An entry with several ids is a title rendered twice (one per breakpoint,
 // the other `display:none`): at least one of them must be rendered, on-screen and legible.
 const TITLE_IDS: string[][] = [
-  ['yWav85A872J3eebD'], // Hero
-  ['GDq1TYUPnp1UCFMP'], // About-Intro-Dark
-  ['about-me-title'],   // About-Me-Cream
-  ['YoSfu967TqAAsgNM'], // About-Light
-  ['JkkbI1eIj5p9V33T'], // Reignite
-  ['vyKTmOw3YNYlJZPL'], // SafeSpace
-  ['pEc3w8pe4QAw5k7o'], // HowItWorks
-  // ['Dct2rK7XCXJaLA2e'], // Testimonials — hidden behind SHOW_TESTIMONIALS flag
-  ['iVtldd7PMtN1BthG'], // Scheduling
-  ['T749khVkMfNluBNv'], // CoupleTherapy
-  ['ZgJbejfHoeBrgmf7', 'ZgJbejfHoeBrgmf7-mobile'], // Contact-Follow
-  ['zNSWHTotP3XOaXao'], // Contact-Office
+  [ID.heroTitle], // Hero
+  [ID.aboutIntroTitle], // About-Intro-Dark
+  [ID.aboutMeTitle],   // About-Me-Cream
+  [ID.aboutCredentialsTitle], // About-Light
+  [ID.aboutGalleryTitle], // Reignite
+  [ID.expertiseTitle], // SafeSpace
+  [ID.servicesTitle], // HowItWorks
+  // [ID.testimonialsTitle], // Testimonials — hidden behind SHOW_TESTIMONIALS flag
+  [ID.ctaBandTitle], // Scheduling
+  [ID.photoGalleryTitle], // CoupleTherapy
+  [ID.contactSocialTitle, ID.contactSocialTitleMobile], // Contact-Follow
+  [ID.contactOfficeTitle], // Contact-Office
 ];
 
 const VIEWPORTS = [
