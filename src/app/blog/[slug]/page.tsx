@@ -56,7 +56,7 @@ export default async function BlogPostPage(
       <BlogHeader />
 
       {/* Hero band — category, title, meta */}
-      <Section id={ID.postHero} bgVariant="dark" className="pt-[clamp(20px,3vw,36px)] pb-[clamp(48px,7vw,96px)]">
+      <Section id={ID.postHero} tone="dark" className="pt-[clamp(20px,3vw,36px)] pb-[clamp(48px,7vw,96px)]">
         <Container maxWidth="md">
           <Link
             href="/blog"
@@ -91,7 +91,7 @@ export default async function BlogPostPage(
       </Section>
 
       {/* Body — capped at a comfortable reading measure (~800px) */}
-      <Section id={ID.postBody} bgVariant="cream" className="py-[clamp(40px,6vw,80px)]">
+      <Section id={ID.postBody} tone="cream" className="py-[clamp(40px,6vw,80px)]">
         <Container maxWidth="lg">
           <div className="mx-auto max-w-[800px]">
             {/* Cover — pulled up to overlap the seam with the dark hero */}
@@ -118,7 +118,7 @@ export default async function BlogPostPage(
       </Section>
 
       {/* Closing CTA */}
-      <Section id={ID.postCta} bgVariant="dark" className="py-[clamp(56px,8vw,110px)]">
+      <Section id={ID.postCta} tone="dark" className="py-[clamp(56px,8vw,110px)]">
         <Container maxWidth="md">
           <div className="flex flex-col items-center gap-[clamp(24px,3.5vw,40px)] text-center">
             <p className="type-quote mx-auto max-w-[55ch] text-[var(--color-cream)]">
@@ -131,7 +131,7 @@ export default async function BlogPostPage(
 
       {/* More from the series */}
       {others.length > 0 && (
-        <Section id={ID.postMore} bgVariant="cream" className="py-[clamp(48px,7vw,96px)]">
+        <Section id={ID.postMore} tone="cream" className="py-[clamp(48px,7vw,96px)]">
           <Container maxWidth="2xl">
             <h2 className="type-title font-bold tracking-[-0.01em] text-[color:var(--header-color)] mb-[clamp(28px,4vw,48px)] text-center">
               עוד מהבלוג

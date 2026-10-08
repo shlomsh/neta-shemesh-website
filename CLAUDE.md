@@ -118,13 +118,13 @@ Cards are full-screen sections (`min-h-[100svh]`). Backgrounds progress through 
 
 **Implementation — `Section` primitive:**
 ```tsx
-<Section bgVariant="dark" fullHeight>   // dark bg, cream text auto-set
-<Section bgVariant="mid" fullHeight>    // mid bg, cream text auto-set
-<Section bgVariant="light" fullHeight>  // light bg, dark text auto-set
-<Section bgVariant="cream" fullHeight>  // cream bg, dark text auto-set
+<Section tone="dark" fit="free">   // dark bg, cream text auto-set
+<Section tone="mid" fit="lock">    // mid bg, cream text auto-set
+<Section tone="light" fit="lock">  // light bg, dark text auto-set
+<Section tone="cream" fit="grow">  // cream bg, dark text auto-set
 ```
 
-Each `bgVariant` sets a `data-bg-tone` attribute on the `<section>` element. CSS in `globals.css` applies background-color, text color, and `--header-color` automatically — **no need to manually pass `onDark` to child primitives** when using the Section primitive.
+Each `tone` sets a `data-bg-tone` attribute on the `<section>` element. CSS in `globals.css` applies background-color, text color, and `--header-color` automatically — **no need to manually pass `onDark` to child primitives** when using the Section primitive.
 
 For bespoke `<section>` elements that don't use the primitive, add `data-bg-tone="dark|mid|light|cream"` directly.
 
@@ -132,7 +132,7 @@ For bespoke `<section>` elements that don't use the primitive, add `data-bg-tone
 
 ## Layout
 
-- **Every solid card must fill at least 100svh on _all_ breakpoints (mobile included).** Use `fullHeight` on the `Section` primitive (it applies `min-h-[100svh]` at every width — do **not** gate it behind `lg:`) or `min-h-[100svh] flex flex-col justify-center` on bespoke sections. Cards whose content is taller than the viewport simply grow past 100svh, which is fine.
+- **Every solid card must fill at least 100svh on _all_ breakpoints (mobile included).** Use `fit` (`free` | `lock` | `grow`) on the `Section` primitive (it applies `min-h-[100svh]` at every width — do **not** gate it behind `lg:` — and publishes `data-fit`) or `min-h-[100svh] flex flex-col justify-center` on bespoke sections. Cards whose content is taller than the viewport simply grow past 100svh, which is fine.
 - **Photo cards** (Hero, CTA band, Footer) are exempt — their height is controlled by their photographic content.
 - **Mobile:** all cards reflow to single-column. Test at 375px. Body text at 375px uses the clamp minimum — ensure it's comfortable (`.type-body` floor is 16px, `.type-lead` floor is 18px, blog `.type-read` floor is 18px / `.type-read-lead` 20px).
 - **Header/nav:** below `md` the nav collapses to a hamburger that opens a full-screen overlay menu (`HeroNav`); the inline link row is `hidden md:flex`. Don't reintroduce a squeezed inline nav on mobile. The overlay is portaled to `document.body` because framer-motion's `will-change` on `ScrollReveal` would otherwise trap `position:fixed`.

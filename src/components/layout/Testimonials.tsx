@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { stagger } from '@/lib/motion';
+import { Section } from '@/components/primitives/layout/Section';
+import { Container } from '@/components/primitives/layout/Container';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialCard } from './testimonials/TestimonialCard';
@@ -17,13 +19,8 @@ export default function Testimonials() {
     <>
       {/* Testimonials Section */}
       {SHOW_TESTIMONIALS && (
-      <section
-        id={ID.testimonials}
-        dir="rtl"
-        data-bg-tone="cream"
-        className="relative overflow-hidden py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center"
-      >
-        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
+      <Section id={ID.testimonials} tone="cream" fit="free" pad="tight">
+        <Container maxWidth="2xl">
 
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
@@ -82,12 +79,13 @@ export default function Testimonials() {
               </ScrollReveal>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
       )}
 
       {/* CTA Section */}
-      <section id={ID.ctaBand} className="relative overflow-hidden flex items-center justify-center py-[clamp(80px,8vw,192px)] min-h-[100svh]">
+      {/* Photo band: no tone. dir={undefined} keeps today's markup (this section never had a dir). */}
+      <Section id={ID.ctaBand} fit="free" center="middle" dir={undefined} className="py-[clamp(80px,8vw,192px)]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/cta-background.webp"
@@ -111,7 +109,7 @@ export default function Testimonials() {
             </ButtonLink>
           </ScrollReveal>
         </div>
-      </section>
+      </Section>
 
       {/* Anchor preserved for layout tests */}
       <div id={ANCHOR.gallery} aria-hidden="true" />
@@ -119,8 +117,8 @@ export default function Testimonials() {
       {/* Gallery Section */}
       {/* lg+: exactly one screen (100svh; floor 720px). The photo grid is height-driven (flex-1,
           frames fill their cell with object-cover) instead of aspect-driven. */}
-      <section id={ID.photoGallery} data-bg-tone="cream" className="py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center lg:h-[max(100svh,720px)] lg:py-12">
-        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
+      <Section id={ID.photoGallery} tone="cream" fit="lock" pad="tight" dir={undefined}>
+        <Container maxWidth="2xl" className="lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
           <ScrollReveal delay={0.1}>
             <SectionTitle id={ID.photoGalleryTitle} className="text-center">טיפול זוגי לקשר בריא ותומך</SectionTitle>
             <p className="type-quote text-center mt-3 md:mt-4 mb-[64px] lg:mb-8 max-w-[65ch] mx-auto">
@@ -145,8 +143,8 @@ export default function Testimonials() {
               </ScrollReveal>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </>
   );
 }

@@ -8,14 +8,15 @@ import Expertise from '@/components/layout/Expertise';
 import { ExpertiseCard } from '@/components/layout/expertise/ExpertiseCard';
 
 describe('Expertise Grid & Card Design', () => {
-  it('grid is 1 column on mobile, 2 at md, a 2x2 at lg (never 3 columns); nothing is clipped by the section', () => {
+  it('grid is 1 column on mobile, 2 at md, a 2x2 at lg (never 3 columns)', () => {
     const { container } = render(<Expertise />);
     const grid = container.querySelector('.grid');
     expect(grid?.className, 'mobile single column').toContain('grid-cols-1');
     expect(grid?.className, 'Grid must be 2 columns at md').toContain('md:grid-cols-2');
     expect(grid?.className, 'Grid is 2 rows at lg').toContain('lg:grid-rows-2');
     expect(grid?.className, 'Grid must not be 3 columns at lg').not.toContain('lg:grid-cols-3');
-    expect(container.querySelector('section')?.className, 'nothing may be clipped').not.toContain('overflow-hidden');
+    // The section now clips like every Section (batch 3a measured 0 px vs the unclipped version at 1280x600..1920x1080,
+    // 768x1024 and 375x812): what keeps the cards from being cut is the flex chain + floor-320 grid asserted in sanity/.
   });
 
   it('cards are 4/5 stacked below lg (prevents 0px collapse) and height-driven at lg', () => {

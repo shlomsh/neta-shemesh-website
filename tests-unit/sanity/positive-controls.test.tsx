@@ -8,11 +8,13 @@ import { describe, expect, it } from 'vitest';
 import {
   EXPECTED_SECTIONS,
   buttons,
+  classMode,
   coversImage,
   cssVar,
   desktopNav,
   displayFontSelectors,
   findTargetSelector,
+  fitOf,
   globalsCss,
   hamburger,
   hasMinScreen,
@@ -113,17 +115,40 @@ describe('css parsers detect in-memory mutations of globals.css', () => {
 });
 
 describe('one-screen / structure predicates', () => {
+  // [data-fit, classes, expected mode, expected isOneScreen]. The predicate must need BOTH halves:
+  // a data-fit with no classes behind it, or classes with no/other data-fit, is 'inconsistent' and not one-screen.
   it.each([
-    ['min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', true],
-    ['min-h-[100svh] lg:h-[100svh] lg:py-12', 'lock-100', true],
-    ['min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12', 'grow-720', true],
-    ['min-h-[100svh] flex', 'free', false],
-    ['lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', false], // lost the all-breakpoint min-h
-    ['min-h-[100svh] lg:h-[max(100svh,720px)]', 'lock-720', false], // lost lg:py-12
-  ])('section class "%s" -> mode %s, isOneScreen %s', (cls, mode, one) => {
-    const el = first(`<section class="${cls}"></section>`);
+    // consistent pairs
+    ['lock', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', true],
+    ['lock', 'min-h-[100svh] lg:h-[100svh] lg:py-12', 'lock-100', true],
+    ['grow', 'min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12', 'grow-720', true],
+    ['free', 'min-h-[100svh] flex', 'free', false],
+    // lost a class the one-screen contract needs
+    ['lock', 'lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', false], // lost the all-breakpoint min-h
+    ['lock', 'min-h-[100svh] lg:h-[max(100svh,720px)]', 'lock-720', false], // lost lg:py-12
+    // data-fit lies: promises a lock/grow the classes do not implement
+    ['lock', 'min-h-[100svh] lg:py-12', 'inconsistent', false],
+    ['grow', 'min-h-[100svh] lg:py-12', 'inconsistent', false],
+    ['lock', 'min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // grow classes, lock label
+    ['grow', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // lock classes, grow label
+    ['free', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // lock classes, free label
+    // classes without a (valid) data-fit
+    [null, 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false],
+    ['screen', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // unknown value
+  ])('data-fit=%s + class "%s" -> mode %s, isOneScreen %s', (fit, cls, mode, one) => {
+    const el = first(`<section${fit ? ` data-fit="${fit}"` : ''} class="${cls}"></section>`);
     expect(oneScreenMode(el)).toBe(mode);
     expect(isOneScreen(el)).toBe(one);
+  });
+
+  it('fitOf reads only the three published values; classMode ignores data-fit', () => {
+    expect(fitOf(first('<section data-fit="lock"></section>'))).toBe('lock');
+    expect(fitOf(first('<section data-fit="grow"></section>'))).toBe('grow');
+    expect(fitOf(first('<section data-fit="free"></section>'))).toBe('free');
+    expect(fitOf(first('<section data-fit="screen"></section>'))).toBeNull();
+    expect(fitOf(first('<section></section>'))).toBeNull();
+    expect(fitOf(null)).toBeNull();
+    expect(classMode(first('<section data-fit="free" class="lg:h-[100svh]"></section>'))).toBe('lock-100');
   });
 
   it('hasMinScreen, isGrowItem, isFlexContainer, isFlexColumn, minHeightKind, overflowOf, coversImage', () => {

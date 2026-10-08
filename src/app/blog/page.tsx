@@ -31,7 +31,7 @@ export default function BlogIndexPage() {
       <BlogHeader />
 
       {/* Intro band */}
-      <Section id={ID.blogIntro} bgVariant="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
+      <Section id={ID.blogIntro} tone="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
         <Container maxWidth="lg" className="text-center">
           <ScrollReveal className="flex flex-col items-center gap-[clamp(14px,2vw,22px)]">
             <span className="type-eyebrow text-[var(--color-blush)]">
@@ -49,7 +49,7 @@ export default function BlogIndexPage() {
       </Section>
 
       {/* Posts grid */}
-      <Section id={ID.blogPosts} bgVariant="cream" className="py-[clamp(48px,7vw,96px)]">
+      <Section id={ID.blogPosts} tone="cream" className="py-[clamp(48px,7vw,96px)]">
         <Container maxWidth="2xl">
           <div className="grid grid-cols-1 gap-[clamp(24px,3vw,40px)] md:grid-cols-2">
             {posts.map((post, i) => (

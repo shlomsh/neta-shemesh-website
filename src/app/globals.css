@@ -29,6 +29,14 @@
    * Pills, buttons and avatars use the built-in `rounded-full`. */
   --radius-tile: 12px;   /* small tiles: gallery grid cells, map, inputs, blog thumbnails */
   --radius-card: 24px;   /* cards, photo frames, portrait, step/expertise cards, collage panels */
+
+  /* Layout rhythm (Section / Container primitives). Generate `px-gutter`, `px-gutter-wide`,
+   * `py-section`, `py-section-tight`. Only values that were repeated 3+ times are tokens;
+   * one-off paddings stay inline. */
+  --spacing-gutter: clamp(16px, 4vw, 48px);        /* Container default side padding */
+  --spacing-gutter-wide: clamp(24px, 5vw, 80px);   /* Container gutter="wide" (About sections) */
+  --spacing-section: clamp(56px, 8vw, 120px);      /* Section pad="section" (vertical) */
+  --spacing-section-tight: clamp(48px, 5vw, 96px); /* Section pad="tight" (vertical) */
 }
 
 /* `static` so the token is always emitted to :root (Tailwind drops unreferenced theme vars,
@@ -71,7 +79,7 @@
   /* ── 4-tone section system ───────────────────────────────────────────────
    * Each tone sets its own background, foreground text color, and
    * --header-color so descendant title primitives auto-adjust.
-   * data-bg-tone is set by <Section bgVariant=…>.
+   * data-bg-tone is set by <Section tone=…>.
    * ──────────────────────────────────────────────────────────────────────── */
 
   /* Dark (#7A5978) — cream text */

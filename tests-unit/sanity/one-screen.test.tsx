@@ -6,14 +6,20 @@
  * floor and a height-driven flex chain Section -> Container -> grid -> frame. Breaking any link
  * (a lost `lg:min-h-0`, an aspect ratio left on at lg, an `overflow-hidden` on <main>) makes
  * the photos overflow or the card collapse, and nothing in jsdom shows it except the classes.
+ *
+ * Section publishes `data-fit="lock|grow|free"`; the helpers (oneScreenMode / isOneScreen) accept it
+ * only when the implementing classes agree, so neither a data-fit that lies nor classes that lost
+ * their data-fit pass. The per-section expectations below are the single place the assignment lives.
  */
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
   EXPECTED_SECTIONS,
   SOLID_SECTIONS,
+  classMode,
   classTokens,
   coversImage,
   findSection,
+  fitOf,
   hasDesktopRhythm,
   hasFullHeight,
   hasMinScreen,
@@ -31,6 +37,8 @@ import {
   overflowOf,
   renderHome,
   stretchesItems,
+  topLevelSections,
+  type Fit,
   type MinHeightKind,
   type OneScreenMode,
 } from './helpers';
@@ -48,16 +56,16 @@ beforeAll(async () => {
 // `free` rows (about-credentials, contact-social): CLAUDE.md only requires min-h-[100svh] there; they
 // are content-driven past one screen on purpose, so no lock/grow is expected. Changing a row is a
 // deliberate decision, not drift.
-const DESKTOP: Record<string, { mode: OneScreenMode; py12: boolean }> = {
-  'about-intro': { mode: 'lock-720', py12: true },
-  expertise: { mode: 'lock-100', py12: true },
-  'about-me': { mode: 'grow-720', py12: true },
-  'about-credentials': { mode: 'free', py12: false },
-  'about-gallery': { mode: 'lock-720', py12: true },
-  services: { mode: 'lock-720', py12: true },
-  'testimonials-gallery': { mode: 'lock-720', py12: true },
-  'contact-social': { mode: 'free', py12: false },
-  'contact-office': { mode: 'lock-720', py12: true },
+const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> = {
+  'about-intro': { mode: 'lock-720', fit: 'lock', py12: true },
+  expertise: { mode: 'lock-100', fit: 'lock', py12: true },
+  'about-me': { mode: 'grow-720', fit: 'grow', py12: true },
+  'about-credentials': { mode: 'free', fit: 'free', py12: false },
+  'about-gallery': { mode: 'lock-720', fit: 'lock', py12: true },
+  services: { mode: 'lock-720', fit: 'lock', py12: true },
+  'testimonials-gallery': { mode: 'lock-720', fit: 'lock', py12: true },
+  'contact-social': { mode: 'free', fit: 'free', py12: false },
+  'contact-office': { mode: 'lock-720', fit: 'lock', py12: true },
 };
 
 describe('B6: every solid section is at least one screen, with the agreed desktop mode', () => {
@@ -73,6 +81,8 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
   it.each(SOLID_SECTIONS.map((s) => s.name))('%s keeps its lock/grow assignment', (name) => {
     const el = findSection(home, name);
     const want = DESKTOP[name];
+    expect(fitOf(el), `${labelOf(el, name)} data-fit changed (expected ${want.fit})`).toBe(want.fit);
+    expect(classMode(el), `${labelOf(el, name)} classes no longer implement data-fit="${want.fit}" (expected ${want.mode})`).toBe(want.mode);
     expect(oneScreenMode(el), `${labelOf(el, name)} changed desktop mode (expected ${want.mode})`).toBe(want.mode);
     expect(hasDesktopRhythm(el), `${labelOf(el, name)} desktop padding (lg:py-12) expectation (${want.py12}) changed`).toBe(want.py12);
     expect(isOneScreen(el), `${labelOf(el, name)} lost its one-screen height`).toBe(want.mode !== 'free');
@@ -83,6 +93,23 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
       const el = findSection(home, spec.name);
       expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost min-h-[100svh]`).toBe(true);
     }
+  });
+
+  it('the CTA band is a free-fit photo band (no tone, no desktop lock) and hero/footer publish no data-fit', () => {
+    const cta = findSection(home, 'cta-band');
+    expect(fitOf(cta), `${labelOf(cta, 'cta-band')} data-fit`).toBe('free');
+    expect(oneScreenMode(cta), `${labelOf(cta, 'cta-band')} classes vs data-fit`).toBe('free');
+    expect(cta.hasAttribute('data-bg-tone'), 'the CTA band is a photo section: no data-bg-tone').toBe(false);
+    for (const name of ['hero', 'footer']) {
+      const el = findSection(home, name);
+      expect(el.hasAttribute('data-fit'), `${labelOf(el, name)} is bespoke and must not claim a Section fit`).toBe(false);
+    }
+  });
+
+  it('no top-level section carries a data-fit outside the table (a new fit must be added deliberately)', () => {
+    const known = new Set([...Object.keys(DESKTOP), 'cta-band'].map((n) => findSection(home, n)));
+    const stray = topLevelSections(home).filter((s) => s.hasAttribute('data-fit') && !known.has(s));
+    expect(stray.map((s) => labelOf(s))).toEqual([]);
   });
 });
 

@@ -1,3 +1,4 @@
+import { Section } from '@/components/primitives/layout/Section';
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { SectionTitle } from "../ui/SectionTitle";
 import { ExpertiseCard } from './expertise/ExpertiseCard';
@@ -11,16 +12,16 @@ export default function Expertise() {
       {/* Anchor target — keep id so layout/nav tests resolve */}
       <div id={ANCHOR.expertise} aria-hidden="true" />
 
-      <section
-        dir="rtl"
-        data-bg-tone="light"
-        className="
-          w-full
-          py-[clamp(32px,5vw,64px)] lg:py-12
-          px-[clamp(16px,5vw,80px)]
-          min-h-[100svh] lg:h-[100svh]
-          flex flex-col justify-center lg:justify-start
-        "
+      {/* lg+: exactly 100svh with NO 720px floor (floor={false}); center="start" lets the 2x2 card grid
+          take the remaining height. TODO(visual): pad="none" + className padding is a near-duplicate
+          of the section/gutter tokens (clamp(32px,5vw,64px) / clamp(16px,5vw,80px)); unify when the
+          owner picks one rhythm. */}
+      <Section
+        tone="light"
+        fit="lock"
+        floor={false}
+        center="start"
+        className="py-[clamp(32px,5vw,64px)] px-[clamp(16px,5vw,80px)]"
       >
         {/* Section header */}
         <ScrollReveal>
@@ -54,7 +55,7 @@ export default function Expertise() {
             </div>
           ))}
         </div>
-      </section>
+      </Section>
     </>
   );
 }

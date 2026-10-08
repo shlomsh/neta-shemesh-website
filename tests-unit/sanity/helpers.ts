@@ -2,10 +2,10 @@
  * Shared helpers for the sanity suite (tests-unit/sanity/*).
  *
  * Design rule: every "how do I recognise X in the DOM" decision lives HERE, so a
- * refactor (moving files under sections/, a Section `fit` prop + `data-fit`, a
- * `one-screen` utility, ...) is absorbed by editing this one file, not 10 tests.
+ * refactor (moving files under sections/, a change in how Section implements `fit`, ...) is
+ * absorbed by editing this one file, not 10 tests.
  *
- *   - isOneScreen(el) / oneScreenMode(el)   one-screen predicate (class based today)
+ *   - fitOf / isOneScreen / oneScreenMode   one-screen predicate (data-fit AND the implementing classes)
  *   - toneOf(el)                            nearest data-bg-tone ('mid' | 'light' | ...)
  *   - topLevelSections(root)                main > section + main > footer, in order
  *   - typeClassesOf(el)                     the .type-* tokens on an element
@@ -166,34 +166,60 @@ export function kindOf(section: Element): Tone | 'photo' {
 
 // ─── One-screen contract (desktop) ───────────────────────────────────────────
 //
-// TODAY the contract is expressed in classes:
-//   all breakpoints : min-h-[100svh]
-//   lock-720        : lg:h-[max(100svh,720px)]   (exactly a screen, floor 720, content must fit)
-//   lock-100        : lg:h-[100svh]
-//   grow-720        : lg:min-h-[max(100svh,720px)] (a screen at least; grows on short viewports)
-//   free            : min-h only, no desktop lock/grow (content-driven past one screen)
-// plus lg:py-12 for the desktop vertical rhythm.
-// If the refactor moves this to a `fit` prop / data-fit, change ONLY this block.
+// Section publishes its height contract as `data-fit="lock|grow|free"` and implements it with classes:
+//   all breakpoints : min-h-[100svh]                      (every fit)
+//   lock-720        : lg:h-[max(100svh,720px)]            (exactly a screen, floor 720, content must fit)
+//   lock-100        : lg:h-[100svh]                       (Section floor={false}; Expertise only)
+//   grow-720        : lg:min-h-[max(100svh,720px)]        (a screen at least; grows on short viewports)
+//   free            : min-h only, no desktop lock/grow    (content-driven past one screen)
+// plus lg:py-12 for the desktop vertical rhythm of lock/grow.
+//
+// `data-fit` alone never counts: every predicate below also reads the classes that implement it, and
+// `oneScreenMode` reports 'inconsistent' when the two disagree (a data-fit that lies, or classes that
+// lost their data-fit). If the implementation moves (an @utility, a new class), change ONLY this block.
 
-export type OneScreenMode = 'lock-720' | 'lock-100' | 'grow-720' | 'free';
+export type Fit = 'lock' | 'grow' | 'free';
+export type OneScreenMode = 'lock-720' | 'lock-100' | 'grow-720' | 'free' | 'inconsistent';
+
+/** The published height contract (`data-fit`), or null when absent / not one of lock|grow|free. */
+export function fitOf(el: Element | null | undefined): Fit | null {
+  const v = el?.getAttribute('data-fit');
+  return v === 'lock' || v === 'grow' || v === 'free' ? v : null;
+}
 
 export function hasMinScreen(el: Element): boolean {
   return hasClass(el, 'min-h-[100svh]');
 }
 
-export function oneScreenMode(el: Element): OneScreenMode {
+/** What the CLASSES alone implement at lg (ignores data-fit). */
+export function classMode(el: Element): Exclude<OneScreenMode, 'inconsistent'> {
   if (hasClass(el, 'lg:h-[max(100svh,720px)]')) return 'lock-720';
   if (hasClass(el, 'lg:h-[100svh]')) return 'lock-100';
   if (hasClass(el, 'lg:min-h-[max(100svh,720px)]')) return 'grow-720';
   return 'free';
 }
 
+/** data-fit and the implementing classes must tell the same story; otherwise 'inconsistent'. */
+export function oneScreenMode(el: Element): OneScreenMode {
+  const fit = fitOf(el);
+  const byClass = classMode(el);
+  const agrees =
+    (fit === 'lock' && (byClass === 'lock-720' || byClass === 'lock-100')) ||
+    (fit === 'grow' && byClass === 'grow-720') ||
+    (fit === 'free' && byClass === 'free');
+  return agrees ? byClass : 'inconsistent';
+}
+
 /** the desktop vertical rhythm of a one-screen card */
 export const hasDesktopRhythm = (el: Element) => hasClass(el, 'lg:py-12');
 
-/** True when the section is a full one-screen card on desktop: min screen + lock/grow + lg:py-12. */
+/**
+ * True when the section is a full one-screen card on desktop: data-fit lock|grow that the classes
+ * back up (consistent mode) + min screen at every breakpoint + lg:py-12.
+ */
 export function isOneScreen(el: Element): boolean {
-  return hasMinScreen(el) && oneScreenMode(el) !== 'free' && hasDesktopRhythm(el);
+  const mode = oneScreenMode(el);
+  return hasMinScreen(el) && (mode === 'lock-720' || mode === 'lock-100' || mode === 'grow-720') && hasDesktopRhythm(el);
 }
 
 // ─── Expected page structure (single source of truth for the suite) ──────────

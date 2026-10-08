@@ -7,7 +7,6 @@ import { QuoteBlock } from "./about/QuoteBlock";
 import { CredentialsList } from './about/CredentialsList';
 import { OrganicBg } from './about/OrganicBg';
 
-import { ScrollAnchor } from '@/components/primitives/layout/ScrollAnchor';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { BodyText } from '@/components/primitives/ui/BodyText';
@@ -31,10 +30,8 @@ export function AboutIntro() {
   return (
     <>
       {/* ── Section 1: Intro with photo collage + text ── */}
-      <ScrollAnchor id={ANCHOR.about} />
-
-      <Section id={ID.aboutIntro} bgVariant="mid" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)] lg:h-[max(100svh,720px)] lg:py-12">
-        <Container maxWidth="2xl" className="relative px-[clamp(24px,5vw,80px)] lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+      <Section id={ID.aboutIntro} anchor={ANCHOR.about} tone="mid" fit="lock" pad="section" seam>
+        <Container maxWidth="2xl" gutter="wide" className="relative lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
           <div className="flex flex-col gap-[40px] lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[1fr_1.25fr] lg:gap-[clamp(40px,5vw,80px)]">
 
             {/* Photo collage — left column on desktop (wider, height-driven to the section), top on mobile */}
@@ -101,12 +98,10 @@ export function AboutBio() {
   return (
     <>
       {/* ── Section 2: Merged About Me (Introduction, Quote, Photo & Signature) ── */}
-      <ScrollAnchor id={ANCHOR.aboutMe} />
-
-      {/* lg+: one screen (min 100svh; floor 720px) with the bio vertically centred. min-h (not h)
-          so a short viewport grows the section rather than clipping the running text. */}
-      <Section id={ID.aboutMeSection} bgVariant="cream" className="-mt-px py-[clamp(56px,8vw,120px)] min-h-[100svh] flex flex-col justify-center lg:min-h-[max(100svh,720px)] lg:py-12">
-        <Container maxWidth="2xl" className="relative z-10 px-[clamp(24px,5vw,80px)]">
+      {/* lg+: one screen (min 100svh; floor 720px) with the bio vertically centred. fit="grow"
+          (min-h, not h) so a short viewport grows the section rather than clipping the running text. */}
+      <Section id={ID.aboutMeSection} anchor={ANCHOR.aboutMe} tone="cream" fit="grow" pad="section" seam>
+        <Container maxWidth="2xl" gutter="wide" className="relative z-10">
           <div className="flex flex-col gap-[48px] lg:flex-row lg:items-start lg:gap-[clamp(40px,6vw,80px)]">
 
             {/* Right Column: Narrative Text */}
@@ -187,9 +182,7 @@ export function AboutCredentials() {
   return (
     <>
       {/* ── Section 3: Credentials list ── */}
-      <ScrollAnchor id={ANCHOR.credentials} />
-
-      <Section id={ID.aboutCredentials} bgVariant="dark" fullHeight className="-mt-px py-[clamp(56px,8vw,120px)]">
+      <Section id={ID.aboutCredentials} anchor={ANCHOR.credentials} tone="dark" fit="free" pad="section" seam>
         {/* Subtle couple line-art background at low opacity */}
         <img
           src={CREDENTIALS_ART}
@@ -199,7 +192,7 @@ export function AboutCredentials() {
           className="absolute bottom-0 left-0 w-[65%] h-[65%] object-contain object-bottom-left pointer-events-none select-none opacity-[0.18] z-0"
         />
 
-        <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)]">
+        <Container maxWidth="2xl" gutter="wide" className="relative z-[1]">
           <div className="flex flex-col items-center gap-[clamp(56px,8vw,100px)]">
 
             <ScrollReveal>
@@ -221,17 +214,11 @@ export function AboutGallery() {
   return (
     <>
       {/* ── Section 4: Re-ignite connection — photo gallery + heading ── */}
-      <ScrollAnchor id={ANCHOR.reignite} />
-
       {/* lg+: exactly one screen (100svh; floor 720px so a short viewport grows rather than clips).
           Flex chain Section -> Container -> wrapper -> grid hands the remaining height to the
           photo grid, so the frames crop (object-cover) instead of overflowing. */}
-      <Section
-        id={ID.aboutGallery}
-        bgVariant="mid"
-        className="-mt-px py-[clamp(56px,8vw,120px)] min-h-[100svh] flex flex-col justify-center lg:h-[max(100svh,720px)] lg:py-12"
-      >
-        <Container maxWidth="2xl" className="relative z-[1] px-[clamp(24px,5vw,80px)] lg:flex lg:flex-1 lg:min-h-0 lg:flex-col">
+      <Section id={ID.aboutGallery} anchor={ANCHOR.reignite} tone="mid" fit="lock" pad="section" seam>
+        <Container maxWidth="2xl" gutter="wide" className="relative z-[1] lg:flex lg:flex-1 lg:min-h-0 lg:flex-col">
           <div className="flex flex-col gap-[40px] items-center lg:flex-1 lg:min-h-0 lg:gap-9">
 
             {/* Heading + sub-text */}

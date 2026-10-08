@@ -1,73 +1,145 @@
 import React from 'react';
+import { ScrollAnchor } from './ScrollAnchor';
 
 /**
- * All accepted bgVariant values.
- *
- * Canonical 4-tone names:
- *   'dark'        → #7A5978  (bg) + cream text
- *   'mid'         → #C49AB8  (bg) + cream text (decorative surface; see CLAUDE.md contrast table)
- *   'light'       → #ECC8CE  (bg) + dark text   (quote-scale text only, AA large)
- *   'cream'       → #FFF5F0  (bg) + dark text
- *   'transparent' → no background, no data-bg-tone
- *
- * Legacy alias (no caller left; removal is part of tech-debt batch 3):
- *   'white'       → maps to 'cream' behavior
+ * Section tone -> `data-bg-tone` (globals.css paints background, text colour and --header-color).
+ *   'dark'  #7A5978 + cream text      'mid'   #C49AB8 (decorative surface; no essential text)
+ *   'light' #ECC8CE + plum text       'cream' #FFF5F0 + plum text
+ * Omit `tone` for photo sections (CTA band): no `data-bg-tone`, the photo carries the surface.
  */
-type BgVariant = 'dark' | 'mid' | 'light' | 'cream' | 'white' | 'transparent';
+export type SectionTone = 'dark' | 'mid' | 'light' | 'cream';
 
-/** Which data-bg-tone attribute to set (drives CSS custom properties in globals.css) */
-type BgTone = 'dark' | 'mid' | 'light' | 'cream' | undefined;
+/**
+ * How tall the section is. Every fit except `undefined` is at least one screen at ALL breakpoints
+ * (`min-h-[100svh]`, content centred in a flex column) and is published as `data-fit`.
+ *   undefined : content height (blog sections); no `data-fit`
+ *   'free'    : one screen at minimum, grows with its content at every width
+ *   'lock'    : mobile = 'free'; from lg exactly one screen (`lg:h-[max(100svh,720px)]`, `lg:py-12`).
+ *               The content must fit inside (flex chain to a photo grid); on a viewport shorter
+ *               than 720px the section is 720px tall.
+ *   'grow'    : mobile = 'free'; from lg one screen at least (`lg:min-h-[max(100svh,720px)]`,
+ *               `lg:py-12`). For running text that must never be clipped.
+ */
+export type SectionFit = 'free' | 'lock' | 'grow';
 
-interface SectionProps extends React.HTMLAttributes<HTMLElement> {
-  id: string;
-  bgVariant?: BgVariant;
-  fullHeight?: boolean;
+/**
+ * How a `fit` section centres its content (only meaningful with `fit`).
+ *   'column' (default) flex column, content centred vertically
+ *   'start'            like 'column', but from lg the content starts at the top (`lg:justify-start`):
+ *                      the 2x2 card grid takes the remaining height (Expertise)
+ *   'middle'           flex row, a single child centred on both axes (photo bands)
+ */
+export type SectionCenter = 'column' | 'start' | 'middle';
+
+/** Vertical padding token: 'section' = py-section, 'tight' = py-section-tight, 'none' = caller's own. */
+export type SectionPad = 'section' | 'tight' | 'none';
+
+/** `floor` exists only on a lock, `center` only on a fit: the union makes the rest a type error. */
+type FitProps =
+  | { fit?: undefined; floor?: never; center?: never }
+  | { fit: 'free' | 'grow'; floor?: never; center?: SectionCenter }
+  | {
+      fit: 'lock';
+      /**
+       * false drops the 720px floor, so the section is exactly `lg:h-[100svh]` at lg
+       * (the Expertise cards). Keep the default (floor) unless a section is proven to fit 100svh.
+       */
+      floor?: boolean;
+      center?: SectionCenter;
+    };
+
+type SectionOwnProps = {
+  id?: string;
+  tone?: SectionTone;
+  /**
+   * 'none' (default) leaves the vertical padding to the caller. One-off paddings go in `className`
+   * (pad="none" + className padding is the sanctioned interim form); never put a second `py-*` in
+   * `className` next to a `pad` token.
+   */
+  pad?: SectionPad;
+  /**
+   * Pull the section up 1px over the previous one. Hides a sub-pixel gap between two toned
+   * sections at fractional device pixel ratios.
+   * TODO(visual-roadmap #2): remove once the seams are solved in CSS.
+   */
+  seam?: boolean;
+  /** Renders a zero-height `ScrollAnchor` with this id immediately before the section. */
+  anchor?: string;
   children: React.ReactNode;
-}
+};
 
-/**
- * Maps canonical variant name → data-bg-tone value.
- * The CSS in globals.css uses [data-bg-tone="…"] to set bg-color,
- * foreground color and --header-color.
- */
-const TONE_MAP: Record<BgVariant, BgTone> = {
-  dark:        'dark',
-  mid:         'mid',
-  light:       'light',
-  cream:       'cream',
-  white:       'cream',   // legacy alias
-  transparent: undefined,
+/** `data-fit` / `data-bg-tone` are owned by `fit` / `tone`: callers cannot set them by hand. */
+type PassThrough = Omit<React.HTMLAttributes<HTMLElement>, 'id' | keyof SectionOwnProps>;
+
+export type SectionProps = SectionOwnProps & FitProps & PassThrough;
+
+/** Whole class strings on purpose: Tailwind only emits utilities it can read verbatim from source. */
+const FIT_CLASS = {
+  free: 'min-h-[100svh]',
+  lock: 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12',
+  lockNoFloor: 'min-h-[100svh] lg:h-[100svh] lg:py-12',
+  grow: 'min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12',
+} as const;
+
+const CENTER_CLASS: Record<SectionCenter, string> = {
+  column: 'flex flex-col justify-center',
+  start: 'flex flex-col justify-center lg:justify-start',
+  middle: 'flex items-center justify-center',
+};
+
+const PAD_CLASS: Record<SectionPad, string> = {
+  section: 'py-section',
+  tight: 'py-section-tight',
+  none: '',
 };
 
 /**
- * Universal wrapper for standard pages/slides.
- * Enforces RTL by default, sets background via data-bg-tone, and
- * optionally locks to 100svh.
+ * The `<section>` shell: tone, height contract (`fit`), vertical padding. Always
+ * `relative w-full overflow-hidden` (clips, and is the positioning context for decor).
  *
- * Background + text color are controlled entirely by globals.css
- * [data-bg-tone] selectors — children inherit the right text color without
- * any per-component onDark flag.
+ * Background and text colour come entirely from the `[data-bg-tone]` rules in globals.css, so
+ * children need no per-component `onDark` flag. `data-fit` publishes the height contract for
+ * tests and tooling; the classes that implement it are emitted from the same prop, so the two
+ * cannot drift.
  */
 export function Section({
   id,
-  bgVariant = 'transparent',
-  fullHeight = false,
-  className = '',
+  tone,
+  fit,
+  floor = true,
+  center = 'column',
+  pad = 'none',
+  seam = false,
+  anchor,
+  className,
   children,
-  ...props
+  ...rest
 }: SectionProps) {
-  const heightClass = fullHeight ? 'min-h-[100svh] flex flex-col justify-center' : '';
-  const tone = TONE_MAP[bgVariant];
+  const fitClass = fit ? (fit === 'lock' && !floor ? FIT_CLASS.lockNoFloor : FIT_CLASS[fit]) : '';
+  const classes = ['relative w-full overflow-hidden', seam && '-mt-px', PAD_CLASS[pad], fitClass, fit && CENTER_CLASS[center], className]
+    .filter(Boolean)
+    .join(' ');
 
-  return (
+  const section = (
     <section
+      {...rest}
       id={id}
-      dir="rtl"
+      // TODO(3c): drop with the descendant dir="rtl" cleanup (<html> is already rtl). Until then
+      // a caller that never had a dir passes dir={undefined} to keep its markup byte-identical.
+      dir={'dir' in rest ? rest.dir : 'rtl'}
       data-bg-tone={tone}
-      className={`relative w-full overflow-hidden ${heightClass} ${className}`}
-      {...props}
+      data-fit={fit}
+      className={classes}
     >
       {children}
     </section>
+  );
+
+  if (!anchor) return section;
+  return (
+    <>
+      <ScrollAnchor id={anchor} />
+      {section}
+    </>
   );
 }

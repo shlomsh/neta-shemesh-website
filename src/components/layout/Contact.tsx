@@ -6,6 +6,8 @@ import { ContactDetails } from './contact/ContactDetails';
 import { MapEmbed } from './contact/MapEmbed';
 import { SectionTitle } from "../ui/SectionTitle";
 import { CONTACT_PHOTOS, OFFICE_PANEL, SOCIAL_PANEL } from '@/content/home/contact';
+import { Section } from '@/components/primitives/layout/Section';
+import { Container } from '@/components/primitives/layout/Container';
 import { ANCHOR, ID } from '@/content/ids';
 
 export default function Contact() {
@@ -14,13 +16,10 @@ export default function Contact() {
       {/* ══════════════════════════════════════════════════════════════════════
           PANEL 1 — Follow me on social
       ══════════════════════════════════════════════════════════════════════ */}
-      <section
-        id={ID.contactSocial}
-        dir="rtl"
-        data-bg-tone="dark"
-        className="py-[80px] px-[24px] min-h-[100svh] flex flex-col justify-center"
-      >
-        <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
+      {/* TODO(visual): py-[80px] px-[24px] (pad="none" + className) is a near-duplicate of the
+          section/gutter tokens; unify when the owner picks one rhythm. */}
+      <Section id={ID.contactSocial} tone="dark" fit="free" className="py-[80px] px-[24px]">
+        <Container maxWidth="xl" gutter="none" className="flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
           {/* Heading on mobile — shown above photos only on small screens */}
           <div className="flex flex-col gap-[24px] text-right lg:hidden">
@@ -92,8 +91,8 @@ export default function Contact() {
               <SocialLinks />
             </ScrollReveal>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* ── Anchor ────────────────────────────────────────────────────────── */}
       <div id={ANCHOR.contact} className="invisible h-0" />
@@ -103,13 +102,9 @@ export default function Contact() {
           Template structure: details col (right in LTR → left in RTL) +
           map col (left in LTR → right in RTL, ~55% width)
       ══════════════════════════════════════════════════════════════════════ */}
-      <section
-        id={ID.contactOffice}
-        dir="rtl"
-        data-bg-tone="mid"
-        className="py-[80px] lg:py-12 px-[24px] min-h-[100svh] lg:h-[max(100svh,720px)] flex flex-col justify-center"
-      >
-        <div className="max-w-[1100px] mx-auto w-full flex flex-col">
+      {/* TODO(visual): same py-[80px] px-[24px] near-duplicate gutter as the social panel. */}
+      <Section id={ID.contactOffice} tone="mid" fit="lock" className="py-[80px] px-[24px]">
+        <Container maxWidth="xl" gutter="none" className="flex flex-col">
 
           {/* Title row: above the card, right-aligned (RTL) on the mauve */}
           <ScrollReveal className="mb-8 md:mb-12 text-right">
@@ -145,8 +140,8 @@ export default function Contact() {
               </div>
             </div>
           </ScrollReveal>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </>
   );
 }
