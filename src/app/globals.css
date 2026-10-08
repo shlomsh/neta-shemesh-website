@@ -166,6 +166,13 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; opacity: 1; transform: none; }
+  /* Scroll-reveal wrappers (ScrollReveal, FooterReveal, ContactFAB) ship their
+     motion initial state (opacity:0) in the SSR HTML as an inline style. Force
+     them visible here: this does not depend on hydration or JS, and !important
+     beats framer-motion's inline styles. */
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  /* ParallaxFrame inner layer: static, no drift/scale (children fill it). */
+  [data-parallax] { transform: none !important; translate: none !important; scale: none !important; }
 }
 
 @utility safari-clip {

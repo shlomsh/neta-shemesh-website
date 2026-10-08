@@ -1,17 +1,16 @@
 'use client';
 
 /**
- * FooterReveal — local ScrollReveal wrapper for the Footer rebuild.
+ * FooterReveal — local ScrollReveal wrapper for the Footer.
  *
- * Uses framer-motion so that under Playwright's reducedMotion:'reduce'
- * the element resolves immediately to opacity:1 / translateY:0 (no hidden
- * intermediate state). This satisfies the structural-verify gate.
- *
- * We do NOT touch globals.css, ScrollReveal.tsx (non-existent), or any
- * shared primitive.
+ * Always renders the same <motion.div> on server and client (no
+ * `useReducedMotion()` branch: it differs between SSR and the first client
+ * render, which left the SSR `opacity:0` stuck after hydration). Under
+ * `prefers-reduced-motion: reduce`, the `[data-reveal]` rule in globals.css
+ * forces opacity:1 / transform:none, so the content resolves immediately.
  */
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 
 interface FooterRevealProps {
@@ -21,19 +20,9 @@ interface FooterRevealProps {
 }
 
 export function FooterReveal({ children, delay = 0, style }: FooterRevealProps) {
-  const prefersReducedMotion = useReducedMotion();
-
-  // When reducedMotion is requested, skip animation entirely — resolve immediately.
-  if (prefersReducedMotion) {
-    return (
-      <div style={{ opacity: 1, transform: 'none', ...style }}>
-        {children}
-      </div>
-    );
-  }
-
   return (
     <motion.div
+      data-reveal=""
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}

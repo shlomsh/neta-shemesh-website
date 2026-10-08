@@ -1,7 +1,7 @@
 'use client';
 
 import { CSSProperties, ReactNode, useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface ParallaxFrameProps {
   /**
@@ -28,7 +28,9 @@ interface ParallaxFrameProps {
  * exposing an edge. Drift is Y-axis only (RTL-safe) and the photo is
  * scaled just enough to cover the drift range.
  *
- * Honours `prefers-reduced-motion`: collapses to a static, full-cover image.
+ * Honours `prefers-reduced-motion`: same tree on server and client (no
+ * `useReducedMotion()` branch, which would mismatch SSR styles); the
+ * `[data-parallax]` rule in globals.css collapses it to a static, full-cover image.
  */
 export function ParallaxFrame({
   children,
@@ -37,7 +39,6 @@ export function ParallaxFrame({
   amount = 8,
 }: ParallaxFrameProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
 
   // 0 when the frame's top edge enters from the bottom of the viewport,
   // 1 when its bottom edge exits past the top — a full traverse.
@@ -57,9 +58,10 @@ export function ParallaxFrame({
   return (
     <div ref={ref} className={`${positionClass} overflow-hidden ${className}`} style={style}>
       <motion.div
+        data-parallax=""
         className="absolute inset-0"
         // Scale up so the ±amount% drift stays covered (overflow each edge).
-        style={prefersReducedMotion ? undefined : { y, scale: 1 + (amount * 2 + 1) / 100 }}
+        style={{ y, scale: 1 + (amount * 2 + 1) / 100 }}
       >
         {children}
       </motion.div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const WA_URL =
   'https://wa.me/972545711060?text=שלום+נטע,+אשמח+לשמוע+קצת+יותר+פרטים';
@@ -28,15 +28,17 @@ const PHONE_HALF =
  * md+: WhatsApp half only.
  * The outer fixed wrapper owns positioning so framer-motion's inline
  * transform on the pill never fights the positioning classes.
+ * Same tree on server and client (no useReducedMotion branch: it would
+ * cause an SSR/hydration style mismatch); `[data-reveal]` in globals.css
+ * shows it immediately under prefers-reduced-motion.
  */
 export function ContactFAB() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <div className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] left-4 z-50 md:bottom-6 md:left-6">
       <motion.div
         data-testid="contact-fab"
-        initial={reduceMotion ? false : { y: 24, opacity: 0 }}
+        data-reveal=""
+        initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
         className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-white/35 bg-[var(--color-plum)] text-[var(--color-cream)] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
