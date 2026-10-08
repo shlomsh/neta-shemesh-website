@@ -13,8 +13,14 @@ const PHONE_PATH =
 
 const HALF_BASE =
   'type-small font-bold flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 px-4 py-2.5 ' +
-  'transition duration-200 hover:bg-[var(--color-mauve)] active:scale-95 ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-cream)] focus-visible:ring-inset';
+  'transition duration-200 active:scale-95 ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset';
+
+// WhatsApp brand green + white: intentional exception to the 4-colour palette (bold CTA, owner decision).
+const WA_HALF =
+  'bg-[#25D366] text-[#FFFFFF] hover:bg-[#1EBE5B] focus-visible:ring-[#FFFFFF]';
+const PHONE_HALF =
+  'hover:bg-[var(--color-mauve)] focus-visible:ring-[var(--color-cream)]';
 
 /**
  * Single contact pill (replaces the old WhatsApp + Phone FABs).
@@ -33,7 +39,7 @@ export function ContactFAB() {
         initial={reduceMotion ? false : { y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-[var(--color-cream)]/45 bg-[var(--color-plum)] text-[var(--color-cream)] shadow-[0_12px_30px_-10px_rgba(122,89,120,0.55)] transition-transform duration-200 hover:-translate-y-0.5"
+        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-white/35 bg-[var(--color-plum)] text-[var(--color-cream)] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
       >
         <a
           data-testid="fab-whatsapp"
@@ -41,7 +47,7 @@ export function ContactFAB() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="שלחו הודעה בוואטסאפ"
-          className={`${HALF_BASE} rounded-s-full md:rounded-full`}
+          className={`${HALF_BASE} ${WA_HALF} rounded-s-full md:rounded-full`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
             <path d={WA_PATH} />
@@ -49,13 +55,13 @@ export function ContactFAB() {
           <span>וואטסאפ</span>
         </a>
 
-        <span aria-hidden="true" className="my-2.5 w-px bg-[var(--color-cream)]/25 md:hidden" />
+        <span aria-hidden="true" className="my-2.5 w-px bg-white/35 md:hidden" />
 
         <a
           data-testid="fab-phone"
           href={PHONE_URL}
           aria-label="התקשרו אליי"
-          className={`${HALF_BASE} rounded-e-full md:hidden`}
+          className={`${HALF_BASE} ${PHONE_HALF} rounded-e-full md:hidden`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
             <path d={PHONE_PATH} />
