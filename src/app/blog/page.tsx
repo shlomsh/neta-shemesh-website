@@ -36,10 +36,10 @@ export default function BlogIndexPage() {
       <Section id="blog-intro" bgVariant="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
         <Container maxWidth="lg" className="text-center">
           <ScrollReveal delay={0} className="flex flex-col items-center gap-[clamp(14px,2vw,22px)]">
-            <span className="type-eyebrow uppercase tracking-[0.08em] text-[var(--color-blush)]">
+            <span className="type-eyebrow text-[var(--color-blush)]">
               הבלוג
             </span>
-            <h1 className="section-header font-[family-name:var(--font-display)]">
+            <h1 className="type-title font-bold tracking-[-0.01em] text-[color:var(--header-color)]">
               מחשבות מהקליניקה
             </h1>
             <p className="type-lead mx-auto max-w-[60ch] text-[var(--color-cream)]">

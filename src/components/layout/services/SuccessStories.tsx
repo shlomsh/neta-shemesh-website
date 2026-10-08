@@ -19,7 +19,7 @@ export function SuccessStories() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <p className="type-lead tracking-[0.012em]">
+          <p className="type-quote max-w-[65ch] mx-auto mt-3 md:mt-4">
             הנה כמה זוגות שעברו את התהליך בקליניקה ויצרו מציאות חדשה ומקרבת בחייהם.
           </p>
         </ScrollReveal>

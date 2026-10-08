@@ -7,7 +7,8 @@ interface BodyTextProps extends React.HTMLAttributes<HTMLParagraphElement> {
 }
 
 /**
- * The standard Stanga fluid body text paragraph.
+ * The standard Stanga fluid body text paragraph (font, tracking and line-height
+ * come from the `type-*` class).
  *
  * Color behavior:
  *   - If an ancestor <Section> sets data-bg-tone="dark" or "mid", the CSS
@@ -16,14 +17,9 @@ interface BodyTextProps extends React.HTMLAttributes<HTMLParagraphElement> {
  *   - The `onDark` prop is kept for backward-compat and explicit overrides.
  *     When not passed, color inherits from the nearest [data-bg-tone] ancestor.
  *
- * Large-text AA bump:
- *   - On mid/light sections globals.css sets --section-needs-large-text: 1.
- *   - We read that via a CSS @container style query — but since Tailwind v4 /
- *     Next.js 15 runs in the browser, we use a simpler approach: emit
- *     data-body-large="true" unconditionally and let CSS apply the bump only
- *     when the ancestor has --section-needs-large-text: 1, via the
- *     :where([data-bg-tone="mid"], [data-bg-tone="light"]) p[data-body-large]
- *     rule already defined in globals.css.
+ * Size: defaults to `type-body`; pass any `type-*` class via `className` to
+ * replace it (BodyText then skips `type-body` to avoid cascade collisions).
+ * Contrast is solved by the tone/colour system, not by forcing bold.
  */
 export function BodyText({
   onDark,
@@ -49,7 +45,7 @@ export function BodyText({
 
   return (
     <p
-      className={`${sizeClass} font-[family-name:var(--font-stanga)] tracking-[0.012em] ${colorClass} ${alignClass} ${className}`}
+      className={`${sizeClass} ${colorClass} ${alignClass} ${className}`}
       {...props}
     >
       {children}

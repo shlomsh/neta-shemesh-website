@@ -23,7 +23,7 @@ export function CredentialsList({ items, checkIconSrc, onDark }: CredentialsList
             loading="lazy"
           />
           <span
-            className="type-card-title leading-[1.2] tracking-[0.012em] text-center"
+            className="type-card-title text-center"
           >
             {item.text}
           </span>

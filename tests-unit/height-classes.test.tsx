@@ -17,11 +17,11 @@ describe('Expertise.tsx — Grid layout classes', () => {
     expect(grid, 'Expertise missing grid layout').not.toBeNull();
   });
 
-  it('contains aspect ratio classes on the card containers to prevent 0px height collapse', () => {
+  it('contains aspect ratio classes (stacked, below lg) on the card containers to prevent 0px height collapse', () => {
     const { container } = render(<Expertise />);
     const cards = container.querySelectorAll('.aspect-\\[4\\/5\\]');
     expect(cards.length).toBeGreaterThan(0);
-    expect(cards[0].className).toContain('lg:aspect-square');
+    expect(cards[0].className).toContain('lg:aspect-auto');
   });
 });
 

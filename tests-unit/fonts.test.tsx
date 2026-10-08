@@ -19,12 +19,12 @@ import React from 'react';
 import About from '@/components/layout/About';
 
 describe('About.tsx — h2 headings use Elamy/Accent font class', () => {
-  it('renders all three h2 headings with font-[family-name:var(--font-display)]', () => {
+  it('renders all three h2 headings with .type-title (Elamy 700)', () => {
     const { container } = render(<About />);
     const headings = container.querySelectorAll('h2');
     expect(headings.length).toBeGreaterThanOrEqual(3);
 
-    const ACCENT = 'font-[family-name:var(--font-display)]';
+    const ACCENT = 'type-title';
     const BAD_STANGA = 'font-[family-name:var(--font-stanga)]';
     const BAD_BARE = 'font-[var(--font-display)]';
     // NOTE: `section-header` is an intentional design-token class applied by
@@ -33,6 +33,8 @@ describe('About.tsx — h2 headings use Elamy/Accent font class', () => {
     headings.forEach((h2) => {
       const cls = h2.className;
       expect(cls, `h2 "${h2.textContent?.trim()}" missing Accent class`).toContain(ACCENT);
+      expect(cls).toContain('font-bold');
+      expect(cls).not.toContain('section-header');
       expect(cls, `h2 "${h2.textContent?.trim()}" must not use stanga font`).not.toContain(BAD_STANGA);
       expect(cls, `h2 "${h2.textContent?.trim()}" must not use bare var() syntax`).not.toContain(BAD_BARE);
     });
@@ -43,11 +45,12 @@ describe('About.tsx — h2 headings use Elamy/Accent font class', () => {
 import Expertise from '@/components/layout/Expertise';
 
 describe('Expertise.tsx — section h2 uses Elamy/Accent font class', () => {
-  it('renders h2 "מקום בטוח לצמוח בו ביחד." with font-[family-name:var(--font-display)]', () => {
+  it('renders h2 "מקום בטוח לצמוח בו ביחד." with .type-title', () => {
     const { container } = render(<Expertise />);
     const h2 = container.querySelector('h2#vyKTmOw3YNYlJZPL');
     expect(h2, 'Expertise h2 not found by id').toBeTruthy();
-    expect(h2!.className).toContain('font-[family-name:var(--font-display)]');
+    expect(h2!.className).toContain('type-title');
+    expect(h2!.className).toContain('font-bold');
     expect(h2!.className).not.toContain('font-[family-name:var(--font-stanga)]');
     // section-header is an intentional SectionTitle design-token class — not a bug
   });
@@ -57,11 +60,12 @@ describe('Expertise.tsx — section h2 uses Elamy/Accent font class', () => {
 import Services from '@/components/layout/Services';
 
 describe('Services.tsx — section h2 uses Elamy/Accent font class', () => {
-  it('renders h2 "איך זה עובד?" with font-[family-name:var(--font-display)]', () => {
+  it('renders h2 "איך זה עובד?" with .type-title', () => {
     const { container } = render(<Services />);
     const h2 = container.querySelector('h2#pEc3w8pe4QAw5k7o');
     expect(h2, 'Services h2 not found by id').toBeTruthy();
-    expect(h2!.className).toContain('font-[family-name:var(--font-display)]');
+    expect(h2!.className).toContain('type-title');
+    expect(h2!.className).toContain('font-bold');
     expect(h2!.className).not.toContain('font-[family-name:var(--font-stanga)]');
     // section-header is an intentional SectionTitle design-token class — not a bug
   });
@@ -71,16 +75,16 @@ describe('Services.tsx — section h2 uses Elamy/Accent font class', () => {
 import { CardLabel } from '@/components/layout/expertise/CardLabel';
 
 describe('CardLabel.tsx — title span uses correct font-family syntax', () => {
-  it('uses font-[family-name:var(--font-body)] (NOT bare font-[var(...)])', () => {
+  it('uses the type-small scale class, bold, with no ad-hoc size', () => {
     const { container } = render(
       <CardLabel title="טיפול זוגי" description="test description" />
     );
     // First span is the title
     const titleSpan = container.querySelector('span');
     expect(titleSpan, 'title span not found').toBeTruthy();
-    expect(titleSpan!.className).toContain('font-[family-name:var(--font-body)]');
-    // Must NOT use the broken bare syntax
-    expect(titleSpan!.className).not.toContain('font-[var(--font-body)]');
+    expect(titleSpan!.className).toContain('type-small');
+    expect(titleSpan!.className).toContain('font-bold');
+    expect(titleSpan!.className).not.toMatch(/text-\[(clamp|\d)/);
   });
 });
 

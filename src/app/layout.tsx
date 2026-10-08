@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { AUTHOR_NAME, AUTHOR_TITLE, SITE_URL } from '@/config/constants';
 
@@ -23,11 +24,6 @@ const elamy = localFont({
 const stanga = localFont({
   src: [
     {
-      path: "../../public/fonts/stanga-light-aaa.woff2",
-      weight: "300",
-      style: "normal",
-    },
-    {
       path: "../../public/fonts/stanga-regular-aaa.woff2",
       weight: "400",
       style: "normal",
@@ -41,6 +37,19 @@ const stanga = localFont({
   variable: "--font-stanga",
   display: "swap",
   preload: true,
+  // Stanga has no Latin glyphs. Without this, next/font appends a generated
+  // local(Arial) "stanga Fallback" to the stack, which would capture Latin text
+  // BEFORE the Latin companion below gets a chance.
+  adjustFontFallback: false,
+});
+
+// Latin / digit companion: Stanga has no A-Z / a-z (nor ©), so email addresses,
+// "M.S.W." etc. fall through to this face instead of Arial. Self-hosted by next/font.
+const latin = Roboto_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-latin-next",
 });
 
 // Any build not pointed at the production domain is a staging copy (Azure SWA
@@ -166,7 +175,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="he" dir="rtl" className={`${elamy.variable} ${stanga.variable}`}>
+    <html lang="he" dir="rtl" className={`${elamy.variable} ${stanga.variable} ${latin.variable}`}>
       <body>
         <script
           type="application/ld+json"

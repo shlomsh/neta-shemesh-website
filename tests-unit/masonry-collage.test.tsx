@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import About from '../src/components/layout/About';
 
 describe('Masonry Collage (About Section 1)', () => {
-  it('should have flex-row-reverse on desktop', () => {
+  it('should split into text + wider photo column on desktop (photos on the left via RTL order)', () => {
     const { container } = render(<About />);
-    const wrapper = container.querySelector('.lg\\:flex-row-reverse');
+    const wrapper = container.querySelector('[class*="lg:grid-cols-[1fr_1.25fr]"]');
     expect(wrapper).not.toBeNull();
   });
 

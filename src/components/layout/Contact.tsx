@@ -30,7 +30,7 @@ export default function Contact() {
       <section
         id="contact-social"
         dir="rtl"
-        data-bg-tone="mid"
+        data-bg-tone="dark"
         className="py-[80px] px-[24px] min-h-[100svh] flex flex-col justify-center"
       >
         <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
@@ -38,7 +38,7 @@ export default function Contact() {
           {/* Heading on mobile — shown above photos only on small screens */}
           <div className="flex flex-col gap-[24px] text-right lg:hidden">
             <ScrollReveal delay={0}>
-              <SectionTitle id="ZgJbejfHoeBrgmf7-mobile" onDark>{SOCIAL_HEADING}</SectionTitle>
+              <SectionTitle id="ZgJbejfHoeBrgmf7-mobile">{SOCIAL_HEADING}</SectionTitle>
             </ScrollReveal>
           </div>
 
@@ -126,12 +126,12 @@ export default function Contact() {
           {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
           <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
             <ScrollReveal delay={0.1} className="hidden lg:block">
-              <SectionTitle id="ZgJbejfHoeBrgmf7" onDark>{SOCIAL_HEADING}</SectionTitle>
+              <SectionTitle id="ZgJbejfHoeBrgmf7">{SOCIAL_HEADING}</SectionTitle>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <p
-                className="type-lead tracking-[0.012em] font-[family-name:var(--font-stanga)] text-[var(--color-white)]"
+                className="type-lead"
               >
                 {SOCIAL_BODY_START}
                 <strong>{SOCIAL_BODY_BOLD}</strong>
@@ -157,39 +157,48 @@ export default function Contact() {
       <section
         id="contact-office"
         dir="rtl"
-        data-bg-tone="cream"
-        className="py-[80px] px-[24px] border-t border-[var(--color-mauve)] min-h-[100svh] flex flex-col justify-center"
+        data-bg-tone="mid"
+        className="py-[80px] lg:py-12 px-[24px] min-h-[100svh] lg:h-[max(100svh,720px)] flex flex-col justify-center"
       >
-        <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-[48px] lg:flex-row lg:items-stretch lg:gap-[48px]">
+        <div className="max-w-[1100px] mx-auto w-full flex flex-col">
 
-          {/* Right col on desktop (first in RTL DOM order): heading + body + contact details */}
-          <div className="flex flex-col gap-[24px] text-right lg:w-[40%] shrink-0">
-            <ScrollReveal delay={0}>
-              <SectionTitle id="zNSWHTotP3XOaXao">{OFFICE_HEADING}</SectionTitle>
-            </ScrollReveal>
+          {/* Title row: above the card, right-aligned (RTL) on the mauve */}
+          <ScrollReveal delay={0} className="mb-8 md:mb-12 text-right">
+            <SectionTitle id="zNSWHTotP3XOaXao">{OFFICE_HEADING}</SectionTitle>
+          </ScrollReveal>
 
-            <ScrollReveal delay={0.1}>
-              <p
-                className="type-lead tracking-[0.012em] font-[family-name:var(--font-stanga)]"
-              >
-                {OFFICE_BODY_START}
-                <strong>{OFFICE_BODY_BOLD}</strong>
-                {OFFICE_BODY_END}
-              </p>
-            </ScrollReveal>
+          {/* One cream card frames both details and map. Mauve fails contrast for any text
+              (2.26:1); plum on cream is 5.55:1 (AA at any size). The card hugs its content
+              (the section centres it vertically); at lg the map stretches to the details
+              column's height via items-stretch, with a 360px floor. */}
+          <ScrollReveal delay={0.1} className="w-full">
+            <div
+              data-bg-tone="cream"
+              className="rounded-card bg-[var(--color-cream)] p-6 md:p-8 lg:p-10 w-full"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-stretch">
 
-            <ScrollReveal delay={0.2}>
-              <ContactDetails
-                phone={PHONE}
-                email={EMAIL}
-                addressStrong={ADDRESS_STRONG}
-              />
-            </ScrollReveal>
-          </div>
+                {/* Right cell (first in RTL DOM): lead + contact details */}
+                <div className="flex flex-col justify-center gap-[24px] text-right">
+                  <p
+                    className="type-lead"
+                  >
+                    {OFFICE_BODY_START}
+                    <strong>{OFFICE_BODY_BOLD}</strong>
+                    {OFFICE_BODY_END}
+                  </p>
 
-          {/* Left col on desktop (second in RTL DOM order): map — full width on mobile */}
-          <ScrollReveal delay={0.3} className="lg:flex-1 min-h-[300px] lg:min-h-[400px]">
-            <MapEmbed className="h-[300px] lg:h-full min-h-[300px] lg:min-h-[400px]" />
+                  <ContactDetails
+                    phone={PHONE}
+                    email={EMAIL}
+                    addressStrong={ADDRESS_STRONG}
+                  />
+                </div>
+
+                {/* Left cell: map, 260px on mobile, matches the details height at lg */}
+                <MapEmbed className="h-[260px] lg:h-full lg:min-h-[360px] safari-clip" />
+              </div>
+            </div>
           </ScrollReveal>
         </div>
       </section>

@@ -24,8 +24,9 @@ interface ButtonLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> 
  *                   and photo sections (hero, CTA band, footer).
  * A mauve fill is never used: neither cream nor plum text passes on it.
  *
- * Sizes: `md` (default) and `sm` (44–54px tall, used by hero CTA / nav pill).
- * Both keep the type floor at 14px or above. Sizing classes are mutually
+ * Type: one style for every button, `.type-lead` (18-22px) bold, no uppercase and
+ * no tracking. Sizes differ only in height: `md` (default, 56px tall) and `sm`
+ * (48px tall, used by hero CTA / nav pill). Sizing classes are mutually
  * exclusive per size so `className` extras (width, margin, text size) never
  * fight with the base padding.
  */
@@ -38,11 +39,13 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   const baseClasses =
-    'inline-flex items-center justify-center whitespace-nowrap font-[family-name:var(--font-stanga)] font-bold uppercase tracking-[0.138em] rounded-full transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+    'type-lead inline-flex items-center justify-center whitespace-nowrap font-bold rounded-full transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
 
+  // No vertical padding: height comes from min-h alone, so a pill whose label is a
+  // smaller-line-box `.font-latin` span (phone number) is exactly as tall as a Hebrew one.
   const sizes = {
-    md: 'py-[18px] px-[44px] shadow-lg hover:shadow-xl',
-    sm: 'h-[clamp(44px,5.4vw,54px)] px-[clamp(16px,2.5vw,32px)] text-[clamp(14px,1.4vw,17px)] md:text-[20px] leading-[1.375] shadow-md hover:shadow-lg',
+    md: 'min-h-[56px] px-[44px] shadow-lg hover:shadow-xl',
+    sm: 'min-h-[48px] px-[clamp(20px,2.5vw,32px)] shadow-md hover:shadow-lg',
   };
 
   const variants = {

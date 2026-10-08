@@ -33,7 +33,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
 
       {/* Body */}
       <div className="flex flex-1 flex-col gap-[12px] p-[clamp(20px,2.5vw,28px)]">
-        <span className="type-eyebrow uppercase tracking-[0.08em] text-[var(--color-mauve)]">
+        <span className="type-eyebrow text-[var(--color-mauve)]">
           {post.category}
         </span>
 

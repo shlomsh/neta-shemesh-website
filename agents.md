@@ -11,8 +11,9 @@
 - **RTL Support:** The site is Hebrew `dir="rtl"`. When positioning elements, use logical properties (`start-*`, `end-*`) where applicable, and test layouts to ensure they don't break in RTL context.
 - **Animations:** Use `ScrollReveal` (framer-motion). Pass stagger delay as a prop computed on the server (`index * 0.12`). Keep parent grids/sections as server components (SEO-safe).
 - **Typography:** 
-  - `var(--font-canva-accent)` (Elamy): a **decorative handwriting/display** font. Use ONLY for hero/section display titles, short quotes-as-display, the logo, and signatures. **Never for body paragraphs** (it is unreadable as running text, especially RTL Hebrew — this was a real bug).
-  - `var(--font-stanga)`: the clean body font — all paragraphs, body, captions, names, labels, nav, CTA.
+  - `var(--font-display)` (Elamy): a **decorative handwriting/display** font. Use ONLY for the hero H1 and section H2 (weight 700), step numerals and the signature (weight 400). **Never for body paragraphs** (it is unreadable as running text, especially RTL Hebrew — this was a real bug). Weights: 400 + 700 (700 for headings only).
+  - `var(--font-stanga)` / `var(--font-body)`: the clean body font — all paragraphs, body, captions, names, labels, nav, CTA. Weights: 400 + 700.
+  - **Latin companion (`var(--font-latin)`, Roboto Condensed 400/700, next/font/google):** Stanga has **no Latin glyphs** (A–Z, a–z, ©). `--font-body` is `stanga, latin-companion, sans-serif`, so Latin inside Hebrew text falls to the companion automatically (never Arial). Use the `.font-latin` utility explicitly for phone numbers and email addresses. Stanga's `adjustFontFallback` is `false` so no generated Arial fallback sits in front of the companion.
 
 ### Responsive Type Scale (canonical — added 2026-06-20)
 
@@ -20,17 +21,21 @@ Sizing is centralized as fluid `clamp()` utility classes in `globals.css`. **Use
 
 | Class | Size (mobile → desktop) | Font / Weight | LH | Use for |
 |---|---|---|---|---|
-| `.type-display` | `clamp(40px,9vw,88px)` | accent / 400 | 1.05 | Hero title |
-| `.type-title` | `clamp(30px,5vw,52px)` | accent / 400 | 1.15 | Section H2 |
+| `.type-display` | `clamp(40px,9vw,72px)` | accent / 400 (700 on the hero H1) | 1.05 | Hero H1, step numerals |
+| `.type-title` | `clamp(30px,5vw,52px)` | accent / 700 on headings | 1.15 | Section H2, footer tagline |
 | `.type-card-title` | `clamp(22px,3vw,30px)` | body / 700 | 1.25 | Card/sub headings |
 | `.type-quote` | `clamp(24px,3vw,32px)` | body / 400 | 1.5 | Pull-quotes, personal statement |
 | `.type-lead` | `clamp(18px,2vw,22px)` | body / 400 | 1.6 | Intro/lead paragraph |
 | `.type-body` | `clamp(16px,1.6vw,18px)` | body / 400 | 1.65 | Default paragraph |
 | `.type-small` | `clamp(14px,1.3vw,16px)` | body / 400 | 1.5 | Captions, attribution title |
-| `.type-eyebrow` | `clamp(13px,1.2vw,14px)` | body / 600, +0.08em, upper | 1.4 | Labels/eyebrows (Latin only) |
+| `.type-eyebrow` | `14px` | body / 700, +0.08em, upper | 1.4 | Labels/eyebrows (Latin only) |
 | `.type-signature` | `clamp(32px,5vw,56px)` | accent / 400 | 1.1 | Handwritten signature |
 
+Blog exception: `.type-read` (20–23px) and `.type-read-lead` (22–28px) for long-form article text. Buttons and desktop nav links are `.type-lead` bold (tracking 0); hero subtext is `.type-quote`.
+
 Best-practice rules: max two weights per font family; line length ~65ch max; comfortable line-height (1.6–1.7 body, 1.1–1.2 display); build hierarchy with **size + the body/accent font split**, not by bolding everything.
+
+**Section subtitle** (the one line under an H2, in the title lockup) = `.type-quote` + `max-w-[65ch]`, aligned with the title, `mt-3 md:mt-4`; `.type-lead` is for the first paragraph of running copy, not subtitles.
 
 ### Color System & Card Rotation (locked decision — 2026-06-20)
 
@@ -65,14 +70,12 @@ Hero nav/CTA pill (`bg-brand-primary/75` mauve over plum ≈ `#B28AA8`, cream te
 - **Mid** → no essential text at all (2.26:1 with cream fails even large-text AA); decorative/image-dominant surfaces only.
 - Text on a nested photo/card surface (StepCard, ExpertiseCard, TestimonialCard) is judged by its *own visible* background, not the parent tone.
 
-The legacy `[data-body-large]` bold-bump still exists in `globals.css` for cards not yet migrated, but it is **deprecated** — prefer moving the card's tone over bolding its text.
-
 **Card background sequence:** Cards are screen-height sections. Backgrounds still progress through the palette for rhythm, but tone is chosen **content-first** (per the rule above), not by a rigid darkest→lightest cycle. The 3 **photo** cards (Hero, CTA band, Footer) keep their photographic treatment + dark overlay and sit outside the sequence. *(Worked example: the About/Quote personal-statement card moved Mid→Cream so its quote + italic attribution caption render cleanly at high contrast.)*
 
 **Implementation mechanism (do not reinvent):**
 - Background + text color are driven by a `data-bg-tone="dark|mid|light|cream"` attribute (CSS rules live in `globals.css`). The `Section` primitive (`bgVariant` prop) applies this; bespoke `<section>`s set `data-bg-tone` directly.
 - When changing a card's tone, **sync its descendants' text color**: remove hardcoded `text-white`/`onDark` where the new tone needs dark text, and vice versa, so color inherits from the tone.
-- `[data-body-large]` is **deprecated** — do not add it to new elements. Solve contrast via content-aware tone assignment instead.
+- The old `[data-body-large]` forced-bold attribute has been **removed**. Solve contrast via content-aware tone assignment instead.
 - See `CLAUDE.md` for the full typography + color guidelines.
 
 ## 2. Client Persona & Voice
@@ -247,7 +250,7 @@ Then "done" is checkable. One section at a time, committed, fully off `canva-sou
   Canva's high-specificity `styles.css`.
 - **Organic backgrounds:** render decorative SVGs as absolute layers (`z-0 pointer-events-none`) with
   content stacked `z-10`. Watch `overflow-hidden` cropping circular avatars.
-- **Tailwind v4 clamp() limits:** `text-[clamp(...)]` fails silently in v4 if it doesn't map directly to a recognized length/size token, causing it to fall back to browser default sizes (e.g., `24px` for an `h2`). When needing fluid text, rely on defined CSS classes (like `.section-header` in `globals.css`) rather than inline arbitrary clamp utilities.
+- **Tailwind v4 clamp() limits:** `text-[clamp(...)]` fails silently in v4 if it doesn't map directly to a recognized length/size token, causing it to fall back to browser default sizes (e.g., `24px` for an `h2`). When needing fluid text, rely on defined CSS classes (like `.type-title` in `globals.css`) rather than inline arbitrary clamp utilities.
 - **Playwright BASE_URL Gotcha:** If Github Actions runs `BASE_URL=http://localhost:3000 npx playwright test` but the next server isn't already running in the background, Playwright's `webServer` block will automatically spin it up. However, if tests fall back to `https://kromaticdesignstudio.my.canva.site` when `process.env.BASE_URL` is empty locally, you will get confusing title mismatches. Always run `npm run start` explicitly or ensure `BASE_URL` is passed correctly in local environments.
 - **RTL Positioning:** This site runs with `dir="rtl"`. When positioning absolute elements (like Quote Icons), always verify logical placement. A `left-[32px]` utility places an element on the opposite side of the text in RTL. Use logical properties (`start-*`, `end-*`) or explicitly map `right-[32px]` for top-right anchors.
 - **Canva Faded Background Pattern:** To fade a background image correctly behind text, render the `<img>` at full opacity (`opacity-100`) and place an absolute `bg-[var(--color-canva-dark)] opacity-30` overlay **on top** of it. Lowering the image opacity against a solid dark background layer *behind* it will cause the image to disappear.

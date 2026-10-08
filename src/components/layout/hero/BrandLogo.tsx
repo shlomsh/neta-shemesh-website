@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 /**
  * BrandLogo — "נטע שמש" logotype in the Elamy Bold display face.
  *
@@ -11,7 +13,7 @@
  */
 export function BrandLogo() {
   return (
-    <a
+    <Link
       id="Fyf1hlFV3WFGVXJq"
       href="/"
       dir="rtl"
@@ -30,6 +32,6 @@ export function BrandLogo() {
         "
         loading="eager"
       />
-    </a>
+    </Link>
   );
 }

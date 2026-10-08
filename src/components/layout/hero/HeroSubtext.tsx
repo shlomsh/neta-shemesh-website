@@ -1,8 +1,7 @@
 /**
  * HeroSubtext — supporting body copy beneath the main heading.
  *
- * Two lines of Hebrew body text in Stanga Regular (weight 400),
- * matching the original letter-spacing and line-height from the template source.
+ * Two lines of Hebrew supporting copy at `.type-quote` (Stanga 400, 24-32px).
  * Server component.
  */
 export function HeroSubtext() {
@@ -10,12 +9,8 @@ export function HeroSubtext() {
     <p
       dir="rtl"
       className="
+        type-quote
         text-[var(--color-blush)]
-        font-[family-name:var(--font-stanga)]
-        font-normal
-        text-[clamp(18px,4vw,24px)]
-        leading-[1.45]
-        tracking-[0.012em]
         w-full
       "
     >

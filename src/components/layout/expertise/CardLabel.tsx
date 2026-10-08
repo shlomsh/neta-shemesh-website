@@ -19,12 +19,9 @@ export function CardLabel({ title, description }: CardLabelProps) {
       <span
         className="
           block
-          font-[family-name:var(--font-body)]
+          type-small
           text-[var(--color-white)]
           font-bold
-          text-[clamp(14px,1.6vw,18px)]
-          leading-[1.3]
-          tracking-[0.012em]
         "
       >
         {title}

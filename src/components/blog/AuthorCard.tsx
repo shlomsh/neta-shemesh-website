@@ -23,7 +23,7 @@ export function AuthorCard() {
       </div>
 
       <div className="flex flex-col gap-[6px]">
-        <span className="type-eyebrow uppercase tracking-[0.08em] text-[var(--color-mauve)]">
+        <span className="type-eyebrow text-[var(--color-mauve)]">
           על הכותבת
         </span>
         <p className="type-card-title text-[var(--color-plum)]">{AUTHOR_NAME}</p>

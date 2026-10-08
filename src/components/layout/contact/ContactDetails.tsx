@@ -11,9 +11,6 @@ export function ContactDetails({
   email,
   addressStrong,
 }: ContactDetailsProps) {
-  const emailParts = email.split('@');
-  const hasAt = emailParts.length > 1;
-
   return (
     <ul className="flex flex-col gap-[24px] list-none">
       {/* Address */}
@@ -33,10 +30,7 @@ export function ContactDetails({
           }}
         />
         <div className="text-right">
-          <p
-            data-body-large="true"
-            className="font-bold leading-[1.45] tracking-[0.012em] font-[family-name:var(--font-stanga)] text-inherit"
-          >
+          <p className="type-lead">
             {addressStrong}
           </p>
         </div>
@@ -62,10 +56,9 @@ export function ContactDetails({
           <a
             href={`tel:${phone.replace(/[\s-]/g, '')}`}
             dir="ltr"
-            data-body-large="true"
-            className="font-bold hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit inline-block"
+            className="type-lead hover:opacity-80 transition-opacity text-inherit inline-block"
           >
-            {phone}
+            <span className="font-latin">{phone}</span>
           </a>
         </div>
       </li>
@@ -90,17 +83,9 @@ export function ContactDetails({
           <a
             href={`mailto:${email}`}
             dir="ltr"
-            className="font-bold hover:opacity-80 transition-opacity font-[family-name:var(--font-stanga)] text-inherit inline-block contact-email-link"
+            className="type-lead hover:opacity-80 transition-opacity text-inherit inline-block"
           >
-            {hasAt ? (
-              <>
-                {emailParts[0]}
-                <span className="font-sans">@</span>
-                {emailParts[1]}
-              </>
-            ) : (
-              email
-            )}
+            <span className="font-latin">{email}</span>
           </a>
         </div>
       </li>

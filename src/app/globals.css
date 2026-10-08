@@ -9,13 +9,34 @@
   --font-elamy: var(--font-elamy), sans-serif;
   --font-stanga: var(--font-stanga), sans-serif;
 
-  --font-body: var(--font-stanga), sans-serif;
+  /* Latin/digit companion (Roboto Condensed via next/font, see layout.tsx).
+   * Stanga has no Latin glyphs; the browser falls through Stanga -> companion
+   * per character, so Latin inside Hebrew text renders in the companion. */
+  --font-latin: var(--font-latin-next), sans-serif;
+
+  /* Optical size correction for the Latin companion. Roboto Condensed is set
+   * on a much larger body than Stanga: at 18px, its digits are 13.2px tall vs
+   * 9.3px for Stanga's Hebrew letters (lamed ascender 11.0px), and its
+   * lowercase x-height is 9.7px vs 9.3px. 0.88 puts digits at ~11.6px (about
+   * the Hebrew ascender) and lowercase at ~8.5px (just below the Hebrew body),
+   * so phone/email read at the same weight as the Hebrew beside them. */
+  --latin-scale: 0.88;
+
+  --font-body: var(--font-stanga), var(--font-latin), sans-serif;
   --font-display: var(--font-elamy), cursive;
 
   /* Border-radius scale (3 steps). Generates `rounded-tile` / `rounded-card`.
    * Pills, buttons and avatars use the built-in `rounded-full`. */
   --radius-tile: 12px;   /* small tiles: gallery grid cells, map, inputs, blog thumbnails */
   --radius-card: 24px;   /* cards, photo frames, portrait, step/expertise cards, collage panels */
+}
+
+/* `static` so the token is always emitted to :root (Tailwind drops unreferenced theme vars,
+ * and it is only consumed through the arbitrary utility `bg-[var(--surface-veil)]`). */
+@theme static {
+  /* Cream veil over mauve for inner cards on mid sections; measured >=4.5:1 against plum
+   * (cream 85% over mauve ~ #F6E7E8 -> 4.97:1), so lead/body text is allowed. */
+  --surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));
 }
 
 :root {
@@ -43,10 +64,12 @@
   html, body {
     background-color: var(--color-cream);
     color: var(--color-plum);
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     direction: rtl; /* Hebrew RTL */
   }
 }
+
+/* Desktop card snapping is handled in JS by src/components/ui/SoftSnap.tsx (no CSS scroll-snap). */
 
 /* Align map in Contact section to have a left gutter in RTL desktop view */
 @media (min-width: 1024.05px) {
@@ -96,12 +119,12 @@
     --header-color: var(--color-plum);
   }
 
-  /* ── Large-text AA bump for Mid and Light sections ──────────────────────
+  /* ── Large-text flag for Mid and Light sections ─────────────────────────
    * Mid ≈ 2.26:1 (fails AA even for large text; decorative surfaces only),
    * Light ≈ 3.89:1 (AA large text only: ≥18.66 px bold OR ≥24 px regular).
-   * .body-text-large is applied by BodyText when it detects the section
-   * tone via the inherited CSS custom property --section-needs-large-text.
-   * We set that property to 1 on Mid/Light, and BodyText reads it.
+   * --section-needs-large-text is informational: nothing forces bold any more
+   * (the old forced-bold attribute was removed). Copy on these tones is set at the
+   * `.type-quote` / `.type-title` scale instead.
    * ──────────────────────────────────────────────────────────────────────── */
   [data-bg-tone="mid"],
   [data-bg-tone="light"] {
@@ -112,36 +135,6 @@
   [data-bg-tone="cream"] {
     --section-needs-large-text: 0;
   }
-
-  /* The actual size/weight bump — applied via data attribute on the element
-   * so it doesn't bleed into unrelated text nodes. Matches <p>, <a>, etc. */
-  [data-body-large="true"] {
-    font-size: clamp(18.67px, 1.6vw, 22px) !important;
-    font-weight: 700 !important;
-  }
-
-  .hero-title, .hero-title span,
-  .section-header, .section-header span {
-    font-family: var(--font-display) !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    line-height: 1.2em !important;
-    text-transform: none !important;
-    letter-spacing: -0.01em !important;
-    color: var(--header-color) !important;
-  }
-  .sub-header, .sub-header span {
-    font-family: var(--font-display) !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    line-height: 1.3em !important;
-    text-transform: none !important;
-    letter-spacing: 0em !important;
-    color: var(--header-color) !important;
-  }
-  .hero-title, .hero-title span     { font-size: clamp(34px, 4.95vw, 63.36px) !important; }
-  .section-header, .section-header span { font-size: clamp(28px, 4.375vw, 56px) !important; }
-  .sub-header, .sub-header span     { font-size: clamp(22px, 2.42vw, 30.98px) !important; }
 }
 
 /* Hero illustration gentle float (05B Dark Ground). */
@@ -190,7 +183,7 @@
   .type-display {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(40px, 9vw, 88px);
+    font-size: clamp(40px, 9vw, 72px);
     line-height: 1.05;
     letter-spacing: -0.01em;
   }
@@ -203,35 +196,35 @@
   }
 
   .type-card-title {
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     font-weight: 700;
     font-size: clamp(22px, 3vw, 30px);
     line-height: 1.25;
   }
 
   .type-quote {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-weight: 400;
-    font-size: clamp(18px, 2vw, 24px);
+    font-size: clamp(24px, 3vw, 32px);
     line-height: 1.5;
   }
 
   .type-lead {
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: clamp(18px, 2vw, 22px);
     line-height: 1.6;
   }
 
   .type-body {
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: clamp(16px, 1.6vw, 18px);
     line-height: 1.65;
   }
 
   .type-small {
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: clamp(14px, 1.3vw, 16px);
     line-height: 1.5;
@@ -243,7 +236,7 @@
    * for comfortable sustained reading. Used only by the blog PostBody.
    * ──────────────────────────────────────────────────────────────────────── */
   .type-read {
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     font-weight: 400;
     /* Long-form blog body. Generous sizing for sustained reading: 20px on the
      * smallest phones, scaling to 23px on desktop. The vw mid-term keeps it
@@ -253,16 +246,16 @@
   }
 
   .type-read-lead {
-    font-family: var(--font-stanga);
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: clamp(22px, 5.6vw, 28px);
     line-height: 1.65;
   }
 
   .type-eyebrow {
-    font-family: var(--font-stanga);
-    font-weight: 600;
-    font-size: clamp(13px, 1.2vw, 14px);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
     line-height: 1.4;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -275,8 +268,15 @@
     line-height: 1.1;
   }
 
-  .contact-email-link {
-    font-size: clamp(14.5px, 1.3vw, 16.5px);
+  /* Latin/digit companion for phone numbers and email addresses.
+   * This is the ONE allowed size rule outside the type scale: it only applies
+   * an optical correction (--latin-scale) relative to the surrounding
+   * `.type-*` size, so it MUST sit on a child <span> of the element that
+   * carries the `.type-*` class (on the same element it would override that
+   * class's size and resolve 1em against the parent instead). */
+  .font-latin {
+    font-family: var(--font-latin), sans-serif;
+    font-size: calc(1em * var(--latin-scale));
   }
 }
 

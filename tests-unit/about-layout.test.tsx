@@ -22,8 +22,8 @@ describe('About Layout', () => {
     expect(organicBgSvg).not.toBeNull();
     
     // Check if it has the required classes
-    expect(organicBgSvg?.className.baseVal || organicBgSvg?.getAttribute('class')).toContain('z-0');
-    expect(organicBgSvg?.className.baseVal || organicBgSvg?.getAttribute('class')).toContain('pointer-events-none');
+    expect((organicBgSvg?.getAttribute('class') ?? '')).toContain('z-0');
+    expect((organicBgSvg?.getAttribute('class') ?? '')).toContain('pointer-events-none');
 
     // Find the text layer wrapper for "ליווי מקצועי לזוגות"
     const header = screen.getByText('ליווי מקצועי לזוגות');

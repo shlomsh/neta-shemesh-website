@@ -24,14 +24,14 @@ export function PostBody({ blocks }: PostBodyProps) {
         switch (block.type) {
           case 'lead':
             return (
-              <p key={i} className="type-read-lead text-right tracking-[0.012em] text-[var(--color-plum)]">
+              <p key={i} className="type-read-lead text-right text-[var(--color-plum)]">
                 {block.text}
               </p>
             );
 
           case 'paragraph':
             return (
-              <p key={i} className="type-read text-right tracking-[0.012em] text-[var(--color-plum)]">
+              <p key={i} className="type-read text-right text-[var(--color-plum)]">
                 {block.text}
               </p>
             );
@@ -71,7 +71,7 @@ export function PostBody({ blocks }: PostBodyProps) {
                       aria-hidden="true"
                       className="mt-[12px] h-[8px] w-[8px] shrink-0 rounded-full bg-[var(--color-mauve)]"
                     />
-                    <p className="type-read text-right tracking-[0.012em] text-[var(--color-plum)]">
+                    <p className="type-read text-right text-[var(--color-plum)]">
                       {item.lead && (
                         <span className="font-bold text-[var(--color-plum)]">{item.lead} </span>
                       )}

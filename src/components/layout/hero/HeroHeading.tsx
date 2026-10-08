@@ -1,10 +1,6 @@
 /**
- * HeroHeading — main hero title in Elamy Bold.
- *
- * The original template used var(--font-display) = Stanga with no
- * explicit font-weight, causing it to fall through to the light/regular
- * face under font-synthesis:none.  Explicitly specifying font-weight:700
- * ensures Stanga-Bold.woff2 is used so the heading renders heavy.
+ * HeroHeading — main hero title: `.type-display` (Elamy, 40-72px) at weight 700
+ * (headings are Elamy Bold by owner decision; numerals/signature stay 400).
  *
  * Preserves id="yWav85A872J3eebD" required by layout-fit and
  * computed-style-golden test suites.
@@ -21,12 +17,9 @@ export function HeroHeading() {
       id="yWav85A872J3eebD"
       dir="rtl"
       className="
+        type-display
         text-[var(--color-white)]
-        font-[family-name:var(--font-display)]
         font-bold
-        text-[clamp(48px,12vw,72px)]
-        leading-[1.1]
-        tracking-[-0.02em]
         w-full
       "
     >

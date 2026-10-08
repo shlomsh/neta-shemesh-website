@@ -10,8 +10,9 @@
 
 | Token | Family | Role |
 |---|---|---|
-| `var(--font-display)` | Elamy (handwriting/display) | Hero title, section H2, signature only |
+| `var(--font-display)` | Elamy (handwriting/display) | Hero H1 + section H2 (700), step numerals + signature (400) only |
 | `var(--font-stanga)` | Stanga (clean sans) | Everything else — paragraphs, names, labels, nav, CTA |
+| `var(--font-latin)` | Roboto Condensed (Latin/digit companion) | Latin letters and digits Stanga lacks; phone + email |
 
 **Elamy is a decorative script. Never use it for body paragraphs.** It is illegible as running text, especially in Hebrew RTL. This was a real production bug.
 
@@ -23,15 +24,17 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 
 | Class | Mobile → Desktop | Font | Weight | Line-height | Use for |
 |---|---|---|---|---|---|
-| `.type-display` | 40px → 88px | accent | 400 | 1.05 | Hero H1 |
-| `.type-title` | 30px → 52px | accent | 400 | 1.15 | Section H2 |
+| `.type-display` | 40px → 72px | accent | 400 (700 on the hero H1) | 1.05 | Hero H1, step numerals |
+| `.type-title` | 30px → 52px | accent | 700 (headings) | 1.15 | Section H2, footer tagline |
 | `.type-card-title` | 22px → 30px | body | **700** | 1.25 | Card/step headings |
-| `.type-quote` | 24px → 32px | body | 400 | 1.50 | Pull-quotes, personal statements |
+| `.type-quote` | 24px → 32px | body (Stanga) | 400 | 1.50 | Pull-quotes, personal statements, blush/mauve card copy |
 | `.type-lead` | 18px → 22px | body | 400 | 1.60 | First paragraph of a section |
 | `.type-body` | 16px → 18px | body | 400 | 1.65 | Default body copy |
 | `.type-small` | 14px → 16px | body | 400 | 1.50 | Captions, attribution subtitle |
-| `.type-eyebrow` | 13px → 14px | body | 600 | 1.40 | Labels / eyebrows (uppercase, +0.08em tracking) |
+| `.type-eyebrow` | 14px fixed | body | 700 | 1.40 | Labels / eyebrows (uppercase, +0.08em tracking) |
 | `.type-signature` | 32px → 56px | accent | 400 | 1.10 | Handwritten signature element |
+
+**Blog exception:** `.type-read` (20px → 23px) and `.type-read-lead` (22px → 28px) are the long-form article sizes used by the blog `PostBody` only.
 
 **Floor rule: no text below 14px anywhere on the site.** `type-small` is the minimum. Anything smaller (e.g. old `text-xs`, `text-[12px]`) fails mobile readability and accessibility.
 
@@ -41,7 +44,7 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 
 1. **Build hierarchy with size + font, not bold.** Use `.type-quote` (large, regular) vs `.type-body` (smaller, regular) to create contrast. `font-bold` belongs only on names, card titles, and CTAs — not on body paragraphs.
 
-2. **Max two weights per font family.** Stanga: 400 (body) + 700 (bold for names/titles). Elamy: 400 only.
+2. **Max two weights per font family.** Stanga: 400 (body) + 700 (bold for names, card titles, nav, CTAs). Elamy: 400 + 700 (700 for headings only: hero H1 and section H2; 400 for step numerals and the signature). Roboto Condensed: 400 + 700.
 
 3. **Line length cap ~65ch** on desktop for comfortable reading. Use `max-w-[65ch]` or the `Container` primitive's `maxWidth` prop.
 
@@ -53,7 +56,11 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 
 5. **Never add both `type-body` and another `type-*` class to the same element manually.** The CSS declaration order means `type-body` (declared later) would win, silently overriding your intended size. Use BodyText's `className` prop or a plain `<p className="type-lead ...">` instead.
 
-6. **`data-body-large` is deprecated.** It was a transitional hack that force-bolded body text for accessibility. It has been removed from `BodyText`. Do not add it to new elements — solve contrast via the color system instead (see below).
+6. **Latin and digits: Stanga has no Latin glyphs** (no A–Z / a–z, no ©). The Latin companion is **Roboto Condensed** (`--font-latin`, 400 + 700, loaded via `next/font/google`, self-hosted). `--font-body` is `stanga, latin, sans-serif`, so Latin inside Hebrew text falls through to the companion automatically, never Arial. Use the `.font-latin` utility explicitly on phone numbers and email addresses. Stanga's `adjustFontFallback` stays `false` in `layout.tsx` so no generated Arial fallback sits ahead of the companion.
+
+7. **No ad-hoc sizes.** Components use only the `.type-*` classes above (plus the blog exception). No `text-[...]`/`clamp()` size overrides, no `font-black`/`font-sans`, no `leading-[...]` or `tracking-[...]` on text that carries a `.type-*` class (allowed: `tracking-[-0.01em]` on Elamy headings). Buttons and desktop nav links are `.type-lead font-bold` (18–22px) with no uppercase and no tracking; the hero subtext is `.type-quote`. `data-body-large` has been removed.
+
+8. **Section subtitle** (the one line under an H2, part of the title lockup) = `.type-quote` + `max-w-[65ch]`, aligned with the title (centred when the title is centred, right-aligned otherwise), `mt-3 md:mt-4` under the title. `.type-lead` is for the first paragraph of running copy, not for subtitles.
 
 ---
 
@@ -101,6 +108,7 @@ Because Light only passes WCAG AA for large text and Mid fails it entirely, **as
 - **Light** → cards with display/quote-scale text only (`.type-title`, `.type-quote`, ≥24px) or image-dominant cards with minimal text.
 - **Mid** → no essential text. Reserve it for decorative surfaces, shapes and image-dominant cards; if a card needs readable text, move it to Dark or Cream.
 - Nested card surfaces (TestimonialCard, ExpertiseCard, StepCard) are judged by their **own visible background**, not the parent section tone.
+- Inner cards on mid (mauve) sections use `--surface-veil` (cream 85% over mauve, 4.97:1 vs plum) so lead/body copy is allowed; solid blush inner cards need quote-scale text.
 
 ---
 

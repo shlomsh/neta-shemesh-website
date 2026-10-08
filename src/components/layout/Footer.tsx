@@ -29,7 +29,7 @@ export default function Footer() {
         {/* 1. Tagline */}
         <FooterReveal delay={0} className="h-full">
           <p
-            className="text-[color:var(--color-white)] font-[family-name:var(--font-display)] text-[clamp(24px,4.4vw,56px)] leading-[1.1] tracking-[-0.02em] text-center w-full h-full flex items-center justify-center"
+            className="type-title font-bold tracking-[-0.01em] text-[color:var(--color-white)] text-center w-full h-full flex items-center justify-center"
             dir="rtl"
           >
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
@@ -48,8 +48,8 @@ export default function Footer() {
 
       </div>
 
-      {/* 4. Copyright — pinned to bottom */}
-      <div className="relative z-10 mt-auto">
+      {/* 4. Copyright — pinned to bottom; extra bottom padding below md clears the ContactFAB pill (bottom-left) */}
+      <div className="relative z-10 mt-auto pb-[calc(env(safe-area-inset-bottom)+72px)] md:pb-0">
         <FooterReveal delay={0.3}>
           <FooterCopyright />
         </FooterReveal>

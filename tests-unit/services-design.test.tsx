@@ -29,13 +29,38 @@ describe('Services mobile and desktop layout', () => {
     const { container } = render(<Services />);
 
     // Stagger was changed from translate-y (out-of-flow, clips in overflow-hidden) to mt-[Xpx].
-    // The second card (index 1) gets lg:mt-[53px] via the staggerClass prop on StepCard.
-    // We search for any element that carries the lg:mt-[53px] stagger.
-    const allElements = container.querySelectorAll('[class]');
-    const staggered = Array.from(allElements).find(el =>
-      (el.getAttribute('class') ?? '').includes('lg:mt-[53px]')
+    // The second column (odd cards) gets a modest lg:mt-10 offset, the first column the
+    // matching lg:mb-10, so the 2x2 grid stays exactly its allotted height at lg+.
+    const allElements = Array.from(container.querySelectorAll('[class]'));
+    const cls = (el: Element) => el.getAttribute('class') ?? '';
+    expect(allElements.filter(el => cls(el).includes('lg:mt-10')).length, 'two odd StepCards offset down').toBe(2);
+    expect(allElements.filter(el => cls(el).includes('lg:mb-10')).length, 'two even StepCards offset up').toBe(2);
+    expect(allElements.some(el => cls(el).includes('lg:mt-[53px]')), 'old large stagger is gone').toBe(false);
+  });
+
+  it('Services section is blush (light); paragraph sits directly on it at the AA-large quote scale; no inner card', () => {
+    const { container } = render(<Services />);
+
+    const section = container.querySelector('#cQd2ufFBWvr5c6ki');
+    expect(section?.getAttribute('data-bg-tone'), 'Services section is light (blush)').toBe('light');
+    expect(section!.className).not.toContain('bg-[var(--color-cream)]');
+
+    // The blush section makes an inner blush card redundant.
+    expect(section!.querySelector('div[data-bg-tone]'), 'no nested tone card').toBeNull();
+
+    const para = Array.from(section!.querySelectorAll('p')).find(p =>
+      p.textContent?.includes('התהליך בקליניקה')
     );
-    expect(staggered, 'Odd-indexed StepCards should have lg:mt-[53px] margin-top stagger').not.toBeUndefined();
+    expect(para, 'intro paragraph').toBeDefined();
+    expect(para!.className).toContain('type-quote');
+    // the quote class owns the 24-32px size: no ad-hoc override
+    expect(para!.className).not.toMatch(/text-\[(clamp|\d)/);
+    expect(para!.className).not.toContain('type-body');
+    expect(para!.className).not.toContain('bg-[var(--color-cream)]');
+
+    const cta = section!.querySelector('a[href="#contact"]');
+    expect(cta?.textContent).toContain('צרו קשר');
+    expect(cta!.className).toContain('bg-[var(--color-plum)]');
   });
 
 });

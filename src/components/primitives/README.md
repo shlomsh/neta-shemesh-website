@@ -21,15 +21,9 @@ both at `width/height:100%`. **Keeps the literal `animation_container`/`animated
 `ScrollAnimator` and the tests depend on them. Pass the element's exact template `animation` inline
 value (the per-element `rise-*`/`linear_fade` string) as `animation`.
 
-### `<Title id spanId tier onDark? text className? style? …props>`
-Renders `<p id className><span id={spanId}>{text}</span><br/></p>`.
-- `tier`: `'hero' | 'section' | 'sub'` → applies `.hero-title` / `.section-header` / `.sub-header`.
-- `onDark`: adds `.on-dark` (cream header on dark bands; default is dark plum). Set for titles on dark surfaces.
-- Pass through layout inline styles that aren't governed by the classes (`direction:'rtl'`, `text-align`, `margin-right`). Do **not** set inline `color/font-size/line-height/letter-spacing` — those are governed by the classes + `--header-color` token.
-
 ### `<Prose …props>` (children or `text`)
 Body paragraph: `<p {...props}>{children ?? text}</p>`. Pass the template `id` and inline style
-(`font-family:var(--font-stanga)`, `line-height`, `letter-spacing`, `text-align`) verbatim.
+(a `type-*` class, `text-align`) verbatim.
 
 ### `<AspectImage src alt? aspectPct objectPosition? fillId? imgId? fillStyle? imgStyle? children? style? …props>`
 The template `padding-top:%` aspect-ratio wrapper + absolute-fill image.
@@ -47,7 +41,7 @@ The only button-shaped link. Always a pill (`rounded-full`) with a lift-on-hover
 - `variant="primary"` (default): plum fill + cream text. Use on cream / blush / mauve sections.
 - `variant="secondary"`: cream fill + plum text. Use on plum sections and photo sections (hero, CTA band, footer).
 - Both pairs are 5.55:1. Never fill a button with mauve: no text colour passes on it.
-- `size="md"` (default) is the full CTA; `size="sm"` is the compact 44-54px pill (hero CTA, nav phone). Type never goes below 14px.
+- One type style for every button: `.type-lead` bold (18-22px), no uppercase, no tracking. `size` only changes padding: `md` (default) is the full CTA (~56-60px tall); `sm` is the compact ~48-52px pill (hero CTA, nav phone). Do not override font size via `className`.
 - Pass layout extras (`w-full`, `mt-*`, `relative z-10`, `min-h-*`) via `className`; do not restyle fill, radius or padding there.
 
 ## Radius scale

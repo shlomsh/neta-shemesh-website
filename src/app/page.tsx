@@ -6,10 +6,11 @@ import Testimonials from '@/components/layout/Testimonials';
 import Contact from '@/components/layout/Contact';
 import Footer from '@/components/layout/Footer';
 import { ContactFAB } from '@/components/ui/ContactFAB';
+import SoftSnap from '@/components/ui/SoftSnap';
 
 export default function Home() {
   return (
-    <main className="relative w-full overflow-hidden" style={{ backgroundColor: 'var(--color-bg-light)' }}>
+    <main className="relative w-full overflow-clip" style={{ backgroundColor: 'var(--color-bg-light)' }}>
       <Hero />
       <AboutIntro />
       <Expertise />
@@ -21,6 +22,7 @@ export default function Home() {
       <Contact />
       <Footer />
       <ContactFAB />
+      <SoftSnap />
     </main>
   );
 }

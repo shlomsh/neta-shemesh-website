@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
@@ -24,15 +24,17 @@ import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
  * cross-route ones like /#about-me — always use plain <a> so the browser does
  * a full navigation that reliably replaces the fragment.
  */
+const subscribeNoop = () => () => {};
+
 export function HeroNav({ basePath = '' }: { basePath?: string }) {
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  // false on the server / first hydration pass, true on the client afterwards
+  // (derived via useSyncExternalStore instead of setState-in-effect).
+  const mounted = useSyncExternalStore(subscribeNoop, () => true, () => false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
-
-  useEffect(() => setMounted(true), []);
 
   const links = [
     { href: `${basePath}#about-me`,  label: 'קצת עליי' },
@@ -102,13 +104,9 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
   }, [open]);
 
   const desktopLinkClass = `
+    type-lead
     text-[var(--color-white)]
-    font-[family-name:var(--font-stanga)]
     font-bold
-    text-[clamp(14px,1.6vw,18px)]
-    md:text-[20px]
-    leading-[1.5]
-    tracking-[0.047em]
     transition-opacity
     hover:opacity-75
     focus-visible:outline-none
@@ -144,7 +142,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
         {links.map(({ href, label }) => renderLink(href, label, desktopLinkClass))}
 
         <ButtonLink href="tel:+972545711060" variant="secondary" size="sm">
-          054-571-1060
+          <span className="font-latin">054-571-1060</span>
         </ButtonLink>
       </nav>
 
@@ -202,7 +200,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
               renderLink(
                 href,
                 label,
-                'text-[var(--color-white)] font-[family-name:var(--font-stanga)] font-bold text-[clamp(26px,8vw,36px)] leading-[1.2] tracking-[0.02em] transition-opacity hover:opacity-75',
+                'type-card-title text-[var(--color-white)] transition-opacity hover:opacity-75',
                 () => setOpen(false),
               ),
             )}
@@ -211,9 +209,9 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
               href="tel:+972545711060"
               variant="secondary"
               onClick={() => setOpen(false)}
-              className="mt-[clamp(12px,4vw,24px)] text-[20px]"
+              className="mt-[clamp(12px,4vw,24px)]"
             >
-              054-571-1060
+              <span className="font-latin">054-571-1060</span>
             </ButtonLink>
           </nav>
         </div>,

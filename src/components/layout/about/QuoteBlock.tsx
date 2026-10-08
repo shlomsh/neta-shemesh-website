@@ -10,7 +10,7 @@ export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) 
       {lines.map((line, i) => (
         <p
           key={i}
-          className="type-quote tracking-[0.012em]"
+          className="type-quote"
         >
           {line}
         </p>
@@ -23,7 +23,7 @@ export function QuoteBlock({ lines, authorName, authorTitle }: QuoteBlockProps) 
             </p>
           )}
           {authorTitle && (
-            <p className="type-small italic opacity-80">
+            <p className="type-small opacity-80">
               {authorTitle}
             </p>
           )}

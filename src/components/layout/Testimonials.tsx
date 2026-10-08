@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { Title } from "@/components/primitives/Title";
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialCard } from './testimonials/TestimonialCard';
@@ -56,8 +55,8 @@ export default function Testimonials() {
 
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
-            <SectionTitle id="Dct2rK7XCXJaLA2e" spanId="zxhh7nAzRvjXP5BT" className="text-center mb-[16px]">לקוחות ממליצים</SectionTitle>
-            <p className="type-lead text-center text-[var(--color-text-primary)] mb-[clamp(48px,6vw,96px)] max-w-[640px] mx-auto">
+            <SectionTitle id="Dct2rK7XCXJaLA2e" spanId="zxhh7nAzRvjXP5BT" className="text-center">לקוחות ממליצים</SectionTitle>
+            <p className="type-quote text-center text-[var(--color-text-primary)] mt-3 md:mt-4 mb-[clamp(48px,6vw,96px)] max-w-[65ch] mx-auto">
               מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.
             </p>
           </ScrollReveal>
@@ -88,8 +87,8 @@ export default function Testimonials() {
                 למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
               </p>
               <div className="text-right">
-                <p className="font-bold text-[var(--color-text-primary)] text-base md:text-[20px]">ויני ואלכסיי</p>
-                <p className="italic text-[var(--color-text-primary)] text-sm md:text-[20px]">נשואים באושר</p>
+                <p className="type-body font-bold text-[var(--color-text-primary)]">ויני ואלכסיי</p>
+                <p className="type-small text-[var(--color-text-primary)]">נשואים באושר</p>
               </div>
             </ScrollReveal>
           </div>
@@ -131,8 +130,8 @@ export default function Testimonials() {
         <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center w-full">
           <ScrollReveal delay={0.1}>
             <SectionTitle id="iVtldd7PMtN1BthG" spanId="VqD8RL1Dlcv6nIpY" onDark
-              className="mb-[24px] drop-shadow-md">קביעת פגישת ייעוץ</SectionTitle>
-            <p className="text-white font-[var(--font-stanga)] text-[clamp(16px,1.4vw,22px)] leading-[1.46] mb-[48px] max-w-[640px] mx-auto drop-shadow-md">
+              className="drop-shadow-md">קביעת פגישת ייעוץ</SectionTitle>
+            <p className="type-quote text-white mt-3 md:mt-4 mb-[48px] max-w-[65ch] mx-auto drop-shadow-md">
               הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם.
             </p>
             <ButtonLink href="#contact" variant="secondary">
@@ -146,16 +145,18 @@ export default function Testimonials() {
       <div id="gallery" aria-hidden="true" />
 
       {/* Gallery Section */}
-      <section id="vln9V07dEMN7DyMa" data-bg-tone="dark" className="py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center">
-        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full">
+      {/* lg+: exactly one screen (100svh; floor 720px). The photo grid is height-driven (flex-1,
+          frames fill their cell with object-cover) instead of aspect-driven. */}
+      <section id="vln9V07dEMN7DyMa" data-bg-tone="cream" className="py-[clamp(48px,5vw,96px)] min-h-[100svh] flex flex-col justify-center lg:h-[max(100svh,720px)] lg:py-12">
+        <div className="max-w-[1280px] mx-auto px-[clamp(16px,4vw,48px)] w-full lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
           <ScrollReveal delay={0.1}>
-            <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" onDark className="text-center mb-[24px]">טיפול זוגי לקשר בריא ותומך</SectionTitle>
-            <p className="type-lead text-center mb-[64px] max-w-[768px] mx-auto">
+            <SectionTitle id="T749khVkMfNluBNv" spanId="y5TxhTV4Bys7XHFV" className="text-center">טיפול זוגי לקשר בריא ותומך</SectionTitle>
+            <p className="type-quote text-center mt-3 md:mt-4 mb-[64px] lg:mb-8 max-w-[65ch] mx-auto">
               השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)] lg:grid-rows-2 lg:h-[calc(100svh-370px)]">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)] lg:grid-rows-2 lg:flex-1 lg:min-h-[320px]">
             {[
               'gallery-item-1.webp',
               'gallery-item-2.webp',

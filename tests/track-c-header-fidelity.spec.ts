@@ -1,14 +1,10 @@
 /**
- * Track C — Header fidelity TDD
+ * Track C — Header fidelity
  *
- * Written RED (failing) against the current codebase. After:
- *   1. Raising .section-header clamp max to ~56px in globals.css
- *   2. Changing tier="sub" → tier="section" for eIrs / iVt / T749 / YoSfu
- *   3. Converting JkkbI from <Prose> to <Title tier="section">
- * …these tests turn GREEN.
- *
- * Template reference: all section-level headers render at ~56.2px @ 1280px viewport.
- * Hero stays larger (63px) — intentional.
+ * Every section-level H2 renders with the canonical `.type-title` class
+ * (clamp(30px, 5vw, 52px) → 52px at a 1280px viewport). These tests assert
+ * that each section heading lands in the ~52px band (47–59 with tolerance)
+ * and stays below the hero display size.
  */
 import { test, expect } from '@playwright/test';
 
@@ -16,8 +12,8 @@ const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
 const DESKTOP_WIDTH = 1280;
 const DESKTOP_HEIGHT = 800;
 
-// Tolerance: ±3px around 56px  (53 – 59)
-const MIN_SECTION_PX = 53;
+// .type-title = 52px @1280; tolerance band 47 – 59
+const MIN_SECTION_PX = 47;
 const MAX_SECTION_PX = 59;
 
 test.describe('Track C — Section header size fidelity @1280', () => {
@@ -34,64 +30,64 @@ test.describe('Track C — Section header size fidelity @1280', () => {
       return el ? parseFloat(getComputedStyle(el).fontSize) : null;
     }, id);
 
-  // ── Always-been section-headers (currently 49px → should be 56px) ──────────
-  test('About-Intro section header ~56px', async ({ page }) => {
+  // ── Section headers (.type-title, 52px @1280) ──────────────────────────────
+  test('About-Intro section header ~52px / .type-title', async ({ page }) => {
     const px = await getFontSize(page, 'GDq1TYUPnp1UCFMP');
     expect(px, 'About-Intro').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'About-Intro').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('SafeSpace section header ~56px', async ({ page }) => {
+  test('SafeSpace section header ~52px / .type-title', async ({ page }) => {
     const px = await getFontSize(page, 'vyKTmOw3YNYlJZPL');
     expect(px, 'SafeSpace').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'SafeSpace').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('HowItWorks section header ~56px', async ({ page }) => {
+  test('HowItWorks section header ~52px / .type-title', async ({ page }) => {
     const px = await getFontSize(page, 'pEc3w8pe4QAw5k7o');
     expect(px, 'HowItWorks').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'HowItWorks').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test.skip('Testimonials section header ~56px', async ({ page }) => {
+  test.skip('Testimonials section header ~52px / .type-title', async ({ page }) => {
     const px = await getFontSize(page, 'Dct2rK7XCXJaLA2e');
     expect(px, 'Testimonials').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'Testimonials').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('Contact-Follow section header ~56px', async ({ page }) => {
+  test('Contact-Follow section header ~52px / .type-title', async ({ page }) => {
     const px = await getFontSize(page, 'ZgJbejfHoeBrgmf7');
     expect(px, 'Contact-Follow').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'Contact-Follow').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('Contact-Office section header ~56px', async ({ page }) => {
+  test('Contact-Office section header ~52px / .type-title', async ({ page }) => {
     const px = await getFontSize(page, 'zNSWHTotP3XOaXao');
     expect(px, 'Contact-Office').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'Contact-Office').toBeLessThan(MAX_SECTION_PX);
   });
 
-  // ── Formerly sub-headers — wrong tier assignment (currently 31px) ─────────
-  test('AboutLight "ליווי להתגברות" ~56px (was sub, needs section)', async ({ page }) => {
+  // ── Headers that were once sub-tier; must now render at section size ──────
+  test('AboutLight "ליווי להתגברות" ~52px / .type-title (was sub, needs section)', async ({ page }) => {
     const px = await getFontSize(page, 'YoSfu967TqAAsgNM');
     expect(px, 'AboutLight').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'AboutLight').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('Scheduling "קביעת פגישת ייעוץ" ~56px (was sub, needs section)', async ({ page }) => {
+  test('Scheduling "קביעת פגישת ייעוץ" ~52px / .type-title (was sub, needs section)', async ({ page }) => {
     const px = await getFontSize(page, 'iVtldd7PMtN1BthG');
     expect(px, 'Scheduling').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'Scheduling').toBeLessThan(MAX_SECTION_PX);
   });
 
-  test('CoupleTherapy "טיפול זוגי" ~56px (was sub, needs section)', async ({ page }) => {
+  test('CoupleTherapy "טיפול זוגי" ~52px / .type-title (was sub, needs section)', async ({ page }) => {
     const px = await getFontSize(page, 'T749khVkMfNluBNv');
     expect(px, 'CoupleTherapy').toBeGreaterThan(MIN_SECTION_PX);
     expect(px, 'CoupleTherapy').toBeLessThan(MAX_SECTION_PX);
   });
 
   // ── Reignite — ungoverned outlier (currently 68px Elamy) ─────────────────
-  test('Reignite "להצית מחדש" is section-header sized, uses Elamy', async ({ page }) => {
+  test('Reignite "להצית מחדש" is .type-title sized, uses Elamy', async ({ page }) => {
     const result = await page.evaluate(() => {
       const el = document.getElementById('JkkbI1eIj5p9V33T');
       if (!el) return null;

@@ -4,13 +4,18 @@ import React from 'react';
 import Expertise from '@/components/layout/Expertise';
 
 describe('Expertise Grid & Card Design', () => {
-  it('Expertise grid should be constrained 2x2 on desktop to prevent massive cards', () => {
+  it('Expertise grid is a 2x2 at lg (4 landscape-ish photos) that fills the remaining 100svh height', () => {
     const { container } = render(<Expertise />);
     const grid = container.querySelector('.grid');
-    expect(grid?.className, 'Grid must be 2 columns').toContain('md:grid-cols-2');
-    expect(grid?.className, 'Grid must not be 3 columns').not.toContain('lg:grid-cols-3');
-    // Ensure the grid container is tightly constrained to prevent huge cards and fit 100vh viewport
-    expect(grid?.className, 'Grid must be tightly constrained to fit 100vh').toContain('max-w-[640px]');
+    expect(grid?.className, 'Grid must be 2 columns at md').toContain('md:grid-cols-2');
+    expect(grid?.className, 'Grid is 2 rows at lg').toContain('lg:grid-rows-2');
+    expect(grid?.className, 'Grid must not be 3 columns at lg').not.toContain('lg:grid-cols-3');
+    expect(grid?.className, 'Grid takes the remaining height').toContain('lg:flex-1');
+    expect(grid?.className, 'Grid keeps real photos on short viewports').toContain('lg:min-h-[320px]');
+    const section = container.querySelector('section');
+    expect(section?.className, 'Section is exactly one screen at lg').toContain('lg:h-[100svh]');
+    expect(section?.className).toContain('min-h-[100svh]');
+    expect(section?.className, 'nothing may be clipped').not.toContain('overflow-hidden');
   });
 
   it('Expertise cards should have a drop shadow on the ScrollReveal wrapper, not an inner vignette', () => {
