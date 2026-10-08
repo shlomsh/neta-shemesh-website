@@ -24,16 +24,16 @@ const PHONE_HALF =
 
 /**
  * Single contact pill (replaces the old WhatsApp + Phone FABs).
- * Mobile: bottom-centre pill with WhatsApp + call halves.
- * md+: bottom-left pill with the WhatsApp half only.
- * The outer fixed wrapper owns positioning/centering so framer-motion's
- * inline transform on the pill never fights the translate classes.
+ * Bottom-left on every breakpoint. Mobile: WhatsApp + call halves.
+ * md+: WhatsApp half only.
+ * The outer fixed wrapper owns positioning so framer-motion's inline
+ * transform on the pill never fights the positioning classes.
  */
 export function ContactFAB() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 md:bottom-6 md:left-6 md:translate-x-0">
+    <div className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] left-4 z-50 md:bottom-6 md:left-6">
       <motion.div
         data-testid="contact-fab"
         initial={reduceMotion ? false : { y: 24, opacity: 0 }}
