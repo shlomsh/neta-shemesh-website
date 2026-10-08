@@ -1,0 +1,16 @@
+/* Hero blob entrance — blooms in during the pause between the "ביחד." word
+   stroke (ends 1.85 s) and the couple pen draw (starts 2.0 s).
+   Sequence: h1 0.08–0.78 s · word stroke 1.05–1.85 s · blob 1.5–2.6 s ·
+   pen 2.0–4.2 s · hearts 4.2 s. CSS-only, no JS dependency. */
+@keyframes blobIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 0.32; transform: scale(1); }
+}
+.blob {
+  opacity: 0;
+  transform-origin: 50% 55%;
+  animation: blobIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) 1.5s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; opacity: 0.32; transform: none; }
+}

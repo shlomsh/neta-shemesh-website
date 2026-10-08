@@ -65,7 +65,7 @@ export function HeroContent() {
         </div>
 
         {/* Art block */}
-        <div className="hero-enter hero-enter-2 w-full lg:flex-1">
+        <div className="w-full lg:flex-1">
           <HeroArt />
         </div>
       </div>

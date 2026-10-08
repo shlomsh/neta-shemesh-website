@@ -1,0 +1,40 @@
+/* Pen draw-in for the hero couple line art. Pure CSS, no JS.
+   Paths carry pathLength="1", so dash values are unit-free.
+   The "1 2" dasharray (gap > 1) avoids the round-cap dot that a
+   "1 1" pattern would show at dashoffset 1. */
+.pen {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  animation: draw var(--d) linear var(--delay) both;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.heart {
+  opacity: 0;
+  transform: scale(0.6);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: heartIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--delay) both;
+}
+
+@keyframes heartIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pen,
+  .heart {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: none;
+  }
+}

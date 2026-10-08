@@ -33,7 +33,7 @@ describe('Services mobile and desktop layout', () => {
     // We search for any element that carries the lg:mt-[53px] stagger.
     const allElements = container.querySelectorAll('[class]');
     const staggered = Array.from(allElements).find(el =>
-      el.className.includes('lg:mt-[53px]')
+      (el.getAttribute('class') ?? '').includes('lg:mt-[53px]')
     );
     expect(staggered, 'Odd-indexed StepCards should have lg:mt-[53px] margin-top stagger').not.toBeUndefined();
   });

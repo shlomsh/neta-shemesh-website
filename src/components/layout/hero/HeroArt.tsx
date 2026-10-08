@@ -7,8 +7,18 @@
  * vertical floating animation (see `floaty` in globals.css, which is
  * disabled under prefers-reduced-motion).
  *
+ * Hero motion sequence (all CSS, no JS):
+ *   h1 fade-in      0.08 - 0.78 s
+ *   word stroke     1.05 - 1.85 s
+ *   blob bloom      1.50 - 2.60 s  (HeroBlob.module.css)
+ *   couple pen      2.00 - 4.20 s
+ *   hearts          4.20 s
+ *
  * Server component; animation is pure CSS.
  */
+import { CoupleLineArt } from './CoupleLineArt';
+import styles from './HeroBlob.module.css';
+
 export function HeroArt() {
   return (
     <div
@@ -23,28 +33,25 @@ export function HeroArt() {
       {/* Asymmetric organic blob */}
       <div
         aria-hidden="true"
-        className="
+        className={`
+          ${styles.blob}
           absolute
           w-[clamp(280px,46vw,520px)]
           h-[clamp(220px,38vw,420px)]
           bg-[var(--color-mauve)]
-          opacity-[0.32]
           [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]
-        "
+        `}
       />
 
       {/* Line-art couple illustration */}
-      <img
-        src="/images/couple-creme.webp"
-        alt="זוג — ציור קו"
+      <CoupleLineArt
         className="
           relative
           w-[clamp(240px,42vw,480px)]
           h-auto
           hero-floaty
+          text-[var(--color-cream)]
         "
-        loading="eager"
-        fetchPriority="high"
       />
     </div>
   );
