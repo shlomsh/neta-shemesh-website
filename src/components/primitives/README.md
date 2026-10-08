@@ -40,7 +40,18 @@ The template `padding-top:%` aspect-ratio wrapper + absolute-fill image.
 
 ### `<Badge svgId gId pathId viewBox d fillColor opacity?>`
 A single template decorative/credential SVG: `<svg id><g id><path id d/></g></svg>` with the template
-background-url placeholder. Use one per stacked SVG path (e.g. Footer stacks several).
+background-url placeholder. Use one per stacked SVG path. Currently unused by any component (the footer CTA is now a plain `ButtonLink` pill).
+
+### `<ButtonLink href variant? size? className? …anchorProps>`
+The only button-shaped link. Always a pill (`rounded-full`) with a lift-on-hover.
+- `variant="primary"` (default): plum fill + cream text. Use on cream / blush / mauve sections.
+- `variant="secondary"`: cream fill + plum text. Use on plum sections and photo sections (hero, CTA band, footer).
+- Both pairs are 5.55:1. Never fill a button with mauve: no text colour passes on it.
+- `size="md"` (default) is the full CTA; `size="sm"` is the compact 44-54px pill (hero CTA, nav phone). Type never goes below 14px.
+- Pass layout extras (`w-full`, `mt-*`, `relative z-10`, `min-h-*`) via `className`; do not restyle fill, radius or padding there.
+
+## Radius scale
+Defined in `@theme` in `globals.css`: `rounded-tile` (12px: gallery cells, map, inputs, thumbnails), `rounded-card` (24px: cards, photo frames, panels) and the built-in `rounded-full` (pills, buttons, avatars). Do not use `rounded-[Npx]` or `%` radii.
 
 ## Notes
 - Decorative clip-path / SVG scaffolding: inline it faithfully (often as `AspectImage` children); don't refactor it during a faithful port.

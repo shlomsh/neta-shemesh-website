@@ -33,7 +33,7 @@ export function ContactFAB() {
         initial={reduceMotion ? false : { y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-[var(--color-cream)]/30 bg-[var(--color-plum)] text-[var(--color-cream)] shadow-[0_12px_30px_-10px_rgba(122,89,120,0.55)] transition-transform duration-200 hover:-translate-y-0.5"
+        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-[var(--color-cream)]/45 bg-[var(--color-plum)] text-[var(--color-cream)] shadow-[0_12px_30px_-10px_rgba(122,89,120,0.55)] transition-transform duration-200 hover:-translate-y-0.5"
       >
         <a
           data-testid="fab-whatsapp"

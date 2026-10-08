@@ -10,7 +10,7 @@
 export function HeroBackground() {
   return (
     <div
-      className="absolute inset-0 bg-[var(--color-plum)]"
+      className="grain-surface absolute inset-0 bg-[var(--color-plum)]"
       aria-hidden="true"
     />
   );

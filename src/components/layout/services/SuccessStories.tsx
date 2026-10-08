@@ -26,7 +26,7 @@ export function SuccessStories() {
       </div>
 
       <ScrollReveal delay={0.4} className="w-full max-w-[960px] px-[16px]">
-        <div className="w-full rounded-[16px] overflow-hidden shadow-2xl">
+        <div className="w-full rounded-card overflow-hidden shadow-2xl">
           <video
             src={VIDEO_SRC}
             playsInline

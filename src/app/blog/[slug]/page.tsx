@@ -120,7 +120,7 @@ export default async function BlogPostPage(
           <div className="mx-auto max-w-[800px]">
             {/* Cover — pulled up to overlap the seam with the dark hero */}
             <ScrollReveal delay={0}>
-              <div className="relative -mt-[clamp(64px,9vw,116px)] mb-[clamp(32px,5vw,56px)] w-full overflow-hidden rounded-[18px] outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_15%,transparent)] shadow-[0_24px_60px_-30px_rgba(122,89,120,0.6)]">
+              <div className="relative -mt-[clamp(64px,9vw,116px)] mb-[clamp(32px,5vw,56px)] w-full overflow-hidden rounded-card outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_15%,transparent)] shadow-[0_24px_60px_-30px_rgba(122,89,120,0.6)]">
                 <div className="pt-[58%]" />
                 <img
                   src={post.coverImage}

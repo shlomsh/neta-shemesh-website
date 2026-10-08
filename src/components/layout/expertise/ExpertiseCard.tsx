@@ -15,8 +15,8 @@ interface ExpertiseCardProps extends ExpertiseCardData {
 
 export function ExpertiseCard({ title, description, imageSrc, imageAlt, delay }: ExpertiseCardProps) {
   return (
-    <ScrollReveal delay={delay} className="w-full h-full shadow-2xl rounded-[4%]">
-      <div className="relative w-full h-full overflow-hidden rounded-[4%] bg-[var(--color-dark)]">
+    <ScrollReveal delay={delay} className="w-full h-full shadow-2xl rounded-card">
+      <div className="relative w-full h-full overflow-hidden rounded-card bg-[var(--color-dark)]">
         <CardImage src={imageSrc} alt={imageAlt} />
         <CardLabel title={title} description={description} />
       </div>

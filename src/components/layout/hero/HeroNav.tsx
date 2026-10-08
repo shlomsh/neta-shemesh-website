@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
+import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 
 /**
  * HeroNav — navigation used both in the hero and the blog header.
@@ -113,7 +114,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
     focus-visible:outline-none
     focus-visible:ring-2
     focus-visible:ring-[var(--color-white)]
-    rounded-sm
+    rounded-tile
   `;
 
   const renderLink = (
@@ -132,20 +133,6 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
       </a>
     );
 
-  const phoneBadgeClass = `
-    inline-flex items-center justify-center
-    bg-[var(--color-brand-primary)]/75
-    hover:bg-[var(--color-brand-primary)]
-    rounded-2xl
-    text-[var(--color-white)]
-    font-[family-name:var(--font-stanga)]
-    font-bold
-    tracking-[0.138em]
-    leading-[1.375]
-    transition-colors
-    whitespace-nowrap
-  `;
-
   return (
     <>
       {/* ── Desktop nav (md and up) ── */}
@@ -156,12 +143,9 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
       >
         {links.map(({ href, label }) => renderLink(href, label, desktopLinkClass))}
 
-        <a
-          href="tel:+972545711060"
-          className={`${phoneBadgeClass} px-[clamp(16px,2.5vw,32px)] h-[clamp(44px,5.4vw,54px)] text-[clamp(13px,1.4vw,17px)] md:text-[20px]`}
-        >
+        <ButtonLink href="tel:+972545711060" variant="secondary" size="sm">
           054-571-1060
-        </a>
+        </ButtonLink>
       </nav>
 
       {/* ── Mobile hamburger (below md) ── */}
@@ -172,7 +156,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
         aria-label="פתיחת תפריט"
         aria-expanded={open}
         aria-controls="mobile-menu"
-        className="md:hidden inline-flex h-[44px] w-[44px] items-center justify-center rounded-xl text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
+        className="md:hidden inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
       >
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6" />
@@ -201,7 +185,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="סגירת תפריט"
-              className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-xl text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
+              className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
             >
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -223,13 +207,14 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
               ),
             )}
 
-            <a
+            <ButtonLink
               href="tel:+972545711060"
+              variant="secondary"
               onClick={() => setOpen(false)}
-              className={`${phoneBadgeClass} mt-[clamp(12px,4vw,24px)] px-[40px] h-[60px] text-[20px]`}
+              className="mt-[clamp(12px,4vw,24px)] text-[20px]"
             >
               054-571-1060
-            </a>
+            </ButtonLink>
           </nav>
         </div>,
         document.body,

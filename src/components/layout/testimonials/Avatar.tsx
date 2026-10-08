@@ -7,7 +7,7 @@ export interface AvatarProps {
 
 export function Avatar({ src, alt }: AvatarProps) {
   return (
-    <div className="w-[64px] h-[64px] rounded-[50%] overflow-hidden shrink-0 ml-[16px]">
+    <div className="w-[64px] h-[64px] rounded-full overflow-hidden shrink-0 ml-[16px]">
       <img
         src={src}
         alt={alt}

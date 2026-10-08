@@ -20,22 +20,16 @@ const photoPanels = [
     src: '/images/about-collage-1.webp',
     objectPosition: '50% 50%',
     aspectPct: 87.06,
-    radiusX: '9%',
-    radiusY: '10.4%',
   },
   {
     src: '/images/about-collage-2.webp',
     objectPosition: '48.1% 47.7%',
     aspectPct: 87.06,
-    radiusX: '9%',
-    radiusY: '10.4%',
   },
   {
     src: '/images/about-collage-3.webp',
     objectPosition: '55.3% 50%',
     aspectPct: 93.07,
-    radiusX: '4.5%',
-    radiusY: '4.8%',
   },
 ] as const;
 
@@ -94,8 +88,6 @@ export function AboutIntro() {
                     src={photoPanels[0].src}
                     objectPosition={photoPanels[0].objectPosition}
                     aspectPct={100}
-                    radiusX="8%"
-                    radiusY="8%"
                   />
                 </ScrollReveal>
                 <ScrollReveal delay={0.12}>
@@ -103,8 +95,6 @@ export function AboutIntro() {
                     src={photoPanels[1].src}
                     objectPosition={photoPanels[1].objectPosition}
                     aspectPct={100}
-                    radiusX="8%"
-                    radiusY="8%"
                   />
                 </ScrollReveal>
               </div>
@@ -114,8 +104,6 @@ export function AboutIntro() {
                     src={photoPanels[2].src}
                     objectPosition={photoPanels[2].objectPosition}
                     aspectPct={150}
-                    radiusX="4%"
-                    radiusY="2.6%"
                   />
                 </ScrollReveal>
               </div>
@@ -195,7 +183,7 @@ export function AboutBio() {
               
               {/* Personal Photo */}
               <ScrollReveal delay={0.24} className="w-full flex justify-start">
-                <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-[24px] outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)] safari-clip">
+                <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-card outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)] safari-clip">
                   <Image
                     src={PROFILE_PHOTO}
                     alt="נטע שמש"
@@ -299,7 +287,7 @@ export function AboutGallery() {
                 <ScrollReveal key={i} delay={i * 0.12}>
                   {/* intrinsic aspect ratio 348:531 ≈ 152.5%; photo drifts within the frame */}
                   <ParallaxFrame
-                    className="aspect-[348/531] rounded-[4.3%/2.82%] outline-[1.5px] outline-[var(--color-black)] safari-clip"
+                    className="aspect-[348/531] rounded-card outline-[1.5px] outline-[var(--color-plum)] safari-clip"
                     amount={9}
                   >
                     <img

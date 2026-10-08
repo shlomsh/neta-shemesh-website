@@ -11,6 +11,11 @@
 
   --font-body: var(--font-stanga), sans-serif;
   --font-display: var(--font-elamy), cursive;
+
+  /* Border-radius scale (3 steps). Generates `rounded-tile` / `rounded-card`.
+   * Pills, buttons and avatars use the built-in `rounded-full`. */
+  --radius-tile: 12px;   /* small tiles: gallery grid cells, map, inputs, blog thumbnails */
+  --radius-card: 24px;   /* cards, photo frames, portrait, step/expertise cards, collage panels */
 }
 
 :root {
@@ -272,5 +277,49 @@
 
   .contact-email-link {
     font-size: clamp(14.5px, 1.3vw, 16.5px);
+  }
+}
+
+/* ── Paper grain on solid sections ───────────────────────────────────────
+ * Faint noise over the section's own background-colour, beneath all in-flow
+ * content (isolation + z-index:-1 on the pseudo). Photo sections carry no
+ * data-bg-tone, so they are untouched. Layered so Tailwind position utilities
+ * (absolute/fixed/sticky) still win over `position: relative`.
+ * ──────────────────────────────────────────────────────────────────────── */
+@layer components {
+  :root {
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  [data-bg-tone],
+  .grain-surface {
+    position: relative;
+    isolation: isolate;
+  }
+
+  [data-bg-tone]::before,
+  .grain-surface::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--grain);
+    background-size: 160px 160px;
+    opacity: var(--grain-opacity, 0.12);
+    mix-blend-mode: soft-light;
+  }
+
+  [data-bg-tone="light"]::before,
+  [data-bg-tone="cream"]::before {
+    --grain-opacity: 0.08;
+    mix-blend-mode: multiply;
+  }
+}
+
+@media print {
+  [data-bg-tone]::before,
+  .grain-surface::before {
+    display: none;
   }
 }

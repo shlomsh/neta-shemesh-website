@@ -6,14 +6,14 @@ interface MapEmbedProps {
 
 export function MapEmbed({ className }: MapEmbedProps) {
   const wrapperClass = className
-    ? `w-full rounded-[8px] overflow-hidden ${className}`
-    : 'w-full aspect-[4/3] rounded-[8px] overflow-hidden';
+    ? `relative w-full rounded-tile overflow-hidden ${className}`
+    : 'relative w-full aspect-[4/3] rounded-tile overflow-hidden';
   return (
     <div className={wrapperClass}>
       <iframe
         src="https://maps.google.com/maps?q=Amnon+ve-Tamar+6,+Netanya&t=&z=15&ie=UTF8&iwloc=&output=embed"
         title="מיקום הקליניקה"
-        className="w-full h-full border-0"
+        className="absolute inset-0 w-full h-full border-0"
         allowFullScreen
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
         loading="lazy"

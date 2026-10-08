@@ -6,9 +6,6 @@ export interface PhotoPanelProps {
   objectPosition?: string;
   /** aspect ratio expressed as height/width * 100 — drives the padding-top intrinsic approach */
   aspectPct?: number;
-  /** border-radius as percentage string e.g. "9%" */
-  radiusX?: string;
-  radiusY?: string;
   className?: string;
 }
 
@@ -17,16 +14,10 @@ export function PhotoPanel({
   alt = '',
   objectPosition = '50% 50%',
   aspectPct,
-  radiusX = '0%',
-  radiusY = '0%',
   className = '',
 }: PhotoPanelProps) {
-  const style: React.CSSProperties = aspectPct
-    ? { borderRadius: `${radiusX} / ${radiusY}` }
-    : { borderRadius: `${radiusX} / ${radiusY}` };
-
   return (
-    <div className={`relative overflow-hidden ${className}`} style={style}>
+    <div className={`relative overflow-hidden rounded-card safari-clip ${className}`}>
       {aspectPct && <div style={{ paddingTop: `${aspectPct}%` }} />}
       <img
         src={src}

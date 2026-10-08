@@ -52,7 +52,7 @@ export default function Contact() {
           <ScrollReveal delay={0} className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-160px)]">
             {/* Mobile: simple vertical stack */}
             <div className="flex flex-col gap-[16px] lg:hidden">
-              <ParallaxFrame className="aspect-[4/5] w-full" amount={9}>
+              <ParallaxFrame className="aspect-[4/5] w-full rounded-card safari-clip" amount={9}>
                 <Image
                   src="/images/contact-clinic-portrait.webp"
                   alt="נטע שמש — תמונה מהקליניקה"
@@ -61,7 +61,7 @@ export default function Contact() {
                   className="object-cover object-center"
                 />
               </ParallaxFrame>
-              <ParallaxFrame className="aspect-[4/5] w-full" amount={9}>
+              <ParallaxFrame className="aspect-[4/5] w-full rounded-card safari-clip" amount={9}>
                 <Image
                   src="/images/contact-consultation.webp"
                   alt="נטע שמש בפגישת ייעוץ"
@@ -70,7 +70,7 @@ export default function Contact() {
                   className="object-cover object-[30%_64%]"
                 />
               </ParallaxFrame>
-              <ParallaxFrame className="aspect-[2/3] w-full" amount={9}>
+              <ParallaxFrame className="aspect-[2/3] w-full rounded-card safari-clip" amount={9}>
                 <Image
                   src="/images/contact-clinic-atmosphere.webp"
                   alt="אווירת הקליניקה של נטע שמש"
@@ -91,7 +91,7 @@ export default function Contact() {
               }}
             >
               {/* Photo 1 — top of left column */}
-              <ParallaxFrame className="min-h-0" style={{ gridArea: 'p1' }} amount={9}>
+              <ParallaxFrame className="min-h-0 rounded-card safari-clip" style={{ gridArea: 'p1' }} amount={9}>
                 <Image
                   src="/images/contact-clinic-portrait.webp"
                   alt="נטע שמש — תמונה מהקליניקה"
@@ -101,7 +101,7 @@ export default function Contact() {
                 />
               </ParallaxFrame>
               {/* Photo 2 — bottom of left column */}
-              <ParallaxFrame className="min-h-0" style={{ gridArea: 'p2' }} amount={9}>
+              <ParallaxFrame className="min-h-0 rounded-card safari-clip" style={{ gridArea: 'p2' }} amount={9}>
                 <Image
                   src="/images/contact-consultation.webp"
                   alt="נטע שמש בפגישת ייעוץ"
@@ -111,7 +111,7 @@ export default function Contact() {
                 />
               </ParallaxFrame>
               {/* Photo 3 — tall portrait spanning full height of right column */}
-              <ParallaxFrame className="min-h-0" style={{ gridArea: 'p3', gridRow: '1 / 3' }} amount={9}>
+              <ParallaxFrame className="min-h-0 rounded-card safari-clip" style={{ gridArea: 'p3', gridRow: '1 / 3' }} amount={9}>
                 <Image
                   src="/images/contact-clinic-atmosphere.webp"
                   alt="אווירת הקליניקה של נטע שמש"
@@ -189,7 +189,7 @@ export default function Contact() {
 
           {/* Left col on desktop (second in RTL DOM order): map — full width on mobile */}
           <ScrollReveal delay={0.3} className="lg:flex-1 min-h-[300px] lg:min-h-[400px]">
-            <MapEmbed className="h-full min-h-[300px] lg:min-h-[400px]" />
+            <MapEmbed className="h-[300px] lg:h-full min-h-[300px] lg:min-h-[400px]" />
           </ScrollReveal>
         </div>
       </section>

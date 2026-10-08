@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Title } from "@/components/primitives/Title";
+import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialCard } from './testimonials/TestimonialCard';
 import type { TestimonialData } from './testimonials/TestimonialCard';
@@ -64,7 +65,7 @@ export default function Testimonials() {
           {/* Featured quote with portrait */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
             <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
-              <div className="relative aspect-[2/3] rounded-[24px] overflow-hidden shadow-xl safari-clip">
+              <div className="relative aspect-[2/3] rounded-card overflow-hidden shadow-xl safari-clip">
                 <Image
                   src="/images/testimonial-featured.webp"
                   alt="זוג בטיפול"
@@ -134,12 +135,9 @@ export default function Testimonials() {
             <p className="text-white font-[var(--font-stanga)] text-[clamp(16px,1.4vw,22px)] leading-[1.46] mb-[48px] max-w-[640px] mx-auto drop-shadow-md">
               הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם.
             </p>
-            <a
-              href="#contact"
-              className="inline-block bg-[var(--color-brand-primary)] text-white font-bold uppercase tracking-[0.138em] py-[20px] px-[48px] rounded hover:opacity-90 transition-opacity shadow-lg"
-            >
+            <ButtonLink href="#contact" variant="secondary">
               מוזמנים ליצור קשר
-            </a>
+            </ButtonLink>
           </ScrollReveal>
         </div>
       </section>
@@ -169,7 +167,7 @@ export default function Testimonials() {
               <ScrollReveal
                 key={img}
                 delay={0.1 * (i + 1)}
-                className="relative w-full aspect-[4/3] lg:aspect-auto overflow-hidden rounded-[12px] shadow-sm safari-clip"
+                className="relative w-full aspect-[4/3] lg:aspect-auto overflow-hidden rounded-tile shadow-sm safari-clip"
               >
                 <Image
                   src={`/images/${img}`}
