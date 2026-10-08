@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:unit": "vitest run",
+    "test:sanity": "vitest run tests-unit/sanity",
     "compare:deploys": "bash scripts/compare-deploys.sh"
   },
   "dependencies": {
