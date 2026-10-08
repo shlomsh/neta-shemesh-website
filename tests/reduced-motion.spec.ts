@@ -5,8 +5,6 @@ import { test, expect } from '@playwright/test';
  * the SSR inline `opacity:0` forever (hydration does not patch style attributes), leaving
  * most sections blank. Run against another server with BASE_URL=http://localhost:3200.
  */
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
-
 test.use({ contextOptions: { reducedMotion: 'reduce' } });
 
 test.describe('prefers-reduced-motion: reduce', () => {
@@ -16,7 +14,7 @@ test.describe('prefers-reduced-motion: reduce', () => {
       if (m.type() === 'error' && /hydrat|did not match|Minified React error #(418|423|425)/i.test(m.text())) hydrationErrors.push(m.text());
     });
 
-    await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'networkidle' });
 
     const h1 = page.locator('h1').first();
     await expect(h1).toBeVisible();

@@ -19,17 +19,14 @@ const photoPanels = [
   {
     src: '/images/about-collage-1.webp',
     objectPosition: '50% 50%',
-    aspectPct: 87.06,
   },
   {
     src: '/images/about-collage-2.webp',
     objectPosition: '48.1% 47.7%',
-    aspectPct: 87.06,
   },
   {
     src: '/images/about-collage-3.webp',
     objectPosition: '55.3% 50%',
-    aspectPct: 93.07,
   },
 ] as const;
 
@@ -317,17 +314,6 @@ export function AboutGallery() {
           </div>
         </Container>
       </Section>
-    </>
-  );
-}
-
-export default function About() {
-  return (
-    <>
-      <AboutIntro />
-      <AboutBio />
-      <AboutCredentials />
-      <AboutGallery />
     </>
   );
 }

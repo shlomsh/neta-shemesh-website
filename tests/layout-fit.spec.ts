@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
  * Layout-fit invariant net (implementation-independent).
  *
  * Unlike responsive.spec.ts — which only checks `documentElement.scrollWidth >
- * clientWidth` and is therefore MASKED by `main { overflow:hidden }` — this spec
+ * clientWidth`, a check that `overflow: clip` on <main> can mask — this spec
  * asserts that each section title is actually fully ON-SCREEN (not clipped off the
  * left/right edge) and that its font has not collapsed (rem-scaling regression).
  *
@@ -12,22 +12,21 @@ import { test, expect } from '@playwright/test';
  * layout is built, only that titles render on-screen at a legible size.
  */
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
-
-// The 13 section title IDs (same source of truth as computed-style-golden.spec.ts).
-const TITLE_IDS = [
-  'yWav85A872J3eebD', // Hero
-  'GDq1TYUPnp1UCFMP', // About-Intro-Dark
-  'about-me-title',   // About-Me-Cream
-  'YoSfu967TqAAsgNM', // About-Light
-  'JkkbI1eIj5p9V33T', // Reignite
-  'vyKTmOw3YNYlJZPL', // SafeSpace
-  'pEc3w8pe4QAw5k7o', // HowItWorks
-  // 'Dct2rK7XCXJaLA2e', // Testimonials — hidden behind SHOW_TESTIMONIALS flag
-  'iVtldd7PMtN1BthG', // Scheduling
-  'T749khVkMfNluBNv', // CoupleTherapy
-  'ZgJbejfHoeBrgmf7', // Contact-Follow
-  'zNSWHTotP3XOaXao', // Contact-Office
+// Section title ids. An entry with several ids is a title rendered twice (one per breakpoint,
+// the other `display:none`): at least one of them must be rendered, on-screen and legible.
+const TITLE_IDS: string[][] = [
+  ['yWav85A872J3eebD'], // Hero
+  ['GDq1TYUPnp1UCFMP'], // About-Intro-Dark
+  ['about-me-title'],   // About-Me-Cream
+  ['YoSfu967TqAAsgNM'], // About-Light
+  ['JkkbI1eIj5p9V33T'], // Reignite
+  ['vyKTmOw3YNYlJZPL'], // SafeSpace
+  ['pEc3w8pe4QAw5k7o'], // HowItWorks
+  // ['Dct2rK7XCXJaLA2e'], // Testimonials — hidden behind SHOW_TESTIMONIALS flag
+  ['iVtldd7PMtN1BthG'], // Scheduling
+  ['T749khVkMfNluBNv'], // CoupleTherapy
+  ['ZgJbejfHoeBrgmf7', 'ZgJbejfHoeBrgmf7-mobile'], // Contact-Follow
+  ['zNSWHTotP3XOaXao'], // Contact-Office
 ];
 
 const VIEWPORTS = [
@@ -47,7 +46,7 @@ test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)',
   for (const vp of VIEWPORTS) {
     test(`section titles fit on-screen and stay legible at ${vp.name} (${vp.width}px)`, async ({ page }) => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
-      await page.goto(TARGET_URL, { waitUntil: 'load' });
+      await page.goto('/', { waitUntil: 'load' });
 
       // Scroll the page to trigger IntersectionObserver reveal animations,
       // then return to top so geometry is measured in final rendered state.
@@ -64,8 +63,13 @@ test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)',
       await page.waitForTimeout(1000);
 
       const measurements = await page.evaluate(({ ids }) => {
-        return ids.map((id) => {
-          const el = document.getElementById(id);
+        return ids.map((candidates) => {
+          // Keep only candidates that are rendered (not display:none).
+          const rendered = candidates
+            .map((id) => document.getElementById(id))
+            .filter((el): el is HTMLElement => !!el && el.getClientRects().length > 0);
+          const el = rendered[0];
+          const id = candidates.join(' | ');
           if (!el) return { id, found: false };
           const rect = el.getBoundingClientRect();
           const fontSize = parseFloat(window.getComputedStyle(el).fontSize);
@@ -81,7 +85,7 @@ test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)',
       }, { ids: TITLE_IDS });
 
       for (const m of measurements) {
-        expect(m.found, `Title #${m.id} should exist in the DOM`).toBe(true);
+        expect(m.found, `Title #${m.id} should exist and be rendered in the DOM`).toBe(true);
         if (!m.found) continue;
 
         // Not clipped off the left edge.

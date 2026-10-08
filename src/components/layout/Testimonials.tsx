@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';

@@ -42,17 +42,10 @@
 :root {
   --color-dark: var(--color-plum);
   --color-white: #FFF5F0;
-  --color-text-muted: var(--color-plum);
   --color-text-primary: var(--color-plum);
-  --color-black: #000000;
   --color-brand-primary: var(--color-mauve);
-  --color-brand-secondary: var(--color-blush);
-  --color-brand-dark: var(--color-plum);
   --color-text-secondary: var(--color-mauve);
   --color-bg-light: var(--color-cream);
-
-  /* Scale up body text because Hebrew fonts appear smaller. */
-  --bfso: 1.1;
 }
 
 @layer base {
@@ -70,16 +63,6 @@
 }
 
 /* Desktop card snapping is handled in JS by src/components/ui/SoftSnap.tsx (no CSS scroll-snap). */
-
-/* Align map in Contact section to have a left gutter in RTL desktop view */
-@media (min-width: 1024.05px) {
-  #LW4zsSyHyezRncZj {
-    max-width: 600px !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-  }
-}
 
 @layer components {
   :root { --header-color: var(--color-plum); }   /* default: dark plum, for light surfaces */
@@ -118,23 +101,6 @@
     color: var(--color-plum);
     --header-color: var(--color-plum);
   }
-
-  /* ── Large-text flag for Mid and Light sections ─────────────────────────
-   * Mid ≈ 2.26:1 (fails AA even for large text; decorative surfaces only),
-   * Light ≈ 3.89:1 (AA large text only: ≥18.66 px bold OR ≥24 px regular).
-   * --section-needs-large-text is informational: nothing forces bold any more
-   * (the old forced-bold attribute was removed). Copy on these tones is set at the
-   * `.type-quote` / `.type-title` scale instead.
-   * ──────────────────────────────────────────────────────────────────────── */
-  [data-bg-tone="mid"],
-  [data-bg-tone="light"] {
-    --section-needs-large-text: 1;
-  }
-
-  [data-bg-tone="dark"],
-  [data-bg-tone="cream"] {
-    --section-needs-large-text: 0;
-  }
 }
 
 /* Hero illustration gentle float (05B Dark Ground). */
@@ -166,7 +132,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; opacity: 1; transform: none; }
-  /* Scroll-reveal wrappers (ScrollReveal, FooterReveal, ContactFAB) ship their
+  /* Scroll-reveal wrappers (ScrollReveal, ContactFAB) ship their
      motion initial state (opacity:0) in the SSR HTML as an inline style. Force
      them visible here: this does not depend on hydration or JS, and !important
      beats framer-motion's inline styles. */

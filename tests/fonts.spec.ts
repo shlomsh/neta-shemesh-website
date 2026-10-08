@@ -1,7 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
-
 /**
  * Font availability tests.
  *
@@ -18,7 +16,6 @@ const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
 const FONTS = [
   { name: 'Elamy-Regular',       path: '/fonts/Elamy-Regular.woff2' },
   { name: 'Elamy-Bold',          path: '/fonts/Elamy-Bold.woff2' },
-  { name: 'Stanga-Light',        path: '/fonts/stanga-light-aaa.woff2' },
   { name: 'Stanga-Regular',      path: '/fonts/stanga-regular-aaa.woff2' },
   { name: 'Stanga-Bold',         path: '/fonts/stanga-bold-aaa.woff2' },
 ];
@@ -27,7 +24,7 @@ test.describe('Font File Availability', () => {
 
   for (const font of FONTS) {
     test(`${font.name} is served with HTTP 200`, async ({ request }) => {
-      const response = await request.get(`${TARGET_URL}${font.path}`);
+      const response = await request.get(font.path);
       expect(
         response.status(),
         `Font "${font.name}" not found at ${font.path} — is it committed to git and not gitignored?`
@@ -36,7 +33,7 @@ test.describe('Font File Availability', () => {
   }
 
   test('Custom fonts are applied via CSS variables on <html>', async ({ page }) => {
-    await page.goto(TARGET_URL, { waitUntil: 'load' });
+    await page.goto('/', { waitUntil: 'load' });
 
     // Each localFont() injects a CSS variable onto <html>. If the font file
     // failed to load, Next.js would skip the variable entirely.

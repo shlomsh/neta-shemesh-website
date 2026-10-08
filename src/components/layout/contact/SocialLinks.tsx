@@ -1,5 +1,3 @@
-'use client';
-
 interface SocialLink {
   href: string;
   label: string;

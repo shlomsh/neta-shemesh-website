@@ -1,12 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * The site under test. Override with BASE_URL to point at another server, e.g.
+ *   npm run start -- -p 3200 &  BASE_URL=http://localhost:3200 npx playwright test
+ * Specs use relative URLs (`page.goto('/')`) and resolve against this.
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3000';
+const base = new URL(BASE_URL);
+const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(base.hostname);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -25,8 +26,8 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    /* Base URL for `page.goto('/')` and `request.get('/x')`. */
+    baseURL: BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -72,10 +73,13 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run start',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
+  /* Start the production server (needs `npm run build` first) when BASE_URL is local
+   * and nothing is listening there yet. Remote BASE_URLs are tested as they are. */
+  webServer: isLocal
+    ? {
+        command: `npm run start -- -p ${base.port || '3000'}`,
+        url: BASE_URL,
+        reuseExistingServer: !process.env.CI,
+      }
+    : undefined,
 });

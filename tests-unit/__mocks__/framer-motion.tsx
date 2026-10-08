@@ -30,7 +30,7 @@ function makeMotionComponent(tag: string) {
       void onDragStart; void onDragEnd; void onDrag;
       void onAnimationStart; void onAnimationComplete;
 
-      return React.createElement(tag, { className, ref, ...domProps }, children as any);
+      return React.createElement(tag, { className, ref, ...domProps }, children as React.ReactNode);
     }
   );
   Component.displayName = `motion.${tag}`;
@@ -48,7 +48,7 @@ export const motion = Object.fromEntries(
 );
 
 export const AnimatePresence = ({ children }: { children: React.ReactNode }) =>
-  React.createElement(React.Fragment, null, children as any);
+  React.createElement(React.Fragment, null, children);
 
 export const useAnimation = () => ({
   start: () => Promise.resolve(),
@@ -58,7 +58,7 @@ export const useAnimation = () => ({
 
 export const useInView = () => true;
 export const useScroll = () => ({ scrollY: { get: () => 0 }, scrollYProgress: { get: () => 0 } });
-export const useTransform = (v: unknown, _: unknown, __: unknown) => v;
+export const useTransform = (v: unknown) => v;
 export const useSpring = (v: unknown) => v;
 export const useMotionValue = (initial: unknown) => ({
   get: () => initial,

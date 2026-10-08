@@ -1,17 +1,6 @@
 import { render } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import Testimonials from '../src/components/layout/Testimonials';
-
-// Mock IntersectionObserver for framer-motion/ScrollReveal
-const observe = vi.fn();
-const unobserve = vi.fn();
-const disconnect = vi.fn();
-window.IntersectionObserver = vi.fn(() => ({
-  observe,
-  unobserve,
-  disconnect,
-  takeRecords: () => [],
-})) as any;
 
 describe('Testimonials Structure', () => {
   // Skipped: the "לקוחות ממליצים" section is currently hidden behind the

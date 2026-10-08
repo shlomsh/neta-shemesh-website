@@ -1,16 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import About from '../src/components/layout/About';
+import { AboutIntro } from '../src/components/layout/About';
 
-describe('Masonry Collage (About Section 1)', () => {
+describe('Masonry Collage (AboutIntro)', () => {
   it('should split into text + wider photo column on desktop (photos on the left via RTL order)', () => {
-    const { container } = render(<About />);
+    const { container } = render(<AboutIntro />);
     const wrapper = container.querySelector('[class*="lg:grid-cols-[1fr_1.25fr]"]');
     expect(wrapper).not.toBeNull();
   });
 
   it('should render a grid with 2 columns', () => {
-    const { container } = render(<About />);
+    const { container } = render(<AboutIntro />);
     const grid = container.querySelector('.grid-cols-2');
     expect(grid).not.toBeNull();
     expect(grid?.className).toContain('grid');
@@ -18,7 +18,7 @@ describe('Masonry Collage (About Section 1)', () => {
   });
 
   it('should render exactly 3 PhotoPanels in the masonry grid', () => {
-    const { container } = render(<About />);
+    const { container } = render(<AboutIntro />);
     const grid = container.querySelector('.grid-cols-2');
     expect(grid).not.toBeNull();
     const images = grid?.querySelectorAll('img');

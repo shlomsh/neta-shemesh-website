@@ -1,5 +1,3 @@
-'use client';
-
 interface ContactDetailsProps {
   phone: string;
   email: string;

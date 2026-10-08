@@ -5,18 +5,13 @@ import React from 'react';
  *
  * Canonical 4-tone names:
  *   'dark'        → #7A5978  (bg) + cream text
- *   'mid'         → #C49AB8  (bg) + cream text
- *   'light'       → #ECC8CE  (bg) + dark text   (body text auto-bumped to AA large)
+ *   'mid'         → #C49AB8  (bg) + cream text (decorative surface; see CLAUDE.md contrast table)
+ *   'light'       → #ECC8CE  (bg) + dark text   (quote-scale text only, AA large)
  *   'cream'       → #FFF5F0  (bg) + dark text
- *   'transparent' → no background
+ *   'transparent' → no background, no data-bg-tone
  *
- * Legacy aliases (kept for backward-compat, mapped to canonical tone):
+ * Legacy alias (no caller left; removal is part of tech-debt batch 3):
  *   'white'       → maps to 'cream' behavior
- *
- * Note: the old 'light' variant previously mapped to --color-bg-light (≡ cream).
- * It now maps to the new blush (#ECC8CE) tone. Any callers that relied on
- * the old 'light' === cream behavior should migrate to 'cream'.
- * Currently the only caller of bgVariant="light" is Services.tsx — verify intent.
  */
 type BgVariant = 'dark' | 'mid' | 'light' | 'cream' | 'white' | 'transparent';
 
@@ -33,7 +28,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 /**
  * Maps canonical variant name → data-bg-tone value.
  * The CSS in globals.css uses [data-bg-tone="…"] to set bg-color,
- * foreground color, --header-color, and --section-needs-large-text.
+ * foreground color and --header-color.
  */
 const TONE_MAP: Record<BgVariant, BgTone> = {
   dark:        'dark',
@@ -50,8 +45,8 @@ const TONE_MAP: Record<BgVariant, BgTone> = {
  * optionally locks to 100svh.
  *
  * Background + text color are controlled entirely by globals.css
- * [data-bg-tone] selectors — callers no longer need to pair
- * bgVariant with onDark manually.
+ * [data-bg-tone] selectors — children inherit the right text color without
+ * any per-component onDark flag.
  */
 export function Section({
   id,

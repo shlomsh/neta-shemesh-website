@@ -2,17 +2,16 @@ import { FooterBackground } from './footer/FooterBackground';
 import { FooterCTA } from './footer/FooterCTA';
 import { FooterBrand } from './footer/FooterBrand';
 import { FooterCopyright } from './footer/FooterCopyright';
-import { FooterReveal } from './footer/FooterReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 /**
  * Footer — server component, App Router.
  *
- * Layout: full-bleed photo band (~720px @1280, fluid below) with a dark scrim.
- * Centered RTL column, top-to-bottom: tagline → CTA (with badge highlights,
- * hidden ≤768) → brand name → copyright pinned near bottom.
+ * Layout: full-bleed photo card (min 100svh) with a dark scrim. Centered RTL
+ * column, top-to-bottom: tagline → CTA → brand name → copyright pinned near
+ * the bottom. Each block fades in via ScrollReveal with a small stagger.
  *
- * All styling via Tailwind utility classes + CSS vars. No inline style objects
- * except the min-height clamp (dynamic value, not expressible as a static class).
+ * All styling via Tailwind utility classes + CSS vars.
  */
 export default function Footer() {
   return (
@@ -27,32 +26,32 @@ export default function Footer() {
       <div className="relative z-10 flex flex-col items-center gap-[clamp(32px,6vw,90px)] w-full max-w-[894px] text-center">
 
         {/* 1. Tagline */}
-        <FooterReveal delay={0} className="h-full">
+        <ScrollReveal className="h-full">
           <p
             className="type-title font-bold tracking-[-0.01em] text-[color:var(--color-white)] text-center w-full h-full flex items-center justify-center"
             dir="rtl"
           >
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
           </p>
-        </FooterReveal>
+        </ScrollReveal>
 
-        {/* 2. CTA link with badge highlights */}
-        <FooterReveal delay={0.1}>
+        {/* 2. CTA link */}
+        <ScrollReveal delay={0.1}>
           <FooterCTA />
-        </FooterReveal>
+        </ScrollReveal>
 
         {/* 3. Brand name */}
-        <FooterReveal delay={0.2}>
+        <ScrollReveal delay={0.2}>
           <FooterBrand />
-        </FooterReveal>
+        </ScrollReveal>
 
       </div>
 
       {/* 4. Copyright — pinned to bottom; extra bottom padding below md clears the ContactFAB pill (bottom-left) */}
       <div className="relative z-10 mt-auto pb-[calc(env(safe-area-inset-bottom)+72px)] md:pb-0">
-        <FooterReveal delay={0.3}>
+        <ScrollReveal delay={0.3}>
           <FooterCopyright />
-        </FooterReveal>
+        </ScrollReveal>
       </div>
     </footer>
   );

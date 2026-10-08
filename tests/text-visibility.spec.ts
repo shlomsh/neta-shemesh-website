@@ -1,11 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
-
 test.describe('Text Visibility and Content Tests', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(TARGET_URL, { waitUntil: 'load' });
+    await page.goto('/', { waitUntil: 'load' });
   });
 
   test('Critical text content is visible to the user', async ({ page }) => {

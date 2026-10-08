@@ -1,14 +1,11 @@
 import Link from 'next/link';
 
 /**
- * BrandLogo — "נטע שמש" logotype in the Elamy Bold display face.
+ * BrandLogo — "נטע שמש" logotype. The wordmark is a pre-rendered image
+ * (public/images/logo-horizontal-light.webp, Elamy Bold baked in), so no font
+ * is involved here.
  *
- * The original template used var(--font-display) = Elamy. With
- * font-synthesis:none active, we must
- * explicitly set font-weight:700 so the real Elamy-Bold.woff2 is loaded
- * rather than a faux-bold that renders thin.
- *
- * Preserves id="Fyf1hlFV3WFGVXJq" for test selectors.
+ * Keeps id="Fyf1hlFV3WFGVXJq" for test selectors.
  * Server component.
  */
 export function BrandLogo() {

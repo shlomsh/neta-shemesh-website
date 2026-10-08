@@ -1,5 +1,3 @@
-'use client';
-
 import { ScrollReveal } from '../../ui/ScrollReveal';
 import { StepImage } from './StepImage';
 import { StepNumber } from './StepNumber';

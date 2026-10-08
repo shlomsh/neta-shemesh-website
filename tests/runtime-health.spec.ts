@@ -1,7 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
-
 test.describe.configure({ timeout: 120000 });
 
 test.describe('Runtime Health Guards', () => {
@@ -21,7 +19,7 @@ test.describe('Runtime Health Guards', () => {
       pageErrors.push(error);
     });
 
-    await page.goto(TARGET_URL, { waitUntil: 'load' });
+    await page.goto('/', { waitUntil: 'load' });
     
     // Scroll down to ensure lazy loaded images and components are triggered
     await page.evaluate(async () => {
@@ -76,7 +74,7 @@ test.describe('Runtime Health Guards', () => {
               // try to resolve relative URL to absolute
               try {
                 srcCandidates.push(new URL(urlMatch, window.location.href).href);
-              } catch (e) {
+              } catch {
                 // ignore invalid
               }
             }

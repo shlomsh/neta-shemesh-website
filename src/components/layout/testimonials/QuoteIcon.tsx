@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function QuoteIcon() {
   return (
     <div className="absolute top-[32px] right-[32px] opacity-100 z-10">

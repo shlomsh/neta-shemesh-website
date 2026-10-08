@@ -1,6 +1,5 @@
 /**
- * Brand name in script/accent font — "נטע שמש"
- * Slightly larger on mobile per token sheet (template scales it up).
+ * Brand name in the handwritten signature style (.type-signature) — "נטע שמש".
  */
 export function FooterBrand() {
   return (

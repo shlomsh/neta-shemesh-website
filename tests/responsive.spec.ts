@@ -1,12 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
-
 test.describe('Responsive Layout Tests', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(TARGET_URL, { waitUntil: 'load' });
-    // Wait for the layout to settle, especially due to ScrollAnimator
+    await page.goto('/', { waitUntil: 'load' });
+    // Let the layout settle (fonts, hero entrance)
     await page.waitForTimeout(1000);
   });
 
@@ -32,8 +30,8 @@ test.describe('Responsive Layout Tests', () => {
   });
 
   test('Main grid container exists and has clipped overflow', async ({ page }) => {
-    // The main container in page.tsx has 'overflow-hidden' which is critical to preventing 
-    // absolute elements from breaking the page width on mobile.
+    // The main container in page.tsx clips overflow, which prevents absolutely positioned
+    // elements from widening the page on mobile.
     const mainElement = page.locator('main');
     // 'clip' (overflow-clip) not 'hidden': clip still prevents overflow but does not create a scroll container, so the JS soft snap keeps working.
     await expect(mainElement).toHaveCSS('overflow', 'clip');

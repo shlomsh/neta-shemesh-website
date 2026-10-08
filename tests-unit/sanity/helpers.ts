@@ -506,7 +506,7 @@ export function parseToneRules(css = globalsCss()): Record<string, ToneRule> {
   const out: Record<string, ToneRule> = {};
   for (const m of stripCssComments(css).matchAll(/\[data-bg-tone="(\w+)"\]\s*\{([^}]*)\}/g)) {
     const body = m[2];
-    if (!/background-color/.test(body)) continue; // the grouped --section-needs-large-text rules
+    if (!/background-color/.test(body)) continue; // only the rules that paint a tone
     const get = (prop: string) => body.match(new RegExp(`(?:^|[;\\s])${prop}\\s*:\\s*([^;]+);`))?.[1].trim();
     out[m[1]] = { bg: get('background-color'), color: get('color'), header: get('--header-color') };
   }

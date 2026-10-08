@@ -15,6 +15,11 @@ const eslintConfig = defineConfig([
     // Vendored Canva template — not our source, do not lint.
     "reference/**",
   ]),
+  {
+    // Standalone Node utilities run by hand (CommonJS, never bundled into the app).
+    files: ["scripts/**/*.js"],
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
 ]);
 
 export default eslintConfig;

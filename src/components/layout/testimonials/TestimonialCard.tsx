@@ -1,4 +1,3 @@
-import React from 'react';
 import { QuoteIcon } from './QuoteIcon';
 import { QuoteText } from './QuoteText';
 import { Attribution } from './Attribution';
@@ -43,7 +42,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   }
 
   return (
-    <div className="flex flex-col justify-between p-[32px] relative rounded-card bg-white shadow-sm min-h-[350px]">
+    <div className="flex flex-col justify-between p-[32px] relative rounded-card bg-[var(--color-cream)] shadow-sm min-h-[350px]">
       <QuoteIcon />
       <QuoteText text={quote} />
       <Attribution name={name} role={role} avatarSrc={avatarSrc} />

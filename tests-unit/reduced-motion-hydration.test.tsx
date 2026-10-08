@@ -6,7 +6,7 @@
  * motion initial state (`style="opacity:0"`), React hydration does not patch mismatched
  * style attributes, so reduce-motion users saw blank sections.
  *
- * Fix: every reveal component renders the identical element + attributes regardless of
+ * Fix: every reveal component (and the Footer, which composes ScrollReveal) renders the identical element + attributes regardless of
  * `useReducedMotion()`, and a CSS rule keyed off `data-reveal` / `data-parallax` forces
  * the content visible under `@media (prefers-reduced-motion: reduce)`.
  */
@@ -27,14 +27,14 @@ vi.mock('framer-motion', async (importOriginal) => {
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { ContactFAB } from '@/components/ui/ContactFAB';
 import { ParallaxFrame } from '@/components/ui/ParallaxFrame';
-import { FooterReveal } from '@/components/layout/FooterReveal';
+import Footer from '@/components/layout/Footer';
 
 const ROOT = path.resolve(__dirname, '..');
 const read = (p: string) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 
 const cases: Array<[string, () => React.ReactElement]> = [
   ['ScrollReveal', () => <ScrollReveal delay={0.1} className="x"><p>hi</p></ScrollReveal>],
-  ['FooterReveal', () => <FooterReveal delay={0.1}><p>hi</p></FooterReveal>],
+  ['Footer (staggered ScrollReveal blocks)', () => <Footer />],
   ['ContactFAB', () => <ContactFAB />],
   ['ParallaxFrame', () => <ParallaxFrame className="h-10"><img alt="" src="/a.jpg" /></ParallaxFrame>],
 ];
@@ -72,7 +72,7 @@ describe('reveal components render the same tree regardless of useReducedMotion(
 describe('structural guards (source + CSS)', () => {
   for (const f of [
     'src/components/ui/ScrollReveal.tsx',
-    'src/components/layout/FooterReveal.tsx',
+    'src/components/layout/Footer.tsx',
     'src/components/ui/ContactFAB.tsx',
     'src/components/ui/ParallaxFrame.tsx',
   ]) {

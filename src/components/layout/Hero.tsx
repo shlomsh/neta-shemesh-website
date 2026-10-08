@@ -1,14 +1,13 @@
 /**
  * Hero — server component entry point.
  *
- * Preserves:
- *   - id="page-1"  (anchor / test selector)
- *   - id="vcPAqaHkkrFaQQwh"  (section id / test selector)
+ * Keeps two ids that tests and layout checks select on:
+ *   - id="page-1"            (zero-height anchor above the section)
+ *   - id="vcPAqaHkkrFaQQwh"  (the section; a legacy export id, to be renamed
+ *                             together with the other such ids in tech-debt batch 2)
  *
  * Architecture: this file is intentionally thin — it owns the section shell
  * and delegates all sub-regions to named components in ./hero/.
- * No template primitives (SectionBand, AnimatedBlock, Badge, etc.),
- * no inline style={{ }}, no cryptic IDs, no rem-scale Tailwind utilities.
  */
 
 import { HeroBackground } from './hero/HeroBackground';

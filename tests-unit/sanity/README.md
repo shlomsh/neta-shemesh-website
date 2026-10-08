@@ -31,7 +31,6 @@ Assertion messages name the section id and heading, e.g. `about-gallery (#about-
 ## Known gaps (deliberate, not hidden)
 
 - `about-credentials` and `contact-social` only carry `min-h-[100svh]` (no desktop lock/grow, no `lg:py-12`). CLAUDE.md only requires the min-height there, so they are `free` rows in `DESKTOP` (`one-screen.test.tsx`). Changing a row is a decision, not drift.
-- `TestimonialCard.tsx` default variant uses `bg-white` (pure #fff, not brand cream). It is not rendered while `SHOW_TESTIMONIALS=false`, so it is allow-listed in `source-scan.test.ts` (D22). Swap it to `bg-[var(--color-cream)]` before turning the flag on, then delete the allow-list entry (the test tells you).
 - Blog pages use `<main overflow-hidden>`; they do not mount SoftSnap, so this is tolerated (only the home page must clip).
 - The Services subtitle has no `max-w-[65ch]` and uses `mt-5 md:mt-9` (Elamy "?" descender); encoded in `SUBTITLES`.
 

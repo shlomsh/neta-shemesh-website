@@ -29,4 +29,4 @@ Status snapshot after the 2026-10-08 session. Production = main. Each item below
 8. OPEN Replace the captionless 6-photo stock grid with real testimonials once Netta supplies quotes (the block exists, gated by SHOW_TESTIMONIALS=false, lorem ipsum).
 9. OPEN Elamy handwritten signature at the end of the bio quote (`.type-signature` exists, unused) — draw-in with the same pen.
 10. OPEN Mobile menu overlay: fade + staggered link reveal, hamburger-to-X morph.
-11. OPEN Housekeeping: social links point to bare facebook.com / instagram.com / twitter.com; footer "© 2026" has no name; test.txt, dead layout/FooterReveal.tsx duplicate, Badge primitive now unused; step cards show a faint light rectangle at rounded corners (ScrollReveal + safari-clip + shadow); About portrait `lg:sticky` never sticks because Section/main are overflow-hidden.
+11. OPEN Housekeeping: social links point to bare facebook.com / instagram.com / twitter.com; footer "© 2026" has no name; step cards show a faint light rectangle at rounded corners (ScrollReveal + safari-clip + shadow); About portrait `lg:sticky` never sticks because Section/main are overflow-hidden.

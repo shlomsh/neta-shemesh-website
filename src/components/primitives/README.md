@@ -1,40 +1,28 @@
-# Layout primitives
+# Primitives
 
-Typed, reusable building blocks that reproduce the template DOM exactly. Card migrations
-(`src/components/layout/*`) compose these instead of raw `dangerouslySetInnerHTML`.
+Small, typed building blocks the section components in `src/components/layout/*` compose. Nothing here knows about page content.
 
-**Faithful-port rule:** during a Track B port, keep every template `id`, `class`, and inline
-style **byte-identical** — pass them through these primitives, don't "improve" them. Design /
-spacing fixes happen later in the Track C fidelity pass. The computed-style golden +
-DOM-fingerprint guard enforce this.
+## Layout (`primitives/layout/`)
 
-## Components
+### `<Section id bgVariant? fullHeight? className? …props>`
+The `<section>` shell. Always `relative w-full overflow-hidden`, `dir="rtl"`.
+- `bgVariant`: `dark | mid | light | cream | transparent` (default `transparent`). Sets `data-bg-tone`; `globals.css` then paints the background, the text colour and `--header-color`, so children need no colour classes. `transparent` emits no `data-bg-tone` (photo sections). `white` is a legacy alias of `cream` with no caller left.
+- `fullHeight`: `min-h-[100svh] flex flex-col justify-center`, at every breakpoint. Desktop one-screen locks (`lg:h-[max(100svh,720px)]`, `lg:min-h-…`, `lg:py-12`) are added by the caller via `className`.
+- `id` is required (scroll targets, tests).
 
-### `<SectionBand background? style? …props>`
-Full-bleed band wrapper: `position:relative; overflow:hidden; display:grid;
-align-items:center; grid-template-columns:auto 100rem auto; z-index:0`. Pass `background` for
-the band color and any extra `style` (e.g. `marginTop:'-1px'` seam merges). One per section row.
+### `<Container maxWidth? className? …props>`
+Centred column with fluid side padding (`px-[clamp(16px,4vw,48px)]`). `maxWidth`: `md` 768, `lg` 1024, `xl` 1100, `2xl` 1280 (default), `none`.
 
-### `<AnimatedBlock animation …props>`
-Renders `<div class="animation_container"><div class="animated" style={{animation}}>{children}</div></div>`,
-both at `width/height:100%`. **Keeps the literal `animation_container`/`animated` class names** —
-`ScrollAnimator` and the tests depend on them. Pass the element's exact template `animation` inline
-value (the per-element `rise-*`/`linear_fade` string) as `animation`.
+### `<Grid colsMobile? colsTablet? colsDesktop? className? …props>`
+Responsive CSS grid using static class lookup maps (Tailwind v4 cannot compile `grid-cols-${n}`). Defaults 1 / 2 / 2 columns.
 
-### `<Prose …props>` (children or `text`)
-Body paragraph: `<p {...props}>{children ?? text}</p>`. Pass the template `id` and inline style
-(a `type-*` class, `text-align`) verbatim.
+### `<ScrollAnchor id>`
+Zero-height invisible anchor placed *before* a section so in-page links land at its top.
 
-### `<AspectImage src alt? aspectPct objectPosition? fillId? imgId? fillStyle? imgStyle? children? style? …props>`
-The template `padding-top:%` aspect-ratio wrapper + absolute-fill image.
-- `aspectPct`: number (→ `${n}%`) or string for the wrapper `padding-top`.
-- **Resolves relative `images/…` → `/images/…`** (served from `public/`). Pass full paths unchanged.
-- `fillId`/`imgId` set the inner wrapper / `<img>` ids; `fillStyle`/`imgStyle` extend their styles.
-- `children` replaces the default `<img>` (use for the clip-path SVG overlays).
+## UI (`primitives/ui/`)
 
-### `<Badge svgId gId pathId viewBox d fillColor opacity?>`
-A single template decorative/credential SVG: `<svg id><g id><path id d/></g></svg>` with the template
-background-url placeholder. Use one per stacked SVG path. Currently unused by any component (the footer CTA is now a plain `ButtonLink` pill).
+### `<BodyText centered? className? …props>`
+The standard paragraph. Renders `type-body` unless `className` already carries a `type-*` class (then that class wins, avoiding the CSS-order collision). Right-aligned by default, `centered` for centred. Colour is inherited from the nearest `[data-bg-tone]` ancestor; there is no colour prop.
 
 ### `<ButtonLink href variant? size? className? …anchorProps>`
 The only button-shaped link. Always a pill (`rounded-full`) with a lift-on-hover.
@@ -44,9 +32,13 @@ The only button-shaped link. Always a pill (`rounded-full`) with a lift-on-hover
 - One type style for every button: `.type-lead` bold (18-22px), no uppercase, no tracking. `size` only changes padding: `md` (default) is the full CTA (~56-60px tall); `sm` is the compact ~48-52px pill (hero CTA, nav phone). Do not override font size via `className`.
 - Pass layout extras (`w-full`, `mt-*`, `relative z-10`, `min-h-*`) via `className`; do not restyle fill, radius or padding there.
 
+## Related (outside `primitives/`)
+- `ui/SectionTitle` is the section `<h2>` (`type-title`, bold, colour from `--header-color`; `onDark` for titles on photo bands).
+- `ui/ScrollReveal`, `ui/ParallaxFrame`, `ui/SoftSnap` are the motion pieces; `ui/ContactFAB` is the contact pill.
+
 ## Radius scale
 Defined in `@theme` in `globals.css`: `rounded-tile` (12px: gallery cells, map, inputs, thumbnails), `rounded-card` (24px: cards, photo frames, panels) and the built-in `rounded-full` (pills, buttons, avatars). Do not use `rounded-[Npx]` or `%` radii.
 
 ## Notes
-- Decorative clip-path / SVG scaffolding: inline it faithfully (often as `AspectImage` children); don't refactor it during a faithful port.
-- A section migrates **fully** to JSX (no leftover `dangerouslySetInnerHTML`) — mixing raw-HTML chunks with JSX siblings makes Next.js chunk-inject `<script>` tags (the fingerprint guard already ignores `<script>`, but full JSX is cleaner).
+- Decorative clip-path / SVG scaffolding (`OrganicBg`, `CoupleLineArt`, the hero underline) stays inline in its own component.
+- Anything with a safari border-radius clip needs the `safari-clip` utility on the rounded, `overflow-hidden` parent (see `agents.md`).

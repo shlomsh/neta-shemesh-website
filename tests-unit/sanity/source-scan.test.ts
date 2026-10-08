@@ -174,7 +174,6 @@ describe('D18: palette lock (hex colours)', () => {
     { hex: '#25d366', file: 'ContactFAB.tsx', reason: 'WhatsApp brand green: owner ruling, stays green' },
     { hex: '#1ebe5b', file: 'ContactFAB.tsx', reason: 'darker hover shade of the WhatsApp green' },
     { hex: '#ffffff', file: 'ContactFAB.tsx', reason: 'white label/ring on the WhatsApp green (WhatsApp brand spec)' },
-    { hex: '#000000', file: 'globals.css', reason: 'legacy --color-black token (unreferenced; scrims use Tailwind black/NN)' },
   ];
 
   function hexHits() {
@@ -221,9 +220,7 @@ describe('D18: palette lock (hex colours)', () => {
 describe('D22: no bg-white on brand surfaces (use cream)', () => {
   /** file name -> why it is tolerated. Prune when fixed. */
   const KNOWN: Record<string, string> = {
-    // FINDING: the default testimonial card is pure #fff, not the brand cream. It is not rendered
-    // today (SHOW_TESTIMONIALS=false in Testimonials). Swap to bg-[var(--color-cream)] BEFORE enabling it.
-    'TestimonialCard.tsx': 'feature-flagged off (SHOW_TESTIMONIALS=false); should be bg-[var(--color-cream)]',
+    // (empty) TestimonialCard's default variant used bg-white until tech-debt batch 1; it is cream now.
   };
 
   const hits = scan(code, rule('bg-white').re);

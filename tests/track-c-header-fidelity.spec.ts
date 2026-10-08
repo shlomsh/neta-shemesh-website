@@ -6,9 +6,8 @@
  * that each section heading lands in the ~52px band (47–59 with tolerance)
  * and stays below the hero display size.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
-const TARGET_URL = process.env.BASE_URL || 'http://localhost:3000';
 const DESKTOP_WIDTH = 1280;
 const DESKTOP_HEIGHT = 800;
 
@@ -21,10 +20,10 @@ test.describe('Track C — Section header size fidelity @1280', () => {
   test.use({ viewport: { width: DESKTOP_WIDTH, height: DESKTOP_HEIGHT } });
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(TARGET_URL, { waitUntil: 'load' });
+    await page.goto('/', { waitUntil: 'load' });
   });
 
-  const getFontSize = (page: any, id: string) =>
+  const getFontSize = (page: Page, id: string) =>
     page.evaluate((id: string) => {
       const el = document.getElementById(id);
       return el ? parseFloat(getComputedStyle(el).fontSize) : null;
