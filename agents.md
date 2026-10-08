@@ -13,7 +13,7 @@
 - **Typography:** 
   - `var(--font-display)` (Elamy): a **decorative handwriting/display** font. Use ONLY for the hero H1 and section H2 (weight 700), step numerals and the signature (weight 400). **Never for body paragraphs** (it is unreadable as running text, especially RTL Hebrew — this was a real bug). Weights: 400 + 700 (700 for headings only).
   - `var(--font-stanga)` / `var(--font-body)`: the clean body font — all paragraphs, body, captions, names, labels, nav, CTA. Weights: 400 + 700.
-  - **Latin companion (`var(--font-latin)`, Roboto Condensed 400/700, next/font/google):** Stanga has **no Latin glyphs** (A–Z, a–z, ©). `--font-body` is `stanga, latin-companion, sans-serif`, so Latin inside Hebrew text falls to the companion automatically (never Arial). Use the `.font-latin` utility explicitly for phone numbers and email addresses. Stanga's `adjustFontFallback` is `false` so no generated Arial fallback sits in front of the companion.
+  - **Latin companion (`var(--font-latin)`, Roboto Condensed 400/700, self-hosted via `next/font/local`):** Stanga has **no Latin glyphs** (A–Z, a–z, ©). `--font-body` is `stanga, latin-companion, sans-serif`, so Latin inside Hebrew text falls to the companion automatically (never Arial). Use the `.font-latin` utility explicitly for phone numbers and email addresses. Stanga's `adjustFontFallback` is `false` so no generated Arial fallback sits in front of the companion.
 
 ### Responsive Type Scale (canonical — added 2026-06-20)
 

@@ -100,3 +100,37 @@ describe('QuoteText.tsx — uses correct font-family syntax', () => {
     expect(p!.className).not.toContain('font-[var(--font-body)]');
   });
 });
+
+// ── Layout font loading ──────────────────────────────────────────────────────
+// The Latin companion must be self-hosted via next/font/local (weights 400 + 700,
+// --font-latin-next variable), never next/font/google: the Google fetch is a
+// build-time network dependency that failed the Vercel production build.
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+describe('layout.tsx — Latin companion is self-hosted via next/font/local', () => {
+  const src = readFileSync(resolve(__dirname, '../src/app/layout.tsx'), 'utf8');
+
+  it('does not import next/font/google', () => {
+    expect(src).not.toContain('next/font/google');
+    expect(src).not.toContain('Roboto_Condensed');
+  });
+
+  it('loads Roboto Condensed 400 + 700 locally with the --font-latin-next variable', () => {
+    const block = src.slice(src.indexOf('const latin = localFont('));
+    const end = block.indexOf('});');
+    const latinBlock = block.slice(0, end);
+    expect(latinBlock).toContain('RobotoCondensed-Regular.woff2');
+    expect(latinBlock).toContain('RobotoCondensed-Bold.woff2');
+    expect(latinBlock).toMatch(/weight:\s*"400"/);
+    expect(latinBlock).toMatch(/weight:\s*"700"/);
+    expect(latinBlock).toContain('variable: "--font-latin-next"');
+    expect(latinBlock).toContain('display: "swap"');
+  });
+
+  it('ships the woff2 files it references', () => {
+    for (const f of ['RobotoCondensed-Regular.woff2', 'RobotoCondensed-Bold.woff2']) {
+      expect(existsSync(resolve(__dirname, '../public/fonts', f)), f).toBe(true);
+    }
+  });
+});

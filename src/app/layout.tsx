@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { AUTHOR_NAME, AUTHOR_TITLE, SITE_URL } from '@/config/constants';
 
@@ -44,12 +43,23 @@ const stanga = localFont({
 });
 
 // Latin / digit companion: Stanga has no A-Z / a-z (nor ©), so email addresses,
-// "M.S.W." etc. fall through to this face instead of Arial. Self-hosted by next/font.
-const latin = Roboto_Condensed({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
+// "M.S.W." etc. fall through to this face instead of Arial. Self-hosted via
+// next/font/local (Latin subset, OFL-1.1) so the build never fetches Google Fonts.
+const latin = localFont({
+  src: [
+    {
+      path: "../../public/fonts/RobotoCondensed-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/RobotoCondensed-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-latin-next",
+  display: "swap",
 });
 
 // Any build not pointed at the production domain is a staging copy (Azure SWA
