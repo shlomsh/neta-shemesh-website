@@ -34,29 +34,35 @@ Best-practice rules: max two weights per font family; line length ~65ch max; com
 
 ### Color System & Card Rotation (locked decision — 2026-06-20)
 
+> **2026-10-08:** palette re-tuned; the hexes and ratios below match `@theme` in `globals.css` and are canonical. The earlier #574964 / #9F8383 / #C8AAAA / #fff0e4 set is retired.
+
 **The 4-color palette** (defined as `@theme` tokens in `globals.css`; these are the ONLY brand colors — do not introduce new hexes):
 
 | Token | Hex | Role |
 |---|---|---|
-| `--color-canva-dark` | `#574964` | Dark plum — dark surfaces / primary text |
-| `--color-canva-mid` | `#9F8383` | Mid mauve — accent / brand |
-| `--color-canva-light` | `#C8AAAA` | Light blush — soft accent |
-| `--color-canva-bg` | `#fff0e4` | Warm cream — light surfaces (note: `--color-white` is aliased to this cream, NOT `#ffffff`) |
+| `--color-plum` | `#7A5978` | Dark plum — dark surfaces / primary text |
+| `--color-mauve` | `#C49AB8` | Mid mauve — accent / brand (`--color-brand-primary`) |
+| `--color-blush` | `#ECC8CE` | Light blush — soft accent |
+| `--color-cream` | `#FFF5F0` | Warm cream — light surfaces (note: `--color-white` is aliased to this cream, NOT `#ffffff`) |
 
-**Approved background → text contrast pairs** (never deviate):
+**Approved background → text contrast pairs** (never deviate; WCAG 2.x, AA normal ≥ 4.5, AA large ≥ 3):
 
 | Background | Text color | WCAG | Notes |
 |---|---|---|---|
-| Dark `#574964` | Cream `#fff0e4` | 7.4:1 ✅ AAA | strong pair |
-| Cream `#fff0e4` | Dark `#574964` | 7.4:1 ✅ AAA | strong pair |
-| Light `#C8AAAA` | Dark `#574964` | 3.9:1 ⚠️ | **large text only** |
-| Mid `#9F8383` | Cream `#fff0e4` | 3.1:1 ⚠️ | **large text only** |
+| Dark `#7A5978` | Cream `#FFF5F0` | 5.55:1 ✅ AA | strong pair (not AAA) |
+| Cream `#FFF5F0` | Dark `#7A5978` | 5.55:1 ✅ AA | strong pair (not AAA) |
+| Light `#ECC8CE` | Dark `#7A5978` | 3.89:1 ⚠️ | **large text only** |
+| Mid `#C49AB8` | Cream `#FFF5F0` | 2.26:1 ❌ | **fails even for large text** |
+| Mid `#C49AB8` | Dark `#7A5978` | 2.46:1 ❌ | fails even for large text |
 
-**Rule of thumb:** Dark & Mid backgrounds → cream text; Light & Cream backgrounds → dark text.
+Hero nav/CTA pill (`bg-brand-primary/75` mauve over plum ≈ `#B28AA8`, cream text): 2.77:1, below 3:1.
 
-**Accessibility — content-aware color assignment (SUPERSEDES the earlier "bump to bold 700" rule, 2026-06-20):** We keep the exact palette hexes. Because Mid and Light only clear WCAG AA for *large* text, **do not force body copy bold to compensate** — that flattens typography (it ruined the About/Quote card). Instead, **assign tone by content**:
-- **Paragraph- or detail-heavy cards** (running body text, small captions, contact details, forms) → **Dark or Cream** (7.4:1, full type freedom at any size/weight).
-- **Mid / Light** → reserved for cards whose on-surface text is **display/quote-scale only** (`.type-title` / `.type-quote`, i.e. ≥24px regular or genuinely large), or image-dominant cards with minimal text.
+**Rule of thumb:** Dark backgrounds → cream text; Light & Cream backgrounds → dark text. **Mid has no compliant text pair** — use it for text-free surfaces/shapes only.
+
+**Accessibility — content-aware color assignment (SUPERSEDES the earlier "bump to bold 700" rule, 2026-06-20):** We keep the exact palette hexes. Because Light only clears WCAG AA for *large* text and Mid fails it entirely, **do not force body copy bold to compensate** — that flattens typography (it ruined the About/Quote card). Instead, **assign tone by content**:
+- **Paragraph- or detail-heavy cards** (running body text, small captions, contact details, forms) → **Dark or Cream** (5.55:1 AA, full type freedom at any size/weight).
+- **Light** → reserved for cards whose on-surface text is **display/quote-scale only** (`.type-title` / `.type-quote`, i.e. ≥24px regular or genuinely large), or image-dominant cards with minimal text.
+- **Mid** → no essential text at all (2.26:1 with cream fails even large-text AA); decorative/image-dominant surfaces only.
 - Text on a nested photo/card surface (StepCard, ExpertiseCard, TestimonialCard) is judged by its *own visible* background, not the parent tone.
 
 The legacy `[data-body-large]` bold-bump still exists in `globals.css` for cards not yet migrated, but it is **deprecated** — prefer moving the card's tone over bolding its text.

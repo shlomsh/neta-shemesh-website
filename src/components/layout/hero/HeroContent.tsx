@@ -6,11 +6,13 @@
  *   - Text block (right in RTL): heading → subtext → CTA
  *   - Art block (left in RTL): floating line-art illustration over a blob
  *
- * Each block is wrapped in ScrollReveal with a staggered delay. Only
- * ScrollReveal is a client component; everything else stays server-side.
+ * Each block is wrapped in a plain div with the pure-CSS `.hero-enter`
+ * entrance (staggered via `.hero-enter-N` delay modifiers, see globals.css).
+ * The hero is above the fold, so it must never gate on JS (no framer-motion
+ * ScrollReveal here: it would ship opacity:0 in the server HTML). Everything
+ * in this file stays server-side.
  */
 
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { BrandLogo } from './BrandLogo';
 import { HeroNav } from './HeroNav';
 import { HeroHeading } from './HeroHeading';
@@ -33,10 +35,10 @@ export function HeroContent() {
       "
     >
       {/* ── Top bar: logo + nav ── */}
-      <ScrollReveal delay={0} className="flex items-center justify-between w-full flex-wrap gap-[16px]">
+      <div className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-[16px]">
         <BrandLogo />
         <HeroNav />
-      </ScrollReveal>
+      </div>
 
       {/* ── Two zones: text + art ── */}
       <div
@@ -49,23 +51,23 @@ export function HeroContent() {
       >
         {/* Text block */}
         <div className="flex flex-col gap-[clamp(16px,2vw,28px)] w-full lg:flex-[0_0_520px] max-w-[560px]">
-          <ScrollReveal delay={0.1}>
+          <div className="hero-enter hero-enter-1">
             <HeroHeading />
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal delay={0.2}>
+          <div className="hero-enter hero-enter-2">
             <HeroSubtext />
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal delay={0.3}>
+          <div className="hero-enter hero-enter-3">
             <HeroCTA />
-          </ScrollReveal>
+          </div>
         </div>
 
         {/* Art block */}
-        <ScrollReveal delay={0.2} className="w-full lg:flex-1">
+        <div className="hero-enter hero-enter-2 w-full lg:flex-1">
           <HeroArt />
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );

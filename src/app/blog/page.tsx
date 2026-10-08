@@ -7,8 +7,7 @@ import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostCard } from '@/components/blog/PostCard';
 import { getAllPosts } from '@/content/posts';
 import Footer from '@/components/layout/Footer';
-import { WhatsAppFAB } from '@/components/ui/WhatsAppFAB';
-import { PhoneFAB } from '@/components/ui/PhoneFAB';
+import { ContactFAB } from '@/components/ui/ContactFAB';
 import { SITE_URL } from '@/config/constants';
 
 export const metadata: Metadata = {
@@ -65,8 +64,7 @@ export default function BlogIndexPage() {
       </Section>
 
       <Footer />
-      <WhatsAppFAB />
-      <PhoneFAB />
+      <ContactFAB />
     </main>
   );
 }

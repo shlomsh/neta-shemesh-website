@@ -4,17 +4,17 @@ import React from 'react';
  * All accepted bgVariant values.
  *
  * Canonical 4-tone names:
- *   'dark'        → #574964  (bg) + cream text
- *   'mid'         → #9F8383  (bg) + cream text
- *   'light'       → #C8AAAA  (bg) + dark text   (body text auto-bumped to AA large)
- *   'cream'       → #fff0e4  (bg) + dark text
+ *   'dark'        → #7A5978  (bg) + cream text
+ *   'mid'         → #C49AB8  (bg) + cream text
+ *   'light'       → #ECC8CE  (bg) + dark text   (body text auto-bumped to AA large)
+ *   'cream'       → #FFF5F0  (bg) + dark text
  *   'transparent' → no background
  *
  * Legacy aliases (kept for backward-compat, mapped to canonical tone):
  *   'white'       → maps to 'cream' behavior
  *
  * Note: the old 'light' variant previously mapped to --color-bg-light (≡ cream).
- * It now maps to the new blush (#C8AAAA) tone. Any callers that relied on
+ * It now maps to the new blush (#ECC8CE) tone. Any callers that relied on
  * the old 'light' === cream behavior should migrate to 'cream'.
  * Currently the only caller of bgVariant="light" is Services.tsx — verify intent.
  */

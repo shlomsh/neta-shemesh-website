@@ -2,7 +2,7 @@
  * HeroBackground — "05B Dark Ground" treatment.
  *
  * Replaces the original full-bleed photo with a solid deep-plum field
- * (--color-plum / #574964). All hero text and the line-art
+ * (--color-plum / #7A5978). All hero text and the line-art
  * illustration sit on top of this in lighter palette tones.
  *
  * Server component; no interactivity needed.

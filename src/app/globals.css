@@ -63,28 +63,28 @@
    * data-bg-tone is set by <Section bgVariant=…>.
    * ──────────────────────────────────────────────────────────────────────── */
 
-  /* Dark (#574964) — cream text */
+  /* Dark (#7A5978) — cream text */
   [data-bg-tone="dark"] {
     background-color: var(--color-plum);
     color: var(--color-cream);
     --header-color: var(--color-cream);
   }
 
-  /* Mid (#9F8383) — cream text */
+  /* Mid (#C49AB8) — cream text */
   [data-bg-tone="mid"] {
     background-color: var(--color-mauve);
     color: var(--color-cream);
     --header-color: var(--color-cream);
   }
 
-  /* Light (#C8AAAA) — dark text */
+  /* Light (#ECC8CE) — dark text */
   [data-bg-tone="light"] {
     background-color: var(--color-blush);
     color: var(--color-plum);
     --header-color: var(--color-plum);
   }
 
-  /* Cream (#fff0e4) — dark text */
+  /* Cream (#FFF5F0) — dark text */
   [data-bg-tone="cream"] {
     background-color: var(--color-cream);
     color: var(--color-plum);
@@ -92,8 +92,8 @@
   }
 
   /* ── Large-text AA bump for Mid and Light sections ──────────────────────
-   * Mid contrast ~3.1:1, Light ~3.9:1 — both pass WCAG AA only for
-   * large text (≥18.66 px bold OR ≥24 px regular).
+   * Mid ≈ 2.26:1 (fails AA even for large text; decorative surfaces only),
+   * Light ≈ 3.89:1 (AA large text only: ≥18.66 px bold OR ≥24 px regular).
    * .body-text-large is applied by BodyText when it detects the section
    * tone via the inherited CSS custom property --section-needs-large-text.
    * We set that property to 1 on Mid/Light, and BodyText reads it.
@@ -149,8 +149,25 @@
   animation: floaty 7s ease-in-out infinite;
 }
 
+/* Hero entrance: pure CSS so the above-the-fold content animates on first
+   paint with zero JS dependency (no opacity:0 in the server HTML). */
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-enter {
+  animation: hero-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-fill-mode: both;
+}
+.hero-enter-0 { animation-delay: 0s; }
+.hero-enter-1 { animation-delay: 0.08s; }
+.hero-enter-2 { animation-delay: 0.16s; }
+.hero-enter-3 { animation-delay: 0.24s; }
+
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
+  .hero-enter { animation: none; opacity: 1; transform: none; }
 }
 
 @utility safari-clip {

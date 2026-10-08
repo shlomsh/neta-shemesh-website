@@ -1,8 +1,10 @@
 # Handoff: Hero Section — 05B "Dark Ground"
 
+> **2026-10-08:** hexes below were remapped from the original handoff palette (#574964 / #9F8383 / #C8AAAA / #fff0e4) to the shipped, canonical palette in `src/app/globals.css`. `hero-05b-reference.html` in this folder still carries the old hexes (static reference only).
+
 ## Overview
 This is the hero section for **נטע שמש** — a couples therapy website (Hebrew, RTL).
-The design is "05B Dark Ground": the darkest palette color (#574964, deep plum) is used as
+The design is "05B Dark Ground": the darkest palette color (#7A5978, deep plum) is used as
 the hero background, with all text and illustration in lighter palette tones (cream, mauve).
 The hero features an abstract line-art illustration of a couple (wire-art style) floating
 over a soft asymmetric blob, with a large Elamy-font headline on the left and a minimal
@@ -28,7 +30,7 @@ Recreate the UI pixel-accurately using the project's existing component patterns
 ### Layout
 - Direction: `rtl` (right-to-left, Hebrew)
 - Full-viewport hero, designed at **1280 × 820 px** reference size
-- Background: `#574964`
+- Background: `#7A5978`
 - Two zones (flex row, `gap: 40px`, `align-items: center`):
   - **Text block** — `flex: 0 0 520px` — absolute positioned inset `150px 60px 64px`
   - **Art block** — `flex: 1`, `height: 480px`, centered illustration
@@ -42,29 +44,29 @@ Recreate the UI pixel-accurately using the project's existing component patterns
 
 | Sub-component | Details |
 |---|---|
-| **Brand mark** | 44×44 px rounded rect (`border-radius: 14px`), `background: #fff0e4`, initial "נ" in `#574964`, Elamy 21px |
-| **Wordmark** | "נטע שמש" — Elamy Bold, 22px, `#fff0e4` |
-| **Nav links** | "קצת עליי · התמחות · יצירת קשר" — Stanga 16px, `#C8AAAA`, `gap: 34px` |
-| **Phone pill** | `border: 1px solid #9F8383`, `color: #fff0e4`, `border-radius: 999px`, padding `11px 22px`, Stanga 15px. Phone number wrapped in `dir="ltr"` span |
+| **Brand mark** | 44×44 px rounded rect (`border-radius: 14px`), `background: #FFF5F0`, initial "נ" in `#7A5978`, Elamy 21px |
+| **Wordmark** | "נטע שמש" — Elamy Bold, 22px, `#FFF5F0` |
+| **Nav links** | "קצת עליי · התמחות · יצירת קשר" — Stanga 16px, `#ECC8CE`, `gap: 34px` |
+| **Phone pill** | `border: 1px solid #C49AB8`, `color: #FFF5F0`, `border-radius: 999px`, padding `11px 22px`, Stanga 15px. Phone number wrapped in `dir="ltr"` span |
 
 ---
 
 ### Component: Headline
-- Font: **Elamy Bold**, 64px, `line-height: 1.16`, `color: #fff0e4`
+- Font: **Elamy Bold**, 64px, `line-height: 1.16`, `color: #FFF5F0`
 - Copy (Hebrew, RTL):
   ```
   מקום בטוח לצמוח בו, ביחד.
   ```
 - The word **"לצמוח"** has a highlight underline accent:
   - `position: absolute`, `left/right: 0`, `bottom: 4px`
-  - `height: 10px`, `background: #C8AAAA`, `border-radius: 6px`
+  - `height: 10px`, `background: #ECC8CE`, `border-radius: 6px`
   - `opacity: 0.55`, `transform: rotate(-1.2deg)`, `z-index: -1`
   - (wrap the word in `position: relative; white-space: nowrap`)
 
 ---
 
 ### Component: Body Text
-- Font: **Stanga Bold**, 19px, `line-height: 1.75`, `color: #C8AAAA`
+- Font: **Stanga Bold**, 19px, `line-height: 1.75`, `color: #ECC8CE`
 - `max-width: 430px`, `margin-top: 24px`
 - Copy:
   ```
@@ -79,8 +81,8 @@ Recreate the UI pixel-accurately using the project's existing component patterns
 
 | Button | Style |
 |---|---|
-| **Primary** — "לקביעת שיחת היכרות" | `background: #fff0e4`, `color: #574964`, `padding: 16px 34px`, `border-radius: 999px`, Stanga 17px, no border |
-| **Secondary** — "איך זה עובד ↗" | Plain text, `color: #C8AAAA`, Stanga 17px, no border/bg |
+| **Primary** — "לקביעת שיחת היכרות" | `background: #FFF5F0`, `color: #7A5978`, `padding: 16px 34px`, `border-radius: 999px`, Stanga 17px, no border |
+| **Secondary** — "איך זה עובד ↗" | Plain text, `color: #ECC8CE`, Stanga 17px, no border/bg |
 
 ---
 
@@ -89,7 +91,7 @@ Recreate the UI pixel-accurately using the project's existing component patterns
 
 **Asymmetric blob (background shape):**
 - `position: absolute`, `width: 520px`, `height: 420px`
-- `background: #9F8383`, `opacity: 0.32`
+- `background: #C49AB8`, `opacity: 0.32`
 - `border-radius: 42% 58% 55% 45% / 55% 48% 52% 45%` (organic ellipse shape)
 
 **Line-art image (`couple3-cream.png`):**
@@ -110,10 +112,10 @@ Recreate the UI pixel-accurately using the project's existing component patterns
 ### Colors
 | Token | Hex | Usage |
 |---|---|---|
-| Dark / Primary | `#574964` | Hero background, brand mark bg text, primary button text |
-| Mid | `#9F8383` | Blob fill, phone pill border |
-| Light | `#C8AAAA` | Nav text, body text, highlight accent, secondary CTA |
-| Cream / Background | `#fff0e4` | All text on dark, primary button background, brand mark bg |
+| Dark / Primary | `#7A5978` | Hero background, brand mark bg text, primary button text |
+| Mid | `#C49AB8` | Blob fill, phone pill border |
+| Light | `#ECC8CE` | Nav text, body text, highlight accent, secondary CTA |
+| Cream / Background | `#FFF5F0` | All text on dark, primary button background, brand mark bg |
 
 ### Typography
 | Font | File | Usage |
@@ -142,8 +144,8 @@ Recreate the UI pixel-accurately using the project's existing component patterns
 |---|---|
 | Primary CTA button | Navigates to contact/booking form. Add hover: slightly darken bg (`#f0e0d2`), transition 200ms |
 | Secondary CTA link | Navigates to "how it works" section (anchor or separate page) |
-| Nav links | Standard page navigation. On hover: `color: #fff0e4`, transition 150ms |
-| Phone pill | Opens phone dialer on mobile (`href="tel:+972501234567"`), hover: border `#C8AAAA` |
+| Nav links | Standard page navigation. On hover: `color: #FFF5F0`, transition 150ms |
+| Phone pill | Opens phone dialer on mobile (`href="tel:+972501234567"`), hover: border `#ECC8CE` |
 | Floating illustration | CSS animation only — pause on `prefers-reduced-motion` media query |
 
 ### Accessibility

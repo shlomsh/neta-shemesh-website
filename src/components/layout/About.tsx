@@ -195,7 +195,7 @@ export function AboutBio() {
               
               {/* Personal Photo */}
               <ScrollReveal delay={0.24} className="w-full flex justify-start">
-                <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-[24px] outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(87,73,100,0.3)] safari-clip">
+                <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-[24px] outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)] safari-clip">
                   <Image
                     src={PROFILE_PHOTO}
                     alt="נטע שמש"

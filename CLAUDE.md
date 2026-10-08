@@ -61,36 +61,45 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 
 ### The palette (4 colors only — do not add new hexes)
 
+> **2026-10-08:** the palette was re-tuned; the values below (matching `@theme` in `src/app/globals.css`) are the canonical ones. The earlier #574964 / #9F8383 / #C8AAAA / #fff0e4 set is retired.
+
 | Token | Hex | Role |
 |---|---|---|
-| `--color-plum` | `#574964` | Dark plum — dark card bg / primary text on light |
-| `--color-mauve` | `#9F8383` | Mid mauve — accent card bg / brand |
-| `--color-blush` | `#C8AAAA` | Light blush — soft accent card bg |
-| `--color-cream` | `#fff0e4` | Warm cream — light card bg / page bg |
+| `--color-plum` | `#7A5978` | Dark plum — dark card bg / primary text on light |
+| `--color-mauve` | `#C49AB8` | Mid mauve — accent card bg / brand (`--color-brand-primary`) |
+| `--color-blush` | `#ECC8CE` | Light blush — soft accent card bg |
+| `--color-cream` | `#FFF5F0` | Warm cream — light card bg / page bg |
 
-> `--color-white` is aliased to `#fff0e4` (the cream), **not** `#ffffff`. Never use `bg-white` for a brand surface — it gives pure white, not the brand cream.
+> `--color-white` is aliased to `#FFF5F0` (the cream), **not** `#ffffff`. Never use `bg-white` for a brand surface — it gives pure white, not the brand cream.
 
 ---
 
 ### Contrast pairs (never deviate)
 
+Ratios are computed with the WCAG 2.x relative-luminance formula. Thresholds: AAA normal ≥ 7, AA normal ≥ 4.5, AA large ≥ 3 (large = ≥24px regular OR ≥18.67px bold).
+
 | Background | Text | WCAG ratio | Notes |
 |---|---|---|---|
-| Dark `#574964` | Cream `#fff0e4` | **7.4:1 ✅ AAA** | Full freedom — any size/weight |
-| Cream `#fff0e4` | Dark `#574964` | **7.4:1 ✅ AAA** | Full freedom — any size/weight |
-| Light `#C8AAAA` | Dark `#574964` | 3.9:1 ⚠️ | Large text only (≥24px regular OR ≥18.67px bold) |
-| Mid `#9F8383` | Cream `#fff0e4` | 3.1:1 ⚠️ | Large text only |
+| Dark `#7A5978` | Cream `#FFF5F0` | **5.55:1 ✅ AA** | Passes AA at any size/weight (not AAA) |
+| Cream `#FFF5F0` | Dark `#7A5978` | **5.55:1 ✅ AA** | Passes AA at any size/weight (not AAA) |
+| Light `#ECC8CE` | Dark `#7A5978` | 3.89:1 ⚠️ | Large text only (≥24px regular OR ≥18.67px bold) |
+| Mid `#C49AB8` | Cream `#FFF5F0` | 2.26:1 ❌ | **Fails AA even for large text** |
+| Mid `#C49AB8` | Dark `#7A5978` | 2.46:1 ❌ | Fails AA even for large text |
+| Light `#ECC8CE` | Cream `#FFF5F0` | 1.43:1 ❌ | Never |
 
-**Rule of thumb:** Dark + Mid backgrounds → cream text. Light + Cream backgrounds → dark text.
+The hero nav/CTA pill (`bg-brand-primary/75` = mauve at 75% over plum ≈ `#B28AA8`, cream text) measures 2.77:1 — also below 3:1.
+
+**Rule of thumb:** Dark backgrounds → cream text. Light + Cream backgrounds → dark text. **Mid has no compliant text pair** — use it for surfaces that carry no text (shapes, fills, image frames, decorative highlights) or only non-essential text; do not place essential copy on it.
 
 ---
 
 ### Content-aware color assignment
 
-Because Mid and Light only pass WCAG AA for large text, **assign card tone by content type** — do not force body copy bold to compensate (that flattens the type hierarchy):
+Because Light only passes WCAG AA for large text and Mid fails it entirely, **assign card tone by content type** — do not force body copy bold to compensate (that flattens the type hierarchy):
 
-- **Dark / Cream** → paragraph-heavy cards (running body text, captions, contact details, forms, credential lists). Full type freedom at any size/weight.
-- **Mid / Light** → cards with display/quote-scale text only (`.type-title`, `.type-quote`, ≥24px) or image-dominant cards with minimal text.
+- **Dark / Cream** → paragraph-heavy cards (running body text, captions, contact details, forms, credential lists). Full type freedom at any size/weight (AA).
+- **Light** → cards with display/quote-scale text only (`.type-title`, `.type-quote`, ≥24px) or image-dominant cards with minimal text.
+- **Mid** → no essential text. Reserve it for decorative surfaces, shapes and image-dominant cards; if a card needs readable text, move it to Dark or Cream.
 - Nested card surfaces (TestimonialCard, ExpertiseCard, StepCard) are judged by their **own visible background**, not the parent section tone.
 
 ---
