@@ -744,6 +744,7 @@ Merged and deduplicated from reports A to G and the two peer reports.
 
 - Do not use `100dvh` on cards (it resizes every card on every toolbar frame and shifts content above the reader), unprefixed `lvh`, or `100vh`. Keep the `svh` base plus `max-lg:min-h-lvh` (in `--card-h` after NS-37). The footer's `supports-[height:100dvh]:min-h-dvh` stays.
 - Do not gate `min-h-[100svh]` behind `lg:` (CLAUDE.md), and do not "fix" the hero to `lvh` without looking at the first-view toolbar-expanded state (NS-25 is an owner decision).
+- Superseded 2026-10-09 by NS-37/NS-39 (see CLAUDE.md Layout): the two bullets above predate `--card-h`/`screen-fit` and the content-height phone cards.
 - Do not change the lg+ heights (`lg:h-[max(100svh,720px)]`, `lg:min-h-[max(100svh,720px)]`, Expertise `floor={false}`) without the three-size pixel parity check.
 - Do not re-enable touch snap in any form (JS `scrollTo`, or CSS `proximity` / `mandatory`).
 - Do not replace SoftSnap with CSS `scroll-snap`, and do not add `scroll-snap-type` without deliberately updating the sanity ban (`tests-unit/sanity/soft-snap.test.tsx`).
