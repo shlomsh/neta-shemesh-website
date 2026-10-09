@@ -8,7 +8,7 @@ import { cx } from '@/lib/cx';
  *   'light' #ECC8CE + plum text       'cream' #FFF5F0 + plum text
  * Omit `tone` for photo sections (CTA band): no `data-bg-tone`, the photo carries the surface.
  */
-export type SectionTone = 'dark' | 'mid' | 'light' | 'cream';
+type SectionTone = 'dark' | 'mid' | 'light' | 'cream';
 
 /**
  * How tall the section is from lg up. Every fit is at least one screen there (`lg:screen-fit` =
@@ -22,7 +22,6 @@ export type SectionTone = 'dark' | 'mid' | 'light' | 'cream';
  *   'grow'    : from lg one screen at least (`lg:min-h-[max(100svh,720px)]`, `lg:py-12`). For
  *               running text that must never be clipped.
  */
-export type SectionFit = 'free' | 'lock' | 'grow';
 
 /**
  * How tall a `fit` section is BELOW lg (NS-39). From lg up nothing depends on this.
@@ -35,7 +34,7 @@ export type SectionFit = 'free' | 'lock' | 'grow';
  *                       are a "moment" on a phone: credentials and the CTA band (plus the bespoke hero and
  *                       footer). Published as `data-phone`.
  */
-export type SectionPhone = 'content' | 'screen';
+type SectionPhone = 'content' | 'screen';
 
 /**
  * How a `fit` section centres its content (only meaningful with `fit`).
@@ -44,10 +43,10 @@ export type SectionPhone = 'content' | 'screen';
  *                      the 2x2 card grid takes the remaining height (Expertise)
  *   'middle'           flex row, a single child centred on both axes (photo bands)
  */
-export type SectionCenter = 'column' | 'start' | 'middle';
+type SectionCenter = 'column' | 'start' | 'middle';
 
 /** Vertical padding token: 'section' = py-section, 'tight' = py-section-tight, 'none' = caller's own. */
-export type SectionPad = 'section' | 'tight' | 'none';
+type SectionPad = 'section' | 'tight' | 'none';
 
 /** `floor` exists only on a lock, `center` and `phone` only on a fit: the union makes the rest a type error. */
 type FitProps =
@@ -91,7 +90,7 @@ type SectionOwnProps = {
  */
 type PassThrough = Omit<React.HTMLAttributes<HTMLElement>, 'id' | 'dir' | keyof SectionOwnProps>;
 
-export type SectionProps = SectionOwnProps & FitProps & PassThrough;
+type SectionProps = SectionOwnProps & FitProps & PassThrough;
 
 /**
  * Whole class strings on purpose: Tailwind only emits utilities it can read verbatim from source.

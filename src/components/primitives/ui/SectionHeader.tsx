@@ -11,7 +11,7 @@ import { SectionTitle } from './SectionTitle';
  *            exception: no 65ch cap (the column never reaches it) and `mt-5 md:mt-9`, because the Elamy
  *            "?" in the title has a long descender.
  */
-export type SubtitleAlign = 'center' | 'column';
+type SubtitleAlign = 'center' | 'column';
 
 const SUBTITLE_CLASS: Record<SubtitleAlign, string> = {
   center: 'type-quote max-w-[65ch] mx-auto mt-3 md:mt-4',

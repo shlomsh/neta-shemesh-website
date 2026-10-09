@@ -1,4 +1,4 @@
-export interface QuoteTextProps {
+interface QuoteTextProps {
   text: string;
 }
 

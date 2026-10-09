@@ -1,4 +1,4 @@
-export interface AvatarProps {
+interface AvatarProps {
   src: string;
   alt: string;
 }

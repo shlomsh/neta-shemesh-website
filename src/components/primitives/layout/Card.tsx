@@ -9,14 +9,14 @@ import { cx } from '@/lib/cx';
  * Both publish `data-bg-tone="cream"`, so text and `--header-color` come from the tone rules in
  * globals.css and children need no colour classes.
  */
-export type CardSurface = 'cream' | 'veil';
+type CardSurface = 'cream' | 'veil';
 
 /**
  * Inner padding.
  *   'md' p-6 md:p-8
  *   'lg' p-6 md:p-8 lg:p-10 (the office card, which also frames the map)
  */
-export type CardPad = 'md' | 'lg';
+type CardPad = 'md' | 'lg';
 
 type CardProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   surface: CardSurface;

@@ -1,4 +1,4 @@
-export interface QuoteBlockProps {
+interface QuoteBlockProps {
   lines: string[];
 }
 

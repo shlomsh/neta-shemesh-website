@@ -20,7 +20,7 @@ import { cx } from '@/lib/cx';
  * exists only under `html[data-reveal-armed]` with `prefers-reduced-motion: no-preference` (globals.css),
  * so JS off, an iframe and reduced motion all show the finished drawing.
  */
-export type LineArtName = 'family' | 'parent-child' | 'individual' | 'chair';
+type LineArtName = 'family' | 'parent-child' | 'individual' | 'chair';
 
 export const LINE_ART_NAMES: readonly LineArtName[] = ['family', 'parent-child', 'individual', 'chair'];
 

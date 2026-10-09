@@ -7,7 +7,7 @@ import { cx } from '@/lib/cx';
  *   'sm' 24px  (the contact detail rows)
  *   'lg' 44px  (the social links, which are also the 44px touch target)
  */
-export type MaskIconSize = 'sm' | 'lg';
+type MaskIconSize = 'sm' | 'lg';
 
 const SIZE_CLASS: Record<MaskIconSize, string> = {
   sm: 'w-[24px] h-[24px] flex-shrink-0',

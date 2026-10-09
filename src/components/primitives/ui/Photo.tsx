@@ -9,14 +9,14 @@ import { ScrollReveal } from '@/components/motion/ScrollReveal';
  * Corner radius of the frame: `card` (24px), `tile` (12px) or `none` (full-bleed bands). A rounded
  * frame also gets `safari-clip`, the WebKit fix for an `overflow-hidden` rounded parent (see `safariClip`).
  */
-export type PhotoRadius = 'card' | 'tile' | 'none';
+type PhotoRadius = 'card' | 'tile' | 'none';
 
 /**
  * Aspect ratio of the frame (width / height). Whole class strings in the maps: Tailwind reads them
  * verbatim. '100/62' and '100/58' are the blog covers (height = 62% / 58% of the width). Never fake a
  * ratio with a `padding-top` spacer div: use `ratio`.
  */
-export type PhotoRatio = 'square' | '4/3' | '4/5' | '2/3' | '348/531' | '100/62' | '100/58';
+type PhotoRatio = 'square' | '4/3' | '4/5' | '2/3' | '348/531' | '100/62' | '100/58';
 
 const RADIUS_CLASS: Record<PhotoRadius, string> = {
   card: 'rounded-card',
@@ -45,7 +45,7 @@ const OUTLINE = 'outline outline-[1.5px] outline-plum';
  *   'self'  when the photo itself is hovered (gallery tiles)
  *   'group' when the enclosing `group` (a linked card) is hovered
  */
-export type PhotoZoom = 'self' | 'group';
+type PhotoZoom = 'self' | 'group';
 const ZOOM_CLASS: Record<PhotoZoom, string> = {
   self: 'motion-safe:hover:scale-105 transition-transform duration-700 ease-out',
   group: 'transition-transform duration-500 motion-safe:group-hover:scale-[1.04]',

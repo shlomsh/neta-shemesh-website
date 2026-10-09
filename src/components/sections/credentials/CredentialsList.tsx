@@ -1,6 +1,6 @@
 import type { Credential } from '@/content/types';
 
-export interface CredentialsListProps {
+interface CredentialsListProps {
   items: Credential[];
   checkIconSrc: string | string[];
   onDark?: boolean;

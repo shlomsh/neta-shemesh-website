@@ -15,7 +15,7 @@ import { NavLink } from './NavLink';
 
 const subscribeNoop = () => () => {};
 
-export interface NavItem {
+interface NavItem {
   label: string;
   href: string;
 }

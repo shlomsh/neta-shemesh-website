@@ -5,7 +5,7 @@ import { cx } from '@/lib/cx';
  * The element a title renders as. `h2` (default) for section titles, `h1` for a page title
  * (blog), `p` for a title-scale line that is not a heading (the footer tagline).
  */
-export type SectionTitleTag = 'h1' | 'h2' | 'p';
+type SectionTitleTag = 'h1' | 'h2' | 'p';
 
 type SectionTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
   as?: SectionTitleTag;

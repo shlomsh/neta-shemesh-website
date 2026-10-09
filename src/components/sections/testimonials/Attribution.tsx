@@ -1,6 +1,6 @@
 import { Avatar } from './Avatar';
 
-export interface AttributionProps {
+interface AttributionProps {
   name: string;
   role: string;
   avatarSrc: string;
