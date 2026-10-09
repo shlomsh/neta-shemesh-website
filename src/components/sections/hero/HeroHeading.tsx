@@ -8,6 +8,8 @@
  * `.type-display` rule in globals.css (layout is unchanged, but the box,
  * and the compositing layer ScrollReveal's animation creates around it,
  * encloses the full ink, so tall ascenders/descenders can't be clipped).
+ * The same holds sideways (--ink-inline). No width utility here (a block h1
+ * already fills its parent): `w-full` + inline padding would shift the box.
  *
  * Keeps ID.heroTitle (content/ids.ts), which the layout-fit and header-fidelity specs select on.
  * Server component.
@@ -26,7 +28,6 @@ export function HeroHeading() {
         type-display
         text-cream
         font-bold
-        w-full
       "
     >
       מקום בטוח לצמוח בו{' '}

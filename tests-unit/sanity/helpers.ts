@@ -506,6 +506,20 @@ const INK_MARGIN_RE = new RegExp(
   ].join('|'),
 );
 
+// NS-45: the same hazard on the inline axis. The ink box also pads inline (--ink-inline) and cancels it with an
+// equal negative margin-inline; a width (w-*, min-w-*, max-w-*, size-*) or inline-padding (p-*, px-*, ps-*, pe-*,
+// pl-*, pr-*) utility on the heading changes the box the margin was balanced against and shifts the title.
+const INK_INLINE = String.raw`(?<![\w-])(?:(?:min-|max-)?w-(?:\[[^\]\s]*\]|[\w./]+)|size-(?:\[[^\]\s]*\]|[\w./]+)|p[xselr]?-(?:\[[^\]\s]*\]|[\w./]+)|\[(?:width|min-width|max-width|padding[\w-]*):[^\]]*\])`;
+const INK_INLINE_RE = new RegExp(
+  [
+    `${INK_TYPE}${INK_GAP}${INK_INLINE}`,
+    `${INK_INLINE}${INK_GAP}${INK_TYPE}`,
+    `className=\\{${INK_EXPR}${INK_TYPE}${INK_EXPR}${INK_INLINE}`,
+    `className=\\{${INK_EXPR}${INK_INLINE}${INK_EXPR}${INK_TYPE}`,
+    `<SectionTitle\\b[^>]*?className=(?:"[^"]*?|\\{${INK_EXPR})${INK_INLINE}`,
+  ].join('|'),
+);
+
 export const SCAN_RULES: ScanRule[] = [
   { id: 'px-size', label: 'arbitrary px/number text size  text-[18px]', re: /(?<![\w-])text-\[(?:\d|\.\d|length:|calc\()/,
     bad: ['className="text-[18px]"', 'md:text-[15px]', 'text-[.9rem]', 'text-[0]'], good: ['text-plum', 'text-[color:var(--header-color)]', 'context-[1]'] },
@@ -559,6 +573,12 @@ export const SCAN_RULES: ScanRule[] = [
     good: ['<h2 className="type-title font-bold tracking-[-0.01em] text-center">', '<SectionTitle className="text-center">', '<div className="mb-[clamp(28px,4vw,48px)]"><SectionTitle className="text-center">',
       '<p className="type-quote max-w-[65ch] mx-auto mt-3 md:mt-4">', '<h3 className="type-card-title mt-2 mb-3 text-cream">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve max-w-[65ch] min-h-[2em]">',
       '<SectionTitle as="p" onDark className="text-center w-full h-full flex items-center justify-center">', '.type-title { margin-block: 0 }'] },
+  { id: 'ink-box-inline', label: 'width or inline-padding utility on an Elamy heading (.type-display/.type-title/.type-signature, or SectionTitle className): the ink box pads inline with an equal negative margin (NS-45), so it shifts the title; put widths and padding on a wrapper',
+    re: INK_INLINE_RE,
+    bad: ['<h1 className="type-display text-cream font-bold w-full">', '<h2 className="type-title max-w-[65ch]">', '<p className="min-w-0 type-signature">', '<h2 className="type-title px-4">', '<SectionTitle as="p" onDark className="text-center w-full h-full">',
+      '<span className="type-display ps-2 self-end">', '<h1 className={cx("type-title", wide && "max-w-prose")}>', '<h2 className="type-title [width:80%]">'],
+    good: ['<h2 className="type-title font-bold tracking-[-0.01em] text-center">', '<SectionTitle className="text-center h-full flex items-center justify-center">', '<div className="w-full"><SectionTitle>', '<h3 className="type-card-title w-full px-4">',
+      '<p className="type-quote max-w-[65ch] mx-auto mt-3 md:mt-4">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve min-h-[2em] opacity-90">', 'type-title { padding-inline: 0 }'] },
   { id: 'hex', label: 'hex colour literal', re: /#[0-9a-fA-F]{3,8}\b/, bad: ['bg-[#123456]', '#ABC', 'color:#fff5f0'], good: ['var(--color-plum)', 'issue #4', 'url(#grad)'] },
 ];
 

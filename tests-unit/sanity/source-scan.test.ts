@@ -88,7 +88,7 @@ describe('C11: no ad-hoc type sizes, weights or removed classes in src', () => {
   const WHOLE_SOURCE = [
     'px-size', 'clamp-size', 'tw-named-size', 'font-black', 'font-sans', 'extra-weights', 'numeric-weight',
     'data-body-large', 'section-header', 'hero-title', 'sub-header', 'contact-email-link',
-    'fontSize-style', 'h-screen', 'ungated-h-100svh', 'display-font-in-component', 'ink-box-margin',
+    'fontSize-style', 'h-screen', 'ungated-h-100svh', 'display-font-in-component', 'ink-box-margin', 'ink-box-inline',
   ];
 
   it.each(WHOLE_SOURCE)('src has no %s', (id) => {

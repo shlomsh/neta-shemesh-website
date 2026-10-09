@@ -72,6 +72,12 @@
    * the headings the site renders. */
   --ink-top: .72em;
   --ink-bottom: .62em;
+  /* Inline ink: the same measurement across the inline axis. Elamy's lamed (ל) and several final forms
+   * swash up to ~.51em past the advance box (fontkit: max +0.513em left, +0.506em right over every live
+   * title; whole-font worst case -0.706em lsb / -0.506em rsb). A composited reveal layer is clipped to its
+   * border box, so without this padding the swash is cut at the title's edge while the fade runs and
+   * "snaps" whole when the layer is dropped (NS-45). .75em encloses the worst glyph in the font. */
+  --ink-inline: .75em;
 
   /* Card height contract (NS-37): the one place the unit decision lives. svh everywhere; lvh below lg
    * (see the @supports block after this one), where the collapsed-toolbar height is static, so no strip of
@@ -237,9 +243,14 @@
    * does, WebKit paints the element clipped to its own box, so tall strokes were cut off on load and
    * "healed" when the animation ended. The padded box encloses the ink; the equal negative margin
    * cancels it, so layout is identical (also against adjacent margins).
-   * HAZARD: a margin utility (mt-*, mb-*, my-*...) on one of these elements REPLACES the negative
-   * margin and shifts the layout; put the spacing on a wrapper or on the neighbouring element (the
-   * sanity suite scans for it). Keep the same values on all three; never patch an individual heading. */
+   * The same box exists on the INLINE axis (--ink-inline, NS-45): Elamy swashes (ל, final forms) overhang
+   * the advance box by ~.5em sideways, and the reveal layer was clipped at the title's own left/right
+   * edge. padding-inline plus the equal negative margin-inline keeps the content box where it was.
+   * HAZARD: a margin utility (mt-*, mb-*, my-*, mx-*...) on one of these elements REPLACES the negative
+   * margin and shifts the layout; so does a width or inline-padding utility (w-*, max-w-*, px-*...),
+   * because the padded border box would no longer be cancelled by the margin. Put spacing and widths on
+   * a wrapper or on the neighbouring element (the sanity suite scans for both). Keep the same values on
+   * all three; never patch an individual heading. */
   .type-display {
     font-family: var(--font-display);
     font-weight: 400;
@@ -248,6 +259,8 @@
     letter-spacing: -0.01em;
     padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
     margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
+    padding-inline: var(--ink-inline);
+    margin-inline: calc(-1 * var(--ink-inline));
   }
 
   .type-title {
@@ -257,6 +270,8 @@
     line-height: 1.15;
     padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
     margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
+    padding-inline: var(--ink-inline);
+    margin-inline: calc(-1 * var(--ink-inline));
   }
 
   .type-card-title {
@@ -332,6 +347,8 @@
     line-height: 1.1;
     padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
     margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
+    padding-inline: var(--ink-inline);
+    margin-inline: calc(-1 * var(--ink-inline));
   }
 
   /* Latin/digit companion for phone numbers and email addresses.

@@ -30,7 +30,7 @@ export function Footer() {
 
         {/* 1. Tagline */}
         <ScrollReveal className="h-full">
-          <SectionTitle as="p" onDark className="text-center w-full h-full flex items-center justify-center">
+          <SectionTitle as="p" onDark className="text-center h-full flex items-center justify-center">
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
           </SectionTitle>
         </ScrollReveal>
