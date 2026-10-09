@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint --max-warnings 0",
     "test:unit": "vitest run",
     "test:sanity": "vitest run tests-unit/sanity",
     "compare:deploys": "bash scripts/compare-deploys.sh",
