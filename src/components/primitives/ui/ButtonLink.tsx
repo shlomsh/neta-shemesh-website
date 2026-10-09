@@ -1,5 +1,6 @@
 import React from 'react';
 import { cx } from '@/lib/cx';
+import { HaloWrap } from './HaloWrap';
 
 type ButtonVariant = 'primary' | 'secondary';
 type ButtonSize = 'md' | 'sm';
@@ -9,6 +10,8 @@ interface ButtonLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> 
   variant?: ButtonVariant;
   /** `md` (default) = full CTA button. `sm` = compact pill for the hero / nav. */
   size?: ButtonSize;
+  /** Soft breathing halo (NS-57) for the primary invitations on photo sections (CTA band, footer). Decoration only. */
+  halo?: boolean;
   children: React.ReactNode;
 }
 
@@ -35,6 +38,7 @@ export function ButtonLink({
   href,
   variant = 'primary',
   size = 'md',
+  halo = false,
   className,
   children,
   ...props
@@ -56,13 +60,14 @@ export function ButtonLink({
       'bg-cream text-plum hover:bg-cream-hover focus-visible:ring-cream focus-visible:ring-offset-plum',
   };
 
-  return (
+  const link = (
     <a
       href={href}
-      className={cx(baseClasses, sizes[size], variants[variant], className)}
+      className={cx(baseClasses, sizes[size], variants[variant], halo && 'btn-halo-target', className)}
       {...props}
     >
       {children}
     </a>
   );
+  return halo ? <HaloWrap>{link}</HaloWrap> : link;
 }

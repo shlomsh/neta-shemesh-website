@@ -32,7 +32,8 @@ export function CtaBand() {
             subtitle="הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם."
             subtitleClassName="mb-[48px]"
           />
-          <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary">
+          {/* "/#contact" (route-absolute) so the button also works from /blog. `halo` adds the breathing ring. */}
+          <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" halo>
             מוזמנים ליצור קשר
           </ButtonLink>
         </ScrollReveal>

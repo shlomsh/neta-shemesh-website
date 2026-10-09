@@ -114,7 +114,7 @@ describe('C14: buttons, nav and hero copy', () => {
   it('services + CTA-band buttons are the md variant (56px)', () => {
     for (const name of ['services', 'cta-band']) {
       const section = findSection(home, name);
-      const a = buttons(section).find((x) => x.getAttribute('href') === '#contact')!;
+      const a = buttons(section).find((x) => ['#contact', '/#contact'].includes(x.getAttribute('href')!))!;
       expect(buttonHeightToken(a), `${labelOf(section, name)} CTA must be the md variant (min-h-[56px])`).toBe('min-h-[56px]');
     }
   });

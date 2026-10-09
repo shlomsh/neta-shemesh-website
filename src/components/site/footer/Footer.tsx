@@ -39,7 +39,7 @@ export function Footer() {
         <ScrollReveal delay={0.1}>
           {/* A single cream ButtonLink pill (secondary variant) on the photo footer; the pill is its own fill. */}
           <div className="relative flex items-center justify-center">
-            <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary" size="sm" className="relative z-10 min-h-[48px]">
+            <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" size="sm" halo className="relative z-10 min-h-[48px]">
               מוזמנים ליצור איתי קשר
             </ButtonLink>
           </div>

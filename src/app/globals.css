@@ -320,6 +320,46 @@
   }
 }
 
+/* Button breathing halo (NS-57; ButtonLink `halo`: CTA band + footer). A soft static cream/blush glow around the pill (the whole treatment under reduced
+   motion) plus, with motion, ONE thin ring that swells gently outward and fades once every 6.5 s (about 3.4 s of
+   breath, then rest). transform / opacity only, peak ring opacity 0.35, paused while the band is off screen
+   (.btn-halo-wrap carries [data-in-view], set by HaloWrap). The button label stays plum on cream (5.55:1). The halo
+   sits after the button in the DOM so hover / focus-visible on the button can brighten it. */
+.btn-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--color-cream) 16%, transparent),
+    0 0 24px 2px color-mix(in srgb, var(--color-blush) 28%, transparent);
+  transition: box-shadow 0.3s ease;
+}
+.btn-halo-target:hover ~ .btn-halo,
+.btn-halo-target:focus-visible ~ .btn-halo {
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--color-cream) 30%, transparent),
+    0 0 36px 6px color-mix(in srgb, var(--color-blush) 50%, transparent);
+}
+@keyframes btn-halo-breathe {
+  0%   { transform: scale(1); opacity: 0; }
+  25%  { opacity: 0.35; }
+  52%  { transform: scale(1.08, 1.3); opacity: 0; }
+  100% { transform: scale(1.08, 1.3); opacity: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn-halo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1.5px solid color-mix(in srgb, var(--color-cream) 70%, transparent);
+    opacity: 0;
+    animation: btn-halo-breathe 6.5s cubic-bezier(0.4, 0, 0.3, 1) infinite;
+  }
+  .btn-halo-wrap:not([data-in-view]) .btn-halo::before { animation-play-state: paused; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; transform: none; }
