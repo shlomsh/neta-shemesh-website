@@ -312,28 +312,19 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
    */
   const BAN_ALLOW: Record<string, BanAllow[]> = {
     'text-mauve': [
-      { file: 'AuthorCard.tsx', count: 2, reason: 'blog author card eyebrow + job title in mauve on a cream/blush card (2.05:1)' },
-      { file: 'PostCard.tsx', count: 1, reason: 'blog card category eyebrow in mauve on cream (2.26:1)' },
       { file: 'Attribution.tsx', count: 1, reason: 'testimonial role line in mauve (type-small)' },
     ],
     'small-text-blush': [
-      { file: 'blog/page.tsx', count: 1, reason: 'blog index eyebrow: blush at type-eyebrow on plum is 3.89:1' },
-      { file: 'blog/[slug]/page.tsx', count: 3, reason: 'post page back link, eyebrow and meta row: blush at type-small / eyebrow on plum is 3.89:1' },
       { file: 'HeroHeading.tsx', count: 1, reason: 'the hand-drawn underline stroke (aria-hidden svg, currentColor): decorative, carries no text' },
     ],
     'text-colour-mix-transparent': [
-      { file: 'blog/[slug]/page.tsx', count: 1, reason: 'post page lead paragraph: cream at 88% on plum' },
-      { file: 'AuthorCard.tsx', count: 1, reason: 'author bio: plum at 82%' },
       { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92%' },
-      { file: 'PostCard.tsx', count: 2, reason: 'card excerpt (plum 82%) and date/read-time row (plum 70%)' },
     ],
     // Rows marked OWNER EXCEPTION are permanent owner decisions (2026-10-09), not debt: leave them in place.
     'bg-mauve-with-text': [
       { file: 'ExpertiseCard.tsx', count: 1, reason: 'OWNER EXCEPTION (permanent, ruling 2026-10-09, do not "fix"): Expertise pills keep the mauve chip with cream label; bold cream 14px on bg-mauve, 2.26:1' },
-      { file: 'ContactFAB.tsx', count: 1, reason: 'the phone half turns bg-mauve on hover with cream text (2.26:1)' },
     ],
     'opacity-on-text': [
-      { file: 'blog/[slug]/page.tsx', count: 1, reason: 'post page back link fades to opacity-75 on hover' },
       { file: 'IconButton.tsx', count: 1, reason: 'icon-only button: the child is an svg, not text; hover fades the icon (NS-41 may swap it for a colour change)' },
       { file: 'ContactDetails.tsx', count: 1, reason: 'phone / email link fades to opacity-80 on hover' },
       { file: 'ExpertiseCard.tsx', count: 1, reason: 'OWNER EXCEPTION (permanent, ruling 2026-10-09, do not "fix"): the Expertise pill chip is bg-mauve opacity-95' },

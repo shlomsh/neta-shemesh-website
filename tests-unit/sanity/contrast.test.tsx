@@ -64,17 +64,8 @@ export const OWNER_EXCEPTIONS: OwnerException[] = [
 /** Ratchet debt: known failures somebody is meant to fix (NS-33 owns the PostCard / AuthorCard / pill / blog-meta rows). Rows may only be deleted. */
 export const CONTRAST_ALLOW: ContrastAllow[] = [
   // Blog index
-  { page: 'blog', where: '#blog-intro', text: 'הבלוג', type: 'type-eyebrow', ratio: 3.89, reason: 'eyebrow: 14px bold blush on plum, 3.89:1 (large text only)' },
   // Blog index cards + the "more posts" row on a post (content-driven copy, so keyed by type class, not by text)
-  { page: 'blog*', where: '#blog-posts|#post-more', text: '*', type: 'type-eyebrow', ratio: 2.26, reason: `PostCard category eyebrow, text-mauve on cream: 2.26:1 (${CARD_POST})` },
-  { page: 'blog*', where: '#blog-posts|#post-more', text: '*', type: 'type-body', ratio: 3.79, reason: `PostCard excerpt, plum 82% on cream (${CARD_POST})` },
-  { page: 'blog*', where: '#blog-posts|#post-more', text: '*', type: 'type-small', ratio: 3.0, reason: `PostCard date + read time, plum 70% on cream (${CARD_POST})` },
   // Post page: hero band (blush on plum) and the author card on the post body
-  { page: 'blog/*', where: '#post-hero', text: '*', type: 'type-eyebrow', ratio: 3.89, reason: 'post category eyebrow: 14px bold blush on plum, 3.89:1' },
-  { page: 'blog/*', where: '#post-hero', text: '*', type: 'type-small', ratio: 3.89, reason: 'back link, author, date, read time: 14px blush on plum, 3.89:1' },
-  { page: 'blog/*', where: '#post-body', text: '*', type: 'type-eyebrow', ratio: 2.05, reason: 'AuthorCard eyebrow: text-mauve on the blush/cream author card, 2.05:1' },
-  { page: 'blog/*', where: '#post-body', text: '*', type: 'type-small', ratio: 2.05, reason: 'AuthorCard job title: text-mauve on the author card, 2.05:1' },
-  { page: 'blog/*', where: '#post-body', text: '*', type: 'type-body', ratio: 3.54, reason: 'AuthorCard bio: plum 82% on the author card, 3.54:1' },
 ];
 
 /**
