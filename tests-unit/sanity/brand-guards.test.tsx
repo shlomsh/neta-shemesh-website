@@ -81,7 +81,7 @@ describe('D20: no hand-drawn underline under section titles', () => {
 
   it('the only stroke-drawn paths on the page live in the hero (h1 word stroke + couple art), the NS-55 signature flourish, or a LineArt illustration (NS-54)', () => {
     const hero = findSection(home, 'hero');
-    const outside = Array.from(home.querySelectorAll('path[pathLength]')).filter((p) => !hero.contains(p) && !p.closest('.sig-flourish') && !p.closest('svg[data-line-art]')); // NS-55: the bio signature flourish is a signature, not a title underline
+    const outside = Array.from(home.querySelectorAll('path[pathLength]')).filter((p) => !hero.contains(p) && !p.closest('.sig-mark, .sig-flourish') && !p.closest('svg[data-line-art]')); // NS-55/56: the bio signature (masked name + flourish) is a signature; NS-54: LineArt illustrations
     expect(outside.length, 'drawn path outside the hero').toBe(0);
   });
 

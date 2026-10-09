@@ -287,24 +287,33 @@
   }
 }
 
-/* Signature "writes itself" (NS-55, bio quote). Same arming rules as the scroll reveal: the hidden state exists
-   only under html[data-reveal-armed] AND no-preference, so JS-off / reduced motion is static and visible.
-   1) the Elamy name is wiped in right-to-left (RTL: the pen starts at the right edge), 2) the flourish
-   pen-draws after it (pathLength=1, "1 2" dasharray as in the hero underline). The wipe clips the padded
-   ink box, so swashes are not cut. */
+/* Signature "writes itself" (NS-55, redrawn as a pen in NS-56, bio quote). Same arming rules as the scroll
+   reveal: the hidden state exists only under html[data-reveal-armed] AND no-preference, so JS-off / reduced
+   motion / iframes are static and fully drawn. The name is real Elamy <text> unveiled through a mask of centerline strokes, one thick .sig-pen path per pen stroke
+   (pathLength=1, "1 2" dasharray as in the hero pen: gap > 1 avoids a round-cap dot at offset 1), each with its own
+   --d / --delay (inline, writing order, right to left). Ease-in-out per stroke so it reads as a hand, not a plotter.
+   The flourish pen-draws right to left after the name. */
+.sig-wrap { font-size: clamp(32px, 5vw, 56px); padding-bottom: calc(0.28em + 14px); } /* room for the flourish 0.1em below the end of the long tail (NS-56) */
+.sig-mark { font-size: clamp(32px, 5vw, 56px); width: 3.175em; height: 1.325em; margin-block: -0.1em -0.125em; overflow: visible; } /* same footprint as the old Elamy text at .type-signature */
+.sig-pen, .sig-flourish path { stroke-dasharray: 1 2; stroke-dashoffset: 0; }
+.sig-full { opacity: 1; }
+.sig-text { font-family: var(--font-display); } /* the real Elamy, as .type-signature */
 @media (prefers-reduced-motion: no-preference) {
-  html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) .sig-name { clip-path: inset(0 0 0 100%); }
-  html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) .sig-flourish path { stroke-dashoffset: 1; }
-  html[data-reveal-armed] [data-reveal="io"][data-revealed] .sig-name {
-    clip-path: inset(0);
-    transition: clip-path 1.6s cubic-bezier(0.45, 0.1, 0.35, 1) 0.45s;
+  html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) :is(.sig-pen, .sig-flourish path) { stroke-dashoffset: 1; }
+  html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) .sig-full { opacity: 0; }
+  html[data-reveal-armed] [data-reveal="io"][data-revealed] .sig-full {
+    opacity: 1;
+    transition: opacity 0.4s ease-out calc(0.35s + var(--delay) - 0.15s);
+  }
+  html[data-reveal-armed] [data-reveal="io"][data-revealed] .sig-pen {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset var(--d) cubic-bezier(0.45, 0.05, 0.4, 0.95) calc(0.35s + var(--delay));
   }
   html[data-reveal-armed] [data-reveal="io"][data-revealed] .sig-flourish path {
     stroke-dashoffset: 0;
-    transition: stroke-dashoffset 0.8s cubic-bezier(0.22, 1, 0.36, 1) 2s;
+    transition: stroke-dashoffset 0.7s cubic-bezier(0.45, 0.05, 0.4, 0.95) calc(0.35s + var(--delay));
   }
 }
-.sig-flourish path { stroke-dasharray: 1 2; stroke-dashoffset: 0; }
 
 /* LineArt pen draw-in (NS-54). Same hidden-state contract as the reveal above: only when armed, only under
    no-preference. The wrapper's own fade/rise is cancelled (the drawing is the motion); the stroke dash

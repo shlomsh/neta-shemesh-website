@@ -179,7 +179,7 @@ describe('C9: [data-bg-tone] rules map each tone to its background, text and hea
 
 describe('C14: Elamy (the display font) is reserved for display, title and signature', () => {
   it('in globals.css only .type-display / .type-title / .type-signature set font-family to the display font', () => {
-    expect(displayFontSelectors(css).sort()).toEqual(['.type-display', '.type-signature', '.type-title']);
+    expect(displayFontSelectors(css).sort()).toEqual(['.sig-text', '.type-display', '.type-signature', '.type-title']); // NS-56: .sig-text is the signature SVG <text> (it cannot carry .type-signature: that class would override its viewBox font-size);
   });
 
   it('component css modules never set the display font', () => {
