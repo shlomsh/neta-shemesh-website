@@ -25,9 +25,13 @@ const ALREADY_THERE_PX = 2;
 
 export const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-/** Snapping runs at every width, and never under prefers-reduced-motion. */
-export function isSnapActive(reducedMotion: boolean): boolean {
-  return !reducedMotion;
+/**
+ * Snapping runs on desktop widths only (>= MIN_WIDTH), and never under prefers-reduced-motion.
+ * It was enabled below 1024px in fd0ba7b/992a790 and made the page feel stuck on iOS in-app
+ * browsers, so the gentle touch mode below is NOT used by the component until it is proven safe.
+ */
+export function isSnapActive(innerWidth: number, reducedMotion: boolean): boolean {
+  return innerWidth >= MIN_WIDTH && !reducedMotion;
 }
 
 export type SnapMode = 'desktop' | 'gentle';

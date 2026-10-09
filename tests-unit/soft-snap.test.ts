@@ -139,12 +139,16 @@ describe('pickSnapTarget: degenerate input', () => {
   });
 });
 
-describe('isSnapActive / snapMode: every width, unless reduced motion; the width only picks the rules', () => {
+describe('isSnapActive / snapMode: desktop widths only, and not under reduced motion', () => {
   it.each([
-    [false, true],
-    [true, false],
-  ])('reduced motion %s -> active %s', (reduced, want) => {
-    expect(isSnapActive(reduced)).toBe(want);
+    [1280, false, true],
+    [MIN_WIDTH, false, true],
+    [1280, true, false],
+    [MIN_WIDTH - 1, false, false],
+    [768, false, false],
+    [390, false, false],
+  ])('width %i, reduced motion %s -> active %s', (width, reduced, want) => {
+    expect(isSnapActive(width, reduced)).toBe(want);
   });
 
   it.each([

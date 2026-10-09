@@ -76,7 +76,7 @@
   }
 }
 
-/* Card snapping (desktop, and a gentler touch variant on phones; the footer is the last target) is handled in JS by src/components/motion/SoftSnap.tsx (no CSS scroll-snap). */
+/* Card snapping (desktop only; the footer is the last target) is handled in JS by src/components/motion/SoftSnap.tsx (no CSS scroll-snap). */
 
 @layer components {
   :root { --header-color: var(--color-plum); }   /* default: dark plum, for light surfaces */

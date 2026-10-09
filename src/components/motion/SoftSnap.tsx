@@ -22,9 +22,9 @@ const SNAP_KEYS = new Set([
  * close (within THRESHOLD of the viewport height). A middle ground between CSS `proximity`
  * (too loose) and `mandatory` (too aggressive).
  *
- * It runs at every width. On touch widths (< MIN_WIDTH) it is gentler: it waits a little longer
- * after the last scroll event or touchend (so iOS momentum has ended), never acts while a finger
- * is down, and does not pull the reader back up into a section taller than the screen.
+ * It runs on desktop widths only (>= MIN_WIDTH). Below that the page scrolls natively and none of
+ * the handlers below do anything (a gentle touch mode shipped in 992a790 made iOS in-app browsers
+ * feel stuck and was disabled; the pure gentle-mode logic stays in lib/soft-snap.ts, unused here).
  *
  * This file is the effect (listeners, timers, the glide); what to snap to is the pure
  * `pickSnapTarget` in `@/lib/soft-snap`, where the constants live too.
@@ -58,7 +58,7 @@ export function SoftSnap() {
       return Math.max(lvhProbe.offsetHeight, window.innerHeight);
     };
 
-    const isActive = () => isSnapActive(reduceQuery.matches);
+    const isActive = () => isSnapActive(window.innerWidth, reduceQuery.matches);
     const settleDelay = () => (snapMode(window.innerWidth) === 'gentle' ? TOUCH_SETTLE_MS : SETTLE_MS);
 
     const finishAnimation = () => {
@@ -163,14 +163,16 @@ export function SoftSnap() {
     };
 
     const onTouchStart = (e: TouchEvent) => {
+      if (!isActive()) return; // below MIN_WIDTH the page scrolls natively: no touch logic at all
       touching = e.touches.length > 0;
       clearSettle(); // a held finger is not "idle"; touchend re-arms the timer
       cancelAnimation();
     };
 
     const onTouchEnd = (e: TouchEvent) => {
+      if (!isActive()) return;
       touching = e.touches.length > 0;
-      if (touching || !isActive()) return;
+      if (touching) return;
       // Momentum scrolling (if any) keeps firing scroll events and pushes this out; a plain lift
       // with no momentum fires none, so arm the settle timer here too.
       clearSettle();

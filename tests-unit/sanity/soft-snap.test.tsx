@@ -3,9 +3,9 @@
  *
  * History: CSS scroll-snap proximity felt loose and mandatory felt aggressive, so snapping moved
  * to SoftSnap.tsx (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts).
- * It runs at every width: the desktop rule at >= 1024px, a gentler one on touch widths (waits for momentum to end, never
- * acts under a finger, never pulls the reader back up a tall section). It silently stops working if <main>
- * becomes overflow-hidden, if a constant drifts, or if it starts snapping under reduced motion or under a finger.
+ * It runs on desktop widths (>= 1024px) only: a gentle touch mode shipped in 992a790 and made the page feel stuck in
+ * iOS in-app browsers, so below 1024px it must do nothing. It silently stops working if <main>
+ * becomes overflow-hidden, if a constant drifts, or if it starts snapping under reduced motion or on phones.
  * This file guards the constants, the mount, the targets (cards AND the footer), and the "does nothing" paths.
  */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -23,7 +23,7 @@ function constant(name: string): number {
 }
 
 describe('constants stay in sane ranges', () => {
-  it('MIN_WIDTH is 1024 (where the desktop rules start; below it the gentle touch rules apply)', () => expect(constant('MIN_WIDTH')).toBe(1024));
+  it('MIN_WIDTH is 1024 (snapping is desktop-only: it does nothing below it)', () => expect(constant('MIN_WIDTH')).toBe(1024));
   it('THRESHOLD is between 0.2 and 0.4 of the viewport height', () => {
     expect(constant('THRESHOLD')).toBeGreaterThanOrEqual(0.2);
     expect(constant('THRESHOLD')).toBeLessThanOrEqual(0.4);
@@ -149,31 +149,18 @@ describe('behaviour (jsdom, fake timers)', () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it('below 1024px it also snaps (gently): a one-screen card edge nearby is glided to', async () => {
-    setup({ width: 390, reduced: false });
-    await mountScrollAndSettle(150);
-    expect(scrollTo, 'SoftSnap no longer snaps on touch widths').toHaveBeenCalled();
-  });
-
-  it('below 1024px, mid-way through a section taller than the screen it does not move', async () => {
-    setup({ width: 390, reduced: false });
-    // window.scrollY is 1000: this card's top is 150px above the viewport top (desktop would pull back to it) and it is 2400px tall.
-    await mountScrollAndSettle(-150, 2400);
-    expect(scrollTo, 'SoftSnap pulled a reader back up a tall section').not.toHaveBeenCalled();
-  });
-
-  it('below 1024px, it waits for the finger: nothing while it is down, a glide once it lifts and the page is still', async () => {
+  it('below 1024px it does nothing: no snap, and no reaction to touch events', async () => {
     setup({ width: 390, reduced: false });
     await mountPage(150);
     touch('touchstart', 1);
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(1000);
-    expect(scrollTo, 'SoftSnap acted under a finger').not.toHaveBeenCalled();
     touch('touchend', 0);
-    await vi.advanceTimersByTimeAsync(100); // less than TOUCH_SETTLE_MS: still waiting for momentum
+    await vi.advanceTimersByTimeAsync(3000);
+    expect(scrollTo, 'SoftSnap is active below 1024px (made iOS in-app browsers feel stuck)').not.toHaveBeenCalled();
+    window.dispatchEvent(new Event('scroll'));
+    await vi.advanceTimersByTimeAsync(3000);
     expect(scrollTo).not.toHaveBeenCalled();
-    await vi.advanceTimersByTimeAsync(1500);
-    expect(scrollTo, 'SoftSnap never snapped after the touch ended').toHaveBeenCalled();
   });
 
   it('does nothing under prefers-reduced-motion', async () => {
