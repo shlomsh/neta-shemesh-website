@@ -348,12 +348,14 @@ describe('keyAction', () => {
 });
 
 describe('easing and duration', () => {
-  it('cubic-bezier(.65, 0, .35, 1) is an ease-in-out: 0 at 0, 1 at 1, 0.5 at 0.5, slow at both ends, monotonic', () => {
+  it('cubic-bezier(.5, 0, .2, 1): 0 at 0, 1 at 1, starts gently, is well ahead of linear mid-way, lands softly, monotonic', () => {
     expect(slideEase(0)).toBe(0);
     expect(slideEase(1)).toBe(1);
-    expect(slideEase(0.5)).toBeCloseTo(0.5, 3);
     expect(slideEase(0.1)).toBeLessThan(0.05);
-    expect(slideEase(0.9)).toBeGreaterThan(0.95);
+    expect(slideEase(0.1)).toBeGreaterThan(0.005);
+    expect(slideEase(0.5)).toBeGreaterThan(0.6);
+    expect(slideEase(0.95)).toBeGreaterThan(0.98);
+    expect(slideEase(0.95)).toBeLessThan(1);
     let prev = 0;
     for (let i = 1; i <= 100; i++) {
       const v = slideEase(i / 100);

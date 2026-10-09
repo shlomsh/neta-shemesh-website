@@ -16,8 +16,12 @@
 
 /** Slide animation length (ms) for a one-card move. */
 export const SLIDE_MS = 650;
-/** Slide easing: cubic-bezier(.65, 0, .35, 1), an ease-in-out with a decided middle. */
-export const SLIDE_BEZIER = [0.65, 0, 0.35, 1] as const;
+/**
+ * Slide easing: cubic-bezier(.5, 0, .2, 1). Tuned from the symmetric (.65, 0, .35, 1), which sat still
+ * for about 100 ms after the wheel (measured: first visible movement at 99 ms, 37 px by 130 ms) and
+ * read as lag; this one is moving by 130 ms (74 px of 900) and still lands softly.
+ */
+export const SLIDE_BEZIER = [0.5, 0, 0.2, 1] as const;
 /** Longest slide (Home / End across the whole page). */
 export const SLIDE_MAX_MS = 1100;
 
