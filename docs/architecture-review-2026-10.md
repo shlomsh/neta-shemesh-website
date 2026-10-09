@@ -5,9 +5,9 @@
 | Date | 2026-10-09 |
 | Status | **Review complete.** Contrast audit H is in (section 3.3): 16 failing sites, 90 of 390 text instances. Colour fixes need owner approval; focus fixes are keyboard only. NS-11 (Elamy ink box) passed its gate as commit `206a875` (0 px at 1440/390 on home, blog and both posts; Simulator crops clean) and is merging. It is on local `main`; the push needs the owner. |
 | Live board (source of truth for ticket status) | https://claude.ai/artifact/GV4NpXrzjzc4wQ1XgBthwt |
-| Board snapshot (git history only, may lag) | `docs/sprint-board-2026-10.md` |
+| Board snapshot (git history only, may lag) | `docs/archive/sprint-board-2026-10.md` |
 | Peer plan this review answers | `docs/stability-perf-plan-2026-10.md` (§6 decisions are answered in section 6 below) |
-| Previous refactor (already executed) | `docs/tech-debt-plan-2026-10.md` |
+| Previous refactor (already executed) | `docs/archive/tech-debt-plan-2026-10.md` |
 | Design contract | `CLAUDE.md` |
 
 Evidence base: audit reports A to G (A bundle/client/Next 16, B motion/a11y, C Tailwind, D components/tests/layering, E runtime perf, F snap/height, G cache/loading/minify), plus the peer session's `rootcause-2026-10.md` and `perf-audit-2026-10.md`. All numbers below come from those reports, including report H (contrast, section 3.3).
