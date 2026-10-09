@@ -69,5 +69,5 @@ bright, busy, or corporate design.
 
 ### Reference
 - Existing site (content + layout reference): https://nettashemesh.lovable.app/
-- Visual/layout design reference: `reference/template/kromaticdesignstudio.my.canva.site/couples-therapist/index.html` — a Canva-exported couples-therapist template. Use it for section structure, typography hierarchy, whitespace rhythm, and card layouts. **Modernize, don't copy** — adapt the design language to the chosen stack (Next.js 16, Tailwind v4, Framer Motion) and the Hebrew-first RTL brand voice.
+- Visual/layout design reference: a Canva-exported couples-therapist template (`reference/template/kromaticdesignstudio.my.canva.site/couples-therapist/index.html`), archived out of the tree and recoverable from git history: `git show dd3e910:reference/template/kromaticdesignstudio.my.canva.site/couples-therapist/index.html` or `git checkout dd3e910 -- reference`. Use it for section structure, typography hierarchy, whitespace rhythm, and card layouts. **Modernize, don't copy** — adapt the design language to the chosen stack (Next.js 16, Tailwind v4, Framer Motion) and the Hebrew-first RTL brand voice.
 - We are rebuilding it on a modern stack — not copying it pixel-for-pixel.

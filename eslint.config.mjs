@@ -12,8 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Vendored Canva template — not our source, do not lint.
-    "reference/**",
   ]),
   {
     // Standalone Node utilities run by hand (CommonJS, never bundled into the app).

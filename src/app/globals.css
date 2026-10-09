@@ -1,7 +1,7 @@
 @import "tailwindcss" source(none);
 
 /* Tailwind scans only the app source. `source(none)` turns off auto-detection (which would also read
- * .github/, scripts/, public/, design_handoff_hero_05b/, the root configs and every .md/test file and emit junk
+ * .github/, scripts/, public/, the root configs and every .md/test file and emit junk
  * rules such as .contents or .ease-in-out); `@source` re-adds src/ (path relative to this file: src/app -> src). */
 @source "../";
 /* ...except the docs inside src (src/components/primitives/README.md quotes sample classes such as

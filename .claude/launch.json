@@ -14,12 +14,6 @@
       "runtimeArgs": ["run", "start"],
       "port": 4102,
       "env": {"PORT": "4102"}
-    },
-    {
-      "name": "template",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8899", "--directory", "reference/template/kromaticdesignstudio.my.canva.site/couples-therapist"],
-      "port": 8899
     }
   ]
 }
