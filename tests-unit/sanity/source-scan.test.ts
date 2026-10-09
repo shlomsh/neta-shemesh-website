@@ -306,7 +306,7 @@ import { CONTRAST_BANS, containsBanSample, maskIconHasDefaultFocus, ratchetBan, 
 
 describe('NS-42: contrast and focus source bans (each with an allow-list that only shrinks)', () => {
   /**
-   * Today's offenders per rule, keyed by file NAME with the number of offences in it. The table is a
+   * Today's offenders per rule, keyed by a path suffix under src/ (`blog/[slug]/page.tsx`; a bare file name only when it is unique) with the number of offences in it. The table is a
    * RATCHET: a new offence (or a file not listed) fails; an entry whose offences are gone ALSO fails
    * ("stale allow entry, remove it"), so the fix commit has to delete its row.
    */
@@ -317,11 +317,12 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
       { file: 'Attribution.tsx', count: 1, reason: 'testimonial role line in mauve (type-small)' },
     ],
     'small-text-blush': [
-      { file: 'page.tsx', count: 4, reason: 'blog index eyebrow + post page back link, eyebrow and meta row: blush at type-small / eyebrow on plum is 3.89:1' },
+      { file: 'blog/page.tsx', count: 1, reason: 'blog index eyebrow: blush at type-eyebrow on plum is 3.89:1' },
+      { file: 'blog/[slug]/page.tsx', count: 3, reason: 'post page back link, eyebrow and meta row: blush at type-small / eyebrow on plum is 3.89:1' },
       { file: 'HeroHeading.tsx', count: 1, reason: 'the hand-drawn underline stroke (aria-hidden svg, currentColor): decorative, carries no text' },
     ],
     'text-colour-mix-transparent': [
-      { file: 'page.tsx', count: 1, reason: 'post page lead paragraph: cream at 88% on plum' },
+      { file: 'blog/[slug]/page.tsx', count: 1, reason: 'post page lead paragraph: cream at 88% on plum' },
       { file: 'AuthorCard.tsx', count: 1, reason: 'author bio: plum at 82%' },
       { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92%' },
       { file: 'PostCard.tsx', count: 2, reason: 'card excerpt (plum 82%) and date/read-time row (plum 70%)' },
@@ -331,7 +332,7 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
       { file: 'ContactFAB.tsx', count: 1, reason: 'the phone half turns bg-mauve on hover with cream text (2.26:1)' },
     ],
     'opacity-on-text': [
-      { file: 'page.tsx', count: 1, reason: 'post page back link fades to opacity-75 on hover' },
+      { file: 'blog/[slug]/page.tsx', count: 1, reason: 'post page back link fades to opacity-75 on hover' },
       { file: 'IconButton.tsx', count: 1, reason: 'icon-only button: the child is an svg, not text; hover fades the icon (NS-41 may swap it for a colour change)' },
       { file: 'ContactDetails.tsx', count: 1, reason: 'phone / email link fades to opacity-80 on hover' },
       { file: 'ExpertiseCard.tsx', count: 1, reason: 'the title pill is bg-mauve opacity-95' },
@@ -389,8 +390,13 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
     const allow: BanAllow[] = [{ file: 'A.tsx', count: 2, reason: 'because' }];
     expect(ratchetBan([h('A.tsx'), h('A.tsx', 2)], allow)).toEqual([]);
     expect(ratchetBan([h('A.tsx'), h('A.tsx', 2), h('A.tsx', 3)], allow)[0]).toMatch(/^new offence in A\.tsx/);
-    expect(ratchetBan([h('A.tsx'), h('A.tsx', 2), h('B.tsx')], allow)[0]).toMatch(/^new offence in B\.tsx/);
+    expect(ratchetBan([h('A.tsx'), h('A.tsx', 2), h('B.tsx')], allow)[0]).toMatch(/^new offence in src\/B\.tsx/);
     expect(ratchetBan([h('A.tsx')], allow)[0]).toMatch(/^stale allow entry, lower its count 2 -> 1/);
     expect(ratchetBan([], allow)[0]).toMatch(/^stale allow entry, remove it: A\.tsx/);
+    // path suffixes tell two page.tsx files apart
+    const p = (path: string) => ({ file: 'page.tsx', path, line: 1, match: 'x' });
+    const two: BanAllow[] = [{ file: 'blog/page.tsx', count: 1, reason: 'because' }];
+    expect(ratchetBan([p('src/app/blog/page.tsx')], two)).toEqual([]);
+    expect(ratchetBan([p('src/app/blog/page.tsx'), p('src/app/blog/[slug]/page.tsx')], two)[0]).toMatch(/^new offence in src\/app\/blog\/\[slug\]\/page\.tsx/);
   });
 });

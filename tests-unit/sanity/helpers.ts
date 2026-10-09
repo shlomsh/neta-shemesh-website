@@ -739,14 +739,14 @@ export function evalColour(expr: string, env: ColourEnv = colourEnv(), depth = 0
   return null;
 }
 
-/** [variant, utility] of a class token; the variant chain is whatever precedes the last top-level ':' (outside [...]). */
+/** [variant, utility] of a class token; the variant chain is whatever precedes the last top-level ':' (outside [...] and (...)). */
 export function splitVariant(token: string): { variant: string; util: string } {
   let depth = 0;
   let cut = -1;
   for (let i = 0; i < token.length; i++) {
     const ch = token[i];
-    if (ch === '[') depth++;
-    else if (ch === ']') depth--;
+    if (ch === '[' || ch === '(') depth++;
+    else if (ch === ']' || ch === ')') depth--;
     else if (ch === ':' && depth === 0) cut = i;
   }
   return cut < 0 ? { variant: '', util: token } : { variant: token.slice(0, cut), util: token.slice(cut + 1) };
@@ -761,7 +761,14 @@ const NAMED_COLOUR = '(plum|mauve|blush|cream|white|black)';
 
 export type ColourToken = { kind: 'inherit' } | { kind: 'colour'; value: RGBA } | { kind: 'unresolved'; token: string };
 
-/** Interpret one base `text-*` / `bg-*` utility as a colour; null when it is not a colour utility at all (text-right, bg-cover ...). */
+/**
+ * Non-colour uses of `text-[...]` / `bg-[...]` / `text-(...)`: sizes, lengths, urls, images, gradients ...
+ * Everything else that starts `text-[` / `bg-[` / `text-(` / `bg-(` or is `<named>/[...]` is a colour syntax:
+ * if the resolver cannot evaluate it, it is reported as unresolved (a skipped text fails the matrix), never ignored.
+ */
+const NON_COLOUR_ARBITRARY = /^(?:\((?:length|percentage|position|size|url|image|angle|number):|\[(?:length|percentage|position|size|url|image|angle|number):|\[url\(|\[(?:\d|\.\d|calc\(|clamp\(|min\(|max\()|\[[^\]]*gradient\()/;
+
+/** Interpret one base `text-*` / `bg-*` utility as a colour; null when it is not a colour utility at all (text-right, bg-cover, text-[14px] ...). */
 export function colourFromToken(prefix: 'text' | 'bg', token: string, env: ColourEnv): ColourToken | null {
   if (prefix === 'text' && (token === 'text-inherit' || token === 'text-current')) return { kind: 'inherit' };
   const named = token.match(new RegExp(`^${prefix}-${NAMED_COLOUR}(?:/(\\d+))?$`));
@@ -771,10 +778,23 @@ export function colourFromToken(prefix: 'text' | 'bg', token: string, env: Colou
   }
   if (prefix === 'text' && token === 'text-transparent') return { kind: 'colour', value: { r: 0, g: 0, b: 0, a: 0 } };
   if (prefix === 'bg' && token === 'bg-transparent') return { kind: 'colour', value: { r: 0, g: 0, b: 0, a: 0 } };
-  const arb = token.match(new RegExp(`^${prefix}-\\[(?:color:)?(.+)\\]$`));
-  if (arb && !/^(?:length|percentage|position|size|url|image|angle):/.test(arb[0].slice(prefix.length + 2)) && /(#|var\(--|color-mix|transparent)/.test(arb[1])) {
+  const unresolved: ColourToken = { kind: 'unresolved', token };
+  // plum/[0.3], cream/[30%]: an arbitrary opacity modifier on a named colour
+  if (new RegExp(`^${prefix}-${NAMED_COLOUR}/\\[`).test(token)) return unresolved;
+  const rest = token.slice(prefix.length + 1);
+  // Tailwind v4 shorthand: text-(--color-cream), bg-(--surface-veil), text-(color:--x)
+  const short = rest.match(/^\((?:color:)?(--[\w-]+)\)$/);
+  if (short) {
+    const v = evalColour(`var(${short[1]})`, env);
+    return v ? { kind: 'colour', value: v } : unresolved;
+  }
+  if (rest.startsWith('(')) return NON_COLOUR_ARBITRARY.test(rest) ? null : unresolved;
+  if (rest.startsWith('[')) {
+    if (NON_COLOUR_ARBITRARY.test(rest)) return null;
+    const arb = rest.match(/^\[(?:color:)?(.+)\]$/);
+    if (!arb) return unresolved; // e.g. text-[color:var(--c)]/50: modifier after the bracket
     const v = evalColour(arb[1], env);
-    return v ? { kind: 'colour', value: v } : { kind: 'unresolved', token };
+    return v ? { kind: 'colour', value: v } : unresolved;
   }
   return null;
 }
@@ -852,12 +872,33 @@ function isCoverLayer(c: Element): boolean {
 }
 
 /**
+ * Group opacity on the backdrop supplier or above it fades text AND backdrop together against whatever is
+ * behind that group (the backdrop of its parent). Folded into both colours, innermost group first. A group
+ * whose parent backdrop is unknowable (a photo) is ignored, so the Expertise pill (`bg-mauve opacity-95`
+ * over a photo) keeps its plain 2.26:1.
+ */
+export function composeGroupOpacity(fg: RGB, bg: RGB, supplier: Element | null, base: ColourEnv = colourEnv()): { fg: RGB; bg: RGB } {
+  const mix = (behind: RGB, c: RGB, o: number): RGB => compositeOver({ ...c, a: o }, behind);
+  for (let g: Element | null = supplier; g; g = g.parentElement) {
+    const o = ownOpacity(g);
+    if (o >= 0.999) continue;
+    const behind = g.parentElement ? backdropOf(g.parentElement, base) : null;
+    if (behind && !behind.ok) continue;
+    const behindColour = behind && behind.ok ? behind.value.colour : base.palette.cream;
+    fg = mix(behindColour, fg, o);
+    bg = mix(behindColour, bg, o);
+  }
+  return { fg, bg };
+}
+
+/**
  * The effective backdrop behind text in `el`: walks up, stacking translucent backgrounds until an
  * opaque one. `faded` is the product of ancestor opacities strictly BELOW the element that supplied
- * the opaque backdrop (they fade the text but not that backdrop). `photo` marks a top-level
+ * the opaque backdrop (they fade the text but not that backdrop); `supplier` is that element, whose own
+ * opacity and its ancestors' fade BOTH colours (see `composeGroupOpacity`). `photo` marks a top-level
  * section/footer with no tone and no background of its own: the backdrop is an image we cannot see.
  */
-export function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved<{ colour: RGB; faded: number; via: string }> | { ok: false; photo: true; reason: string } {
+export function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved<{ colour: RGB; faded: number; via: string; supplier: Element | null }> | { ok: false; photo: true; reason: string } {
   const tones = parseToneRules();
   const layers: RGBA[] = [];
   let faded = 1;
@@ -891,23 +932,26 @@ export function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved
       } else if (l.a > 0) local.push(l);
     }
     layers.push(...local.reverse());
-    if (!opaque && a.parentElement) {
-      // a full-cover sibling painted behind the content: the hero's `absolute inset-0 bg-plum` field, or a photo
+    if (a.parentElement) {
+      // a full-cover sibling painted behind the content: the hero's `absolute inset-0 bg-plum` field, or a photo.
+      // A cover IMAGE wins even over this element's own bg (that bg is only the photo's fallback colour).
       for (const c of Array.from(a.children)) {
         if (c.contains(el) || !isCoverLayer(c)) continue;
+        if (c.tagName === 'IMG' || c.querySelector('img')) {
+          return { ok: false, photo: true, reason: `photo backdrop (full-cover image beside the text, in ${a.tagName.toLowerCase()}${a.id ? '#' + a.id : ''})` };
+        }
+        if (opaque) continue;
         const own = baseTokens(c).map((t) => colourFromToken('bg', t, envAt(c, base))).find((t) => t?.kind === 'colour' && t.value.a >= 0.999);
         if (own?.kind === 'colour') {
           opaque = { r: own.value.r, g: own.value.g, b: own.value.b };
           via = 'cover sibling bg';
-        } else if (c.tagName === 'IMG' || c.querySelector('img')) {
-          return { ok: false, photo: true, reason: `photo backdrop (full-cover image beside the text, in ${a.tagName.toLowerCase()}${a.id ? '#' + a.id : ''})` };
         }
       }
     }
     if (opaque) {
       let colour = opaque;
       for (const l of layers.reverse()) colour = compositeOver(l, colour);
-      return { ok: true, value: { colour, faded, via } };
+      return { ok: true, value: { colour, faded, via, supplier: a } };
     }
     // a top-level solid card without tone or bg paints nothing: a photo section (hero, CTA band, footer)
     if (a.parentElement?.tagName === 'MAIN' && /^(SECTION|FOOTER)$/.test(a.tagName)) {
@@ -918,7 +962,7 @@ export function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved
   // reached <html>: the page background (html, body { background-color: cream })
   let colour: RGB = base.palette.cream;
   for (const l of layers.reverse()) colour = compositeOver(l, colour);
-  return { ok: true, value: { colour, faded, via: 'page' } };
+  return { ok: true, value: { colour, faded, via: 'page', supplier: null } };
 }
 
 const HIDING_DISPLAY = /^(?:flex|block|inline|inline-block|inline-flex|grid|inline-grid|contents|table|list-item)$/;
@@ -1002,7 +1046,7 @@ export interface ContrastFinding {
 export interface ContrastReport {
   /** the failures only */
   findings: ContrastFinding[];
-  /** every measured text (pass or fail), deduplicated by section + text */
+  /** every measured text (pass or fail), deduplicated by section + text + colours + type class */
   all: ContrastFinding[];
   /** text we could not measure, with the reason (photo backdrops, unknown colour syntax) */
   skipped: Array<{ page: string; where: string; text: string; reason: string }>;
@@ -1053,16 +1097,19 @@ export function contrastReport(root: Element, page: string): ContrastReport {
     const style = textStyleOf(el);
     // ancestor opacity (below the backdrop) fades the text colour toward the backdrop
     const fgRgba: RGBA = { ...fg.value, a: fg.value.a * bd.value.faded };
-    const fgFinal = compositeOver(fgRgba, bd.value.colour);
-    const raw = contrastRatio(fgFinal, bd.value.colour);
+    const composed = composeGroupOpacity(compositeOver(fgRgba, bd.value.colour), bd.value.colour, bd.value.supplier);
+    const fgFinal = composed.fg;
+    const bgFinal = composed.bg;
+    const raw = contrastRatio(fgFinal, bgFinal);
     report.measured++;
-    const key = `${where}|${snippet}`;
+    // the key includes the measured style, so a passing copy of a text cannot hide a failing copy
+    const key = `${where}|${snippet}|${hex2(fgFinal)}|${hex2(bgFinal)}|${style.typeClass}|${style.size}|${style.bold}`;
     if (seen.has(key)) continue;
     seen.add(key);
     const required = requiredRatio(style);
     const finding: ContrastFinding = {
       page, where, text: snippet, ratio: Math.round(raw * 100) / 100, required,
-      fg: hex2(fgFinal), bg: hex2(bd.value.colour), size: style.size, bold: style.bold, typeClass: style.typeClass,
+      fg: hex2(fgFinal), bg: hex2(bgFinal), size: style.size, bold: style.bold, typeClass: style.typeClass,
     };
     report.all.push(finding);
     if (raw < required) report.findings.push(finding);
@@ -1360,12 +1407,17 @@ export const CONTRAST_BANS: BanRule[] = [
       frag('<a href="/x" className="type-lead hover:opacity-80 transition-opacity">שלום</a>'),
       frag('<span className="opacity-60"><b>{name}</b></span>'),
       frag('<Link className="font-bold opacity-[0.6]">{label}</Link>'),
+      // NavLink renders its `label` prop as the link text (LABEL_AS_TEXT)
+      frag('<NavLink href="/x" label="שלום" className="hover:opacity-75" />'),
     ],
     good: [
       frag('<img src="/a.webp" alt="" className="opacity-60" />'),
       frag('<div className="opacity-[0.18]"><svg viewBox="0 0 1 1" /></div>'),
       frag('<OrganicBg className="opacity-60 z-0" />'),
       frag('<p className="type-body text-plum">שלום</p>'),
+      // `label` is only visible text on the components in LABEL_AS_TEXT: a MaskIcon label is an aria-label
+      frag('<MaskIcon as="a" href="/x" label="x" src="/i.svg" size="lg" className="hover:opacity-80" />'),
+      frag('<NavLink href="/x" className="opacity-60" />'),
     ],
   },
   {
@@ -1411,26 +1463,32 @@ export function maskIconHasDefaultFocus(): boolean {
 export const containsBanSample = (rule: BanRule, sample: string) => rule.find(fakeFile(sample)).length > 0;
 
 export interface BanAllow {
-  /** file NAME (not path), so moving a file does not break the entry */
+  /** path suffix under src/ (`blog/[slug]/page.tsx`, `AuthorCard.tsx`): a bare name is enough when it is unique, but `page.tsx` is not */
   file: string;
   /** how many offences the file has today */
   count: number;
   reason: string;
 }
 
+const allowFor = (allow: BanAllow[], path: string) =>
+  allow.filter((a) => path === `src/${a.file}` || path.endsWith(`/${a.file}`)).sort((x, y) => y.file.length - x.file.length)[0];
+
 /** Ratchet for a source ban: more hits than allowed = new offender; fewer (or none) = stale entry. Empty list = pass. */
 export function ratchetBan(hits: BanHit[], allow: BanAllow[]): string[] {
   const problems: string[] = [];
-  const byFile = new Map<string, BanHit[]>();
-  for (const h of hits) byFile.set(h.file, [...(byFile.get(h.file) ?? []), h]);
-  for (const [file, list] of byFile) {
-    const allowed = allow.find((a) => a.file === file)?.count ?? 0;
+  const groups = new Map<string, BanHit[]>();
+  for (const h of hits) {
+    const key = allowFor(allow, h.path)?.file ?? h.path;
+    groups.set(key, [...(groups.get(key) ?? []), h]);
+  }
+  for (const [key, list] of groups) {
+    const allowed = allow.find((a) => a.file === key)?.count ?? 0;
     if (list.length > allowed) {
-      problems.push(`new offence in ${file} (${list.length} found, ${allowed} allowed):\n      ${list.map((h) => `${h.path}:${h.line}  ${h.match}`).join('\n      ')}`);
+      problems.push(`new offence in ${key} (${list.length} found, ${allowed} allowed):\n      ${list.map((h) => `${h.path}:${h.line}  ${h.match}`).join('\n      ')}`);
     }
   }
   for (const a of allow) {
-    const found = byFile.get(a.file)?.length ?? 0;
+    const found = groups.get(a.file)?.length ?? 0;
     if (found === 0) problems.push(`stale allow entry, remove it: ${a.file} (${a.reason})`);
     else if (found < a.count) problems.push(`stale allow entry, lower its count ${a.count} -> ${found}: ${a.file} (${a.reason})`);
   }

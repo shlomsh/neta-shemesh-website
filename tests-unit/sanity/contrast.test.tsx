@@ -13,6 +13,7 @@
  */
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
+  allowMatches,
   colourEnv,
   contrastReport,
   contrastRatio,
@@ -30,19 +31,34 @@ import {
 
 // ─── The allow-table: today's known failures ─────────────────────────────────
 
-const MAUVE_TITLE = 'cream on the mauve (tone="mid") surface: 2.26:1, mid has no compliant text pair (CLAUDE.md). Real renders measure 2.11-2.22 because the soft-light paper grain darkens the mauve';
 const CARD_POST = 'blog post card / author card copy: translucent plum (82% / 70%) or text-mauve on cream';
 
+/**
+ * Permanent owner decisions (2026-10-09). NOT debt: they are documented choices, kept out of the
+ * CONTRAST_ALLOW ratchet. They still fail when the text goes away (stale) or its ratio drifts, so a
+ * redesign cannot silently change what the owner agreed to.
+ */
+export interface OwnerException extends ContrastAllow {
+  /** the day the owner decided */
+  decided: string;
+  /** ticket / ruling the row implements */
+  decision: string;
+}
+
+const NS43_C = 'NS-43 option C: the cream titles on the mauve sections stay as designed (2.26:1; a real render measures 2.11-2.22 because the soft-light paper grain darkens the mauve)';
+
+export const OWNER_EXCEPTIONS: OwnerException[] = [
+  { page: 'home', where: '#about-intro', text: 'ליווי מקצועי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Intro title. ${NS43_C}` },
+  { page: 'home', where: '#about-gallery', text: 'להצית מחדש', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite title. ${NS43_C}` },
+  { page: 'home', where: '#about-gallery', text: 'תמיכה והכוונה', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite subtitle (type-quote 24px). ${NS43_C}` },
+  { page: 'home', where: '#contact-office', text: 'המשרד שלי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `ContactOffice title. ${NS43_C}` },
+  { page: '*', where: '[data-testid=fab-whatsapp]', text: 'וואטסאפ', ratio: 1.98, decided: '2026-10-09', decision: 'WhatsApp green stays', reason: 'WhatsApp brand green #25D366 with a white label on the contact FAB: the owner keeps the brand colour (design decisions Oct 2026); 1.98:1' },
+];
+
+/** Ratchet debt: known failures somebody is meant to fix (NS-33 owns the PostCard / AuthorCard / pill / blog-meta rows). Rows may only be deleted. */
 export const CONTRAST_ALLOW: ContrastAllow[] = [
-  // Home: cream on mauve
-  { page: 'home', where: '#about-intro', text: 'ליווי מקצועי', ratio: 2.26, reason: `Intro title, ${MAUVE_TITLE}` },
-  { page: 'home', where: '#about-gallery', text: 'להצית מחדש', ratio: 2.26, reason: `Reignite title, ${MAUVE_TITLE}` },
-  { page: 'home', where: '#about-gallery', text: 'תמיכה והכוונה', ratio: 2.26, reason: `Reignite subtitle (type-quote 24px), ${MAUVE_TITLE}` },
-  { page: 'home', where: '#contact-office', text: 'המשרד שלי', ratio: 2.26, reason: `ContactOffice title, ${MAUVE_TITLE}` },
   // Home: the four Expertise pills are cream bold 14px on a mauve pill (bg-mauve opacity-95)
   { page: 'home', where: 'section(#expertise-title)', text: '*', type: 'type-small', ratio: 2.26, reason: 'ExpertiseCard pill: type-small bold cream on bg-mauve, 2.26:1 (needs 4.5:1)' },
-  // Every page: the floating WhatsApp half of the contact FAB
-  { page: '*', where: '[data-testid=fab-whatsapp]', text: 'וואטסאפ', ratio: 1.98, reason: 'WhatsApp brand green #25D366 + white label, kept by owner ruling (design decisions Oct 2026); 1.98:1' },
   // Blog index
   { page: 'blog', where: '#blog-intro', text: 'הבלוג', type: 'type-eyebrow', ratio: 3.89, reason: 'eyebrow: 14px bold blush on plum, 3.89:1 (large text only)' },
   // Blog index cards + the "more posts" row on a post (content-driven copy, so keyed by type class, not by text)
@@ -255,6 +271,89 @@ describe('NS-42 resolver controls (small DOM fixtures with a known ratio)', () =
   });
 });
 
+describe('NS-42 resolver controls: review blockers (dedupe, unrecognised colour syntax, group opacity)', () => {
+  const run = (html: string): ContrastReport => {
+    const holder = document.createElement('div');
+    holder.innerHTML = html;
+    return contrastReport(holder, 'fixture');
+  };
+
+  it('a passing copy of a text does not hide a failing copy of the same text in the same section', () => {
+    const r = run('<div data-bg-tone="cream"><p class="type-body">שלום</p><p class="type-body text-cream">שלום</p></div>');
+    expect(r.measured).toBe(2);
+    expect(r.all.map((f) => f.ratio).sort()).toEqual([1, 5.55]);
+    expect(r.findings.map((f) => f.ratio)).toEqual([1]);
+    // and in the other order
+    const r2 = run('<div data-bg-tone="cream"><p class="type-body text-cream">שלום</p><p class="type-body">שלום</p></div>');
+    expect(r2.findings.length).toBe(1);
+  });
+
+  it('identical copies (same colours, same type class) are still reported once', () => {
+    const r = run('<div data-bg-tone="cream"><p class="type-body text-cream">שלום</p><p class="type-body text-cream">שלום</p></div>');
+    expect(r.measured).toBe(2);
+    expect(r.findings.length).toBe(1);
+  });
+
+  describe('a colour syntax the resolver does not understand is skipped (and the matrix fails on a skip), never ignored', () => {
+    it.each([
+      ['text-plum/[0.3]', 'text'],
+      ['text-[oklch(0.5_0.1_200)]', 'text'],
+      ['text-(color:--x)', 'text'],
+      ['text-(--nope)', 'text'],
+      ['text-[color:var(--c)]/50', 'text'],
+      ['bg-[rgb(1,2,3)]', 'bg'],
+      ['bg-(--nope)', 'bg'],
+      ['bg-cream/[0.5]', 'bg'],
+    ])('%s', (cls, kind) => {
+      const html = kind === 'text' ? `<div data-bg-tone="cream"><p class="type-body ${cls}">x</p></div>` : `<div data-bg-tone="cream"><div class="${cls}"><p class="type-body">x</p></div></div>`;
+      const r = run(html);
+      expect(r.measured, cls).toBe(0);
+      expect(r.skipped.map((s) => s.reason)[0], cls).toMatch(/unresolved (text colour|background)/);
+    });
+
+    it('the Tailwind v4 shorthand resolves: text-(--color-cream) is cream, bg-(--surface-veil) is the veil', () => {
+      const f = run('<div data-bg-tone="mid"><div class="bg-(--surface-veil)"><p class="type-body text-(--color-plum)">x</p></div></div>').all[0];
+      expect(f.fg).toBe('#7a5978');
+      expect(f.bg).toBe('#f6e7e8');
+      expect(run('<div data-bg-tone="dark"><p class="type-body text-(--color-cream)">x</p></div>').all[0].ratio).toBe(5.55);
+    });
+
+    it.each([
+      'text-[14px]', 'text-[length:var(--x)]', 'text-(length:--x)', 'text-[clamp(1rem,2vw,2rem)]', 'text-[.9rem]', 'text-[percentage:50%]',
+      'bg-[url(/a.png)]', 'bg-[linear-gradient(red,blue)]', 'bg-[position:left_top]', 'bg-[size:10px]', 'bg-[image:var(--g)]', 'bg-(length:--x)', 'bg-cover', 'bg-gradient-to-t',
+    ])('non-colour utility %s is not treated as a colour', (cls) => {
+      const r = run(`<div data-bg-tone="cream"><div class="${cls}"><p class="type-body ${cls}">x</p></div></div>`);
+      expect(r.skipped, cls).toEqual([]);
+      expect(r.all[0].ratio, cls).toBe(5.55);
+    });
+  });
+
+  describe('group opacity on, or above, the backdrop supplier fades both colours against what is behind it', () => {
+    it('opacity-50 on the element that paints the bg: plum at 50% over cream is #bda7b4, and the text fades with it', () => {
+      const f = run('<div data-bg-tone="cream"><div class="bg-plum opacity-50"><p class="type-body text-cream">x</p></div></div>').all[0];
+      expect(f.bg).toBe('#bda7b4');
+      expect(f.fg).toBe('#fff5f0'); // cream text fading toward the cream page behind the group stays cream
+      expect(f.ratio).toBeLessThan(5.55);
+    });
+
+    it('opacity above the supplier gives the same result as on it', () => {
+      const on = run('<div data-bg-tone="cream"><div class="bg-plum opacity-50"><p class="type-body text-cream">x</p></div></div>').all[0];
+      const above = run('<div data-bg-tone="cream"><div class="opacity-50"><div class="bg-plum"><p class="type-body text-cream">x</p></div></div></div>').all[0];
+      expect(above.bg).toBe(on.bg);
+      expect(above.ratio).toBe(on.ratio);
+    });
+
+    it('without any group opacity the same pair is 5.55:1, so the fade is what moved it', () => {
+      expect(run('<div data-bg-tone="cream"><div class="bg-plum"><p class="type-body text-cream">x</p></div></div>').all[0].ratio).toBe(5.55);
+    });
+
+    it('a group whose parent backdrop is a photo is left alone (unknowable): the Expertise pill stays 2.26:1', () => {
+      const html = '<main><section id="s"><div class="relative bg-plum"><img alt="" src="/a.webp" style="position:absolute;height:100%;width:100%"/><div class="bg-mauve opacity-95"><span class="type-small font-bold text-cream">x</span></div></div></section></main>';
+      expect(run(html).all[0].ratio).toBe(2.26);
+    });
+  });
+});
+
 describe('NS-42 ratchet logic (pure)', () => {
   const f = (over: Partial<ContrastFinding> = {}): ContrastFinding => ({
     page: 'home', where: '#x', text: 'שלום עולם', ratio: 2.26, required: 3, fg: '#fff5f0', bg: '#c49ab8', size: 30, bold: true, typeClass: 'type-title', ...over,
@@ -323,22 +422,38 @@ describe('NS-42 contrast matrix: home, /blog, every post', () => {
     expectNone([...known].filter((w) => !where.has(w)).map((w) => `stale allow entry, remove it: PHOTO_BACKDROP ${w}`), 'photo table');
   });
 
-  it('every failure is in CONTRAST_ALLOW (a new low-contrast pair fails here)', () => {
-    const { fresh } = ratchetContrast(reports.flatMap((r) => r.findings), CONTRAST_ALLOW);
-    expectNone(fresh, 'new contrast failure: fix the colour pair, or (only with the owner agreeing) add it to CONTRAST_ALLOW');
+  const failures = () => reports.flatMap((r) => r.findings);
+  const BOTH: ContrastAllow[] = [...OWNER_EXCEPTIONS, ...CONTRAST_ALLOW];
+
+  it('every failure is an owner exception or in CONTRAST_ALLOW (a new low-contrast pair fails here)', () => {
+    expectNone(ratchetContrast(failures(), BOTH).fresh, 'new contrast failure: fix the colour pair, or (only with the owner agreeing) add it to CONTRAST_ALLOW');
   });
 
-  it('every CONTRAST_ALLOW entry still fails: stale allow entry, remove it', () => {
-    const { stale } = ratchetContrast(reports.flatMap((r) => r.findings), CONTRAST_ALLOW);
-    expectNone(stale, 'the pair was fixed (or removed): delete its row from CONTRAST_ALLOW');
+  it.each([
+    ['CONTRAST_ALLOW', CONTRAST_ALLOW],
+    ['OWNER_EXCEPTIONS', OWNER_EXCEPTIONS],
+  ] as const)('every %s entry still fails: stale allow entry, remove it', (_n, table) => {
+    expectNone(ratchetContrast(failures(), table).stale, 'the pair was fixed (or the text removed): delete its row');
   });
 
-  it('every CONTRAST_ALLOW ratio is still the measured one (update the row when a fix only improves the pair)', () => {
-    const { drifted } = ratchetContrast(reports.flatMap((r) => r.findings), CONTRAST_ALLOW);
-    expectNone(drifted, 'ratio drift');
+  it.each([
+    ['CONTRAST_ALLOW', CONTRAST_ALLOW],
+    ['OWNER_EXCEPTIONS', OWNER_EXCEPTIONS],
+  ] as const)('every %s ratio is still the measured one (update the row when a change only moves the pair)', (_n, table) => {
+    expectNone(ratchetContrast(failures(), table).drifted, 'ratio drift');
   });
 
   it('every CONTRAST_ALLOW entry carries a reason', () => {
     for (const e of CONTRAST_ALLOW) expect(e.reason.length, `${e.where} ${e.text}`).toBeGreaterThan(10);
+  });
+
+  it('OWNER_EXCEPTIONS rows are dated decisions with a reason, and no failure sits in both tables (a decision is not debt)', () => {
+    for (const e of OWNER_EXCEPTIONS) {
+      expect(e.decided, `${e.where} ${e.text}`).toBe('2026-10-09');
+      expect(e.decision.length).toBeGreaterThan(3);
+      expect(e.reason.length).toBeGreaterThan(30);
+    }
+    const both = failures().filter((f) => OWNER_EXCEPTIONS.some((o) => allowMatches(o, f)) && CONTRAST_ALLOW.some((o) => allowMatches(o, f)));
+    expectNone(both.map((f) => `${f.page} ${f.where} "${f.text}"`), 'failure listed as owner exception AND as debt');
   });
 });

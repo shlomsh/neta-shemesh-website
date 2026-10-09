@@ -42,14 +42,32 @@ jsdom has no Tailwind CSS, so `getComputedStyle` knows nothing about `text-plum`
 - Sizes come from the nearest `.type-*` class's MOBILE MINIMUM (and x0.88 for `.font-latin`), weight from the nearest `font-bold` / type weight; text with no type class is 16px regular.
 - Text over a photo (hero is a solid plum field and IS measured; StepCard photos, the CTA band and the footer are photos) cannot be measured: it is skipped and listed in `PHOTO_BACKDROP`. A new photo-backed text fails until it is listed.
 - The paper grain (`[data-bg-tone]::before`, soft-light / multiply, 8-12%) is not modelled, so a mauve surface measures 2.26:1 where a real render measures about 2.11-2.22:1.
-- `opacity` on an ancestor fades the text toward the backdrop; an `opacity` on the element that paints the backdrop (the Expertise pill, `bg-mauve opacity-95`) is ignored (the pill sits on a photo anyway).
-- Gradients, `mix-blend-mode`, images and CSS written outside class names (css modules) are not resolved. An unrecognised colour expression is reported as skipped and fails the "nothing is skipped except photos" test instead of passing silently.
+- `opacity` is composed: ancestors below the backdrop supplier fade the text only; `opacity` on the supplier or above it fades text and backdrop together against whatever is behind that group (`composeGroupOpacity`). A group over a photo is ignored (unknowable), so the Expertise pill (`bg-mauve opacity-95` over a photo) stays 2.26:1.
+- Gradients, `mix-blend-mode`, images and CSS written outside class names (css modules) are not resolved.
+- Any `text-` / `bg-` token written as a colour that the resolver cannot evaluate (`text-plum/[0.3]`, `text-[oklch(...)]`, `bg-[rgb(...)]`, `text-[color:var(--c)]/50`, `text-(--unknown)`) is reported as skipped and fails the "nothing is skipped except photos" test; sizes, lengths, urls, images and gradients are recognised as non-colours. The Tailwind v4 shorthand `text-(--color-cream)` / `bg-(--surface-veil)` resolves.
+- The matrix keeps one row per section + text + colours + type class, so a passing copy of a text can never hide a failing copy.
 
 Teaching it a new class: edit `colourFromToken` / `foregroundOf` / `backdropOf` in `helpers.ts`, add a fixture to the "resolver controls" block.
 
 ## Ratchet allow-tables
 
-`CONTRAST_ALLOW` (contrast.test.tsx), `PHOTO_BACKDROP` (same file) and `BAN_ALLOW` (source-scan.test.ts, NS-42 block) list today's known failures. They may only shrink: a failure that is not listed fails the test, and a listed entry that no longer fails fails with "stale allow entry, remove it". A contrast or focus fix therefore deletes its row in the same commit. Blog copy is CMS-driven, so blog rows are keyed by section + type class (`text: '*'`, `type: 'type-eyebrow'`) rather than by text.
+`CONTRAST_ALLOW` (contrast.test.tsx), `PHOTO_BACKDROP` (same file) and `BAN_ALLOW` (source-scan.test.ts, NS-42 block) list today's known failures. They may only shrink: a failure that is not listed fails the test, and a listed entry that no longer fails fails with "stale allow entry, remove it". A contrast or focus fix therefore deletes its row in the same commit. Blog copy is CMS-driven, so blog rows are keyed by section + type class (`text: '*'`, `type: 'type-eyebrow'`) rather than by text. Consequence: a wildcard row absorbs any NEW hit of the same section, same type class and same ratio (a new blog post with another mauve eyebrow does not fail); a hit with a different ratio or type class still does.
+
+`OWNER_EXCEPTIONS` (contrast.test.tsx) is a separate table for permanent owner decisions (2026-10-09: NS-43 option C, the cream titles on the mauve sections; the WhatsApp brand green). Those rows are documented decisions, not debt, but they are checked with the same rules: the text disappearing (stale) or the ratio drifting fails. `BAN_ALLOW` keys are path suffixes under `src/` (`blog/[slug]/page.tsx`), because `page.tsx` alone is ambiguous.
+
+## The NS-42 source bans: why, and how to fix a hit
+
+| Rule id | Why | Fix |
+|---|---|---|
+| `text-mauve` | mauve text has no compliant pair: 2.26:1 on cream, 2.46:1 on plum | `text-plum` (or cream on plum) |
+| `small-text-blush` | blush on plum is 3.89:1, large text only | move to `type-quote` or larger, or use `text-cream` |
+| `text-colour-mix-transparent` | a translucent text colour has no fixed contrast: it depends on the backdrop | a solid palette colour; build hierarchy with size, not alpha |
+| `bg-mauve-with-text` | mauve cannot carry text | `bg-plum` / `bg-cream` / `bg-blush` (quote scale) for the surface; keep mauve for decoration |
+| `opacity-on-text` | opacity fades text below its audited contrast | a colour change on hover (`hover:underline`, a solid colour), not an opacity change |
+| `focus-outline-none` | `outline-none` without a replacement removes the keyboard focus indicator | add `focus-visible:ring-2 focus-visible:ring-<colour>` (or a `focus-visible:outline-*`) to the same class list |
+| `focus-mask-link` | an empty mask-painted anchor has no visible default focus | add a `focus-visible:` ring/outline to the `MaskIcon as="a"` (or to MaskIcon's anchor itself, which clears every usage) |
+
+The `bg-mauve-with-text` and `opacity-on-text` rules use a small JSX scanner in `helpers.ts`; a component counts as text when it has text or an `{expression}` child, or is a `NavLink` with a `label` (`LABEL_AS_TEXT`). Their positive controls include a `NavLink label=` bad sample and a `MaskIcon label=` (an aria-label, not text) good sample.
 
 ## Known gaps (deliberate, not hidden)
 
