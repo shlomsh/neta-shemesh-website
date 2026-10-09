@@ -26,15 +26,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   ...(IS_PRODUCTION_HOST ? {} : { robots: { index: false, follow: false } }),
   ...pageMeta({
-    title: `${SITE.name} | ${SITE.tagline} - ${SITE.city}`,
-    description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
+    title: `${SITE.tagline} ב${SITE.city} | ${SITE.name}`,
+    description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה (פולג). ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
     hreflang: true,
     og: {
-      title: `${SITE.name} | ${SITE.tagline}`,
+      title: `${SITE.name} | ${SITE.tagline} ב${SITE.city}`,
       description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי לזוגות ומשפחות בתהליכי שינוי וצמיחה.',
     },
     twitter: {
-      title: `${SITE.name} | ${SITE.tagline}`,
+      title: `${SITE.name} | ${SITE.tagline} ב${SITE.city}`,
       description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה.',
     },
   }),
