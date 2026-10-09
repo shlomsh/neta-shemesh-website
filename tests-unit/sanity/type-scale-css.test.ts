@@ -153,12 +153,18 @@ describe('C9: [data-bg-tone] rules map each tone to its background, text and hea
     expect(t?.header, `[data-bg-tone="${tone}"] --header-color`).toBe(`var(--color-${want.color})`);
   });
 
-  it('--color-white is aliased to the cream hex (never pure #fff) and --color-brand-primary to mauve', () => {
+  it('--color-white is aliased to the cream hex (never pure #fff)', () => {
     const cream = cssVar(css, '--color-cream')!;
     expect(cream.toLowerCase()).toBe('#fff5f0');
     expect(cssVar(css, '--color-white')?.toLowerCase(), '--color-white must equal the cream hex').toBe(cream.toLowerCase());
-    expect(cssVar(css, '--color-brand-primary'), '--color-brand-primary').toBe('var(--color-mauve)');
   });
+
+  it.each(['--color-dark', '--color-text-primary', '--color-text-secondary', '--color-bg-light', '--color-brand-primary'])(
+    'the retired colour alias %s is gone (say plum / cream / mauve)',
+    (name) => {
+      expect(cssVar(css, name), `${name} is back in globals.css`).toBeUndefined();
+    },
+  );
 });
 
 describe('C14: Elamy (the display font) is reserved for display, title and signature', () => {

@@ -73,7 +73,7 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 | Token | Hex | Role |
 |---|---|---|
 | `--color-plum` | `#7A5978` | Dark plum — dark card bg / primary text on light |
-| `--color-mauve` | `#C49AB8` | Mid mauve — accent card bg / brand (`--color-brand-primary`) |
+| `--color-mauve` | `#C49AB8` | Mid mauve — accent card bg / brand |
 | `--color-blush` | `#ECC8CE` | Light blush — soft accent card bg |
 | `--color-cream` | `#FFF5F0` | Warm cream — light card bg / page bg |
 
@@ -96,7 +96,7 @@ Ratios are computed with the WCAG 2.x relative-luminance formula. Thresholds: AA
 | Mid `#C49AB8` | Dark `#7A5978` | 2.46:1 ❌ | Fails AA even for large text |
 | Light `#ECC8CE` | Cream `#FFF5F0` | 1.43:1 ❌ | Never |
 
-The hero nav/CTA pill (`bg-brand-primary/75` = mauve at 75% over plum ≈ `#B28AA8`, cream text) measures 2.77:1 — also below 3:1.
+A translucent mauve surface (`bg-mauve/75` = mauve at 75% over plum ≈ `#B28AA8`) with cream text measures 2.76:1 — also below 3:1 (the old hero pill; the hero nav/CTA are now cream-on-plum buttons, 5.55:1).
 
 **Rule of thumb:** Dark backgrounds → cream text. Light + Cream backgrounds → dark text. **Mid has no compliant text pair** — use it for surfaces that carry no text (shapes, fills, image frames, decorative highlights) or only non-essential text; do not place essential copy on it.
 

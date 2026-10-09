@@ -143,7 +143,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
         {links.map(({ href, label }) => renderLink(href, label, desktopLinkClass))}
 
         <ButtonLink href={telHref()} variant="secondary" size="sm">
-          <span className="font-latin">{SITE.phone.display}</span>
+          <span dir="ltr" className="font-latin">{SITE.phone.display}</span>
         </ButtonLink>
       </nav>
 
@@ -204,7 +204,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
               onClick={() => setOpen(false)}
               className="mt-[clamp(12px,4vw,24px)]"
             >
-              <span className="font-latin">{SITE.phone.display}</span>
+              <span dir="ltr" className="font-latin">{SITE.phone.display}</span>
             </ButtonLink>
           </nav>
         </div>,

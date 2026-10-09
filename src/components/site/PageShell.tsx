@@ -13,8 +13,8 @@ import { ContactFAB } from '@/components/ui/ContactFAB';
  *   - 'hidden' the blog pages, which mount no SoftSnap and rely on `overflow-hidden` to contain
  *              the cover-image overlap.
  *
- * The page surface is always cream (`bg-cream`, #FFF5F0). The home page used to spell it through the
- * `--color-bg-light` alias and the blog pages through `--color-cream`; both resolved to the same value.
+ * The page surface is always cream (`bg-cream`, #FFF5F0). The home page and the blog pages used to spell
+ * it through two different tokens; both resolved to the same value.
  */
 const OVERFLOW = {
   clip: 'overflow-clip',

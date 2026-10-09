@@ -1,6 +1,6 @@
 // @vitest-environment node
 /**
- * SANITY C11/C17 + D18/D22: static scans over src/**\/*.{ts,tsx,css}.
+ * SANITY C11/C17 + D18: static scans over src/**\/*.{ts,tsx,css}.
  *
  * These are globs, not file names, so moving files under sections/ does not matter.
  *
@@ -228,25 +228,6 @@ describe('D18: palette lock (hex colours)', () => {
   });
 });
 
-describe('D22: no bg-white on brand surfaces (use cream)', () => {
-  /** file name -> why it is tolerated. Prune when fixed. */
-  const KNOWN: Record<string, string> = {
-    // (empty) TestimonialCard's default variant used bg-white until tech-debt batch 1; it is cream now.
-  };
-
-  const hits = scan(code, rule('bg-white').re);
-
-  it('bg-white appears only in the known, documented place', () => {
-    const unknown = hits.filter((h) => !Object.keys(KNOWN).some((name) => h.split(':')[0].endsWith('/' + name)));
-    expectNone(unknown, 'bg-white gives pure #fff, not the brand cream');
-  });
-
-  it('the known exception is still there (remove it from KNOWN once fixed)', () => {
-    for (const name of Object.keys(KNOWN)) expect(hits.some((h) => h.split(':')[0].endsWith('/' + name)), `${name} no longer has bg-white: remove it from KNOWN`).toBe(true);
-  });
-
-});
-
 describe('R9: colour utilities come from the @theme palette, not from arbitrary var() values', () => {
   /**
    * Arbitrary `text-[var(--color-plum)]` style utilities that are legitimately left, keyed by file NAME,
@@ -266,8 +247,16 @@ describe('R9: colour utilities come from the @theme palette, not from arbitrary 
     for (const name of Object.keys(ALLOWED)) expect(hits.some((h) => h.split(':')[0].endsWith('/' + name)), `${name} no longer needs an exception`).toBe(true);
   });
 
-  it('no text-white / bg-white/35 / ring-white: they resolve through the :root --color-white override; write the -cream utility', () => {
+  it('no bg-white / text-white / bg-white/35 / ring-white: bg-white is pure #fff, the rest resolve through the :root --color-white override; write the -cream utility', () => {
     expectNone(scan(code, rule('white-utility').re), 'named white utility (use cream: same computed colour, no reliance on the :root override)');
+  });
+
+  it('Tailwind does not scan tests, docs or markdown (@source not), so sample classes there cannot generate junk CSS', () => {
+    // raw text on purpose: the naive stripCssComments would eat the `/**/` inside "../../**/*.md"
+    const css = sourceNamed('globals.css').text;
+    for (const dir of ['tests-unit', 'tests', 'docs', '**/*.md']) {
+      expect(css, `@source not for ${dir}`).toContain(`@source not "../../${dir}";`);
+    }
   });
 
   it('the four palette names are declared as @theme colours, so text-plum / bg-cream / ... really generate CSS', () => {

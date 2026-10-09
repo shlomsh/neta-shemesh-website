@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Tailwind scans the whole project root by default. Class-name-looking strings in tests and docs
+ * (sample classes in assertions, examples in the .md docs) would generate junk rules (.ring-white, an invalid
+ * .ring-[...]); only the app source feeds the stylesheet. Paths are relative to this file. */
+@source not "../../tests-unit";
+@source not "../../tests";
+@source not "../../docs";
+@source not "../../**/*.md";
+
 @theme {
   --color-plum: #7A5978;
   --color-mauve: #C49AB8;
@@ -48,12 +56,10 @@
 }
 
 :root {
-  --color-dark: var(--color-plum);
+  /* Overrides Tailwind's default white with the brand cream; read by .on-dark. The other
+   * colour aliases (--color-dark, --color-text-*, --color-bg-light, --color-brand-primary)
+   * are retired: say plum / cream / mauve. */
   --color-white: #FFF5F0;
-  --color-text-primary: var(--color-plum);
-  --color-brand-primary: var(--color-mauve);
-  --color-text-secondary: var(--color-mauve);
-  --color-bg-light: var(--color-cream);
 }
 
 @layer base {
