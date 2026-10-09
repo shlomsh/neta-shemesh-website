@@ -54,6 +54,14 @@ export interface SnapInput {
    * tall section from a one-screen one); when it is missing every target counts as one screen.
    */
   sectionHeights?: readonly number[];
+  /**
+   * Height of the LARGE viewport (`100lvh`: the screen with the browser toolbar collapsed). Phone
+   * cards are at least this tall, so with the toolbar expanded (innerHeight smaller) a card that
+   * is exactly one screen is a few dozen px taller than `viewportHeight`: that is still a one-screen
+   * card, not a tall one. Gentle mode calls a section tall only above this height. Defaults to
+   * `viewportHeight`.
+   */
+  largeViewportHeight?: number;
   /** 'desktop' (default) or 'gentle' (touch, see `snapMode`). */
   mode?: SnapMode;
   /** A finger is on the screen right now: never snap under it. */
@@ -70,7 +78,7 @@ export interface SnapInput {
  *
  * Gentle mode (touch widths) adds one rule: many phone sections are taller than the screen, and
  * someone reading one must not be pulled back up to its top. So a target that is already above
- * the viewport top is dropped when its section is taller than the viewport; snapping forward to
+ * the viewport top is dropped when its section is taller than the (large) viewport; snapping forward to
  * the next card top (within the threshold) and to one-screen sections works as on desktop.
  */
 export function pickSnapTarget({
@@ -79,6 +87,7 @@ export function pickSnapTarget({
   documentHeight,
   sectionTops,
   sectionHeights,
+  largeViewportHeight = viewportHeight,
   mode = 'desktop',
   touching = false,
 }: SnapInput): number | null {
@@ -91,7 +100,7 @@ export function pickSnapTarget({
     const top = sectionTops[i];
     if (mode === 'gentle' && top < scrollY - ALREADY_THERE_PX) {
       const height = sectionHeights?.[i] ?? 0;
-      if (height > viewportHeight + ALREADY_THERE_PX) continue; // tall section already entered: no snapping back
+      if (height > Math.max(viewportHeight, largeViewportHeight) + ALREADY_THERE_PX) continue; // tall section already entered: no snapping back
     }
     const dist = Math.abs(top - scrollY);
     if (dist < bestDist) {

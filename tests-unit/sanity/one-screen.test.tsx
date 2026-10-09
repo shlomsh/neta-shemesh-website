@@ -22,6 +22,7 @@ import {
   fitOf,
   hasClass,
   hasDesktopRhythm,
+  hasMobileFill,
   hasFullHeight,
   hasMinScreen,
   isFlexColumn,
@@ -77,6 +78,11 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
   it.each(SOLID_SECTIONS.map((s) => s.name))('%s carries min-h-[100svh] at every breakpoint', (name) => {
     const el = findSection(home, name);
     expect(hasMinScreen(el), `${labelOf(el, name)} lost min-h-[100svh]`).toBe(true);
+  });
+
+  it.each([...SOLID_SECTIONS.map((s) => s.name), 'cta-band'])('%s fills the LARGE viewport below lg (no strip of the next card when a phone toolbar collapses)', (name) => {
+    const el = findSection(home, name);
+    expect(hasMobileFill(el), `${labelOf(el, name)} lost max-lg:min-h-lvh (or gained an unprefixed lvh that changes desktop)`).toBe(true);
   });
 
   it.each(SOLID_SECTIONS.map((s) => s.name))('%s keeps its lock/grow assignment', (name) => {

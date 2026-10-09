@@ -195,6 +195,16 @@ export function hasMinScreen(el: Element): boolean {
   return hasClass(el, 'min-h-[100svh]');
 }
 
+/**
+ * Below lg a fit section's one-screen minimum is the LARGE viewport (`max-lg:min-h-lvh`, static) so a
+ * collapsed phone toolbar leaves no strip of the next card; `min-h-[100svh]` stays as the fallback
+ * (see hasMinScreen). The lg rules are untouched, and `lvh` must never appear unprefixed (that would
+ * change desktop).
+ */
+export function hasMobileFill(el: Element): boolean {
+  return hasMinScreen(el) && hasClass(el, 'max-lg:min-h-lvh') && !hasClass(el, 'min-h-lvh') && !hasClass(el, 'lg:min-h-lvh');
+}
+
 /** What the CLASSES alone implement at lg (ignores data-fit). */
 export function classMode(el: Element): Exclude<OneScreenMode, 'inconsistent'> {
   if (hasClass(el, 'lg:h-[max(100svh,720px)]')) return 'lock-720';

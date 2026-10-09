@@ -18,6 +18,7 @@ import {
   globalsCss,
   hamburger,
   hasMinScreen,
+  hasMobileFill,
   isFlexColumn,
   isFlexContainer,
   isGrowItem,
@@ -154,6 +155,11 @@ describe('one-screen / structure predicates', () => {
   it('hasMinScreen, isGrowItem, isFlexContainer, isFlexColumn, minHeightKind, overflowOf, coversImage', () => {
     expect(hasMinScreen(first('<div class="min-h-[100svh]"></div>'))).toBe(true);
     expect(hasMinScreen(first('<div class="lg:min-h-[100svh]"></div>'))).toBe(false);
+    expect(hasMobileFill(first('<div class="min-h-[100svh] max-lg:min-h-lvh"></div>'))).toBe(true);
+    expect(hasMobileFill(first('<div class="min-h-[100svh]"></div>'))).toBe(false); // svh only: strip when the toolbar collapses
+    expect(hasMobileFill(first('<div class="max-lg:min-h-lvh"></div>'))).toBe(false); // no svh fallback
+    expect(hasMobileFill(first('<div class="min-h-[100svh] max-lg:min-h-lvh min-h-lvh"></div>'))).toBe(false); // lvh leaking to desktop
+    expect(hasMobileFill(first('<div class="min-h-[100svh] max-lg:min-h-lvh lg:min-h-lvh"></div>'))).toBe(false);
     expect(isGrowItem(first('<div class="lg:flex-1"></div>'))).toBe(true);
     expect(isGrowItem(first('<div class="flex-1"></div>'))).toBe(false);
     expect(isFlexContainer(first('<div class="lg:flex"></div>'))).toBe(true);

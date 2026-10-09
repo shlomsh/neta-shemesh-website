@@ -13,6 +13,13 @@ export type SectionTone = 'dark' | 'mid' | 'light' | 'cream';
 /**
  * How tall the section is. Every fit except `undefined` is at least one screen at ALL breakpoints
  * (`min-h-[100svh]`, content centred in a flex column) and is published as `data-fit`.
+ *
+ * Below lg the minimum is `100lvh` (`max-lg:min-h-lvh`, with `100svh` kept as the fallback for
+ * browsers without lvh). On a phone `svh` is the viewport with the browser toolbar EXPANDED, so
+ * once the toolbar collapses on scroll the visible height is taller and a one-screen card left a
+ * strip of the next card showing. `lvh` is the collapsed-toolbar height, and unlike `dvh` it is
+ * static: nothing resizes (and no content above the reader shifts) when the toolbar toggles.
+ * From lg up nothing changes: the `max-lg:` rule does not apply and the classes are as before.
  *   undefined : content height (blog sections); no `data-fit`
  *   'free'    : one screen at minimum, grows with its content at every width
  *   'lock'    : mobile = 'free'; from lg exactly one screen (`lg:h-[max(100svh,720px)]`, `lg:py-12`).
@@ -79,10 +86,10 @@ export type SectionProps = SectionOwnProps & FitProps & PassThrough;
 
 /** Whole class strings on purpose: Tailwind only emits utilities it can read verbatim from source. */
 const FIT_CLASS = {
-  free: 'min-h-[100svh]',
-  lock: 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12',
-  lockNoFloor: 'min-h-[100svh] lg:h-[100svh] lg:py-12',
-  grow: 'min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12',
+  free: 'min-h-[100svh] max-lg:min-h-lvh',
+  lock: 'min-h-[100svh] max-lg:min-h-lvh lg:h-[max(100svh,720px)] lg:py-12',
+  lockNoFloor: 'min-h-[100svh] max-lg:min-h-lvh lg:h-[100svh] lg:py-12',
+  grow: 'min-h-[100svh] max-lg:min-h-lvh lg:min-h-[max(100svh,720px)] lg:py-12',
 } as const;
 
 const CENTER_CLASS: Record<SectionCenter, string> = {

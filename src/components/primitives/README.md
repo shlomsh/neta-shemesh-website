@@ -7,7 +7,7 @@ Small, typed building blocks the section components in `src/components/sections/
 ### `<Section id? tone? fit? floor? center? pad? seam? anchor? className? …props>`
 The `<section>` shell: always `relative w-full overflow-hidden` (no `dir`: `<html dir="rtl">` sets the direction, and `dir` is not a Section prop), plus whatever the props below ask for. `id` is optional (Expertise has none). `data-fit` and `data-bg-tone` are owned by `fit` and `tone`; a hand-passed attribute cannot override them.
 - `tone`: `dark | mid | light | cream`. Sets `data-bg-tone`; `globals.css` then paints the background, the text colour and `--header-color`, so children need no colour classes. Omit it for photo sections (CTA band): no `data-bg-tone`.
-- `fit` (published as `data-fit`; omit for content height, e.g. blog sections). Every fit is `min-h-[100svh]` at ALL breakpoints:
+- `fit` (published as `data-fit`; omit for content height, e.g. blog sections). Every fit is `min-h-[100svh]` at ALL breakpoints, and below lg additionally `max-lg:min-h-lvh` (the collapsed-toolbar height, static, so no strip of the next card on a phone and nothing shifts when the toolbar toggles; from lg up the classes and the rendered heights are exactly as before):
   - `free`: one screen at minimum, then grows with its content (about-credentials, contact-social, CTA band).
   - `lock`: from lg exactly one screen, `lg:h-[max(100svh,720px)] lg:py-12`; the content must fit through a `lg:flex-1 lg:min-h-0` chain to the photo grid. On a viewport shorter than 720px it is 720px tall.
   - `grow`: from lg at least one screen, `lg:min-h-[max(100svh,720px)] lg:py-12`; for running text that must never be clipped (about-me).

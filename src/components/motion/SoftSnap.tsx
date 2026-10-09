@@ -46,6 +46,18 @@ export function SoftSnap() {
     // Fingers currently on the screen (touchstart/touchend/touchcancel). A snap never fights one.
     let touching = false;
 
+    // Invisible probe whose height is 100lvh (the collapsed-toolbar screen); 0 where lvh is unsupported.
+    let lvhProbe: HTMLDivElement | null = null;
+    const largeViewportHeight = () => {
+      if (!lvhProbe) {
+        lvhProbe = document.createElement('div');
+        lvhProbe.setAttribute('aria-hidden', 'true');
+        lvhProbe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
+        document.body.appendChild(lvhProbe);
+      }
+      return Math.max(lvhProbe.offsetHeight, window.innerHeight);
+    };
+
     const isActive = () => isSnapActive(reduceQuery.matches);
     const settleDelay = () => (snapMode(window.innerWidth) === 'gentle' ? TOUCH_SETTLE_MS : SETTLE_MS);
 
@@ -123,6 +135,7 @@ export function SoftSnap() {
         documentHeight: document.documentElement.scrollHeight,
         sectionTops: rects.map((r) => r.top + y),
         sectionHeights: rects.map((r) => r.height),
+        largeViewportHeight: largeViewportHeight(),
         mode: snapMode(window.innerWidth),
         touching,
       });
@@ -188,6 +201,7 @@ export function SoftSnap() {
     return () => {
       clearSettle();
       cancelAnimation();
+      lvhProbe?.remove();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('wheel', onUserInput);
       window.removeEventListener('touchstart', onTouchStart);

@@ -231,6 +231,15 @@ describe('pickSnapTarget: gentle mode (touch widths)', () => {
     expect(gentle(800 + 200, { sectionHeights: [800, 803, 800, 1700, 800] })).toBeNull();
   });
 
+  it('toolbar expanded: a card exactly one LARGE screen tall is one screen, not tall (still snaps back to its top)', () => {
+    // visible 714, large (collapsed-toolbar) 754; the card is 754 tall: 40px past the visible height.
+    const expanded = { viewportHeight: 714, largeViewportHeight: 754, sectionHeights: [754, 754, 754, 754, 754], sectionTops: [0, 754, 1508, 2262, 3016], documentHeight: 3770 };
+    expect(gentle(754 + 30, expanded)).toBe(754);
+    expect(gentle(754 + 30, { ...expanded, largeViewportHeight: undefined }), 'without the large height it would count as tall').toBeNull();
+    // but a genuinely taller card (3 screens) is still tall
+    expect(gentle(754 + 30, { ...expanded, sectionHeights: [754, 2262, 754, 754, 754] })).toBeNull();
+  });
+
   it('without heights every section counts as one screen (same result as desktop)', () => {
     expect(gentle(800 + 200, { sectionHeights: undefined })).toBe(800);
   });
