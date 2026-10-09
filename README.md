@@ -47,7 +47,7 @@ For the curious: this site is built with some of the most modern web technology 
 
 - **[Tailwind CSS v4](https://tailwindcss.com/)** — the newest major version, with a redesigned configuration system (`@theme` in CSS rather than a separate config file). All spacing, colors, and typography tokens live in one place and cascade correctly across every component.
 - A **custom fluid type scale** built with CSS `clamp()` — text sizes adapt smoothly between mobile and desktop without any abrupt jumps. No text on the site is smaller than 14px on any device.
-- **Custom brand fonts** — loaded from `.woff2` files, parsed with [`fontkit`](https://github.com/foliojs/fontkit) to confirm their true names. No Google Fonts, no third-party CDN dependency.
+- **Custom brand fonts** — loaded from `.woff2` files, self-hosted through `next/font/local` (fontkit is a dev-only dependency, used by a sanity test to measure the Elamy glyph ink). No Google Fonts, no third-party CDN dependency.
 
 ### Motion & interactions
 

@@ -16,7 +16,12 @@ const nextConfig: NextConfig = {
   // against production showed AVIF was never being served.
   images: isStaticExport
     ? { unoptimized: true }
-    : { formats: ['image/avif' as const, 'image/webp' as const] },
+    : {
+        formats: ['image/avif' as const, 'image/webp' as const],
+        // Allowed `quality` values: 75 is Next's default, 84 is PHOTO_QUALITY (src/lib/image-quality.ts;
+        // keep the two in step: next.config.ts cannot use the `@/` alias).
+        qualities: [75, 84],
+      },
   async redirects() {
     return [
       {

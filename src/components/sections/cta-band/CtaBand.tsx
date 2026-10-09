@@ -3,6 +3,7 @@ import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { Section } from '@/components/primitives/layout/Section';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
+import { PHOTO_QUALITY } from '@/lib/image-quality';
 import { ANCHOR, ID, anchorHref } from '@/content/ids';
 
 /** The "קביעת פגישת ייעוץ" photo band. A photo section: no tone, so no data-bg-tone. */
@@ -14,6 +15,7 @@ export function CtaBand() {
           src="/images/cta-background.webp"
           fill
           sizes="100vw"
+          quality={PHOTO_QUALITY}
           className="object-cover opacity-90"
           alt=""
         />

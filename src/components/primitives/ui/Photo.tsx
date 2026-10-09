@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { CSSProperties, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
+import { PHOTO_QUALITY } from '@/lib/image-quality';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 
@@ -57,8 +58,8 @@ const ZOOM_CLASS: Record<PhotoZoom, string> = {
  * Never switch an existing call site between the two: that changes the srcset and so the pixels.
  */
 type PhotoEngine =
-  | { engine?: 'img'; /** Lazy by default; `eager` for an above-the-fold photo (the first blog row, an article cover). */ loading?: 'lazy' | 'eager'; sizes?: never }
-  | { engine: 'next'; loading?: never; sizes: string };
+  | { engine?: 'img'; quality?: never; /** Lazy by default; `eager` for an above-the-fold photo (the first blog row, an article cover). */ loading?: 'lazy' | 'eager'; sizes?: never }
+  | { engine: 'next'; loading?: never; sizes: string; /** Optimizer quality; defaults to `PHOTO_QUALITY` (84). Must be listed in `images.qualities`. */ quality?: number };
 
 /**
  * What moves the frame.
@@ -117,7 +118,7 @@ export function Photo(props: PhotoProps) {
 
   const image =
     props.engine === 'next' ? (
-      <Image src={src} alt={alt} fill sizes={props.sizes} className={cx('object-cover', zoomClass)} style={imageStyle} />
+      <Image src={src} alt={alt} fill sizes={props.sizes} quality={props.quality ?? PHOTO_QUALITY} className={cx('object-cover', zoomClass)} style={imageStyle} />
     ) : (
       <img
         src={src}
