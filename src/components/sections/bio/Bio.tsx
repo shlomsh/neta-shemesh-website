@@ -75,7 +75,7 @@ export function Bio() {
               {/* Quote Block & Signature */}
               <div className="flex flex-col gap-[16px] relative mt-[8px]">
                 <ScrollReveal delay={0.28} className="absolute -top-[24px] start-0">
-                  <img
+                  <img // eslint-disable-line @next/next/no-img-element -- decorative SVG quote mark; next/image does not optimise SVG
                     src={`${QUOTE_ICON}?v=2`}
                     alt=""
                     aria-hidden="true"

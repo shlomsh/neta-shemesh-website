@@ -30,6 +30,7 @@ const cases: Array<[string, () => React.ReactElement]> = [
   ['ScrollReveal', () => <ScrollReveal delay={0.1} className="x"><p>hi</p></ScrollReveal>],
   ['Footer (staggered ScrollReveal blocks)', () => <Footer />],
   ['ContactFAB', () => <ContactFAB />],
+  // eslint-disable-next-line @next/next/no-img-element -- test fixture markup, not shipped
   ['ParallaxFrame', () => <ParallaxFrame className="h-10"><img alt="" src="/a.jpg" /></ParallaxFrame>],
 ];
 

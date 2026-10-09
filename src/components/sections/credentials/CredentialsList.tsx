@@ -12,7 +12,7 @@ export function CredentialsList({ items, checkIconSrc, onDark }: CredentialsList
     <ul className="grid grid-cols-2 md:grid-cols-3 gap-[32px] md:gap-[64px]">
       {items.map((item, i) => (
         <li key={i} className="flex flex-col items-center text-center">
-          <img
+          <img // eslint-disable-line @next/next/no-img-element -- small fixed-size static webp icons with a CSS filter, below the fold
             src={icons[i % icons.length]}
             alt=""
             aria-hidden="true"

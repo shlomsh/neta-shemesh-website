@@ -18,7 +18,7 @@ export function BrandLogo() {
       aria-label="לעמוד הבית"
       className="flex items-center"
     >
-      <img
+      <img // eslint-disable-line @next/next/no-img-element -- above-the-fold logo with explicit size, preloaded as a static webp (LCP); kept raw on purpose
         src="/images/logo-horizontal-light.webp"
         alt={`${SITE.name} — ${SITE.tagline}`}
         width={1073}
