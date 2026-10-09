@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
+import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostBody } from '@/components/blog/PostBody';
@@ -73,9 +74,7 @@ export default async function BlogPostPage(
             <span className="type-eyebrow text-[var(--color-blush)]">
               {post.category}
             </span>
-            <h1 className="type-title font-bold tracking-[-0.01em] text-[color:var(--header-color)]">
-              {post.title}
-            </h1>
+            <SectionTitle as="h1">{post.title}</SectionTitle>
             <p className="type-lead mx-auto max-w-[60ch] text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]">
               {post.excerpt}
             </p>
@@ -133,9 +132,7 @@ export default async function BlogPostPage(
       {others.length > 0 && (
         <Section id={ID.postMore} tone="cream" className="py-[clamp(48px,7vw,96px)]">
           <Container maxWidth="2xl">
-            <h2 className="type-title font-bold tracking-[-0.01em] text-[color:var(--header-color)] mb-[clamp(28px,4vw,48px)] text-center">
-              עוד מהבלוג
-            </h2>
+            <SectionTitle className="mb-[clamp(28px,4vw,48px)] text-center">עוד מהבלוג</SectionTitle>
             <div className="grid grid-cols-1 gap-[clamp(24px,3vw,40px)] md:grid-cols-2">
               {others.map((other, i) => (
                 <ScrollReveal key={other.slug} delay={stagger(i % 2)} className="h-full">

@@ -1,15 +1,15 @@
-import Image from 'next/image';
 import { ScrollReveal } from '../ui/ScrollReveal';
-import { ParallaxFrame } from '../ui/ParallaxFrame';
-import { PhotoPanel } from './about/PhotoPanel';
-import { SectionTitle } from "../ui/SectionTitle";
 import { QuoteBlock } from "./about/QuoteBlock";
 import { CredentialsList } from './about/CredentialsList';
 import { OrganicBg } from './about/OrganicBg';
 
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
+import { Card } from '@/components/primitives/layout/Card';
 import { BodyText } from '@/components/primitives/ui/BodyText';
+import { Photo } from '@/components/primitives/ui/Photo';
+import { SectionSubtitle } from '@/components/primitives/ui/SectionHeader';
+import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 import { ANCHOR, ID } from '@/content/ids';
 import { SITE } from '@/content/site';
 import { stagger } from '@/lib/motion';
@@ -37,24 +37,32 @@ export function AboutIntro() {
             {/* Photo collage — left column on desktop (wider, height-driven to the section), top on mobile */}
             <div className="relative w-full grid grid-cols-2 gap-[16px] lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">
               <ScrollReveal className="lg:min-h-0">
-                <PhotoPanel
+                <Photo
                   src={INTRO_PHOTOS[0].src}
+                  alt=""
+                  radius="card"
+                  ratio="square"
+                  fillCellAtLg
                   objectPosition={INTRO_PHOTOS[0].objectPosition}
-                  className="aspect-square lg:aspect-auto lg:h-full"
                 />
               </ScrollReveal>
               <ScrollReveal delay={0.24} className="row-span-2 lg:min-h-0">
-                <PhotoPanel
+                <Photo
                   src={INTRO_PHOTOS[2].src}
+                  alt=""
+                  radius="card"
                   objectPosition={INTRO_PHOTOS[2].objectPosition}
                   className="h-full"
                 />
               </ScrollReveal>
               <ScrollReveal delay={0.12} className="lg:min-h-0">
-                <PhotoPanel
+                <Photo
                   src={INTRO_PHOTOS[1].src}
+                  alt=""
+                  radius="card"
+                  ratio="square"
+                  fillCellAtLg
                   objectPosition={INTRO_PHOTOS[1].objectPosition}
-                  className="aspect-square lg:aspect-auto lg:h-full"
                 />
               </ScrollReveal>
             </div>
@@ -70,10 +78,7 @@ export function AboutIntro() {
               <ScrollReveal delay={0.12} className="relative z-10">
                 {/* Veil card: cream 85% over mauve (--surface-veil) is 4.97:1 against plum, so the
                     copy can sit at the lead scale. data-bg-tone="cream" keeps plum text. */}
-                <div
-                  data-bg-tone="cream"
-                  className="rounded-card bg-[var(--surface-veil)] p-6 md:p-8 text-right flex flex-col gap-4"
-                >
+                <Card surface="veil" pad="md" className="text-right flex flex-col gap-4">
                   <BodyText className="type-lead max-w-[65ch]">
                     מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
                     השחיקה או המשברים מעלים בנו תחושות של ריחוק ובדידות, דווקא
@@ -84,7 +89,7 @@ export function AboutIntro() {
                     להניח את מנגנוני ההגנה, ללמוד להקשיב באמת זה לזו, ולמצוא
                     את הגשר חזרה לחיבור, קירבה וביטחון זוגי.
                   </BodyText>
-                </div>
+                </Card>
               </ScrollReveal>
             </div>
           </div>
@@ -138,16 +143,17 @@ export function AboutBio() {
               
               {/* Personal Photo */}
               <ScrollReveal delay={0.24} className="w-full flex justify-start">
-                <div className="relative aspect-[4/3] w-full max-w-[320px] overflow-hidden rounded-card outline outline-[1.5px] outline-[var(--color-plum)] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)] safari-clip">
-                  <Image
-                    src={PROFILE_PHOTO}
-                    alt={SITE.name}
-                    fill
-                    sizes="(max-width: 1024px) 320px, 320px"
-                    className="object-cover object-[50%_35%]"
-                    loading="lazy"
-                  />
-                </div>
+                <Photo
+                  engine="next"
+                  src={PROFILE_PHOTO}
+                  alt={SITE.name}
+                  sizes="(max-width: 1024px) 320px, 320px"
+                  radius="card"
+                  ratio="4/3"
+                  outlined
+                  objectPosition="50% 35%"
+                  className="w-full max-w-[320px] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)]"
+                />
               </ScrollReveal>
 
               {/* Quote Block & Signature */}
@@ -231,9 +237,9 @@ export function AboutGallery() {
               {/* Subtitle sits on mauve by owner decision (decorative title lockup, same
                   exception as the Elamy titles; 2.26:1). Inherits the section's cream text. */}
               <ScrollReveal delay={0.12}>
-                <BodyText centered className="type-quote max-w-[65ch] mt-3 md:mt-4">
+                <SectionSubtitle align="center">
                   תמיכה והכוונה לבנייה מחדש של האמון וריפוי פצעים רגשיים בקשר.
-                </BodyText>
+                </SectionSubtitle>
               </ScrollReveal>
             </div>
 
@@ -243,18 +249,16 @@ export function AboutGallery() {
                 <ScrollReveal key={i} delay={stagger(i)} className="lg:h-full lg:min-h-0">
                   {/* below lg: intrinsic aspect 348:531; lg+: frame fills the grid's remaining
                       height and the photo crops (object-cover) while drifting within it */}
-                  <ParallaxFrame
-                    className="aspect-[348/531] lg:aspect-auto lg:h-full rounded-card outline-[1.5px] outline-[var(--color-plum)] safari-clip"
-                    amount={9}
-                  >
-                    <img
-                      src={panel.src}
-                      alt=""
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      style={{ objectPosition: panel.objectPosition }}
-                    />
-                  </ParallaxFrame>
+                  <Photo
+                    src={panel.src}
+                    alt=""
+                    radius="card"
+                    ratio="348/531"
+                    fillCellAtLg
+                    outlined
+                    objectPosition={panel.objectPosition}
+                    motion={{ parallax: 9 }}
+                  />
                 </ScrollReveal>
               ))}
             </div>

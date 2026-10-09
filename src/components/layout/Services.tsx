@@ -1,10 +1,9 @@
-import { SectionTitle } from "../ui/SectionTitle";
 import { StepCard } from './services/StepCard';
 import { Section } from '../primitives/layout/Section';
 import { Container } from '../primitives/layout/Container';
 import { Grid } from '../primitives/layout/Grid';
-import { BodyText } from '../primitives/ui/BodyText';
 import { ButtonLink } from '../primitives/ui/ButtonLink';
+import { SectionHeader } from '../primitives/ui/SectionHeader';
 import { STEPS } from '@/content/home/steps';
 import { ANCHOR, ID, anchorHref } from '@/content/ids';
 
@@ -25,13 +24,14 @@ export default function Services() {
 
           {/* Text column — centered on mobile, right-aligned sticky on desktop */}
           <div className="text-center md:text-right md:w-[320px] md:shrink-0 lg:text-right lg:w-[400px] lg:shrink-0 lg:self-center z-10 mb-[48px] md:mb-0 lg:mb-0">
-            <SectionTitle id={ID.servicesTitle}>איך זה עובד?</SectionTitle>
-
-            {/* Section is blush (plum text = 3.89:1, AA large only), so the paragraph is
+            {/* Section is blush (plum text = 3.89:1, AA large only), so the subtitle is
                 set at the quote scale (>=24px). */}
-            <BodyText className="type-quote mt-5 md:mt-9">
-              התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי.
-            </BodyText>
+            <SectionHeader
+              id={ID.servicesTitle}
+              align="column"
+              title="איך זה עובד?"
+              subtitle="התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי."
+            />
 
             <div className="mt-[48px]">
               <ButtonLink href={anchorHref(ANCHOR.contact)} variant="primary" className="w-full sm:w-auto">

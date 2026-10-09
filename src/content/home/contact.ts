@@ -30,22 +30,20 @@ export const CONTACT_PHOTOS: ContactPhoto[] = [
   {
     src: '/images/contact-clinic-portrait.webp',
     alt: `${SITE.name} — תמונה מהקליניקה`,
-    imageClass: 'object-cover object-center',
-    mobile: { aspectClass: 'aspect-[4/5]' },
+    mobile: { ratio: '4/5' },
     desktop: { area: 'p1', sizes: '(max-width: 1024px) 50vw, 28vw' },
   },
   {
     src: '/images/contact-consultation.webp',
     alt: `${SITE.name} בפגישת ייעוץ`,
-    imageClass: 'object-cover object-[30%_64%]',
-    mobile: { aspectClass: 'aspect-[4/5]' },
+    objectPosition: '30% 64%',
+    mobile: { ratio: '4/5' },
     desktop: { area: 'p2', sizes: '(max-width: 1024px) 50vw, 28vw' },
   },
   {
     src: '/images/contact-clinic-atmosphere.webp',
     alt: `אווירת הקליניקה של ${SITE.name}`,
-    imageClass: 'object-cover',
-    mobile: { aspectClass: 'aspect-[2/3]' },
+    mobile: { ratio: '2/3' },
     desktop: { area: 'p3', extraStyle: { gridRow: '1 / 3' }, sizes: '(max-width: 768px) 37vw, 21vw' },
   },
 ];

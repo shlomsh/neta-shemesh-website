@@ -1,4 +1,4 @@
-import { maskIconStyle } from '@/components/primitives/ui/maskIcon';
+import { MaskIcon } from '@/components/primitives/ui/MaskIcon';
 import { CONTACT_ICONS } from '@/content/home/contact';
 import { SITE, addressLine, mailHref, telHref } from '@/content/site';
 
@@ -21,7 +21,7 @@ export function ContactDetails() {
     <ul className="flex flex-col gap-[24px] list-none">
       {CONTACT_ROWS.map(({ icon, href, text }) => (
         <li key={icon} className="flex items-center gap-[16px]">
-          <span className="flex-shrink-0 w-[24px] h-[24px]" style={maskIconStyle(icon)} />
+          <MaskIcon src={icon} size="sm" />
           <div className="text-right">
             {href ? (
               <a

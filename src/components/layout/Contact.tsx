@@ -1,13 +1,13 @@
-import Image from 'next/image';
 import { ScrollReveal } from '../ui/ScrollReveal';
-import { ParallaxFrame } from '../ui/ParallaxFrame';
 import { SocialLinks } from './contact/SocialLinks';
 import { ContactDetails } from './contact/ContactDetails';
 import { MapEmbed } from './contact/MapEmbed';
-import { SectionTitle } from "../ui/SectionTitle";
 import { CONTACT_PHOTOS, OFFICE_PANEL, SOCIAL_PANEL } from '@/content/home/contact';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
+import { Card } from '@/components/primitives/layout/Card';
+import { Photo } from '@/components/primitives/ui/Photo';
+import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 import { ANCHOR, ID } from '@/content/ids';
 
 export default function Contact() {
@@ -39,13 +39,18 @@ export default function Contact() {
             {/* Mobile: simple vertical stack */}
             <div className="flex flex-col gap-[16px] lg:hidden">
               {CONTACT_PHOTOS.map((photo) => (
-                <ParallaxFrame
+                <Photo
                   key={photo.src}
-                  className={`${photo.mobile.aspectClass} w-full rounded-card safari-clip`}
-                  amount={9}
-                >
-                  <Image src={photo.src} alt={photo.alt} fill sizes="100vw" className={photo.imageClass} />
-                </ParallaxFrame>
+                  engine="next"
+                  src={photo.src}
+                  alt={photo.alt}
+                  sizes="100vw"
+                  radius="card"
+                  ratio={photo.mobile.ratio}
+                  objectPosition={photo.objectPosition}
+                  motion={{ parallax: 9 }}
+                  className="w-full"
+                />
               ))}
             </div>
 
@@ -59,14 +64,18 @@ export default function Contact() {
               }}
             >
               {CONTACT_PHOTOS.map((photo) => (
-                <ParallaxFrame
+                <Photo
                   key={photo.src}
-                  className="min-h-0 rounded-card safari-clip"
+                  engine="next"
+                  src={photo.src}
+                  alt={photo.alt}
+                  sizes={photo.desktop.sizes}
+                  radius="card"
+                  objectPosition={photo.objectPosition}
+                  motion={{ parallax: 9 }}
                   style={{ gridArea: photo.desktop.area, ...photo.desktop.extraStyle }}
-                  amount={9}
-                >
-                  <Image src={photo.src} alt={photo.alt} fill sizes={photo.desktop.sizes} className={photo.imageClass} />
-                </ParallaxFrame>
+                  className="min-h-0"
+                />
               ))}
             </div>
           </ScrollReveal>
@@ -116,10 +125,7 @@ export default function Contact() {
               (the section centres it vertically); at lg the map stretches to the details
               column's height via items-stretch, with a 360px floor. */}
           <ScrollReveal delay={0.1} className="w-full">
-            <div
-              data-bg-tone="cream"
-              className="rounded-card bg-[var(--color-cream)] p-6 md:p-8 lg:p-10 w-full"
-            >
+            <Card surface="cream" pad="lg" className="w-full">
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-stretch">
 
                 {/* Right cell (first in RTL DOM): lead + contact details */}
@@ -138,7 +144,7 @@ export default function Contact() {
                 {/* Left cell: map, 260px on mobile, matches the details height at lg */}
                 <MapEmbed className="h-[260px] lg:h-full lg:min-h-[360px] safari-clip" />
               </div>
-            </div>
+            </Card>
           </ScrollReveal>
         </Container>
       </Section>

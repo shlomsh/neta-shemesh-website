@@ -4,7 +4,8 @@ import { stagger } from '@/lib/motion';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
-import { SectionTitle } from "@/components/ui/SectionTitle";
+import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
+import { Photo } from '@/components/primitives/ui/Photo';
 import { TestimonialCard } from './testimonials/TestimonialCard';
 import { TESTIMONIALS } from '@/content/home/testimonials';
 import { GALLERY_IMAGES } from '@/content/home/gallery';
@@ -24,24 +25,28 @@ export default function Testimonials() {
 
           {/* Section heading */}
           <ScrollReveal delay={0.1}>
-            <SectionTitle id={ID.testimonialsTitle} className="text-center">לקוחות ממליצים</SectionTitle>
-            <p className="type-quote text-center text-[var(--color-text-primary)] mt-3 md:mt-4 mb-[clamp(48px,6vw,96px)] max-w-[65ch] mx-auto">
-              מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה.
-            </p>
+            <SectionHeader
+              id={ID.testimonialsTitle}
+              align="center"
+              title="לקוחות ממליצים"
+              subtitle="מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה."
+              subtitleClassName="mb-[clamp(48px,6vw,96px)]"
+            />
           </ScrollReveal>
 
           {/* Featured quote with portrait */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
             <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
-              <div className="relative aspect-[2/3] rounded-card overflow-hidden shadow-xl safari-clip">
-                <Image
-                  src="/images/testimonial-featured.webp"
-                  alt="זוג בטיפול"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 360px"
-                  className="object-cover object-[50%_42%]"
-                />
-              </div>
+              <Photo
+                engine="next"
+                src="/images/testimonial-featured.webp"
+                alt="זוג בטיפול"
+                sizes="(max-width: 1024px) 100vw, 360px"
+                radius="card"
+                ratio="2/3"
+                objectPosition="50% 42%"
+                className="shadow-xl"
+              />
             </ScrollReveal>
 
             <ScrollReveal delay={0.3} className="w-full lg:flex-1 flex flex-col justify-center">
@@ -99,11 +104,14 @@ export default function Testimonials() {
 
         <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center w-full">
           <ScrollReveal delay={0.1}>
-            <SectionTitle id={ID.ctaBandTitle} onDark
-              className="drop-shadow-md">קביעת פגישת ייעוץ</SectionTitle>
-            <p className="type-quote text-white mt-3 md:mt-4 mb-[48px] max-w-[65ch] mx-auto drop-shadow-md">
-              הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם.
-            </p>
+            <SectionHeader
+              id={ID.ctaBandTitle}
+              align="center"
+              onPhoto
+              title="קביעת פגישת ייעוץ"
+              subtitle="הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם."
+              subtitleClassName="mb-[48px]"
+            />
             <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary">
               מוזמנים ליצור קשר
             </ButtonLink>
@@ -120,27 +128,30 @@ export default function Testimonials() {
       <Section id={ID.photoGallery} tone="cream" fit="lock" pad="tight" dir={undefined}>
         <Container maxWidth="2xl" className="lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
           <ScrollReveal delay={0.1}>
-            <SectionTitle id={ID.photoGalleryTitle} className="text-center">טיפול זוגי לקשר בריא ותומך</SectionTitle>
-            <p className="type-quote text-center mt-3 md:mt-4 mb-[64px] lg:mb-8 max-w-[65ch] mx-auto">
-              השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב.
-            </p>
+            <SectionHeader
+              id={ID.photoGalleryTitle}
+              align="center"
+              title="טיפול זוגי לקשר בריא ותומך"
+              subtitle="השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב."
+              subtitleClassName="mb-[64px] lg:mb-8"
+            />
           </ScrollReveal>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(12px,1.5vw,24px)] lg:grid-rows-2 lg:flex-1 lg:min-h-[320px]">
             {GALLERY_IMAGES.map((img, i) => (
-              <ScrollReveal
+              <Photo
                 key={img}
-                delay={0.1 * (i + 1)}
-                className="relative w-full aspect-[4/3] lg:aspect-auto overflow-hidden rounded-tile shadow-sm safari-clip"
-              >
-                <Image
-                  src={`/images/${img}`}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              </ScrollReveal>
+                engine="next"
+                src={`/images/${img}`}
+                alt=""
+                sizes="(max-width: 768px) 50vw, 33vw"
+                radius="tile"
+                ratio="4/3"
+                fillCellAtLg
+                zoom
+                motion={{ reveal: 0.1 * (i + 1) }}
+                className="w-full shadow-sm"
+              />
             ))}
           </div>
         </Container>

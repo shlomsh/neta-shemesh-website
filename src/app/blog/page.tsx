@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
+import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostCard } from '@/components/blog/PostCard';
@@ -37,9 +38,7 @@ export default function BlogIndexPage() {
             <span className="type-eyebrow text-[var(--color-blush)]">
               הבלוג
             </span>
-            <h1 className="type-title font-bold tracking-[-0.01em] text-[color:var(--header-color)]">
-              מחשבות מהקליניקה
-            </h1>
+            <SectionTitle as="h1">מחשבות מהקליניקה</SectionTitle>
             <p className="type-lead mx-auto max-w-[60ch] text-[var(--color-cream)]">
               רעיונות, כלים ותובנות על זוגיות, הורות והקשרים שאנחנו הכי רוצים
               לטפח. סדרת מאמרים שנכתבת מהלב ומהניסיון בחדר הטיפול.

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
+import { IconButton } from '@/components/primitives/ui/IconButton';
 import { NAV_LINKS } from '@/content/home/nav';
 import { anchorHref, ID } from '@/content/ids';
 import { SITE, telHref } from '@/content/site';
@@ -148,21 +149,20 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
       </nav>
 
       {/* ── Mobile hamburger (below md) ── */}
-      <button
+      <IconButton
         ref={hamburgerRef}
-        type="button"
+        label="פתיחת תפריט"
         onClick={() => setOpen(true)}
-        aria-label="פתיחת תפריט"
         aria-expanded={open}
         aria-controls={ID.mobileMenu}
-        className="md:hidden inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
+        className="md:hidden"
       >
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6" />
           <line x1="3" y1="12" x2="21" y2="12" />
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
-      </button>
+      </IconButton>
 
       {/* ── Mobile overlay menu ── */}
       {/* Portaled to <body>: framer-motion's `will-change` on the ScrollReveal
@@ -179,18 +179,12 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
           className="fixed inset-0 z-[100] md:hidden flex flex-col bg-[var(--color-plum)]"
         >
           <div className="flex items-center justify-end px-[clamp(20px,5vw,40px)] py-[clamp(20px,4vw,32px)]">
-            <button
-              ref={closeButtonRef}
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="סגירת תפריט"
-              className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]"
-            >
+            <IconButton ref={closeButtonRef} label="סגירת תפריט" onClick={() => setOpen(false)}>
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                 <line x1="6" y1="6" x2="18" y2="18" />
                 <line x1="6" y1="18" x2="18" y2="6" />
               </svg>
-            </button>
+            </IconButton>
           </div>
 
           <nav

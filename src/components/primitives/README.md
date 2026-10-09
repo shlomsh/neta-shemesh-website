@@ -1,6 +1,6 @@
 # Primitives
 
-Small, typed building blocks the section components in `src/components/layout/*` compose. Nothing here knows about page content.
+Small, typed building blocks the section components in `src/components/layout/*` and the blog compose. Nothing here knows about page content.
 
 ## Layout (`primitives/layout/`)
 
@@ -25,10 +25,26 @@ Centred column. `maxWidth`: `md` 768, `lg` 1024, `xl` 1100, `2xl` 1280 (default)
 ### `<Grid colsMobile? colsTablet? colsDesktop? className? …props>`
 Responsive CSS grid using static class lookup maps (Tailwind v4 cannot compile `grid-cols-${n}`). Defaults 1 / 2 / 2 columns.
 
+### `<Card surface pad className? …props>`
+An inner card on a toned section: `rounded-card` + padding, nothing else (the layout of the content, e.g. `flex flex-col gap-4` or `w-full`, goes in `className`).
+- `surface` (required): `cream` (solid cream, plum text 5.55:1; the office card that frames details + map) | `veil` (cream 85% over mauve via `--surface-veil`, 4.97:1 against plum, so lead copy is allowed; mauve sections only, the about-intro text). Both publish `data-bg-tone="cream"`, which paints the background and sets the text/title colours, so there is no hand-written `bg-[var(--color-cream)]`.
+- `pad` (required): `md` `p-6 md:p-8` | `lg` `p-6 md:p-8 lg:p-10`.
+- `data-bg-tone` is owned by the primitive and cannot be overridden. The parked `TestimonialCard`, `AuthorCard` and `PostCard` are mixed-colour surfaces and stay on a bare `rounded-card`.
+
 ### `<ScrollAnchor id>`
 Zero-height invisible anchor placed *before* a section so in-page links land at its top.
 
 ## UI (`primitives/ui/`)
+
+### `<SectionTitle as? onDark? className? …props>`
+The one title style: `type-title font-bold tracking-[-0.01em]`, colour from `--header-color` (so it follows the nearest `[data-bg-tone]`). `as`: `h2` (default) | `h1` (blog page titles) | `p` (the footer tagline, a title-scale line that is not a heading). `onDark` is for a title on a photo band with no `data-bg-tone` (adds `.on-dark`). Renders no wrapper element.
+
+### `<SectionHeader id title subtitle align onPhoto? subtitleClassName?>` / `<SectionSubtitle align onPhoto? className?>`
+The title + subtitle lockup of CLAUDE.md typography rule 8, as two sibling elements (a fragment): the caller keeps its own wrapper and `ScrollReveal`. `SectionSubtitle` is a `BodyText` at `type-quote`.
+- `align` (required): `center` (title centred; subtitle `max-w-[65ch] mx-auto mt-3 md:mt-4`) | `column` (right-aligned side column: the Services exception, `mt-5 md:mt-9` for the Elamy "?" descender and no 65ch cap).
+- `onPhoto`: cream title + white subtitle, both with `drop-shadow-md` (the CTA band, which has no tone).
+- `subtitleClassName` / `className`: layout extras only (the margin to the next block).
+- When the title and the subtitle reveal separately (About gallery) use `SectionTitle` and `SectionSubtitle` directly.
 
 ### `<BodyText centered? className? …props>`
 The standard paragraph. Renders `type-body` unless `className` already carries a `type-*` class (then that class wins, avoiding the CSS-order collision). Right-aligned by default, `centered` for centred. Colour is inherited from the nearest `[data-bg-tone]` ancestor; there is no colour prop.
@@ -41,11 +57,23 @@ The only button-shaped link. Always a pill (`rounded-full`) with a lift-on-hover
 - One type style for every button: `.type-lead` bold (18-22px), no uppercase, no tracking. `size` only changes padding: `md` (default) is the full CTA (~56-60px tall); `sm` is the compact ~48-52px pill (hero CTA, nav phone). Do not override font size via `className`.
 - Pass layout extras (`w-full`, `mt-*`, `relative z-10`, `min-h-*`) via `className`; do not restyle fill, radius or padding there.
 
+### `<Photo src alt radius ratio? fillCellAtLg? objectPosition? outlined? zoom? motion? engine? sizes? className? style? children?>`
+A photo in a clipped frame, cover-fitted. The frame is `relative overflow-hidden` + the radius + the optional aspect ratio; the photo is `absolute inset-0 w-full h-full object-cover`.
+- `radius` (required): `card` (`rounded-card`, 24px) | `tile` (`rounded-tile`, 12px) | `none` (full-bleed bands). `safari-clip` is on by default for both, so a frame cannot forget it; `safariClip={false}` turns it off only where an ancestor already carries it (ExpertiseCard: stacking it on a nested frame shifts the rounded-edge antialiasing in Chromium).
+- `alt` (required; `""` for decorative). `ratio`: `square | 4/3 | 4/5 | 2/3 | 348/531`, the aspect on mobile. `fillCellAtLg`: from lg the ratio is dropped and the grid cell gives the height (`lg:aspect-auto lg:h-full`), the contract of every photo in a `lock` section's flex chain. `objectPosition`: CSS crop, e.g. `"48.1% 47.7%"`. `outlined`: plum 1.5px outline. `zoom`: slow scale-up on hover.
+- `engine`: `img` (default, plain lazy `<img>`) | `next` (`next/image` with `fill`; `sizes` is then required). Never switch a call site between the two: it changes the srcset and so the pixels.
+- `motion`: none (a `<div>` frame; `children` are overlays drawn over the photo: gradients, labels) | `{ parallax: n }` (ParallaxFrame: the photo drifts n% inside the frame; no overlays) | `{ reveal: delay }` (the frame itself is the `ScrollReveal` element, so the grid cell is the frame and no wrapper is added; no overlays, no `style`).
+- `className`: placement and one-off surface extras of the frame (`w-full`, `h-full`, `shadow-*`). `style`: grid placement (Contact mosaic).
+
+### `<MaskIcon src size as? …>`
+A single-colour SVG file painted with `currentColor` through a CSS mask, so it follows the text colour. `size`: `sm` 24px (contact rows) | `lg` 44px (social links). Default renders an empty decorative `<span>`; `as="a"` (`href`, `label`, `external?`) makes the anchor itself the painted box, so no wrapper or child is needed.
+
+### `<IconButton label className? …buttonProps>`
+Round 44px icon-only `<button type="button">` in the cream-on-plum header style with the keyboard focus ring (hamburger, menu close). `label` is the required accessible name; the icon is `children`; `onClick`, `aria-expanded`, `aria-controls`, `ref` and visibility (`md:hidden`) come from the caller.
+
 ## Related (outside `primitives/`)
-- `ui/SectionTitle` is the section `<h2>` (`type-title`, bold, colour from `--header-color`; `onDark` for titles on photo bands).
 - `ui/ScrollReveal`, `ui/ParallaxFrame`, `ui/SoftSnap` are the motion pieces; `ui/ContactFAB` is the contact pill. Reveal delays come from `lib/motion.ts` (`stagger(i)`); do not pass `delay={0}`.
 - `site/PageShell` is the `<main>` shell shared by the home page and both blog pages (`overflow` is a required prop: `clip` for home, `hidden` for blog); `site/JsonLd` renders a JSON-LD script.
-- `primitives/ui/maskIcon.ts` (`maskIconStyle(src)`) is the style for single-colour SVG icons painted as a `currentColor` mask (contact rows, social links).
 
 ## Spacing tokens
 `@theme` in `globals.css`: `--spacing-gutter`, `--spacing-gutter-wide`, `--spacing-section`, `--spacing-section-tight` (generate `px-gutter`, `px-gutter-wide`, `py-section`, `py-section-tight`). Only values repeated 3+ times are tokens. Note that a `--spacing-*` token also creates `gap-`, `w-`, `h-`, `m-`, `inset-` ... utilities with that name (e.g. `gap-section`), so keep the names unambiguous. Tailwind emits a `@theme` variable only when a utility that names it is used; a token consumed only through an arbitrary `[var(--x)]` utility must go in `@theme static`.
@@ -55,4 +83,5 @@ Defined in `@theme` in `globals.css`: `rounded-tile` (12px: gallery cells, map, 
 
 ## Notes
 - Decorative clip-path / SVG scaffolding (`OrganicBg`, `CoupleLineArt`, the hero underline) stays inline in its own component.
-- Anything with a safari border-radius clip needs the `safari-clip` utility on the rounded, `overflow-hidden` parent (see `agents.md`).
+- Anything with a safari border-radius clip needs the `safari-clip` utility on the rounded, `overflow-hidden` parent (see `agents.md`). `Photo` radius `card`/`tile` does this for photo frames.
+- The class lockups a primitive owns (the title class list, the mask style, the cover-fit photo, the icon-button classes) are written only in that primitive; `tests-unit/sanity/ui-primitives.test.tsx` fails when a component re-types them.

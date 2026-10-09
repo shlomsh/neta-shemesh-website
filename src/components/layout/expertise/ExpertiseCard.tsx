@@ -1,5 +1,5 @@
 import { ScrollReveal } from '../../ui/ScrollReveal';
-import { CardImage } from './CardImage';
+import { Photo } from '@/components/primitives/ui/Photo';
 import { CardLabel } from './CardLabel';
 
 import type { ExpertiseCardData } from '@/content/types';
@@ -11,10 +11,10 @@ interface ExpertiseCardProps extends Omit<ExpertiseCardData, 'slug'> {
 export function ExpertiseCard({ title, description, imageSrc, imageAlt, delay }: ExpertiseCardProps) {
   return (
     <ScrollReveal delay={delay} className="w-full h-full shadow-2xl rounded-card">
-      <div className="relative w-full h-full overflow-hidden rounded-card bg-[var(--color-dark)]">
-        <CardImage src={imageSrc} alt={imageAlt} />
+      {/* safariClip off: the grid cell around this card (Expertise.tsx) already carries safari-clip */}
+      <Photo src={imageSrc} alt={imageAlt} radius="card" safariClip={false} className="w-full h-full bg-[var(--color-dark)]">
         <CardLabel title={title} description={description} />
-      </div>
+      </Photo>
     </ScrollReveal>
   );
 }

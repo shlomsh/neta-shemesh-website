@@ -3,6 +3,7 @@ import { FooterCTA } from './footer/FooterCTA';
 import { FooterBrand } from './footer/FooterBrand';
 import { FooterCopyright } from './footer/FooterCopyright';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 
 /**
  * Footer — server component, App Router.
@@ -27,12 +28,9 @@ export default function Footer() {
 
         {/* 1. Tagline */}
         <ScrollReveal className="h-full">
-          <p
-            className="type-title font-bold tracking-[-0.01em] text-[color:var(--color-white)] text-center w-full h-full flex items-center justify-center"
-            dir="rtl"
-          >
+          <SectionTitle as="p" onDark dir="rtl" className="text-center w-full h-full flex items-center justify-center">
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
-          </p>
+          </SectionTitle>
         </ScrollReveal>
 
         {/* 2. CTA link */}

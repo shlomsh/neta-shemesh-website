@@ -12,7 +12,7 @@
 - **Page:** `src/app/page.tsx` is a flat list of sections inside `<PageShell overflow="clip">` (`src/components/site/PageShell.tsx`: the shared `<main>` + `Footer` + `ContactFAB`). The home page must stay `clip` (`overflow-hidden` would break soft snap and sticky); the two blog pages pass `hidden`; the prop is explicit on purpose. `src/app/layout.tsx` holds the root metadata and the site JSON-LD, built by `src/lib/seo/metadata.ts` (`pageMeta`) and `src/lib/seo/jsonld.ts` (`siteJsonLd`, `blogPostingJsonLd`, rendered by `components/site/JsonLd`); fonts are declared in `src/app/fonts.ts`; blog in `src/app/blog/**` with posts in `src/content/posts/`.
 - **Content (single source of truth):** `src/content/` is plain typed data, no component imports. `site.ts` = every site fact (name, phone as display + E.164, email, address, hours, URL, WhatsApp message) plus `telHref()/mailHref()/waHref()/mapEmbedSrc()`; `ids.ts` = every DOM id (`ID`) and scroll anchor (`ANCHOR`, `anchorHref()`), consumed by components, nav links, Playwright specs and unit tests; `types.ts`; `home/*.ts` = the copy arrays (expertise, steps, about, gallery, contact, nav, social, parked testimonials). Never type a phone, email, street or id literal in a component: the sanity suite (`single-source.test.tsx`) fails on it. JSON-LD `Service` nodes are derived from `home/expertise.ts`.
 - **Sections:** `src/components/layout/*` (About.tsx exports `AboutIntro/AboutBio/AboutCredentials/AboutGallery`; Testimonials.tsx holds the CTA band and the photo gallery plus a parked, hidden testimonials block). Sub-components sit in the sibling folder of each section.
-- **Primitives:** `src/components/primitives/` (see its `README.md`): `Section`, `Container`, `Grid`, `ScrollAnchor`, `BodyText`, `ButtonLink`. Section tone is a `data-bg-tone` attribute; CSS does the colours.
+- **Primitives:** `src/components/primitives/` (see its `README.md`): `Section`, `Container`, `Grid`, `Card`, `ScrollAnchor`, `BodyText`, `ButtonLink`, `SectionTitle`, `SectionHeader`/`SectionSubtitle`, `Photo`, `MaskIcon`, `IconButton`. Section tone is a `data-bg-tone` attribute; CSS does the colours.
 - **Motion:** `ScrollReveal` (framer-motion) for fade/rise-in, `ParallaxFrame`, `SoftSnap` (desktop JS glide to the nearest card edge; no CSS scroll-snap), `ContactFAB`. Stagger delays are passed as props (`stagger(index)` from `src/lib/motion.ts`, 0.12s per step; it lives outside the client `ScrollReveal` module so server components can call it), so parent grids stay server components. Do not pass `delay={0}` (the default).
 - **Reduced motion is handled in CSS, not in React.** `ScrollReveal`/`ParallaxFrame`/`ContactFAB` render the same tree on server and client and never branch on `useReducedMotion()`; a `[data-reveal]`/`[data-parallax]` rule under `@media (prefers-reduced-motion: reduce)` forces the final frame. Branching in React ships `opacity:0` in the SSR HTML and the content stays invisible after hydration.
 - **Fonts:** three `next/font/local` families declared in `src/app/fonts.ts` (Elamy, Stanga, Roboto Condensed as the Latin companion), all self-hosted from `public/fonts/`. Never `next/font/google` (the Vercel build once failed fetching it). In `layout.tsx` the `./fonts` import stays before `import "./globals.css"` so our rules win.
@@ -33,7 +33,7 @@ Neta Shemesh is a couple and family therapist with **14 years of clinical experi
 
 ## 4. Gotchas that still apply
 
-- **Safari clipping:** absolute children inside `overflow-hidden` + `border-radius` bleed in Safari. Put the `safari-clip` utility on the rounded parent.
+- **Safari clipping:** absolute children inside `overflow-hidden` + `border-radius` bleed in Safari. Put the `safari-clip` utility on the rounded parent (`Photo` radius `card`/`tile` already does).
 - **Organic backgrounds:** decorative SVGs are absolute layers (`z-0 pointer-events-none`) with content on `z-10`.
 - **Faded background images:** render the `<img>` at full opacity and put a tinted overlay on top; lowering the image's own opacity over a dark base makes it vanish.
 - **Tailwind v4 arbitrary `clamp()` text sizes fail silently** and fall back to browser defaults. Use the `.type-*` classes from `globals.css`.
@@ -55,7 +55,7 @@ Neta Shemesh is a couple and family therapist with **14 years of clinical experi
 ## 6. File map
 
 - Page / layout / CSS / fonts: `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/fonts.ts`, `src/app/globals.css` · page shell: `src/components/site/PageShell.tsx` · SEO: `src/lib/seo/`
-- Sections: `src/components/layout/` · primitives: `src/components/primitives/` · motion + FAB + title: `src/components/ui/`
+- Sections: `src/components/layout/` · primitives: `src/components/primitives/` · motion + FAB: `src/components/ui/`
 - Content + site facts + ids: `src/content/` (`site.ts`, `ids.ts`, `types.ts`, `home/`) · motion delays: `src/lib/motion.ts` · class helper (not adopted yet): `src/lib/cx.ts`
 - Tests: `tests-unit/` (vitest), `tests/` (Playwright)
 - Docs: `CLAUDE.md` (design rules), `docs/typography-guideline-2026-10.md`, `docs/visual-roadmap-2026-10.md`, `docs/tech-debt-plan-2026-10.md`, `docs/deployment.md`

@@ -60,9 +60,10 @@ export interface RichLine {
 export interface ContactPhoto {
   src: string;
   alt: string;
-  /** Tailwind classes on the `<Image>` (crop). */
-  imageClass: string;
-  mobile: { aspectClass: string };
+  /** CSS `object-position` crop; centred when absent. */
+  objectPosition?: string;
+  /** Mobile stack: aspect ratio of the frame. */
+  mobile: { ratio: '4/5' | '2/3' };
   desktop: {
     /** grid-area name */
     area: string;

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { SectionTitle } from '../src/components/ui/SectionTitle';
+import { SectionTitle } from '../src/components/primitives/ui/SectionTitle';
 
 // Title class/weight rules live in sanity/type-usage.test.tsx (C16).
 describe('SectionTitle', () => {

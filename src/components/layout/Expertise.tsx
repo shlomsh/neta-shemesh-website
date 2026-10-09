@@ -1,6 +1,6 @@
 import { Section } from '@/components/primitives/layout/Section';
 import { ScrollReveal } from "../ui/ScrollReveal";
-import { SectionTitle } from "../ui/SectionTitle";
+import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
 import { ExpertiseCard } from './expertise/ExpertiseCard';
 import { EXPERTISE_CARDS } from '@/content/home/expertise';
 import { ANCHOR, ID } from '@/content/ids';
@@ -26,18 +26,13 @@ export default function Expertise() {
         {/* Section header */}
         <ScrollReveal>
           <div className="text-center mb-[clamp(24px,4vw,48px)] lg:mb-9">
-            <SectionTitle id={ID.expertiseTitle}>טיפול זוגי ומשפחתי בנתניה</SectionTitle>
-            {/* Blush section (plum = 3.89:1, AA large only): paragraph at the quote scale (>=24px). */}
-            <p
-              className="
-                type-quote
-                max-w-[65ch]
-                mx-auto
-                mt-3 md:mt-4
-              "
-            >
-              תמיכה והכוונה מקצועית לבניית אמון וחיזוק הביטחון בקשר.
-            </p>
+            {/* Blush section (plum = 3.89:1, AA large only): subtitle at the quote scale (>=24px). */}
+            <SectionHeader
+              id={ID.expertiseTitle}
+              align="center"
+              title="טיפול זוגי ומשפחתי בנתניה"
+              subtitle="תמיכה והכוונה מקצועית לבניית אמון וחיזוק הביטחון בקשר."
+            />
           </div>
         </ScrollReveal>
 

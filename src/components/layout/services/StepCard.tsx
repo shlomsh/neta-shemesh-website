@@ -1,5 +1,5 @@
 import { ScrollReveal } from '../../ui/ScrollReveal';
-import { StepImage } from './StepImage';
+import { Photo } from '@/components/primitives/ui/Photo';
 import { StepNumber } from './StepNumber';
 import { StepTitle } from './StepTitle';
 import { StepBullets } from './StepBullets';
@@ -23,8 +23,7 @@ export function StepCard({
 }: StepCardProps) {
   return (
     <ScrollReveal delay={delay} className={`w-full h-full ${staggerClass}`}>
-      <div className="relative w-full h-full overflow-hidden rounded-card shadow-lg safari-clip">
-        <StepImage src={imageSrc} alt={title} />
+      <Photo src={imageSrc} alt={title} radius="card" className="w-full h-full shadow-lg">
 
         {/* Legibility gradient so white text reads on any photo */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
@@ -35,7 +34,7 @@ export function StepCard({
           <StepTitle text={title} />
           <StepBullets items={bullets} />
         </div>
-      </div>
+      </Photo>
     </ScrollReveal>
   );
 }

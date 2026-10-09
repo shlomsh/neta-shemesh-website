@@ -1,18 +1,19 @@
-import { maskIconStyle } from '@/components/primitives/ui/maskIcon';
+import { MaskIcon } from '@/components/primitives/ui/MaskIcon';
 import { SOCIAL_LINKS } from '@/content/home/social';
 
 export function SocialLinks() {
   return (
     <div className="flex gap-[24px]">
       {SOCIAL_LINKS.map((link) => (
-        <a
+        <MaskIcon
           key={link.href}
+          as="a"
           href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={link.label}
-          className="w-[44px] h-[44px] flex-shrink-0 hover:opacity-80 transition-opacity"
-          style={maskIconStyle(link.iconSrc)}
+          label={link.label}
+          external
+          src={link.iconSrc}
+          size="lg"
+          className="hover:opacity-80 transition-opacity"
         />
       ))}
     </div>
