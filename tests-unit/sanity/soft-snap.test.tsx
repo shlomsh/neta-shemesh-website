@@ -11,7 +11,7 @@
  * This file guards the constants, the mount, the targets (cards AND the footer), the gate, and the "does nothing" paths.
  */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render } from '@testing-library/react';
+import { act, cleanup, render } from '@testing-library/react';
 import React from 'react';
 import { findTargetSelector, parseExportedNumber, readSources, renderHome, sourceNamed, topLevelSections } from './helpers';
 
@@ -96,17 +96,28 @@ describe('targets', () => {
   });
 });
 
-const engineLoads = vi.hoisted(() => ({ count: 0 }));
-// Counts evaluations of the engine module: it must never be loaded on touch / reduced-motion / narrow viewports.
+const engineMounts = vi.hoisted(() => ({ count: 0 }));
+// Counts MOUNTS of the engine (not module evaluations, which are cached per file and so order-dependent):
+// it must never mount on touch / reduced-motion / narrow viewports. The real engine still runs inside the wrapper.
 vi.mock('@/components/motion/SoftSnapEngine', async (importOriginal) => {
-  engineLoads.count++;
-  return importOriginal();
+  const real = await importOriginal<typeof import('@/components/motion/SoftSnapEngine')>();
+  const { createElement, useEffect } = await import('react');
+  return {
+    SoftSnapEngine: () => {
+      useEffect(() => {
+        engineMounts.count++;
+      }, []);
+      return createElement(real.SoftSnapEngine);
+    },
+  };
 });
 
 describe('behaviour (jsdom, fake timers)', () => {
   const originalMatchMedia = window.matchMedia;
   const originalScrollTo = window.scrollTo;
   let scrollTo: ReturnType<typeof vi.fn>;
+  let env: { width: number; pointer: 'fine' | 'coarse'; reduced: boolean };
+  let changeListeners: Array<() => void> = [];
 
   /** Evaluates the real query strings against the simulated device: min-width, pointer, reduced motion. */
   function evaluate(query: string, o: { width: number; pointer: 'fine' | 'coarse'; reduced: boolean }): boolean {
@@ -121,7 +132,8 @@ describe('behaviour (jsdom, fake timers)', () => {
   }
 
   function setup(opts: { width: number; reduced: boolean; pointer?: 'fine' | 'coarse' }) {
-    const env = { width: opts.width, pointer: opts.pointer ?? 'fine', reduced: opts.reduced };
+    env = { width: opts.width, pointer: opts.pointer ?? 'fine', reduced: opts.reduced };
+    changeListeners = [];
     vi.useFakeTimers();
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: opts.width });
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
@@ -133,8 +145,12 @@ describe('behaviour (jsdom, fake timers)', () => {
       onchange: null,
       addListener: vi.fn(),
       removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
+      addEventListener: vi.fn((type: string, fn: () => void) => {
+        if (type === 'change') changeListeners.push(fn);
+      }),
+      removeEventListener: vi.fn((type: string, fn: () => void) => {
+        changeListeners = changeListeners.filter((l) => l !== fn);
+      }),
       dispatchEvent: vi.fn(),
     })) as unknown as typeof window.matchMedia;
     scrollTo = vi.fn();
@@ -177,6 +193,7 @@ describe('behaviour (jsdom, fake timers)', () => {
 
   beforeEach(() => {
     cleanup();
+    engineMounts.count = 0;
   });
 
   afterEach(() => {
@@ -189,10 +206,7 @@ describe('behaviour (jsdom, fake timers)', () => {
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 768 });
   });
 
-  // NOTE: keep this test FIRST. The engine module is cached after its first load, so only the
-  // very first test of the file can prove "never imported"; the engineLoads assertion at the end of
-  // each later touch test only holds because this one runs before any desktop test.
-  it('touch (coarse pointer, 390px): touchstart, scroll to 110, touchend, 3s later: no scrollTo at all, and the engine was never imported', async () => {
+  it('touch (coarse pointer, 390px): touchstart, scroll to 110, touchend, 3s later: no scrollTo at all, and the engine never mounted', async () => {
     setup({ width: 390, reduced: false, pointer: 'coarse' });
     await mountPage(150);
     touch('touchstart', 1);
@@ -209,34 +223,34 @@ describe('behaviour (jsdom, fake timers)', () => {
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(3000);
     expect(scrollTo).not.toHaveBeenCalled();
-    expect(engineLoads.count, 'the snap engine was downloaded on a touch device').toBe(0);
+    expect(engineMounts.count, 'the snap engine mounted on a touch device').toBe(0);
   });
 
   it('a coarse pointer on a DESKTOP-width screen (touch laptop in tablet mode, iPad landscape) does nothing either', async () => {
     setup({ width: 1366, reduced: false, pointer: 'coarse' });
     await mountScrollAndSettle(150);
     expect(scrollTo).not.toHaveBeenCalled();
-    expect(engineLoads.count).toBe(0);
+    expect(engineMounts.count).toBe(0);
   });
 
   it('below 1024px with a fine pointer (narrow desktop window) does nothing', async () => {
     setup({ width: 900, reduced: false, pointer: 'fine' });
     await mountScrollAndSettle(150);
     expect(scrollTo).not.toHaveBeenCalled();
-    expect(engineLoads.count).toBe(0);
+    expect(engineMounts.count).toBe(0);
   });
 
-  it('does nothing under prefers-reduced-motion, and never loads the engine', async () => {
+  it('does nothing under prefers-reduced-motion, and never mounts the engine', async () => {
     setup({ width: 1280, reduced: true, pointer: 'fine' });
     await mountScrollAndSettle(150);
     expect(scrollTo, 'SoftSnap snapped under prefers-reduced-motion').not.toHaveBeenCalled();
-    expect(engineLoads.count).toBe(0);
+    expect(engineMounts.count).toBe(0);
   });
 
   it('control: on desktop (1440, fine pointer), near a card edge after a wheel tick, the engine loads and it glides', async () => {
     setup({ width: 1440, reduced: false });
     await mountScrollAndSettle(150);
-    expect(engineLoads.count, 'the gate did not load the engine on desktop').toBe(1);
+    expect(engineMounts.count, 'the gate did not mount the engine on desktop').toBe(1);
     expect(scrollTo, 'SoftSnap is not mounted in the page or no longer snaps on desktop').toHaveBeenCalled();
   });
 
@@ -261,5 +275,22 @@ describe('behaviour (jsdom, fake timers)', () => {
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(2000);
     expect(scrollTo).toHaveBeenCalled();
+  });
+
+  it('when the media query flips from match to no-match (rotate to a phone-sized viewport, pointer becomes coarse) the engine unmounts and stops snapping', async () => {
+    setup({ width: 1440, reduced: false });
+    await mountPage(150);
+    expect(engineMounts.count, 'precondition: the engine mounted on desktop').toBe(1);
+    expect(changeListeners.length, 'the gate subscribed to matchMedia change events').toBeGreaterThan(0);
+
+    env.width = 390;
+    env.pointer = 'coarse';
+    await act(async () => {
+      changeListeners.forEach((l) => l());
+    });
+    window.dispatchEvent(new Event('wheel'));
+    window.dispatchEvent(new Event('scroll'));
+    await vi.advanceTimersByTimeAsync(3000);
+    expect(scrollTo, 'the engine kept snapping after the media query stopped matching').not.toHaveBeenCalled();
   });
 });

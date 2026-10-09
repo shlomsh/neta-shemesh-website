@@ -1,7 +1,8 @@
 /**
  * Soft snap: the decision logic, free of DOM, timers and React so it can be tested with plain
- * numbers. `components/motion/SoftSnap.tsx` is the thin effect that feeds it (scroll position,
- * section tops) and animates to whatever it returns.
+ * numbers. `components/motion/SoftSnapEngine.tsx` is the thin effect that feeds it (scroll position,
+ * section tops) and animates to whatever it returns; `components/motion/SoftSnap.tsx` is the gate that
+ * loads that engine only where `SNAP_MEDIA` matches.
  */
 
 /** Viewport width (px) at which snapping may start; below it the page scrolls natively. */
