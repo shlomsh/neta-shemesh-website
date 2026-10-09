@@ -31,8 +31,6 @@ import {
 
 // ─── The allow-table: today's known failures ─────────────────────────────────
 
-const CARD_POST = 'blog post card / author card copy: translucent plum (82% / 70%) or text-mauve on cream';
-
 /**
  * Permanent owner decisions (2026-10-09). NOT debt: they are documented choices, kept out of the
  * CONTRAST_ALLOW ratchet. They still fail when the text goes away (stale) or its ratio drifts, so a
@@ -61,12 +59,8 @@ export const OWNER_EXCEPTIONS: OwnerException[] = [
   { page: 'home', where: 'section(#expertise-title)', text: 'ליווי אישי', ratio: 2.26, decided: '2026-10-09', decision: 'Expertise pills stay mauve', reason: PILL },
 ];
 
-/** Ratchet debt: known failures somebody is meant to fix (NS-33 owns the PostCard / AuthorCard / pill / blog-meta rows). Rows may only be deleted. */
-export const CONTRAST_ALLOW: ContrastAllow[] = [
-  // Blog index
-  // Blog index cards + the "more posts" row on a post (content-driven copy, so keyed by type class, not by text)
-  // Post page: hero band (blush on plum) and the author card on the post body
-];
+/** Ratchet debt: known failures somebody is meant to fix. Empty since NS-33 landed (the PostCard / AuthorCard / pill / blog-meta rows are gone). Rows may only be deleted. */
+export const CONTRAST_ALLOW: ContrastAllow[] = [];
 
 /**
  * Text that sits over a photo: the backdrop is an image the DOM cannot describe, so the matrix skips
