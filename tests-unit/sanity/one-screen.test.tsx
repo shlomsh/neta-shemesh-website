@@ -24,6 +24,7 @@ import {
   hasDesktopRhythm,
   hasMobileFill,
   hasFullHeight,
+  globalsCss,
   hasMinScreen,
   isFlexColumn,
   isFlexContainer,
@@ -37,7 +38,9 @@ import {
   minHeightKind,
   oneScreenMode,
   overflowOf,
+  readSources,
   renderHome,
+  stripCssComments,
   stretchesItems,
   topLevelSections,
   type Fit,
@@ -55,7 +58,7 @@ beforeAll(async () => {
  *   lock-720 = lg:h-[max(100svh,720px)]   lock-100 = lg:h-[100svh]
  *   grow-720 = lg:min-h-[max(100svh,720px)]   free = min-h only (content-driven)
  */
-// `free` rows (about-credentials, contact-social): CLAUDE.md only requires min-h-[100svh] there; they
+// `free` rows (about-credentials, contact-social): CLAUDE.md only requires the one-screen minimum there; they
 // are content-driven past one screen on purpose, so no lock/grow is expected. Changing a row is a
 // deliberate decision, not drift.
 const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> = {
@@ -75,14 +78,14 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
     expect(Object.keys(DESKTOP).sort(), 'DESKTOP table and EXPECTED_SECTIONS solid sections diverged: add/remove the row').toEqual(SOLID_SECTIONS.map((s) => s.name).sort());
   });
 
-  it.each(SOLID_SECTIONS.map((s) => s.name))('%s carries min-h-[100svh] at every breakpoint', (name) => {
+  it.each(SOLID_SECTIONS.map((s) => s.name))('%s carries screen-fit (min-height: var(--card-h)) at every breakpoint', (name) => {
     const el = findSection(home, name);
-    expect(hasMinScreen(el), `${labelOf(el, name)} lost min-h-[100svh]`).toBe(true);
+    expect(hasMinScreen(el), `${labelOf(el, name)} lost screen-fit`).toBe(true);
   });
 
-  it.each([...SOLID_SECTIONS.map((s) => s.name), 'cta-band'])('%s fills the LARGE viewport below lg (no strip of the next card when a phone toolbar collapses)', (name) => {
+  it.each([...SOLID_SECTIONS.map((s) => s.name), 'cta-band'])('%s consumes the card-height token (which is the LARGE viewport below lg)', (name) => {
     const el = findSection(home, name);
-    expect(hasMobileFill(el), `${labelOf(el, name)} lost max-lg:min-h-lvh (or gained an unprefixed lvh that changes desktop)`).toBe(true);
+    expect(hasMobileFill(el), `${labelOf(el, name)} lost screen-fit (or carries a hand-written min-h-lvh that changes desktop)`).toBe(true);
   });
 
   it.each(SOLID_SECTIONS.map((s) => s.name))('%s keeps its lock/grow assignment', (name) => {
@@ -98,16 +101,31 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
   it('photo sections (hero, CTA band, footer) still fill a screen at minimum', () => {
     for (const spec of EXPECTED_SECTIONS.filter((s) => s.kind === 'photo')) {
       const el = findSection(home, spec.name);
-      expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost min-h-[100svh]`).toBe(true);
+      expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost screen-fit`).toBe(true);
     }
   });
 
-  it('the footer fills the VISIBLE screen: 100dvh where supported, with the 100svh above as the fallback; content centred between the top and the copyright', () => {
+  it('the footer fills the VISIBLE screen (screen-visible = --card-h upgraded to 100dvh where supported); content centred between the top and the copyright', () => {
     const el = findSection(home, 'footer');
-    expect(hasClass(el, 'supports-[height:100dvh]:min-h-dvh'), 'footer lost its dvh upgrade (phones show a sliver of the previous card once the toolbar collapses)').toBe(true);
+    expect(hasClass(el, 'screen-visible'), 'footer lost screen-visible (phones show a sliver of the previous card once the toolbar collapses)').toBe(true);
     expect(hasClass(el, 'justify-between'), 'justify-between leaves an empty void between the content and the copyright').toBe(false);
     const column = el.querySelector(':scope > div.relative.z-10');
     expect(column && hasClass(column, 'my-auto'), 'the tagline/CTA/signature group is no longer vertically centred').toBe(true);
+  });
+
+  it('the card-height unit decision lives in ONE place: --card-h (svh; lvh below lg, @supports-gated) and the two utilities that read it', () => {
+    const css = stripCssComments(globalsCss()).replace(/\s+/g, ' ');
+    expect(css, ':root --card-h default').toMatch(/:root \{[^}]*--card-h: 100svh;/);
+    expect(css, '--hero-h default').toMatch(/--hero-h: 100svh;/);
+    expect(css, '--card-h is 100lvh below lg (64rem), only where lvh is supported').toMatch(/@supports \(height: 100lvh\) \{ @media \(width < 64rem\) \{ :root \{ --card-h: 100lvh; \} \} \}/);
+    expect(css, 'screen-fit reads the token').toMatch(/@utility screen-fit \{ min-height: var\(--card-h\); \}/);
+    expect(css, 'screen-visible = token, upgraded to dvh where supported').toMatch(/@utility screen-visible \{ min-height: var\(--card-h\); @supports \(height: 100dvh\) \{ min-height: 100dvh; \} \}/);
+    // No component spells the unit decision itself any more (the hero keeps min-h-[100svh] until NS-26/NS-25).
+    const offenders = readSources()
+      .filter((f) => f.path.endsWith('.tsx') && !f.path.includes('/hero/'))
+      .filter((f) => /max-lg:min-h-lvh|supports-\[height:100dvh\]:min-h-dvh|min-h-\[100svh\]/.test(f.text))
+      .map((f) => f.path);
+    expect(offenders, 'a component re-spelled the card height: use screen-fit / screen-visible').toEqual([]);
   });
 
   it('the CTA band is a free-fit photo band (no tone, no desktop lock) and hero/footer publish no data-fit', () => {

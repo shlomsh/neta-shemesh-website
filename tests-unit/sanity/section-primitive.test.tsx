@@ -43,7 +43,7 @@ describe('Section: fit publishes data-fit AND emits the classes that implement i
     expect(classMode(el)).toBe(mode);
     expect(oneScreenMode(el)).toBe(mode);
     expect(isOneScreen(el)).toBe(one);
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['min-h-[100svh]', 'flex', 'flex-col', 'justify-center']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['screen-fit', 'flex', 'flex-col', 'justify-center']));
   });
 
   it('callers cannot override data-fit / data-bg-tone by hand (the props own them)', () => {
@@ -69,7 +69,7 @@ describe('Section: fit publishes data-fit AND emits the classes that implement i
   it('no fit = content height: no data-fit, no min-h, no flex', () => {
     const el = sectionOf(<Section tone="cream">x</Section>);
     expect(el.hasAttribute('data-fit')).toBe(false);
-    expect(classTokens(el)).not.toContain('min-h-[100svh]');
+    expect(classTokens(el)).not.toContain('screen-fit');
     expect(classTokens(el)).not.toContain('flex');
     expect(el.getAttribute('data-bg-tone')).toBe('cream');
   });

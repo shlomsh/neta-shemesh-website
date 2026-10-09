@@ -171,7 +171,7 @@ export function kindOf(section: Element): Tone | 'photo' {
 // ─── One-screen contract (desktop) ───────────────────────────────────────────
 //
 // Section publishes its height contract as `data-fit="lock|grow|free"` and implements it with classes:
-//   all breakpoints : min-h-[100svh]                      (every fit)
+//   all breakpoints : screen-fit (min-height: var(--card-h))  (every fit; --card-h = 100svh, 100lvh below lg)
 //   lock-720        : lg:h-[max(100svh,720px)]            (exactly a screen, floor 720, content must fit)
 //   lock-100        : lg:h-[100svh]                       (Section floor={false}; Expertise only)
 //   grow-720        : lg:min-h-[max(100svh,720px)]        (a screen at least; grows on short viewports)
@@ -191,18 +191,23 @@ export function fitOf(el: Element | null | undefined): Fit | null {
   return v === 'lock' || v === 'grow' || v === 'free' ? v : null;
 }
 
+/**
+ * True when the element is at least one screen tall at every breakpoint: a Section fit (`screen-fit`),
+ * the footer (`screen-visible`, which is `--card-h` upgraded to dvh) or the hero. The hero still
+ * spells its own height (`min-h-[100svh]`; it moves to `--hero-h` with NS-26/NS-25).
+ */
 export function hasMinScreen(el: Element): boolean {
-  return hasClass(el, 'min-h-[100svh]');
+  return hasClass(el, 'screen-fit') || hasClass(el, 'screen-visible') || hasClass(el, 'min-h-[100svh]') || hasClass(el, 'min-h-[var(--hero-h)]');
 }
 
 /**
- * Below lg a fit section's one-screen minimum is the LARGE viewport (`max-lg:min-h-lvh`, static) so a
- * collapsed phone toolbar leaves no strip of the next card; `min-h-[100svh]` stays as the fallback
- * (see hasMinScreen). The lg rules are untouched, and `lvh` must never appear unprefixed (that would
- * change desktop).
+ * A fit section's one-screen minimum is `screen-fit` (`min-height: var(--card-h)`); the token is
+ * `100svh`, and the LARGE viewport (`100lvh`, static) below lg so a collapsed phone toolbar leaves no
+ * strip of the next card (the unit decision is asserted on globals.css in one-screen.test.tsx). An
+ * unprefixed `min-h-lvh` would change desktop, so it must never appear next to it.
  */
 export function hasMobileFill(el: Element): boolean {
-  return hasMinScreen(el) && hasClass(el, 'max-lg:min-h-lvh') && !hasClass(el, 'min-h-lvh') && !hasClass(el, 'lg:min-h-lvh');
+  return hasClass(el, 'screen-fit') && !hasClass(el, 'min-h-lvh') && !hasClass(el, 'lg:min-h-lvh') && !hasClass(el, 'max-lg:min-h-lvh');
 }
 
 /** What the CLASSES alone implement at lg (ignores data-fit). */

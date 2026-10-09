@@ -120,22 +120,22 @@ describe('one-screen / structure predicates', () => {
   // a data-fit with no classes behind it, or classes with no/other data-fit, is 'inconsistent' and not one-screen.
   it.each([
     // consistent pairs
-    ['lock', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', true],
-    ['lock', 'min-h-[100svh] lg:h-[100svh] lg:py-12', 'lock-100', true],
-    ['grow', 'min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12', 'grow-720', true],
-    ['free', 'min-h-[100svh] flex', 'free', false],
+    ['lock', 'screen-fit lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', true],
+    ['lock', 'screen-fit lg:h-[100svh] lg:py-12', 'lock-100', true],
+    ['grow', 'screen-fit lg:min-h-[max(100svh,720px)] lg:py-12', 'grow-720', true],
+    ['free', 'screen-fit flex', 'free', false],
     // lost a class the one-screen contract needs
     ['lock', 'lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', false], // lost the all-breakpoint min-h
-    ['lock', 'min-h-[100svh] lg:h-[max(100svh,720px)]', 'lock-720', false], // lost lg:py-12
+    ['lock', 'screen-fit lg:h-[max(100svh,720px)]', 'lock-720', false], // lost lg:py-12
     // data-fit lies: promises a lock/grow the classes do not implement
-    ['lock', 'min-h-[100svh] lg:py-12', 'inconsistent', false],
-    ['grow', 'min-h-[100svh] lg:py-12', 'inconsistent', false],
-    ['lock', 'min-h-[100svh] lg:min-h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // grow classes, lock label
-    ['grow', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // lock classes, grow label
-    ['free', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // lock classes, free label
+    ['lock', 'screen-fit lg:py-12', 'inconsistent', false],
+    ['grow', 'screen-fit lg:py-12', 'inconsistent', false],
+    ['lock', 'screen-fit lg:min-h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // grow classes, lock label
+    ['grow', 'screen-fit lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // lock classes, grow label
+    ['free', 'screen-fit lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // lock classes, free label
     // classes without a (valid) data-fit
-    [null, 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false],
-    ['screen', 'min-h-[100svh] lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // unknown value
+    [null, 'screen-fit lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false],
+    ['screen', 'screen-fit lg:h-[max(100svh,720px)] lg:py-12', 'inconsistent', false], // unknown value
   ])('data-fit=%s + class "%s" -> mode %s, isOneScreen %s', (fit, cls, mode, one) => {
     const el = first(`<section${fit ? ` data-fit="${fit}"` : ''} class="${cls}"></section>`);
     expect(oneScreenMode(el)).toBe(mode);
@@ -153,13 +153,16 @@ describe('one-screen / structure predicates', () => {
   });
 
   it('hasMinScreen, isGrowItem, isFlexContainer, isFlexColumn, minHeightKind, overflowOf, coversImage', () => {
-    expect(hasMinScreen(first('<div class="min-h-[100svh]"></div>'))).toBe(true);
+    expect(hasMinScreen(first('<div class="screen-fit"></div>'))).toBe(true);
+    expect(hasMinScreen(first('<div class="screen-visible"></div>'))).toBe(true);
+    expect(hasMinScreen(first('<div class="min-h-[100svh]"></div>'))).toBe(true); // the hero's own spelling
     expect(hasMinScreen(first('<div class="lg:min-h-[100svh]"></div>'))).toBe(false);
-    expect(hasMobileFill(first('<div class="min-h-[100svh] max-lg:min-h-lvh"></div>'))).toBe(true);
-    expect(hasMobileFill(first('<div class="min-h-[100svh]"></div>'))).toBe(false); // svh only: strip when the toolbar collapses
-    expect(hasMobileFill(first('<div class="max-lg:min-h-lvh"></div>'))).toBe(false); // no svh fallback
-    expect(hasMobileFill(first('<div class="min-h-[100svh] max-lg:min-h-lvh min-h-lvh"></div>'))).toBe(false); // lvh leaking to desktop
-    expect(hasMobileFill(first('<div class="min-h-[100svh] max-lg:min-h-lvh lg:min-h-lvh"></div>'))).toBe(false);
+    expect(hasMinScreen(first('<div class="lg:screen-fit"></div>'))).toBe(false); // gated: not every breakpoint
+    expect(hasMobileFill(first('<div class="screen-fit"></div>'))).toBe(true);
+    expect(hasMobileFill(first('<div class="min-h-[100svh]"></div>'))).toBe(false); // the old svh-only spelling: strip when the toolbar collapses
+    expect(hasMobileFill(first('<div class="screen-fit min-h-lvh"></div>'))).toBe(false); // lvh leaking to desktop
+    expect(hasMobileFill(first('<div class="screen-fit lg:min-h-lvh"></div>'))).toBe(false);
+    expect(hasMobileFill(first('<div class="screen-fit max-lg:min-h-lvh"></div>'))).toBe(false); // the retired spelling next to the token
     expect(isGrowItem(first('<div class="lg:flex-1"></div>'))).toBe(true);
     expect(isGrowItem(first('<div class="flex-1"></div>'))).toBe(false);
     expect(isFlexContainer(first('<div class="lg:flex"></div>'))).toBe(true);

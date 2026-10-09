@@ -20,7 +20,7 @@ export function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="relative w-full overflow-hidden flex flex-col items-center px-6 py-[clamp(48px,6vw,96px)] min-h-[100svh] supports-[height:100dvh]:min-h-dvh"
+      className="relative w-full overflow-hidden flex flex-col items-center px-6 py-[clamp(48px,6vw,96px)] screen-visible"
     >
       {/* Background photo + scrim — absolutely positioned */}
       <FooterBackground />
