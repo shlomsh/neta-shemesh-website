@@ -24,23 +24,15 @@ beforeAll(async () => {
 });
 
 describe('D19: ContactFAB', () => {
-  it('WhatsApp green is kept on the glyph only (NS-33): the pill stays plum, both halves cream-on-plum, no green fill or white label', () => {
+  it('WhatsApp half is #25D366, the pill itself is plum, the phone half has no WhatsApp green', () => {
     const pill = home.querySelector('[data-testid="contact-fab"]')!;
     const wa = home.querySelector('[data-testid="fab-whatsapp"]')!;
     const phone = home.querySelector('[data-testid="fab-phone"]')!;
     expect(pill && wa && phone, 'contact FAB parts').toBeTruthy();
-    const glyph = wa.querySelector('svg')!.parentElement!;
-    expect(classTokens(glyph).some((t) => /^text-\[#25d366\]$/i.test(t)), 'WhatsApp glyph keeps the brand green #25D366').toBe(true);
-    for (const half of [wa, phone]) {
-      const t = classTokens(half);
-      expect(t.some((x) => /^(hover:)?bg-\[#/i.test(x)), 'no hex fill on a FAB half (white on #25D366 was 1.98:1)').toBe(false);
-      expect(t.some((x) => /white|#fff/i.test(x)), 'no white text or ring on a FAB half').toBe(false);
-      expect(t.some((x) => /^(hover:)?bg-mauve$/.test(x)), 'cream on mauve is 2.26:1, never a hover fill').toBe(false);
-      expect(t, 'focus ring is cream').toContain('focus-visible:ring-cream');
-    }
-    expect(classTokens(wa).some((t) => /^text-/.test(t) && t !== 'text-cream'), 'WhatsApp label inherits cream from the pill').toBe(false);
+    expect(classTokens(wa).some((t) => /^bg-\[#25d366\]$/i.test(t)), 'WhatsApp half must use #25D366').toBe(true);
     expect(hasClass(pill, 'bg-plum'), 'pill base is plum').toBe(true);
     expect(classTokens(phone).some((t) => /25d366/i.test(t)), 'phone half must not be WhatsApp green').toBe(false);
+    expect(classTokens(phone).some((t) => /^(hover:)?bg-mauve$/.test(t)), 'phone half hover is a darker plum: cream on mauve is 2.26:1 (NS-33)').toBe(false);
     expect(phone.getAttribute('href')).toMatch(/^tel:/);
     expect(wa.getAttribute('href')).toMatch(/^https:\/\/wa\.me\//);
   });

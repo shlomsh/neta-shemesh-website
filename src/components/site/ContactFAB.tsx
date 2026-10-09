@@ -14,11 +14,13 @@ const HALF_BASE =
   'transition duration-200 motion-safe:active:scale-95 ' +
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset';
 
-// Both halves sit on the plum pill with a cream label (5.55:1). The WhatsApp green (owner ruling: it
-// stays) is kept for the glyph only; white on that green was 1.98:1 (NS-33). Hover is a darker plum,
-// never mauve (cream on mauve is 2.26:1).
-const HALF_HOVER = 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)] focus-visible:ring-cream';
-const WA_GLYPH = 'flex text-[#25D366]';
+// WhatsApp brand green + white: intentional exception to the 4-colour palette (bold CTA, owner decision;
+// re-confirmed 2026-10-09: native WhatsApp colours stay, 1.98:1 label accepted as an owner-approved exception).
+const WA_HALF =
+  'bg-[#25D366] text-[#FFFFFF] hover:bg-[#1EBE5B] focus-visible:ring-[#FFFFFF]';
+// Phone half hovers to a darker plum, never mauve (cream on mauve is 2.26:1, NS-33).
+const PHONE_HALF =
+  'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)] focus-visible:ring-cream';
 
 /**
  * Single contact pill (replaces the old WhatsApp + Phone FABs).
@@ -47,11 +49,9 @@ export function ContactFAB() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="שלחו הודעה בוואטסאפ"
-          className={cx(HALF_BASE, HALF_HOVER, 'rounded-s-full md:rounded-full')}
+          className={cx(HALF_BASE, WA_HALF, 'rounded-s-full md:rounded-full')}
         >
-          <span aria-hidden="true" className={WA_GLYPH}>
-            <WhatsAppIcon />
-          </span>
+          <WhatsAppIcon />
           <span>וואטסאפ</span>
         </a>
 
@@ -61,7 +61,7 @@ export function ContactFAB() {
           data-testid="fab-phone"
           href={PHONE_URL}
           aria-label="התקשרו אליי"
-          className={cx(HALF_BASE, HALF_HOVER, 'rounded-e-full md:hidden')}
+          className={cx(HALF_BASE, PHONE_HALF, 'rounded-e-full md:hidden')}
         >
           <PhoneIcon />
           <span>חייגו</span>
