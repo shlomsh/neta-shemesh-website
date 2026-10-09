@@ -1,38 +1,39 @@
-'use client';
-
-import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import type { CSSProperties, ReactNode } from 'react';
 
 interface ScrollRevealProps {
   children: ReactNode;
+  /** Seconds. Passed to CSS as `--reveal-delay`; omit for none. */
   delay?: number;
   className?: string;
 }
 
 /**
- * Fade/rise-in on scroll.
+ * Fade/rise-in on scroll, in three parts:
  *
- * Always renders the same <motion.div> on the server and the client. Do NOT
- * branch on `useReducedMotion()` here: it is false during SSR and true on the
- * first client render, so the server HTML ships `style="opacity:0"`, React
- * hydration never patches mismatched style attributes, and the content stays
- * invisible forever for reduce-motion users.
+ *   1. this SERVER component: a plain `<div data-reveal="io">`. No inline opacity/transform, so the HTML
+ *      is fully visible without JS (the old framer `initial={{ opacity: 0 }}` shipped `opacity:0` in the
+ *      server HTML and left the page blank when hydration was slow, blocked, or in an iframe);
+ *   2. `RevealObserver` (the one client island, mounted in `PageShell`): once it is sure it can do the
+ *      job (top-level page, IntersectionObserver present, no reduced motion), it sets
+ *      `html[data-reveal-armed]` and marks elements `data-revealed` as they come into view;
+ *   3. CSS in `globals.css`: the hidden state exists only under `html[data-reveal-armed]` AND
+ *      `prefers-reduced-motion: no-preference`.
  *
- * Reduced motion is handled in CSS instead: `[data-reveal]` is forced to
- * opacity:1 / transform:none under `@media (prefers-reduced-motion: reduce)`
- * (globals.css), which beats the inline styles and does not depend on hydration.
+ * Same markup on the server and the client by construction: never branch on `useReducedMotion()`,
+ * `matchMedia` or `window.top` here (8fcd901: a branch gave the server HTML a different `style` than the
+ * client's, and React hydration does not patch `style`). `data-reveal="io"` (not a bare `data-reveal`)
+ * is what `RevealObserver` and the hidden-state CSS select; ContactFAB's bare `data-reveal` stays on
+ * framer until NS-14 and is untouched by this mechanism. Any `[data-reveal]` is still forced visible
+ * under `prefers-reduced-motion: reduce`.
  */
 export function ScrollReveal({ children, delay = 0, className = '' }: ScrollRevealProps) {
   return (
-    <motion.div
-      data-reveal=""
+    <div
+      data-reveal="io"
       className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={delay > 0 ? ({ '--reveal-delay': `${delay}s` } as CSSProperties) : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

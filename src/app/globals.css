@@ -154,14 +154,29 @@
 .hero-enter-2 { animation-delay: 0.16s; }
 .hero-enter-3 { animation-delay: 0.24s; }
 
+/* Scroll reveal (ScrollReveal + RevealObserver). The hidden state exists ONLY when JS has armed it
+   (html[data-reveal-armed], set after the observer's first callback) AND the user has no reduced-motion
+   preference; the server HTML and the base CSS hide nothing. The transition sits on the REVEALED state so
+   that arming never animates a fade-out of every below-the-fold element. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  html[data-reveal-armed] [data-reveal="io"][data-revealed] {
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+      translate 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; opacity: 1; transform: none; }
-  /* Scroll-reveal wrappers (ScrollReveal, ContactFAB) ship their
-     motion initial state (opacity:0) in the SSR HTML as an inline style. Force
-     them visible here: this does not depend on hydration or JS, and !important
-     beats framer-motion's inline styles. */
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  /* Belt for every reveal wrapper. ScrollReveal ships no hidden state (RevealObserver arms it, and
+     never under reduce), but ContactFAB still carries framer's inline opacity:0 / transform (NS-14),
+     which only !important beats. Does not depend on hydration or JS. */
+  [data-reveal] { opacity: 1 !important; transform: none !important; translate: none !important; }
   /* ParallaxFrame inner layer: static, no drift/scale (children fill it). */
   [data-parallax] { transform: none !important; translate: none !important; scale: none !important; }
 }

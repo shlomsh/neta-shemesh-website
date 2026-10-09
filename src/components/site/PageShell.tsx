@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { ID } from '@/content/ids';
 import { cx } from '@/lib/cx';
+import { RevealObserver } from '@/components/motion/RevealObserver';
 import { ContactFAB } from './ContactFAB';
 import { Footer } from './footer/Footer';
 
@@ -45,6 +46,7 @@ export function PageShell({ overflow, children, behaviors }: PageShellProps) {
         {children}
         <Footer />
         <ContactFAB />
+        <RevealObserver />
         {behaviors}
       </main>
     </>

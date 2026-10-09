@@ -72,7 +72,7 @@ A single-colour SVG file painted with `currentColor` through a CSS mask, so it f
 Round 44px icon-only `<button type="button">` in the cream-on-plum header style with the keyboard focus ring (hamburger, menu close). `label` is the required accessible name; the icon is `children`; `onClick`, `aria-expanded`, `aria-controls`, `ref` and visibility (`md:hidden`) come from the caller.
 
 ## Related (outside `primitives/`)
-- `motion/ScrollReveal`, `motion/ParallaxFrame`, `motion/SoftSnap` are the motion pieces (`Photo` builds on the first two, which is why motion is a sibling layer that primitives may import, never the other way round); `site/ContactFAB` is the contact pill. Reveal delays come from `lib/motion.ts` (`stagger(i)`); do not pass `delay={0}`.
+- `motion/ScrollReveal` (a server component; `motion/RevealObserver` in `PageShell` drives it), `motion/ParallaxFrame`, `motion/SoftSnap` are the motion pieces (`Photo` builds on the first two, which is why motion is a sibling layer that primitives may import, never the other way round); `site/ContactFAB` is the contact pill. Reveal delays come from `lib/motion.ts` (`stagger(i)`); do not pass `delay={0}`.
 - `site/PageShell` is the `<main>` shell shared by the home page and both blog pages (`overflow` is a required prop: `clip` for home, `hidden` for blog; the surface is always `bg-cream`); `site/JsonLd` renders a JSON-LD script.
 
 ## Colour utilities
