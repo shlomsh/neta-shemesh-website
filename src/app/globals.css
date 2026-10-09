@@ -224,6 +224,55 @@
   html { scroll-behavior: auto; }
 }
 
+/* ContactFAB entrance (NS-14). Reproduces what framer-motion actually rendered for
+   `initial {y:24, opacity:0}` -> `animate {y:0, opacity:1}`, `transition {delay: .8, duration: .5}`, measured frame by
+   frame in the production build (see the NS-14 report):
+   - opacity: a plain 0.5s ease-out tween, cubic-bezier(0, 0, .58, 1) (framer's default ease for a duration-only
+     tween; fits the measured curve to 0.001 RMS).
+   - rise: framer drives `y` through the same easeOut over 0.5s, but the pill carries Tailwind's
+     `transition-transform duration-200`, which re-targets on every frame framer writes, so the pill barely moves
+     during the fade (24px -> 20.6px) and then settles the last ~21px in the 0.2s after framer finishes (done at
+     0.72s). That lagged curve is the look today, so it is kept as measured (piecewise-linear, 20ms steps where it
+     moves fast). The intended single easeOut rise would be: `fab-rise 0.5s cubic-bezier(0, 0, .58, 1) .8s backwards`
+     with keyframes from translateY(24px) to none.
+   `backwards` fill: the pill is hidden only during the 0.8s delay; its rest state (no animation) is fully visible,
+   so it shows with JS off and the server HTML has no inline opacity:0. Own keyframes and class; the hero and reveal
+   rules are separate. Both animations start at first paint (framer started at hydration, ~50-100ms later). */
+@keyframes fab-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fab-rise {
+  0%      { transform: translateY(24px); }
+  8.33%   { transform: translateY(23.94px); }
+  16.67%  { transform: translateY(23.76px); }
+  25%     { transform: translateY(23.48px); }
+  33.33%  { transform: translateY(23.09px); }
+  41.67%  { transform: translateY(22.63px); }
+  50%     { transform: translateY(22.11px); }
+  58.33%  { transform: translateY(21.55px); }
+  66.67%  { transform: translateY(20.96px); }
+  72.22%  { transform: translateY(20.3px); }
+  75%     { transform: translateY(18.33px); }
+  77.78%  { transform: translateY(13.85px); }
+  80.56%  { transform: translateY(8.64px); }
+  83.33%  { transform: translateY(5.05px); }
+  86.11%  { transform: translateY(2.82px); }
+  88.89%  { transform: translateY(1.43px); }
+  91.67%  { transform: translateY(0.6px); }
+  94.44%  { transform: translateY(0.16px); }
+  97.22%  { transform: translateY(0.01px); }
+  100%    { transform: none; }
+}
+.fab-enter {
+  animation:
+    fab-fade 0.5s cubic-bezier(0, 0, 0.58, 1) 0.8s backwards,
+    fab-rise 0.72s linear 0.8s backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fab-enter { animation: none; }
+}
+
 @utility safari-clip {
   /* WebKit rendering bug workaround for border-radius overflow */
   -webkit-mask-image: -webkit-radial-gradient(white, black);

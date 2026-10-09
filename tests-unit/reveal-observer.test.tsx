@@ -74,7 +74,7 @@ describe('RevealObserver', () => {
     expect(container.innerHTML).toBe('');
   });
 
-  it('uses ONE observer over the ScrollReveal elements only (not the framer ContactFAB)', () => {
+  it('uses ONE observer over the ScrollReveal elements only (not the bare data-reveal ContactFAB)', () => {
     const { container } = page();
     expect(FakeIO.instances).toHaveLength(1);
     const e = els(container);

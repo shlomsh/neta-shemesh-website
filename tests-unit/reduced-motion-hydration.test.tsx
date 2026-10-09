@@ -7,9 +7,10 @@
  * users saw blank sections.
  *
  * Now: ScrollReveal is a server component with no hidden state in its markup at all (the hidden state is
- * CSS, armed by RevealObserver, and only under `prefers-reduced-motion: no-preference`). ContactFAB and
- * ParallaxFrame still use framer until NS-14 / NS-15, so they keep the "same tree whatever
- * useReducedMotion() says" guard, plus the CSS belt that forces them visible under reduce.
+ * CSS, armed by RevealObserver, and only under `prefers-reduced-motion: no-preference`). ContactFAB is a
+ * server component too (NS-14): its entrance is the `.fab-enter` CSS keyframe, off under reduce, with no
+ * inline `opacity:0` in the HTML. ParallaxFrame still uses framer until NS-15, so it keeps the "same tree
+ * whatever useReducedMotion() says" guard, plus the CSS belt that forces it static under reduce.
  */
 import React from 'react';
 import fs from 'fs';
@@ -89,6 +90,26 @@ describe('structural guards (source + CSS)', () => {
     const src = read('src/components/motion/ScrollReveal.tsx').replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '');
     expect(src).not.toMatch(/use client/);
     expect(src).not.toMatch(/framer-motion/);
+  });
+
+  it('ContactFAB is a server component (NS-14): no client directive, no framer-motion, no inline hidden state', () => {
+    const src = read('src/components/site/ContactFAB.tsx').replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '');
+    expect(src).not.toMatch(/use client/);
+    expect(src).not.toMatch(/framer-motion/);
+    const html = renderToString(<ContactFAB />);
+    expect(html).not.toMatch(/opacity:\s*0/);
+    expect(html).not.toMatch(/style=/);
+    expect(html).toMatch(/class="fab-enter /);
+  });
+
+  it('the FAB entrance is a CSS keyframe with a visible rest state, switched off under reduce', () => {
+    const css = read('src/app/globals.css');
+    expect(css).toMatch(/\.fab-enter\s*\{\s*animation:\s*fab-fade 0\.5s cubic-bezier\(0, 0, 0\.58, 1\) 0\.8s backwards,\s*fab-rise 0\.72s linear 0\.8s backwards;/);
+    expect(css).toMatch(/@keyframes fab-fade\s*\{\s*from\s*\{\s*opacity:\s*0;\s*\}\s*to\s*\{\s*opacity:\s*1;/);
+    expect(css).toMatch(/@keyframes fab-rise\s*\{\s*0%\s*\{\s*transform:\s*translateY\(24px\);/);
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)\s*\{\s*\.fab-enter\s*\{\s*animation:\s*none;/);
+    // the rest state (the .fab-enter rule's own declarations) never hides it
+    expect(css.match(/\.fab-enter\s*\{([^}]*)\}/)![1]).not.toMatch(/opacity|visibility/);
   });
 
   it('globals.css forces [data-reveal] visible and [data-parallax] static under reduce', () => {
