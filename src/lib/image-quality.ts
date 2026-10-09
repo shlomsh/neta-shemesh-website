@@ -10,3 +10,6 @@
  * rejects the request.
  */
 export const PHOTO_QUALITY = 84;
+
+/** The contact-consultation photo: fine detail, still 1.4 dB softer than 16.2.9 at q84, and 92 is still short (34.97 dB), so it gets 96 (35.54 dB vs 35.43 for 16.2.9 at q75). */
+export const PHOTO_QUALITY_DETAIL = 96;

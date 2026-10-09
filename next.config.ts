@@ -18,9 +18,9 @@ const nextConfig: NextConfig = {
     ? { unoptimized: true }
     : {
         formats: ['image/avif' as const, 'image/webp' as const],
-        // Allowed `quality` values: 75 is Next's default, 84 is PHOTO_QUALITY (src/lib/image-quality.ts;
+        // Allowed `quality` values: 75 is Next's default, 84 is PHOTO_QUALITY, 96 is PHOTO_QUALITY_DETAIL (src/lib/image-quality.ts;
         // keep the two in step: next.config.ts cannot use the `@/` alias).
-        qualities: [75, 84],
+        qualities: [75, 84, 96],
       },
   async redirects() {
     return [

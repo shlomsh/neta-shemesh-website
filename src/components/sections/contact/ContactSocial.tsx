@@ -5,6 +5,7 @@ import { Photo } from '@/components/primitives/ui/Photo';
 import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 import { CONTACT_PHOTOS, SOCIAL_PANEL } from '@/content/home/contact';
 import { ID } from '@/content/ids';
+import { PHOTO_QUALITY_DETAIL } from '@/lib/image-quality';
 import { SocialLinks } from './SocialLinks';
 
 export function ContactSocial() {
@@ -42,6 +43,7 @@ export function ContactSocial() {
                     engine="next"
                     src={photo.src}
                     alt={photo.alt}
+                    quality={photo.detail ? PHOTO_QUALITY_DETAIL : undefined}
                     sizes="100vw"
                     radius="card"
                     ratio={photo.mobile.ratio}
@@ -67,6 +69,7 @@ export function ContactSocial() {
                     engine="next"
                     src={photo.src}
                     alt={photo.alt}
+                    quality={photo.detail ? PHOTO_QUALITY_DETAIL : undefined}
                     sizes={photo.desktop.sizes}
                     radius="card"
                     objectPosition={photo.objectPosition}

@@ -37,6 +37,7 @@ export const CONTACT_PHOTOS: ContactPhoto[] = [
     src: '/images/contact-consultation.webp',
     alt: `${SITE.name} בפגישת ייעוץ`,
     objectPosition: '30% 64%',
+    detail: true,
     mobile: { ratio: '4/5' },
     desktop: { area: 'p2', sizes: '(max-width: 1024px) 50vw, 28vw' },
   },

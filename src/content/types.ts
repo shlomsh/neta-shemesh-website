@@ -62,6 +62,8 @@ export interface ContactPhoto {
   alt: string;
   /** CSS `object-position` crop; centred when absent. */
   objectPosition?: string;
+  /** Fine-detail photo: delivered at `PHOTO_QUALITY_DETAIL` instead of the default `PHOTO_QUALITY`. */
+  detail?: boolean;
   /** Mobile stack: aspect ratio of the frame. */
   mobile: { ratio: '4/5' | '2/3' };
   desktop: {

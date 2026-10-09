@@ -154,10 +154,18 @@ async function main() {
   baselineDir = path.join(tmp, 'baseline');
   console.log(`[vr] baseline ${ref} (${sha.slice(0, 7)}) vs working tree ${ROOT}`);
 
-  // Baseline worktree (detached, outside the repo tree); node_modules cloned copy-on-write.
+  // Baseline worktree (detached, outside the repo tree). If its lockfile matches the candidate's,
+  // node_modules is cloned copy-on-write; if it differs (a dependency upgrade), `npm ci` installs the
+  // baseline's own deps, otherwise both sides would run the candidate's packages and always agree.
   git('worktree', 'add', '--detach', baselineDir, sha);
-  let cp = spawnSync('cp', ['-cR', path.join(ROOT, 'node_modules'), path.join(baselineDir, 'node_modules')]);
-  if (cp.status !== 0) spawnSync('cp', ['-R', path.join(ROOT, 'node_modules'), path.join(baselineDir, 'node_modules')], { stdio: 'inherit' });
+  const lock = (d) => { try { return readFileSync(path.join(d, 'package-lock.json'), 'utf8'); } catch { return ''; } };
+  if (lock(baselineDir) !== lock(ROOT)) {
+    console.log('[vr] package-lock differs from the baseline: running npm ci in the baseline worktree...');
+    run('npm', ['ci', '--no-audit', '--no-fund'], baselineDir);
+  } else {
+    const cp = spawnSync('cp', ['-cR', path.join(ROOT, 'node_modules'), path.join(baselineDir, 'node_modules')]);
+    if (cp.status !== 0) spawnSync('cp', ['-R', path.join(ROOT, 'node_modules'), path.join(baselineDir, 'node_modules')], { stdio: 'inherit' });
+  }
 
   console.log('[vr] building baseline...');
   run(process.execPath, [nextBin(baselineDir), 'build'], baselineDir);
