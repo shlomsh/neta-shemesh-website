@@ -1,19 +1,22 @@
 /**
- * SANITY B9: soft snap (JS), no CSS scroll-snap.
+ * SANITY B9: soft snap (JS), no CSS scroll-snap, NO snap on touch.
  *
  * History: CSS scroll-snap proximity felt loose and mandatory felt aggressive, so snapping moved
- * to SoftSnap.tsx (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts).
- * It runs on desktop widths (>= 1024px) only: a gentle touch mode shipped in 992a790 and made the page feel stuck in
- * iOS in-app browsers, so below 1024px it must do nothing. It silently stops working if <main>
- * becomes overflow-hidden, if a constant drifts, or if it starts snapping under reduced motion or on phones.
- * This file guards the constants, the mount, the targets (cards AND the footer), and the "does nothing" paths.
+ * to JS (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts).
+ * A gentle touch mode shipped in 992a790 and made the page feel stuck on iPhones (it snapped BACKWARD
+ * to the hero and to one-screen cards after slow swipes); it was deleted. SoftSnap.tsx is now a tiny
+ * gate: only where `(min-width: 1024px) and (pointer: fine)` matches and motion is not reduced does it
+ * dynamic-import the engine (SoftSnapEngine.tsx), so touch devices download and run no snap code at any width.
+ * It silently stops working if <main> becomes overflow-hidden or a constant drifts.
+ * This file guards the constants, the mount, the targets (cards AND the footer), the gate, and the "does nothing" paths.
  */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 import React from 'react';
 import { findTargetSelector, parseExportedNumber, readSources, renderHome, sourceNamed, topLevelSections } from './helpers';
 
-const snap = sourceNamed('SoftSnap.tsx').text; // the effect: target selector, listeners
+const gate = sourceNamed('SoftSnap.tsx').text; // the tiny client gate
+const snap = sourceNamed('SoftSnapEngine.tsx').text; // the engine: target selector, listeners
 const tuning = sourceNamed('lib/soft-snap.ts').text; // the pure decision logic and its constants
 
 function constant(name: string): number {
@@ -24,6 +27,9 @@ function constant(name: string): number {
 
 describe('constants stay in sane ranges', () => {
   it('MIN_WIDTH is 1024 (snapping is desktop-only: it does nothing below it)', () => expect(constant('MIN_WIDTH')).toBe(1024));
+  it('there is no touch constant or mode left in lib/soft-snap.ts', () => {
+    expect(tuning).not.toMatch(/TOUCH_SETTLE_MS|snapMode|SnapMode|gentle|touching|largeViewportHeight|lvh/);
+  });
   it('THRESHOLD is between 0.2 and 0.4 of the viewport height', () => {
     expect(constant('THRESHOLD')).toBeGreaterThanOrEqual(0.2);
     expect(constant('THRESHOLD')).toBeLessThanOrEqual(0.4);
@@ -32,17 +38,36 @@ describe('constants stay in sane ranges', () => {
     expect(constant('SETTLE_MS')).toBeGreaterThanOrEqual(100);
     expect(constant('SETTLE_MS')).toBeLessThanOrEqual(250);
   });
-  it('TOUCH_SETTLE_MS is 150-400 and longer than SETTLE_MS (momentum must have ended)', () => {
-    expect(constant('TOUCH_SETTLE_MS')).toBeGreaterThanOrEqual(150);
-    expect(constant('TOUCH_SETTLE_MS')).toBeLessThanOrEqual(400);
-    expect(constant('TOUCH_SETTLE_MS')).toBeGreaterThan(constant('SETTLE_MS'));
-  });
   it('DURATION_MS is 350-700', () => {
     expect(constant('DURATION_MS')).toBeGreaterThanOrEqual(350);
     expect(constant('DURATION_MS')).toBeLessThanOrEqual(700);
   });
   it('STARTUP_IGNORE_MS is at least 1000 (hero entrance must not be snapped over)', () => {
     expect(constant('STARTUP_IGNORE_MS')).toBeGreaterThanOrEqual(1000);
+  });
+});
+
+describe('the gate (SoftSnap.tsx) and the engine (SoftSnapEngine.tsx)', () => {
+  it('the gate gates on the snap media query and reduced motion, and loads the engine only by dynamic import()', () => {
+    expect(gate).toContain('SNAP_MEDIA');
+    expect(gate).toContain('prefers-reduced-motion');
+    expect(gate).toMatch(/import\(\s*['"]\.\/SoftSnapEngine['"]\s*\)/);
+    expect(gate, 'a static import would ship the engine to touch devices').not.toMatch(/^import[^;]*SoftSnapEngine/m);
+  });
+  it('no other module imports the engine statically', () => {
+    const hits = readSources()
+      .filter((f) => !f.path.endsWith('SoftSnapEngine.tsx') && /from\s+['"][^'"]*SoftSnapEngine['"]/.test(f.text))
+      .map((f) => f.path);
+    expect(hits).toEqual([]);
+  });
+  it('neither file has touch handlers, a gentle mode or the lvh probe', () => {
+    for (const text of [gate, snap]) {
+      expect(text).not.toMatch(/touch(start|end|cancel|move)|TOUCH_SETTLE_MS|gentle|lvh|snapMode/i);
+    }
+  });
+  it('the engine skips snapping while the mobile menu is open (main[inert] / body scroll lock)', () => {
+    expect(snap).toContain('main[inert]');
+    expect(snap).toContain("document.body.style.overflow === 'hidden'");
   });
 });
 
@@ -71,19 +96,39 @@ describe('targets', () => {
   });
 });
 
+const engineLoads = vi.hoisted(() => ({ count: 0 }));
+// Counts evaluations of the engine module: it must never be loaded on touch / reduced-motion / narrow viewports.
+vi.mock('@/components/motion/SoftSnapEngine', async (importOriginal) => {
+  engineLoads.count++;
+  return importOriginal();
+});
+
 describe('behaviour (jsdom, fake timers)', () => {
   const originalMatchMedia = window.matchMedia;
   const originalScrollTo = window.scrollTo;
   let scrollTo: ReturnType<typeof vi.fn>;
 
-  function setup(opts: { width: number; reduced: boolean; edgeDistance?: number }) {
+  /** Evaluates the real query strings against the simulated device: min-width, pointer, reduced motion. */
+  function evaluate(query: string, o: { width: number; pointer: 'fine' | 'coarse'; reduced: boolean }): boolean {
+    if (query.includes('prefers-reduced-motion')) return o.reduced;
+    return query.split(/\band\b/).every((term) => {
+      const minWidth = /min-width:\s*(\d+)px/.exec(term);
+      if (minWidth) return o.width >= Number(minWidth[1]);
+      const pointer = /pointer:\s*(fine|coarse)/.exec(term);
+      if (pointer) return o.pointer === pointer[1];
+      return false;
+    });
+  }
+
+  function setup(opts: { width: number; reduced: boolean; pointer?: 'fine' | 'coarse' }) {
+    const env = { width: opts.width, pointer: opts.pointer ?? 'fine', reduced: opts.reduced };
     vi.useFakeTimers();
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: opts.width });
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
     Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 1000 });
     Object.defineProperty(document.documentElement, 'scrollHeight', { configurable: true, value: 20000 });
     window.matchMedia = vi.fn((query: string) => ({
-      matches: query.includes('prefers-reduced-motion') ? opts.reduced : false,
+      matches: evaluate(query, env),
       media: query,
       onchange: null,
       addListener: vi.fn(),
@@ -105,6 +150,11 @@ describe('behaviour (jsdom, fake timers)', () => {
     });
     const first = document.querySelector('main > section') as HTMLElement;
     first.getBoundingClientRect = () => ({ top: edgeDistance, bottom: edgeDistance + height, left: 0, right: 1, width: 1, height, x: 0, y: edgeDistance, toJSON: () => ({}) });
+    // the gate's import() of the engine resolves in real (not faked) time; under load it can take several turns
+    for (let i = 0; i < 25; i++) {
+      await vi.dynamicImportSettled();
+      await vi.advanceTimersByTimeAsync(0);
+    }
     await vi.advanceTimersByTimeAsync(2500);
     return first;
   }
@@ -112,6 +162,7 @@ describe('behaviour (jsdom, fake timers)', () => {
   /** mountPage, then scroll, settle, and let the glide finish. */
   async function mountScrollAndSettle(edgeDistance: number, height = 800) {
     await mountPage(edgeDistance, height);
+    window.dispatchEvent(new Event('wheel'));
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(400); // settle
     await vi.advanceTimersByTimeAsync(1500); // glide
@@ -130,6 +181,7 @@ describe('behaviour (jsdom, fake timers)', () => {
 
   afterEach(() => {
     cleanup();
+    document.body.style.overflow = '';
     vi.useRealTimers();
     window.matchMedia = originalMatchMedia;
     window.scrollTo = originalScrollTo;
@@ -137,35 +189,77 @@ describe('behaviour (jsdom, fake timers)', () => {
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 768 });
   });
 
-  it('control: on desktop, near a card edge, it glides (scrollTo is called)', async () => {
-    setup({ width: 1280, reduced: false, edgeDistance: 150 });
-    await mountScrollAndSettle(150);
-    expect(scrollTo, 'SoftSnap is not mounted in the page or no longer snaps on desktop').toHaveBeenCalled();
-  });
-
-  it('control: far from every card edge it leaves the page alone', async () => {
-    setup({ width: 1280, reduced: false, edgeDistance: 700 });
-    await mountScrollAndSettle(700);
-    expect(scrollTo).not.toHaveBeenCalled();
-  });
-
-  it('below 1024px it does nothing: no snap, and no reaction to touch events', async () => {
-    setup({ width: 390, reduced: false });
+  // NOTE: keep this test FIRST. The engine module is cached after its first load, so only the
+  // very first test of the file can prove "never imported"; the engineLoads assertion at the end of
+  // each later touch test only holds because this one runs before any desktop test.
+  it('touch (coarse pointer, 390px): touchstart, scroll to 110, touchend, 3s later: no scrollTo at all, and the engine was never imported', async () => {
+    setup({ width: 390, reduced: false, pointer: 'coarse' });
     await mountPage(150);
     touch('touchstart', 1);
+    window.scrollY = 110;
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(1000);
     touch('touchend', 0);
     await vi.advanceTimersByTimeAsync(3000);
-    expect(scrollTo, 'SoftSnap is active below 1024px (made iOS in-app browsers feel stuck)').not.toHaveBeenCalled();
+    expect(scrollTo, 'SoftSnap acted on a touch device (it snapped backward and made iOS feel stuck)').not.toHaveBeenCalled();
+    expect(
+      scrollTo.mock.calls.filter(([, y]) => typeof y === 'number' && y < 110),
+      'no scrollTo below the swipe position',
+    ).toEqual([]);
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(3000);
     expect(scrollTo).not.toHaveBeenCalled();
+    expect(engineLoads.count, 'the snap engine was downloaded on a touch device').toBe(0);
   });
 
-  it('does nothing under prefers-reduced-motion', async () => {
-    setup({ width: 1280, reduced: true, edgeDistance: 150 });
+  it('a coarse pointer on a DESKTOP-width screen (touch laptop in tablet mode, iPad landscape) does nothing either', async () => {
+    setup({ width: 1366, reduced: false, pointer: 'coarse' });
+    await mountScrollAndSettle(150);
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(engineLoads.count).toBe(0);
+  });
+
+  it('below 1024px with a fine pointer (narrow desktop window) does nothing', async () => {
+    setup({ width: 900, reduced: false, pointer: 'fine' });
+    await mountScrollAndSettle(150);
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(engineLoads.count).toBe(0);
+  });
+
+  it('does nothing under prefers-reduced-motion, and never loads the engine', async () => {
+    setup({ width: 1280, reduced: true, pointer: 'fine' });
     await mountScrollAndSettle(150);
     expect(scrollTo, 'SoftSnap snapped under prefers-reduced-motion').not.toHaveBeenCalled();
+    expect(engineLoads.count).toBe(0);
+  });
+
+  it('control: on desktop (1440, fine pointer), near a card edge after a wheel tick, the engine loads and it glides', async () => {
+    setup({ width: 1440, reduced: false });
+    await mountScrollAndSettle(150);
+    expect(engineLoads.count, 'the gate did not load the engine on desktop').toBe(1);
+    expect(scrollTo, 'SoftSnap is not mounted in the page or no longer snaps on desktop').toHaveBeenCalled();
+  });
+
+  it('control: far from every card edge it leaves the page alone', async () => {
+    setup({ width: 1280, reduced: false, pointer: 'fine' });
+    await mountScrollAndSettle(700);
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('while the mobile menu is open (main[inert], body scroll locked) it never snaps; once closed it does', async () => {
+    setup({ width: 1280, reduced: false });
+    await mountPage(150);
+    const main = document.querySelector('main') as HTMLElement;
+    main.setAttribute('inert', '');
+    document.body.style.overflow = 'hidden';
+    window.dispatchEvent(new Event('scroll'));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(scrollTo, 'snapped under the open menu overlay').not.toHaveBeenCalled();
+
+    main.removeAttribute('inert');
+    document.body.style.overflow = '';
+    window.dispatchEvent(new Event('scroll'));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(scrollTo).toHaveBeenCalled();
   });
 });

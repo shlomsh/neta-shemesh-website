@@ -8,20 +8,18 @@
  * (top 9900, document 10800). The footer is the last snap target, like any card.
  * THRESHOLD is 0.3, so 270px at this viewport.
  *
- * The first groups use the default (desktop) mode and pin its behaviour unchanged. The
- * "gentle mode" groups at the end cover the touch widths (< MIN_WIDTH).
+ * There is no touch mode: SNAP_MEDIA / isSnapActive keep touch (coarse pointer) devices out
+ * entirely, so pickSnapTarget only ever serves the desktop rules.
  */
 import { describe, expect, it } from 'vitest';
 import {
   DURATION_MS,
   MIN_WIDTH,
+  SNAP_MEDIA,
   THRESHOLD,
   easeOutCubic,
-  TOUCH_SETTLE_MS,
-  SETTLE_MS,
   isSnapActive,
   pickSnapTarget,
-  snapMode,
   type SnapInput,
 } from '@/lib/soft-snap';
 
@@ -139,124 +137,36 @@ describe('pickSnapTarget: degenerate input', () => {
   });
 });
 
-describe('isSnapActive / snapMode: desktop widths only, and not under reduced motion', () => {
-  it.each([
-    [1280, false, true],
-    [MIN_WIDTH, false, true],
-    [1280, true, false],
-    [MIN_WIDTH - 1, false, false],
-    [768, false, false],
-    [390, false, false],
-  ])('width %i, reduced motion %s -> active %s', (width, reduced, want) => {
-    expect(isSnapActive(width, reduced)).toBe(want);
+/** Minimal evaluator for the two terms SNAP_MEDIA uses, so the tests can ask "does this device match?". */
+function matchesSnapMedia(width: number, pointer: 'fine' | 'coarse'): boolean {
+  const minWidth = Number(/min-width:\s*(\d+)px/.exec(SNAP_MEDIA)?.[1]);
+  const wantsFine = /pointer:\s*fine/.test(SNAP_MEDIA);
+  return width >= minWidth && (!wantsFine || pointer === 'fine');
+}
+
+describe('SNAP_MEDIA / isSnapActive: desktop width AND a fine pointer, and not under reduced motion', () => {
+  it('SNAP_MEDIA is the documented query', () => {
+    expect(MIN_WIDTH).toBe(1024);
+    expect(SNAP_MEDIA).toBe('(min-width: 1024px) and (pointer: fine)');
   });
 
   it.each([
-    [MIN_WIDTH - 1, 'gentle'],
-    [MIN_WIDTH, 'desktop'],
-    [1440, 'desktop'],
-    [768, 'gentle'],
-    [375, 'gentle'],
-  ])('width %i -> %s', (width, want) => {
-    expect(snapMode(width)).toBe(want);
+    [1440, 'fine', false, true],
+    [MIN_WIDTH, 'fine', false, true],
+    [1440, 'fine', true, false], // reduced motion
+    [MIN_WIDTH - 1, 'fine', false, false], // narrow desktop window
+    [768, 'fine', false, false],
+    [390, 'fine', false, false],
+  ] as const)('width %i, %s pointer, reduced motion %s -> active %s', (width, pointer, reduced, want) => {
+    expect(isSnapActive(matchesSnapMedia(width, pointer), reduced)).toBe(want);
   });
 
-  it('touch settles later than desktop (momentum must have ended)', () => {
-    expect(TOUCH_SETTLE_MS).toBeGreaterThan(SETTLE_MS);
-  });
-});
-
-describe('pickSnapTarget: a finger on the screen blocks every snap', () => {
-  it.each(['desktop', 'gentle'] as const)('%s: touching -> null even right beside a top', (mode) => {
-    expect(at(1000, { mode, touching: true })).toBeNull();
-    expect(at(1000, { mode, touching: false })).toBe(900);
-  });
-});
-
-describe('pickSnapTarget: gentle mode (touch widths)', () => {
-  // Phone-like fixture: 800px viewport (threshold 240). A one-screen intro, a 2400px (3 screens)
-  // tall section, a one-screen card, a 1700px tall section, and the 800px footer.
-  const MVH = 800;
-  const M_TOPS = [0, 800, 3200, 4000, 5700];
-  const M_HEIGHTS = [800, 2400, 800, 1700, 800];
-  const M_DOC = 6500;
-  const gentle = (scrollY: number, over: Partial<SnapInput> = {}): number | null =>
-    pickSnapTarget({
-      scrollY,
-      viewportHeight: MVH,
-      documentHeight: M_DOC,
-      sectionTops: M_TOPS,
-      sectionHeights: M_HEIGHTS,
-      mode: 'gentle',
-      ...over,
-    });
-
-  it('mid-way through a tall section: no snap (not pulled back to its top, not pushed on)', () => {
-    expect(gentle(800 + 500)).toBeNull(); // 500px in, top 500 above, next top 1900 below
-    expect(gentle(800 + 1200)).toBeNull();
-    expect(gentle(800 + 200)).toBeNull(); // 200px past a tall section's top: stay (desktop would go back)
-    expect(gentle(800 + 200, { mode: 'desktop' })).toBe(800); // contrast: desktop snaps back
-  });
-
-  it('approaching the next card top from inside a tall section (within the threshold below) glides forward', () => {
-    expect(gentle(3200 - 200)).toBe(3200);
-    expect(gentle(3200 - 240)).toBe(3200); // exactly the threshold
-    expect(gentle(3200 - 241)).toBeNull();
-  });
-
-  it('entering a tall section from above snaps to its top', () => {
-    expect(gentle(800 - 150)).toBe(800);
-    expect(gentle(4000 - 100)).toBe(4000);
-  });
-
-  it('a one-screen card behaves as on desktop, in both directions', () => {
-    expect(gentle(3200 + 150)).toBe(3200); // just past a one-screen card top: back to it
-    expect(gentle(3200 - 150)).toBe(3200);
-    expect(gentle(3200 + 400)).toBeNull(); // too far
-    expect(gentle(0)).toBeNull(); // already there
-    expect(gentle(120)).toBe(0); // the one-screen intro: back to its top
-  });
-
-  it('the footer snaps like a card: from above, and back to it from just inside', () => {
-    expect(gentle(5700 - 200)).toBe(5700);
-    expect(gentle(5700 - 241)).toBeNull();
-    expect(gentle(5700)).toBeNull(); // it is also the end of the page
-  });
-
-  it('a tall footer: no snapping back up into it', () => {
-    const input = { sectionHeights: [800, 2400, 800, 1700, 1100], documentHeight: 6800 };
-    expect(gentle(5700 - 200, input)).toBe(5700);
-    expect(gentle(5700 + 120, input)).toBeNull(); // inside the tall footer, top above the viewport
-  });
-
-  it('a section within 2px taller than the viewport still counts as one screen', () => {
-    const heights = [800, 802, 800, 1700, 800];
-    expect(gentle(800 + 200, { sectionHeights: heights })).toBe(800);
-    expect(gentle(800 + 200, { sectionHeights: [800, 803, 800, 1700, 800] })).toBeNull();
-  });
-
-  it('toolbar expanded: a card exactly one LARGE screen tall is one screen, not tall (still snaps back to its top)', () => {
-    // visible 714, large (collapsed-toolbar) 754; the card is 754 tall: 40px past the visible height.
-    const expanded = { viewportHeight: 714, largeViewportHeight: 754, sectionHeights: [754, 754, 754, 754, 754], sectionTops: [0, 754, 1508, 2262, 3016], documentHeight: 3770 };
-    expect(gentle(754 + 30, expanded)).toBe(754);
-    expect(gentle(754 + 30, { ...expanded, largeViewportHeight: undefined }), 'without the large height it would count as tall').toBeNull();
-    // but a genuinely taller card (3 screens) is still tall
-    expect(gentle(754 + 30, { ...expanded, sectionHeights: [754, 2262, 754, 754, 754] })).toBeNull();
-  });
-
-  it('without heights every section counts as one screen (same result as desktop)', () => {
-    expect(gentle(800 + 200, { sectionHeights: undefined })).toBe(800);
-  });
-
-  it('keeps the shared rules: end of page, already-there, reduced motion is handled by the caller', () => {
-    expect(gentle(M_DOC - MVH)).toBeNull();
-    expect(gentle(800 + 2)).toBeNull();
-  });
-
-  it('desktop with heights supplied is unaffected by them (heights are only read in gentle mode)', () => {
-    const base = at(1000);
-    expect(at(1000, { sectionHeights: TOPS.map(() => 5000) })).toBe(base);
-    expect(at(1000, { mode: 'desktop', sectionHeights: TOPS.map(() => 5000) })).toBe(900);
+  it('a coarse pointer is inactive at any width (phones, tablets, iPad landscape, touch-only large screens)', () => {
+    for (const width of [320, 390, 768, 1023, 1024, 1180, 1366, 1440, 2560, 5120]) {
+      for (const reduced of [false, true]) {
+        expect(isSnapActive(matchesSnapMedia(width, 'coarse'), reduced), `width ${width}, reduced ${reduced}`).toBe(false);
+      }
+    }
   });
 });
 
