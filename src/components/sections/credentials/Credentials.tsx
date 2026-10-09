@@ -3,6 +3,7 @@ import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
+import { PHOTO_QUALITY } from '@/lib/image-quality';
 import { ANCHOR, ID } from '@/content/ids';
 import { CREDENTIALS, CREDENTIAL_ICONS, CREDENTIALS_ART } from '@/content/home/about';
 import { CredentialsList } from './CredentialsList';
@@ -20,6 +21,7 @@ export function Credentials() {
           width={1024}
           height={768}
           sizes="min(780px, 65vw)"
+          quality={PHOTO_QUALITY}
           className="absolute bottom-0 left-0 w-[65%] h-[65%] object-contain object-bottom-left pointer-events-none select-none opacity-[0.18] z-0"
         />
 
