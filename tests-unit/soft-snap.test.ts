@@ -17,10 +17,19 @@ import {
   MIN_WIDTH,
   SNAP_MEDIA,
   THRESHOLD,
+  V2_ARM,
+  V2_BACKWARD,
+  V2_DURATION_MS,
+  V2_SETTLE_MS,
+  V2_THRESHOLD,
+  DEFAULT_SNAP_MODE,
   easeOutCubic,
   isSnapActive,
+  parseSnapVariant,
   pickSnapTarget,
+  pickSnapTargetV2,
   type SnapInput,
+  type SnapInputV2,
 } from '@/lib/soft-snap';
 
 const VH = 900;
@@ -189,5 +198,171 @@ describe('easeOutCubic', () => {
 
   it('the glide time constant is the documented one', () => {
     expect(DURATION_MS).toBe(520);
+  });
+});
+
+// ─── v2 (NS-36) ───────────────────────────────────────────────────────────────────────────────────
+// Same fixture. v2 limits at 900px: arm > 135px of net scroll, ahead <= 180px, behind <= 72px.
+
+const atV2 = (scrollY: number, gestureDelta: number, over: Partial<SnapInputV2> = {}): number | null =>
+  pickSnapTargetV2({ scrollY, gestureDelta, viewportHeight: VH, documentHeight: DOC, sectionTops: TOPS, ...over });
+
+describe('v2 constants', () => {
+  it('are the documented ones', () => {
+    expect(V2_ARM).toBe(0.15);
+    expect(V2_THRESHOLD).toBe(0.2);
+    expect(V2_BACKWARD).toBe(0.08);
+    expect(V2_SETTLE_MS).toBeGreaterThanOrEqual(180);
+    expect(V2_SETTLE_MS).toBeLessThanOrEqual(220);
+    expect(V2_DURATION_MS).toBeGreaterThanOrEqual(350);
+    expect(V2_DURATION_MS).toBeLessThanOrEqual(420);
+  });
+  it('the default mode stays v1 and parseSnapVariant only accepts off|v1|v2', () => {
+    expect(DEFAULT_SNAP_MODE).toBe('v1');
+    for (const m of ['off', 'v1', 'v2']) expect(parseSnapVariant(m)).toBe(m);
+    for (const bad of [null, undefined, '', 'V2', 'v3', 'on', 1, {}]) expect(parseSnapVariant(bad)).toBeNull();
+  });
+});
+
+describe('pickSnapTargetV2: direction', () => {
+  it('scrolling down, just short of a top: glides forward to it', () => {
+    expect(atV2(900 - 150, 400)).toBe(900);
+  });
+  it('scrolling down, past a top by more than the backward band: stays (no pull back)', () => {
+    expect(atV2(900 + 150, 400)).toBeNull(); // v1 would glide back 150px
+    expect(pickSnapTarget({ scrollY: 1050, viewportHeight: VH, documentHeight: DOC, sectionTops: TOPS })).toBe(900);
+  });
+  it('scrolling down past a top: the next top ahead (1800) is too far, so it stays', () => {
+    expect(atV2(900 + 200, 400)).toBeNull();
+  });
+  it('scrolling up, just short of a top: glides up to it', () => {
+    expect(atV2(1800 + 150, -400)).toBe(1800);
+  });
+  it('scrolling up, past a top (above it) by more than the band: stays', () => {
+    expect(atV2(1800 - 150, -400)).toBeNull();
+  });
+  it('scrolling down and up are mirror images', () => {
+    for (const off of [10, 50, 100, 179, 181, 300]) {
+      expect(atV2(2700 - off, 300) === null).toBe(atV2(1800 + off, -300) === null);
+    }
+  });
+  it('never returns a target behind the gesture further than the band, over a sweep of positions', () => {
+    for (let y = 0; y <= 9000; y += 7) {
+      for (const delta of [300, -300]) {
+        const t = atV2(y, delta);
+        if (t === null) continue;
+        const behind = (t - y) * Math.sign(delta) < 0;
+        if (behind) expect(Math.abs(t - y)).toBeLessThanOrEqual(V2_BACKWARD * VH);
+        else expect(Math.abs(t - y)).toBeLessThanOrEqual(V2_THRESHOLD * VH);
+      }
+    }
+  });
+});
+
+describe('pickSnapTargetV2: the backward exception at 8% of the viewport height', () => {
+  const band = V2_BACKWARD * VH; // 72
+  it('a small overshoot within 8% pulls back to the top (down gesture)', () => {
+    expect(atV2(900 + 40, 400)).toBe(900);
+    expect(atV2(900 + band, 400)).toBe(900);
+  });
+  it('just beyond 8% it does not', () => {
+    expect(atV2(900 + band + 0.5, 400)).toBeNull();
+  });
+  it('same for an upward gesture that stopped just above a top', () => {
+    expect(atV2(1800 - 40, -400)).toBe(1800);
+    expect(atV2(1800 - band - 0.5, -400)).toBeNull();
+  });
+  it('the band scales with the viewport height', () => {
+    expect(atV2(900 + 60, 400, { viewportHeight: 600 })).toBeNull(); // band 48
+    expect(atV2(900 + 48, 400, { viewportHeight: 600 })).toBe(900);
+  });
+  it('when both a top ahead and a top behind qualify, the nearer wins', () => {
+    // tops 1000 and 1100: at 1060 down: behind 60 (band 72), ahead 40 (threshold 180)
+    expect(atV2(1060, 400, { sectionTops: [0, 1000, 1100, 5000] })).toBe(1100);
+    // at 1020: behind 20, ahead 80 -> behind
+    expect(atV2(1020, 400, { sectionTops: [0, 1000, 1100, 5000] })).toBe(1000);
+  });
+});
+
+describe('pickSnapTargetV2: armed by a deliberate gesture', () => {
+  const arm = V2_ARM * VH; // 135
+  it('no net scroll, or a tiny one, never glides even right beside a top', () => {
+    expect(atV2(900 - 50, 0)).toBeNull();
+    expect(atV2(900 - 50, 30)).toBeNull();
+    expect(atV2(900 - 50, -30)).toBeNull();
+  });
+  it('a single 120px wheel notch (0.133 vh) does not arm', () => {
+    expect(atV2(900 - 120, 120)).toBeNull();
+    expect(atV2(900 + 120, -120)).toBeNull();
+  });
+  it('exactly 0.15 vh does not arm, just more does (either sign)', () => {
+    expect(atV2(900 - 100, arm)).toBeNull();
+    expect(atV2(900 - 100, arm + 1)).toBe(900);
+    expect(atV2(900 + 100, -arm)).toBeNull();
+    expect(atV2(900 + 100, -arm - 1)).toBe(900);
+  });
+  it('a 120px notch on an 800px viewport is exactly 0.15 and stays unarmed', () => {
+    expect(atV2(800 - 100, 120, { viewportHeight: 800, sectionTops: [0, 800, 1600], documentHeight: 9000 })).toBeNull();
+  });
+});
+
+describe('pickSnapTargetV2: threshold 0.2 vh ahead', () => {
+  const limit = V2_THRESHOLD * VH; // 180
+  it('exactly at the threshold glides, just beyond does not', () => {
+    expect(atV2(900 - limit, 400)).toBe(900);
+    expect(atV2(900 - limit - 0.5, 400)).toBeNull();
+    expect(atV2(900 + limit, -400)).toBe(900);
+    expect(atV2(900 + limit + 0.5, -400)).toBeNull();
+  });
+  it('is tighter than v1 (0.3): 250px short is v1 territory only', () => {
+    expect(atV2(900 - 250, 400)).toBeNull();
+    expect(at(900 - 250)).toBe(900);
+  });
+  it('already on an edge (within 2px) does nothing', () => {
+    expect(atV2(900, 400)).toBeNull();
+    expect(atV2(898, 400)).toBeNull();
+    expect(atV2(902, -400)).toBeNull();
+  });
+  it('scales with the viewport height', () => {
+    expect(atV2(900 - 150, 400, { viewportHeight: 600 })).toBeNull(); // limit 120
+    expect(atV2(900 - 120, 400, { viewportHeight: 600 })).toBe(900);
+  });
+});
+
+describe('pickSnapTargetV2: tall sections keep free scrolling inside them', () => {
+  // a 3000px section from 1000 to 4000 (viewport 900), then a normal card to 4900
+  const TALL = [0, 1000, 4000, 4900];
+  const tall = (y: number, d: number) => atV2(y, d, { sectionTops: TALL, documentHeight: 9000 });
+  it('mid-section, away from both edges, never glides (either direction)', () => {
+    for (const y of [1300, 1800, 2500, 3000, 3600, 3700]) {
+      expect(tall(y, 500), `down at ${y}`).toBeNull();
+      expect(tall(y, -500), `up at ${y}`).toBeNull();
+    }
+  });
+  it('near the top edge it still attracts in the gesture direction', () => {
+    expect(tall(1000 - 150, 500)).toBe(1000); // arriving from above
+    expect(tall(1000 + 150, -500)).toBe(1000); // arriving from below, scrolling up
+  });
+  it('near the next top (the section end) it attracts when scrolling down', () => {
+    expect(tall(4000 - 150, 500)).toBe(4000);
+  });
+  it('reading down just below the section top does not pull back beyond the 8% band', () => {
+    expect(tall(1000 + 150, 500)).toBeNull();
+  });
+});
+
+describe('pickSnapTargetV2: shared guards with v1', () => {
+  it('null while the page bottom is visible, with no targets, or on a page shorter than the viewport', () => {
+    expect(atV2(FOOTER_TOP, 400)).toBeNull();
+    expect(atV2(1000, 400, { sectionTops: [] })).toBeNull();
+    expect(atV2(0, 400, { documentHeight: 700, sectionTops: [0, 100] })).toBeNull();
+  });
+  it('the footer top is a target when arriving from above', () => {
+    expect(atV2(FOOTER_TOP - 150, 400)).toBe(FOOTER_TOP);
+  });
+  it('does not mutate its input', () => {
+    const tops = [...TOPS];
+    atV2(1000, 400, { sectionTops: tops });
+    expect(tops).toEqual(TOPS);
   });
 });

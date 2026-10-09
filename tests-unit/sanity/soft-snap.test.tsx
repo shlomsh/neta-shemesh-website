@@ -107,11 +107,11 @@ vi.mock('@/components/motion/SoftSnapEngine', async (importOriginal) => {
   const real = await importOriginal<typeof import('@/components/motion/SoftSnapEngine')>();
   const { createElement, useEffect } = await import('react');
   return {
-    SoftSnapEngine: () => {
+    SoftSnapEngine: (props: { mode?: 'v1' | 'v2' }) => {
       useEffect(() => {
         engineMounts.count++;
       }, []);
-      return createElement(real.SoftSnapEngine);
+      return createElement(real.SoftSnapEngine, props);
     },
   };
 });

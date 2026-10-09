@@ -5,8 +5,12 @@ import {
   DURATION_MS,
   SETTLE_MS,
   STARTUP_IGNORE_MS,
+  V2_DURATION_MS,
+  V2_SETTLE_MS,
   easeOutCubic,
   pickSnapTarget,
+  pickSnapTargetV2,
+  type SnapVariant,
 } from '@/lib/soft-snap';
 
 const SNAP_KEYS = new Set([
@@ -28,11 +32,19 @@ const isMenuOpen = () =>
  * does skip snapping while the mobile menu overlay is open.
  *
  * This file is the effect (listeners, timers, the glide); what to snap to is the pure
- * `pickSnapTarget` in `@/lib/soft-snap`, where the constants live too.
+ * `pickSnapTarget` (v1) or `pickSnapTargetV2` in `@/lib/soft-snap`, where the constants live too.
+ * `mode` (default v1) picks the decision, settle time and glide length; v2 additionally sums the
+ * net scroll since the last settle (`gestureDelta`) so the decision knows the gesture direction.
  */
-export function SoftSnapEngine() {
+export function SoftSnapEngine({ mode = 'v1' }: { mode?: Exclude<SnapVariant, 'off'> }) {
   useEffect(() => {
+    const v2 = mode === 'v2';
+    const settleMs = v2 ? V2_SETTLE_MS : SETTLE_MS;
+    const durationMs = v2 ? V2_DURATION_MS : DURATION_MS;
     const mountedAt = performance.now();
+    // v2: signed net scroll since the last settle, and the last scrollY seen (to take deltas from)
+    let gestureDelta = 0;
+    let lastY = window.scrollY;
 
     let animating = false;
     let rafId = 0;
@@ -50,6 +62,8 @@ export function SoftSnapEngine() {
       if (animating) {
         document.documentElement.style.scrollBehavior = prevScrollBehavior;
         animating = false;
+        gestureDelta = 0;
+        lastY = window.scrollY;
       }
     };
 
@@ -81,7 +95,7 @@ export function SoftSnapEngine() {
       const start = performance.now();
       const step = (now: number) => {
         if (!animating) return;
-        const t = Math.min(1, (now - start) / DURATION_MS);
+        const t = Math.min(1, (now - start) / durationMs);
         const y = from + delta * easeOutCubic(t);
         lastOwnY = y;
         window.scrollTo(0, y);
@@ -110,18 +124,25 @@ export function SoftSnapEngine() {
       if (isTyping()) return;
 
       const y = window.scrollY;
+      const delta = gestureDelta;
+      gestureDelta = 0; // every settle starts a fresh gesture, whether or not it glides
+      lastY = y;
       const sections = document.querySelectorAll<HTMLElement>('main > section, main > footer');
-      const target = pickSnapTarget({
+      const input = {
         scrollY: y,
         viewportHeight: window.innerHeight,
         documentHeight: document.documentElement.scrollHeight,
         sectionTops: Array.from(sections, (s) => s.getBoundingClientRect().top + y),
-      });
+      };
+      const target = v2 ? pickSnapTargetV2({ ...input, gestureDelta: delta }) : pickSnapTarget(input);
       if (target !== null) animateTo(target);
     };
 
     const onScroll = () => {
       if (animating) return; // our own scroll events
+      const y = window.scrollY;
+      gestureDelta += y - lastY;
+      lastY = y;
       if (lastOwnY !== null) {
         const own = Math.abs(window.scrollY - lastOwnY) < 1;
         if (own) return; // trailing event from our last programmatic scroll
@@ -132,11 +153,21 @@ export function SoftSnapEngine() {
         skipNextSettle = true;
       }
       clearSettle();
-      settleTimer = setTimeout(settle, SETTLE_MS);
+      settleTimer = setTimeout(settle, settleMs);
     };
 
     const onUserInput = () => {
       cancelAnimation();
+    };
+
+    // A wheel event can precede its scroll event by a frame: while a decision is pending, any
+    // wheel input pushes it back so a slow mouse wheel is never decided between two notches.
+    const onWheel = () => {
+      cancelAnimation();
+      if (v2 && settleTimer !== undefined) {
+        clearSettle();
+        settleTimer = setTimeout(settle, settleMs);
+      }
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -144,7 +175,7 @@ export function SoftSnapEngine() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('wheel', onUserInput, { passive: true });
+    window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('pointerdown', onUserInput, { passive: true });
     window.addEventListener('keydown', onKeyDown);
 
@@ -152,11 +183,11 @@ export function SoftSnapEngine() {
       clearSettle();
       cancelAnimation();
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('wheel', onUserInput);
+      window.removeEventListener('wheel', onWheel);
       window.removeEventListener('pointerdown', onUserInput);
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, []);
+  }, [mode]);
 
   return null;
 }
