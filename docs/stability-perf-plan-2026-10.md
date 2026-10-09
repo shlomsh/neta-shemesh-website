@@ -75,3 +75,18 @@ Ordered by expected impact on the "latency" feeling. **BN** = behaviour-neutral;
 ## 8. Evidence log
 
 _(to be appended: root-cause report from A; measured numbers from B)_
+
+## 9. Decisions and outcome
+
+The architect's answers to the questions in §6 are in `docs/architecture-review-2026-10.md` §6; that section is the record of the decisions. What shipped from this plan (ticket ids refer to the live board):
+
+- **NS-11** shared Elamy ink-box fix for headings (replaces the per-heading hero patch).
+- **NS-13** CSS reveal with one IntersectionObserver instead of framer-motion reveals.
+- **NS-16** touch snap retired for good; soft snap stays at widths >= 1024px only.
+- **NS-26** hero first paint: text visible immediately, decorative strokes animate after.
+- **NS-37 / NS-39** card heights (full-screen cards fill the visible screen on mobile).
+- **NS-42** contrast guard in the sanity suite.
+- **NS-33** contrast fixes on the blog cards.
+- **NS-45** inline ink box (in progress).
+
+The live kanban, https://claude.ai/artifact/GV4NpXrzjzc4wQ1XgBthwt, is the board of record for status. This plan is kept as the problem statement and evidence trail; it may lag the board.
