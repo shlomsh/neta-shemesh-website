@@ -30,7 +30,7 @@ describe('D19: ContactFAB', () => {
     const phone = home.querySelector('[data-testid="fab-phone"]')!;
     expect(pill && wa && phone, 'contact FAB parts').toBeTruthy();
     expect(classTokens(wa).some((t) => /^bg-\[#25d366\]$/i.test(t)), 'WhatsApp half must use #25D366').toBe(true);
-    expect(hasClass(pill, 'bg-[var(--color-plum)]'), 'pill base is plum').toBe(true);
+    expect(hasClass(pill, 'bg-plum'), 'pill base is plum').toBe(true);
     expect(classTokens(phone).some((t) => /25d366/i.test(t)), 'phone half must not be WhatsApp green').toBe(false);
     expect(phone.getAttribute('href')).toMatch(/^tel:/);
     expect(wa.getAttribute('href')).toMatch(/^https:\/\/wa\.me\//);

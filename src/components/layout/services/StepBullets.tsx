@@ -8,7 +8,7 @@ export function StepBullets({ items }: StepBulletsProps) {
       {items.map((item, i) => (
         <li
           key={i}
-          className="type-small text-white/90"
+          className="type-small text-cream/90"
         >
           {item}
         </li>

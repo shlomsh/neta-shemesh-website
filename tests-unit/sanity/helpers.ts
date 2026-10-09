@@ -138,10 +138,14 @@ export function overflowOf(el: Element | null | undefined): 'clip' | 'hidden' | 
   if (hasClass(el, 'overflow-clip')) return 'clip';
   return null;
 }
-/** a card/photo surface class (not bg-cover/bg-center/bg-no-repeat): veil, brand colour var, black scrim, gradient */
+/**
+ * a card/photo surface class (not bg-cover/bg-center/bg-no-repeat): veil, brand colour (the named
+ * theme utility `bg-cream`, or the legacy arbitrary `bg-[var(--color-*)]` form), black scrim, gradient
+ */
 export function isSurfaceBg(token: string): boolean {
   return (
     /^bg-\[var\(--(?:surface-veil|color-[a-z-]+)\)\]$/.test(token) ||
+    /^bg-(?:plum|mauve|blush|cream)(?:\/\d+)?$/.test(token) ||
     /^bg-(?:black|white)(?:\/\d+)?$/.test(token) ||
     /^bg-gradient-/.test(token) ||
     /^bg-linear-/.test(token) ||
@@ -439,7 +443,7 @@ const BP = '(?:[a-z0-9]+:)*'; // optional responsive/state prefix chain: md:, lg
 
 export const SCAN_RULES: ScanRule[] = [
   { id: 'px-size', label: 'arbitrary px/number text size  text-[18px]', re: /(?<![\w-])text-\[(?:\d|\.\d|length:|calc\()/,
-    bad: ['className="text-[18px]"', 'md:text-[15px]', 'text-[.9rem]', 'text-[0]'], good: ['text-[var(--color-plum)]', 'text-[color:var(--header-color)]', 'context-[1]'] },
+    bad: ['className="text-[18px]"', 'md:text-[15px]', 'text-[.9rem]', 'text-[0]'], good: ['text-plum', 'text-[color:var(--header-color)]', 'context-[1]'] },
   { id: 'clamp-size', label: 'clamp() text size  text-[clamp(', re: /(?<![\w-])text-\[clamp\(/,
     bad: ['text-[clamp(1rem,2vw,2rem)]'], good: ['py-[clamp(32px,5vw,64px)]', 'gap-[clamp(1px,2px,3px)]'] },
   { id: 'tw-named-size', label: 'Tailwind named text size (xs/sm/base/lg/xl/2xl..)', re: new RegExp(`(?<![\\w:-])${BP}text-(?:xs|sm|base|lg|xl|[2-9]xl)(?![\\w-])`),
@@ -464,15 +468,23 @@ export const SCAN_RULES: ScanRule[] = [
   { id: 'main-overflow-hidden', label: '<main> with overflow-hidden', re: /<main\b[^>]*\boverflow-hidden/,
     bad: ['<main className="relative w-full overflow-hidden" style={{}}>'], good: ['<main className="relative w-full overflow-clip">', '<section className="overflow-hidden">'] },
   { id: 'pageshell-overflow-hidden', label: '<PageShell overflow="hidden"> (the PageShell form of <main overflow-hidden>)', re: /<PageShell\b[^>]*\boverflow=\{?["']hidden/,
-    bad: ['<PageShell overflow="hidden" surface="cream">', "<PageShell surface=\"cream\" overflow={'hidden'}>"], good: ['<PageShell overflow="clip" surface="bg-light">', '<PageShell overflow="clip" surface="cream">'] },
+    bad: ['<PageShell overflow="hidden">', "<PageShell behaviors={x} overflow={'hidden'}>"], good: ['<PageShell overflow="clip">', '<PageShell overflow="clip" behaviors={<SoftSnap />}>'] },
   { id: 'google-fonts', label: 'Google Fonts fetch (breaks the Vercel prod build)', re: /next\/font\/google|fonts\.googleapis|fonts\.gstatic/,
     bad: ['import { Roboto } from "next/font/google"', 'https://fonts.googleapis.com/css'], good: ['next/font/local'] },
   { id: 'display-font-in-component', label: 'Elamy / display font set directly on a component', re: /(?<![\w-])font-(?:display|elamy)(?![\w-])|family-name:var\(--font-(?:display|elamy)\)|font-\[var\(--font-(?:display|elamy)\)\]|\bfontFamily\b/,
     bad: ['font-display', 'font-[family-name:var(--font-display)]', 'font-[var(--font-elamy)]', "style={{ fontFamily: 'x' }}"], good: ['font-[family-name:var(--font-body)]', 'type-title', 'font-displayed'] },
   { id: 'stock-palette', label: 'stock Tailwind palette colour', re: /(?<![\w-])(?:bg|text|border|ring|outline|fill|stroke|from|via|to|divide|decoration|shadow)-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)-\d{2,3}/,
-    bad: ['bg-red-500', 'text-gray-600', 'border-blue-300'], good: ['bg-[var(--color-plum)]', 'text-white', 'bg-black/20'] },
+    bad: ['bg-red-500', 'text-gray-600', 'border-blue-300'], good: ['bg-plum', 'text-cream', 'bg-black/20'] },
   { id: 'bg-white', label: 'bg-white (pure #fff, not the brand cream)', re: /(?<![\w-])bg-white(?![\w/-])/,
-    bad: ['bg-white', 'rounded-card bg-white shadow-sm'], good: ['bg-white/35', 'bg-[var(--color-cream)]', 'bg-whitesmoke'] },
+    bad: ['bg-white', 'rounded-card bg-white shadow-sm'], good: ['bg-white/35', 'bg-cream', 'bg-whitesmoke'] },
+  { id: 'arbitrary-colour-var', label: 'arbitrary colour utility  text-[var(--color-plum)]  (use the theme utility: text-plum, bg-cream, ring-mauve ...)',
+    re: /(?<![\w-])(?:text|bg|border|ring-offset|ring|outline|fill|stroke|from|via|to|decoration|divide|caret|accent|shadow)-\[(?:color:)?var\(--color-[a-z-]+\)\]/,
+    bad: ['text-[var(--color-plum)]', 'focus-visible:ring-[var(--color-white)]', 'text-[color:var(--color-white)]', 'bg-[var(--color-dark)]', 'hover:outline-[color:var(--color-mauve)]', 'focus-visible:ring-offset-[var(--color-cream)]'],
+    good: ['text-plum', 'bg-cream/35', 'bg-[var(--surface-veil)]', 'text-[color:var(--header-color)]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]', 'outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]'] },
+  { id: 'white-utility', label: 'named white utility  text-white / bg-white/35 / ring-white  (resolves through the :root --color-white override; use the -cream utility)',
+    re: /(?<![\w-])(?:text|bg|border|ring-offset|ring|outline|fill|stroke|from|via|to|decoration|divide|caret|accent)-white(?![\w-])/,
+    bad: ['text-white', 'text-white/90', 'ring-white/35', 'bg-white/35', 'lg:hover:text-white', 'focus-visible:ring-offset-white'],
+    good: ['text-cream', 'bg-cream/35', 'bg-whitesmoke', 'text-whitespace', 'on-white'] },
   { id: 'hex', label: 'hex colour literal', re: /#[0-9a-fA-F]{3,8}\b/, bad: ['bg-[#123456]', '#ABC', 'color:#fff5f0'], good: ['var(--color-plum)', 'issue #4', 'url(#grad)'] },
 ];
 

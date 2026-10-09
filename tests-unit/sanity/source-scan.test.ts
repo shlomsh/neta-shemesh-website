@@ -245,3 +245,33 @@ describe('D22: no bg-white on brand surfaces (use cream)', () => {
   });
 
 });
+
+describe('R9: colour utilities come from the @theme palette, not from arbitrary var() values', () => {
+  /**
+   * Arbitrary `text-[var(--color-plum)]` style utilities that are legitimately left, keyed by file NAME,
+   * each WITH a reason. None today: `text-[color:var(--header-color)]` (SectionTitle) is not a palette
+   * colour, it follows the tone, so it does not match the rule at all.
+   */
+  const ALLOWED: Record<string, string> = {};
+
+  const hits = scan(code, rule('arbitrary-colour-var').re);
+
+  it('no component uses text-[var(--color-*)] / bg-[var(--color-*)] / ring-[...]: use text-plum, bg-cream, ring-mauve ...', () => {
+    const unknown = hits.filter((h) => !Object.keys(ALLOWED).some((name) => h.split(':')[0].endsWith('/' + name)));
+    expectNone(unknown, 'arbitrary colour utility (the @theme colour name is the utility: text-plum, bg-cream, ring-cream/35 ...)');
+  });
+
+  it('every allow-list entry is still in use (prune ALLOWED when it is fixed)', () => {
+    for (const name of Object.keys(ALLOWED)) expect(hits.some((h) => h.split(':')[0].endsWith('/' + name)), `${name} no longer needs an exception`).toBe(true);
+  });
+
+  it('no text-white / bg-white/35 / ring-white: they resolve through the :root --color-white override; write the -cream utility', () => {
+    expectNone(scan(code, rule('white-utility').re), 'named white utility (use cream: same computed colour, no reliance on the :root override)');
+  });
+
+  it('the four palette names are declared as @theme colours, so text-plum / bg-cream / ... really generate CSS', () => {
+    const css = stripCssComments(sourceNamed('globals.css').text);
+    const theme = css.match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+    for (const name of ['plum', 'mauve', 'blush', 'cream']) expect(theme, `--color-${name} in @theme`).toMatch(new RegExp(`--color-${name}\\s*:\\s*#`));
+  });
+});

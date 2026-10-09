@@ -79,6 +79,8 @@ All sizes are fluid `clamp()`, mobile-first. **Do not hardcode `text-[XXpx]` or 
 
 > `--color-white` is aliased to `#FFF5F0` (the cream), **not** `#ffffff`. Never use `bg-white` for a brand surface — it gives pure white, not the brand cream.
 
+**Write colours as the named theme utilities** (`text-plum`, `bg-cream`, `bg-mauve`, `ring-cream/35`, `outline-plum`, `border-mauve`, `focus-visible:ring-offset-cream` ...): each `@theme` colour name is the utility. Do not write the arbitrary form `text-[var(--color-plum)]` and do not use the `-white` utilities (`text-white`, `bg-white/35`) or the retired aliases (`-text-primary`, `-dark`, `-bg-light`, `-brand-primary`); say cream/plum/mauve. The sanity suite (`source-scan.test.ts`, rules `arbitrary-colour-var` and `white-utility`) fails on them. What stays arbitrary on purpose: `bg-[var(--surface-veil)]` (the cream-over-mauve veil), `text-[color:var(--header-color)]` (follows the section tone) and `color-mix(...)` hover/outline tints.
+
 ---
 
 ### Contrast pairs (never deviate)

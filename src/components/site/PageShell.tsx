@@ -12,34 +12,24 @@ import { ContactFAB } from '@/components/ui/ContactFAB';
  *   - 'hidden' the blog pages, which mount no SoftSnap and rely on `overflow-hidden` to contain
  *              the cover-image overlap.
  *
- * `surface` keeps each page's exact inline background: 'bg-light' is the alias the home page used,
- * 'cream' the token the blog pages used. Both resolve to the same cream (#FFF5F0); they are kept
- * as two values only so this extraction changes no markup.
+ * The page surface is always cream (`bg-cream`, #FFF5F0). The home page used to spell it through the
+ * `--color-bg-light` alias and the blog pages through `--color-cream`; both resolved to the same value.
  */
 const OVERFLOW = {
   clip: 'overflow-clip',
   hidden: 'overflow-hidden',
 } as const;
 
-const SURFACE = {
-  'bg-light': 'var(--color-bg-light)',
-  cream: 'var(--color-cream)',
-} as const;
-
 interface PageShellProps {
   overflow: keyof typeof OVERFLOW;
-  surface: keyof typeof SURFACE;
   children: ReactNode;
   /** Rendered after the FAB (e.g. the behaviour-only `<SoftSnap />`, which renders nothing). */
   behaviors?: ReactNode;
 }
 
-export function PageShell({ overflow, surface, children, behaviors }: PageShellProps) {
+export function PageShell({ overflow, children, behaviors }: PageShellProps) {
   return (
-    <main
-      className={`relative w-full ${OVERFLOW[overflow]}`}
-      style={{ backgroundColor: SURFACE[surface] }}
-    >
+    <main className={`relative w-full bg-cream ${OVERFLOW[overflow]}`}>
       {children}
       <Footer />
       <ContactFAB />

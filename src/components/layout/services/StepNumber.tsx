@@ -6,7 +6,7 @@ export function StepNumber({ text }: StepNumberProps) {
   return (
     <span
       dir="ltr"
-      className="type-display self-end text-white drop-shadow-md"
+      className="type-display self-end text-cream drop-shadow-md"
     >
       {text}
     </span>

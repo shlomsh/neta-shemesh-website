@@ -8,7 +8,7 @@ export function CardLabel({ title, description }: CardLabelProps) {
     <div
       className="
         absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2
-        bg-[var(--color-brand-primary)] opacity-95
+        bg-mauve opacity-95
         rounded-full
         px-[24px] py-[8px]
         w-max max-w-[90%]
@@ -20,7 +20,7 @@ export function CardLabel({ title, description }: CardLabelProps) {
         className="
           block
           type-small
-          text-[var(--color-white)]
+          text-cream
           font-bold
         "
       >

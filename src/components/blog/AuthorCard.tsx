@@ -23,11 +23,11 @@ export function AuthorCard() {
       </div>
 
       <div className="flex flex-col gap-[6px]">
-        <span className="type-eyebrow text-[var(--color-mauve)]">
+        <span className="type-eyebrow text-mauve">
           על הכותבת
         </span>
-        <p className="type-card-title text-[var(--color-plum)]">{SITE.name}</p>
-        <p className="type-small text-[var(--color-mauve)]">{SITE.jobTitle} &middot; {SITE.city}</p>
+        <p className="type-card-title text-plum">{SITE.name}</p>
+        <p className="type-small text-mauve">{SITE.jobTitle} &middot; {SITE.city}</p>
         <p className="type-body text-[color:color-mix(in_srgb,var(--color-plum)_82%,transparent)]">
           מלווה זוגות, הורים ומשפחות בתהליכי שינוי, משבר וצמיחה — מתוך אמונה שכל
           קשר יכול למצוא מחדש את הדרך אל הקרבה והביטחון.

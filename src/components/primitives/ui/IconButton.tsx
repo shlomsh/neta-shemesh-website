@@ -10,7 +10,7 @@ type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type
 };
 
 const BASE =
-  'inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-[var(--color-white)] transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-white)]';
+  'inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-cream transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream';
 
 /**
  * A round 44px icon-only button in the cream-on-plum header style (hamburger, menu close).

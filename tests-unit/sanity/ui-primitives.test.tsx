@@ -78,7 +78,7 @@ describe('Photo: clipped cover-fitted frame', () => {
   it('objectPosition lands on the image as a crop, outlined adds the plum outline, zoom scales on hover', () => {
     const el = frame(<Photo src="/a" alt="" radius="card" outlined zoom="self" objectPosition="30% 64%" />);
     expect(img(el).getAttribute('style')).toContain('object-position:30% 64%');
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['outline', 'outline-[1.5px]', 'outline-[var(--color-plum)]']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['outline', 'outline-[1.5px]', 'outline-plum']));
     expect(hasClass(img(el), 'hover:scale-105')).toBe(true);
     expect(hasClass(img(frame(<Photo src="/a" alt="" radius="none" zoom="group" />)), 'group-hover:scale-[1.04]')).toBe(true);
   });
@@ -198,10 +198,10 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup', () 
     expect(classTokens(p)).toEqual(expect.arrayContaining(['type-quote', 'mt-5', 'md:mt-9', 'text-right']));
     expect(hasClass(p, 'max-w-[65ch]')).toBe(false);
   });
-  it('SectionHeader onPhoto: cream title and white subtitle, both with the soft shadow', () => {
+  it('SectionHeader onPhoto: cream title and subtitle, both with the soft shadow', () => {
     const [h, p] = Array.from(root(<SectionHeader id="h" align="center" onPhoto title="T" subtitle="S" />).children);
     expect(classTokens(h)).toEqual(expect.arrayContaining(['on-dark', 'drop-shadow-md']));
-    expect(classTokens(p)).toEqual(expect.arrayContaining(['text-white', 'drop-shadow-md']));
+    expect(classTokens(p)).toEqual(expect.arrayContaining(['text-cream', 'drop-shadow-md']));
   });
   it('SectionSubtitle on its own is the same paragraph (About gallery reveals the two lines separately)', () => {
     expect(classTokens(first(<SectionSubtitle align="center">S</SectionSubtitle>))).toEqual(expect.arrayContaining(['type-quote', 'max-w-[65ch]', 'mt-3', 'md:mt-4']));

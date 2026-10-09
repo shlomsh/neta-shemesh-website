@@ -32,7 +32,7 @@ type SectionSubtitleProps = {
  */
 export function SectionSubtitle({ align, onPhoto = false, className, children }: SectionSubtitleProps) {
   return (
-    <BodyText centered={align === 'center'} className={cx(SUBTITLE_CLASS[align], onPhoto && 'text-white drop-shadow-md', className)}>
+    <BodyText centered={align === 'center'} className={cx(SUBTITLE_CLASS[align], onPhoto && 'text-cream drop-shadow-md', className)}>
       {children}
     </BodyText>
   );
@@ -44,7 +44,7 @@ type SectionHeaderProps = {
   title: React.ReactNode;
   subtitle: React.ReactNode;
   align: SubtitleAlign;
-  /** Photo band: cream title and white subtitle, both with a soft shadow (the CTA band). */
+  /** Photo band: cream title and subtitle, both with a soft shadow (the CTA band). */
   onPhoto?: boolean;
   /** Layout extras only (the margin from the subtitle to the next block). */
   subtitleClassName?: string;

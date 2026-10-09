@@ -37,7 +37,7 @@ const RATIO_CLASS: Record<PhotoRatio, string> = {
 
 /** From lg the grid cell decides the height; the ratio would fight the flex chain (see Section `fit="lock"`). */
 const FILL_CELL_AT_LG = 'lg:aspect-auto lg:h-full';
-const OUTLINE = 'outline outline-[1.5px] outline-[var(--color-plum)]';
+const OUTLINE = 'outline outline-[1.5px] outline-plum';
 
 /**
  * Slow scale-up of the photo.

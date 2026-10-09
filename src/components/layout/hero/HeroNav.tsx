@@ -107,13 +107,13 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
 
   const desktopLinkClass = `
     type-lead
-    text-[var(--color-white)]
+    text-cream
     font-bold
     transition-opacity
     hover:opacity-75
     focus-visible:outline-none
     focus-visible:ring-2
-    focus-visible:ring-[var(--color-white)]
+    focus-visible:ring-cream
     rounded-tile
   `;
 
@@ -176,7 +176,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
           aria-modal="true"
           aria-label="תפריט ניווט"
           dir="rtl"
-          className="fixed inset-0 z-[100] md:hidden flex flex-col bg-[var(--color-plum)]"
+          className="fixed inset-0 z-[100] md:hidden flex flex-col bg-plum"
         >
           <div className="flex items-center justify-end px-[clamp(20px,5vw,40px)] py-[clamp(20px,4vw,32px)]">
             <IconButton ref={closeButtonRef} label="סגירת תפריט" onClick={() => setOpen(false)}>
@@ -195,7 +195,7 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
               renderLink(
                 href,
                 label,
-                'type-card-title text-[var(--color-white)] transition-opacity hover:opacity-75',
+                'type-card-title text-cream transition-opacity hover:opacity-75',
                 () => setOpen(false),
               ),
             )}

@@ -42,7 +42,7 @@ The one title style: `type-title font-bold tracking-[-0.01em]`, colour from `--h
 ### `<SectionHeader id title subtitle align onPhoto? subtitleClassName?>` / `<SectionSubtitle align onPhoto? className?>`
 The title + subtitle lockup of CLAUDE.md typography rule 8, as two sibling elements (a fragment): the caller keeps its own wrapper and `ScrollReveal`. `SectionSubtitle` is a `BodyText` at `type-quote`.
 - `align` (required): `center` (title centred; subtitle `max-w-[65ch] mx-auto mt-3 md:mt-4`) | `column` (right-aligned side column: the Services exception, `mt-5 md:mt-9` for the Elamy "?" descender and no 65ch cap).
-- `onPhoto`: cream title + white subtitle, both with `drop-shadow-md` (the CTA band, which has no tone).
+- `onPhoto`: cream title + cream subtitle (`text-cream`), both with `drop-shadow-md` (the CTA band, which has no tone).
 - `subtitleClassName` / `className`: layout extras only (the margin to the next block).
 - When the title and the subtitle reveal separately (About gallery) use `SectionTitle` and `SectionSubtitle` directly.
 
@@ -73,7 +73,10 @@ Round 44px icon-only `<button type="button">` in the cream-on-plum header style 
 
 ## Related (outside `primitives/`)
 - `ui/ScrollReveal`, `ui/ParallaxFrame`, `ui/SoftSnap` are the motion pieces; `ui/ContactFAB` is the contact pill. Reveal delays come from `lib/motion.ts` (`stagger(i)`); do not pass `delay={0}`.
-- `site/PageShell` is the `<main>` shell shared by the home page and both blog pages (`overflow` is a required prop: `clip` for home, `hidden` for blog); `site/JsonLd` renders a JSON-LD script.
+- `site/PageShell` is the `<main>` shell shared by the home page and both blog pages (`overflow` is a required prop: `clip` for home, `hidden` for blog; the surface is always `bg-cream`); `site/JsonLd` renders a JSON-LD script.
+
+## Colour utilities
+Primitives and components write colours as the `@theme` names: `text-plum`, `bg-cream`, `ring-cream`, `outline-plum`, `border-mauve`, `ring-offset-cream` (and `/35` style opacity). Never `text-[var(--color-plum)]`, never `text-white` / `bg-white/35` (cream and white are the same computed colour here, say cream). Exceptions that stay arbitrary: `bg-[var(--surface-veil)]` (`Card` veil), `text-[color:var(--header-color)]` (`SectionTitle`, follows the tone), `color-mix(...)` tints.
 
 ## Spacing tokens
 `@theme` in `globals.css`: `--spacing-gutter`, `--spacing-gutter-wide`, `--spacing-section`, `--spacing-section-tight` (generate `px-gutter`, `px-gutter-wide`, `py-section`, `py-section-tight`). Only values repeated 3+ times are tokens. Note that a `--spacing-*` token also creates `gap-`, `w-`, `h-`, `m-`, `inset-` ... utilities with that name (e.g. `gap-section`), so keep the names unambiguous. Tailwind emits a `@theme` variable only when a utility that names it is used; a token consumed only through an arbitrary `[var(--x)]` utility must go in `@theme static`.

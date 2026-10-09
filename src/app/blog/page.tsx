@@ -28,18 +28,18 @@ export default function BlogIndexPage() {
   const posts = getAllPosts();
 
   return (
-    <PageShell overflow="hidden" surface="cream">
+    <PageShell overflow="hidden">
       <BlogHeader />
 
       {/* Intro band */}
       <Section id={ID.blogIntro} tone="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
         <Container maxWidth="lg" className="text-center">
           <ScrollReveal className="flex flex-col items-center gap-[clamp(14px,2vw,22px)]">
-            <span className="type-eyebrow text-[var(--color-blush)]">
+            <span className="type-eyebrow text-blush">
               הבלוג
             </span>
             <SectionTitle as="h1">מחשבות מהקליניקה</SectionTitle>
-            <p className="type-lead mx-auto max-w-[60ch] text-[var(--color-cream)]">
+            <p className="type-lead mx-auto max-w-[60ch] text-cream">
               רעיונות, כלים ותובנות על זוגיות, הורות והקשרים שאנחנו הכי רוצים
               לטפח. סדרת מאמרים שנכתבת מהלב ומהניסיון בחדר הטיפול.
             </p>

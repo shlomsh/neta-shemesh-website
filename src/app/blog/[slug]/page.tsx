@@ -52,7 +52,7 @@ export default async function BlogPostPage(
   const others = getOtherPosts(slug);
 
   return (
-    <PageShell overflow="hidden" surface="cream">
+    <PageShell overflow="hidden">
       <JsonLd data={blogPostingJsonLd(post)} />
 
       <BlogHeader />
@@ -62,7 +62,7 @@ export default async function BlogPostPage(
         <Container maxWidth="md">
           <Link
             href="/blog"
-            className="type-small mb-[clamp(20px,3vw,32px)] inline-flex items-center gap-[8px] font-bold text-[var(--color-blush)] transition-opacity hover:opacity-75"
+            className="type-small mb-[clamp(20px,3vw,32px)] inline-flex items-center gap-[8px] font-bold text-blush transition-opacity hover:opacity-75"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="4" y1="12" x2="20" y2="12" />
@@ -72,14 +72,14 @@ export default async function BlogPostPage(
           </Link>
 
           <div className="flex flex-col items-center gap-[clamp(14px,2vw,22px)] text-center">
-            <span className="type-eyebrow text-[var(--color-blush)]">
+            <span className="type-eyebrow text-blush">
               {post.category}
             </span>
             <SectionTitle as="h1">{post.title}</SectionTitle>
             <p className="type-lead mx-auto max-w-[60ch] text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]">
               {post.excerpt}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-[10px] type-small text-[var(--color-blush)]">
+            <div className="flex flex-wrap items-center justify-center gap-[10px] type-small text-blush">
               <span>{SITE.name}</span>
               <span aria-hidden="true">·</span>
               <time dateTime={post.date}>{post.dateDisplay}</time>
@@ -124,7 +124,7 @@ export default async function BlogPostPage(
       <Section id={ID.postCta} tone="dark" className="py-[clamp(56px,8vw,110px)]">
         <Container maxWidth="md">
           <div className="flex flex-col items-center gap-[clamp(24px,3.5vw,40px)] text-center">
-            <p className="type-quote mx-auto max-w-[55ch] text-[var(--color-cream)]">
+            <p className="type-quote mx-auto max-w-[55ch] text-cream">
               {post.cta.text}
             </p>
             <ButtonLink href={post.cta.href} variant="secondary">{post.cta.buttonLabel}</ButtonLink>

@@ -20,7 +20,7 @@ const HALF_BASE =
 const WA_HALF =
   'bg-[#25D366] text-[#FFFFFF] hover:bg-[#1EBE5B] focus-visible:ring-[#FFFFFF]';
 const PHONE_HALF =
-  'hover:bg-[var(--color-mauve)] focus-visible:ring-[var(--color-cream)]';
+  'hover:bg-mauve focus-visible:ring-cream';
 
 /**
  * Single contact pill (replaces the old WhatsApp + Phone FABs).
@@ -41,7 +41,7 @@ export function ContactFAB() {
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-white/35 bg-[var(--color-plum)] text-[var(--color-cream)] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
+        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-cream/35 bg-plum text-cream shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
       >
         <a
           data-testid="fab-whatsapp"
@@ -57,7 +57,7 @@ export function ContactFAB() {
           <span>וואטסאפ</span>
         </a>
 
-        <span aria-hidden="true" className="my-2.5 w-px bg-white/35 md:hidden" />
+        <span aria-hidden="true" className="my-2.5 w-px bg-cream/35 md:hidden" />
 
         <a
           data-testid="fab-phone"

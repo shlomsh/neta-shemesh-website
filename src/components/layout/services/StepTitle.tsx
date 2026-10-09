@@ -4,7 +4,7 @@ interface StepTitleProps {
 
 export function StepTitle({ text }: StepTitleProps) {
   return (
-    <h3 className="type-card-title mt-2 mb-3 text-white drop-shadow">
+    <h3 className="type-card-title mt-2 mb-3 text-cream drop-shadow">
       {text}
     </h3>
   );

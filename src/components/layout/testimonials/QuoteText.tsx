@@ -7,7 +7,7 @@ export function QuoteText({ text }: QuoteTextProps) {
     <p
       className="
         type-quote
-        text-[var(--color-text-primary)]
+        text-plum
         font-[family-name:var(--font-body)]
         text-right
         mt-[64px]

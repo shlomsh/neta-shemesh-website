@@ -10,7 +10,7 @@ export function HeroSubtext() {
       dir="rtl"
       className="
         type-quote
-        text-[var(--color-blush)]
+        text-blush
         w-full
       "
     >

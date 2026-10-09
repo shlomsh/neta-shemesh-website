@@ -18,7 +18,7 @@ export function HeroHeading() {
       dir="rtl"
       className="
         type-display
-        text-[var(--color-white)]
+        text-cream
         font-bold
         w-full
       "
@@ -32,7 +32,7 @@ export function HeroHeading() {
           className="
             absolute inset-x-0 bottom-[0.08em] -z-10
             h-[0.22em]
-            text-[var(--color-blush)]
+            text-blush
             opacity-[0.6]
             rotate-[-1.2deg]
           "

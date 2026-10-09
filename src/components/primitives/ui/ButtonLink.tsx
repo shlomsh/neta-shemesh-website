@@ -50,9 +50,9 @@ export function ButtonLink({
 
   const variants = {
     primary:
-      'bg-[var(--color-plum)] text-[var(--color-cream)] hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)] focus-visible:ring-[var(--color-plum)] focus-visible:ring-offset-[var(--color-cream)]',
+      'bg-plum text-cream hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)] focus-visible:ring-plum focus-visible:ring-offset-cream',
     secondary:
-      'bg-[var(--color-cream)] text-[var(--color-plum)] hover:bg-[color:color-mix(in_srgb,var(--color-cream)_85%,var(--color-blush))] focus-visible:ring-[var(--color-cream)] focus-visible:ring-offset-[var(--color-plum)]',
+      'bg-cream text-plum hover:bg-[color:color-mix(in_srgb,var(--color-cream)_85%,var(--color-blush))] focus-visible:ring-cream focus-visible:ring-offset-plum',
   };
 
   return (

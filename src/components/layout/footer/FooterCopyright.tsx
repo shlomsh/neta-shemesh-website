@@ -4,7 +4,7 @@
 export function FooterCopyright() {
   return (
     <p
-      className="type-small text-[color:var(--color-white)] text-center"
+      className="type-small text-cream text-center"
       dir="rtl"
     >
       כל הזכויות שמורות <span className="font-latin">©</span> 2026.

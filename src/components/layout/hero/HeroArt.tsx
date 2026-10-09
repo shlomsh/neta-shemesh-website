@@ -38,7 +38,7 @@ export function HeroArt() {
           absolute
           w-[clamp(280px,46vw,520px)]
           h-[clamp(220px,38vw,420px)]
-          bg-[var(--color-mauve)]
+          bg-mauve
           [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]
         `}
       />
@@ -50,7 +50,7 @@ export function HeroArt() {
           w-[clamp(240px,42vw,480px)]
           h-auto
           hero-floaty
-          text-[var(--color-cream)]
+          text-cream
         "
       />
     </div>

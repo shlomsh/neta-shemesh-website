@@ -12,7 +12,7 @@ export function ExpertiseCard({ title, description, imageSrc, imageAlt, delay }:
   return (
     <ScrollReveal delay={delay} className="w-full h-full shadow-2xl rounded-card">
       {/* safariClip off: the grid cell around this card (Expertise.tsx) already carries safari-clip */}
-      <Photo src={imageSrc} alt={imageAlt} radius="card" safariClip={false} className="w-full h-full bg-[var(--color-dark)]">
+      <Photo src={imageSrc} alt={imageAlt} radius="card" safariClip={false} className="w-full h-full bg-plum">
         <CardLabel title={title} description={description} />
       </Photo>
     </ScrollReveal>

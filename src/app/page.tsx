@@ -10,7 +10,7 @@ import SoftSnap from '@/components/ui/SoftSnap';
 export default function Home() {
   return (
     // overflow 'clip', never 'hidden': SoftSnap and sticky need <main> not to be a scroll container.
-    <PageShell overflow="clip" surface="bg-light" behaviors={<SoftSnap />}>
+    <PageShell overflow="clip" behaviors={<SoftSnap />}>
       <Hero />
       <AboutIntro />
       <Expertise />

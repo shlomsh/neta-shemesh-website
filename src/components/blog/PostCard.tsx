@@ -19,7 +19,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
     <Link
       href={`/blog/${post.slug}`}
       dir="rtl"
-      className="group flex h-full flex-col overflow-hidden rounded-card bg-[var(--color-cream)] outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)] transition-all duration-300 hover:-translate-y-1 hover:outline-[color:var(--color-mauve)] hover:shadow-[0_18px_40px_-20px_rgba(122,89,120,0.45)]"
+      className="group flex h-full flex-col overflow-hidden rounded-card bg-cream outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)] transition-all duration-300 hover:-translate-y-1 hover:outline-mauve hover:shadow-[0_18px_40px_-20px_rgba(122,89,120,0.45)]"
     >
       {/* Cover */}
       <Photo
@@ -34,11 +34,11 @@ export function PostCard({ post, priority = false }: PostCardProps) {
 
       {/* Body */}
       <div className="flex flex-1 flex-col gap-[12px] p-[clamp(20px,2.5vw,28px)]">
-        <span className="type-eyebrow text-[var(--color-mauve)]">
+        <span className="type-eyebrow text-mauve">
           {post.category}
         </span>
 
-        <h3 className="type-card-title text-[var(--color-plum)]">
+        <h3 className="type-card-title text-plum">
           {post.title}
         </h3>
 
