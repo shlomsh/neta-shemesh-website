@@ -20,7 +20,7 @@ export function Hero() {
 
       <section
         id={ID.hero}
-        aria-label="כותרת ראשית"
+        aria-labelledby={ID.heroTitle}
         className="
           relative
           w-full

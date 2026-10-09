@@ -6,6 +6,8 @@ interface PostCardProps {
   post: BlogPost;
   /** Eager-load the cover for above-the-fold cards (first row on the listing). */
   priority?: boolean;
+  /** Heading level of the title: 3 under an h2 ("more posts"), 2 on the blog index under the h1. */
+  headingLevel?: 2 | 3;
 }
 
 /**
@@ -14,7 +16,8 @@ interface PostCardProps {
  *
  * Lives on cream surfaces → dark plum text (AAA). The whole card is a link.
  */
-export function PostCard({ post, priority = false }: PostCardProps) {
+export function PostCard({ post, priority = false, headingLevel = 3 }: PostCardProps) {
+  const Heading = headingLevel === 2 ? 'h2' : 'h3';
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -37,9 +40,9 @@ export function PostCard({ post, priority = false }: PostCardProps) {
           {post.category}
         </span>
 
-        <h3 className="type-card-title text-plum">
+        <Heading className="type-card-title text-plum">
           {post.title}
-        </h3>
+        </Heading>
 
         <p className="type-body text-[color:color-mix(in_srgb,var(--color-plum)_82%,transparent)]">
           {post.excerpt}

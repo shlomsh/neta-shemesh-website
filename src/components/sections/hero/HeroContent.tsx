@@ -34,7 +34,7 @@ export function HeroContent() {
       "
     >
       {/* ── Top bar: logo + nav ── */}
-      <div className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-[16px]">
+      <div role="banner" className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-[16px]">
         <BrandLogo />
         <SiteNav />
       </div>

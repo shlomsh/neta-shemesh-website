@@ -11,6 +11,9 @@
 
 /** Section ids and heading ids. */
 export const ID = {
+  // Page-level skip link target (the <main> element, see site/PageShell)
+  main: 'main',
+
   // Hero
   hero: 'hero',
   // (named *-heading, not *-title: a removed CSS class called like the latter is banned by the source scan)

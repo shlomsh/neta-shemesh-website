@@ -7,7 +7,9 @@ import { IconButton } from '@/components/primitives/ui/IconButton';
 import { ID } from '@/content/ids';
 import { SITE, telHref } from '@/content/site';
 import { useBodyScrollLock } from './hooks/useBodyScrollLock';
+import { useCloseAtBreakpoint } from './hooks/useCloseAtBreakpoint';
 import { useFocusTrap } from './hooks/useFocusTrap';
+import { useInertBackground } from './hooks/useInertBackground';
 import { CloseIcon } from './icons/CloseIcon';
 import { NavLink } from './NavLink';
 
@@ -32,7 +34,10 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
 
   // Lock body scroll, focus the close button, and handle keyboard while the overlay is open.
   useBodyScrollLock(open);
+  useInertBackground(open);
   useFocusTrap(open, overlayRef, closeButtonRef, onClose);
+  // The overlay is md:hidden: close it when the viewport grows past md (rotation, split view).
+  useCloseAtBreakpoint(open, '(min-width: 768px)', onClose);
 
   if (!(mounted && open)) return null;
 

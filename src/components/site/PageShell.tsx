@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ID } from '@/content/ids';
 import { cx } from '@/lib/cx';
 import { ContactFAB } from './ContactFAB';
 import { Footer } from './footer/Footer';
@@ -30,11 +31,22 @@ interface PageShellProps {
 
 export function PageShell({ overflow, children, behaviors }: PageShellProps) {
   return (
-    <main className={cx('relative w-full bg-cream', OVERFLOW[overflow])}>
-      {children}
-      <Footer />
-      <ContactFAB />
-      {behaviors}
-    </main>
+    <>
+      {/* Skip link: the first focusable element on every page. Visually hidden (sr-only, out of flow)
+          until keyboard focus, then a fixed cream pill with a plum ring (5.55:1). A sibling of <main>,
+          not a child, so the `main > section` selectors (SoftSnap, tests) never see it. */}
+      <a
+        href={`#${ID.main}`}
+        className="sr-only type-lead font-bold focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:start-3 focus-visible:z-[200] focus-visible:inline-flex focus-visible:min-h-[44px] focus-visible:items-center focus-visible:rounded-full focus-visible:bg-cream focus-visible:px-6 focus-visible:py-2 focus-visible:text-plum focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+      >
+        דלגו לתוכן
+      </a>
+      <main id={ID.main} tabIndex={-1} className={cx('relative w-full bg-cream focus:outline-none', OVERFLOW[overflow])}>
+        {children}
+        <Footer />
+        <ContactFAB />
+        {behaviors}
+      </main>
+    </>
   );
 }

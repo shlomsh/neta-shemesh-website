@@ -53,7 +53,7 @@ export default function BlogIndexPage() {
           <div className="grid grid-cols-1 gap-[clamp(24px,3vw,40px)] md:grid-cols-2">
             {posts.map((post, i) => (
               <ScrollReveal key={post.slug} delay={stagger(i % 2)} className="h-full">
-                <PostCard post={post} priority={i < 2} />
+                <PostCard post={post} priority={i < 2} headingLevel={2} />
               </ScrollReveal>
             ))}
           </div>

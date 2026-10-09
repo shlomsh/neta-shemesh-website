@@ -23,7 +23,6 @@ import { cx } from '@/lib/cx';
 export function HeroArt() {
   return (
     <div
-      aria-hidden="false"
       className="
         relative
         flex items-center justify-center
