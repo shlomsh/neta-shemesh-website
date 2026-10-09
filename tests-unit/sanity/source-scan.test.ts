@@ -298,3 +298,99 @@ describe('C1: RTL is declared once, on <html>', () => {
     expect(stripCssComments(sourceNamed('globals.css').text)).toMatch(/direction\s*:\s*rtl/);
   });
 });
+
+// ════════════════════════════════════════════════════════════════════════════
+// NS-42: contrast and focus bans (own block, kept at the end of the file)
+// ════════════════════════════════════════════════════════════════════════════
+import { CONTRAST_BANS, containsBanSample, maskIconHasDefaultFocus, ratchetBan, type BanAllow } from './helpers';
+
+describe('NS-42: contrast and focus source bans (each with an allow-list that only shrinks)', () => {
+  /**
+   * Today's offenders per rule, keyed by file NAME with the number of offences in it. The table is a
+   * RATCHET: a new offence (or a file not listed) fails; an entry whose offences are gone ALSO fails
+   * ("stale allow entry, remove it"), so the fix commit has to delete its row.
+   */
+  const BAN_ALLOW: Record<string, BanAllow[]> = {
+    'text-mauve': [
+      { file: 'AuthorCard.tsx', count: 2, reason: 'blog author card eyebrow + job title in mauve on a cream/blush card (2.05:1)' },
+      { file: 'PostCard.tsx', count: 1, reason: 'blog card category eyebrow in mauve on cream (2.26:1)' },
+      { file: 'Attribution.tsx', count: 1, reason: 'testimonial role line in mauve (type-small)' },
+    ],
+    'small-text-blush': [
+      { file: 'page.tsx', count: 4, reason: 'blog index eyebrow + post page back link, eyebrow and meta row: blush at type-small / eyebrow on plum is 3.89:1' },
+      { file: 'HeroHeading.tsx', count: 1, reason: 'the hand-drawn underline stroke (aria-hidden svg, currentColor): decorative, carries no text' },
+    ],
+    'text-colour-mix-transparent': [
+      { file: 'page.tsx', count: 1, reason: 'post page lead paragraph: cream at 88% on plum' },
+      { file: 'AuthorCard.tsx', count: 1, reason: 'author bio: plum at 82%' },
+      { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92%' },
+      { file: 'PostCard.tsx', count: 2, reason: 'card excerpt (plum 82%) and date/read-time row (plum 70%)' },
+    ],
+    'bg-mauve-with-text': [
+      { file: 'ExpertiseCard.tsx', count: 1, reason: 'the title pill: bold cream 14px on bg-mauve, 2.26:1' },
+      { file: 'ContactFAB.tsx', count: 1, reason: 'the phone half turns bg-mauve on hover with cream text (2.26:1)' },
+    ],
+    'opacity-on-text': [
+      { file: 'page.tsx', count: 1, reason: 'post page back link fades to opacity-75 on hover' },
+      { file: 'IconButton.tsx', count: 1, reason: 'icon-only button: the child is an svg, not text; hover fades the icon (NS-41 may swap it for a colour change)' },
+      { file: 'ContactDetails.tsx', count: 1, reason: 'phone / email link fades to opacity-80 on hover' },
+      { file: 'ExpertiseCard.tsx', count: 1, reason: 'the title pill is bg-mauve opacity-95' },
+      { file: 'MobileMenu.tsx', count: 1, reason: 'overlay nav links fade to opacity-75 on hover' },
+      { file: 'SiteNav.tsx', count: 1, reason: 'desktop nav links fade to opacity-75 on hover' },
+    ],
+    'focus-outline-none': [
+      { file: 'PageShell.tsx', count: 1, reason: '<main tabIndex=-1> is the skip-link target: programmatic focus only, not reachable by Tab; NS-41 decides whether it needs a ring' },
+    ],
+    'focus-mask-link': [
+      { file: 'SocialLinks.tsx', count: 1, reason: 'the three social links are empty mask-painted anchors with no focus-visible ring (NS-41)' },
+    ],
+  };
+
+  const bySource = (id: string) => {
+    const r = CONTRAST_BANS.find((b) => b.id === id)!;
+    let hits = sources.flatMap((f) => r.find(f));
+    // a MaskIcon whose own anchor ships a focus ring covers every `<MaskIcon as="a">` usage
+    if (id === 'focus-mask-link' && maskIconHasDefaultFocus()) hits = hits.filter((h) => !h.match.startsWith('<MaskIcon'));
+    return hits;
+  };
+
+  it('the rule table and the allow table list the same rules', () => {
+    expect(Object.keys(BAN_ALLOW).sort()).toEqual(CONTRAST_BANS.map((b) => b.id).sort());
+  });
+
+  describe.each(CONTRAST_BANS.map((b) => [b.id, b] as const))('%s', (id, r) => {
+    it('positive control: flags every known-bad sample and spares every known-good one', () => {
+      expect(r.bad.length, `${id} needs bad samples`).toBeGreaterThan(0);
+      expect(r.good.length, `${id} needs good samples`).toBeGreaterThan(0);
+      for (const s of r.bad) expect(containsBanSample(r, s), `${id} must flag:\n${s}`).toBe(true);
+      for (const s of r.good) expect(containsBanSample(r, s), `${id} must NOT flag:\n${s}`).toBe(false);
+    });
+
+    it(`src has no new offender: ${r.label}`, () => {
+      const problems = ratchetBan(bySource(id), BAN_ALLOW[id]).filter((p) => !p.startsWith('stale'));
+      expectNone(problems, `${id}: new offence (fix it, or add the file to BAN_ALLOW with a reason only if the owner agrees)`);
+    });
+
+    it('every allow entry still has its offence: stale allow entry, remove it', () => {
+      const problems = ratchetBan(bySource(id), BAN_ALLOW[id]).filter((p) => p.startsWith('stale'));
+      expectNone(problems, `${id}: the offence is gone, delete or lower the BAN_ALLOW row`);
+    });
+
+    it('every allow entry has a reason and a positive count', () => {
+      for (const a of BAN_ALLOW[id]) {
+        expect(a.reason.length, `${id} ${a.file}`).toBeGreaterThan(10);
+        expect(a.count, `${id} ${a.file}`).toBeGreaterThan(0);
+      }
+    });
+  });
+
+  it('ratchetBan: more hits than allowed, a file that is not listed, and a vanished offence are all reported', () => {
+    const h = (file: string, line = 1) => ({ file, path: `src/${file}`, line, match: 'x' });
+    const allow: BanAllow[] = [{ file: 'A.tsx', count: 2, reason: 'because' }];
+    expect(ratchetBan([h('A.tsx'), h('A.tsx', 2)], allow)).toEqual([]);
+    expect(ratchetBan([h('A.tsx'), h('A.tsx', 2), h('A.tsx', 3)], allow)[0]).toMatch(/^new offence in A\.tsx/);
+    expect(ratchetBan([h('A.tsx'), h('A.tsx', 2), h('B.tsx')], allow)[0]).toMatch(/^new offence in B\.tsx/);
+    expect(ratchetBan([h('A.tsx')], allow)[0]).toMatch(/^stale allow entry, lower its count 2 -> 1/);
+    expect(ratchetBan([], allow)[0]).toMatch(/^stale allow entry, remove it: A\.tsx/);
+  });
+});

@@ -603,3 +603,836 @@ export function displayFontSelectors(css = globalsCss()): string[] {
   }
   return out;
 }
+
+// ─── Contrast: colour maths and a class-to-colour resolver (NS-42) ───────────
+//
+// jsdom has no Tailwind CSS, so `getComputedStyle` knows nothing about `text-plum` or `bg-mauve/50`.
+// Instead of computed values this resolver reads the CLASS LIST of every ancestor and maps it to a
+// colour through the palette declared in `@theme` (globals.css), the same way the browser would for
+// the base (mobile) state. What it understands:
+//   text-plum|mauve|blush|cream|white|black(/NN)   bg-<same>(/NN)   text-inherit|current
+//   text-[color:...] / bg-[...] holding #hex, var(--color-*), var(--surface-veil),
+//     var(--header-color), color-mix(in srgb, A p%, B|transparent)
+//   [data-bg-tone] -> background/colour/--header-color from the tone rules in globals.css
+//   .on-dark -> --header-color cream;   opacity-NN / opacity-[0.NN] on ancestors; inline style colour/opacity
+// Not resolved (see LIMITS in README): variant states (hover:, focus-visible:), breakpoint colour
+// overrides, gradients, photos behind text, mix-blend-mode grain, group-opacity against a bg that
+// sits above the faded element.
+
+export interface RGB { r: number; g: number; b: number }
+export interface RGBA extends RGB { a: number }
+
+export function hexToRgb(hex: string): RGB {
+  let h = hex.replace('#', '');
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+  if (h.length === 8) h = h.slice(0, 6);
+  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+}
+
+/** WCAG 2.x relative luminance. */
+export function relativeLuminance(c: RGB): number {
+  const lin = (v: number) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+}
+
+/** WCAG 2.x contrast ratio, always >= 1 (order of the two colours does not matter). */
+export function contrastRatio(a: RGB, b: RGB): number {
+  const la = relativeLuminance(a);
+  const lb = relativeLuminance(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** Source-over compositing of a (possibly translucent) colour on an opaque one, in sRGB like browsers do. */
+export function compositeOver(fg: RGBA, bg: RGB): RGB {
+  return { r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a) };
+}
+
+/** `@theme` colours (`--color-plum: #7A5978;` ...), straight from globals.css so the palette has one source. */
+export function themeColours(css = globalsCss()): Record<string, RGB> {
+  const theme = stripCssComments(css).match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+  const out: Record<string, RGB> = {};
+  for (const m of theme.matchAll(/--color-([a-z]+)\s*:\s*(#[0-9a-fA-F]{3,8})\s*;/g)) out[m[1]] = hexToRgb(m[2]);
+  return out;
+}
+
+export interface ColourEnv {
+  palette: Record<string, RGB>;
+  /** custom properties: '--surface-veil' (raw css), '--header-color' (resolved by the caller per element) */
+  vars: Record<string, string>;
+}
+
+let envCache: ColourEnv | undefined;
+export function colourEnv(): ColourEnv {
+  if (!envCache) {
+    const css = globalsCss();
+    envCache = { palette: themeColours(css), vars: { '--surface-veil': cssVar(css, '--surface-veil') ?? '' } };
+  }
+  return envCache;
+}
+
+function splitTopLevel(s: string, sep = ','): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of s) {
+    if (ch === '(') depth++;
+    if (ch === ')') depth--;
+    if (ch === sep && depth === 0) {
+      out.push(cur.trim());
+      cur = '';
+    } else cur += ch;
+  }
+  out.push(cur.trim());
+  return out;
+}
+
+/**
+ * Evaluate a CSS colour expression: `#hex`, `transparent`, `black`/`white`, `var(--color-x)`,
+ * `var(--surface-veil)`, `var(--header-color)` (from `env.vars`), `color-mix(in srgb, A p%, B [q%])`.
+ * Returns null for anything it does not understand (the caller reports it, never guesses).
+ */
+export function evalColour(expr: string, env: ColourEnv = colourEnv(), depth = 0): RGBA | null {
+  const e = expr.trim().replace(/_/g, ' ');
+  if (depth > 6) return null;
+  if (/^#[0-9a-fA-F]{3,8}$/.test(e)) return { ...hexToRgb(e), a: 1 };
+  if (e === 'transparent') return { r: 0, g: 0, b: 0, a: 0 };
+  if (e === 'black') return { r: 0, g: 0, b: 0, a: 1 };
+  if (e === 'white') return { r: 255, g: 255, b: 255, a: 1 };
+  const v = e.match(/^var\(\s*(--[\w-]+)\s*\)$/);
+  if (v) {
+    const name = v[1];
+    if (name.startsWith('--color-')) {
+      const c = env.palette[name.slice(8)];
+      return c ? { ...c, a: 1 } : null;
+    }
+    const raw = env.vars[name];
+    return raw ? evalColour(raw, env, depth + 1) : null;
+  }
+  const mix = e.match(/^color-mix\(\s*in srgb\s*,(.*)\)$/);
+  if (mix) {
+    const parts = splitTopLevel(mix[1]);
+    if (parts.length !== 2) return null;
+    const parse = (p: string) => {
+      const m = p.match(/^(.*?)(?:\s+(\d+(?:\.\d+)?)%)?$/)!;
+      const c = evalColour(m[1], env, depth + 1);
+      return c ? { c, pct: m[2] === undefined ? undefined : Number(m[2]) } : null;
+    };
+    const A = parse(parts[0]);
+    const B = parse(parts[1]);
+    if (!A || !B) return null;
+    let pa = A.pct;
+    let pb = B.pct;
+    if (pa === undefined && pb === undefined) pa = pb = 50;
+    else if (pa === undefined) pa = 100 - pb!;
+    else if (pb === undefined) pb = 100 - pa;
+    const sum = pa + pb!;
+    const wa = pa / sum;
+    const wb = pb! / sum;
+    const alpha = (A.c.a * wa + B.c.a * wb) * Math.min(1, sum / 100);
+    if (alpha === 0) return { r: 0, g: 0, b: 0, a: 0 };
+    const ch = (k: 'r' | 'g' | 'b') => (A.c[k] * A.c.a * wa + B.c[k] * B.c.a * wb) / (A.c.a * wa + B.c.a * wb);
+    return { r: ch('r'), g: ch('g'), b: ch('b'), a: alpha };
+  }
+  return null;
+}
+
+/** [variant, utility] of a class token; the variant chain is whatever precedes the last top-level ':' (outside [...]). */
+export function splitVariant(token: string): { variant: string; util: string } {
+  let depth = 0;
+  let cut = -1;
+  for (let i = 0; i < token.length; i++) {
+    const ch = token[i];
+    if (ch === '[') depth++;
+    else if (ch === ']') depth--;
+    else if (ch === ':' && depth === 0) cut = i;
+  }
+  return cut < 0 ? { variant: '', util: token } : { variant: token.slice(0, cut), util: token.slice(cut + 1) };
+}
+
+/** Class tokens that apply in the base state (no hover:/md:/focus-visible: ... prefix). */
+export function baseTokens(el: Element): string[] {
+  return classTokens(el).filter((t) => splitVariant(t).variant === '');
+}
+
+const NAMED_COLOUR = '(plum|mauve|blush|cream|white|black)';
+
+export type ColourToken = { kind: 'inherit' } | { kind: 'colour'; value: RGBA } | { kind: 'unresolved'; token: string };
+
+/** Interpret one base `text-*` / `bg-*` utility as a colour; null when it is not a colour utility at all (text-right, bg-cover ...). */
+export function colourFromToken(prefix: 'text' | 'bg', token: string, env: ColourEnv): ColourToken | null {
+  if (prefix === 'text' && (token === 'text-inherit' || token === 'text-current')) return { kind: 'inherit' };
+  const named = token.match(new RegExp(`^${prefix}-${NAMED_COLOUR}(?:/(\\d+))?$`));
+  if (named) {
+    const c = env.palette[named[1] === 'white' ? 'white' : named[1]] ?? env.palette.cream;
+    return { kind: 'colour', value: { ...c, a: named[2] === undefined ? 1 : Number(named[2]) / 100 } };
+  }
+  if (prefix === 'text' && token === 'text-transparent') return { kind: 'colour', value: { r: 0, g: 0, b: 0, a: 0 } };
+  if (prefix === 'bg' && token === 'bg-transparent') return { kind: 'colour', value: { r: 0, g: 0, b: 0, a: 0 } };
+  const arb = token.match(new RegExp(`^${prefix}-\\[(?:color:)?(.+)\\]$`));
+  if (arb && !/^(?:length|percentage|position|size|url|image|angle):/.test(arb[0].slice(prefix.length + 2)) && /(#|var\(--|color-mix|transparent)/.test(arb[1])) {
+    const v = evalColour(arb[1], env);
+    return v ? { kind: 'colour', value: v } : { kind: 'unresolved', token };
+  }
+  return null;
+}
+
+/** `--header-color` as seen by this element: its own/ancestor `.on-dark` (cream) or the nearest `[data-bg-tone]` rule. */
+export function headerColourAt(el: Element, env: ColourEnv = colourEnv()): RGBA {
+  const tones = parseToneRules();
+  for (let a: Element | null = el; a; a = a.parentElement) {
+    if (hasClass(a, 'on-dark')) return { ...env.palette.cream, a: 1 };
+    const tone = a.getAttribute('data-bg-tone');
+    if (tone && tones[tone]?.header) return evalColour(tones[tone].header!, env) ?? { ...env.palette.plum, a: 1 };
+  }
+  return { ...env.palette.plum, a: 1 }; // :root { --header-color: var(--color-plum) }
+}
+
+function envAt(el: Element, base: ColourEnv): ColourEnv {
+  const h = headerColourAt(el, base);
+  const hex = (n: number) => Math.round(n).toString(16).padStart(2, '0');
+  return { palette: base.palette, vars: { ...base.vars, '--header-color': `#${hex(h.r)}${hex(h.g)}${hex(h.b)}` } };
+}
+
+function inlineStyleColour(el: Element, prop: 'color' | 'background-color', env: ColourEnv): RGBA | null {
+  const style = el.getAttribute('style') ?? '';
+  const m = style.match(new RegExp(`(?:^|;)\\s*${prop}\\s*:\\s*([^;]+)`));
+  if (!m || m[1].trim() === 'currentColor' || m[1].trim() === 'transparent') return null;
+  return evalColour(m[1], env);
+}
+
+export type Resolved<T> = { ok: true; value: T } | { ok: false; reason: string };
+
+/** The text colour that applies to text directly inside `el` (before opacity). Translucent colours keep their alpha. */
+export function foregroundOf(el: Element, base: ColourEnv = colourEnv()): Resolved<RGBA> {
+  const tones = parseToneRules();
+  for (let a: Element | null = el; a; a = a.parentElement) {
+    const env = envAt(a, base);
+    const inline = inlineStyleColour(a, 'color', env);
+    if (inline) return { ok: true, value: inline };
+    let inherit = false;
+    for (const t of baseTokens(a)) {
+      const c = colourFromToken('text', t, env);
+      if (!c) continue;
+      if (c.kind === 'unresolved') return { ok: false, reason: `unresolved text colour ${c.token}` };
+      if (c.kind === 'inherit') inherit = true;
+      else return { ok: true, value: c.value };
+    }
+    if (inherit) continue;
+    const tone = a.getAttribute('data-bg-tone');
+    if (tone && tones[tone]?.color) {
+      const v = evalColour(tones[tone].color!, env);
+      if (v) return { ok: true, value: v };
+    }
+  }
+  return { ok: true, value: { ...base.palette.plum, a: 1 } }; // html { color: var(--color-plum) }
+}
+
+/** opacity contributed by `el` itself: opacity-60, opacity-[0.18], inline opacity:.5 (base state only). */
+export function ownOpacity(el: Element): number {
+  let o = 1;
+  for (const t of baseTokens(el)) {
+    const m = t.match(/^opacity-(\d+)$/) ?? t.match(/^opacity-\[(0?\.\d+|1)\]$/);
+    if (m) o *= m[0].includes('[') ? Number(m[1]) : Number(m[1]) / 100;
+  }
+  const inline = (el.getAttribute('style') ?? '').match(/(?:^|;)\s*opacity\s*:\s*([\d.]+)/);
+  if (inline) o *= Number(inline[1]);
+  return o;
+}
+
+/** An absolutely positioned element that covers its parent (`absolute inset-0`, or a next/image `fill`). */
+function isCoverLayer(c: Element): boolean {
+  const toks = baseTokens(c);
+  const style = c.getAttribute('style') ?? '';
+  const absolute = toks.includes('absolute') || /position:\s*absolute/.test(style);
+  const cover = toks.includes('inset-0') || (/width:\s*100%/.test(style) && /height:\s*100%/.test(style));
+  return absolute && cover;
+}
+
+/**
+ * The effective backdrop behind text in `el`: walks up, stacking translucent backgrounds until an
+ * opaque one. `faded` is the product of ancestor opacities strictly BELOW the element that supplied
+ * the opaque backdrop (they fade the text but not that backdrop). `photo` marks a top-level
+ * section/footer with no tone and no background of its own: the backdrop is an image we cannot see.
+ */
+export function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved<{ colour: RGB; faded: number; via: string }> | { ok: false; photo: true; reason: string } {
+  const tones = parseToneRules();
+  const layers: RGBA[] = [];
+  let faded = 1;
+  for (let a: Element | null = el; a; a = a.parentElement) {
+    const env = envAt(a, base);
+    let opaque: RGB | null = null;
+    let via = '';
+    const inline = inlineStyleColour(a, 'background-color', env);
+    const layersHere: RGBA[] = [];
+    if (inline) layersHere.push(inline);
+    for (const t of baseTokens(a)) {
+      if (/^(?:bg-gradient|bg-linear|from-|via-|to-)/.test(t) && !t.startsWith('bg-[')) continue;
+      const c = colourFromToken('bg', t, env);
+      if (!c) continue;
+      if (c.kind === 'unresolved') return { ok: false, reason: `unresolved background ${c.token}` };
+      if (c.kind === 'colour') layersHere.push(c.value);
+    }
+    const tone = a.getAttribute('data-bg-tone');
+    if (tone && tones[tone]?.bg) {
+      const v = evalColour(tones[tone].bg!, env);
+      if (v) layersHere.unshift(v);
+    }
+    // a tone paints before the element's own utilities; within one element the later layer sits on top.
+    // `layers` is ordered nearest-to-the-text first, so this element's layers go in reverse.
+    const local: RGBA[] = [];
+    for (const l of layersHere) {
+      if (l.a >= 0.999) {
+        opaque = { r: l.r, g: l.g, b: l.b };
+        via = tone ? `[data-bg-tone=${tone}]` : 'bg';
+        local.length = 0;
+      } else if (l.a > 0) local.push(l);
+    }
+    layers.push(...local.reverse());
+    if (!opaque && a.parentElement) {
+      // a full-cover sibling painted behind the content: the hero's `absolute inset-0 bg-plum` field, or a photo
+      for (const c of Array.from(a.children)) {
+        if (c.contains(el) || !isCoverLayer(c)) continue;
+        const own = baseTokens(c).map((t) => colourFromToken('bg', t, envAt(c, base))).find((t) => t?.kind === 'colour' && t.value.a >= 0.999);
+        if (own?.kind === 'colour') {
+          opaque = { r: own.value.r, g: own.value.g, b: own.value.b };
+          via = 'cover sibling bg';
+        } else if (c.tagName === 'IMG' || c.querySelector('img')) {
+          return { ok: false, photo: true, reason: `photo backdrop (full-cover image beside the text, in ${a.tagName.toLowerCase()}${a.id ? '#' + a.id : ''})` };
+        }
+      }
+    }
+    if (opaque) {
+      let colour = opaque;
+      for (const l of layers.reverse()) colour = compositeOver(l, colour);
+      return { ok: true, value: { colour, faded, via } };
+    }
+    // a top-level solid card without tone or bg paints nothing: a photo section (hero, CTA band, footer)
+    if (a.parentElement?.tagName === 'MAIN' && /^(SECTION|FOOTER)$/.test(a.tagName)) {
+      return { ok: false, photo: true, reason: `photo backdrop under ${a.tagName.toLowerCase()}${a.id ? '#' + a.id : ''}` };
+    }
+    faded *= ownOpacity(a);
+  }
+  // reached <html>: the page background (html, body { background-color: cream })
+  let colour: RGB = base.palette.cream;
+  for (const l of layers.reverse()) colour = compositeOver(l, colour);
+  return { ok: true, value: { colour, faded, via: 'page' } };
+}
+
+const HIDING_DISPLAY = /^(?:flex|block|inline|inline-block|inline-flex|grid|inline-grid|contents|table|list-item)$/;
+const BREAKPOINTS = ['sm', 'md', 'lg', 'xl', '2xl'];
+
+/** display:none at the mobile (375px) or desktop (1280px) width, from `hidden` plus `md:flex` style overrides. */
+export function isHiddenAt(el: Element, viewport: 'mobile' | 'desktop'): boolean {
+  let hidden = false;
+  const toks = classTokens(el);
+  if (toks.includes('hidden')) hidden = true;
+  if (viewport === 'desktop') {
+    for (const bp of BREAKPOINTS) {
+      for (const t of toks) {
+        const { variant, util } = splitVariant(t);
+        if (variant !== bp) continue;
+        if (util === 'hidden') hidden = true;
+        else if (HIDING_DISPLAY.test(util)) hidden = false;
+      }
+    }
+  } else {
+    // max-lg:hidden etc. apply below the breakpoint
+    for (const t of toks) {
+      const { variant, util } = splitVariant(t);
+      if (/^max-(?:sm|md|lg|xl|2xl)$/.test(variant) && util === 'hidden') hidden = true;
+    }
+  }
+  return hidden;
+}
+
+/** Visually hidden text (`sr-only`) is not part of the visible contrast matrix. */
+export const isSrOnly = (el: Element) => baseTokens(el).includes('sr-only');
+
+export interface TextStyle { size: number; bold: boolean; typeClass: string | null }
+
+/** Mobile-minimum size and weight of text in `el`: nearest `.type-*` for size (x0.88 per `.font-latin` span), nearest font-bold / type weight for weight. */
+export function textStyleOf(el: Element): TextStyle {
+  const rules = parseTypeRules();
+  let scale = 1;
+  let size: number | null = null;
+  let typeClass: string | null = null;
+  let weight: number | null = null;
+  for (let a: Element | null = el; a; a = a.parentElement) {
+    const toks = baseTokens(a);
+    if (weight === null) {
+      if (toks.includes('font-bold')) weight = 700;
+      else if (toks.includes('font-normal')) weight = 400;
+    }
+    const type = typeClassesOf(a)[0]?.slice(5);
+    if (type && rules.has(type)) {
+      const r = rules.get(type)!;
+      if (weight === null && r.weight) weight = Number(r.weight);
+      size = sizeRange(r.size)?.min ?? null;
+      typeClass = `type-${type}`;
+      break;
+    }
+    if (toks.includes('font-latin')) scale *= 0.88;
+  }
+  return { size: (size ?? 16) * scale, bold: (weight ?? 400) >= 700, typeClass };
+}
+
+/** WCAG 1.4.3: 3:1 for large text (>= 24px, or >= 18.67px bold), 4.5:1 otherwise. */
+export function requiredRatio(style: TextStyle): number {
+  return style.size >= 24 || (style.bold && style.size >= 18.66) ? 3 : 4.5;
+}
+
+export interface ContrastFinding {
+  page: string;
+  /** `#section-id` of the nearest section, or the landmark tag (`header`, `footer`, `nav`) */
+  where: string;
+  /** whitespace-normalised text, first 60 chars */
+  text: string;
+  ratio: number;
+  required: number;
+  fg: string;
+  bg: string;
+  size: number;
+  bold: boolean;
+  typeClass: string | null;
+}
+
+export interface ContrastReport {
+  /** the failures only */
+  findings: ContrastFinding[];
+  /** every measured text (pass or fail), deduplicated by section + text */
+  all: ContrastFinding[];
+  /** text we could not measure, with the reason (photo backdrops, unknown colour syntax) */
+  skipped: Array<{ page: string; where: string; text: string; reason: string }>;
+  /** number of text nodes measured */
+  measured: number;
+}
+
+const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'TITLE', 'SVG', 'OPTION']);
+const hex2 = (c: RGB) => '#' + [c.r, c.g, c.b].map((n) => Math.round(n).toString(16).padStart(2, '0')).join('');
+const HAS_LETTER = /[\p{L}\p{N}]/u;
+
+export function whereOf(el: Element): string {
+  const s = el.closest('section[id], footer, header, nav');
+  if (s) return s.id ? `#${s.id}` : s.tagName.toLowerCase();
+  const bare = el.closest('section');
+  if (bare) {
+    const heading = bare.querySelector('[id]');
+    return heading ? `section(${'#' + heading.id})` : 'section';
+  }
+  const tid = el.closest('[data-testid]')?.getAttribute('data-testid');
+  return tid ? `[data-testid=${tid}]` : 'page';
+}
+
+/** Measure every visible text node under `root` (one page). */
+export function contrastReport(root: Element, page: string): ContrastReport {
+  const report: ContrastReport = { findings: [], all: [], skipped: [], measured: 0 };
+  const seen = new Set<string>();
+  for (const node of textNodes(root)) {
+    const el = node.parentElement;
+    if (!el) continue;
+    const text = (node.textContent ?? '').replace(/\s+/g, ' ').trim();
+    if (!HAS_LETTER.test(text)) continue; // separators like "·" carry no information
+    let skip = false;
+    let hiddenMobile = false;
+    let hiddenDesktop = false;
+    for (let a: Element | null = el; a; a = a.parentElement) {
+      if (SKIP_TAGS.has(a.tagName.toUpperCase()) || isSrOnly(a)) skip = true;
+      if (isHiddenAt(a, 'mobile')) hiddenMobile = true;
+      if (isHiddenAt(a, 'desktop')) hiddenDesktop = true;
+    }
+    if (skip || (hiddenMobile && hiddenDesktop)) continue;
+    const where = whereOf(el);
+    const snippet = text.slice(0, 60);
+    const fg = foregroundOf(el);
+    const bd = backdropOf(el);
+    if (!fg.ok) { report.skipped.push({ page, where, text: snippet, reason: fg.reason }); continue; }
+    if (!bd.ok) { report.skipped.push({ page, where, text: snippet, reason: bd.reason }); continue; }
+    const style = textStyleOf(el);
+    // ancestor opacity (below the backdrop) fades the text colour toward the backdrop
+    const fgRgba: RGBA = { ...fg.value, a: fg.value.a * bd.value.faded };
+    const fgFinal = compositeOver(fgRgba, bd.value.colour);
+    const raw = contrastRatio(fgFinal, bd.value.colour);
+    report.measured++;
+    const key = `${where}|${snippet}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const required = requiredRatio(style);
+    const finding: ContrastFinding = {
+      page, where, text: snippet, ratio: Math.round(raw * 100) / 100, required,
+      fg: hex2(fgFinal), bg: hex2(bd.value.colour), size: style.size, bold: style.bold, typeClass: style.typeClass,
+    };
+    report.all.push(finding);
+    if (raw < required) report.findings.push(finding);
+  }
+  return report;
+}
+
+// ─── Ratchet: an allow-table that may only shrink ────────────────────────────
+
+export interface ContrastAllow {
+  /** page id, `*` wildcards allowed: `home`, `blog`, `blog/*`, `*` */
+  page: string;
+  /** `#section-id` or landmark tag as reported in the failure; `a|b` lists alternatives */
+  where: string;
+  /** start of the failing text (after whitespace normalisation); `*` = any text (use it for CMS-driven blog copy, with `type`) */
+  text: string;
+  /** narrow a `*` entry to one type class, e.g. `type-eyebrow` */
+  type?: string;
+  /** the ratio measured when the entry was written (+-0.02) */
+  ratio: number;
+  reason: string;
+}
+
+const globToRe = (g: string) => new RegExp('^' + g.split('*').map((p) => p.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$');
+
+export const allowMatches = (a: ContrastAllow, f: ContrastFinding) =>
+  globToRe(a.page).test(f.page) &&
+  a.where.split('|').includes(f.where) &&
+  (a.text === '*' || f.text.startsWith(a.text)) &&
+  (a.type === undefined || a.type === f.typeClass);
+
+/** New failures (not allow-listed), stale entries (match no failure), and entries whose ratio drifted. Empty arrays = pass. */
+export function ratchetContrast(findings: ContrastFinding[], allow: ContrastAllow[]): { fresh: string[]; stale: string[]; drifted: string[] } {
+  const label = (f: ContrastFinding) =>
+    `[${f.page}] ${f.where} "${f.text}" ${f.ratio}:1 < ${f.required}:1 (${f.fg} on ${f.bg}, ${f.size}px${f.bold ? ' bold' : ''}${f.typeClass ? ' ' + f.typeClass : ''})`;
+  const fresh = findings.filter((f) => !allow.some((a) => allowMatches(a, f))).map(label);
+  const stale: string[] = [];
+  const drifted: string[] = [];
+  for (const a of allow) {
+    const hits = findings.filter((f) => allowMatches(a, f));
+    if (hits.length === 0) stale.push(`stale allow entry, remove it: [${a.page}] ${a.where} "${a.text}"${a.type ? ' ' + a.type : ''} (was ${a.ratio}:1; ${a.reason})`);
+    else for (const h of hits) if (Math.abs(h.ratio - a.ratio) > 0.02) drifted.push(`allow entry ratio changed, update it: [${h.page}] ${a.where} "${a.text}" table ${a.ratio}:1, now ${h.ratio}:1`);
+  }
+  return { fresh, stale, drifted };
+}
+
+/** The pages the matrix covers: home, /blog, and every post. Each is rendered once per test file. */
+let contrastPagesCache: Promise<Array<{ page: string; root: HTMLElement }>> | undefined;
+export function renderContrastPages(): Promise<Array<{ page: string; root: HTMLElement }>> {
+  if (!contrastPagesCache) {
+    contrastPagesCache = (async () => {
+      const { renderToStaticMarkup } = await import('react-dom/server');
+      const out: Array<{ page: string; root: HTMLElement }> = [{ page: 'home', root: await renderHome() }];
+      const mount = (el: React.ReactElement) => {
+        const holder = document.createElement('div');
+        holder.innerHTML = renderToStaticMarkup(el);
+        return holder;
+      };
+      const { default: BlogIndex } = await import('@/app/blog/page');
+      out.push({ page: 'blog', root: mount(React.createElement(BlogIndex)) });
+      const { default: BlogPost } = await import('@/app/blog/[slug]/page');
+      const { getAllPosts } = await import('@/content/posts');
+      for (const post of getAllPosts()) {
+        const el = await BlogPost({ params: Promise.resolve({ slug: post.slug }) });
+        out.push({ page: `blog/${post.slug}`, root: mount(el as React.ReactElement) });
+      }
+      return out;
+    })();
+  }
+  return contrastPagesCache;
+}
+
+// ─── Contrast / focus source bans (NS-42) ────────────────────────────────────
+
+export interface BanHit { file: string; path: string; line: number; match: string }
+
+export interface BanRule {
+  id: string;
+  label: string;
+  /** every offence in one source file (the file name decides nothing: allow-tables key on `file`) */
+  find(file: SourceFile): BanHit[];
+  /** snippets as a .tsx file body: find() MUST flag each of these (positive control) */
+  bad: string[];
+  /** snippets find() must NOT flag */
+  good: string[];
+}
+
+const lineOf = (text: string, index: number) => text.slice(0, index).split('\n').length;
+const hit = (f: SourceFile, index: number, match: string): BanHit => ({ file: f.name, path: f.path, line: lineOf(f.text, index), match: match.replace(/\s+/g, ' ').trim().slice(0, 80) });
+
+/** Plain regex ban over the whole text of the given file kinds. */
+function regexBan(re: RegExp, kinds: RegExp): (f: SourceFile) => BanHit[] {
+  return (f) => (kinds.test(f.name) ? [...f.text.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'))].map((m) => hit(f, m.index!, m[0])) : []);
+}
+
+/** Class-list-looking string literals in a code file (quotes / backticks; Hebrew prose and sentences are excluded). */
+export function classStrings(f: SourceFile): Array<{ index: number; text: string }> {
+  const out: Array<{ index: number; text: string }> = [];
+  if (!/\.tsx?$/.test(f.name)) return out;
+  for (const m of f.text.matchAll(/"([^"]*)"|'([^'\n]*)'|`([^`]*)`/g)) {
+    const text = m[1] ?? m[2] ?? m[3] ?? '';
+    if (!text.trim() || text.length > 800) continue;
+    if (!text.split(/\s+/).filter(Boolean).every((t) => /^[\w:\-[\]/().,%#!&>=*+$@{}~|'\\^"]+$/.test(t))) continue;
+    out.push({ index: m.index!, text });
+  }
+  return out;
+}
+
+export interface JsxElement {
+  name: string;
+  /** index of `<` */
+  start: number;
+  /** text of the opening tag between the name and `>` (attributes, className expressions, style) */
+  attrs: string;
+  selfClosing: boolean;
+  /** any descendant text: JSX text with a letter/digit, or a `{expression}` child other than a comment / blank string */
+  hasText: boolean;
+}
+
+/**
+ * A small JSX scanner (no dependency on a TS parser): every opening tag with its attribute text and
+ * whether it carries text below it. Tolerant by design: `<` counts as a tag only after `( , = ? : & | { > ;`
+ * or `return`, which spares generics (`Record<string,...>`) and comparisons.
+ */
+/** self-closing components whose `label` prop is rendered as visible text */
+const LABEL_AS_TEXT = new Set(['NavLink']);
+
+export function scanJsx(text: string): JsxElement[] {
+  const out: JsxElement[] = [];
+  const stack: Array<{ el: JsxElement }> = [];
+  const n = text.length;
+  let i = 0;
+  const skipString = (j: number): number => {
+    const q = text[j];
+    j++;
+    while (j < n && text[j] !== q) j += text[j] === '\\' ? 2 : 1;
+    return j + 1;
+  };
+  const skipBraces = (j: number): number => {
+    // text[j] === '{' ; returns index after the matching '}'
+    let depth = 0;
+    while (j < n) {
+      const ch = text[j];
+      if (ch === '"' || ch === "'" || ch === '`') j = skipString(j);
+      else if (ch === '/' && text[j + 1] === '/') j = text.indexOf('\n', j) < 0 ? n : text.indexOf('\n', j);
+      else if (ch === '/' && text[j + 1] === '*') j = text.indexOf('*/', j) < 0 ? n : text.indexOf('*/', j) + 2;
+      else {
+        if (ch === '{') depth++;
+        if (ch === '}') {
+          depth--;
+          if (depth === 0) return j + 1;
+        }
+        j++;
+      }
+    }
+    return n;
+  };
+  const markText = () => {
+    for (const f of stack) f.el.hasText = true;
+  };
+  while (i < n) {
+    const ch = text[i];
+    if (ch === '<' && text[i + 1] === '/') {
+      const end = text.indexOf('>', i);
+      if (stack.length) stack.pop();
+      i = end < 0 ? n : end + 1;
+      continue;
+    }
+    if (ch === '<' && /[A-Za-z]/.test(text[i + 1] ?? '')) {
+      const before = text.slice(Math.max(0, i - 12), i).trimEnd();
+      const last = before.slice(-1);
+      const tagLike = stack.length > 0 || before === '' || /[(,=?:&|{>;]/.test(last) || /return$/.test(before);
+      if (tagLike) {
+        const nameM = text.slice(i + 1).match(/^[A-Za-z][\w.:-]*/)!;
+        let j = i + 1 + nameM[0].length;
+        const attrStart = j;
+        let selfClosing = false;
+        while (j < n) {
+          const c = text[j];
+          if (c === '"' || c === "'" || c === '`') j = skipString(j);
+          else if (c === '{') j = skipBraces(j);
+          else if (c === '/' && text[j + 1] === '>') { selfClosing = true; break; }
+          else if (c === '>') break;
+          else j++;
+        }
+        const attrs = text.slice(attrStart, j);
+        // components that render their `label` prop as visible text without children
+        const hasText = selfClosing && LABEL_AS_TEXT.has(nameM[0]) && /\blabel=/.test(attrs);
+        const el: JsxElement = { name: nameM[0], start: i, attrs, selfClosing, hasText };
+        out.push(el);
+        i = j + (selfClosing ? 2 : 1);
+        if (!selfClosing) stack.push({ el });
+        continue;
+      }
+    }
+    if (stack.length) {
+      if (ch === '{') {
+        const end = skipBraces(i);
+        const inner = text.slice(i + 1, end - 1).replace(/\/\*[\s\S]*?\*\//g, '').trim();
+        if (inner && !/^(['"`])\s*\1$/.test(inner)) markText();
+        i++; // descend: elements inside a .map(...) callback are scanned too
+        continue;
+      }
+      if (/[\p{L}\p{N}]/u.test(ch)) markText();
+    }
+    i++;
+  }
+  return out;
+}
+
+/**
+ * Elements whose class list carries `tokenRe`. A token that lives in a module-level string const
+ * (`const PHONE = 'hover:bg-mauve ...'`) is attributed to every element that mentions that const.
+ */
+export function elementsWithClass(f: SourceFile, tokenRe: RegExp): Array<{ el: JsxElement; token: string }> {
+  if (!/\.tsx$/.test(f.name)) return [];
+  const els = scanJsx(f.text);
+  const re = new RegExp(tokenRe.source, tokenRe.flags.replace('g', ''));
+  const out: Array<{ el: JsxElement; token: string }> = [];
+  const seen = new Set<JsxElement>();
+  const add = (el: JsxElement, token: string) => {
+    if (!seen.has(el)) {
+      seen.add(el);
+      out.push({ el, token });
+    }
+  };
+  for (const el of els) {
+    const m = el.attrs.match(new RegExp(tokenRe.source, tokenRe.flags.replace('g', '')));
+    if (m) add(el, m[0]);
+  }
+  for (const m of f.text.matchAll(/\b(?:const|let)\s+([A-Za-z_]\w*)\s*(?::[^=\n]+)?=\s*((?:(?:'[^'\n]*'|"[^"\n]*"|`[^`]*`)\s*\+?\s*)+);/g)) {
+    const tok = m[2].match(re);
+    if (!tok) continue;
+    const name = m[1];
+    for (const el of els) if (new RegExp(`(?<![\\w.])${name}(?![\\w])`).test(el.attrs)) add(el, tok[0]);
+  }
+  return out;
+}
+
+const VARIANTS = String.raw`(?:[a-z0-9-]+:)*`;
+const TQ = ['type-quote', 'type-title', 'type-display', 'type-card-title', 'type-signature'];
+
+const frag = (body: string) => `export const X = () => (\n${body}\n);\n`;
+const fakeFile = (text: string): SourceFile => ({ path: 'src/components/x/Sample.tsx', name: 'Sample.tsx', text });
+
+export const CONTRAST_BANS: BanRule[] = [
+  {
+    id: 'text-mauve',
+    label: 'text-mauve (mauve on cream is 2.26:1, on blush 1.7:1: it has no compliant text pair; use plum)',
+    find: regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-mauve(?:/\\d+)?(?![\\w-])`), /\.tsx?$/),
+    bad: ['<p className="type-small text-mauve">x</p>', 'className="hover:text-mauve"', 'text-mauve/80'],
+    good: ['<i className="bg-mauve" />', 'border-mauve pr-4', 'ring-mauve', 'text-mauvelous', 'text-plum'],
+  },
+  {
+    id: 'small-text-blush',
+    label: 'text-blush below the type-quote scale (blush on plum is 3.89:1: large text only, >=24px, or >=18.67px bold)',
+    find: (f) =>
+      classStrings(f)
+        .filter(({ text }) => new RegExp(`(?<![\\w-])${VARIANTS}text-blush(?![\\w-])`).test(text) && !TQ.some((t) => new RegExp(`(?<![\\w-])${t}(?![\\w-])`).test(text)))
+        .map(({ index, text }) => hit(f, index, text)),
+    bad: ['<span className="type-eyebrow text-blush">x</span>', '<p className="type-small text-blush">', 'className="font-bold text-blush"', '<p className="type-lead text-blush">', 'className="\n type-body\n text-blush\n"'],
+    good: ['<p className="type-quote text-blush w-full">', '<h1 className="type-title text-blush">', '<p className="type-card-title text-blush">', '<i className="bg-blush" />', 'className="type-small text-cream"'],
+  },
+  {
+    id: 'text-colour-mix-transparent',
+    label: 'color-mix(... transparent) used as a TEXT colour (a translucent text colour has no fixed contrast: use a solid palette colour)',
+    find: (f) => [
+      ...regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-\\[(?:color:)?color-mix\\([^\\]]*transparent`), /\.tsx?$/)(f),
+      ...regexBan(/(?<![\w\-[])color\s*:\s*['"`]?color-mix\([^;\n]*transparent/, /\.(?:tsx?|css)$/)(f),
+    ],
+    bad: ['text-[color:color-mix(in_srgb,var(--color-plum)_70%,transparent)]', 'md:text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]', "style={{ color: 'color-mix(in srgb, red 50%, transparent)' }}", '.x { color: color-mix(in srgb, var(--color-plum) 50%, transparent); }'],
+    good: ['outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]', 'bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]', 'text-[color:var(--header-color)]', '.x { background-color: color-mix(in srgb, red 50%, transparent); }', '--surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));'],
+  },
+  {
+    id: 'bg-mauve-with-text',
+    label: 'bg-mauve on an element that has text inside it (mauve has no compliant text pair: 2.26:1 with cream, 2.46:1 with plum; use plum, cream or blush for the surface)',
+    find: (f) => elementsWithClass(f, new RegExp(`(?<![\\w-])${VARIANTS}bg-mauve(?![\\w-])`)).filter(({ el }) => el.hasText).map(({ el }) => hit(f, el.start, `<${el.name}> ${el.attrs}`)),
+    bad: [
+      frag('<div className="rounded-full bg-mauve px-4"><span className="type-small">{title}</span></div>'),
+      frag('<div className="bg-mauve"><p>שלום עולם</p></div>'),
+      "const PHONE = 'hover:bg-mauve focus-visible:ring-cream';\n" + frag('<a href="/x" className={cx(BASE, PHONE)}><span>טלפון</span></a>'),
+    ],
+    good: [
+      frag('<span aria-hidden="true" className="h-[3px] w-[44px] rounded-full bg-mauve" />'),
+      frag('<div className="absolute bg-mauve"><svg viewBox="0 0 1 1" /></div>'),
+      frag('<div className="bg-plum"><p>שלום</p></div>'),
+      "const BLOB = 'bg-mauve';\n" + frag('<div className={cx(styles.blob, BLOB)} />'),
+    ],
+  },
+  {
+    id: 'opacity-on-text',
+    label: 'opacity-* on an element that has text inside it (opacity fades text below its audited contrast; pick a solid palette colour instead)',
+    find: (f) => elementsWithClass(f, new RegExp(`(?<![\\w-])${VARIANTS}opacity-(?:\\d+|\\[[\\d.]+\\])(?![\\w-])`)).filter(({ el }) => el.hasText).map(({ el }) => hit(f, el.start, `<${el.name}> ${el.attrs}`)),
+    bad: [
+      frag('<a href="/x" className="type-lead hover:opacity-80 transition-opacity">שלום</a>'),
+      frag('<span className="opacity-60"><b>{name}</b></span>'),
+      frag('<Link className="font-bold opacity-[0.6]">{label}</Link>'),
+    ],
+    good: [
+      frag('<img src="/a.webp" alt="" className="opacity-60" />'),
+      frag('<div className="opacity-[0.18]"><svg viewBox="0 0 1 1" /></div>'),
+      frag('<OrganicBg className="opacity-60 z-0" />'),
+      frag('<p className="type-body text-plum">שלום</p>'),
+    ],
+  },
+  {
+    id: 'focus-outline-none',
+    label: 'outline-none without a focus-visible: ring / outline replacement in the same class list (keyboard users lose the focus indicator)',
+    find: (f) =>
+      classStrings(f)
+        .filter(({ text }) => new RegExp(`(?<![\\w-])${VARIANTS}outline-(?:none|hidden)(?![\\w-])`).test(text) && !/(?<![\w-])(?:focus-visible|focus-within|focus):(?:ring-(?!0)[\w[\]/#-]+|outline-(?!none|hidden)[\w[\]/#-]+|outline(?![\w-])|shadow-[\w[\]/#-]+)/.test(text))
+        .map(({ index, text }) => hit(f, index, text)),
+    bad: ['className="focus:outline-none"', 'className="outline-none"', 'className="rounded-full focus-visible:outline-none"', 'className="focus-visible:outline-none focus-visible:ring-0"', 'className="outline-hidden hover:underline"'],
+    good: ['className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream"', 'className="focus:outline-none focus:ring-2"', 'className="outline-none focus-visible:outline-2 focus-visible:outline-plum"', 'className="outline outline-[1.5px] outline-plum"', 'className="rounded-full"'],
+  },
+  {
+    id: 'focus-mask-link',
+    label: 'a mask-painted link / button (MaskIcon as="a", or an <a>/<button> with mask-image) with no focus-visible: ring or outline (an empty box with a mask has no default focus indicator a keyboard user can see)',
+    find: (f) => {
+      if (!/\.tsx$/.test(f.name)) return [];
+      const hits: BanHit[] = [];
+      for (const el of scanJsx(f.text)) {
+        const focusOk = /focus-visible:/.test(el.attrs);
+        if (el.name === 'MaskIcon' && /\bas=["{']*a["'}]*/.test(el.attrs) && !focusOk) hits.push(hit(f, el.start, `<MaskIcon ${el.attrs}`));
+        else if (/^(?:a|button)$/.test(el.name) && /mask-?image|\bmask-\[/i.test(el.attrs) && !focusOk) hits.push(hit(f, el.start, `<${el.name} ${el.attrs}`));
+      }
+      return hits;
+    },
+    bad: [
+      frag('<MaskIcon as="a" href="/x" label="x" src="/i.svg" size="lg" className="hover:opacity-80" />'),
+      frag('<a href="/x" style={{ maskImage: "url(/i.svg)" }} className="w-4 h-4" />'),
+    ],
+    good: [
+      frag('<MaskIcon as="a" href="/x" label="x" src="/i.svg" size="lg" className="focus-visible:ring-2 focus-visible:ring-cream" />'),
+      frag('<MaskIcon src="/i.svg" size="sm" />'),
+      frag('<a href="/x" className="focus-visible:ring-2">שלום</a>'),
+    ],
+  },
+];
+
+/** MaskIcon's own anchor branch ships a focus-visible: ring/outline: then a bare `<MaskIcon as="a">` usage is fine. */
+export function maskIconHasDefaultFocus(): boolean {
+  return /focus-visible:/.test(sourceNamed('MaskIcon.tsx').text);
+}
+
+export const containsBanSample = (rule: BanRule, sample: string) => rule.find(fakeFile(sample)).length > 0;
+
+export interface BanAllow {
+  /** file NAME (not path), so moving a file does not break the entry */
+  file: string;
+  /** how many offences the file has today */
+  count: number;
+  reason: string;
+}
+
+/** Ratchet for a source ban: more hits than allowed = new offender; fewer (or none) = stale entry. Empty list = pass. */
+export function ratchetBan(hits: BanHit[], allow: BanAllow[]): string[] {
+  const problems: string[] = [];
+  const byFile = new Map<string, BanHit[]>();
+  for (const h of hits) byFile.set(h.file, [...(byFile.get(h.file) ?? []), h]);
+  for (const [file, list] of byFile) {
+    const allowed = allow.find((a) => a.file === file)?.count ?? 0;
+    if (list.length > allowed) {
+      problems.push(`new offence in ${file} (${list.length} found, ${allowed} allowed):\n      ${list.map((h) => `${h.path}:${h.line}  ${h.match}`).join('\n      ')}`);
+    }
+  }
+  for (const a of allow) {
+    const found = byFile.get(a.file)?.length ?? 0;
+    if (found === 0) problems.push(`stale allow entry, remove it: ${a.file} (${a.reason})`);
+    else if (found < a.count) problems.push(`stale allow entry, lower its count ${a.count} -> ${found}: ${a.file} (${a.reason})`);
+  }
+  return problems;
+}
