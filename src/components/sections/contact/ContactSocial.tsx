@@ -13,89 +13,91 @@ export function ContactSocial() {
       {/* ══════════════════════════════════════════════════════════════════════
           PANEL 1 — Follow me on social
       ══════════════════════════════════════════════════════════════════════ */}
-      {/* TODO(visual): py-[80px] px-[24px] (pad="none" + className) is a near-duplicate of the
-          section/gutter tokens; unify when the owner picks one rhythm. */}
-      <Section id={ID.contactSocial} tone="dark" fit="free" className="py-[80px] px-[24px]">
-        <Container maxWidth="xl" gutter="none" className="flex flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
+      {/* The outer Container owns the wide gutter (maxWidth="none": its max-width would include the
+          padding); the inner 1100px row keeps the content at that width. */}
+      <Section id={ID.contactSocial} tone="dark" fit="free" pad="section">
+        <Container maxWidth="none" gutter="wide">
+          <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
-          {/* Heading on mobile — shown above photos only on small screens */}
-          <div className="flex flex-col gap-[24px] text-right lg:hidden">
-            <ScrollReveal>
-              <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
-            </ScrollReveal>
-          </div>
-
-          {/* Photo mosaic grid — mosaic of 3 portraits */}
-          {/*
-            Desktop layout (RTL mirrored from template):
-              Col 1 (right, wider): photo1 top + photo2 bottom (stacked)
-              Col 2 (left, narrower): photo3 spanning both rows (tall portrait)
-            Mobile: single-column stack of all 3 photos
-          */}
-          <ScrollReveal className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-160px)]">
-            {/* Mobile: simple vertical stack */}
-            <div className="flex flex-col gap-[16px] lg:hidden">
-              {CONTACT_PHOTOS.map((photo) => (
-                <Photo
-                  key={photo.src}
-                  engine="next"
-                  src={photo.src}
-                  alt={photo.alt}
-                  sizes="100vw"
-                  radius="card"
-                  ratio={photo.mobile.ratio}
-                  objectPosition={photo.objectPosition}
-                  motion={{ parallax: 9 }}
-                  className="w-full"
-                />
-              ))}
+            {/* Heading on mobile — shown above photos only on small screens */}
+            <div className="flex flex-col gap-[24px] text-right lg:hidden">
+              <ScrollReveal>
+                <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
+              </ScrollReveal>
             </div>
 
-            {/* Desktop/tablet: 2-column mosaic grid */}
-            <div
-              className="hidden lg:grid gap-[16px] h-full"
-              style={{
-                gridTemplateColumns: '1fr 1fr',
-                gridTemplateRows: '1fr 1fr',
-                gridTemplateAreas: '"p1 p3" "p2 p3"',
-              }}
-            >
-              {CONTACT_PHOTOS.map((photo) => (
-                <Photo
-                  key={photo.src}
-                  engine="next"
-                  src={photo.src}
-                  alt={photo.alt}
-                  sizes={photo.desktop.sizes}
-                  radius="card"
-                  objectPosition={photo.objectPosition}
-                  motion={{ parallax: 9 }}
-                  style={{ gridArea: photo.desktop.area, ...photo.desktop.extraStyle }}
-                  className="min-h-0"
-                />
-              ))}
-            </div>
-          </ScrollReveal>
+            {/* Photo mosaic grid — mosaic of 3 portraits */}
+            {/*
+              Desktop layout (RTL mirrored from template):
+                Col 1 (right, wider): photo1 top + photo2 bottom (stacked)
+                Col 2 (left, narrower): photo3 spanning both rows (tall portrait)
+              Mobile: single-column stack of all 3 photos
+            */}
+            <ScrollReveal className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-2*var(--spacing-section))]">
+              {/* Mobile: simple vertical stack */}
+              <div className="flex flex-col gap-[16px] lg:hidden">
+                {CONTACT_PHOTOS.map((photo) => (
+                  <Photo
+                    key={photo.src}
+                    engine="next"
+                    src={photo.src}
+                    alt={photo.alt}
+                    sizes="100vw"
+                    radius="card"
+                    ratio={photo.mobile.ratio}
+                    objectPosition={photo.objectPosition}
+                    motion={{ parallax: 9 }}
+                    className="w-full"
+                  />
+                ))}
+              </div>
 
-          {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
-          <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
-            <ScrollReveal delay={0.1} className="hidden lg:block">
-              <SectionTitle id={ID.contactSocialTitle}>{SOCIAL_PANEL.heading}</SectionTitle>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.2}>
-              <p
-                className="type-lead"
+              {/* Desktop/tablet: 2-column mosaic grid */}
+              <div
+                className="hidden lg:grid gap-[16px] h-full"
+                style={{
+                  gridTemplateColumns: '1fr 1fr',
+                  gridTemplateRows: '1fr 1fr',
+                  gridTemplateAreas: '"p1 p3" "p2 p3"',
+                }}
               >
-                {SOCIAL_PANEL.body.start}
-                <strong>{SOCIAL_PANEL.body.bold}</strong>
-                {SOCIAL_PANEL.body.end}
-              </p>
+                {CONTACT_PHOTOS.map((photo) => (
+                  <Photo
+                    key={photo.src}
+                    engine="next"
+                    src={photo.src}
+                    alt={photo.alt}
+                    sizes={photo.desktop.sizes}
+                    radius="card"
+                    objectPosition={photo.objectPosition}
+                    motion={{ parallax: 9 }}
+                    style={{ gridArea: photo.desktop.area, ...photo.desktop.extraStyle }}
+                    className="min-h-0"
+                  />
+                ))}
+              </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.3}>
-              <SocialLinks />
-            </ScrollReveal>
+            {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
+            <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
+              <ScrollReveal delay={0.1} className="hidden lg:block">
+                <SectionTitle id={ID.contactSocialTitle}>{SOCIAL_PANEL.heading}</SectionTitle>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.2}>
+                <p
+                  className="type-lead"
+                >
+                  {SOCIAL_PANEL.body.start}
+                  <strong>{SOCIAL_PANEL.body.bold}</strong>
+                  {SOCIAL_PANEL.body.end}
+                </p>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.3}>
+                <SocialLinks />
+              </ScrollReveal>
+            </div>
           </div>
         </Container>
       </Section>
