@@ -176,10 +176,10 @@ describe('A4: office card (owner option B)', () => {
     const card = cards[0];
     expect(card.querySelector('a[href^="tel:"]'), 'phone link in the card').not.toBeNull();
     expect(card.querySelector('a[href^="mailto:"]'), 'email link in the card').not.toBeNull();
-    const iframe = section.querySelector('iframe');
-    expect(iframe, `${labelOf(section, 'contact-office')} map iframe`).not.toBeNull();
-    expect(card.contains(iframe), 'map iframe must be inside the same card as the details').toBe(true);
-    expect(section.querySelectorAll('iframe').length, 'single map').toBe(1);
+    const iframe = section.querySelector('[data-map-embed]');
+    expect(iframe, `${labelOf(section, 'contact-office')} map embed`).not.toBeNull();
+    expect(card.contains(iframe), 'map embed must be inside the same card as the details').toBe(true);
+    expect(section.querySelectorAll('[data-map-embed]').length, 'single map').toBe(1);
   });
 
   it('the office h2 is outside the card, on the mauve', () => {

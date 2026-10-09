@@ -247,8 +247,7 @@ describe('B7: height-driven flex chain per section', () => {
   it('contact-office: the map wrapper stretches (lg:h-full, 360px floor) in an items-stretch grid inside the card', () => {
     const section = findSection(home, 'contact-office');
     const card = section.querySelector('[data-bg-tone="cream"]')!;
-    const iframe = section.querySelector('iframe')!;
-    const wrapper = iframe.parentElement!;
+    const wrapper = section.querySelector('[data-map-embed]')!;
     expect(isStretchedMapFrame(wrapper), `${labelOf(section, 'contact-office')} map wrapper lost its stretch / 360px floor`).toBe(true);
     const grid = wrapper.parentElement!;
     expect(stretchesItems(grid), `${labelOf(section, 'contact-office')} map grid lost items-stretch`).toBe(true);

@@ -61,7 +61,7 @@ async function shoot(page: Page, file: string, label: string, viewport: number, 
     await expect(target).toHaveScreenshot(name, {
       animations: 'disabled',
       caret: 'hide',
-      mask: [page.locator('iframe')],
+      mask: [page.locator('[data-map-embed], iframe')],
       ...(fullPage ? { fullPage: true } : {}),
     });
     record({ ...base, diffPx: 0, status: MODE === 'baseline' ? 'recorded' : 'ok' });
