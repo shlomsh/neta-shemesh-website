@@ -16,6 +16,8 @@ export function CredentialsList({ items, checkIconSrc, onDark }: CredentialsList
             src={icons[i % icons.length]}
             alt=""
             aria-hidden="true"
+            width={384}
+            height={288}
             className="w-[96px] h-auto shrink-0 mb-[16px]"
             style={onDark ? { filter: 'brightness(0) saturate(100%) invert(96%) sepia(13%) saturate(1034%) hue-rotate(314deg) brightness(105%) contrast(101%)' } : undefined}
             loading="lazy"
