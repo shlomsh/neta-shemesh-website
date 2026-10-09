@@ -88,6 +88,9 @@ describe('A2: text on mauve (mid) sections', () => {
       const approved = subtitleSpec && h2 ? subtitleOf(h2) : null;
       for (const node of textNodes(section)) {
         const el = node.parentElement!;
+        // Owner-approved exception (2026-10-09, NS-43): the cream h2 titles (and the one approved
+        // subtitle below) stay directly on the mauve in Intro, Reignite and ContactOffice, even though
+        // they measure 2.11-2.22 and fail the large-text threshold. Do not "fix" these; see CLAUDE.md.
         if (el.closest('h1, h2')) continue;
         if (approved && approved.contains(node)) {
           approvedUsed++;
