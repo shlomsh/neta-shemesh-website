@@ -17,8 +17,10 @@ import {
   fitOf,
   globalsCss,
   hamburger,
+  hasLgMinScreen,
   hasMinScreen,
   hasMobileFill,
+  hasPhoneContentHeight,
   isFlexColumn,
   isFlexContainer,
   isGrowItem,
@@ -31,6 +33,8 @@ import {
   minHeightKind,
   oneScreenMode,
   overflowOf,
+  phoneMode,
+  phoneOf,
   parseExportedNumber,
   parseToneRules,
   parseTypeRules,
@@ -124,6 +128,8 @@ describe('one-screen / structure predicates', () => {
     ['lock', 'screen-fit lg:h-[100svh] lg:py-12', 'lock-100', true],
     ['grow', 'screen-fit lg:min-h-[max(100svh,720px)] lg:py-12', 'grow-720', true],
     ['free', 'screen-fit flex', 'free', false],
+    ['lock', 'lg:screen-fit lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', true], // phone="content": the lg minimum is lg-gated
+    ['grow', 'lg:min-h-[max(100svh,720px)] lg:py-12', 'grow-720', true], // phone="content" grow: its own min-h is the lg minimum
     // lost a class the one-screen contract needs
     ['lock', 'lg:h-[max(100svh,720px)] lg:py-12', 'lock-720', false], // lost the all-breakpoint min-h
     ['lock', 'screen-fit lg:h-[max(100svh,720px)]', 'lock-720', false], // lost lg:py-12
@@ -163,6 +169,20 @@ describe('one-screen / structure predicates', () => {
     expect(hasMobileFill(first('<div class="screen-fit min-h-lvh"></div>'))).toBe(false); // lvh leaking to desktop
     expect(hasMobileFill(first('<div class="screen-fit lg:min-h-lvh"></div>'))).toBe(false);
     expect(hasMobileFill(first('<div class="screen-fit max-lg:min-h-lvh"></div>'))).toBe(false); // the retired spelling next to the token
+    expect(hasLgMinScreen(first('<div class="lg:screen-fit"></div>'))).toBe(true);
+    expect(hasLgMinScreen(first('<div class="lg:min-h-[max(100svh,720px)]"></div>'))).toBe(true);
+    expect(hasLgMinScreen(first('<div class="lg:h-[max(100svh,720px)]"></div>'))).toBe(false); // a height alone is not the minimum
+    expect(hasPhoneContentHeight(first('<div class="relative lg:screen-fit lg:h-[100svh] py-section"></div>'))).toBe(true);
+    expect(hasPhoneContentHeight(first('<div class="screen-fit"></div>'))).toBe(false);
+    expect(hasPhoneContentHeight(first('<div class="min-h-[300px]"></div>'))).toBe(false);
+    expect(hasPhoneContentHeight(first('<div class="h-screen"></div>'))).toBe(false);
+    // data-phone must agree with the classes below lg
+    expect(phoneMode(first('<section data-phone="screen" class="screen-fit"></section>'))).toBe('screen');
+    expect(phoneMode(first('<section data-phone="content" class="lg:screen-fit"></section>'))).toBe('content');
+    expect(phoneMode(first('<section data-phone="content" class="screen-fit"></section>'))).toBe('inconsistent'); // label lies
+    expect(phoneMode(first('<section data-phone="screen" class="lg:screen-fit"></section>'))).toBe('inconsistent');
+    expect(phoneMode(first('<section class="screen-fit"></section>'))).toBeNull();
+    expect(phoneOf(first('<section data-phone="tall"></section>'))).toBeNull();
     expect(isGrowItem(first('<div class="lg:flex-1"></div>'))).toBe(true);
     expect(isGrowItem(first('<div class="flex-1"></div>'))).toBe(false);
     expect(isFlexContainer(first('<div class="lg:flex"></div>'))).toBe(true);

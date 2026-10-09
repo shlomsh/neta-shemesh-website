@@ -1,5 +1,8 @@
 /**
- * SANITY B: one-screen heights (desktop contract) + the flex chain that makes it work.
+ * SANITY B: one-screen heights (desktop contract, phone contract) + the flex chain that makes it work.
+ *
+ * Phone (below lg, NS-39): a card is as tall as its content + padding, except the four "moments" that
+ * stay exactly one screen: hero, credentials, CTA band, footer (PHONE table below).
  *
  * History: the cards were first aspect-ratio driven (content decided the height, sections ran
  * 1.3 screens), then locked to 100svh (content clipped on short viewports), then given a 720px
@@ -22,7 +25,9 @@ import {
   fitOf,
   hasClass,
   hasDesktopRhythm,
+  hasLgMinScreen,
   hasMobileFill,
+  hasPhoneContentHeight,
   hasFullHeight,
   globalsCss,
   hasMinScreen,
@@ -38,6 +43,8 @@ import {
   minHeightKind,
   oneScreenMode,
   overflowOf,
+  phoneMode,
+  phoneOf,
   readSources,
   renderHome,
   stripCssComments,
@@ -46,6 +53,7 @@ import {
   type Fit,
   type MinHeightKind,
   type OneScreenMode,
+  type PhoneMode,
 } from './helpers';
 
 let home: HTMLElement;
@@ -73,19 +81,47 @@ const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> 
   'contact-office': { mode: 'lock-720', fit: 'lock', py12: true },
 };
 
-describe('B6: every solid section is at least one screen, with the agreed desktop mode', () => {
+/**
+ * Phone contract (below lg). Content height is the default; ONLY these stay one screen on a phone
+ * (plus the bespoke hero and footer, asserted below). Flipping a row is a decision, not drift.
+ */
+const PHONE: Record<string, PhoneMode> = {
+  'about-intro': 'content',
+  expertise: 'content',
+  'about-me': 'content',
+  'about-credentials': 'screen',
+  'about-gallery': 'content',
+  services: 'content',
+  'testimonials-gallery': 'content',
+  'contact-social': 'content',
+  'contact-office': 'content',
+  'cta-band': 'screen',
+};
+
+describe('B6: every solid section is at least one screen from lg, with the agreed desktop and phone modes', () => {
   it('the table covers exactly the solid sections', () => {
     expect(Object.keys(DESKTOP).sort(), 'DESKTOP table and EXPECTED_SECTIONS solid sections diverged: add/remove the row').toEqual(SOLID_SECTIONS.map((s) => s.name).sort());
   });
 
-  it.each(SOLID_SECTIONS.map((s) => s.name))('%s carries screen-fit (min-height: var(--card-h)) at every breakpoint', (name) => {
+  it.each(SOLID_SECTIONS.map((s) => s.name))('%s is at least one screen from lg', (name) => {
     const el = findSection(home, name);
-    expect(hasMinScreen(el), `${labelOf(el, name)} lost screen-fit`).toBe(true);
+    expect(hasLgMinScreen(el), `${labelOf(el, name)} lost its lg+ one-screen minimum`).toBe(true);
   });
 
-  it.each([...SOLID_SECTIONS.map((s) => s.name), 'cta-band'])('%s consumes the card-height token (which is the LARGE viewport below lg)', (name) => {
+  it('the PHONE table covers exactly the Section-based cards (solid sections + the CTA band)', () => {
+    expect(Object.keys(PHONE).sort()).toEqual([...SOLID_SECTIONS.map((s) => s.name), 'cta-band'].sort());
+  });
+
+  it.each(Object.keys(PHONE))('%s: its phone mode is published as data-phone AND implemented by the classes', (name) => {
     const el = findSection(home, name);
-    expect(hasMobileFill(el), `${labelOf(el, name)} lost screen-fit (or carries a hand-written min-h-lvh that changes desktop)`).toBe(true);
+    const want = PHONE[name];
+    expect(phoneOf(el), `${labelOf(el, name)} data-phone changed (expected ${want})`).toBe(want);
+    expect(phoneMode(el), `${labelOf(el, name)}: data-phone and the classes disagree (expected ${want})`).toBe(want);
+    if (want === 'screen') {
+      expect(hasMobileFill(el), `${labelOf(el, name)} lost screen-fit (or carries a hand-written min-h-lvh)`).toBe(true);
+    } else {
+      expect(hasPhoneContentHeight(el), `${labelOf(el, name)} carries a min-height / height below lg: a phone card sizes to its content`).toBe(true);
+    }
   });
 
   it.each(SOLID_SECTIONS.map((s) => s.name))('%s keeps its lock/grow assignment', (name) => {
@@ -98,10 +134,10 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
     expect(isOneScreen(el), `${labelOf(el, name)} lost its one-screen height`).toBe(want.mode !== 'free');
   });
 
-  it('photo sections (hero, CTA band, footer) still fill a screen at minimum', () => {
+  it('photo sections (hero, CTA band, footer) still fill a screen at minimum at every width', () => {
     for (const spec of EXPECTED_SECTIONS.filter((s) => s.kind === 'photo')) {
       const el = findSection(home, spec.name);
-      expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost screen-fit`).toBe(true);
+      expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost its all-breakpoint one-screen minimum`).toBe(true);
     }
   });
 

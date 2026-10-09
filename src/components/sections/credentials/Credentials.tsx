@@ -10,7 +10,7 @@ export function Credentials() {
   return (
     <>
       {/* ── Section 3: Credentials list ── */}
-      <Section id={ID.aboutCredentials} anchor={ANCHOR.credentials} tone="dark" fit="free" pad="section" seam>
+      <Section id={ID.aboutCredentials} anchor={ANCHOR.credentials} tone="dark" fit="free" phone="screen" pad="section" seam>
         {/* Subtle couple line-art background at low opacity */}
         <img
           src={CREDENTIALS_ART}

@@ -16,8 +16,12 @@ import {
   classTokens,
   fitOf,
   globalsCss,
+  hasLgMinScreen,
+  hasPhoneContentHeight,
   isOneScreen,
   oneScreenMode,
+  phoneMode,
+  phoneOf,
   readSources,
   sourceNamed,
   stripCssComments,
@@ -43,20 +47,44 @@ describe('Section: fit publishes data-fit AND emits the classes that implement i
     expect(classMode(el)).toBe(mode);
     expect(oneScreenMode(el)).toBe(mode);
     expect(isOneScreen(el)).toBe(one);
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['screen-fit', 'flex', 'flex-col', 'justify-center']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['flex', 'flex-col', 'justify-center']));
+  });
+
+  it('phone defaults to content: no min-height below lg, lg:screen-fit (or the grow min-h) keeps the lg+ screen', () => {
+    for (const fit of ['free', 'lock', 'grow'] as const) {
+      const el = sectionOf(<Section fit={fit}>x</Section>);
+      expect(el.getAttribute('data-phone'), fit).toBe('content');
+      expect(phoneMode(el), fit).toBe('content');
+      expect(hasPhoneContentHeight(el), `${fit}: no unprefixed height`).toBe(true);
+      expect(hasLgMinScreen(el), `${fit}: still a screen from lg`).toBe(true);
+    }
+    expect(classTokens(sectionOf(<Section fit="free">x</Section>))).toContain('lg:screen-fit');
+    expect(classTokens(sectionOf(<Section fit="grow">x</Section>))).not.toContain('lg:screen-fit'); // would fight lg:min-h-[...] by source order
+  });
+
+  it('phone="screen" = screen-fit at every width (--card-h: 100lvh below lg), the same lg classes as before', () => {
+    for (const [fit, mode] of [['free', 'free'], ['lock', 'lock-720'], ['grow', 'grow-720']] as const) {
+      const el = sectionOf(<Section fit={fit} phone="screen">x</Section>);
+      expect(el.getAttribute('data-phone'), fit).toBe('screen');
+      expect(phoneMode(el), fit).toBe('screen');
+      expect(classTokens(el), fit).toContain('screen-fit');
+      expect(classMode(el), fit).toBe(mode);
+    }
   });
 
   it('callers cannot override data-fit / data-bg-tone by hand (the props own them)', () => {
-    const spread = { 'data-fit': 'lock', 'data-bg-tone': 'dark' } as Record<string, string>;
+    const spread = { 'data-fit': 'lock', 'data-bg-tone': 'dark', 'data-phone': 'screen' } as Record<string, string>;
     const el = sectionOf(<Section fit="free" tone="cream" {...spread}>x</Section>);
     expect(fitOf(el)).toBe('free');
+    expect(phoneOf(el)).toBe('content');
     expect(el.getAttribute('data-bg-tone')).toBe('cream');
     const bare = sectionOf(<Section {...spread}>x</Section>);
     expect(bare.hasAttribute('data-fit')).toBe(false);
+    expect(bare.hasAttribute('data-phone')).toBe(false);
     expect(bare.hasAttribute('data-bg-tone')).toBe(false);
   });
 
-  it('types: floor only with fit="lock", center only with a fit', () => {
+  it('types: floor only with fit="lock", center and phone only with a fit', () => {
     // These lines are checked by `tsc --noEmit` (vitest does not type-check); at runtime they just render.
     // @ts-expect-error floor is only accepted with fit="lock"
     sectionOf(<Section fit="grow" floor={false}>x</Section>);
@@ -64,11 +92,14 @@ describe('Section: fit publishes data-fit AND emits the classes that implement i
     sectionOf(<Section center="middle">x</Section>);
     // @ts-expect-error floor needs a fit
     sectionOf(<Section floor={false}>x</Section>);
+    // @ts-expect-error phone needs a fit
+    sectionOf(<Section phone="screen">x</Section>);
   });
 
-  it('no fit = content height: no data-fit, no min-h, no flex', () => {
+  it('no fit = content height: no data-fit, no data-phone, no min-h, no flex', () => {
     const el = sectionOf(<Section tone="cream">x</Section>);
     expect(el.hasAttribute('data-fit')).toBe(false);
+    expect(el.hasAttribute('data-phone')).toBe(false);
     expect(classTokens(el)).not.toContain('screen-fit');
     expect(classTokens(el)).not.toContain('flex');
     expect(el.getAttribute('data-bg-tone')).toBe('cream');

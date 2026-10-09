@@ -8,7 +8,7 @@ import { ANCHOR, ID, anchorHref } from '@/content/ids';
 /** The "קביעת פגישת ייעוץ" photo band. A photo section: no tone, so no data-bg-tone. */
 export function CtaBand() {
   return (
-    <Section id={ID.ctaBand} fit="free" center="middle" className="py-[clamp(80px,8vw,192px)]">
+    <Section id={ID.ctaBand} fit="free" phone="screen" center="middle" className="py-[clamp(80px,8vw,192px)]">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/cta-background.webp"

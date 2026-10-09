@@ -171,7 +171,9 @@ export function kindOf(section: Element): Tone | 'photo' {
 // ─── One-screen contract (desktop) ───────────────────────────────────────────
 //
 // Section publishes its height contract as `data-fit="lock|grow|free"` and implements it with classes:
-//   all breakpoints : screen-fit (min-height: var(--card-h))  (every fit; --card-h = 100svh, 100lvh below lg)
+//   from lg         : lg:screen-fit (min-height: var(--card-h), = 100svh at lg)   (free + lock; grow has its own min-h)
+//   below lg        : data-phone="content" (default: no min-height, sized by content + padding)
+//                     data-phone="screen"  : screen-fit at every width (--card-h = 100lvh below lg); credentials + CTA band
 //   lock-720        : lg:h-[max(100svh,720px)]            (exactly a screen, floor 720, content must fit)
 //   lock-100        : lg:h-[100svh]                       (Section floor={false}; Expertise only)
 //   grow-720        : lg:min-h-[max(100svh,720px)]        (a screen at least; grows on short viewports)
@@ -192,22 +194,53 @@ export function fitOf(el: Element | null | undefined): Fit | null {
 }
 
 /**
- * True when the element is at least one screen tall at every breakpoint: a Section fit (`screen-fit`),
- * the footer (`screen-visible`, which is `--card-h` upgraded to dvh) or the hero. The hero still
- * spells its own height (`min-h-[100svh]`; it moves to `--hero-h` with NS-26/NS-25).
+ * True when the element is at least one screen tall at EVERY breakpoint: a Section with
+ * `phone="screen"` (`screen-fit`), the footer (`screen-visible`, which is `--card-h` upgraded to dvh) or
+ * the hero. The hero still spells its own height (`min-h-[100svh]`; it moves to `--hero-h` with
+ * NS-26/NS-25).
  */
 export function hasMinScreen(el: Element): boolean {
   return hasClass(el, 'screen-fit') || hasClass(el, 'screen-visible') || hasClass(el, 'min-h-[100svh]') || hasClass(el, 'min-h-[var(--hero-h)]');
 }
 
 /**
- * A fit section's one-screen minimum is `screen-fit` (`min-height: var(--card-h)`); the token is
- * `100svh`, and the LARGE viewport (`100lvh`, static) below lg so a collapsed phone toolbar leaves no
- * strip of the next card (the unit decision is asserted on globals.css in one-screen.test.tsx). An
- * unprefixed `min-h-lvh` would change desktop, so it must never appear next to it.
+ * True when the fit section is at least one screen tall FROM LG (every phone mode shares this): `screen-fit`
+ * / `lg:screen-fit` (free, lock) or the grow's own `lg:min-h-[max(100svh,720px)]`.
+ */
+export function hasLgMinScreen(el: Element): boolean {
+  return hasClass(el, 'screen-fit') || hasClass(el, 'lg:screen-fit') || hasClass(el, 'lg:min-h-[max(100svh,720px)]');
+}
+
+/**
+ * Below lg a `phone="screen"` section's one-screen minimum is `screen-fit` (`min-height: var(--card-h)`);
+ * the token is `100svh`, and the LARGE viewport (`100lvh`, static) below lg so a collapsed phone toolbar
+ * leaves no strip of the next card (the unit decision is asserted on globals.css in one-screen.test.tsx).
+ * A hand-written `min-h-lvh` would change desktop or bypass the token, so it must never appear next to it.
  */
 export function hasMobileFill(el: Element): boolean {
   return hasClass(el, 'screen-fit') && !hasClass(el, 'min-h-lvh') && !hasClass(el, 'lg:min-h-lvh') && !hasClass(el, 'max-lg:min-h-lvh');
+}
+
+/** No unprefixed height/min-height at all: below lg the element is as tall as its content + padding. */
+export function hasPhoneContentHeight(el: Element): boolean {
+  return !classTokens(el).some((t) => /^(screen-fit|screen-visible|min-h-|h-)/.test(t));
+}
+
+export type PhoneMode = 'screen' | 'content';
+export type PhoneState = PhoneMode | 'inconsistent';
+
+/** The published phone contract (`data-phone`), or null when absent / not one of screen|content. */
+export function phoneOf(el: Element | null | undefined): PhoneMode | null {
+  const v = el?.getAttribute('data-phone');
+  return v === 'screen' || v === 'content' ? v : null;
+}
+
+/** data-phone and the classes below lg must tell the same story; otherwise 'inconsistent' (null without data-phone). */
+export function phoneMode(el: Element): PhoneState | null {
+  const declared = phoneOf(el);
+  if (!declared) return null;
+  const byClass: PhoneMode | null = hasMobileFill(el) ? 'screen' : hasPhoneContentHeight(el) ? 'content' : null;
+  return byClass === declared ? declared : 'inconsistent';
 }
 
 /** What the CLASSES alone implement at lg (ignores data-fit). */
@@ -234,11 +267,11 @@ export const hasDesktopRhythm = (el: Element) => hasClass(el, 'lg:py-12');
 
 /**
  * True when the section is a full one-screen card on desktop: data-fit lock|grow that the classes
- * back up (consistent mode) + min screen at every breakpoint + lg:py-12.
+ * back up (consistent mode) + min screen from lg + lg:py-12.
  */
 export function isOneScreen(el: Element): boolean {
   const mode = oneScreenMode(el);
-  return hasMinScreen(el) && (mode === 'lock-720' || mode === 'lock-100' || mode === 'grow-720') && hasDesktopRhythm(el);
+  return hasLgMinScreen(el) && (mode === 'lock-720' || mode === 'lock-100' || mode === 'grow-720') && hasDesktopRhythm(el);
 }
 
 // ─── Expected page structure (single source of truth for the suite) ──────────
