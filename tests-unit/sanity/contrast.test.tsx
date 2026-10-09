@@ -45,7 +45,6 @@ export interface OwnerException extends ContrastAllow {
 
 const NS43_C = 'NS-43 option C: the cream titles on the mauve sections stay as designed (2.26:1; a real render measures 2.11-2.22 because the soft-light paper grain darkens the mauve)';
 
-const PILL = 'owner ruling 2026-10-09: Expertise pills keep the mauve chip with cream label (bold 14px cream on bg-mauve: 2.26:1 in the matrix, 2.12-2.29 in a browser)';
 
 export const OWNER_EXCEPTIONS: OwnerException[] = [
   { page: 'home', where: '#about-intro', text: 'ליווי מקצועי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Intro title. ${NS43_C}` },
@@ -53,10 +52,6 @@ export const OWNER_EXCEPTIONS: OwnerException[] = [
   { page: 'home', where: '#about-gallery', text: 'תמיכה והכוונה', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite subtitle (type-quote 24px). ${NS43_C}` },
   { page: 'home', where: '#contact-office', text: 'המשרד שלי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `ContactOffice title. ${NS43_C}` },
   { page: '*', where: '[data-testid=fab-whatsapp]', text: 'וואטסאפ', ratio: 1.98, decided: '2026-10-09', decision: 'WhatsApp green stays', reason: 'WhatsApp brand green #25D366 with a white label on the contact FAB: the owner keeps the brand colour (design decisions Oct 2026); 1.98:1' },
-  { page: 'home', where: 'section(#expertise-title)', text: 'טיפול זוגי', ratio: 2.26, decided: '2026-10-09', decision: 'Expertise pills stay mauve', reason: PILL },
-  { page: 'home', where: 'section(#expertise-title)', text: 'טיפול משפחתי', ratio: 2.26, decided: '2026-10-09', decision: 'Expertise pills stay mauve', reason: PILL },
-  { page: 'home', where: 'section(#expertise-title)', text: 'הדרכת הורים', ratio: 2.26, decided: '2026-10-09', decision: 'Expertise pills stay mauve', reason: PILL },
-  { page: 'home', where: 'section(#expertise-title)', text: 'ליווי אישי', ratio: 2.26, decided: '2026-10-09', decision: 'Expertise pills stay mauve', reason: PILL },
 ];
 
 /** Ratchet debt: known failures somebody is meant to fix. Empty since NS-33 landed (the PostCard / AuthorCard / pill / blog-meta rows are gone). Rows may only be deleted. */

@@ -71,7 +71,7 @@ beforeAll(async () => {
 // deliberate decision, not drift.
 const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> = {
   'about-intro': { mode: 'lock-720', fit: 'lock', py12: true },
-  expertise: { mode: 'lock-100', fit: 'lock', py12: true },
+  expertise: { mode: 'grow-720', fit: 'grow', py12: true },
   'about-me': { mode: 'grow-720', fit: 'grow', py12: true },
   'about-credentials': { mode: 'free', fit: 'free', py12: false },
   'about-gallery': { mode: 'lock-720', fit: 'lock', py12: true },
