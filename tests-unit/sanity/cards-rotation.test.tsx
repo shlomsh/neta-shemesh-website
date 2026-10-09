@@ -127,8 +127,9 @@ describe('A3: running text on blush (light) surfaces', () => {
     for (let node: Element | null = el; node && node !== toneRoot; node = node.parentElement) {
       if (node !== el && node.hasAttribute('data-bg-tone')) return true;
       if (classTokens(node).some(isSurfaceBg)) return true;
-      // a photo card: the element has an absolutely positioned cover image (direct child) behind its text
-      if (Array.from(node.children).some((c) => c.tagName === 'IMG' && hasClass(c, 'absolute') && hasClass(c, 'inset-0'))) return true;
+      // a photo card: the element has an absolutely positioned cover image (direct child) behind its text:
+      // a plain <img class="absolute inset-0"> or a next/image `fill` (data-nimg="fill", positioned inline)
+      if (Array.from(node.children).some((c) => c.tagName === 'IMG' && ((hasClass(c, 'absolute') && hasClass(c, 'inset-0')) || c.getAttribute('data-nimg') === 'fill'))) return true;
     }
     return false;
   }

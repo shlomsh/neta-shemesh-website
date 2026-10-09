@@ -7,11 +7,26 @@ interface ExpertiseCardProps extends Omit<ExpertiseCardData, 'slug'> {
   delay: number;
 }
 
+/**
+ * `sizes` = the width the image renders at (NS-30). The landscape sources are cover-fitted into 4:5 cards below
+ * lg, so the image is 1.88x the card wide (165vw; the 640px column caps it at about 1200px), then 580px in the
+ * two-column tablet grid and 500px in the lg grid.
+ */
+const CARD_SIZES = '(min-width: 1024px) 500px, (min-width: 768px) 580px, 165vw';
+
 export function ExpertiseCard({ title, description, imageSrc, imageAlt, delay }: ExpertiseCardProps) {
   return (
     <ScrollReveal delay={delay} className="w-full h-full shadow-2xl rounded-card">
       {/* safariClip off: the grid cell around this card (Expertise.tsx) already carries safari-clip */}
-      <Photo src={imageSrc} alt={imageAlt} radius="card" safariClip={false} className="w-full h-full bg-plum">
+      <Photo
+        engine="next"
+        src={imageSrc}
+        alt={imageAlt}
+        sizes={CARD_SIZES}
+        radius="card"
+        safariClip={false}
+        className="w-full h-full bg-plum"
+      >
         {/* The pill shows only the title; the description is read by screen readers only. */}
         <div
           className="

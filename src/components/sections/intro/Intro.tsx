@@ -9,6 +9,14 @@ import { ANCHOR, ID } from '@/content/ids';
 import { INTRO_PHOTOS } from '@/content/home/about';
 import { OrganicBg } from './OrganicBg';
 
+/**
+ * `sizes` = the width the IMAGE renders at (NS-30). The 3:2 sources are cover-fitted into square cells, so the
+ * image is 1.5x the cell wide (about 66vw below lg); the tall cell spans two rows, so it is about 2x that
+ * (136vw). From lg the cells are height-driven (about 600px / 1200px at 1440x900).
+ */
+const COLLAGE_SQUARE_SIZES = '(min-width: 1024px) 600px, 66vw';
+const COLLAGE_TALL_SIZES = '(min-width: 1024px) 1200px, 136vw';
+
 export function Intro() {
   return (
     <>
@@ -21,7 +29,9 @@ export function Intro() {
             <div className="relative w-full grid grid-cols-2 gap-[16px] lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">
               <ScrollReveal className="lg:min-h-0">
                 <Photo
+                  engine="next"
                   src={INTRO_PHOTOS[0].src}
+                  sizes={COLLAGE_SQUARE_SIZES}
                   alt=""
                   radius="card"
                   ratio="square"
@@ -31,7 +41,9 @@ export function Intro() {
               </ScrollReveal>
               <ScrollReveal delay={0.24} className="row-span-2 lg:min-h-0">
                 <Photo
+                  engine="next"
                   src={INTRO_PHOTOS[2].src}
+                  sizes={COLLAGE_TALL_SIZES}
                   alt=""
                   radius="card"
                   objectPosition={INTRO_PHOTOS[2].objectPosition}
@@ -40,7 +52,9 @@ export function Intro() {
               </ScrollReveal>
               <ScrollReveal delay={0.12} className="lg:min-h-0">
                 <Photo
+                  engine="next"
                   src={INTRO_PHOTOS[1].src}
+                  sizes={COLLAGE_SQUARE_SIZES}
                   alt=""
                   radius="card"
                   ratio="square"

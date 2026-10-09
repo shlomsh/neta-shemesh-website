@@ -11,6 +11,13 @@ interface StepCardProps {
   staggerClass?: string;
 }
 
+/**
+ * `sizes` = the width the image renders at (NS-30). The landscape sources are cover-fitted into tall cards, so
+ * the image is wider than the card: 175vw in the one-column phone layout, about 50vw in the two-column tablet
+ * grid, 560px at lg (height-driven).
+ */
+const CARD_SIZES = '(min-width: 1024px) 560px, (min-width: 768px) 50vw, 175vw';
+
 export function StepCard({
   imageSrc,
   numberText,
@@ -21,7 +28,7 @@ export function StepCard({
 }: StepCardProps) {
   return (
     <ScrollReveal delay={delay} className={cx('w-full h-full', staggerClass)}>
-      <Photo src={imageSrc} alt={title} radius="card" className="w-full h-full shadow-lg">
+      <Photo engine="next" src={imageSrc} alt={title} sizes={CARD_SIZES} radius="card" className="w-full h-full shadow-lg">
 
         {/* Legibility gradient so white text reads on any photo */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />

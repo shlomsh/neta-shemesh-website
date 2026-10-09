@@ -53,13 +53,18 @@ const ZOOM_CLASS: Record<PhotoZoom, string> = {
 
 /**
  * How the image is delivered.
- *   engine 'img' (default): a plain `<img>`, lazy unless told otherwise.
- *   engine 'next': `next/image` with `fill`; `sizes` is required because it decides the srcset.
- * Never switch an existing call site between the two: that changes the srcset and so the pixels.
+ *   engine 'img' (default): a plain `<img>` of the raw file, lazy unless told otherwise. No call site uses it
+ *                     since NS-30; it stays as the escape hatch for a file that must be served untouched.
+ *   engine 'next': `next/image` with `fill` (AVIF/WebP, DPR-aware srcset). `sizes` is required because it
+ *                     decides the srcset: write the width the IMAGE renders at (a cover-fitted photo in a
+ *                     frame of another ratio overflows the frame on one axis, and a ParallaxFrame layer is
+ *                     scaled up by 1 + (2 * amount + 1) / 100), not the frame width.
+ * Switching a call site between the two changes the srcset and so the pixels: check it visually.
+ * The Azure static export serves both unoptimised (`images.unoptimized` in next.config.ts).
  */
 type PhotoEngine =
   | { engine?: 'img'; quality?: never; /** Lazy by default; `eager` for an above-the-fold photo (the first blog row, an article cover). */ loading?: 'lazy' | 'eager'; sizes?: never }
-  | { engine: 'next'; loading?: never; sizes: string; /** Optimizer quality; defaults to `PHOTO_QUALITY` (84). Must be listed in `images.qualities`. */ quality?: number };
+  | { engine: 'next'; /** Lazy by default; `eager` for an above-the-fold photo. No `priority`: no photo is the LCP element. */ loading?: 'lazy' | 'eager'; sizes: string; /** Optimizer quality; defaults to `PHOTO_QUALITY` (84). Must be listed in `images.qualities`. */ quality?: number };
 
 /**
  * What moves the frame.
@@ -118,7 +123,7 @@ export function Photo(props: PhotoProps) {
 
   const image =
     props.engine === 'next' ? (
-      <Image src={src} alt={alt} fill sizes={props.sizes} quality={props.quality ?? PHOTO_QUALITY} className={cx('object-cover', zoomClass)} style={imageStyle} />
+      <Image src={src} alt={alt} fill sizes={props.sizes} quality={props.quality ?? PHOTO_QUALITY} loading={props.loading} className={cx('object-cover', zoomClass)} style={imageStyle} />
     ) : (
       <img
         src={src}

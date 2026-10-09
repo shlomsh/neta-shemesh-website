@@ -8,6 +8,13 @@ import { ANCHOR, ID } from '@/content/ids';
 import { stagger } from '@/lib/motion';
 import { REIGNITE_PHOTOS } from '@/content/home/about';
 
+/**
+ * `sizes` = the width the image renders at (NS-30), including the 1.19 scale of the parallax layer: about
+ * 108vw in the single column below 640px, 36vw in the three columns, 720px at lg (height-driven). The
+ * sources are 768px wide, so nothing above that is ever used.
+ */
+const GALLERY_SIZES = '(min-width: 1024px) 720px, (min-width: 640px) 36vw, 108vw';
+
 export function Reignite() {
   return (
     <>
@@ -42,7 +49,9 @@ export function Reignite() {
                   {/* below lg: intrinsic aspect 348:531; lg+: frame fills the grid's remaining
                       height and the photo crops (object-cover) while drifting within it */}
                   <Photo
+                    engine="next"
                     src={panel.src}
+                    sizes={GALLERY_SIZES}
                     alt=""
                     radius="card"
                     ratio="348/531"

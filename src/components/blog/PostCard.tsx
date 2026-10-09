@@ -25,7 +25,9 @@ export function PostCard({ post, priority = false, headingLevel = 3 }: PostCardP
     >
       {/* Cover */}
       <Photo
+        engine="next"
         src={post.coverImage}
+        sizes="(min-width: 1280px) 580px, (min-width: 768px) 46vw, 92vw"
         alt={post.coverAlt}
         radius="none"
         ratio="100/62"
