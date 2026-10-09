@@ -192,10 +192,10 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup', () 
     expect(typeClassesOf(p)).toEqual(['type-quote']);
     expect(classTokens(p)).toEqual(expect.arrayContaining(['max-w-[65ch]', 'mx-auto', 'mt-3', 'md:mt-4', 'text-center', 'mb-[48px]']));
   });
-  it('SectionHeader column (the Services exception): mt-5 md:mt-9, no 65ch cap, right-aligned', () => {
+  it('SectionHeader column (the Services exception): mt-5 md:mt-9, no 65ch cap, centred below md and right-aligned from md (title and subtitle agree, NS-24)', () => {
     const [h, p] = Array.from(root(<SectionHeader id="h" align="column" title="T" subtitle="S" />).children);
-    expect(hasClass(h, 'text-center')).toBe(false);
-    expect(classTokens(p)).toEqual(expect.arrayContaining(['type-quote', 'mt-5', 'md:mt-9', 'text-right']));
+    expect(classTokens(h)).toEqual(expect.arrayContaining(['text-center', 'md:text-right']));
+    expect(classTokens(p)).toEqual(expect.arrayContaining(['type-quote', 'mt-5', 'md:mt-9', 'text-center', 'md:text-right']));
     expect(hasClass(p, 'max-w-[65ch]')).toBe(false);
   });
   it('SectionHeader onPhoto: cream title and subtitle, both with the soft shadow', () => {

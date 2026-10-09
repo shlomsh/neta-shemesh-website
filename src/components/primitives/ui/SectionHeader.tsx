@@ -6,7 +6,8 @@ import { SectionTitle } from './SectionTitle';
 /**
  * How the subtitle (and the title above it) is aligned.
  *   'center' title and subtitle centred; the subtitle is capped at 65ch and sits `mt-3 md:mt-4` under the title
- *   'column' title and subtitle right-aligned in a narrow side column (Services, 320-400px). The documented
+ *   'column' title and subtitle in a narrow side column (Services, 320-400px): centred below md (the column
+ *            is stacked above the cards, like the other lockups), right-aligned from md up. The documented
  *            exception: no 65ch cap (the column never reaches it) and `mt-5 md:mt-9`, because the Elamy
  *            "?" in the title has a long descender.
  */
@@ -14,7 +15,7 @@ export type SubtitleAlign = 'center' | 'column';
 
 const SUBTITLE_CLASS: Record<SubtitleAlign, string> = {
   center: 'type-quote max-w-[65ch] mx-auto mt-3 md:mt-4',
-  column: 'type-quote mt-5 md:mt-9',
+  column: 'type-quote mt-5 md:mt-9 md:text-right',
 };
 
 type SectionSubtitleProps = {
@@ -32,7 +33,7 @@ type SectionSubtitleProps = {
  */
 export function SectionSubtitle({ align, onPhoto = false, className, children }: SectionSubtitleProps) {
   return (
-    <BodyText centered={align === 'center'} className={cx(SUBTITLE_CLASS[align], onPhoto && 'text-cream drop-shadow-md', className)}>
+    <BodyText centered className={cx(SUBTITLE_CLASS[align], onPhoto && 'text-cream drop-shadow-md', className)}>
       {children}
     </BodyText>
   );
@@ -58,7 +59,7 @@ type SectionHeaderProps = {
 export function SectionHeader({ id, title, subtitle, align, onPhoto = false, subtitleClassName }: SectionHeaderProps) {
   return (
     <>
-      <SectionTitle id={id} onDark={onPhoto} className={cx(align === 'center' && 'text-center', onPhoto && 'drop-shadow-md')}>
+      <SectionTitle id={id} onDark={onPhoto} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-right', onPhoto && 'drop-shadow-md')}>
         {title}
       </SectionTitle>
       <SectionSubtitle align={align} onPhoto={onPhoto} className={subtitleClassName}>
