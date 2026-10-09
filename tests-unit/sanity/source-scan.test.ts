@@ -182,9 +182,7 @@ describe('D18: palette lock (hex colours)', () => {
    * so moving a file does not break the entry.
    */
   const ALLOWED: Array<{ hex: string; file: string; reason: string }> = [
-    { hex: '#25d366', file: 'ContactFAB.tsx', reason: 'WhatsApp brand green: owner ruling, stays green' },
-    { hex: '#1ebe5b', file: 'ContactFAB.tsx', reason: 'darker hover shade of the WhatsApp green' },
-    { hex: '#ffffff', file: 'ContactFAB.tsx', reason: 'white label/ring on the WhatsApp green (WhatsApp brand spec)' },
+    { hex: '#25d366', file: 'ContactFAB.tsx', reason: 'WhatsApp brand green: owner ruling, stays green (glyph only since NS-33; label and fill are palette)' },
     { hex: '#000', file: 'globals.css', reason: '--color-black in @theme, kept (Tailwind default value) for the photo scrims only: bg-black/20, from-black/60 ...' },
   ];
 

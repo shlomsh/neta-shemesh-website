@@ -65,7 +65,7 @@ export default async function BlogPostPage(
         <Container maxWidth="md">
           <Link
             href="/blog"
-            className="type-small mb-[clamp(20px,3vw,32px)] inline-flex items-center gap-[8px] font-bold text-blush transition-opacity hover:opacity-75"
+            className="type-small mb-[clamp(20px,3vw,32px)] inline-flex items-center gap-[8px] font-bold text-cream underline-offset-4 hover:underline"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="4" y1="12" x2="20" y2="12" />
@@ -75,14 +75,14 @@ export default async function BlogPostPage(
           </Link>
 
           <div className="flex flex-col items-center gap-[clamp(14px,2vw,22px)] text-center">
-            <span className="type-eyebrow text-blush">
+            <span className="type-eyebrow text-cream">
               {post.category}
             </span>
             <SectionTitle as="h1">{post.title}</SectionTitle>
-            <p className="type-lead mx-auto max-w-[60ch] text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]">
+            <p className="type-lead mx-auto max-w-[60ch] text-cream">
               {post.excerpt}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-[10px] type-small text-blush">
+            <div className="flex flex-wrap items-center justify-center gap-[10px] type-small text-cream">
               <span>{SITE.name}</span>
               <span aria-hidden="true">·</span>
               <time dateTime={post.date}>{post.dateDisplay}</time>

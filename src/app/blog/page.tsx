@@ -35,7 +35,7 @@ export default function BlogIndexPage() {
       <Section id={ID.blogIntro} tone="dark" className="pt-[clamp(28px,4vw,52px)] pb-[clamp(48px,7vw,96px)]">
         <Container maxWidth="lg" className="text-center">
           <ScrollReveal className="flex flex-col items-center gap-[clamp(14px,2vw,22px)]">
-            <span className="type-eyebrow text-blush">
+            <span className="type-eyebrow text-cream">
               הבלוג
             </span>
             <SectionTitle as="h1">מחשבות מהקליניקה</SectionTitle>

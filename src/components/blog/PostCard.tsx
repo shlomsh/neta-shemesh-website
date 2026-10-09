@@ -36,7 +36,7 @@ export function PostCard({ post, priority = false, headingLevel = 3 }: PostCardP
 
       {/* Body */}
       <div className="flex flex-1 flex-col gap-[12px] p-[clamp(20px,2.5vw,28px)]">
-        <span className="type-eyebrow text-mauve">
+        <span className="type-eyebrow text-plum">
           {post.category}
         </span>
 
@@ -44,11 +44,11 @@ export function PostCard({ post, priority = false, headingLevel = 3 }: PostCardP
           {post.title}
         </Heading>
 
-        <p className="type-body text-[color:color-mix(in_srgb,var(--color-plum)_82%,transparent)]">
+        <p className="type-body text-plum">
           {post.excerpt}
         </p>
 
-        <div className="mt-auto flex items-center gap-[10px] pt-[8px] type-small text-[color:color-mix(in_srgb,var(--color-plum)_70%,transparent)]">
+        <div className="mt-auto flex items-center gap-[10px] pt-[8px] type-small text-plum">
           <time dateTime={post.date}>{post.dateDisplay}</time>
           <span aria-hidden="true">·</span>
           <span>{post.readTime}</span>

@@ -16,7 +16,7 @@ export function ExpertiseCard({ title, description, imageSrc, imageAlt, delay }:
         <div
           className="
         absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2
-        bg-mauve opacity-95
+        bg-cream
         rounded-full
         px-[24px] py-[8px]
         w-max max-w-[90%]
@@ -28,7 +28,7 @@ export function ExpertiseCard({ title, description, imageSrc, imageAlt, delay }:
             className="
           block
           type-small
-          text-cream
+          text-plum
           font-bold
         "
           >
