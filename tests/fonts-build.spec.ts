@@ -21,9 +21,12 @@ test.describe('fonts (built output)', () => {
       const root = getComputedStyle(document.documentElement);
       const varValue = root.getPropertyValue('--font-elamy').trim();
 
-      // Raw CSS of every same-origin stylesheet the page links (built output, not the CSSOM).
+      // Raw CSS of the built output (not the CSSOM): every linked stylesheet plus inline <style> blocks.
+      // experimental.inlineCss (next.config.ts) ships the CSS inline, so the page may link none at all.
       const hrefs = [...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')].map((l) => l.href);
-      const css = (await Promise.all(hrefs.map((h) => fetch(h).then((r) => r.text())))).join('\n');
+      const linked = await Promise.all(hrefs.map((h) => fetch(h).then((r) => r.text())));
+      const inline = [...document.querySelectorAll('style')].map((s) => s.textContent ?? '');
+      const css = [...linked, ...inline].join('\n');
       const faces = [...css.matchAll(/@font-face\s*\{[^}]*?font-family:\s*(?:"([^"]+)"|'([^']+)'|([^;}\s]+))/g)].map(
         (m) => (m[1] ?? m[2] ?? m[3]).trim(),
       );
