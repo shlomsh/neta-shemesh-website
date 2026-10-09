@@ -13,7 +13,7 @@ Caveats:
 2. **Transitive prod vulnerabilities all ride on Next**: nested `postcss@8.4.31` (high, 4 advisories), optional `sharp@0.34.5` (high, 3), plus `nanoid`, `source-map-js`, `baseline-browser-mapping` which a lockfile-only refresh fixes. Next 16.3.8+/16.4.0 depends on `postcss 8.5.23` and `sharp ^0.35.4`, which clears both.
 3. **Real exposure of this site is lower than the severity suggests, but not zero.** Site is on Vercel (platform runs its own image optimizer and routing; Windows-host and custom-server advisories do not apply). The Azure SWA deploy is a static export with no server at all. The app uses no Server Actions, no middleware/proxy, no rewrites, no `next/og`. It does use `next/image` with `formats: ['image/avif', ...]` (relevant to the AVIF image-optimizer RCE class, on self-hosted setups) and static/ISR-style pages. Treat as "upgrade now", not "emergency".
 4. **Version hygiene is loose**: no `engines`, no `.nvmrc`/`.node-version`, CI uses floating `node-version: lts/*` (which flips to Node 26 around now), `@types/node` is `^20` while local/runtime Node is 24, and pins are a mix of exact (`next`, `react`, `react-dom`, `eslint-config-next`) and bare-major carets (`^4`, `^5`, `^9`, `^19`, `^20`).
-5. **Unused / misplaced**: `fontkit` is never imported (only mentioned in a README line and two comments about one-off font measurement); `scripts/generate-logos.js` requires `playwright`, which is not declared (resolved only because `@playwright/test` pulls it in). Everything else declared is genuinely used. The 4 remaining `npm audit` findings that look scary but are dev-only (`braces`/`micromatch`/`fast-glob`/`@next/eslint-plugin-next`) have **no usable fix**: the audit's suggestion (`eslint-config-next@14.2.35`) is a major downgrade.
+5. **Unused / misplaced**: `fontkit` is NOT unused after all: `tests-unit/sanity/type-scale-css.test.ts` (NS-45) loads it to measure Elamy glyph ink, so it stays as a devDependency (correction made during Batch 0); `scripts/generate-logos.js` requires `playwright`, which is not declared (resolved only because `@playwright/test` pulls it in). Everything else declared is genuinely used. The 4 remaining `npm audit` findings that look scary but are dev-only (`braces`/`micromatch`/`fast-glob`/`@next/eslint-plugin-next`) have **no usable fix**: the audit's suggestion (`eslint-config-next@14.2.35`) is a major downgrade.
 
 ## 2. Summary table
 
@@ -37,7 +37,7 @@ Type = semver distance from current to latest. "Wanted" = highest version satisf
 | typescript | 5.9.3 | 5.9.3 | 7.0.2 | major (via 6.0.3) | High. `typescript-eslint` peer is `>=4.8.4 <6.1.0`, so TS 7 would break lint. Next 16.3+ can use TS 7 for `next build` type checking (`useTypeScriptCli`), but ESLint is the blocker. TS 6.0.x is allowed by the peer range. | Hold. Optional later spike: TS 6.0.3 on its own (F) |
 | @types/node | 20.19.43 | 20.19.43 | 26.6.4 | major | Medium. Types should match the Node actually used (local 24; Vercel setting unknown). Required `>=24` or `^22` by vitest 5. | Decide Node baseline first, then `^24` (D) |
 | jsdom | 29.1.1 | 29.1.1 | 30.1.2 (hidden by npm outdated) | major | Medium. 30.x needs Node `^22.22.2 \|\| ^24.15.0`; local 24.13.0 does not satisfy it, which is why `npm outdated` omits it. | Hold until Node >= 24.15 locally and in CI (E) |
-| fontkit | 2.0.4 | 2.0.4 | 2.0.4 | none | None, up to date but **unused** | **Remove** (see section 4) |
+| fontkit | 2.0.4 | 2.0.4 | 2.0.4 | none | None, up to date. Used by the NS-45 sanity test | **Keep** as devDependency (see section 4) |
 | framer-motion | 12.40.0 (`^12.40.0`) | 12.43.0 | 14.0.0 | minor / major | n/a | **Do not upgrade.** Removed by NS-15 (see below) |
 
 ### framer-motion (separate note)
@@ -95,7 +95,7 @@ Method: a Node script scanning `src/`, `tests-unit/`, `tests/`, `scripts/` and r
 | @vitejs/plugin-react, jsdom, vitest | `vitest.config.ts`, tests | Used (test-only) |
 | eslint, eslint-config-next | `eslint.config.mjs` | Used |
 | typescript, @types/node, @types/react, @types/react-dom | type-checking, `next build`, ESLint | Used implicitly (no import needed) |
-| **fontkit** | **only `package.json`**. README line 50 ("parsed with fontkit") and two comments in `globals.css` / `type-scale-css.test.ts` say fontkit was used once to measure Elamy. No script, test or config imports it. | **Unused. Remove.** Both depcheck and the grep agree. If the owner wants to keep the one-off measurement reproducible, put the script in `scripts/` first, or run it via `npx -p fontkit`. Also fix the README sentence, which claims it is part of the font loading. |
+| fontkit | `tests-unit/sanity/type-scale-css.test.ts` (NS-45: Elamy ink measurement, `createRequire('fontkit')`); also README line 50 and comments in `globals.css` / `StepCard.tsx` | **Used (devDependency, keep).** Correction: the original audit predated NS-45 and wrongly called it unused. README line 50 is still inaccurate (fontkit is not part of font loading); fix separately. |
 
 Other hygiene points:
 - **Undeclared import**: `scripts/generate-logos.js` does `require('playwright')`. depcheck reports it as missing. It currently resolves only because `@playwright/test` depends on `playwright`. Either declare `playwright` or switch to `require('@playwright/test')`'s `chromium`.
@@ -140,7 +140,7 @@ Other hygiene points:
 Common rules: one batch = one commit (or two) on its own branch; do not start a batch while NS-14/15 holds `package.json` (rebase after it merges, since removing framer-motion also changes the lockfile and the vitest alias); lockfile diffs must contain only the intended packages (`git diff --stat package-lock.json`); after each batch run the gate below and push to main only with owner approval (production deploy).
 
 ### Batch 0 — no-regret cleanup (before or alongside A)
-- Remove `fontkit`; fix the README sentence; declare/replace the `playwright` import in `scripts/generate-logos.js`.
+- ~~Remove `fontkit`~~ (kept: used by a sanity test); fix the README sentence; declare/replace the `playwright` import in `scripts/generate-logos.js`.
 - Add `engines` and `.nvmrc` once the Node baseline is chosen; pin CI `node-version`.
 - **Gate:** `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm run test:unit`, one `npm run build`.
 
