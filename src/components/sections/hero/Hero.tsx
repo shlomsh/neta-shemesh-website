@@ -25,7 +25,7 @@ export function Hero() {
           relative
           w-full
           overflow-hidden
-          min-h-[100svh]
+          hero-fit
         "
       >
         {/* "05B Dark Ground": a solid deep-plum field (--color-plum / #7A5978); all hero text and

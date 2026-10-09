@@ -29,7 +29,7 @@ export function HeroContent() {
         relative z-10
         flex flex-col
         w-full
-        min-h-[100svh]
+        hero-fit
         px-[clamp(20px,5vw,80px)]
         py-[clamp(32px,4vw,56px)]
         gap-[clamp(24px,3vw,40px)]

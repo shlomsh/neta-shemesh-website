@@ -82,13 +82,14 @@
   /* Card height contract (NS-37): the one place the unit decision lives. svh everywhere; lvh below lg
    * (see the @supports block after this one), where the collapsed-toolbar height is static, so no strip of
    * the next card shows and nothing resizes when the toolbar toggles. dvh is only for the footer
-   * (screen-visible). Never dvh on cards. The hero keeps its own token (svh at every width). */
+   * (screen-visible). Never dvh on cards. The hero reads its own token, --hero-h (hero-fit), which follows
+   * the same unit decision (NS-25). */
   --card-h: 100svh;
   --hero-h: 100svh;
 }
 @supports (height: 100lvh) {
   @media (width < 64rem) {
-    :root { --card-h: 100lvh; }
+    :root { --card-h: 100lvh; --hero-h: 100lvh; }
   }
 }
 
@@ -96,6 +97,10 @@
  * band). The lg:h-/lg:min-h- utilities on lock/grow sort after this and override it from lg up. */
 @utility screen-fit {
   min-height: var(--card-h);
+}
+/* The hero's one-screen height (NS-25): --hero-h, which is the same unit decision as --card-h. */
+@utility hero-fit {
+  min-height: var(--hero-h);
 }
 /* The footer fills the VISIBLE screen at the bottom of the page: --card-h, upgraded to dvh where supported. */
 @utility screen-visible {

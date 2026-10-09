@@ -196,11 +196,10 @@ export function fitOf(el: Element | null | undefined): Fit | null {
 /**
  * True when the element is at least one screen tall at EVERY breakpoint: a Section with
  * `phone="screen"` (`screen-fit`), the footer (`screen-visible`, which is `--card-h` upgraded to dvh) or
- * the hero. The hero still spells its own height (`min-h-[100svh]`; it moves to `--hero-h` with
- * NS-26/NS-25).
+ * the hero (`hero-fit` = `min-height: var(--hero-h)`).
  */
 export function hasMinScreen(el: Element): boolean {
-  return hasClass(el, 'screen-fit') || hasClass(el, 'screen-visible') || hasClass(el, 'min-h-[100svh]') || hasClass(el, 'min-h-[var(--hero-h)]');
+  return hasClass(el, 'screen-fit') || hasClass(el, 'screen-visible') || hasClass(el, 'hero-fit');
 }
 
 /**

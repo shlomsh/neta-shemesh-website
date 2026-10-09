@@ -153,12 +153,13 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     const css = stripCssComments(globalsCss()).replace(/\s+/g, ' ');
     expect(css, ':root --card-h default').toMatch(/:root \{[^}]*--card-h: 100svh;/);
     expect(css, '--hero-h default').toMatch(/--hero-h: 100svh;/);
-    expect(css, '--card-h is 100lvh below lg (64rem), only where lvh is supported').toMatch(/@supports \(height: 100lvh\) \{ @media \(width < 64rem\) \{ :root \{ --card-h: 100lvh; \} \} \}/);
+    expect(css, '--card-h and --hero-h are 100lvh below lg (64rem), only where lvh is supported').toMatch(/@supports \(height: 100lvh\) \{ @media \(width < 64rem\) \{ :root \{ --card-h: 100lvh; --hero-h: 100lvh; \} \} \}/);
+    expect(css, 'hero-fit reads the hero token').toMatch(/@utility hero-fit \{ min-height: var\(--hero-h\); \}/);
     expect(css, 'screen-fit reads the token').toMatch(/@utility screen-fit \{ min-height: var\(--card-h\); \}/);
     expect(css, 'screen-visible = token, upgraded to dvh where supported').toMatch(/@utility screen-visible \{ min-height: var\(--card-h\); @supports \(height: 100dvh\) \{ min-height: 100dvh; \} \}/);
-    // No component spells the unit decision itself any more (the hero keeps min-h-[100svh] until NS-26/NS-25).
+    // No component spells the unit decision itself any more (the hero reads --hero-h through hero-fit, NS-25).
     const offenders = readSources()
-      .filter((f) => f.path.endsWith('.tsx') && !f.path.includes('/hero/'))
+      .filter((f) => f.path.endsWith('.tsx'))
       .filter((f) => /max-lg:min-h-lvh|supports-\[height:100dvh\]:min-h-dvh|min-h-\[100svh\]/.test(f.text))
       .map((f) => f.path);
     expect(offenders, 'a component re-spelled the card height: use screen-fit / screen-visible').toEqual([]);
