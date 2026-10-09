@@ -18,7 +18,6 @@ export const REIGNITE_PHOTOS: readonly CroppedPhoto[] = [
 export const BIO_QUOTE_LINES = [
   'הטיפול הזוגי מספק לכם מרחב מוגן, בו תוכלו לפרק את השתיקות, ללמוד להקשיב ולהתחיל לבנות מחדש את הקשר.',
   'יחד, נלמד לזהות את הדינמיקה הזוגית ולייצר שפה משותפת שמחזירה את הקרבה הביתה.',
-  '- נטע',
 ];
 
 export const CREDENTIALS: Credential[] = [
