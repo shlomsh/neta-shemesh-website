@@ -7,6 +7,7 @@ import { CONTACT_PHOTOS, SOCIAL_PANEL } from '@/content/home/contact';
 import { ID } from '@/content/ids';
 import { PHOTO_QUALITY_DETAIL } from '@/lib/image-quality';
 import { SocialLinks } from './SocialLinks';
+import { RichParagraph } from './RichParagraph';
 
 export function ContactSocial() {
   // PANEL 1 — Follow me on social
@@ -71,7 +72,7 @@ export function ContactSocial() {
                   radius="card"
                   objectPosition={photo.objectPosition}
                   motion={{ parallax: 9 }}
-                  style={{ gridArea: photo.desktop.area, ...photo.desktop.extraStyle }}
+                  style={{ gridArea: photo.desktop.area }}
                   className="min-h-0"
                 />
               ))}
@@ -85,13 +86,7 @@ export function ContactSocial() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <p
-                className="type-lead"
-              >
-                {SOCIAL_PANEL.body.start}
-                <strong>{SOCIAL_PANEL.body.bold}</strong>
-                {SOCIAL_PANEL.body.end}
-              </p>
+              <RichParagraph line={SOCIAL_PANEL.body} />
             </ScrollReveal>
 
             <ScrollReveal delay={0.3}>

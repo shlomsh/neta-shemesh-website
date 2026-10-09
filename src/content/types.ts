@@ -69,8 +69,6 @@ export interface ContactPhoto {
   desktop: {
     /** grid-area name */
     area: string;
-    /** extra style props on the frame, e.g. the tall portrait spanning both rows */
-    extraStyle?: { gridRow: string };
     sizes: string;
   };
 }

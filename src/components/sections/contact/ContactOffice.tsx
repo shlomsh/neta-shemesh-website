@@ -7,6 +7,7 @@ import { OFFICE_PANEL } from '@/content/home/contact';
 import { ANCHOR, ID } from '@/content/ids';
 import { ContactDetails } from './ContactDetails';
 import { MapEmbed } from './MapEmbed';
+import { RichParagraph } from './RichParagraph';
 
 export function ContactOffice() {
   // PANEL 2 — Office details + map
@@ -34,13 +35,7 @@ export function ContactOffice() {
 
                 {/* Right cell (first in RTL DOM): lead + contact details */}
                 <div className="flex flex-col justify-center gap-[24px] text-right">
-                  <p
-                    className="type-lead"
-                  >
-                    {OFFICE_PANEL.body.start}
-                    <strong>{OFFICE_PANEL.body.bold}</strong>
-                    {OFFICE_PANEL.body.end}
-                  </p>
+                  <RichParagraph line={OFFICE_PANEL.body} />
 
                   <ContactDetails />
                 </div>

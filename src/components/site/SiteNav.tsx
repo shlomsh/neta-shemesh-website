@@ -6,7 +6,7 @@ import { IconButton } from '@/components/primitives/ui/IconButton';
 import { NAV_LINKS } from '@/content/home/nav';
 import { anchorHref, ID } from '@/content/ids';
 import { SITE, telHref } from '@/content/site';
-import { MenuIcon } from './icons/MenuIcon';
+import { MenuIcon } from './icons';
 import { MobileMenu } from './MobileMenu';
 import { NavLink } from './NavLink';
 
@@ -21,9 +21,9 @@ import { NavLink } from './NavLink';
  *                  14px legibility floor). The overlay gives each link a large
  *                  tap target instead.
  *
- * basePath: prefix for hash anchors. Default '' works on the homepage
- * (#about-me scrolls in-page). Pass '/' from blog pages so the links become
- * /#about-me (full-document navigation, avoids App Router hash-stacking bug).
+ * crossRoute: false (default) on the homepage, where #about-me scrolls in-page. Pass true from
+ * blog pages so the links become /#about-me (full-document navigation, avoids App Router
+ * hash-stacking bug).
  */
 const desktopLinkClass = `
     type-lead
@@ -37,7 +37,7 @@ const desktopLinkClass = `
     rounded-tile
   `;
 
-export function SiteNav({ basePath = '' }: { basePath?: string }) {
+export function SiteNav({ crossRoute = false }: { crossRoute?: boolean }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -45,7 +45,7 @@ export function SiteNav({ basePath = '' }: { basePath?: string }) {
 
   const links = NAV_LINKS.map((link) => ({
     label: link.label,
-    href: link.anchor !== undefined ? anchorHref(link.anchor, basePath) : link.route,
+    href: link.anchor !== undefined ? anchorHref(link.anchor, crossRoute ? '/' : '') : link.route,
   }));
 
   // Return focus to the hamburger button when the overlay closes (not on initial mount).

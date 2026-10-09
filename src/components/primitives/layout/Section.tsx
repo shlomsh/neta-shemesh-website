@@ -69,7 +69,7 @@ type SectionOwnProps = {
   /**
    * 'none' (default) adds no vertical padding of its own: the section is then padded by `lg:py-12`
    * (lock/grow), by the content itself (Services, which pads inside its Container), or by a one-off
-   * `py-*` in `className` (the CTA band). Never put a second `py-*` in `className` next to a `pad`
+   * `py-*` in `className` (the CTA band, the blog and 404 sections: they have no token for their own clamp). Never put a second `py-*` in `className` next to a `pad`
    * token: two utilities for one property are decided by CSS source order.
    */
   pad?: SectionPad;

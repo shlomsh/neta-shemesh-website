@@ -10,7 +10,7 @@ import { useBodyScrollLock } from './hooks/useBodyScrollLock';
 import { useCloseAtBreakpoint } from './hooks/useCloseAtBreakpoint';
 import { useFocusTrap } from './hooks/useFocusTrap';
 import { useInertBackground } from './hooks/useInertBackground';
-import { CloseIcon } from './icons/CloseIcon';
+import { CloseIcon } from './icons';
 import { NavLink } from './NavLink';
 
 const subscribeNoop = () => () => {};

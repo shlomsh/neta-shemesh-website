@@ -1,7 +1,6 @@
 import { telHref, waHref } from '@/content/site';
 import { cx } from '@/lib/cx';
-import { PhoneIcon } from './icons/PhoneIcon';
-import { WhatsAppIcon } from './icons/WhatsAppIcon';
+import { PhoneIcon, WhatsAppIcon } from './icons';
 
 const WA_URL = waHref();
 const PHONE_URL = telHref();

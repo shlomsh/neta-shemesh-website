@@ -24,10 +24,10 @@ afterEach(() => {
 const OPEN_LABEL = 'פתיחת תפריט';
 const CLOSE_LABEL = 'סגירת תפריט';
 
-function setup(basePath?: string) {
+function setup(crossRoute?: boolean) {
   const view = render(
     <PageShell overflow="clip">
-      <SiteNav basePath={basePath} />
+      <SiteNav crossRoute={crossRoute} />
       <button type="button">page control</button>
     </PageShell>,
   );
@@ -91,8 +91,8 @@ describe('MobileMenu: open and close', () => {
     expect(links.at(-1)!.getAttribute('href')).toBe(telHref());
   });
 
-  it('prefixes hash anchors with basePath on blog pages, leaves routes alone', () => {
-    const { hamburger } = setup('/');
+  it('prefixes hash anchors with a slash (crossRoute) on blog pages, leaves routes alone', () => {
+    const { hamburger } = setup(true);
     fireEvent.click(hamburger);
     const dialog = screen.getByRole('dialog');
     const hrefs = within(dialog).getAllByRole('link').map((a) => a.getAttribute('href'));

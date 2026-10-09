@@ -45,7 +45,7 @@ export const CONTACT_PHOTOS: ContactPhoto[] = [
     src: '/images/contact-clinic-atmosphere.webp',
     alt: `אווירת הקליניקה של ${SITE.name}`,
     mobile: { ratio: '2/3' },
-    desktop: { area: 'p3', extraStyle: { gridRow: '1 / 3' }, sizes: '(max-width: 768px) 37vw, 21vw' },
+    desktop: { area: 'p3', sizes: '(max-width: 768px) 37vw, 21vw' },
   },
 ];
 
