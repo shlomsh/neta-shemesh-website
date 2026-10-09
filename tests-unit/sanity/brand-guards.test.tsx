@@ -92,7 +92,8 @@ describe('D21: hero entrance and couple line-art', () => {
     const css = stripCssComments(readSources().find((s) => s.name === 'globals.css')!.text);
     expect(css).toMatch(/@keyframes hero-enter\b/);
     expect(css).toMatch(/\.hero-enter\s*\{[^}]*animation:\s*hero-enter/);
-    for (let i = 0; i < 4; i++) expect(css, `.hero-enter-${i}`).toMatch(new RegExp(`\\.hero-enter-${i}\\s*\\{[^}]*animation-delay`));
+    // .hero-enter-0 has no rule on purpose (delay 0s is the default); the class stays on the first block as a marker
+    for (let i = 1; i < 4; i++) expect(css, `.hero-enter-${i}`).toMatch(new RegExp(`\\.hero-enter-${i}\\s*\\{[^}]*animation-delay`));
     const reduced = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
     expect(reduced).toMatch(/\.hero-enter\s*\{[^}]*animation:\s*none/);
   });

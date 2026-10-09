@@ -1,21 +1,28 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
 
-/* Tailwind scans the whole project root by default. Class-name-looking strings in tests and docs
- * (sample classes in assertions, examples in the .md docs) would generate junk rules (.ring-white, an invalid
- * .ring-[...]); only the app source feeds the stylesheet. Paths are relative to this file. */
-@source not "../../tests-unit";
-@source not "../../tests";
-@source not "../../docs";
-@source not "../../**/*.md";
+/* Tailwind scans only the app source. `source(none)` turns off auto-detection (which would also read
+ * .github/, scripts/, public/, design_handoff_hero_05b/, the root configs and every .md/test file and emit junk
+ * rules such as .contents or .ease-in-out); `@source` re-adds src/ (path relative to this file: src/app -> src). */
+@source "../";
+/* ...except the docs inside src (src/components/primitives/README.md quotes sample classes such as
+ * text-white and gap-section). */
+@source not "../**/*.md";
 
 @theme {
+  /* Palette guard: drop Tailwind's whole default palette so an off-brand utility (bg-red-500) compiles to
+   * nothing, then declare exactly the colours the site uses. */
+  --color-*: initial;
   --color-plum: #7A5978;
   --color-mauve: #C49AB8;
   --color-blush: #ECC8CE;
   --color-cream: #FFF5F0;
+  /* white is the brand cream, never pure #fff (read by .on-dark) */
+  --color-white: #FFF5F0;
+  /* black only for photo scrims (bg-black/20, from-black/60 ...) */
+  --color-black: #000;
 
-  --font-elamy: var(--font-elamy), sans-serif;
-  --font-stanga: var(--font-stanga), sans-serif;
+  /* --font-elamy, --font-stanga and --font-latin-next are set by next/font on <html> (src/app/fonts.ts,
+   * layout.tsx); they are deliberately not redeclared here (a self-referencing token is a cycle). */
 
   /* Latin/digit companion (Roboto Condensed via next/font, see layout.tsx).
    * Stanga has no Latin glyphs; the browser falls through Stanga -> companion
@@ -56,10 +63,8 @@
 }
 
 :root {
-  /* Overrides Tailwind's default white with the brand cream; read by .on-dark. The other
-   * colour aliases (--color-dark, --color-text-*, --color-bg-light, --color-brand-primary)
-   * are retired: say plum / cream / mauve. */
-  --color-white: #FFF5F0;
+  /* --color-white is the brand cream, declared in @theme. The other colour aliases (--color-dark,
+   * --color-text-*, --color-bg-light, --color-brand-primary) are retired: say plum / cream / mauve. */
 
   /* Elamy ink box (see ".type-display" below): how far the glyph ink reaches above/below the line
    * box, in em of the heading's own font-size. Measured with fontkit: ink tops out at +1.106em
@@ -143,9 +148,8 @@
 
 .hero-enter {
   animation: hero-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-fill-mode: both;
 }
-.hero-enter-0 { animation-delay: 0s; }
+/* .hero-enter-0 needs no rule: its delay is the default 0s (the class stays as a marker). */
 .hero-enter-1 { animation-delay: 0.08s; }
 .hero-enter-2 { animation-delay: 0.16s; }
 .hero-enter-3 { animation-delay: 0.24s; }

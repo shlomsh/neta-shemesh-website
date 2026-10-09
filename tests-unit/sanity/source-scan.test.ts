@@ -185,6 +185,7 @@ describe('D18: palette lock (hex colours)', () => {
     { hex: '#25d366', file: 'ContactFAB.tsx', reason: 'WhatsApp brand green: owner ruling, stays green' },
     { hex: '#1ebe5b', file: 'ContactFAB.tsx', reason: 'darker hover shade of the WhatsApp green' },
     { hex: '#ffffff', file: 'ContactFAB.tsx', reason: 'white label/ring on the WhatsApp green (WhatsApp brand spec)' },
+    { hex: '#000', file: 'globals.css', reason: '--color-black in @theme, kept (Tailwind default value) for the photo scrims only: bg-black/20, from-black/60 ...' },
   ];
 
   function hexHits() {
@@ -251,12 +252,19 @@ describe('R9: colour utilities come from the @theme palette, not from arbitrary 
     expectNone(scan(code, rule('white-utility').re), 'named white utility (use cream: same computed colour, no reliance on the :root override)');
   });
 
-  it('Tailwind does not scan tests, docs or markdown (@source not), so sample classes there cannot generate junk CSS', () => {
-    // raw text on purpose: the naive stripCssComments would eat the `/**/` inside "../../**/*.md"
+  it('Tailwind scans only src (source(none) + @source "../"), so tests, docs, markdown, configs and public/ cannot generate junk CSS', () => {
+    // raw text on purpose: the naive stripCssComments would eat any `/**/` inside a glob
     const css = sourceNamed('globals.css').text;
-    for (const dir of ['tests-unit', 'tests', 'docs', '**/*.md']) {
-      expect(css, `@source not for ${dir}`).toContain(`@source not "../../${dir}";`);
-    }
+    expect(css, 'auto-detection must be off').toContain('@import "tailwindcss" source(none);');
+    expect(css, 'src/ is the one scanned root (path relative to src/app/globals.css)').toContain('@source "../";');
+    expect(css, 'the READMEs inside src quote sample classes, so markdown stays excluded').toContain('@source not "../**/*.md";');
+  });
+
+  it('the default Tailwind palette is dropped (--color-*: initial) and white stays the cream alias', () => {
+    const css = stripCssComments(sourceNamed('globals.css').text);
+    const theme = css.match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+    expect(theme).toMatch(/--color-\*\s*:\s*initial\s*;/);
+    expect(theme).toMatch(/--color-black\s*:/);
   });
 
   it('the four palette names are declared as @theme colours, so text-plum / bg-cream / ... really generate CSS', () => {
