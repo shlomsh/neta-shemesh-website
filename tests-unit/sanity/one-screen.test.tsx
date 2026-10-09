@@ -20,6 +20,7 @@ import {
   coversImage,
   findSection,
   fitOf,
+  hasClass,
   hasDesktopRhythm,
   hasFullHeight,
   hasMinScreen,
@@ -93,6 +94,14 @@ describe('B6: every solid section is at least one screen, with the agreed deskto
       const el = findSection(home, spec.name);
       expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost min-h-[100svh]`).toBe(true);
     }
+  });
+
+  it('the footer fills the VISIBLE screen: 100dvh where supported, with the 100svh above as the fallback; content centred between the top and the copyright', () => {
+    const el = findSection(home, 'footer');
+    expect(hasClass(el, 'supports-[height:100dvh]:min-h-dvh'), 'footer lost its dvh upgrade (phones show a sliver of the previous card once the toolbar collapses)').toBe(true);
+    expect(hasClass(el, 'justify-between'), 'justify-between leaves an empty void between the content and the copyright').toBe(false);
+    const column = el.querySelector(':scope > div.relative.z-10');
+    expect(column && hasClass(column, 'my-auto'), 'the tagline/CTA/signature group is no longer vertically centred').toBe(true);
   });
 
   it('the CTA band is a free-fit photo band (no tone, no desktop lock) and hero/footer publish no data-fit', () => {

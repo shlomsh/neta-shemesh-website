@@ -1,10 +1,12 @@
 /**
- * SANITY B9: desktop soft snap (JS), no CSS scroll-snap.
+ * SANITY B9: soft snap (JS), no CSS scroll-snap.
  *
  * History: CSS scroll-snap proximity felt loose and mandatory felt aggressive, so snapping moved
- * to SoftSnap.tsx (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts). It silently stops working if <main>
- * becomes overflow-hidden, if a constant drifts, or if it starts snapping on phones / under
- * reduced motion. This file guards the constants, the mount, and the "does nothing" paths.
+ * to SoftSnap.tsx (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts).
+ * It runs at every width: the desktop rule at >= 1024px, a gentler one on touch widths (waits for momentum to end, never
+ * acts under a finger, never pulls the reader back up a tall section). It silently stops working if <main>
+ * becomes overflow-hidden, if a constant drifts, or if it starts snapping under reduced motion or under a finger.
+ * This file guards the constants, the mount, the targets (cards AND the footer), and the "does nothing" paths.
  */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
@@ -21,7 +23,7 @@ function constant(name: string): number {
 }
 
 describe('constants stay in sane ranges', () => {
-  it('MIN_WIDTH is 1024 (desktop only)', () => expect(constant('MIN_WIDTH')).toBe(1024));
+  it('MIN_WIDTH is 1024 (where the desktop rules start; below it the gentle touch rules apply)', () => expect(constant('MIN_WIDTH')).toBe(1024));
   it('THRESHOLD is between 0.2 and 0.4 of the viewport height', () => {
     expect(constant('THRESHOLD')).toBeGreaterThanOrEqual(0.2);
     expect(constant('THRESHOLD')).toBeLessThanOrEqual(0.4);
@@ -29,6 +31,11 @@ describe('constants stay in sane ranges', () => {
   it('SETTLE_MS is 100-250', () => {
     expect(constant('SETTLE_MS')).toBeGreaterThanOrEqual(100);
     expect(constant('SETTLE_MS')).toBeLessThanOrEqual(250);
+  });
+  it('TOUCH_SETTLE_MS is 150-400 and longer than SETTLE_MS (momentum must have ended)', () => {
+    expect(constant('TOUCH_SETTLE_MS')).toBeGreaterThanOrEqual(150);
+    expect(constant('TOUCH_SETTLE_MS')).toBeLessThanOrEqual(400);
+    expect(constant('TOUCH_SETTLE_MS')).toBeGreaterThan(constant('SETTLE_MS'));
   });
   it('DURATION_MS is 350-700', () => {
     expect(constant('DURATION_MS')).toBeGreaterThanOrEqual(350);
@@ -54,14 +61,13 @@ describe('targets', () => {
     home = await renderHome();
   });
 
-  it('its selector matches the solid + photo cards of the real page and excludes the footer', () => {
+  it('its selector matches the solid + photo cards of the real page AND the footer, in page order', () => {
     const selector = findTargetSelector(snap);
     expect(selector, 'SoftSnap target selector not found').toBeTruthy();
     const targets = Array.from(home.querySelectorAll(selector!));
     expect(targets.length, 'SoftSnap targets').toBeGreaterThanOrEqual(10);
-    expect(targets.some((t) => t.tagName === 'FOOTER'), 'footer must not be a snap target').toBe(false);
-    const sections = topLevelSections(home).filter((s) => s.tagName === 'SECTION');
-    expect(targets, 'every top-level <section> is a snap target').toEqual(sections);
+    expect(targets[targets.length - 1]?.tagName, 'the footer is the last snap target').toBe('FOOTER');
+    expect(targets, 'every top-level <section> and the footer is a snap target').toEqual(topLevelSections(home));
   });
 });
 
@@ -70,7 +76,7 @@ describe('behaviour (jsdom, fake timers)', () => {
   const originalScrollTo = window.scrollTo;
   let scrollTo: ReturnType<typeof vi.fn>;
 
-  function setup(opts: { width: number; reduced: boolean; edgeDistance: number }) {
+  function setup(opts: { width: number; reduced: boolean; edgeDistance?: number }) {
     vi.useFakeTimers();
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: opts.width });
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
@@ -90,19 +96,32 @@ describe('behaviour (jsdom, fake timers)', () => {
     window.scrollTo = scrollTo as unknown as typeof window.scrollTo;
   }
 
-  /** Mount the real page, wait out the startup grace, park a card edge `edgeDistance` px below, scroll, settle. */
-  async function mountScrollAndSettle(edgeDistance: number) {
+  /** Mount the real page and park every card far away, except the first, `edgeDistance` px below the viewport top (height `height`). */
+  async function mountPage(edgeDistance: number, height = 800) {
     const { default: Home } = await import('@/app/page');
     render(React.createElement(Home));
-    document.querySelectorAll('main > section').forEach((s) => {
+    document.querySelectorAll('main > section, main > footer').forEach((s) => {
       (s as HTMLElement).getBoundingClientRect = () => ({ top: 5000, bottom: 5800, left: 0, right: 1, width: 1, height: 800, x: 0, y: 5000, toJSON: () => ({}) });
     });
     const first = document.querySelector('main > section') as HTMLElement;
-    first.getBoundingClientRect = () => ({ top: edgeDistance, bottom: edgeDistance + 800, left: 0, right: 1, width: 1, height: 800, x: 0, y: edgeDistance, toJSON: () => ({}) });
+    first.getBoundingClientRect = () => ({ top: edgeDistance, bottom: edgeDistance + height, left: 0, right: 1, width: 1, height, x: 0, y: edgeDistance, toJSON: () => ({}) });
     await vi.advanceTimersByTimeAsync(2500);
+    return first;
+  }
+
+  /** mountPage, then scroll, settle, and let the glide finish. */
+  async function mountScrollAndSettle(edgeDistance: number, height = 800) {
+    await mountPage(edgeDistance, height);
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(400); // settle
     await vi.advanceTimersByTimeAsync(1500); // glide
+  }
+
+  /** A touch event carrying `count` fingers (jsdom's TouchEvent does not take a touches list). */
+  function touch(type: 'touchstart' | 'touchend', count: number) {
+    const ev = new Event(type);
+    Object.defineProperty(ev, 'touches', { value: Array.from({ length: count }, () => ({})) });
+    window.dispatchEvent(ev);
   }
 
   beforeEach(() => {
@@ -130,10 +149,31 @@ describe('behaviour (jsdom, fake timers)', () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it('does nothing below 1024px', async () => {
-    setup({ width: 800, reduced: false, edgeDistance: 150 });
+  it('below 1024px it also snaps (gently): a one-screen card edge nearby is glided to', async () => {
+    setup({ width: 390, reduced: false });
     await mountScrollAndSettle(150);
-    expect(scrollTo, 'SoftSnap snapped below MIN_WIDTH').not.toHaveBeenCalled();
+    expect(scrollTo, 'SoftSnap no longer snaps on touch widths').toHaveBeenCalled();
+  });
+
+  it('below 1024px, mid-way through a section taller than the screen it does not move', async () => {
+    setup({ width: 390, reduced: false });
+    // window.scrollY is 1000: this card's top is 150px above the viewport top (desktop would pull back to it) and it is 2400px tall.
+    await mountScrollAndSettle(-150, 2400);
+    expect(scrollTo, 'SoftSnap pulled a reader back up a tall section').not.toHaveBeenCalled();
+  });
+
+  it('below 1024px, it waits for the finger: nothing while it is down, a glide once it lifts and the page is still', async () => {
+    setup({ width: 390, reduced: false });
+    await mountPage(150);
+    touch('touchstart', 1);
+    window.dispatchEvent(new Event('scroll'));
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(scrollTo, 'SoftSnap acted under a finger').not.toHaveBeenCalled();
+    touch('touchend', 0);
+    await vi.advanceTimersByTimeAsync(100); // less than TOUCH_SETTLE_MS: still waiting for momentum
+    expect(scrollTo).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(scrollTo, 'SoftSnap never snapped after the touch ended').toHaveBeenCalled();
   });
 
   it('does nothing under prefers-reduced-motion', async () => {

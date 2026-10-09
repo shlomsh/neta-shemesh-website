@@ -7,22 +7,25 @@ import { FooterBackground } from './FooterBackground';
 /**
  * Footer — server component, App Router.
  *
- * Layout: full-bleed photo card (min 100svh) with a dark scrim. Centered RTL
- * column, top-to-bottom: tagline → CTA → brand name → copyright pinned near
- * the bottom. Each block fades in via ScrollReveal with a small stagger.
+ * Layout: full-bleed photo card filling the *visible* screen (min 100dvh, with 100svh as the
+ * fallback) with a dark scrim. `svh` alone left a strip of the previous card showing on phones
+ * once Safari's toolbar collapsed, because the visible height is then larger than svh.
+ * Centered RTL column: the tagline → CTA → brand name group sits in the vertical middle of the
+ * free space (`my-auto`), the copyright at the bottom. Each block fades in via ScrollReveal with
+ * a small stagger. SoftSnap treats this footer as the last snap target.
  *
  * All styling via Tailwind utility classes + CSS vars.
  */
 export function Footer() {
   return (
     <footer
-      className="relative w-full overflow-hidden flex flex-col items-center justify-between px-6 py-[clamp(48px,6vw,96px)] min-h-[100svh]"
+      className="relative w-full overflow-hidden flex flex-col items-center px-6 py-[clamp(48px,6vw,96px)] min-h-[100svh] supports-[height:100dvh]:min-h-dvh"
     >
       {/* Background photo + scrim — absolutely positioned */}
       <FooterBackground />
 
-      {/* Content column — sits above the background via z-10 */}
-      <div className="relative z-10 flex flex-col items-center gap-[clamp(32px,6vw,90px)] w-full max-w-[894px] text-center">
+      {/* Content column — sits above the background via z-10; my-auto centres it between the top padding and the copyright */}
+      <div className="relative z-10 my-auto flex flex-col items-center gap-[clamp(32px,6vw,90px)] w-full max-w-[894px] text-center">
 
         {/* 1. Tagline */}
         <ScrollReveal className="h-full">
@@ -52,8 +55,8 @@ export function Footer() {
 
       </div>
 
-      {/* 4. Copyright — pinned to bottom; extra bottom padding below md clears the ContactFAB pill (bottom-left) */}
-      <div className="relative z-10 mt-auto pb-[calc(env(safe-area-inset-bottom)+72px)] md:pb-0">
+      {/* 4. Copyright — last flex item, so it rests at the bottom; extra bottom padding below md clears the ContactFAB pill (bottom-left) */}
+      <div className="relative z-10 pb-[calc(env(safe-area-inset-bottom)+72px)] md:pb-0">
         <ScrollReveal delay={0.3}>
           <p
             className="type-small text-cream text-center"

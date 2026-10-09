@@ -5,9 +5,11 @@ import {
   DURATION_MS,
   SETTLE_MS,
   STARTUP_IGNORE_MS,
+  TOUCH_SETTLE_MS,
   easeOutCubic,
   isSnapActive,
   pickSnapTarget,
+  snapMode,
 } from '@/lib/soft-snap';
 
 const SNAP_KEYS = new Set([
@@ -16,8 +18,13 @@ const SNAP_KEYS = new Set([
 
 /**
  * Soft snap: after the user stops scrolling, gently glide to the nearest top-level card
- * edge, but only when that edge is already close (within THRESHOLD of the viewport height).
- * A middle ground between CSS `proximity` (too loose) and `mandatory` (too aggressive).
+ * edge (the `main > section` cards and the `main > footer`), but only when that edge is already
+ * close (within THRESHOLD of the viewport height). A middle ground between CSS `proximity`
+ * (too loose) and `mandatory` (too aggressive).
+ *
+ * It runs at every width. On touch widths (< MIN_WIDTH) it is gentler: it waits a little longer
+ * after the last scroll event or touchend (so iOS momentum has ended), never acts while a finger
+ * is down, and does not pull the reader back up into a section taller than the screen.
  *
  * This file is the effect (listeners, timers, the glide); what to snap to is the pure
  * `pickSnapTarget` in `@/lib/soft-snap`, where the constants live too.
@@ -36,8 +43,11 @@ export function SoftSnap() {
     // Last position we scrolled to ourselves; trailing scroll events at that exact
     // position (delivered after a cancel) must not re-arm the settle timer.
     let lastOwnY: number | null = null;
+    // Fingers currently on the screen (touchstart/touchend/touchcancel). A snap never fights one.
+    let touching = false;
 
-    const isActive = () => isSnapActive(window.innerWidth, reduceQuery.matches);
+    const isActive = () => isSnapActive(reduceQuery.matches);
+    const settleDelay = () => (snapMode(window.innerWidth) === 'gentle' ? TOUCH_SETTLE_MS : SETTLE_MS);
 
     const finishAnimation = () => {
       if (rafId) cancelAnimationFrame(rafId);
@@ -105,12 +115,16 @@ export function SoftSnap() {
       if (isTyping()) return;
 
       const y = window.scrollY;
-      const sections = document.querySelectorAll<HTMLElement>('main > section');
+      const sections = document.querySelectorAll<HTMLElement>('main > section, main > footer');
+      const rects = Array.from(sections, (s) => s.getBoundingClientRect());
       const target = pickSnapTarget({
         scrollY: y,
         viewportHeight: window.innerHeight,
         documentHeight: document.documentElement.scrollHeight,
-        sectionTops: Array.from(sections, (s) => s.getBoundingClientRect().top + y),
+        sectionTops: rects.map((r) => r.top + y),
+        sectionHeights: rects.map((r) => r.height),
+        mode: snapMode(window.innerWidth),
+        touching,
       });
       if (target !== null) animateTo(target);
     };
@@ -128,11 +142,26 @@ export function SoftSnap() {
         skipNextSettle = true;
       }
       clearSettle();
-      settleTimer = setTimeout(settle, SETTLE_MS);
+      settleTimer = setTimeout(settle, settleDelay());
     };
 
     const onUserInput = () => {
       cancelAnimation();
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      touching = e.touches.length > 0;
+      clearSettle(); // a held finger is not "idle"; touchend re-arms the timer
+      cancelAnimation();
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      touching = e.touches.length > 0;
+      if (touching || !isActive()) return;
+      // Momentum scrolling (if any) keeps firing scroll events and pushes this out; a plain lift
+      // with no momentum fires none, so arm the settle timer here too.
+      clearSettle();
+      settleTimer = setTimeout(settle, settleDelay());
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -148,7 +177,9 @@ export function SoftSnap() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('wheel', onUserInput, { passive: true });
-    window.addEventListener('touchstart', onUserInput, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchEnd, { passive: true });
     window.addEventListener('pointerdown', onUserInput, { passive: true });
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('resize', onResize);
@@ -159,7 +190,9 @@ export function SoftSnap() {
       cancelAnimation();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('wheel', onUserInput);
-      window.removeEventListener('touchstart', onUserInput);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchEnd);
       window.removeEventListener('pointerdown', onUserInput);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('resize', onResize);
