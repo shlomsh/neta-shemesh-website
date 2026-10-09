@@ -96,7 +96,9 @@ describe('structural guards (source + CSS)', () => {
     const idx = css.indexOf('@media (prefers-reduced-motion: reduce)');
     expect(idx).toBeGreaterThan(-1);
     const block = css.slice(idx, css.indexOf('@utility safari-clip'));
-    expect(block).toMatch(/\[data-reveal\]\s*\{[^}]*opacity:\s*1\s*!important[^}]*transform:\s*none\s*!important[^}]*translate:\s*none\s*!important/);
+    expect(block).toMatch(/\[data-reveal\]\s*\{[^}]*opacity:\s*1\s*!important[^}]*transform:\s*none\s*!important/);
+    // the minifier turns `transform:none; translate:none` into `transform:translate(0)` (a real transform)
+    expect(block).not.toMatch(/\[data-reveal\]\s*\{[^}]*translate\s*:/);
     expect(block).toMatch(/\[data-parallax\]\s*\{[^}]*transform:\s*none\s*!important/);
   });
 

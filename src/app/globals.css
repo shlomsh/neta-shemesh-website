@@ -176,7 +176,11 @@
   /* Belt for every reveal wrapper. ScrollReveal ships no hidden state (RevealObserver arms it, and
      never under reduce), but ContactFAB still carries framer's inline opacity:0 / transform (NS-14),
      which only !important beats. Does not depend on hydration or JS. */
-  [data-reveal] { opacity: 1 !important; transform: none !important; translate: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  /* No `translate: none` here on purpose: the CSS minifier folds `transform: none; translate: none` into
+     `transform: translate(0)`, which is a real transform (stacking context, fixed-descendant containing
+     block) and cost ~1/255 colour shifts in the VR. Under reduce the hidden-state rule above is never
+     active (it only exists under no-preference), so there is no translate to cancel. */
   /* ParallaxFrame inner layer: static, no drift/scale (children fill it). */
   [data-parallax] { transform: none !important; translate: none !important; scale: none !important; }
 }
