@@ -92,6 +92,17 @@
     :root { --card-h: 100lvh; --hero-h: 100lvh; }
   }
 }
+/* iOS 26 Safari draws the page edge to edge, under the floating bottom bar, but 100lvh stops where that bar
+ * starts: measured on an iPhone 17 the layout viewport is 62pt below the screen top and 100lvh is 754pt,
+ * so at scroll 0 the hero ends 58pt above the screen bottom and the next card shows beside the bar (env()
+ * safe-area insets read 0 in Safari, viewport-fit=cover changes nothing, dvh is no taller than lvh). The hero
+ * therefore overshoots lvh by 60px. Gated to iOS WebKit (-webkit-touch-callout) that has CSS anchor
+ * positioning (Safari 26+); iOS 18 and every other browser keep exactly 100lvh (NS-25). */
+@supports (-webkit-touch-callout: none) and (anchor-name: --a) {
+  @media (width < 64rem) {
+    :root { --hero-h: calc(100lvh + 60px); }
+  }
+}
 
 /* One screen at least: the height every full-screen card consumes (Section fit free/lock/grow, the CTA
  * band). The lg:h-/lg:min-h- utilities on lock/grow sort after this and override it from lg up. */

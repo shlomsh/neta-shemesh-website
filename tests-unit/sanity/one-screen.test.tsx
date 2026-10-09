@@ -154,6 +154,7 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     expect(css, ':root --card-h default').toMatch(/:root \{[^}]*--card-h: 100svh;/);
     expect(css, '--hero-h default').toMatch(/--hero-h: 100svh;/);
     expect(css, '--card-h and --hero-h are 100lvh below lg (64rem), only where lvh is supported').toMatch(/@supports \(height: 100lvh\) \{ @media \(width < 64rem\) \{ :root \{ --card-h: 100lvh; --hero-h: 100lvh; \} \} \}/);
+    expect(css, '--hero-h overshoots 100lvh by 60px on iOS 26 Safari only (floating bottom bar), below lg').toMatch(/@supports \(-webkit-touch-callout: none\) and \(anchor-name: --a\) \{ @media \(width < 64rem\) \{ :root \{ --hero-h: calc\(100lvh \+ 60px\); \} \} \}/);
     expect(css, 'hero-fit reads the hero token').toMatch(/@utility hero-fit \{ min-height: var\(--hero-h\); \}/);
     expect(css, 'screen-fit reads the token').toMatch(/@utility screen-fit \{ min-height: var\(--card-h\); \}/);
     expect(css, 'screen-visible = token, upgraded to dvh where supported').toMatch(/@utility screen-visible \{ min-height: var\(--card-h\); @supports \(height: 100dvh\) \{ min-height: 100dvh; \} \}/);
