@@ -7,7 +7,18 @@ import localFont from "next/font/local";
  * `--font-latin` in globals.css.
  */
 
-/** Display / handwriting: hero H1 + section H2 (700), step numerals + signature (400). */
+/**
+ * Display / handwriting: hero H1 + section H2 (700), step numerals + signature (400).
+ *
+ * `preload` is per localFont() call, not per `src` entry, so the one Elamy family is declared as two
+ * calls that share the family name `elamy` (the `font-family` declaration below; without it the name
+ * would be the const name). Only the Bold face (the hero H1, above the fold) is preloaded. The
+ * Regular face (step numerals + signature, below the fold) swaps in on demand. This relies on
+ * Turbopack's unhashed family names: under webpack each call would get its own hashed family.
+ *
+ * `elamy` owns the `--font-elamy` variable and the "elamy Fallback" face (generated from Regular,
+ * as before); `elamyBold` adds only its @font-face and so skips the variable and a second fallback.
+ */
 export const elamy = localFont({
   src: [
     {
@@ -15,14 +26,25 @@ export const elamy = localFont({
       weight: "400",
       style: "normal",
     },
+  ],
+  variable: "--font-elamy",
+  display: "swap",
+  preload: false,
+  declarations: [{ prop: "font-family", value: "elamy" }],
+});
+
+export const elamyBold = localFont({
+  src: [
     {
       path: "../../public/fonts/Elamy-Bold.woff2",
       weight: "700",
       style: "normal",
     },
   ],
-  variable: "--font-elamy",
   display: "swap",
+  preload: true,
+  adjustFontFallback: false,
+  declarations: [{ prop: "font-family", value: "elamy" }],
 });
 
 /** Clean sans for everything else (body, names, labels, nav, CTA). */
@@ -66,4 +88,6 @@ export const latin = localFont({
   ],
   variable: "--font-latin-next",
   display: "swap",
+  // Below the fold in practice (phone, email, "M.S.W."): swap in on demand, no preload.
+  preload: false,
 });

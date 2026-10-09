@@ -130,8 +130,8 @@ describe('C17: fonts (declared in app/fonts.ts, applied in app/layout.tsx)', () 
   const block = (name: string) => blocks.find((b) => b.name === name)?.body ?? '';
   const weights = (body: string) => [...body.matchAll(/weight:\s*"(\d+)"/g)].map((m) => m[1]);
 
-  it('exactly three next/font/local fonts: elamy, stanga, latin', () => {
-    expect(blocks.map((b) => b.name).sort()).toEqual(['elamy', 'latin', 'stanga']);
+  it('exactly four next/font/local calls, three families: elamy (Regular + Bold calls), stanga, latin', () => {
+    expect(blocks.map((b) => b.name).sort()).toEqual(['elamy', 'elamyBold', 'latin', 'stanga']);
     expect(layout).toContain('from "next/font/local"');
   });
 
@@ -143,10 +143,29 @@ describe('C17: fonts (declared in app/fonts.ts, applied in app/layout.tsx)', () 
     expect(b).toMatch(/adjustFontFallback:\s*false/);
   });
 
-  it('Elamy is 400 + 700 with --font-elamy', () => {
-    const b = block('elamy');
-    expect(weights(b)).toEqual(['400', '700']);
-    expect(b).toContain('variable: "--font-elamy"');
+  it('Elamy is 400 (elamy, owns --font-elamy) + 700 (elamyBold), one shared family name "elamy"', () => {
+    const regular = block('elamy');
+    const bold = block('elamyBold');
+    expect(weights(regular)).toEqual(['400']);
+    expect(regular).toContain('Elamy-Regular.woff2');
+    expect(regular).toContain('variable: "--font-elamy"');
+    expect(weights(bold)).toEqual(['700']);
+    expect(bold).toContain('Elamy-Bold.woff2');
+    expect(bold, 'the Bold call must not declare a second variable').not.toContain('variable:');
+    for (const b of [regular, bold]) expect(b).toContain('{ prop: "font-family", value: "elamy" }');
+  });
+
+  it('NS-29: exactly three preloaded faces (Elamy Bold, Stanga Regular + Bold); Elamy Regular and both Roboto Condensed faces are not preloaded', () => {
+    const preloaded = (b: string) => !/preload:\s*false/.test(b);
+    expect(preloaded(block('elamyBold')), 'elamyBold preload').toBe(true);
+    expect(block('elamyBold')).toMatch(/preload:\s*true/);
+    expect(block('stanga')).toMatch(/preload:\s*true/);
+    expect(weights(block('stanga')).length, 'stanga faces').toBe(2);
+    expect(block('elamy')).toMatch(/preload:\s*false/);
+    expect(block('latin')).toMatch(/preload:\s*false/);
+    // 1 (elamyBold) + 2 (stanga) faces preload; nothing else does
+    const count = ['elamy', 'elamyBold', 'stanga', 'latin'].reduce((n, name) => n + (preloaded(block(name)) ? weights(block(name)).length : 0), 0);
+    expect(count).toBe(3);
   });
 
   it('Roboto Condensed latin companion is 400 + 700, local, --font-latin-next', () => {
