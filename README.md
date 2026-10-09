@@ -51,7 +51,7 @@ For the curious: this site is built with some of the most modern web technology 
 
 ### Motion & interactions
 
-- **[Framer Motion v12](https://www.framer.com/motion/)** — scroll-triggered animations that reveal sections as visitors scroll down. Respects the operating system's "reduce motion" accessibility preference.
+- **CSS motion** — scroll-triggered reveals (one tiny IntersectionObserver island), a CSS scroll-driven photo parallax and the contact pill's entrance keyframe. No animation library. Respects the operating system's "reduce motion" accessibility preference.
 
 ### Hebrew & RTL
 

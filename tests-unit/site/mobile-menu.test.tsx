@@ -2,7 +2,7 @@
  * NS-21: MobileMenu behaviour. Opens and closes, Escape, focus into the menu and back, background
  * inert + scroll lock while open, and link clicks closing it. (The md breakpoint auto-close and the
  * basic inert/Escape cases are also in a11y-quick-wins.test.tsx; this file is the full behaviour spec.)
- * Behaviour and roles only: no colour classes, no framer internals.
+ * Behaviour and roles only: no colour classes.
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';

@@ -21,9 +21,9 @@ export interface NavItem {
 }
 
 /**
- * The full-screen overlay menu below md. Portaled to <body>: framer-motion's `will-change` on the
- * ScrollReveal ancestor establishes a containing block that would otherwise trap this
- * position:fixed overlay inside the top bar. `onClose` must be referentially stable.
+ * The full-screen overlay menu below md. Portaled to <body> for stacking safety: it renders out of the top
+ * bar's stacking context and containing block (any `transform`, `translate` or `will-change` on an ancestor
+ * would otherwise trap this position:fixed overlay inside the bar). `onClose` must be referentially stable.
  */
 export function MobileMenu({ open, links, onClose }: { open: boolean; links: NavItem[]; onClose: () => void }) {
   // false on the server / first hydration pass, true on the client afterwards

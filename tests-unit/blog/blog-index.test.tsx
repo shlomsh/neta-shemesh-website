@@ -1,6 +1,6 @@
 /**
  * NS-21: render tests for the blog index page (/blog). Behaviour only: headings, links, text and
- * metadata. No colour classes and no ScrollReveal / framer internals (those are owned by other work).
+ * metadata. No colour classes and no ScrollReveal internals (those are owned by other work).
  */
 import { render, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';

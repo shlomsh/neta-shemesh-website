@@ -14,11 +14,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      // Mock framer-motion so motion.* renders as plain elements
-      'framer-motion': path.resolve(
-        __dirname,
-        './tests-unit/__mocks__/framer-motion.tsx'
-      ),
     },
   },
 });

@@ -1,30 +1,22 @@
 /**
- * Guards the reduced-motion hydration fix (8fcd901) under the NS-13 reveal model.
+ * Guards the reduced-motion hydration fix (8fcd901) under the CSS motion model.
  *
  * Original bug: components branched on `useReducedMotion()` (false on the server, true on the first
  * client render under `prefers-reduced-motion: reduce`). The SSR HTML shipped the motion initial state
  * (`style="opacity:0"`), React hydration does not patch mismatched style attributes, so reduce-motion
  * users saw blank sections.
  *
- * Now: ScrollReveal is a server component with no hidden state in its markup at all (the hidden state is
- * CSS, armed by RevealObserver, and only under `prefers-reduced-motion: no-preference`). ContactFAB is a
- * server component too (NS-14): its entrance is the `.fab-enter` CSS keyframe, off under reduce, with no
- * inline `opacity:0` in the HTML. ParallaxFrame is a server component too (NS-15): a CSS scroll-driven animation that exists only
- * under no-preference, plus the CSS belt that forces it static under reduce.
+ * Now: ScrollReveal, ContactFAB and ParallaxFrame are all server components with no hidden state in their
+ * markup at all. The reveal hidden state is CSS, armed by RevealObserver, only under
+ * `prefers-reduced-motion: no-preference`; the FAB entrance is the `.fab-enter` keyframe and the parallax a
+ * scroll-driven animation, both off (or static) under reduce. This file guards the markup and the CSS.
  */
 import React from 'react';
 import fs from 'fs';
 import path from 'path';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
-
-const reduced = vi.hoisted(() => ({ value: false }));
-
-vi.mock('framer-motion', async (importOriginal) => {
-  const actual = await importOriginal<Record<string, unknown>>();
-  return { ...actual, useReducedMotion: () => reduced.value };
-});
 
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { ContactFAB } from '@/components/site/ContactFAB';
@@ -41,30 +33,19 @@ const cases: Array<[string, () => React.ReactElement]> = [
   ['ParallaxFrame', () => <ParallaxFrame className="h-10"><img alt="" src="/a.jpg" /></ParallaxFrame>],
 ];
 
-describe('reveal components render the same tree regardless of useReducedMotion()', () => {
+describe('reveal components ship no hidden state in their markup', () => {
   beforeEach(() => cleanup());
 
   for (const [name, make] of cases) {
-    it(`${name}: identical client markup for reduce=true and reduce=false`, () => {
-      reduced.value = false;
-      const a = render(make()).container.innerHTML;
-      cleanup();
-      reduced.value = true;
-      const b = render(make()).container.innerHTML;
-      expect(b).toBe(a);
-    });
-
-    it(`${name}: identical server markup for reduce=true and reduce=false`, () => {
-      reduced.value = false;
-      const a = renderToString(make());
-      reduced.value = true;
-      const b = renderToString(make());
-      expect(b).toBe(a);
+    it(`${name}: server markup has no inline opacity:0 / transform / visibility`, () => {
+      const html = renderToString(make());
+      expect(html).not.toMatch(/opacity:\s*0/);
+      // inline styles may carry custom properties (--reveal-delay, --parallax-*) and next/image geometry, never a hidden state
+      for (const m of html.matchAll(/style="([^"]*)"/g)) expect(m[1]).not.toMatch(/(^|;)\s*(opacity|transform|translate|scale|visibility)\s*:/);
     });
   }
 
   it('ScrollReveal carries the hooks the CSS and RevealObserver key off', () => {
-    reduced.value = true;
     const { container } = render(<ScrollReveal><p>hi</p></ScrollReveal>);
     const el = container.firstElementChild!;
     expect(el.hasAttribute('data-reveal')).toBe(true);

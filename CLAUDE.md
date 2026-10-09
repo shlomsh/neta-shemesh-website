@@ -147,16 +147,16 @@ For bespoke `<section>` elements that don't use the primitive, add `data-bg-tone
 - **Soft snap** (`SoftSnap`, pure decision in `src/lib/soft-snap.ts`) covers every `main > section` and the footer, only where `(min-width: 1024px) and (pointer: fine)` matches (desktop mouse/trackpad). **There is no snap wherever the primary pointer is coarse (phones, tablets), at any width**: the page scrolls natively there; hybrid touch laptops whose primary pointer is fine get desktop snap. The gentle touch mode (it snapped backward to the hero and to one-screen cards after slow swipes, so iPhones felt stuck) was deleted, along with its touch handlers, `TOUCH_SETTLE_MS` and the lvh probe; do not reintroduce it. `SoftSnap.tsx` is a tiny gate that loads the engine (`SoftSnapEngine.tsx`) by dynamic `import()` only when the query matches, so touch devices ship no snap chunk. The engine skips snapping while the mobile menu overlay is open (`main[inert]` / body scroll lock). Off under `prefers-reduced-motion`.
 - **Reusable surfaces** (`src/components/primitives/`, see its `README.md`): an inner card on a toned section is `<Card surface="cream|veil" pad="md|lg">` (it publishes `data-bg-tone="cream"`; never add a hand-written `bg-[var(--color-cream)]`); every framed photo is `<Photo radius="card|tile|none">` (bakes in `overflow-hidden`, the radius, `safari-clip` and the cover fit; do not re-type `object-cover` frames); single-colour SVG icons are `<MaskIcon size="sm|lg">`; icon-only round buttons are `<IconButton label>`.
 - **Mobile:** all cards reflow to single-column and size to their content (see above). Test at 375px. Body text at 375px uses the clamp minimum — ensure it's comfortable (`.type-body` floor is 16px, `.type-lead` floor is 18px, blog `.type-read` floor is 18px / `.type-read-lead` 20px).
-- **Header/nav:** below `md` the nav collapses to a hamburger that opens a full-screen overlay menu (`site/SiteNav` + `site/MobileMenu`); the inline link row is `hidden md:flex`. Don't reintroduce a squeezed inline nav on mobile. The overlay is portaled to `document.body` because framer-motion's `will-change` on `ScrollReveal` would otherwise trap `position:fixed`.
+- **Header/nav:** below `md` the nav collapses to a hamburger that opens a full-screen overlay menu (`site/SiteNav` + `site/MobileMenu`); the inline link row is `hidden md:flex`. Don't reintroduce a squeezed inline nav on mobile. The overlay is portaled to `document.body` for stacking safety: no ancestor sets `will-change` any more (framer-motion, whose `will-change` once trapped `position:fixed` inside the bar, is gone), but a `transform`/`translate` on any ancestor would, and the portal keeps the overlay out of the header's stacking context.
 - **No horizontal overflow.** Check `document.documentElement.scrollWidth > document.documentElement.clientWidth` after any layout change.
 
 ---
 
 ## Embedding the site in an iframe
 
-The site is not iframe-embeddable by design (`frame-ancestors 'none'` in the CSP, `next.config.ts`). If that ever needs to change, expect **two** obstacles, not one:
+The site is not iframe-embeddable by design (`frame-ancestors 'none'` in the CSP, `next.config.ts`). If that ever needs to change:
 
-1. Relaxing the CSP `frame-ancestors` directive.
-2. `ScrollReveal.tsx` — `framer-motion`'s `whileInView` must be skipped inside an iframe. IntersectionObserver doesn't fire reliably there, leaving content stuck at `opacity: 0`.
+1. Relax the CSP `frame-ancestors` directive.
+2. The reveal side needs no change: IntersectionObserver doesn't fire reliably inside an iframe, which used to leave content stuck at `opacity: 0`, so `RevealObserver.tsx` already skips iframes (it never arms the hidden state there and everything stays visible).
 
-This was learned the hard way; a previous attempt needed both fixes and still didn't render reliably (reverted in `c95a8e0`).
+This was learned the hard way; a previous attempt (with the old framer-motion reveals) needed two fixes and still didn't render reliably (reverted in `c95a8e0`).
