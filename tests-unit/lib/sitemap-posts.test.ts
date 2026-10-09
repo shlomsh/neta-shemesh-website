@@ -35,7 +35,7 @@ describe('sitemap contents', () => {
   });
 
   it('every URL is absolute on the site origin', () => {
-    for (const u of urls) expect(u.startsWith(SITE.url), u).toBe(true);
+    for (const u of urls) expect(new URL(u).origin, u).toBe(new URL(SITE.url).origin);
   });
 
   it('each post entry is dated from the post and has a valid priority', () => {

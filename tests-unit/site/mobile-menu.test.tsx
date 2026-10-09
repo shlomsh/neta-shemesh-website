@@ -186,8 +186,8 @@ describe('MobileMenu: focus', () => {
   });
 
   it('does not steal focus on first mount (nothing focused until the menu has been opened)', () => {
-    const { hamburger } = setup();
-    expect(document.activeElement).not.toBe(hamburger);
+    setup();
+    expect(document.activeElement).toBe(document.body);
   });
 });
 

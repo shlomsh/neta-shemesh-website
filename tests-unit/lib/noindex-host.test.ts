@@ -6,11 +6,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 // next/font/local needs the Next compiler; the layout only reads `.variable` from each font here.
-vi.mock('@/app/fonts', () => ({
-  elamy: { variable: 'f-elamy' },
-  stanga: { variable: 'f-stanga' },
-  latin: { variable: 'f-latin' },
-}));
+vi.mock('@/app/fonts', () => new Proxy({}, { get: () => ({ variable: 'f', className: 'f' }) }));
 
 async function loadWith(siteUrl: string | undefined) {
   vi.resetModules();

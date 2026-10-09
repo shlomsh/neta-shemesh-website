@@ -107,8 +107,9 @@ describe('siteJsonLd', () => {
   });
 
   it('does not advertise empty sameAs profiles as links', () => {
-    const biz = graph.find((n) => Array.isArray(n['@type']))!;
-    expect(biz.sameAs).toEqual(SITE.sameAs);
+    const biz = graph.find((n) => n['@id'] === `${SITE.url}/#business`)!;
+    expect(biz.sameAs as string[]).toEqual(SITE.sameAs);
+    expect((biz.sameAs as string[]).every(Boolean)).toBe(true);
   });
 });
 
