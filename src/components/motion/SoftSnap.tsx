@@ -1,19 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-
-/** Snapping is only active at or above this viewport width (desktop). */
-export const MIN_WIDTH = 1024;
-/** Fraction of innerHeight: only snap when the nearest card top is within this distance. */
-export const THRESHOLD = 0.3;
-/** Idle time (ms) after the last scroll event before deciding whether to snap. */
-export const SETTLE_MS = 140;
-/** Duration (ms) of the snap animation. */
-export const DURATION_MS = 520;
-/** Ignore scroll activity for this long after mount (hero entrance). */
-export const STARTUP_IGNORE_MS = 1500;
-
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+import {
+  DURATION_MS,
+  SETTLE_MS,
+  STARTUP_IGNORE_MS,
+  easeOutCubic,
+  isSnapActive,
+  pickSnapTarget,
+} from '@/lib/soft-snap';
 
 const SNAP_KEYS = new Set([
   'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' ', 'Spacebar', 'Home', 'End',
@@ -23,6 +18,9 @@ const SNAP_KEYS = new Set([
  * Soft snap: after the user stops scrolling, gently glide to the nearest top-level card
  * edge, but only when that edge is already close (within THRESHOLD of the viewport height).
  * A middle ground between CSS `proximity` (too loose) and `mandatory` (too aggressive).
+ *
+ * This file is the effect (listeners, timers, the glide); what to snap to is the pure
+ * `pickSnapTarget` in `@/lib/soft-snap`, where the constants live too.
  */
 export function SoftSnap() {
   useEffect(() => {
@@ -39,7 +37,7 @@ export function SoftSnap() {
     // position (delivered after a cancel) must not re-arm the settle timer.
     let lastOwnY: number | null = null;
 
-    const isActive = () => window.innerWidth >= MIN_WIDTH && !reduceQuery.matches;
+    const isActive = () => isSnapActive(window.innerWidth, reduceQuery.matches);
 
     const finishAnimation = () => {
       if (rafId) cancelAnimationFrame(rafId);
@@ -107,22 +105,14 @@ export function SoftSnap() {
       if (isTyping()) return;
 
       const y = window.scrollY;
-      const vh = window.innerHeight;
-      if (y + vh >= document.documentElement.scrollHeight - 2) return;
-
       const sections = document.querySelectorAll<HTMLElement>('main > section');
-      let best: number | null = null;
-      let bestDist = Infinity;
-      sections.forEach((s) => {
-        const top = s.getBoundingClientRect().top + y;
-        const dist = Math.abs(top - y);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = top;
-        }
+      const target = pickSnapTarget({
+        scrollY: y,
+        viewportHeight: window.innerHeight,
+        documentHeight: document.documentElement.scrollHeight,
+        sectionTops: Array.from(sections, (s) => s.getBoundingClientRect().top + y),
       });
-      if (best === null) return;
-      if (bestDist > 2 && bestDist <= THRESHOLD * vh) animateTo(best);
+      if (target !== null) animateTo(target);
     };
 
     const onScroll = () => {

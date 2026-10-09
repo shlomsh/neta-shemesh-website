@@ -2,7 +2,7 @@
  * SANITY B9: desktop soft snap (JS), no CSS scroll-snap.
  *
  * History: CSS scroll-snap proximity felt loose and mandatory felt aggressive, so snapping moved
- * to SoftSnap.tsx (settle, then glide to a nearby card top). It silently stops working if <main>
+ * to SoftSnap.tsx (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts). It silently stops working if <main>
  * becomes overflow-hidden, if a constant drifts, or if it starts snapping on phones / under
  * reduced motion. This file guards the constants, the mount, and the "does nothing" paths.
  */
@@ -11,10 +11,11 @@ import { cleanup, render } from '@testing-library/react';
 import React from 'react';
 import { findTargetSelector, parseExportedNumber, readSources, renderHome, sourceNamed, topLevelSections } from './helpers';
 
-const snap = sourceNamed('SoftSnap.tsx').text;
+const snap = sourceNamed('SoftSnap.tsx').text; // the effect: target selector, listeners
+const tuning = sourceNamed('lib/soft-snap.ts').text; // the pure decision logic and its constants
 
 function constant(name: string): number {
-  const v = parseExportedNumber(snap, name);
+  const v = parseExportedNumber(tuning, name);
   if (v === null) throw new Error(`SoftSnap: constant ${name} not found / not a plain number`);
   return v;
 }
