@@ -46,4 +46,4 @@ Each layer imports only from the layers before it (to its left), never after. Co
 
 1. `sections/<slug>/<Name>.tsx` with one `Section` (tone, fit, pad; see the primitives README), ids from `content/ids.ts`, copy from `content/`.
 2. Mount it in `app/page.tsx` in page order; add its expected tone/fit row to the sanity tables (`EXPECTED_SECTIONS`, `DESKTOP` in `one-screen.test.tsx`).
-3. Run the sanity suite and a pixel diff (`docs/tech-debt-plan-2026-10.md` section 6).
+3. Run the sanity suite and a pixel diff (`docs/archive/tech-debt-plan-2026-10.md` section 6).

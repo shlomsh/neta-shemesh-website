@@ -1,3 +1,5 @@
+> **Superseded (2026-10-09): this plan was executed; follow-up work is tracked on the live kanban (https://claude.ai/artifact/GV4NpXrzjzc4wQ1XgBthwt).** Archived for history. Section 6 (the pixel-diff method) is still a useful reference.
+
 # Tech-debt refactor plan (behaviour-neutral) — netta-shemesh-website
 
 Audit of the working tree as-is on 2026-10-09 (branch `claude/netashemesh-visual-improvements-63836a`, uncommitted, mid typography migration). Read-only; nothing in the repo was touched. Line numbers are from the working tree at audit time (`globals.css` was being edited concurrently, so its numbers are approximate).

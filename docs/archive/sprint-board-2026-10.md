@@ -1,3 +1,5 @@
+> **Superseded by the live kanban (https://claude.ai/artifact/GV4NpXrzjzc4wQ1XgBthwt), 2026-10-09.** Archived snapshot, kept for git history.
+
 # Sprint board: architecture, stability and performance (2026-10)
 
 > **Source of truth: the live kanban at https://claude.ai/artifact/GV4NpXrzjzc4wQ1XgBthwt** (private to the owner). Its tickets live in the artifact's database, collection `tickets`, with one document per id (`NS-01` …). Sessions read and update them with the `ArtifactData` tool, using pinned `update` writes with `if_version`, not by editing this file. Fields: `status` (needs-owner | blocked | todo | in-progress | review | merging | done | dropped), `owner` (ARCH | VIS | ""), `note`, `commit`, `files` (lock list), `depends`, `kind` (BN | VC | contract | n/a).
