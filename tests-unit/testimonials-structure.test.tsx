@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { ID } from '../src/content/ids';
-import Testimonials from '../src/components/layout/Testimonials';
+import { Testimonials } from '../src/components/sections/testimonials/Testimonials';
 
 describe('Testimonials Structure', () => {
-  // Skipped: the "לקוחות ממליצים" section is currently hidden behind the
-  // SHOW_TESTIMONIALS flag in Testimonials.tsx (awaiting real client testimonials).
-  it.skip('renders clean grid layout without legacy raw DOM blobs', () => {
+  // The "לקוחות ממליצים" section is parked (not mounted: SHOW_TESTIMONIALS in app/page.tsx, awaiting
+  // real client testimonials). It is its own component now, so it is tested directly instead of skipped.
+  it('renders clean grid layout without legacy raw DOM blobs', () => {
     const { container } = render(<Testimonials />);
 
     // Ignore next/image which uses absolute positioning internally

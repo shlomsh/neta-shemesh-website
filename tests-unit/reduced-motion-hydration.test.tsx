@@ -24,10 +24,10 @@ vi.mock('framer-motion', async (importOriginal) => {
   return { ...actual, useReducedMotion: () => reduced.value };
 });
 
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { ContactFAB } from '@/components/ui/ContactFAB';
-import { ParallaxFrame } from '@/components/ui/ParallaxFrame';
-import Footer from '@/components/layout/Footer';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { ContactFAB } from '@/components/site/ContactFAB';
+import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
+import { Footer } from '@/components/site/footer/Footer';
 
 const ROOT = path.resolve(__dirname, '..');
 const read = (p: string) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -71,10 +71,10 @@ describe('reveal components render the same tree regardless of useReducedMotion(
 
 describe('structural guards (source + CSS)', () => {
   for (const f of [
-    'src/components/ui/ScrollReveal.tsx',
-    'src/components/layout/Footer.tsx',
-    'src/components/ui/ContactFAB.tsx',
-    'src/components/ui/ParallaxFrame.tsx',
+    'src/components/motion/ScrollReveal.tsx',
+    'src/components/site/footer/Footer.tsx',
+    'src/components/site/ContactFAB.tsx',
+    'src/components/motion/ParallaxFrame.tsx',
   ]) {
     it(`${f} does not call useReducedMotion (SSR/client branch)`, () => {
       expect(read(f).replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '')).not.toMatch(/useReducedMotion/);

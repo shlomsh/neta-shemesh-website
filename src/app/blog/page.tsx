@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostCard } from '@/components/blog/PostCard';
 import { getAllPosts } from '@/content/posts';

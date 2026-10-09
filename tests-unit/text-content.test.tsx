@@ -5,9 +5,9 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 
-import { HeroHeading } from '@/components/layout/hero/HeroHeading';
-import Services from '@/components/layout/Services';
-import Expertise from '@/components/layout/Expertise';
+import { HeroHeading } from '@/components/sections/hero/HeroHeading';
+import { Services } from '@/components/sections/services/Services';
+import { Expertise } from '@/components/sections/expertise/Expertise';
 
 describe('HeroHeading — key Hebrew string present', () => {
   it('renders "מקום בטוח לצמוח בו ביחד."', () => {

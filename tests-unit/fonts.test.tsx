@@ -8,13 +8,13 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 
-import { CardLabel } from '@/components/layout/expertise/CardLabel';
-import { QuoteText } from '@/components/layout/testimonials/QuoteText';
+import { ExpertiseCard } from '@/components/sections/expertise/ExpertiseCard';
+import { QuoteText } from '@/components/sections/testimonials/QuoteText';
 
-describe('CardLabel.tsx — title span', () => {
+describe('ExpertiseCard.tsx — pill title span', () => {
   it('uses the type-small scale class, bold, with no ad-hoc size', () => {
     const { container } = render(
-      <CardLabel title="טיפול זוגי" description="test description" />
+      <ExpertiseCard title="טיפול זוגי" description="test description" imageSrc="/x.webp" imageAlt="" delay={0} />
     );
     const titleSpan = container.querySelector('span');
     expect(titleSpan, 'title span not found').toBeTruthy();

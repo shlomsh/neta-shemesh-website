@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { AboutIntro } from '../src/components/layout/About';
+import { Intro } from '../src/components/sections/intro/Intro';
 
 describe('About Layout', () => {
   it('should have z-0 and pointer-events-none on the organic background, and z-10 on text layers', () => {
-    const { container } = render(<AboutIntro />);
+    const { container } = render(<Intro />);
     
     // The OrganicBg is an SVG with aria-hidden="true"
     // Let's find it by checking if it contains the ellipses with the specific colors,

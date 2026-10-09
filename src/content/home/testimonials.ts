@@ -1,7 +1,7 @@
 import type { TestimonialData } from '../types';
 
 // PARKED: the "לקוחות ממליצים" block is hidden behind SHOW_TESTIMONIALS in
-// components/layout/Testimonials.tsx until real client testimonials exist. Placeholder copy.
+// components/sections/testimonials/Testimonials.tsx until real client testimonials exist. Placeholder copy.
 export const TESTIMONIALS: TestimonialData[] = [
   {
     id: 'card-1',

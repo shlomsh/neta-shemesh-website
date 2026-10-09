@@ -76,7 +76,7 @@
   }
 }
 
-/* Desktop card snapping is handled in JS by src/components/ui/SoftSnap.tsx (no CSS scroll-snap). */
+/* Desktop card snapping is handled in JS by src/components/motion/SoftSnap.tsx (no CSS scroll-snap). */
 
 @layer components {
   :root { --header-color: var(--color-plum); }   /* default: dark plum, for light surfaces */

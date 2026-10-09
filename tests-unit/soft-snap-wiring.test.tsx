@@ -7,9 +7,9 @@ import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import SoftSnap from '@/components/ui/SoftSnap';
+import { SoftSnap } from '@/components/motion/SoftSnap';
 
-const src = readFileSync(resolve(__dirname, '../src/components/ui/SoftSnap.tsx'), 'utf8');
+const src = readFileSync(resolve(__dirname, '../src/components/motion/SoftSnap.tsx'), 'utf8');
 const page = readFileSync(resolve(__dirname, '../src/app/page.tsx'), 'utf8');
 
 describe('SoftSnap wiring', () => {

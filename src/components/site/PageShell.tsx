@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import Footer from '@/components/layout/Footer';
 import { cx } from '@/lib/cx';
-import { ContactFAB } from '@/components/ui/ContactFAB';
+import { ContactFAB } from './ContactFAB';
+import { Footer } from './footer/Footer';
 
 /**
  * The `<main>` shell shared by every page: relative full-width column, the page surface colour,

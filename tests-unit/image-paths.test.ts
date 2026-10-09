@@ -15,7 +15,7 @@ import { describe, it, expect } from 'vitest';
 // test by importing the component and checking rendered img src attributes.
 import React from 'react';
 import { render } from '@testing-library/react';
-import Services from '@/components/layout/Services';
+import { Services } from '@/components/sections/services/Services';
 
 describe('Services — step image paths start with /images/', () => {
   it('all step imageSrc values have a leading slash', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
-import { CredentialsList } from '../src/components/layout/about/CredentialsList';
+import { CredentialsList } from '../src/components/sections/credentials/CredentialsList';
 
 test('CredentialsList uses a grid layout with 3 columns on desktop', () => {
   const dummyItems = [{ text: 'Test 1' }, { text: 'Test 2' }];

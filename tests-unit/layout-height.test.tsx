@@ -5,8 +5,17 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { ID } from '../src/content/ids';
-import Contact from '../src/components/layout/Contact';
-import Footer from '../src/components/layout/Footer';
+import { ContactSocial } from '../src/components/sections/contact/ContactSocial';
+import { ContactOffice } from '../src/components/sections/contact/ContactOffice';
+import { Footer } from '../src/components/site/footer/Footer';
+
+/** The two contact panels, as the home page mounts them. */
+const Contact = () => (
+  <>
+    <ContactSocial />
+    <ContactOffice />
+  </>
+);
 
 describe('Contact', () => {
   it('renders exactly two sections: social (dark) then office (mid)', () => {

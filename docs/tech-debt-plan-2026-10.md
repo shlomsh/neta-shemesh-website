@@ -68,20 +68,22 @@ Risk = chance of a visual/DOM change if done carefully. Size: S <1h, M half-day,
 | T3 | Tests | Duplicate / vacuous tests and boilerplate: `footer-tap-target.test.tsx` and `footer-tap-targets.test.tsx` cover the same class; `image-components.test.tsx` has zero assertions; `testimonials-structure.test.tsx` is `it.skip`; Services grid classes asserted in 3 files (`services-design:12`, `height-classes:33`, `one-screen:22-28`); Expertise grid in 2; `IntersectionObserver` stubs in 5 files and `matchMedia` stubs in 3 even though `framer-motion` is aliased to a mock (`vitest.config.ts:22-26`) so no observer is needed; `import React` boilerplate in 10 files; `as any` casts (`testimonials-structure.test.tsx:14`, `__mocks__/framer-motion.tsx:33,51`). | listed | See section 4: shared `tests-unit/helpers/{render,stubs}.ts(x)`; stubs moved once into `setup.ts`; merge/delete duplicates. | Low | S |
 | Y3 | Content (flag only) | Not refactor items, but surfaced: `SOCIAL_LINKS` point at bare `facebook.com`/`instagram.com`/`twitter.com` (`SocialLinks.tsx:12,18,24`) and JSON-LD `sameAs: []` (`layout.tsx:126`); footer "© 2026" has no name (`FooterCopyright.tsx:10`); testimonials are lorem ipsum; README "15 years" vs 14. | listed | Ask owner; once real URLs exist they go into `content/home/social.ts` and JSON-LD `sameAs` from the same array. | - | - |
 
-## 3. Proposed layout after refactor (for reference)
+## 3. Layout after refactor (shipped in 4-1; the proposal in the first audit differed in the places noted)
 
 ```
 src/
   app/            layout.tsx (slim) · fonts.ts · page.tsx · blog/** · sitemap.ts
-  lib/            cx.ts · soft-snap.ts · seo/{jsonld.ts,metadata.ts}
+  lib/            cx.ts · motion.ts · seo/{jsonld.ts,metadata.ts}            (soft-snap.ts arrives in 4-2)
   content/        site.ts · ids.ts · types.ts · home/{nav,expertise,steps,about,gallery,contact,social,testimonials}.ts · posts/**
   components/
+    README.md     folder rules + dependency direction
     primitives/   layout/{Section,Container,Grid,Card,ScrollAnchor} · ui/{BodyText,ButtonLink,SectionTitle,SectionHeader,Photo,MaskIcon,IconButton}
     motion/       ScrollReveal · ParallaxFrame · SoftSnap
-    site/         PageShell · SiteHeader · BrandLogo · SiteNav · MobileMenu · ContactFAB · hooks/ · icons/
-    sections/     hero/ · intro/ · expertise/ · bio/ · credentials/ · reignite/ · services/ · cta-band/ · gallery/ · contact/ · footer/ · testimonials/ (parked)
+    site/         PageShell · JsonLd · ContactFAB · BrandLogo · SiteNav · MobileMenu · NavLink · footer/{Footer,FooterBackground} · hooks/{useFocusTrap,useBodyScrollLock} · icons/{Menu,Close,WhatsApp,Phone}
+    sections/     hero/ · intro/ · expertise/ · bio/ · credentials/ · reignite/ · services/ · cta-band/ · gallery/ · contact/{ContactSocial,ContactOffice,...} · testimonials/ (parked)
     blog/
 ```
+Differences from the first proposal: the footer is in `site/footer/` (the shell in `site/` renders it on every page, and `site/` must not import `sections/`); the proposed `SiteHeader` was not created (the hero's top bar and the blog's `BlogHeader` are different markup, and both now compose `BrandLogo` + `SiteNav`); `primitives/ui` keeps its name now that the old `components/ui` is gone (motion moved to `motion/`, the FAB to `site/`), so there is one `ui` folder; section components are named after their folder (`Intro`, `Bio`, `Credentials`, `Reignite`, `CtaBand`, `Gallery`, `ContactSocial`, `ContactOffice`).
 Unit tests in `tests-unit/` stay (vitest `include`/Playwright `testDir` coupling makes renaming not worth it).
 
 ## 4. Test plan (T1/T2/T3 detail)
@@ -116,6 +118,8 @@ Verify per sub-commit: tsc, lint, unit, build, pixel diff 0 px (both viewports),
 ### Batch 4 — Re-allocation (pure moves) and structural splits
 Items: A1 (one file per section under `sections/`, named exports, thin `page.tsx`), A2 (`site/` header + hooks + icons), A3 (inline logic-free leaves, optional `PhotoCard`), A4 (folder rules + `components/README.md`), C7, C9 (SoftSnap pure function), update imports in tests.
 Use `git mv` so history follows. Verify: tsc, lint, unit, build, Playwright; pixel diff 0 px; DOM outline diff empty (no markup changes allowed in this batch).
+
+**Shipped in 4-0 and 4-1.** 4-0: dead colour aliases removed, `@source not` for tests/docs (see R9). 4-1: A1 (one file per section under `sections/`, `page.tsx` is a flat composition list; `About.tsx` became `Intro`/`Bio`/`Credentials`/`Reignite`, `Testimonials.tsx` became `Testimonials` (parked, gated by `SHOW_TESTIMONIALS` in `page.tsx`) + `CtaBand` + `Gallery`, `Contact.tsx` became `ContactSocial` + `ContactOffice`); A2 + C7 (`HeroNav` is now `site/SiteNav` + `site/MobileMenu` + `site/NavLink`, with `useFocusTrap` / `useBodyScrollLock` hooks and `Menu`/`Close`/`WhatsApp`/`Phone` icon components; DOM and behaviour unchanged); A3 (inlined: `Step{Number,Title,Bullets}`, `CardLabel`, `Footer{Brand,Copyright,CTA}`, `Hero{Background,Subtext,CTA}`; kept as real units: `FooterBackground`, `HeroArt`, `HeroHeading`, `CoupleLineArt`, `OrganicBg`, the testimonial leaves); A4 (`components/README.md`, `motion/` folder, named exports everywhere except route files, the dependency direction enforced by `tests-unit/sanity/component-layers.test.ts`). Pure moves: 0 px at six viewports (home + both posts + blog index) and an empty DOM outline diff, with and without classes. The parked testimonials test (`testimonials-structure.test.tsx`) is un-skipped now that the block is its own component.
 
 ## 6. Verification recipe
 

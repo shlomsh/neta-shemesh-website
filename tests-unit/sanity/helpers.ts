@@ -23,7 +23,7 @@ export const SRC = join(ROOT, 'src');
 // ─── Source files ────────────────────────────────────────────────────────────
 
 export interface SourceFile {
-  /** posix path relative to the repo root, e.g. src/components/layout/About.tsx */
+  /** posix path relative to the repo root, e.g. src/components/sections/intro/Intro.tsx */
   path: string;
   /** file name only; allow-lists key on this so moving a file does not break them */
   name: string;

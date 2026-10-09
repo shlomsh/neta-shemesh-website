@@ -25,7 +25,7 @@ test.describe('Text Visibility and Content Tests', () => {
   });
 
   // Skipped: the testimonials section is hidden behind the SHOW_TESTIMONIALS flag
-  // in Testimonials.tsx (awaiting real client testimonials).
+  // in app/page.tsx (awaiting real client testimonials).
   test.skip('Testimonial card background has correct opacity', async ({ page }) => {
     // The middle testimonial card has an SVG background that should be opacity: 0.16
     const cardSvg = page.locator(`#${ID.testimonialCardArt}`).first();

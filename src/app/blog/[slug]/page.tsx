@@ -7,7 +7,7 @@ import { Container } from '@/components/primitives/layout/Container';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { Photo } from '@/components/primitives/ui/Photo';
 import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostBody } from '@/components/blog/PostBody';
 import { PostCard } from '@/components/blog/PostCard';

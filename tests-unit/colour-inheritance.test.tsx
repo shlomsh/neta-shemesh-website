@@ -7,10 +7,11 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { ID } from '@/content/ids';
-import Expertise from '@/components/layout/Expertise';
-import Services from '@/components/layout/Services';
-import Contact from '@/components/layout/Contact';
-import Testimonials from '@/components/layout/Testimonials';
+import { Expertise } from '@/components/sections/expertise/Expertise';
+import { Services } from '@/components/sections/services/Services';
+import { ContactSocial } from '@/components/sections/contact/ContactSocial';
+import { CtaBand } from '@/components/sections/cta-band/CtaBand';
+import { Gallery } from '@/components/sections/gallery/Gallery';
 
 describe('copy inherits its colour from the tone', () => {
   it('Expertise: subtitle has no hardcoded cream or opacity; the h2 is not on-dark', () => {
@@ -23,8 +24,8 @@ describe('copy inherits its colour from the tone', () => {
     expect(section.querySelector('h2')!.className).not.toContain('on-dark');
   });
 
-  it('Testimonials gallery (cream): titles are not on-dark and the subtitle has no hardcoded colour; the CTA band stays a photo card', () => {
-    const { container } = render(<Testimonials />);
+  it('Photo gallery (cream): titles are not on-dark and the subtitle has no hardcoded colour; the CTA band stays a photo card', () => {
+    const { container } = render(<><CtaBand /><Gallery /></>);
     const section = container.querySelector(`#${ID.photoGallery}`)!;
     expect(section.querySelector('h2')!.className).not.toContain('on-dark');
     expect(section.querySelector('p')!.className).not.toMatch(/(?:^|\s)text-(?:plum|mauve|blush|cream)(?:\s|$)|text-\[var\(--color-/);
@@ -45,7 +46,7 @@ describe('copy inherits its colour from the tone', () => {
   });
 
   it('Contact social (plum): lead copy sits directly on it with no hardcoded colour and no nested tone card', () => {
-    const { container } = render(<Contact />);
+    const { container } = render(<ContactSocial />);
     const section = container.querySelector(`#${ID.contactSocial}`)!;
     expect(section.querySelector('div[data-bg-tone]'), 'no nested tone card').toBeNull();
     const para = Array.from(section.querySelectorAll('p')).find(p => p.textContent?.includes('בואו נשמור על קשר'));

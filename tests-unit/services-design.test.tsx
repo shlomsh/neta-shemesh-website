@@ -5,8 +5,8 @@
  */
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import Services from '@/components/layout/Services';
-import { StepBullets } from '@/components/layout/services/StepBullets';
+import { Services } from '@/components/sections/services/Services';
+import { StepCard } from '@/components/sections/services/StepCard';
 
 describe('Services mobile and desktop layout', () => {
   it('the step grid is 1 column on mobile, 2 at md and lg, and 2 rows at lg', () => {
@@ -36,9 +36,9 @@ describe('Services mobile and desktop layout', () => {
   });
 });
 
-describe('StepBullets', () => {
+describe('StepCard bullets', () => {
   it('bullets use the type-small scale class', () => {
-    const li = render(<StepBullets items={['a']} />).container.querySelector('li')!;
+    const li = render(<StepCard imageSrc="/x.webp" numberText="1" title="t" bullets={['a']} delay={0} />).container.querySelector('li')!;
     expect(li.className).toContain('type-small');
   });
 });

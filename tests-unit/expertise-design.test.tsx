@@ -4,8 +4,8 @@
  */
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import Expertise from '@/components/layout/Expertise';
-import { ExpertiseCard } from '@/components/layout/expertise/ExpertiseCard';
+import { Expertise } from '@/components/sections/expertise/Expertise';
+import { ExpertiseCard } from '@/components/sections/expertise/ExpertiseCard';
 
 describe('Expertise Grid & Card Design', () => {
   it('grid is 1 column on mobile, 2 at md, a 2x2 at lg (never 3 columns)', () => {
@@ -48,7 +48,7 @@ describe('Expertise Grid & Card Design', () => {
     expect(container.querySelector('.shadow-2xl'), 'Expertise card is missing the drop shadow on the wrapper').not.toBeNull();
   });
 
-  it('the pill (CardLabel) shows only the title; the description is not displayed', () => {
+  it('the pill shows only the title; the description is not displayed', () => {
     const { container } = render(<Expertise />);
     const labelContainer = container.querySelector('.absolute.top-\\[50\\%\\]');
     const descriptionSpan = labelContainer?.querySelector('span:nth-child(2)');

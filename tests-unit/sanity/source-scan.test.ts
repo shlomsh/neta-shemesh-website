@@ -74,9 +74,9 @@ describe('scan rules: positive controls (each regex flags a known-bad sample and
 
   it('pickSource matches by path suffix and throws on ambiguity or absence', () => {
     const f = (path: string): SourceFile => ({ path, name: path.split('/').pop()!, text: '' });
-    const files = [f('src/app/layout.tsx'), f('src/app/blog/layout.tsx'), f('src/components/ui/SoftSnap.tsx')];
+    const files = [f('src/app/layout.tsx'), f('src/app/blog/layout.tsx'), f('src/components/motion/SoftSnap.tsx')];
     expect(pickSource(files, 'app/layout.tsx').path).toBe('src/app/layout.tsx');
-    expect(pickSource(files, 'SoftSnap.tsx').path).toBe('src/components/ui/SoftSnap.tsx');
+    expect(pickSource(files, 'SoftSnap.tsx').path).toBe('src/components/motion/SoftSnap.tsx');
     expect(() => pickSource(files, 'layout.tsx')).toThrow(/ambiguous/);
     expect(() => pickSource(files, 'nope.tsx')).toThrow(/no source file/);
   });

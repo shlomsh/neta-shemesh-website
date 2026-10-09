@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import type { CSSProperties, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
-import { ParallaxFrame } from '@/components/ui/ParallaxFrame';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
 
 /**
  * Corner radius of the frame: `card` (24px), `tile` (12px) or `none` (full-bleed bands). A rounded

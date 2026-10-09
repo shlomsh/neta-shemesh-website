@@ -1,0 +1,61 @@
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { Section } from '@/components/primitives/layout/Section';
+import { Container } from '@/components/primitives/layout/Container';
+import { Card } from '@/components/primitives/layout/Card';
+import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
+import { OFFICE_PANEL } from '@/content/home/contact';
+import { ANCHOR, ID } from '@/content/ids';
+import { ContactDetails } from './ContactDetails';
+import { MapEmbed } from './MapEmbed';
+
+export function ContactOffice() {
+  return (
+    <>
+      {/* ── Anchor ────────────────────────────────────────────────────────── */}
+      <div id={ANCHOR.contact} className="invisible h-0" />
+
+      {/* ══════════════════════════════════════════════════════════════════════
+          PANEL 2 — Office details + map
+          Template structure: details col (right in LTR → left in RTL) +
+          map col (left in LTR → right in RTL, ~55% width)
+      ══════════════════════════════════════════════════════════════════════ */}
+      {/* TODO(visual): same py-[80px] px-[24px] near-duplicate gutter as the social panel. */}
+      <Section id={ID.contactOffice} tone="mid" fit="lock" className="py-[80px] px-[24px]">
+        <Container maxWidth="xl" gutter="none" className="flex flex-col">
+
+          {/* Title row: above the card, right-aligned (RTL) on the mauve */}
+          <ScrollReveal className="mb-8 md:mb-12 text-right">
+            <SectionTitle id={ID.contactOfficeTitle}>{OFFICE_PANEL.heading}</SectionTitle>
+          </ScrollReveal>
+
+          {/* One cream card frames both details and map. Mauve fails contrast for any text
+              (2.26:1); plum on cream is 5.55:1 (AA at any size). The card hugs its content
+              (the section centres it vertically); at lg the map stretches to the details
+              column's height via items-stretch, with a 360px floor. */}
+          <ScrollReveal delay={0.1} className="w-full">
+            <Card surface="cream" pad="lg" className="w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-stretch">
+
+                {/* Right cell (first in RTL DOM): lead + contact details */}
+                <div className="flex flex-col justify-center gap-[24px] text-right">
+                  <p
+                    className="type-lead"
+                  >
+                    {OFFICE_PANEL.body.start}
+                    <strong>{OFFICE_PANEL.body.bold}</strong>
+                    {OFFICE_PANEL.body.end}
+                  </p>
+
+                  <ContactDetails />
+                </div>
+
+                {/* Left cell: map, 260px on mobile, matches the details height at lg */}
+                <MapEmbed className="h-[260px] lg:h-full lg:min-h-[360px] safari-clip" />
+              </div>
+            </Card>
+          </ScrollReveal>
+        </Container>
+      </Section>
+    </>
+  );
+}
