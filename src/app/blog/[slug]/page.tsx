@@ -21,6 +21,9 @@ import { stagger } from '@/lib/motion';
 import { pageMeta } from '@/lib/seo/metadata';
 import { blogPostingJsonLd } from '@/lib/seo/jsonld';
 
+// Only the slugs below exist; anything else is a 404 rather than an on-demand render.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }

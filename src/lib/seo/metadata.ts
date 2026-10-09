@@ -1,6 +1,18 @@
 import type { Metadata } from 'next';
 import { SITE } from '@/content/site';
 
+/**
+ * The site-wide share image (src/app/opengraph-image.png, 1200x630). A page-level `openGraph`
+ * object replaces the file-convention image, so non-article pages must name it explicitly or
+ * they ship without og:image. Alt matches src/app/opengraph-image.alt.txt.
+ */
+export const DEFAULT_OG_IMAGE = {
+  url: '/opengraph-image.png',
+  width: 1200,
+  height: 630,
+  alt: `${SITE.name} — ${SITE.tagline}`,
+};
+
 interface PageMetaInput {
   title: string;
   description: string;
@@ -43,7 +55,7 @@ export function pageMeta({ title, description, path = '', hreflang = false, og, 
           publishedTime: article.publishedTime,
           images: [{ url: article.imageUrl }],
         }
-      : { type: 'website', ...common },
+      : { type: 'website', ...common, images: [DEFAULT_OG_IMAGE] },
     ...(twitter
       ? { twitter: { card: 'summary_large_image', title: twitter.title, description: twitter.description } }
       : {}),
