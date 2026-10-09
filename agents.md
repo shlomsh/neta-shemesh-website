@@ -61,3 +61,13 @@ Neta Shemesh is a couple and family therapist with **14 years of clinical experi
 - Docs: `CLAUDE.md` (design rules), `docs/typography-guideline-2026-10.md`, `docs/visual-roadmap-2026-10.md`, `docs/archive/tech-debt-plan-2026-10.md`, `docs/deployment.md`
 - Copy tone: `netta_voice.md`
 - **Deployment: `docs/deployment.md`.** The site ships to Vercel *and* Azure SWA from the same commits, switched by `BUILD_STATIC_EXPORT` and `NEXT_PUBLIC_SITE_URL`. Read it before touching `next.config.ts`, `public/staticwebapp.config.json`, canonical URLs or anything image-related: the two hosts hold the same header policy in two files that drift silently, and the Azure copy must stay non-indexable. `npm run compare:deploys` checks that they still agree.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
