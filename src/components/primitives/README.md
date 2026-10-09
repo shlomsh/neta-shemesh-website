@@ -42,7 +42,7 @@ The one title style: `type-title font-bold tracking-[-0.01em]`, colour from `--h
 
 ### `<SectionHeader id title subtitle align onPhoto? subtitleClassName?>` / `<SectionSubtitle align onPhoto? className?>`
 The title + subtitle lockup of CLAUDE.md typography rule 8, as two sibling elements (a fragment): the caller keeps its own wrapper and `ScrollReveal`. `SectionSubtitle` is a `BodyText` at `type-quote`.
-- `align` (required): `center` (title centred; subtitle `max-w-[65ch] mx-auto mt-3 md:mt-4`) | `column` (right-aligned side column: the Services exception, `mt-5 md:mt-9` for the Elamy "?" descender and no 65ch cap).
+- `align` (required): `center` (title centred; subtitle `max-w-[65ch] mx-auto mt-3 md:mt-4`) | `column` (side column, centred below md and right-aligned from md: the Services exception, `mt-5 md:mt-9` for the Elamy "?" descender and no 65ch cap).
 - `onPhoto`: cream title + cream subtitle (`text-cream`), both with `drop-shadow-md` (the CTA band, which has no tone).
 - `subtitleClassName` / `className`: layout extras only (the margin to the next block).
 - When the title and the subtitle reveal separately (About gallery) use `SectionTitle` and `SectionSubtitle` directly.
@@ -67,7 +67,7 @@ A photo in a clipped frame, cover-fitted. The frame is `relative overflow-hidden
 - `className`: placement and one-off surface extras of the frame (`w-full`, `h-full`, `shadow-*`). `style`: grid placement (Contact mosaic).
 
 ### `<MaskIcon src size as? …>`
-A single-colour SVG file painted with `currentColor` through a CSS mask, so it follows the text colour. `size`: `sm` 24px (contact rows) | `lg` 44px (social links). Default renders an empty decorative `<span>`; `as="a"` (`href`, `label`, `external?`) makes the anchor itself the painted box, so no wrapper or child is needed.
+A single-colour SVG file painted with `currentColor` through a CSS mask, so it follows the text colour. `size`: `sm` 24px (contact rows) | `lg` 44px (social links). Default renders an empty decorative `<span>`; `as="a"` (`href`, `label`, `external?`) makes the anchor the sized box and focus ring; an inner aria-hidden span carries the mask.
 
 ### `<IconButton label className? …buttonProps>`
 Round 44px icon-only `<button type="button">` in the cream-on-plum header style with the keyboard focus ring (hamburger, menu close). `label` is the required accessible name; the icon is `children`; `onClick`, `aria-expanded`, `aria-controls`, `ref` and visibility (`md:hidden`) come from the caller.
