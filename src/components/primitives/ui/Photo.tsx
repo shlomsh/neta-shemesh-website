@@ -125,7 +125,7 @@ export function Photo(props: PhotoProps) {
     props.engine === 'next' ? (
       <Image src={src} alt={alt} fill sizes={props.sizes} quality={props.quality ?? PHOTO_QUALITY} loading={props.loading} className={cx('object-cover', zoomClass)} style={imageStyle} />
     ) : (
-      <img
+      <img // eslint-disable-line @next/next/no-img-element -- raw-file escape hatch (engine="img"); every call site uses engine="next"
         src={src}
         alt={alt}
         loading={props.loading ?? 'lazy'}
