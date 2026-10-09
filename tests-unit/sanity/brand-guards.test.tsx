@@ -30,11 +30,22 @@ describe('D19: ContactFAB', () => {
     const phone = home.querySelector('[data-testid="fab-phone"]')!;
     expect(pill && wa && phone, 'contact FAB parts').toBeTruthy();
     expect(classTokens(wa).some((t) => /^bg-\[#25d366\]$/i.test(t)), 'WhatsApp half must use #25D366').toBe(true);
+    expect(classTokens(wa).some((t) => /^text-\[#ffffff\]$/i.test(t)), 'WhatsApp half label stays white').toBe(true);
+    expect(classTokens(wa).some((t) => /^hover:bg-\[#1ebe5b\]$/i.test(t)), 'WhatsApp half hover stays #1EBE5B').toBe(true);
     expect(hasClass(pill, 'bg-plum'), 'pill base is plum').toBe(true);
     expect(classTokens(phone).some((t) => /25d366/i.test(t)), 'phone half must not be WhatsApp green').toBe(false);
     expect(classTokens(phone).some((t) => /^(hover:)?bg-mauve$/.test(t)), 'phone half hover is a darker plum: cream on mauve is 2.26:1 (NS-33)').toBe(false);
     expect(phone.getAttribute('href')).toMatch(/^tel:/);
     expect(wa.getAttribute('href')).toMatch(/^https:\/\/wa\.me\//);
+  });
+
+  it('WhatsApp half keyboard focus is a two-tone cream + plum ring, never white-on-green (NS-41)', () => {
+    const t = classTokens(home.querySelector('[data-testid="fab-whatsapp"]')!);
+    // white on #25D366 is 1.98:1 (< 3:1); plum meets the green at 3.00:1 and the cream band at 5.55:1
+    expect(t.filter((x) => /^focus-visible:ring-/.test(x) && x !== 'focus-visible:ring-inset' && x !== 'focus-visible:ring-2'), 'ring colour').toEqual(['focus-visible:ring-cream']);
+    expect(t, 'inner plum band').toEqual(expect.arrayContaining(['focus-visible:outline-2', 'focus-visible:outline-solid', 'focus-visible:outline-plum']));
+    expect(t.some((x) => /^focus-visible:outline-offset-|^focus-visible:-outline-offset-/.test(x)), 'plum band sits inside the half').toBe(true);
+    expect(t.some((x) => /^focus-visible:ring-\[/i.test(x)), 'no arbitrary-colour focus ring').toBe(false);
   });
 
   it('is fixed bottom-left on every breakpoint (left- at base and md, never right-)', () => {

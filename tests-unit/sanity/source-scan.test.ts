@@ -203,7 +203,7 @@ describe('D18: palette lock (hex colours)', () => {
   const ALLOWED: Array<{ hex: string; file: string; reason: string }> = [
     { hex: '#25d366', file: 'ContactFAB.tsx', reason: 'WhatsApp brand green: owner ruling, stays green (re-confirmed 2026-10-09: owner kept the native WhatsApp colours)' },
     { hex: '#1ebe5b', file: 'ContactFAB.tsx', reason: 'darker hover shade of the WhatsApp green (owner kept the native WhatsApp colours, 2026-10-09)' },
-    { hex: '#ffffff', file: 'ContactFAB.tsx', reason: 'white label/ring on the WhatsApp green (WhatsApp brand spec; owner kept the native WhatsApp colours, 2026-10-09; 1.98:1 is an owner-approved exception)' },
+    { hex: '#ffffff', file: 'ContactFAB.tsx', reason: 'white label and glyph on the WhatsApp green (WhatsApp brand spec; owner kept the native WhatsApp colours, 2026-10-09; 1.98:1 is an owner-approved exception). The focus ring is cream + plum, not white (NS-41)' },
     { hex: '#000', file: 'globals.css', reason: '--color-black in @theme, kept (Tailwind default value) for the photo scrims only: bg-black/20, from-black/60 ...' },
   ];
 
