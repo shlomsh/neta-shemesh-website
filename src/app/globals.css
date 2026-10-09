@@ -60,6 +60,13 @@
    * colour aliases (--color-dark, --color-text-*, --color-bg-light, --color-brand-primary)
    * are retired: say plum / cream / mauve. */
   --color-white: #FFF5F0;
+
+  /* Elamy ink box (see ".type-display" below): how far the glyph ink reaches above/below the line
+   * box, in em of the heading's own font-size. Measured with fontkit: ink tops out at +1.106em
+   * (צ ק) and the final forms go further (ץ +1.516, ף +1.21 below; ך -0.80); these values enclose
+   * the headings the site renders. */
+  --ink-top: .72em;
+  --ink-bottom: .62em;
 }
 
 @layer base {
@@ -167,12 +174,24 @@
    * ad-hoc font/size/weight combos throughout the site.
    * ──────────────────────────────────────────────────────────────────────── */
 
+  /* Elamy ink box: .type-display, .type-title and .type-signature (the three Elamy classes) carry
+   * padding-block (--ink-top / --ink-bottom, declared on :root) with an equal negative margin-block.
+   * Elamy's ink overshoots its line box (up to ~1.1em above the baseline vs a 0.8em ascent, ~0.56em
+   * below, more for the final forms ץ ף ך). ScrollReveal animates opacity/transform and, while it
+   * does, WebKit paints the element clipped to its own box, so tall strokes were cut off on load and
+   * "healed" when the animation ended. The padded box encloses the ink; the equal negative margin
+   * cancels it, so layout is identical (also against adjacent margins).
+   * HAZARD: a margin utility (mt-*, mb-*, my-*...) on one of these elements REPLACES the negative
+   * margin and shifts the layout; put the spacing on a wrapper or on the neighbouring element (the
+   * sanity suite scans for it). Keep the same values on all three; never patch an individual heading. */
   .type-display {
     font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(40px, 9vw, 72px);
     line-height: 1.05;
     letter-spacing: -0.01em;
+    padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
+    margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
   }
 
   .type-title {
@@ -180,6 +199,8 @@
     font-weight: 400;
     font-size: clamp(30px, 5vw, 52px);
     line-height: 1.15;
+    padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
+    margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
   }
 
   .type-card-title {
@@ -253,6 +274,8 @@
     font-weight: 400;
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1.1;
+    padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
+    margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
   }
 
   /* Latin/digit companion for phone numbers and email addresses.

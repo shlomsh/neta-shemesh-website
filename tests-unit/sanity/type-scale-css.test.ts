@@ -180,3 +180,41 @@ describe('C14: Elamy (the display font) is reserved for display, title and signa
     expectNone(offenders, 'css module using Elamy');
   });
 });
+
+describe('C14c: the Elamy ink box (--ink-top / --ink-bottom) on the three Elamy classes', () => {
+  const norm = (v: string | undefined) => (v ?? '').replace(/\s+/g, ' ').trim();
+  const rootBlocks = [...clean.matchAll(/:root\s*\{([^}]*)\}/g)].map((m) => m[1]);
+  const rootVar = (name: string) => rootBlocks.map((b) => b.match(new RegExp(`${name}\\s*:\\s*([^;]+);`))?.[1].trim()).find(Boolean);
+  // floors from the fontkit measurement of Elamy (see globals.css): ink reaches +1.106em / -0.562em on
+  // צ ק and further on the final forms; below these values a reveal animation clips glyphs on iOS
+  const FLOOR = { top: 0.72, bottom: 0.62 };
+
+  it('--ink-top and --ink-bottom are declared on :root, in em, at or above the measured floor', () => {
+    const top = rootVar('--ink-top');
+    const bottom = rootVar('--ink-bottom');
+    expect(top, '--ink-top missing from :root').toBeDefined();
+    expect(bottom, '--ink-bottom missing from :root').toBeDefined();
+    expect(top, '--ink-top must be an em length').toMatch(/^\d*\.?\d+em$/);
+    expect(bottom, '--ink-bottom must be an em length').toMatch(/^\d*\.?\d+em$/);
+    expect(parseFloat(top!), '--ink-top shrank below the measured ink overshoot').toBeGreaterThanOrEqual(FLOOR.top);
+    expect(parseFloat(bottom!), '--ink-bottom shrank below the measured ink overshoot').toBeGreaterThanOrEqual(FLOOR.bottom);
+  });
+
+  it.each(['display', 'title', 'signature'])(
+    '.type-%s pads by the ink box and cancels it with an equal negative margin (layout stays put)',
+    (name) => {
+      const body = clean.match(new RegExp(`\\.type-${name}\\s*\\{([^}]*)\\}`))?.[1];
+      expect(body, `.type-${name} rule missing`).toBeDefined();
+      const get = (prop: string) => norm(body!.match(new RegExp(`(?:^|[;\\s])${prop}\\s*:\\s*([^;]+);`))?.[1]);
+      expect(get('padding-block'), `.type-${name} padding-block`).toBe('var(--ink-top) var(--ink-bottom)');
+      expect(get('margin-block'), `.type-${name} margin-block`).toBe('calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom))');
+    },
+  );
+
+  it('no other .type-* class carries the ink box (it is Elamy-only)', () => {
+    const offenders = [...clean.matchAll(/\.type-([a-z-]+)\s*\{([^}]*)\}/g)]
+      .filter(([, name, body]) => !['display', 'title', 'signature'].includes(name) && /--ink-/.test(body))
+      .map(([, name]) => `.type-${name}`);
+    expectNone(offenders, 'ink-box vars on a non-Elamy class');
+  });
+});

@@ -136,7 +136,9 @@ export default async function BlogPostPage(
       {others.length > 0 && (
         <Section id={ID.postMore} tone="cream" className="py-[clamp(48px,7vw,96px)]">
           <Container maxWidth="2xl">
-            <SectionTitle className="mb-[clamp(28px,4vw,48px)] text-center">עוד מהבלוג</SectionTitle>
+            <div className="mb-[clamp(28px,4vw,48px)]">
+              <SectionTitle className="text-center">עוד מהבלוג</SectionTitle>
+            </div>
             <div className="grid grid-cols-1 gap-[clamp(24px,3vw,40px)] md:grid-cols-2">
               {others.map((other, i) => (
                 <ScrollReveal key={other.slug} delay={stagger(i % 2)} className="h-full">
