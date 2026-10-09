@@ -45,7 +45,7 @@ function nestedScrollerCanScroll(from: EventTarget | null, dir: Dir): boolean {
 }
 
 /**
- * Slide pager (`?snap=slides`, NS-48 preview): one scroll gesture moves exactly one card.
+ * Slide pager (NS-48): one scroll gesture moves exactly one card, like a slide show.
  *
  * Wheel and trackpad: the first event of a gesture slides to the next / previous card top
  * (`pageTo`), every later event of that gesture is swallowed (`preventDefault`) until the gesture
@@ -53,8 +53,8 @@ function nestedScrollerCanScroll(from: EventTarget | null, dir: Dir): boolean {
  * Space, Home, End. Anchor links, scrollbar drags, find-in-page and `scrollIntoView` are never
  * fought: any scroll we did not make cancels a slide in flight, and there is no settle snap.
  *
- * Loaded only by the `SoftSnap` gate (desktop width, fine pointer, no reduced motion), so this file
- * needs no media checks and has no touch handling. The pure decisions live in `@/lib/slide-pager`.
+ * Loaded only by the `SoftSnap` gate (desktop width, fine pointer, no reduced motion; dynamic `import()`, started
+ * eagerly there), so this file needs no media checks and has no touch handling. The pure decisions live in `@/lib/slide-pager`.
  */
 export function SlidePager() {
   useEffect(() => {

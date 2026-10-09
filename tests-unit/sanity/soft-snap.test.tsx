@@ -1,14 +1,15 @@
 /**
- * SANITY B9: soft snap (JS), no CSS scroll-snap, NO snap on touch.
+ * SANITY B9: the slide pager (JS), no CSS scroll-snap, NO paging on touch.
  *
- * History: CSS scroll-snap proximity felt loose and mandatory felt aggressive, so snapping moved
- * to JS (settle, then glide to a nearby card top; the constants and the decision live in lib/soft-snap.ts).
- * A gentle touch mode shipped in 992a790 and made the page feel stuck on iPhones (it snapped BACKWARD
- * to the hero and to one-screen cards after slow swipes); it was deleted. SoftSnap.tsx is now a tiny
- * gate: only where `(min-width: 1024px) and (pointer: fine)` matches and motion is not reduced does it
- * dynamic-import the engine (SoftSnapEngine.tsx), so touch devices download and run no snap code at any width.
- * It silently stops working if <main> becomes overflow-hidden or a constant drifts.
- * This file guards the constants, the mount, the targets (cards AND the footer), the gate, and the "does nothing" paths.
+ * History: CSS scroll-snap proximity felt loose and mandatory felt aggressive, then a JS "soft snap"
+ * (settle, glide to a nearby card top) felt cumbersome; NS-48 replaced it with a slide pager: one wheel /
+ * trackpad gesture or key moves exactly one card (components/motion/SlidePager.tsx, pure decisions in
+ * lib/slide-pager.ts, table-tested in tests-unit/slide-pager.test.ts). SoftSnap.tsx is the tiny gate: only
+ * where `(min-width: 1024px) and (pointer: fine)` matches and motion is not reduced does it mount the
+ * pager (dynamic import, started eagerly there), so touch devices download and run no pager code at any width.
+ * A gentle touch snap shipped in 992a790 and made iPhones feel stuck; it was deleted.
+ * It silently stops working if <main> becomes overflow-hidden or the target selector drifts.
+ * This file guards the mount, the targets (cards AND the footer), the gate, and the "does nothing" paths.
  */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, render } from '@testing-library/react';
@@ -16,83 +17,69 @@ import React from 'react';
 import { findTargetSelector, parseExportedNumber, readSources, renderHome, sourceNamed, topLevelSections } from './helpers';
 
 const gate = sourceNamed('SoftSnap.tsx').text; // the tiny client gate
-const snap = sourceNamed('SoftSnapEngine.tsx').text; // the engine: target selector, listeners
-const tuning = sourceNamed('lib/soft-snap.ts').text; // the pure decision logic and its constants
+const pager = sourceNamed('SlidePager.tsx').text; // the pager: target selector, listeners
+const tuning = sourceNamed('lib/soft-snap.ts').text; // MIN_WIDTH, SNAP_MEDIA, isSnapActive
+const pure = sourceNamed('lib/slide-pager.ts').text; // the pure decisions and their constants
 
 function constant(name: string): number {
-  const v = parseExportedNumber(tuning, name);
-  if (v === null) throw new Error(`SoftSnap: constant ${name} not found / not a plain number`);
+  const v = parseExportedNumber(pure, name);
+  if (v === null) throw new Error(`SlidePager: constant ${name} not found / not a plain number`);
   return v;
 }
 
 describe('constants stay in sane ranges', () => {
-  it('MIN_WIDTH is 1024 (snapping is desktop-only: it does nothing below it)', () => expect(constant('MIN_WIDTH')).toBe(1024));
-  it('there is no touch constant or mode left in lib/soft-snap.ts', () => {
-    expect(tuning).not.toMatch(/TOUCH_SETTLE_MS|snapMode|SnapMode|gentle|touching|largeViewportHeight|lvh/);
+  it('MIN_WIDTH is 1024 (paging is desktop-only: it does nothing below it)', () => {
+    expect(parseExportedNumber(tuning, 'MIN_WIDTH')).toBe(1024);
   });
-  it('THRESHOLD is between 0.2 and 0.4 of the viewport height', () => {
-    expect(constant('THRESHOLD')).toBeGreaterThanOrEqual(0.2);
-    expect(constant('THRESHOLD')).toBeLessThanOrEqual(0.4);
+  it('there is no touch constant or mode left in lib/soft-snap.ts or lib/slide-pager.ts', () => {
+    for (const text of [tuning, pure]) {
+      expect(text).not.toMatch(/TOUCH_SETTLE_MS|snapMode|SnapMode|gentle|touching|largeViewportHeight|lvh/);
+    }
   });
-  it('SETTLE_MS is 100-250', () => {
-    expect(constant('SETTLE_MS')).toBeGreaterThanOrEqual(100);
-    expect(constant('SETTLE_MS')).toBeLessThanOrEqual(250);
+  it('SLIDE_MS is 400-900 (a short slide, not a scroll)', () => {
+    expect(constant('SLIDE_MS')).toBeGreaterThanOrEqual(400);
+    expect(constant('SLIDE_MS')).toBeLessThanOrEqual(900);
   });
-  it('DURATION_MS is 350-700', () => {
-    expect(constant('DURATION_MS')).toBeGreaterThanOrEqual(350);
-    expect(constant('DURATION_MS')).toBeLessThanOrEqual(700);
-  });
-  it('STARTUP_IGNORE_MS is at least 1000 (hero entrance must not be snapped over)', () => {
-    expect(constant('STARTUP_IGNORE_MS')).toBeGreaterThanOrEqual(1000);
+  it('QUIET_MS is 100-300 (the gesture-end silence)', () => {
+    expect(constant('QUIET_MS')).toBeGreaterThanOrEqual(100);
+    expect(constant('QUIET_MS')).toBeLessThanOrEqual(300);
   });
 });
 
-describe('the gate (SoftSnap.tsx) and the engine (SoftSnapEngine.tsx)', () => {
-  it('the gate gates on the snap media query and reduced motion, and loads the engine only by dynamic import()', () => {
+describe('the gate (SoftSnap.tsx) and the pager (SlidePager.tsx)', () => {
+  it('the gate gates on the snap media query and reduced motion, and loads the pager only by dynamic import()', () => {
     expect(gate).toContain('SNAP_MEDIA');
     expect(gate).toContain('prefers-reduced-motion');
-    expect(gate).toMatch(/import\(\s*['"]\.\/SoftSnapEngine['"]\s*\)/);
-    expect(gate, 'a static import would ship the engine to touch devices').not.toMatch(/^import[^;]*SoftSnapEngine/m);
+    expect(gate).toMatch(/import\(\s*['"]\.\/SlidePager['"]\s*\)/);
+    expect(gate, 'a static import would ship the pager to touch devices').not.toMatch(/^import[^;]*SlidePager/m);
   });
-  it('no other module imports the engine statically', () => {
+  it('no other module imports the pager statically', () => {
     const hits = readSources()
-      .filter((f) => !f.path.endsWith('SoftSnapEngine.tsx') && /from\s+['"][^'"]*SoftSnapEngine['"]/.test(f.text))
+      .filter((f) => !f.path.endsWith('SlidePager.tsx') && /from\s+['"][^'"]*SlidePager['"]/.test(f.text))
       .map((f) => f.path);
     expect(hits).toEqual([]);
   });
   it('neither file has touch handlers, a gentle mode or the lvh probe', () => {
-    for (const text of [gate, snap]) {
+    for (const text of [gate, pager]) {
       expect(text).not.toMatch(/touch(start|end|cancel|move)|TOUCH_SETTLE_MS|gentle|lvh|snapMode/i);
     }
   });
-  it('the gate and the engine are client components (they use hooks and window listeners)', () => {
+  it('the gate and the pager are client components (they use hooks and window listeners)', () => {
     expect(gate.trimStart().startsWith("'use client'")).toBe(true);
-    expect(snap.trimStart().startsWith("'use client'")).toBe(true);
+    expect(pager.trimStart().startsWith("'use client'")).toBe(true);
   });
-  it('the engine skips snapping while the mobile menu is open (main[inert] / body scroll lock)', () => {
-    expect(snap).toContain('main[inert]');
-    expect(snap).toContain("document.body.style.overflow === 'hidden'");
+  it('the pager skips paging while the mobile menu is open (main[inert] / body scroll lock)', () => {
+    expect(pager).toContain('main[inert]');
+    expect(pager).toContain("document.body.style.overflow === 'hidden'");
   });
 });
 
 describe('no CSS scroll-snap anywhere', () => {
-  // NS-48 preview: `?snap=slides-css` (SlidesCss.tsx) is the ONE place that may spell CSS scroll-snap. It renders
-  // only when the owner opts in with the query toggle and is scoped to html[data-snap="slides-css"]; delete this
-  // allowance together with that file if the preview is dropped.
-  const PREVIEW_ALLOWED = ['components/motion/SlidesCss.tsx'];
-  it('no scroll-snap-type / snap utilities in css or tsx (except the opt-in ?snap=slides-css preview)', () => {
+  it('no scroll-snap-type / snap utilities in css or tsx (the pager is JS; CSS snap fights it)', () => {
     const hits = readSources()
       .filter((s) => /scroll-snap-type|scrollSnapType|\bsnap-(x|y|both|mandatory|proximity)\b/.test(s.text))
-      .map((s) => s.path)
-      .filter((p) => !PREVIEW_ALLOWED.some((a) => p.endsWith(a)));
-    expect(hits, 'CSS scroll-snap reintroduced (it fights the JS soft snap)').toEqual([]);
-  });
-  it('the preview allowance is scoped: SlidesCss.tsx only styles html[data-snap="slides-css"], never a bare html/body/main rule', () => {
-    const text = sourceNamed('SlidesCss.tsx').text;
-    const rules = [...text.matchAll(/scroll-snap-type[^;]*;/g)];
-    expect(rules).toHaveLength(1);
-    expect(text).toMatch(/html\[data-snap="slides-css"\]\s*\{\s*scroll-snap-type/);
-    expect(text).toMatch(/prefers-reduced-motion: no-preference/);
+      .map((s) => s.path);
+    expect(hits, 'CSS scroll-snap reintroduced (it fights the JS slide pager)').toEqual([]);
   });
 });
 
@@ -103,7 +90,7 @@ describe('targets', () => {
   });
 
   it('its selector matches the solid + photo cards of the real page AND the footer, in page order', () => {
-    const selector = findTargetSelector(snap);
+    const selector = findTargetSelector(pager);
     expect(selector, 'SoftSnap target selector not found').toBeTruthy();
     const targets = Array.from(home.querySelectorAll(selector!));
     expect(targets.length, 'SoftSnap targets').toBeGreaterThanOrEqual(10);
@@ -112,25 +99,26 @@ describe('targets', () => {
   });
 });
 
-const engineMounts = vi.hoisted(() => ({ count: 0 }));
-// Counts MOUNTS of the engine (not module evaluations, which are cached per file and so order-dependent):
-// it must never mount on touch / reduced-motion / narrow viewports. The real engine still runs inside the wrapper.
-vi.mock('@/components/motion/SoftSnapEngine', async (importOriginal) => {
-  const real = await importOriginal<typeof import('@/components/motion/SoftSnapEngine')>();
+const pagerMounts = vi.hoisted(() => ({ count: 0 }));
+// Counts MOUNTS of the pager (not module evaluations, which are cached per file and so order-dependent):
+// it must never mount on touch / reduced-motion / narrow viewports. The real pager still runs inside the wrapper.
+vi.mock('@/components/motion/SlidePager', async (importOriginal) => {
+  const real = await importOriginal<typeof import('@/components/motion/SlidePager')>();
   const { createElement, useEffect } = await import('react');
   return {
-    SoftSnapEngine: (props: { mode?: 'v1' | 'v2' }) => {
+    SlidePager: () => {
       useEffect(() => {
-        engineMounts.count++;
+        pagerMounts.count++;
       }, []);
-      return createElement(real.SoftSnapEngine, props);
+      return createElement(real.SlidePager);
     },
   };
 });
 
-describe('behaviour (jsdom, fake timers)', () => {
+describe('behaviour (jsdom, fake rAF)', () => {
   const originalMatchMedia = window.matchMedia;
   const originalScrollTo = window.scrollTo;
+  const CARD = 800;
   let scrollTo: ReturnType<typeof vi.fn>;
   let env: { width: number; pointer: 'fine' | 'coarse'; reduced: boolean };
   let changeListeners: Array<() => void> = [];
@@ -150,11 +138,10 @@ describe('behaviour (jsdom, fake timers)', () => {
   function setup(opts: { width: number; reduced: boolean; pointer?: 'fine' | 'coarse' }) {
     env = { width: opts.width, pointer: opts.pointer ?? 'fine', reduced: opts.reduced };
     changeListeners = [];
-    vi.useFakeTimers();
+    vi.useFakeTimers({ toFake: ['requestAnimationFrame', 'cancelAnimationFrame', 'performance'] });
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: opts.width });
-    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
-    Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 1000 });
-    Object.defineProperty(document.documentElement, 'scrollHeight', { configurable: true, value: 20000 });
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: CARD });
+    Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 0 });
     window.matchMedia = vi.fn((query: string) => ({
       matches: evaluate(query, env),
       media: query,
@@ -169,36 +156,43 @@ describe('behaviour (jsdom, fake timers)', () => {
       }),
       dispatchEvent: vi.fn(),
     })) as unknown as typeof window.matchMedia;
-    scrollTo = vi.fn();
+    // like a browser: a scrollTo moves scrollY
+    scrollTo = vi.fn((_x: number, y: number) => {
+      Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: y });
+    });
     window.scrollTo = scrollTo as unknown as typeof window.scrollTo;
   }
 
-  /** Mount the real page and park every card far away, except the first, `edgeDistance` px below the viewport top (height `height`). */
-  async function mountPage(edgeDistance: number, height = 800) {
+  /** Mount the real page, stack its cards `CARD` px tall from the document top, and let the gate load the pager. */
+  async function mountPage() {
     const { default: Home } = await import('@/app/page');
     render(React.createElement(Home));
-    document.querySelectorAll('main > section, main > footer').forEach((s) => {
-      (s as HTMLElement).getBoundingClientRect = () => ({ top: 5000, bottom: 5800, left: 0, right: 1, width: 1, height: 800, x: 0, y: 5000, toJSON: () => ({}) });
+    const cards = document.querySelectorAll<HTMLElement>('main > section, main > footer');
+    cards.forEach((el, i) => {
+      el.getBoundingClientRect = () => {
+        const top = i * CARD - window.scrollY;
+        return { top, bottom: top + CARD, left: 0, right: 1, width: 1, height: CARD, x: 0, y: top, toJSON: () => ({}) };
+      };
     });
-    const first = document.querySelector('main > section') as HTMLElement;
-    first.getBoundingClientRect = () => ({ top: edgeDistance, bottom: edgeDistance + height, left: 0, right: 1, width: 1, height, x: 0, y: edgeDistance, toJSON: () => ({}) });
-    // the gate's import() of the engine resolves in real (not faked) time; under load it can take several turns
-    for (let i = 0; i < 25; i++) {
-      await vi.dynamicImportSettled();
-      await vi.advanceTimersByTimeAsync(0);
-    }
-    await vi.advanceTimersByTimeAsync(2500);
-    return first;
+    Object.defineProperty(document.documentElement, 'scrollHeight', { configurable: true, value: cards.length * CARD });
+    await act(async () => {
+      for (let i = 0; i < 25; i++) {
+        await vi.dynamicImportSettled();
+        await Promise.resolve();
+      }
+    });
   }
 
-  /** mountPage, then scroll, settle, and let the glide finish. */
-  async function mountScrollAndSettle(edgeDistance: number, height = 800) {
-    await mountPage(edgeDistance, height);
-    window.dispatchEvent(new Event('wheel'));
-    window.dispatchEvent(new Event('scroll'));
-    await vi.advanceTimersByTimeAsync(400); // settle
-    await vi.advanceTimersByTimeAsync(1500); // glide
-  }
+  const frames = async (ms: number) => {
+    for (let t = 0; t < ms; t += 16) await vi.advanceTimersByTimeAsync(16);
+  };
+
+  const wheel = (dy = 100) => {
+    const ev = new WheelEvent('wheel', { deltaY: dy, cancelable: true, bubbles: true });
+    Object.defineProperty(ev, 'timeStamp', { value: performance.now() }); // jsdom stamps with the real clock; the test runs on the faked one
+    window.dispatchEvent(ev);
+    return ev;
+  };
 
   /** A touch event carrying `count` fingers (jsdom's TouchEvent does not take a touches list). */
   function touch(type: 'touchstart' | 'touchend', count: number) {
@@ -209,7 +203,7 @@ describe('behaviour (jsdom, fake timers)', () => {
 
   beforeEach(() => {
     cleanup();
-    engineMounts.count = 0;
+    pagerMounts.count = 0;
   });
 
   afterEach(() => {
@@ -222,81 +216,77 @@ describe('behaviour (jsdom, fake timers)', () => {
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 768 });
   });
 
-  it('touch (coarse pointer, 390px): touchstart, scroll to 110, touchend, 3s later: no scrollTo at all, and the engine never mounted', async () => {
+  it('touch (coarse pointer, 390px): touch swipe and wheel events, 3s later: no event cancelled, no scrollTo at all, and the pager never mounted', async () => {
     setup({ width: 390, reduced: false, pointer: 'coarse' });
-    await mountPage(150);
+    await mountPage();
     touch('touchstart', 1);
+    expect(wheel(100).defaultPrevented, 'the pager cancelled a scroll on a touch device').toBe(false);
     window.scrollY = 110;
     window.dispatchEvent(new Event('scroll'));
-    await vi.advanceTimersByTimeAsync(1000);
+    await frames(1000);
     touch('touchend', 0);
-    await vi.advanceTimersByTimeAsync(3000);
-    expect(scrollTo, 'SoftSnap acted on a touch device (it snapped backward and made iOS feel stuck)').not.toHaveBeenCalled();
-    expect(
-      scrollTo.mock.calls.filter(([, y]) => typeof y === 'number' && y < 110),
-      'no scrollTo below the swipe position',
-    ).toEqual([]);
-    window.dispatchEvent(new Event('scroll'));
-    await vi.advanceTimersByTimeAsync(3000);
-    expect(scrollTo).not.toHaveBeenCalled();
-    expect(engineMounts.count, 'the snap engine mounted on a touch device').toBe(0);
+    await frames(3000);
+    expect(scrollTo, 'the pager acted on a touch device (it must scroll natively)').not.toHaveBeenCalled();
+    expect(pagerMounts.count, 'the pager mounted on a touch device').toBe(0);
   });
 
   it('a coarse pointer on a DESKTOP-width screen (touch laptop in tablet mode, iPad landscape) does nothing either', async () => {
     setup({ width: 1366, reduced: false, pointer: 'coarse' });
-    await mountScrollAndSettle(150);
+    await mountPage();
+    expect(wheel().defaultPrevented).toBe(false);
+    await frames(1500);
     expect(scrollTo).not.toHaveBeenCalled();
-    expect(engineMounts.count).toBe(0);
+    expect(pagerMounts.count).toBe(0);
   });
 
   it('below 1024px with a fine pointer (narrow desktop window) does nothing', async () => {
     setup({ width: 900, reduced: false, pointer: 'fine' });
-    await mountScrollAndSettle(150);
+    await mountPage();
+    expect(wheel().defaultPrevented).toBe(false);
+    await frames(1500);
     expect(scrollTo).not.toHaveBeenCalled();
-    expect(engineMounts.count).toBe(0);
+    expect(pagerMounts.count).toBe(0);
   });
 
-  it('does nothing under prefers-reduced-motion, and never mounts the engine', async () => {
+  it('does nothing under prefers-reduced-motion, and never mounts the pager', async () => {
     setup({ width: 1280, reduced: true, pointer: 'fine' });
-    await mountScrollAndSettle(150);
-    expect(scrollTo, 'SoftSnap snapped under prefers-reduced-motion').not.toHaveBeenCalled();
-    expect(engineMounts.count).toBe(0);
+    await mountPage();
+    expect(wheel().defaultPrevented, 'the pager cancelled a scroll under prefers-reduced-motion').toBe(false);
+    await frames(1500);
+    expect(scrollTo, 'the pager paged under prefers-reduced-motion').not.toHaveBeenCalled();
+    expect(pagerMounts.count).toBe(0);
   });
 
-  it('control: on desktop (1440, fine pointer), near a card edge after a wheel tick, the engine loads and it glides', async () => {
+  it('control: on desktop (1440, fine pointer) the pager mounts in the real page and one wheel notch slides exactly one card', async () => {
     setup({ width: 1440, reduced: false });
-    await mountScrollAndSettle(150);
-    expect(engineMounts.count, 'the gate did not mount the engine on desktop').toBe(1);
-    expect(scrollTo, 'SoftSnap is not mounted in the page or no longer snaps on desktop').toHaveBeenCalled();
+    await mountPage();
+    expect(pagerMounts.count, 'the gate did not mount the pager on desktop').toBe(1);
+    expect(wheel().defaultPrevented, 'SoftSnap is not mounted in the page or no longer pages on desktop').toBe(true);
+    await frames(1200);
+    expect(window.scrollY).toBe(CARD);
   });
 
-  it('control: far from every card edge it leaves the page alone', async () => {
-    setup({ width: 1280, reduced: false, pointer: 'fine' });
-    await mountScrollAndSettle(700);
-    expect(scrollTo).not.toHaveBeenCalled();
-  });
-
-  it('while the mobile menu is open (main[inert], body scroll locked) it never snaps; once closed it does', async () => {
+  it('while the mobile menu is open (main[inert], body scroll locked) it never pages; once closed it does', async () => {
     setup({ width: 1280, reduced: false });
-    await mountPage(150);
+    await mountPage();
     const main = document.querySelector('main') as HTMLElement;
     main.setAttribute('inert', '');
     document.body.style.overflow = 'hidden';
-    window.dispatchEvent(new Event('scroll'));
-    await vi.advanceTimersByTimeAsync(2000);
-    expect(scrollTo, 'snapped under the open menu overlay').not.toHaveBeenCalled();
+    expect(wheel().defaultPrevented, 'paged under the open menu overlay').toBe(false);
+    await frames(1500);
+    expect(scrollTo).not.toHaveBeenCalled();
 
     main.removeAttribute('inert');
     document.body.style.overflow = '';
-    window.dispatchEvent(new Event('scroll'));
-    await vi.advanceTimersByTimeAsync(2000);
+    expect(wheel().defaultPrevented).toBe(true);
+    await frames(1200);
     expect(scrollTo).toHaveBeenCalled();
   });
 
-  it('when the media query flips from match to no-match (rotate to a phone-sized viewport, pointer becomes coarse) the engine unmounts and stops snapping', async () => {
+  it('when the media query flips from match to no-match (rotate to a phone-sized viewport, pointer becomes coarse) the pager unmounts and stops paging', async () => {
     setup({ width: 1440, reduced: false });
-    await mountPage(150);
-    expect(engineMounts.count, 'precondition: the engine mounted on desktop').toBe(1);
+    await mountPage();
+    expect(pagerMounts.count, 'precondition: the pager mounted on desktop').toBe(1);
     expect(changeListeners.length, 'the gate subscribed to matchMedia change events').toBeGreaterThan(0);
 
     env.width = 390;
@@ -304,43 +294,46 @@ describe('behaviour (jsdom, fake timers)', () => {
     await act(async () => {
       changeListeners.forEach((l) => l());
     });
-    window.dispatchEvent(new Event('wheel'));
-    window.dispatchEvent(new Event('scroll'));
-    await vi.advanceTimersByTimeAsync(3000);
-    expect(scrollTo, 'the engine kept snapping after the media query stopped matching').not.toHaveBeenCalled();
+    expect(wheel().defaultPrevented, 'the pager kept cancelling scrolls after the media query stopped matching').toBe(false);
+    await frames(1500);
+    expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  describe('a glide in flight is cancelled by user input (moved from the legacy soft-snap-wiring grep, NS-20)', () => {
-    /** Mount, scroll near a card edge, let the settle timer fire and the glide START but not finish. */
-    async function startGlide() {
+  describe('a slide in flight yields to input that is not ours (cancel-on-input)', () => {
+    /** Mount, start a slide with a wheel notch, let it run a little but not finish. */
+    async function startSlide() {
       setup({ width: 1440, reduced: false });
-      await mountPage(150);
-      window.dispatchEvent(new Event('scroll'));
-      await vi.advanceTimersByTimeAsync(constant('SETTLE_MS') + constant('DURATION_MS') / 4);
-      expect(scrollTo.mock.calls.length, 'precondition: the glide has started').toBeGreaterThan(0);
+      await mountPage();
+      wheel();
+      await frames(200);
+      expect(scrollTo.mock.calls.length, 'precondition: the slide has started').toBeGreaterThan(0);
       return scrollTo.mock.calls.length;
     }
 
-    const CANCELLING: Array<[string, () => Event]> = [
-      ['wheel', () => new Event('wheel')],
-      ['pointerdown', () => new Event('pointerdown')],
-      ['keydown ArrowDown', () => new KeyboardEvent('keydown', { key: 'ArrowDown' })],
-      ['keydown Space', () => new KeyboardEvent('keydown', { key: ' ' })],
-      ['keydown PageDown', () => new KeyboardEvent('keydown', { key: 'PageDown' })],
+    const FOREIGN: Array<[string, () => void]> = [
+      ['a scroll we did not make (anchor link, find-in-page, scrollIntoView)', () => {
+        Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 2400 });
+        window.dispatchEvent(new Event('scroll'));
+      }],
+      ['a scrollbar drag (pointerdown on <html>) followed by the scroll it causes', () => {
+        document.documentElement.dispatchEvent(new Event('pointerdown', { bubbles: true }));
+        Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: 2400 });
+        window.dispatchEvent(new Event('scroll'));
+      }],
+      ['a hashchange', () => window.dispatchEvent(new Event('hashchange'))],
     ];
 
-    it.each(CANCELLING)('%s stops the glide: no further scrollTo after it', async (_name, make) => {
-      const before = await startGlide();
-      window.dispatchEvent(make());
-      await vi.advanceTimersByTimeAsync(constant('DURATION_MS') * 2);
-      expect(scrollTo.mock.calls.length, 'the glide kept fighting the user after input').toBe(before);
+    it.each(FOREIGN)('%s stops the slide: no further scrollTo after it', async (_name, act_) => {
+      const before = await startSlide();
+      act_();
+      await frames(constant('SLIDE_MS') * 2);
+      expect(scrollTo.mock.calls.length, 'the slide kept fighting the user after input').toBe(before);
     });
 
-    it('control: with no input the same glide keeps going, and a non-scroll key (a) does not cancel it', async () => {
-      const before = await startGlide();
-      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
-      await vi.advanceTimersByTimeAsync(constant('DURATION_MS') * 2);
-      expect(scrollTo.mock.calls.length, 'the glide stopped without a cancelling input').toBeGreaterThan(before);
+    it('control: with no foreign input the same slide runs to the next card top', async () => {
+      await startSlide();
+      await frames(constant('SLIDE_MS') * 2);
+      expect(window.scrollY).toBe(CARD);
     });
   });
 });

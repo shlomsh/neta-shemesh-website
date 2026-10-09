@@ -1,5 +1,5 @@
 /**
- * Slide pager (NS-48 preview, `?snap=slides`): the decision logic, free of DOM, timers and React so
+ * Slide pager (NS-48): the decision logic, free of DOM, timers and React so
  * it can be tested with plain numbers. `components/motion/SlidePager.tsx` is the thin effect that
  * feeds it (wheel events, keys, section tops) and animates to whatever it returns.
  *

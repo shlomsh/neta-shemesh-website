@@ -1,7 +1,7 @@
 /**
- * The NS-48 preview modes `?snap=slides` (JS pager) and `?snap=slides-css` (native CSS snap): their
- * gating (desktop width + fine pointer + no reduced motion, menu closed) and what the real
- * components do in jsdom. The decisions themselves are table-tested in slide-pager.test.ts.
+ * The slide pager's gating (desktop width + fine pointer + no reduced motion, menu closed, `?snap=off`
+ * escape hatch) and what the real components do in jsdom. The decisions themselves are table-tested
+ * in slide-pager.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, render } from '@testing-library/react';
@@ -63,50 +63,10 @@ const wheel = (dy: number, over: WheelEventInit = {}) => {
   return ev;
 };
 
-describe('?snap=slides-css', () => {
-  beforeEach(() => {
-    window.sessionStorage.clear();
-    document.documentElement.removeAttribute('data-snap');
-  });
-  afterEach(() => {
-    cleanup();
-    vi.unstubAllGlobals();
-    window.history.replaceState({}, '', '/');
-    document.documentElement.removeAttribute('data-snap');
-  });
-
-  it('sets html[data-snap="slides-css"] and renders the scoped mandatory-snap rules, nothing else on html', async () => {
-    const { baseElement } = await mount('?snap=slides-css');
-    expect(document.documentElement.getAttribute('data-snap')).toBe('slides-css');
-    const css = baseElement.querySelector('style')?.textContent ?? '';
-    expect(css).toMatch(/html\[data-snap="slides-css"\]\s*\{\s*scroll-snap-type:\s*y mandatory/);
-    expect(css).toMatch(/main > section[\s\S]*main > footer[\s\S]*scroll-snap-align:\s*start;\s*scroll-snap-stop:\s*always/);
-    expect(css).toMatch(/@media \(min-width: 1024px\) and \(pointer: fine\) and \(prefers-reduced-motion: no-preference\)/);
-  });
-
-  it('removes the attribute again when unmounted', async () => {
-    const { unmount } = await mount('?snap=slides-css');
-    unmount();
-    expect(document.documentElement.hasAttribute('data-snap')).toBe(false);
-  });
-
-  it.each<[string, Env]>([
-    ['touch (coarse pointer, 390)', { width: 390, pointer: 'coarse', reduced: false }],
-    ['a coarse pointer on a desktop-width screen', { width: 1366, pointer: 'coarse', reduced: false }],
-    ['a narrow desktop window (900, fine)', { width: 900, pointer: 'fine', reduced: false }],
-    ['prefers-reduced-motion', { width: 1440, pointer: 'fine', reduced: true }],
-  ])('%s: no attribute and no style', async (_n, env) => {
-    const { baseElement } = await mount('?snap=slides-css', env);
-    expect(document.documentElement.hasAttribute('data-snap')).toBe(false);
-    expect(baseElement.querySelector('style')).toBeNull();
-  });
-});
-
-describe('?snap=slides (the JS pager)', () => {
+describe('the slide pager', () => {
   let scrollTo: ReturnType<typeof vi.fn>;
   beforeEach(() => {
-    window.sessionStorage.clear();
-    document.body.style.overflow = '';
+      document.body.style.overflow = '';
     scrollTo = vi.fn((_x: number, y: number) => {
       Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: y });
     });
@@ -130,7 +90,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('a wheel notch slides exactly one card (900 px) and ends exactly on the card top; its own wheel event is cancelled', async () => {
     buildPage();
-    await mount('?snap=slides');
+    await mount('');
     const ev = wheel(100);
     expect(ev.defaultPrevented).toBe(true);
     await frames(1200);
@@ -141,7 +101,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('the rest of a gesture (a 1 s decaying tail, 16 ms apart) is swallowed (cancelled) and moves nothing more', async () => {
     buildPage();
-    await mount('?snap=slides');
+    await mount('');
     wheel(100);
     await frames(16);
     const ys: number[] = [];
@@ -156,7 +116,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('keys: ArrowDown pages, Shift+Space / PageUp page back, End and Home jump; typing fields keep their keys', async () => {
     buildPage();
-    await mount('?snap=slides');
+    await mount('');
     const key = (k: string, o: KeyboardEventInit = {}) => {
       const ev = new KeyboardEvent('keydown', { key: k, cancelable: true, bubbles: true, ...o });
       window.dispatchEvent(ev);
@@ -192,7 +152,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('keys pressed mid-slide retarget from where the slide is heading (three quick presses = three cards)', async () => {
     buildPage();
-    await mount('?snap=slides');
+    await mount('');
     for (let i = 0; i < 3; i++) {
       window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', cancelable: true }));
       await frames(100);
@@ -203,7 +163,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('a scroll we did not make (anchor link, scrollbar, scrollIntoView) cancels the slide instead of fighting it', async () => {
     buildPage();
-    await mount('?snap=slides');
+    await mount('');
     wheel(100);
     await frames(200);
     const calls = scrollTo.mock.calls.length;
@@ -216,7 +176,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('does not touch wheel events while the menu is open, on ctrl+wheel (zoom), or horizontal', async () => {
     buildPage();
-    await mount('?snap=slides');
+    await mount('');
     expect(wheel(100, { ctrlKey: true }).defaultPrevented).toBe(false);
     expect(wheel(5, { deltaX: 100 }).defaultPrevented).toBe(false);
     document.body.style.overflow = 'hidden';
@@ -227,7 +187,7 @@ describe('?snap=slides (the JS pager)', () => {
 
   it('a card taller than the viewport scrolls natively (event not cancelled) until its bottom edge', async () => {
     buildPage(700, 720);
-    await mount('?snap=slides');
+    await mount('');
     const ev = wheel(10); // 20 px of card below the viewport
     expect(ev.defaultPrevented).toBe(false);
     expect(scrollTo).not.toHaveBeenCalled();
@@ -246,7 +206,7 @@ describe('?snap=slides (the JS pager)', () => {
     ['prefers-reduced-motion', { width: 1440, pointer: 'fine', reduced: true }],
   ])('%s: no listeners, no cancelled wheel, no scrollTo, no key hijack', async (_n, env) => {
     buildPage();
-    await mount('?snap=slides', env);
+    await mount('', env);
     expect(wheel(100).defaultPrevented).toBe(false);
     const k = new KeyboardEvent('keydown', { key: 'ArrowDown', cancelable: true });
     window.dispatchEvent(k);
@@ -255,28 +215,38 @@ describe('?snap=slides (the JS pager)', () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it('?snap=slides is remembered across client navigation (sessionStorage)', async () => {
+  it('?snap=off is the hidden escape hatch: no cancelled wheel, no scrollTo, no key hijack; nothing is stored', async () => {
     buildPage();
-    await mount('?snap=slides');
-    expect(window.sessionStorage.getItem('snap-mode')).toBe('slides');
+    await mount('?snap=off');
+    expect(wheel(100).defaultPrevented).toBe(false);
+    const k = new KeyboardEvent('keydown', { key: 'ArrowDown', cancelable: true });
+    window.dispatchEvent(k);
+    expect(k.defaultPrevented).toBe(false);
+    await frames(1500);
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(window.sessionStorage.length).toBe(0);
+  });
+
+  it('any other ?snap= value (the old A/B toggle) changes nothing: the pager runs', async () => {
+    buildPage();
+    await mount('?snap=v2');
+    expect(wheel(100).defaultPrevented).toBe(true);
   });
 });
 
-describe('source rules for the preview modes', () => {
+describe('source rules', () => {
   const pager = src('src/components/motion/SlidePager.tsx');
-  const css = src('src/components/motion/SlidesCss.tsx');
   const gate = src('src/components/motion/SoftSnap.tsx');
-  it('the default mode is still v1 (production unchanged)', () => {
-    expect(src('src/lib/soft-snap.ts')).toMatch(/DEFAULT_SNAP_MODE: SnapVariant = 'v1'/);
-  });
-  it('the gate loads both preview components by dynamic import() only', () => {
+  it('the gate loads the pager by dynamic import() only, never statically', () => {
     expect(gate).toMatch(/import\(\s*['"]\.\/SlidePager['"]\s*\)/);
-    expect(gate).toMatch(/import\(\s*['"]\.\/SlidesCss['"]\s*\)/);
-    expect(gate).not.toMatch(/^import[^;]*(SlidePager|SlidesCss)/m);
+    expect(gate).not.toMatch(/^import[^;]*SlidePager/m);
+  });
+  it('the gate starts the download eagerly (module level), so the first gesture after hydration already pages', () => {
+    expect(gate).toMatch(/^if \(typeof window !== 'undefined'/m);
+    expect(gate).toMatch(/void loadPager\(\)/);
   });
   it('the pager registers its wheel listener as non-passive (it must be able to cancel) and has no touch handling', () => {
     expect(pager).toMatch(/addEventListener\('wheel',\s*onWheel,\s*\{\s*passive:\s*false\s*\}\)/);
     expect(pager).not.toMatch(/touch(start|end|cancel|move)/i);
-    expect(css).not.toMatch(/touch(start|end|cancel|move)/i);
   });
 });
