@@ -17,7 +17,7 @@ export function NavLink({
   onClick?: () => void;
 }) {
   return href.startsWith('/') && !href.includes('#') ? (
-    <Link href={href} className={className} onClick={onClick}>
+    <Link href={href} prefetch={false} className={className} onClick={onClick}>
       {label}
     </Link>
   ) : (
