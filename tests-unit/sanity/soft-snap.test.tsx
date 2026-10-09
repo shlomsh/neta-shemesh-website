@@ -65,6 +65,10 @@ describe('the gate (SoftSnap.tsx) and the engine (SoftSnapEngine.tsx)', () => {
       expect(text).not.toMatch(/touch(start|end|cancel|move)|TOUCH_SETTLE_MS|gentle|lvh|snapMode/i);
     }
   });
+  it('the gate and the engine are client components (they use hooks and window listeners)', () => {
+    expect(gate.trimStart().startsWith("'use client'")).toBe(true);
+    expect(snap.trimStart().startsWith("'use client'")).toBe(true);
+  });
   it('the engine skips snapping while the mobile menu is open (main[inert] / body scroll lock)', () => {
     expect(snap).toContain('main[inert]');
     expect(snap).toContain("document.body.style.overflow === 'hidden'");
@@ -292,5 +296,39 @@ describe('behaviour (jsdom, fake timers)', () => {
     window.dispatchEvent(new Event('scroll'));
     await vi.advanceTimersByTimeAsync(3000);
     expect(scrollTo, 'the engine kept snapping after the media query stopped matching').not.toHaveBeenCalled();
+  });
+
+  describe('a glide in flight is cancelled by user input (moved from the legacy soft-snap-wiring grep, NS-20)', () => {
+    /** Mount, scroll near a card edge, let the settle timer fire and the glide START but not finish. */
+    async function startGlide() {
+      setup({ width: 1440, reduced: false });
+      await mountPage(150);
+      window.dispatchEvent(new Event('scroll'));
+      await vi.advanceTimersByTimeAsync(constant('SETTLE_MS') + constant('DURATION_MS') / 4);
+      expect(scrollTo.mock.calls.length, 'precondition: the glide has started').toBeGreaterThan(0);
+      return scrollTo.mock.calls.length;
+    }
+
+    const CANCELLING: Array<[string, () => Event]> = [
+      ['wheel', () => new Event('wheel')],
+      ['pointerdown', () => new Event('pointerdown')],
+      ['keydown ArrowDown', () => new KeyboardEvent('keydown', { key: 'ArrowDown' })],
+      ['keydown Space', () => new KeyboardEvent('keydown', { key: ' ' })],
+      ['keydown PageDown', () => new KeyboardEvent('keydown', { key: 'PageDown' })],
+    ];
+
+    it.each(CANCELLING)('%s stops the glide: no further scrollTo after it', async (_name, make) => {
+      const before = await startGlide();
+      window.dispatchEvent(make());
+      await vi.advanceTimersByTimeAsync(constant('DURATION_MS') * 2);
+      expect(scrollTo.mock.calls.length, 'the glide kept fighting the user after input').toBe(before);
+    });
+
+    it('control: with no input the same glide keeps going, and a non-scroll key (a) does not cancel it', async () => {
+      const before = await startGlide();
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
+      await vi.advanceTimersByTimeAsync(constant('DURATION_MS') * 2);
+      expect(scrollTo.mock.calls.length, 'the glide stopped without a cancelling input').toBeGreaterThan(before);
+    });
   });
 });

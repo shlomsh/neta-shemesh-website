@@ -6,7 +6,25 @@
  * back on mobile (13px links).
  */
 import { beforeAll, describe, expect, it } from 'vitest';
-import { classTokens, desktopNav, expectNone, hamburger, hasClass, renderHome, textNodes } from './helpers';
+import {
+  EXPECTED_SECTIONS,
+  classTokens,
+  desktopNav,
+  expectNone,
+  findSection,
+  hamburger,
+  hasClass,
+  headingTextOf,
+  renderHome,
+  textNodes,
+} from './helpers';
+
+/** Parse an HTML fragment into a detached element (controls for the checkers below). */
+function fragment(html: string): HTMLElement {
+  const holder = document.createElement('div');
+  holder.innerHTML = html;
+  return holder;
+}
 
 let home: HTMLElement;
 beforeAll(async () => {
@@ -65,5 +83,94 @@ describe('E13: navigation collapses below md', () => {
     expect(burger, 'hamburger button (aria-controls=mobile-menu, md:hidden) not found').not.toBeNull();
     expect(burger!.getAttribute('aria-label'), 'hamburger needs an accessible name').toBeTruthy();
     expect(hasClass(burger, 'md:hidden'), 'hamburger must disappear from md up').toBe(true);
+  });
+});
+
+// ─── Moved from the legacy class-string tests (NS-20) ────────────────────────
+// Each check below is the behaviour a deleted tests-unit/*.test.tsx file guarded, restated
+// without naming a component or a layout class that a refactor may legitimately rename.
+
+/** Every image URL a page can fetch must be root-absolute or https (a bare `images/x.webp` is a relative-URL bug). */
+function relativeImageUrls(root: ParentNode): string[] {
+  const bad: string[] = [];
+  const ok = (u: string) => /^(\/|https:\/\/)/.test(u);
+  for (const img of Array.from(root.querySelectorAll('img'))) {
+    const src = img.getAttribute('src') ?? '';
+    if (!ok(src)) bad.push(`src="${src}"`);
+    const srcset = img.getAttribute('srcset');
+    if (srcset) {
+      for (const candidate of srcset.split(',')) {
+        const url = candidate.trim().split(/\s+/)[0];
+        if (url && !ok(url)) bad.push(`srcset="${url}"`);
+      }
+    }
+  }
+  return bad;
+}
+
+/** Decorative overlays (aria-hidden svg taken out of flow with `absolute`) must not swallow clicks. */
+function clickBlockingOverlays(root: ParentNode): string[] {
+  return Array.from(root.querySelectorAll('svg[aria-hidden="true"]'))
+    .filter((svg) => hasClass(svg, 'absolute') && !hasClass(svg, 'pointer-events-none'))
+    .map((svg) => `<svg class="${classTokens(svg).slice(0, 6).join(' ')}">`);
+}
+
+/** A link with no visible text and no labelled image inside has no accessible name unless it carries aria-label. */
+function unnamedIconLinks(root: ParentNode): string[] {
+  return Array.from(root.querySelectorAll<HTMLElement>('a'))
+    .filter((a) => !(a.textContent ?? '').trim() && !a.querySelector('img[alt]:not([alt=""])') && !a.getAttribute('aria-label')?.trim())
+    .map((a) => a.outerHTML.slice(0, 100));
+}
+
+describe('E14: every titled section still has a heading', () => {
+  it('each section found by id (hero, services, ...) has a non-empty h1/h2; the exact copy is NOT pinned here', () => {
+    const missing: string[] = [];
+    let checked = 0;
+    for (const spec of EXPECTED_SECTIONS.filter((s) => s.heading)) {
+      checked++;
+      const text = headingTextOf(findSection(home, spec.name));
+      if (!text) missing.push(spec.name);
+    }
+    expect(checked, 'sections with a heading in EXPECTED_SECTIONS').toBeGreaterThanOrEqual(10);
+    expectNone(missing, 'sections that lost their h1/h2 text');
+  });
+});
+
+describe('E15: image URLs are root-absolute', () => {
+  it('every <img src> and srcset candidate on the page starts with "/" or "https://"', () => {
+    const imgs = home.querySelectorAll('img');
+    expect(imgs.length, 'the page has far fewer images than expected: the walker went blind').toBeGreaterThan(20);
+    expectNone(relativeImageUrls(home), 'relative image URLs (a bare images/x.webp resolves against the current route)');
+  });
+
+  it('control: the checker flags a bare relative src and srcset, spares /images/x and https URLs', () => {
+    expect(relativeImageUrls(fragment('<img src="images/a.webp"><img src="/ok.webp" srcset="/a.webp 1x, b.webp 2x">'))).toEqual(['src="images/a.webp"', 'srcset="b.webp"']);
+    expect(relativeImageUrls(fragment('<img src="/images/a.webp"><img src="https://x.test/a.webp">'))).toEqual([]);
+  });
+});
+
+describe('E16: decorative overlays never intercept clicks', () => {
+  it('every absolutely-positioned aria-hidden svg carries pointer-events-none', () => {
+    const overlays = Array.from(home.querySelectorAll('svg[aria-hidden="true"]')).filter((svg) => hasClass(svg, 'absolute'));
+    expect(overlays.length, 'the page lost its decorative overlay (the about-intro organic background)').toBeGreaterThanOrEqual(1);
+    expectNone(clickBlockingOverlays(home), 'decorative svgs that would block taps on the copy beneath');
+  });
+
+  it('control: flags an absolute decorative svg without pointer-events-none, spares labelled/inline ones', () => {
+    expect(clickBlockingOverlays(fragment('<svg aria-hidden="true" class="absolute inset-0"></svg>'))).toHaveLength(1);
+    expect(clickBlockingOverlays(fragment('<svg aria-hidden="true" class="absolute inset-0 pointer-events-none"></svg><svg aria-hidden="true" class="h-4"></svg>'))).toEqual([]);
+  });
+});
+
+describe('E17: icon-only links have an accessible name', () => {
+  it('every link without visible text (logo, social icons) has an aria-label or a labelled image', () => {
+    const iconLinks = Array.from(home.querySelectorAll('a')).filter((a) => !(a.textContent ?? '').trim());
+    expect(iconLinks.length, 'no icon-only links found: the walker went blind').toBeGreaterThanOrEqual(2);
+    expectNone(unnamedIconLinks(home), 'icon-only links a screen reader announces as just "link"');
+  });
+
+  it('control: flags an empty link, spares aria-label and alt-image links', () => {
+    expect(unnamedIconLinks(fragment('<a href="/x"><svg></svg></a>'))).toHaveLength(1);
+    expect(unnamedIconLinks(fragment('<a aria-label="x" href="/x"></a><a href="/y"><img src="/a" alt="logo"></a><a href="/z">text</a>'))).toEqual([]);
   });
 });

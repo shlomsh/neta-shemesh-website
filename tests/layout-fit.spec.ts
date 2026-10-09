@@ -109,4 +109,21 @@ test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)',
       }
     });
   }
+
+  // Kept from the deleted track-c-header-fidelity.spec.ts (NS-20): the only real-browser check that the
+  // Elamy display font is what the section titles compute to. Sizes are pinned in sanity/type-scale-css
+  // and sanity/type-usage; only the computed family needs a browser.
+  test('section titles compute to the Elamy display font (desktop)', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/', { waitUntil: 'load' });
+    const families = await page.evaluate((ids: string[]) =>
+      ids.map((id) => {
+        const el = document.getElementById(id);
+        return { id, family: el ? window.getComputedStyle(el).fontFamily.toLowerCase() : null };
+      }), [ID.aboutGalleryTitle]);
+    for (const f of families) {
+      expect(f.family, `#${f.id} should exist`).not.toBeNull();
+      expect(f.family, `#${f.id} must use Elamy`).toContain('elamy');
+    }
+  });
 });

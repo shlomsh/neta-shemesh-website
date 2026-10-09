@@ -29,31 +29,4 @@ test.describe('Responsive Layout Tests', () => {
     expect(hasHorizontalScroll).toBe(false);
   });
 
-  test('Main grid container exists and has clipped overflow', async ({ page }) => {
-    // The main container in page.tsx clips overflow, which prevents absolutely positioned
-    // elements from widening the page on mobile.
-    const mainElement = page.locator('main');
-    // 'clip' (overflow-clip) not 'hidden': clip still prevents overflow but does not create a scroll container, so the JS soft snap keeps working.
-    await expect(mainElement).toHaveCSS('overflow', 'clip');
-  });
-
-  test('Critical text scales correctly and remains visible on mobile', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 812 });
-    
-    // Check that the hero text doesn't flow off-screen
-    const heroTitle = page.getByText('נטע שמש').first();
-    await heroTitle.scrollIntoViewIfNeeded();
-    
-    const isVisible = await heroTitle.isVisible();
-    expect(isVisible).toBe(true);
-
-    const boundingBox = await heroTitle.boundingBox();
-    expect(boundingBox).not.toBeNull();
-    if (boundingBox) {
-       // Ensure the element's right edge doesn't significantly exceed viewport width (375)
-       expect(boundingBox.x).toBeGreaterThanOrEqual(-5); // Allow slight sub-pixel rounding
-       expect(boundingBox.x + boundingBox.width).toBeLessThanOrEqual(375 + 10); // Allow slight sub-pixel rounding
-    }
-  });
-
 });

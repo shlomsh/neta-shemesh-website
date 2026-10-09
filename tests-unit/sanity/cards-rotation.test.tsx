@@ -202,3 +202,12 @@ describe('A5: the gallery subtitle is not wrapped in a card', () => {
     }
   });
 });
+
+describe('A6: the social section copy sits directly on the plum (moved from legacy colour-inheritance, NS-20)', () => {
+  it('contact-social holds no nested tone card, and its social icon links are present', () => {
+    const section = findSection(home, 'contact-social');
+    const nested = Array.from(section.querySelectorAll('[data-bg-tone]')).map((el) => `${el.tagName.toLowerCase()}[${el.getAttribute('data-bg-tone')}]`);
+    expect(nested, `${labelOf(section, 'contact-social')} grew a nested tone card (the lead copy is meant to sit on the plum itself)`).toEqual([]);
+    expect(section.querySelectorAll('a[aria-label]').length, 'social icon links').toBeGreaterThanOrEqual(1);
+  });
+});
