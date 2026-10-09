@@ -79,8 +79,8 @@ describe('Photo: clipped cover-fitted frame', () => {
     const el = frame(<Photo src="/a" alt="" radius="card" outlined zoom="self" objectPosition="30% 64%" />);
     expect(img(el).getAttribute('style')).toContain('object-position:30% 64%');
     expect(classTokens(el)).toEqual(expect.arrayContaining(['outline', 'outline-[1.5px]', 'outline-plum']));
-    expect(hasClass(img(el), 'hover:scale-105')).toBe(true);
-    expect(hasClass(img(frame(<Photo src="/a" alt="" radius="none" zoom="group" />)), 'group-hover:scale-[1.04]')).toBe(true);
+    expect(hasClass(img(el), 'motion-safe:hover:scale-105')).toBe(true);
+    expect(hasClass(img(frame(<Photo src="/a" alt="" radius="none" zoom="group" />)), 'motion-safe:group-hover:scale-[1.04]')).toBe(true);
   });
   it('the blog cover ratios are aspect-ratio on the frame, not a padding-top spacer; loading is lazy unless eager', () => {
     for (const [ratio, cls] of [['100/62', 'aspect-[100/62]'], ['100/58', 'aspect-[100/58]']] as const) {

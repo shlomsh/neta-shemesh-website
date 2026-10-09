@@ -40,7 +40,7 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   const baseClasses =
-    'type-lead inline-flex items-center justify-center whitespace-nowrap font-bold rounded-full transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+    'type-lead inline-flex items-center justify-center whitespace-nowrap font-bold rounded-full transition-all motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
 
   // No vertical padding: height comes from min-h alone, so a pill whose label is a
   // smaller-line-box `.font-latin` span (phone number) is exactly as tall as a Hebrew one.

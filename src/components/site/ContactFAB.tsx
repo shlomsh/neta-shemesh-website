@@ -11,7 +11,7 @@ const PHONE_URL = telHref();
 
 const HALF_BASE =
   'type-small font-bold flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 px-4 py-2.5 ' +
-  'transition duration-200 active:scale-95 ' +
+  'transition duration-200 motion-safe:active:scale-95 ' +
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset';
 
 // WhatsApp brand green + white: intentional exception to the 4-colour palette (bold CTA, owner decision).
@@ -39,7 +39,7 @@ export function ContactFAB() {
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-cream/35 bg-plum text-cream shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
+        className="flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-cream/35 bg-plum text-cream shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 motion-safe:hover:-translate-y-0.5"
       >
         <a
           data-testid="fab-whatsapp"

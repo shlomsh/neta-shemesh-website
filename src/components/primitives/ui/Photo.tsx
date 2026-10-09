@@ -46,8 +46,8 @@ const OUTLINE = 'outline outline-[1.5px] outline-plum';
  */
 export type PhotoZoom = 'self' | 'group';
 const ZOOM_CLASS: Record<PhotoZoom, string> = {
-  self: 'hover:scale-105 transition-transform duration-700 ease-out',
-  group: 'transition-transform duration-500 group-hover:scale-[1.04]',
+  self: 'motion-safe:hover:scale-105 transition-transform duration-700 ease-out',
+  group: 'transition-transform duration-500 motion-safe:group-hover:scale-[1.04]',
 };
 
 /**

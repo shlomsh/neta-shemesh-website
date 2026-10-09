@@ -162,6 +162,12 @@
   [data-parallax] { transform: none !important; translate: none !important; scale: none !important; }
 }
 
+/* Anchor jumps (nav links, "#contact") must not glide under reduced motion. Unlayered on purpose:
+   it beats the `scroll-behavior: smooth` set in @layer base regardless of source order. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 @utility safari-clip {
   /* WebKit rendering bug workaround for border-radius overflow */
   -webkit-mask-image: -webkit-radial-gradient(white, black);
