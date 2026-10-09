@@ -73,13 +73,18 @@ test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)',
           const id = candidates.join(' | ');
           if (!el) return { id, found: false };
           const rect = el.getBoundingClientRect();
-          const fontSize = parseFloat(window.getComputedStyle(el).fontSize);
+          const cs = window.getComputedStyle(el);
+          const fontSize = parseFloat(cs.fontSize);
+          // Measure the content box: NS-45 gives display/title/signature a deliberate `--ink-inline` padding
+          // (with an equal negative margin) so swash ink isn't clipped, which pushes the border box off-screen.
+          const left = rect.left + parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth);
+          const right = rect.right - parseFloat(cs.paddingRight) - parseFloat(cs.borderRightWidth);
           return {
             id,
             found: true,
-            left: rect.left,
-            right: rect.left + rect.width,
-            width: rect.width,
+            left,
+            right,
+            width: right - left,
             fontSize,
           };
         });
