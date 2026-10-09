@@ -29,7 +29,25 @@ export const COVERED = [
   [0x20, 0x25], [0x27, 0x39], [0x3a, 0x40], [0x5b, 0x5f], [0x7b, 0x7d], [0xa0, 0xa0], [0xab, 0xab], [0xbb, 0xbb],
   [0x590, 0x5ff], [0x2013, 0x2014], [0x2018, 0x201e], [0x20aa, 0x20aa], [0xfb1d, 0xfb4f],
 ];
-export const UNICODE_RANGE = COVERED.map(([a, b]) => (a === b ? `U+${a.toString(16).toUpperCase()}` : `U+${a.toString(16).toUpperCase()}-${b.toString(16).toUpperCase()}`)).join(', ');
+const hex = (n) => n.toString(16).toUpperCase();
+/**
+ * `unicode-range` for one face: COVERED intersected with the REAL font's own cmap. A fallback face must claim
+ * exactly what the real font renders, no more: a char the real font lacks (e.g. Stanga has no gershayim U+05F4
+ * or maqaf U+05BE) has to keep falling to the Latin companion / system font at rest, or the at-rest render changes.
+ */
+export function unicodeRange(font) {
+  const cps = [];
+  for (const [a, b] of COVERED) for (let cp = a; cp <= b; cp++) if (adv(font, cp) != null) cps.push(cp);
+  const out = [];
+  let s = null, p = null;
+  for (const cp of [...cps, Infinity]) {
+    if (s === null) { s = p = cp; continue; }
+    if (cp === p + 1) { p = cp; continue; }
+    out.push(s === p ? `U+${hex(s)}` : `U+${hex(s)}-${hex(p)}`);
+    s = p = cp;
+  }
+  return out.join(', ');
+}
 export const isCovered = (cp) => COVERED.some(([a, b]) => cp >= a && cp <= b);
 
 /** Face -> [real font file, fallback key in the reference JSON]. */
@@ -117,7 +135,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   for (const [face, [file, key]] of Object.entries(FACES)) {
     const r = compute(loadReal(file), refs[key], counts);
     const pct = (v) => (v * 100).toFixed(2) + '%';
-    console.log(`${face.padEnd(14)} size-adjust ${pct(r.sizeAdjust)}  ascent-override ${pct(r.ascent)}  descent-override ${pct(r.descent)}  line-gap-override ${pct(r.lineGap)}`);
+    console.log(`${face.padEnd(14)} size-adjust ${pct(r.sizeAdjust)}  ascent-override ${pct(r.ascent)}  descent-override ${pct(r.descent)}  line-gap-override ${pct(r.lineGap)}\n               unicode-range: ${unicodeRange(loadReal(file))}`);
   }
-  console.log('unicode-range:', UNICODE_RANGE);
 }

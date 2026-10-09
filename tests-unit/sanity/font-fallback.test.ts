@@ -8,7 +8,7 @@
  * with Arial), and (3) the font-family order: real font, fallback face, Latin companion, generic.
  */
 import { describe, expect, it } from 'vitest';
-import { FACES, UNICODE_RANGE, compute, corpus, isCovered, loadRef, loadReal } from '../../scripts/font-fallback-metrics.mjs';
+import { FACES, unicodeRange, compute, corpus, isCovered, loadRef, loadReal } from '../../scripts/font-fallback-metrics.mjs';
 import { cssVar, globalsCss, stripCssComments } from './helpers';
 
 const css = stripCssComments(globalsCss());
@@ -32,7 +32,7 @@ describe('Hebrew fallback faces', () => {
     expect(pct(block, 'ascent-override')).toBeCloseTo(want.ascent, 3);
     expect(pct(block, 'descent-override')).toBeCloseTo(want.descent, 3);
     expect(pct(block, 'line-gap-override')).toBeCloseTo(want.lineGap, 3);
-    expect(block).toContain(`unicode-range: ${UNICODE_RANGE};`);
+    expect(block).toContain(`unicode-range: ${unicodeRange(loadReal(file))};`);
   });
 
   it('size-adjust shrinks the wide system Hebrew font (a sane band, not 100%)', () => {
@@ -48,6 +48,8 @@ describe('Hebrew fallback faces', () => {
     for (let cp = 0x61; cp <= 0x7a; cp++) expect(isCovered(cp), String.fromCharCode(cp)).toBe(false);
     expect(isCovered(0xa9), '©').toBe(false);
     expect(isCovered(0x5d0), 'alef').toBe(true);
+    // at rest the fallback must not claim glyphs the real font lacks (gershayim in "עו״ס", maqaf)
+    expect(unicodeRange(loadReal('stanga-regular-aaa.woff2'))).not.toMatch(/5F4|5BE/);
   });
 
   it('font stacks: real font, Hebrew-only fallback, Latin companion, generic', () => {
