@@ -14,7 +14,7 @@ type SectionTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
   /**
    * A decorative drawing set BESIDE the title, in the same row (so the section gets no taller). It is a sibling of
    * the heading, never inside it (the h2-decoration guard forbids svg/path in a title). In RTL it sits on the
-   * heading's left. Size it yourself (about the title's cap height); it is `shrink-0` and centred on the line.
+   * heading's right (first in DOM order = first in reading order). Size it yourself (about the title's cap height); it is `shrink-0` and centred on the line.
    */
   marker?: React.ReactNode;
   /** Row alignment when a `marker` is set (default `justify-start`; centred titles pass `justify-center`). */
@@ -38,8 +38,8 @@ export function SectionTitle({ as: Tag = 'h2', id, className, onDark = false, ma
   if (!marker) return title;
   return (
     <div className={cx('flex flex-nowrap items-center gap-[clamp(10px,1.4vw,18px)]', rowClassName ?? 'justify-start')}>
-      {title}
       <span className="shrink-0">{marker}</span>
+      {title}
     </div>
   );
 }
