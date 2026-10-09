@@ -23,6 +23,8 @@ const RADIUS_CLASS: Record<PhotoRadius, string> = {
   none: '',
 };
 
+// Tailwind needs verbatim class strings, so the ratio is a closed union: a template type (`aspect-[${string}]`)
+// would compile and silently emit no CSS.
 const RATIO_CLASS: Record<PhotoRatio, string> = {
   square: 'aspect-square',
   '4/3': 'aspect-[4/3]',

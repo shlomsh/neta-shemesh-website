@@ -56,7 +56,7 @@ Neta Shemesh is a couple and family therapist with **14 years of clinical experi
 
 - Page / layout / CSS / fonts: `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/fonts.ts`, `src/app/globals.css` · page shell: `src/components/site/PageShell.tsx` · SEO: `src/lib/seo/`
 - Sections: `src/components/layout/` · primitives: `src/components/primitives/` · motion + FAB: `src/components/ui/`
-- Content + site facts + ids: `src/content/` (`site.ts`, `ids.ts`, `types.ts`, `home/`) · motion delays: `src/lib/motion.ts` · class helper (not adopted yet): `src/lib/cx.ts`
+- Content + site facts + ids: `src/content/` (`site.ts`, `ids.ts`, `types.ts`, `home/`) · motion delays: `src/lib/motion.ts` · class-list helper: `src/lib/cx.ts` (`cx()`, used for every conditional/composed class list)
 - Tests: `tests-unit/` (vitest), `tests/` (Playwright)
 - Docs: `CLAUDE.md` (design rules), `docs/typography-guideline-2026-10.md`, `docs/visual-roadmap-2026-10.md`, `docs/tech-debt-plan-2026-10.md`, `docs/deployment.md`
 - Copy tone: `netta_voice.md`

@@ -20,7 +20,7 @@ import Services from '@/components/layout/Services';
 describe('Services — step image paths start with /images/', () => {
   it('all step imageSrc values have a leading slash', () => {
     const { container } = render(React.createElement(Services));
-    // StepImage renders an <img> with the imageSrc as src
+    // each step card renders its photo as an <img> (Photo primitive) with the imageSrc as src
     const imgs = container.querySelectorAll('img');
     const stepImgs = Array.from(imgs).filter((img) =>
       img.getAttribute('src')?.includes('images/')

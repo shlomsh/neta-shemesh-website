@@ -100,6 +100,8 @@ export default async function BlogPostPage(
                 src={post.coverImage}
                 alt={post.coverAlt}
                 radius="card"
+                // Preserves the pre-refactor rendering: the cover was never masked with `safari-clip`. Turning it
+                // on is a visual change (rounded-edge antialiasing) and needs a Safari check first.
                 safariClip={false}
                 ratio="100/58"
                 loading="eager"

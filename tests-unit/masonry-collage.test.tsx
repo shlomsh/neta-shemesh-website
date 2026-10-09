@@ -17,7 +17,7 @@ describe('Masonry Collage (AboutIntro)', () => {
     expect(grid?.className).toContain('grid-cols-2');
   });
 
-  it('should render exactly 3 PhotoPanels in the masonry grid', () => {
+  it('should render exactly 3 photos in the masonry grid', () => {
     const { container } = render(<AboutIntro />);
     const grid = container.querySelector('.grid-cols-2');
     expect(grid).not.toBeNull();
