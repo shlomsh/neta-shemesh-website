@@ -81,8 +81,13 @@ export function pickSnapTarget({ scrollY, viewportHeight, documentHeight, sectio
 // overshoot it pulled the page backward (NS-36 audit: 50% of triggered glides, mean 122px). v2 only
 // glides the way the reader was already going, and only after a deliberate gesture.
 
-/** The A/B modes of the `?snap=` toggle. `off` mounts no engine at all. */
-export type SnapVariant = 'off' | 'v1' | 'v2';
+/**
+ * The A/B modes of the `?snap=` toggle. `off` mounts no engine at all. `slides` (the JS slide
+ * pager, `lib/slide-pager.ts`) and `slides-css` (native mandatory CSS snap) are the NS-48 previews.
+ */
+export type SnapVariant = 'off' | 'v1' | 'v2' | 'slides' | 'slides-css';
+/** Every valid `?snap=` value, in menu order. */
+export const SNAP_VARIANTS: readonly SnapVariant[] = ['off', 'v1', 'v2', 'slides', 'slides-css'];
 /** Mode when no `?snap=` is given and nothing is stored. v1 until the owner picks a new default. */
 export const DEFAULT_SNAP_MODE: SnapVariant = 'v1';
 /** Query parameter that selects the mode (read once on mount). */
@@ -92,7 +97,7 @@ export const SNAP_MODE_STORAGE_KEY = 'snap-mode';
 
 /** A valid mode, or null for anything else (missing, misspelt, wrong type). */
 export function parseSnapVariant(value: unknown): SnapVariant | null {
-  return value === 'off' || value === 'v1' || value === 'v2' ? value : null;
+  return SNAP_VARIANTS.find((v) => v === value) ?? null;
 }
 
 /**

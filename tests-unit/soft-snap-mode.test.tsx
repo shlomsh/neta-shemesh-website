@@ -1,5 +1,5 @@
 /**
- * The `?snap=off|v1|v2` toggle (NS-36): read once on mount from the query, remembered in
+ * The `?snap=off|v1|v2` toggle (NS-36; `slides` and `slides-css` are covered by slide-pager-wiring.test.tsx): read once on mount from the query, remembered in
  * sessionStorage (so client navigation keeps it), default v1, `off` loads no engine. The engine is
  * replaced by a recorder here; its behaviour is covered by sanity/soft-snap.test.tsx and the pure
  * decision tests in soft-snap.test.ts.

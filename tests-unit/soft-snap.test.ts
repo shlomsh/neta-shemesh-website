@@ -217,10 +217,10 @@ describe('v2 constants', () => {
     expect(V2_DURATION_MS).toBeGreaterThanOrEqual(350);
     expect(V2_DURATION_MS).toBeLessThanOrEqual(420);
   });
-  it('the default mode stays v1 and parseSnapVariant only accepts off|v1|v2', () => {
+  it('the default mode stays v1 and parseSnapVariant only accepts off|v1|v2|slides|slides-css', () => {
     expect(DEFAULT_SNAP_MODE).toBe('v1');
-    for (const m of ['off', 'v1', 'v2']) expect(parseSnapVariant(m)).toBe(m);
-    for (const bad of [null, undefined, '', 'V2', 'v3', 'on', 1, {}]) expect(parseSnapVariant(bad)).toBeNull();
+    for (const m of ['off', 'v1', 'v2', 'slides', 'slides-css']) expect(parseSnapVariant(m)).toBe(m);
+    for (const bad of [null, undefined, '', 'V2', 'v3', 'on', 'slide', 'Slides', 'slides-css ', 1, {}]) expect(parseSnapVariant(bad)).toBeNull();
   });
 });
 

@@ -36,7 +36,7 @@ const isMenuOpen = () =>
  * `mode` (default v1) picks the decision, settle time and glide length; v2 additionally sums the
  * net scroll since the last settle (`gestureDelta`) so the decision knows the gesture direction.
  */
-export function SoftSnapEngine({ mode = 'v1' }: { mode?: Exclude<SnapVariant, 'off'> }) {
+export function SoftSnapEngine({ mode = 'v1' }: { mode?: Extract<SnapVariant, 'v1' | 'v2'> }) {
   useEffect(() => {
     const v2 = mode === 'v2';
     const settleMs = v2 ? V2_SETTLE_MS : SETTLE_MS;

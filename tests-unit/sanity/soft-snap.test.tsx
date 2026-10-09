@@ -76,11 +76,23 @@ describe('the gate (SoftSnap.tsx) and the engine (SoftSnapEngine.tsx)', () => {
 });
 
 describe('no CSS scroll-snap anywhere', () => {
-  it('no scroll-snap-type / snap utilities in css or tsx', () => {
+  // NS-48 preview: `?snap=slides-css` (SlidesCss.tsx) is the ONE place that may spell CSS scroll-snap. It renders
+  // only when the owner opts in with the query toggle and is scoped to html[data-snap="slides-css"]; delete this
+  // allowance together with that file if the preview is dropped.
+  const PREVIEW_ALLOWED = ['components/motion/SlidesCss.tsx'];
+  it('no scroll-snap-type / snap utilities in css or tsx (except the opt-in ?snap=slides-css preview)', () => {
     const hits = readSources()
       .filter((s) => /scroll-snap-type|scrollSnapType|\bsnap-(x|y|both|mandatory|proximity)\b/.test(s.text))
-      .map((s) => s.path);
+      .map((s) => s.path)
+      .filter((p) => !PREVIEW_ALLOWED.some((a) => p.endsWith(a)));
     expect(hits, 'CSS scroll-snap reintroduced (it fights the JS soft snap)').toEqual([]);
+  });
+  it('the preview allowance is scoped: SlidesCss.tsx only styles html[data-snap="slides-css"], never a bare html/body/main rule', () => {
+    const text = sourceNamed('SlidesCss.tsx').text;
+    const rules = [...text.matchAll(/scroll-snap-type[^;]*;/g)];
+    expect(rules).toHaveLength(1);
+    expect(text).toMatch(/html\[data-snap="slides-css"\]\s*\{\s*scroll-snap-type/);
+    expect(text).toMatch(/prefers-reduced-motion: no-preference/);
   });
 });
 
