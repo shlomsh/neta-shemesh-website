@@ -273,6 +273,29 @@
   .fab-enter { animation: none; }
 }
 
+/* ParallaxFrame drift (NS-15). Static midpoint everywhere (translateY 0 + the oversize scale, which is what
+   framer showed at scroll progress 0.5); a scroll-driven animation replaces it where supported and motion is
+   welcome. `view()` binds to the nearest scroll container, so the frame, Section and Footer clip with
+   `overflow-clip` (hidden would freeze it). `translateY(%)` is relative to the layer's own height, exactly like
+   framer's `y: "N%"`. Under reduce, the `[data-parallax]` rule in the reduce block above wins (!important). */
+[data-parallax] { transform: translateY(0) scale(var(--parallax-scale, 1)); }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-parallax] {
+      animation-name: parallax-drift;
+      animation-duration: 1ms;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+@keyframes parallax-drift {
+  from { transform: translateY(calc(-1 * var(--parallax-amount, 0%))) scale(var(--parallax-scale, 1)); }
+  to { transform: translateY(var(--parallax-amount, 0%)) scale(var(--parallax-scale, 1)); }
+}
+
 @utility safari-clip {
   /* WebKit rendering bug workaround for border-radius overflow */
   -webkit-mask-image: -webkit-radial-gradient(white, black);

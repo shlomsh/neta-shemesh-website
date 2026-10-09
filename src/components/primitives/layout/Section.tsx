@@ -128,7 +128,8 @@ const PAD_CLASS: Record<SectionPad, string> = {
 
 /**
  * The `<section>` shell: tone, height contract (`fit`), vertical padding. Always
- * `relative w-full overflow-hidden` (clips, and is the positioning context for decor).
+ * `relative w-full overflow-clip` (clips, is the positioning context for decor, and is NOT a scroll container: a
+ * `view()` parallax timeline binds to the nearest scroll container, which `overflow-hidden` would make of the section).
  *
  * Background and text colour come entirely from the `[data-bg-tone]` rules in globals.css, so
  * children need no per-component `onDark` flag. `data-fit` / `data-phone` publish the height contract for
@@ -151,7 +152,7 @@ export function Section({
 }: SectionProps) {
   const fitClasses = FIT_CLASS[phone];
   const fitClass = fit ? (fit === 'lock' && !floor ? fitClasses.lockNoFloor : fitClasses[fit]) : '';
-  const classes = cx('relative w-full overflow-hidden', seam && '-mt-px', PAD_CLASS[pad], fitClass, fit && CENTER_CLASS[center], className);
+  const classes = cx('relative w-full overflow-clip', seam && '-mt-px', PAD_CLASS[pad], fitClass, fit && CENTER_CLASS[center], className);
 
   const section = (
     <section

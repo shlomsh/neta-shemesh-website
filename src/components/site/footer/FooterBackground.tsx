@@ -7,7 +7,7 @@ import { Photo } from '@/components/primitives/ui/Photo';
  */
 export function FooterBackground() {
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-clip">
       {/* Photo — drifts within the band as it scrolls */}
       <Photo
         engine="next"

@@ -15,7 +15,13 @@ export function Bio() {
       {/* ── Section 2: Merged About Me (Introduction, Quote, Photo & Signature) ── */}
       {/* lg+: one screen (min 100svh; floor 720px) with the bio vertically centred. fit="grow"
           (min-h, not h) so a short viewport grows the section rather than clipping the running text. */}
-      <Section id={ID.aboutMeSection} anchor={ANCHOR.aboutMe} tone="cream" fit="grow" pad="section" seam>
+      {/* `overflow-hidden!` (instead of the Section default `overflow-clip`) on purpose: the left column's
+          `lg:sticky lg:top-[120px]` is NOT inert today. This section is a (never-scrolling) scroll container, so the
+          sticky offset resolves against it and parks the column at the bottom of its slack (29px at 1280-1440x900,
+          71px at 1024x768, 0 at 1920x1080). Under `overflow-clip` it would bind to the window instead and either
+          drift (sticky) or sit that many px higher (static): a visible change. No ParallaxFrame lives in this
+          section, so the `view()` timelines elsewhere are unaffected. */}
+      <Section id={ID.aboutMeSection} anchor={ANCHOR.aboutMe} tone="cream" fit="grow" pad="section" seam className="overflow-hidden!">
         <Container maxWidth="2xl" gutter="wide" className="relative z-10">
           <div className="flex flex-col gap-[48px] lg:flex-row lg:items-start lg:gap-[clamp(40px,6vw,80px)]">
 

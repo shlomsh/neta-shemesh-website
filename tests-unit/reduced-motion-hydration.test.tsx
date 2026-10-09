@@ -9,8 +9,8 @@
  * Now: ScrollReveal is a server component with no hidden state in its markup at all (the hidden state is
  * CSS, armed by RevealObserver, and only under `prefers-reduced-motion: no-preference`). ContactFAB is a
  * server component too (NS-14): its entrance is the `.fab-enter` CSS keyframe, off under reduce, with no
- * inline `opacity:0` in the HTML. ParallaxFrame still uses framer until NS-15, so it keeps the "same tree
- * whatever useReducedMotion() says" guard, plus the CSS belt that forces it static under reduce.
+ * inline `opacity:0` in the HTML. ParallaxFrame is a server component too (NS-15): a CSS scroll-driven animation that exists only
+ * under no-preference, plus the CSS belt that forces it static under reduce.
  */
 import React from 'react';
 import fs from 'fs';
@@ -100,6 +100,20 @@ describe('structural guards (source + CSS)', () => {
     expect(html).not.toMatch(/opacity:\s*0/);
     expect(html).not.toMatch(/style=/);
     expect(html).toMatch(/class="fab-enter /);
+  });
+
+  it('ParallaxFrame is a server component (NS-15): no client directive, no framer-motion, drift is CSS-only', () => {
+    const src = read('src/components/motion/ParallaxFrame.tsx').replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '');
+    expect(src).not.toMatch(/use client/);
+    expect(src).not.toMatch(/framer-motion/);
+    const css = read('src/app/globals.css');
+    // the scroll-driven animation exists only under no-preference AND where animation-timeline is supported
+    const m = css.match(/@media \(prefers-reduced-motion: no-preference\)\s*\{\s*@supports \(animation-timeline: view\(\)\)\s*\{([\s\S]*?)\n  \}\n\}/);
+    expect(m).not.toBeNull();
+    expect(m![1]).toMatch(/animation-name:\s*parallax-drift/);
+    expect(m![1]).toMatch(/animation-range:\s*cover 0% cover 100%/);
+    // static midpoint outside the gate
+    expect(css).toMatch(/\[data-parallax\]\s*\{\s*transform:\s*translateY\(0\) scale\(var\(--parallax-scale, 1\)\)/);
   });
 
   it('the FAB entrance is a CSS keyframe with a visible rest state, switched off under reduce', () => {

@@ -100,7 +100,7 @@ describe('Photo: clipped cover-fitted frame', () => {
   it('parallax: the photo sits in the drifting layer, the frame keeps its radius; no `relative` of its own (ParallaxFrame decides)', () => {
     const el = frame(<Photo src="/a" alt="" radius="card" motion={{ parallax: 9 }} className="w-full" />);
     expect(el.querySelector('[data-parallax]')!.querySelector('img')).not.toBeNull();
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['overflow-hidden', 'rounded-card', 'safari-clip', 'w-full']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['overflow-clip', 'rounded-card', 'safari-clip', 'w-full']));
     const band = classTokens(frame(<Photo src="/a" alt="" radius="none" motion={{ parallax: 8 }} className="absolute inset-0" />));
     expect(band).toContain('absolute');
     expect(band).not.toContain('relative');

@@ -129,9 +129,9 @@ describe('Section: tone, pad, overflow, seam, anchor, dir', () => {
     expect(classTokens(sectionOf(<Section pad="tight">x</Section>))).toContain('py-section-tight');
     expect(classTokens(sectionOf(<Section>x</Section>)).filter((t) => t.startsWith('py-'))).toEqual([]);
   });
-  it('every Section is relative + overflow-hidden (there is no overflow prop)', () => {
+  it('every Section is relative + overflow-clip (there is no overflow prop)', () => {
     for (const render of [() => <Section>x</Section>, () => <Section fit="lock">x</Section>, () => <Section tone="cream" pad="section" seam>x</Section>]) {
-      expect(classTokens(sectionOf(render()))).toEqual(expect.arrayContaining(['relative', 'w-full', 'overflow-hidden']));
+      expect(classTokens(sectionOf(render()))).toEqual(expect.arrayContaining(['relative', 'w-full', 'overflow-clip']));
     }
   });
   it('seam adds -mt-px, otherwise none', () => {

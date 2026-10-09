@@ -5,7 +5,7 @@ Small, typed building blocks the section components in `src/components/sections/
 ## Layout (`primitives/layout/`)
 
 ### `<Section id? tone? fit? floor? center? pad? seam? anchor? className? …props>`
-The `<section>` shell: always `relative w-full overflow-hidden` (no `dir`: `<html dir="rtl">` sets the direction, and `dir` is not a Section prop), plus whatever the props below ask for. `id` is optional (Expertise has none). `data-fit` and `data-bg-tone` are owned by `fit` and `tone`; a hand-passed attribute cannot override them.
+The `<section>` shell: always `relative w-full overflow-clip` (no `dir`: `<html dir="rtl">` sets the direction, and `dir` is not a Section prop), plus whatever the props below ask for. `id` is optional (Expertise has none). `data-fit` and `data-bg-tone` are owned by `fit` and `tone`; a hand-passed attribute cannot override them.
 - `tone`: `dark | mid | light | cream`. Sets `data-bg-tone`; `globals.css` then paints the background, the text colour and `--header-color`, so children need no colour classes. Omit it for photo sections (CTA band): no `data-bg-tone`.
 - `fit` (published as `data-fit`; omit for content height at every width, e.g. blog sections). From lg every fit is at least one screen (`lg:screen-fit` = `min-height: var(--card-h)`, `100svh` there; grow uses its own `lg:min-h-[max(100svh,720px)]`).
   - `free`: from lg one screen at minimum, then grows with its content (about-credentials, contact-social, CTA band).
@@ -17,7 +17,7 @@ The `<section>` shell: always `relative w-full overflow-hidden` (no `dir`: `<htm
 - `pad`: `section` (`py-section`) | `tight` (`py-section-tight`) | `none` (default, no vertical padding of its own: the section is padded by `lg:py-12` (lock/grow), by its content (Services) or by a one-off `py-*` in `className` (the CTA band)). The About, Expertise and Contact sections all use `pad="section"` with `Container gutter="wide"` (Expertise and Contact joined on 2026-10-09). On a `lock`/`grow` section `lg:py-12` takes over from lg up, so `pad` only sets the padding below lg there. Never put a second `py-*` in `className` next to a `pad` token: two utilities for one property are decided by CSS source order.
 - `seam`: `-mt-px` (hides a sub-pixel gap between two toned sections; TODO visual-roadmap #2).
 - `anchor`: renders a `ScrollAnchor` with that id immediately before the section.
-- There is no `overflow` prop: every section clips (`overflow-hidden`) and is a positioning context. (Making the four sections that used to be unclipped clip too was measured at 0 px at six viewports.)
+- There is no `overflow` prop: every section clips (`overflow-clip`, which unlike `overflow-hidden` is not a scroll container, so the `view()` parallax timelines inside bind to the page) and is a positioning context. (Making the four sections that used to be unclipped clip too was measured at 0 px at six viewports.)
 - The tests (`tests-unit/sanity/helpers.ts`: `fitOf`, `oneScreenMode`, `isOneScreen`) read `data-fit` AND check the classes that implement it, so one cannot lie without the other.
 
 ### `<Container maxWidth? gutter? className? …props>`
