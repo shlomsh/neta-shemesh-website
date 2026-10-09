@@ -2,12 +2,12 @@
 /**
  * SANITY E: the dependency direction between the component folders (src/components/README.md).
  *
- *   content -> lib -> primitives, motion -> site -> sections, blog -> app
+ *   content -> lib -> motion -> primitives -> site -> (sections | blog) -> app
  *
- * Each layer may import from the layers before it, never after. primitives and motion are
- * siblings (primitives may use motion, e.g. Photo uses ScrollReveal; motion never uses primitives),
- * and sections and blog are siblings (neither imports the other, and no section imports another
- * section: a section folder is a self-contained unit that page.tsx composes).
+ * Each layer may import from the layers before it, never after. It is a chain: primitives use motion
+ * (e.g. Photo uses ScrollReveal) and motion never uses primitives. sections and blog are siblings
+ * (neither imports the other, and no section imports another section: a section folder is a
+ * self-contained unit that page.tsx composes). ESLint mirrors this in eslint.config.mjs.
  *
  * History: Photo (a primitive) imported two components from `components/ui`, a folder that also held
  * a site widget (ContactFAB) and the footer lived in `layout/` although the shell in `site/` renders
@@ -117,7 +117,7 @@ describe('E1: component folders only import in one direction', () => {
     const files = readSources().filter((f) => /\.tsx?$/.test(f.name));
     expectNone(
       layerViolations(files).map((v) => `${v.file}: from '${v.import}' (${v.why})`),
-      'import against the layer direction (content -> lib -> primitives, motion -> site -> sections, blog -> app)',
+      'import against the layer direction (content -> lib -> motion -> primitives -> site -> sections | blog -> app)',
     );
   });
 

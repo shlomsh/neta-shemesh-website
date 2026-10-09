@@ -15,10 +15,10 @@ src/components/
 ## Dependency direction
 
 ```
-content  ->  lib  ->  primitives, motion  ->  site  ->  sections, blog  ->  app
+content  ->  lib  ->  motion  ->  primitives  ->  site  ->  (sections | blog)  ->  app
 ```
 
-Each layer imports only from the layers before it (to its left), never after. Concretely:
+It is a chain: each layer imports only from the layers before it (to its left), never after. `motion` sits before `primitives` because `primitives` use `motion` (`Photo` uses `ScrollReveal`) and `motion` never uses a primitive. `sections` and `blog` are the one fork: siblings that never import each other. Concretely:
 
 - `content/` is plain typed data: no component, no `lib` import.
 - `lib/` imports `content` only.
@@ -28,7 +28,7 @@ Each layer imports only from the layers before it (to its left), never after. Co
 - `sections/` and `blog/` may use everything to the left, including `site/`. They never import each other, and one section never imports another section (a section folder is a self-contained unit that `app/page.tsx` composes).
 - `app/` (pages, layouts) composes all of the above.
 
-`tests-unit/sanity/component-layers.test.ts` fails on any import that goes against this, and on a new top-level folder that has no row in its table.
+Two guards enforce it: ESLint `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint`, so CI) fail on any import that goes against this, and `tests-unit/sanity/component-layers.test.ts` does the same plus fails on a new top-level folder that has no row in its table. A new layer or section folder needs its row in both (the section list in the ESLint config is read from the folder, so a new section is covered automatically).
 
 ## Folder rules
 
