@@ -80,6 +80,8 @@ export function Bio() {
                   src={`${QUOTE_ICON}?v=2`}
                   alt=""
                   aria-hidden="true"
+                  width={71}
+                  height={40}
                   loading="lazy"
                   className="w-[clamp(28px,3.5vw,40px)] h-auto"
                 />

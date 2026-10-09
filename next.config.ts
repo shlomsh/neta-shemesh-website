@@ -7,6 +7,11 @@ const isStaticExport = process.env.BUILD_STATIC_EXPORT === 'true';
 
 const nextConfig: NextConfig = {
   ...(isStaticExport ? { output: 'export' as const } : {}),
+  // Inline the (small) CSS into the HTML: removes the render-blocking stylesheet requests and lets
+  // the font files be discovered from the document itself. Lighthouse mobile showed ~850 ms of
+  // render blocking from two chunks (13 KiB + 1.5 KiB); with real throttling (devtools, mobile) FCP/LCP went
+  // 1.58 s -> 0.85 s locally. Cross-page CSS caching is moot on a 4-page site.
+  experimental: { inlineCss: true },
   // Kept as one conditional key rather than folded into the spread above: a
   // second `images` key after the spread would silently override it and break
   // the static export.
