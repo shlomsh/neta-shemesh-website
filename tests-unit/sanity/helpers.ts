@@ -398,7 +398,7 @@ export interface SubtitleSpec {
   section: string;
   /** margin classes under the title; Services differs on purpose (Elamy "?" descender) */
   margin: string[];
-  /** max-w-[65ch] required (Services' 320-400px column never reaches 65ch, so it has none) */
+  /** max-w-prose (--container-prose = 65ch) required (Services' 320-400px column never reaches 65ch, so it has none) */
   needsMaxWidth: boolean;
   /** Sits directly on a mauve surface by owner decision (decorative title lockup). */
   onMid?: boolean;
@@ -570,14 +570,14 @@ export const SCAN_RULES: ScanRule[] = [
     bad: ['<h2 className="type-title mb-6">', '<p className="mt-3 type-signature text-cream">', '<span className="type-display md:-mt-2 self-end">', '<SectionTitle className="mb-[clamp(28px,4vw,48px)] text-center">',
       '<SectionTitle\n  id={ID.x}\n  className="text-center my-4"\n>', '<h1 className={cx("type-title", wide && "mx-auto")}>', '<h2 className="type-title [margin-top:8px]">', '<SectionTitle className={cx("a", x && "mt-2")}>'],
     good: ['<h2 className="type-title font-bold tracking-[-0.01em] text-center">', '<SectionTitle className="text-center">', '<div className="mb-[clamp(28px,4vw,48px)]"><SectionTitle className="text-center">',
-      '<p className="type-quote max-w-[65ch] mx-auto mt-3 md:mt-4">', '<h3 className="type-card-title mt-2 mb-3 text-cream">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve max-w-[65ch] min-h-[2em]">',
+      '<p className="type-quote max-w-prose mx-auto mt-3 md:mt-4">', '<h3 className="type-card-title mt-2 mb-3 text-cream">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve max-w-prose min-h-[2em]">',
       '<SectionTitle as="p" onDark className="text-center w-full h-full flex items-center justify-center">', '.type-title { margin-block: 0 }'] },
   { id: 'ink-box-inline', label: 'width or inline-padding utility on an Elamy heading (.type-display/.type-title/.type-signature, or SectionTitle className): the ink box pads inline with an equal negative margin (NS-45), so it shifts the title; put widths and padding on a wrapper',
     re: INK_INLINE_RE,
-    bad: ['<h1 className="type-display text-cream font-bold w-full">', '<h2 className="type-title max-w-[65ch]">', '<p className="min-w-0 type-signature">', '<h2 className="type-title px-4">', '<SectionTitle as="p" onDark className="text-center w-full h-full">',
+    bad: ['<h1 className="type-display text-cream font-bold w-full">', '<h2 className="type-title max-w-prose">', '<p className="min-w-0 type-signature">', '<h2 className="type-title px-4">', '<SectionTitle as="p" onDark className="text-center w-full h-full">',
       '<span className="type-display ps-2 self-end">', '<h1 className={cx("type-title", wide && "max-w-prose")}>', '<h2 className="type-title [width:80%]">'],
     good: ['<h2 className="type-title font-bold tracking-[-0.01em] text-center">', '<SectionTitle className="text-center h-full flex items-center justify-center">', '<div className="w-full"><SectionTitle>', '<h3 className="type-card-title w-full px-4">',
-      '<p className="type-quote max-w-[65ch] mx-auto mt-3 md:mt-4">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve min-h-[2em] opacity-90">', 'type-title { padding-inline: 0 }'] },
+      '<p className="type-quote max-w-prose mx-auto mt-3 md:mt-4">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve min-h-[2em] opacity-90">', 'type-title { padding-inline: 0 }'] },
   { id: 'hex', label: 'hex colour literal', re: /#[0-9a-fA-F]{3,8}\b/, bad: ['bg-[#123456]', '#ABC', 'color:#fff5f0'], good: ['var(--color-plum)', 'issue #4', 'url(#grad)'] },
 ];
 
@@ -814,7 +814,7 @@ export function baseTokens(el: Element): string[] {
   return classTokens(el).filter((t) => splitVariant(t).variant === '');
 }
 
-const NAMED_COLOUR = '(plum|mauve|blush|cream|white|black)';
+const NAMED_COLOUR = '(plum|mauve|blush|cream|white|black|whatsapp)';
 
 export type ColourToken = { kind: 'inherit' } | { kind: 'colour'; value: RGBA } | { kind: 'unresolved'; token: string };
 
@@ -1435,10 +1435,12 @@ export const CONTRAST_BANS: BanRule[] = [
     label: 'color-mix(... transparent) used as a TEXT colour (a translucent text colour has no fixed contrast: use a solid palette colour)',
     find: (f) => [
       ...regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-\\[(?:color:)?color-mix\\([^\\]]*transparent`), /\.tsx?$/)(f),
+      // the Tailwind opacity-modifier spelling of the same thing: text-plum/92, md:text-cream/90 (a /N below 100)
+      ...regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-(?:plum|mauve|blush|cream|white|black)/(?:\\d{1,2}|\\[[^\\]]+\\])(?![\\w%-])`), /\.tsx?$/)(f),
       ...regexBan(/(?<![\w\-[])color\s*:\s*['"`]?color-mix\([^;\n]*transparent/, /\.(?:tsx?|css)$/)(f),
     ],
-    bad: ['text-[color:color-mix(in_srgb,var(--color-plum)_70%,transparent)]', 'md:text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]', "style={{ color: 'color-mix(in srgb, red 50%, transparent)' }}", '.x { color: color-mix(in srgb, var(--color-plum) 50%, transparent); }'],
-    good: ['outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]', 'bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]', 'text-[color:var(--header-color)]', '.x { background-color: color-mix(in srgb, red 50%, transparent); }', '--surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));'],
+    bad: ['text-[color:color-mix(in_srgb,var(--color-plum)_70%,transparent)]', 'md:text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]', "style={{ color: 'color-mix(in srgb, red 50%, transparent)' }}", '.x { color: color-mix(in srgb, var(--color-plum) 50%, transparent); }', 'text-plum/92', 'md:text-cream/90', 'text-plum/[0.3]'],
+    good: ['bg-plum/60', 'outline-plum/18', 'text-plum', 'text-cream/100', 'outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]', 'bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]', 'text-[color:var(--header-color)]', '.x { background-color: color-mix(in srgb, red 50%, transparent); }', '--surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));'],
   },
   {
     id: 'bg-mauve-with-text',

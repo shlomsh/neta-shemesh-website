@@ -31,7 +31,7 @@ export function StepCard({
       <Photo engine="next" src={imageSrc} alt={title} sizes={CARD_SIZES} radius="card" className="w-full h-full shadow-lg">
 
         {/* Legibility gradient so white text reads on any photo */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/10" />
 
         {/* Content anchored to bottom, RTL — direction inherited from <html>; font from body */}
         <div className="absolute inset-0 flex flex-col justify-end p-[20px] text-right sm:p-[24px]">

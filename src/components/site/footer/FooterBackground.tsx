@@ -19,7 +19,7 @@ export function FooterBackground() {
         className="absolute inset-0"
       />
       {/* Dark gradient scrim for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-black/20" />
     </div>
   );
 }

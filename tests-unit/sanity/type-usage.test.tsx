@@ -77,7 +77,7 @@ describe('C13: section subtitle lockup', () => {
     expect(p, `${labelOf(section, spec.section)} lost its subtitle under the h2`).not.toBeNull();
     expect(typeClassesOf(p), `${labelOf(section, spec.section)} subtitle type class`).toEqual(['type-quote']);
     for (const m of spec.margin) expect(hasClass(p, m), `${labelOf(section, spec.section)} subtitle lost ${m}`).toBe(true);
-    expect(hasClass(p, 'max-w-[65ch]'), `${labelOf(section, spec.section)} subtitle max-w-[65ch] expectation (${spec.needsMaxWidth})`).toBe(spec.needsMaxWidth);
+    expect(hasClass(p, 'max-w-prose'), `${labelOf(section, spec.section)} subtitle max-w-prose (65ch) expectation (${spec.needsMaxWidth})`).toBe(spec.needsMaxWidth);
   });
 
   it('Services is the one deliberate margin exception (mt-5 md:mt-9, for the Elamy "?" descender); the rest use mt-3 md:mt-4', () => {

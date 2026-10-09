@@ -69,6 +69,19 @@
   /* black only for photo scrims (bg-black/20, from-black/60 ...) */
   --color-black: #000;
 
+  /* WhatsApp brand green and its hover shade: the ContactFAB WhatsApp half only (owner-approved exception,
+   * 2026-10-09; the label and glyph stay #FFFFFF at 1.98:1). The only colours outside the four-colour palette. */
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #1EBE5B;
+
+  /* Derived hover tints (generate `bg-plum-hover`, `bg-cream-hover`): solid plum/cream pressed a step darker /
+   * toward blush. Written once here instead of as a color-mix(...) at each call site. */
+  --color-plum-hover: color-mix(in srgb, var(--color-plum) 88%, black);
+  --color-cream-hover: color-mix(in srgb, var(--color-cream) 85%, var(--color-blush));
+
+  /* Reading measure (generates `max-w-prose`): the ~65ch line-length cap for running text and subtitles. */
+  --container-prose: 65ch;
+
   /* --font-elamy, --font-stanga and --font-latin-next are set by next/font on <html> (src/app/fonts.ts,
    * layout.tsx); they are deliberately not redeclared here (a self-referencing token is a cycle). */
 
@@ -151,6 +164,12 @@
   @media (width < 64rem) {
     :root { --hero-h: calc(100lvh + 80px); }
   }
+}
+
+/* The keyboard focus ring stack shared by every interactive element: no default outline, a 2px ring.
+ * The ring colour (and offset / inset) stays at the call site: class="focus-ring focus-visible:ring-plum". */
+@utility focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2;
 }
 
 /* One screen at least: the height every full-screen card consumes (Section fit free/lock/grow, the CTA

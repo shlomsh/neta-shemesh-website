@@ -167,7 +167,7 @@ describe('IconButton: round 44px icon-only button', () => {
     expect(el.getAttribute('type')).toBe('button');
     expect(el.getAttribute('aria-label')).toBe('Open');
     expect(el.getAttribute('aria-expanded')).toBe('false');
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['h-[44px]', 'w-[44px]', 'rounded-full', 'focus-visible:ring-2', 'md:hidden']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['h-[44px]', 'w-[44px]', 'rounded-full', 'focus-ring', 'md:hidden']));
   });
   it('types: label is required', () => {
     // @ts-expect-error an icon-only button needs its accessible name
@@ -196,13 +196,13 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup', () 
     expect(hasClass(h, 'text-center')).toBe(true);
     expect(p.tagName).toBe('P');
     expect(typeClassesOf(p)).toEqual(['type-quote']);
-    expect(classTokens(p)).toEqual(expect.arrayContaining(['max-w-[65ch]', 'mx-auto', 'mt-3', 'md:mt-4', 'text-center', 'mb-[48px]']));
+    expect(classTokens(p)).toEqual(expect.arrayContaining(['max-w-prose', 'mx-auto', 'mt-3', 'md:mt-4', 'text-center', 'mb-[48px]']));
   });
   it('SectionHeader column (the Services exception): mt-5 md:mt-9, no 65ch cap, centred below md and right-aligned from md (title and subtitle agree, NS-24)', () => {
     const [h, p] = Array.from(root(<SectionHeader id="h" align="column" title="T" subtitle="S" />).children);
     expect(classTokens(h)).toEqual(expect.arrayContaining(['text-center', 'md:text-right']));
     expect(classTokens(p)).toEqual(expect.arrayContaining(['type-quote', 'mt-5', 'md:mt-9', 'text-center', 'md:text-right']));
-    expect(hasClass(p, 'max-w-[65ch]')).toBe(false);
+    expect(hasClass(p, 'max-w-prose')).toBe(false);
   });
   it('SectionHeader onPhoto: cream title and subtitle, both with the soft shadow', () => {
     const [h, p] = Array.from(root(<SectionHeader id="h" align="center" onPhoto title="T" subtitle="S" />).children);
@@ -210,7 +210,7 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup', () 
     expect(classTokens(p)).toEqual(expect.arrayContaining(['text-cream', 'drop-shadow-md']));
   });
   it('SectionSubtitle on its own is the same paragraph (About gallery reveals the two lines separately)', () => {
-    expect(classTokens(first(<SectionSubtitle align="center">S</SectionSubtitle>))).toEqual(expect.arrayContaining(['type-quote', 'max-w-[65ch]', 'mt-3', 'md:mt-4']));
+    expect(classTokens(first(<SectionSubtitle align="center">S</SectionSubtitle>))).toEqual(expect.arrayContaining(['type-quote', 'max-w-prose', 'mt-3', 'md:mt-4']));
   });
 });
 

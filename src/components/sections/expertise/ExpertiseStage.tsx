@@ -108,7 +108,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
               >
                 <div className="overflow-hidden min-h-0">
                   {/* Blush section (plum = 3.89:1, AA large only): the description must stay at the quote scale (>=24px). */}
-                  <p className="type-quote max-w-[65ch] ps-5 pt-1 pb-3">{item.description}</p>
+                  <p className="type-quote max-w-prose ps-5 pt-1 pb-3">{item.description}</p>
                 </div>
               </div>
             </div>

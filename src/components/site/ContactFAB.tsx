@@ -8,7 +8,7 @@ const PHONE_URL = telHref();
 const HALF_BASE =
   'type-small font-bold flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 px-4 py-2.5 ' +
   'transition duration-200 motion-safe:active:scale-95 ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset';
+  'focus-ring focus-visible:ring-inset';
 
 // WhatsApp brand green + white: intentional exception to the 4-colour palette (bold CTA, owner decision;
 // re-confirmed 2026-10-09: native WhatsApp colours stay, 1.98:1 label accepted as an owner-approved exception).
@@ -17,11 +17,11 @@ const HALF_BASE =
 // meets the green at 3.00:1 and the cream band at 5.55:1, so the ring clears 3:1 over any page colour
 // (a white ring on this green is only 1.98:1, NS-41). Rest and hover are untouched.
 const WA_HALF =
-  'bg-[#25D366] text-[#FFFFFF] hover:bg-[#1EBE5B] focus-visible:ring-cream ' +
+  'bg-whatsapp text-[#FFFFFF] hover:bg-whatsapp-hover focus-visible:ring-cream ' +
   'focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-4 focus-visible:outline-plum';
 // Phone half hovers to a darker plum, never mauve (cream on mauve is 2.26:1, NS-33).
 const PHONE_HALF =
-  'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)] focus-visible:ring-cream';
+  'hover:bg-plum-hover focus-visible:ring-cream';
 
 /**
  * Single contact pill (replaces the old WhatsApp + Phone FABs).

@@ -29,11 +29,11 @@ describe('D19: ContactFAB', () => {
     const wa = home.querySelector('[data-testid="fab-whatsapp"]')!;
     const phone = home.querySelector('[data-testid="fab-phone"]')!;
     expect(pill && wa && phone, 'contact FAB parts').toBeTruthy();
-    expect(classTokens(wa).some((t) => /^bg-\[#25d366\]$/i.test(t)), 'WhatsApp half must use #25D366').toBe(true);
+    expect(classTokens(wa).includes('bg-whatsapp'), 'WhatsApp half must use bg-whatsapp (--color-whatsapp #25D366)').toBe(true);
     expect(classTokens(wa).some((t) => /^text-\[#ffffff\]$/i.test(t)), 'WhatsApp half label stays white').toBe(true);
-    expect(classTokens(wa).some((t) => /^hover:bg-\[#1ebe5b\]$/i.test(t)), 'WhatsApp half hover stays #1EBE5B').toBe(true);
+    expect(classTokens(wa).includes('hover:bg-whatsapp-hover'), 'WhatsApp half hover stays --color-whatsapp-hover #1EBE5B').toBe(true);
     expect(hasClass(pill, 'bg-plum'), 'pill base is plum').toBe(true);
-    expect(classTokens(phone).some((t) => /25d366/i.test(t)), 'phone half must not be WhatsApp green').toBe(false);
+    expect(classTokens(phone).some((t) => /25d366|whatsapp/i.test(t)), 'phone half must not be WhatsApp green').toBe(false);
     expect(classTokens(phone).some((t) => /^(hover:)?bg-mauve$/.test(t)), 'phone half hover is a darker plum: cream on mauve is 2.26:1 (NS-33)').toBe(false);
     expect(phone.getAttribute('href')).toMatch(/^tel:/);
     expect(wa.getAttribute('href')).toMatch(/^https:\/\/wa\.me\//);
@@ -59,7 +59,10 @@ describe('D19: ContactFAB', () => {
   });
 
   it('WhatsApp green is used only by the FAB (nowhere else in src)', () => {
-    const users = readSources().filter((s) => /#25d366/i.test(s.text)).map((s) => s.name);
+    // the hex lives once in globals.css (--color-whatsapp / -hover); the utilities are bg-whatsapp / hover:bg-whatsapp-hover
+    const hexUsers = readSources().filter((s) => /#25d366/i.test(s.text)).map((s) => s.name);
+    expect(hexUsers).toEqual(['globals.css']);
+    const users = readSources().filter((s) => /(?<![\w-])(?:hover:)?bg-whatsapp(?:-hover)?(?![\w-])/.test(s.text)).map((s) => s.name);
     expect(users).toEqual(['ContactFAB.tsx']);
   });
 });

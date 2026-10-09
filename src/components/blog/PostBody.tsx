@@ -56,7 +56,7 @@ export function PostBody({ blocks }: PostBodyProps) {
                 key={i}
                 className="my-[clamp(8px,1.5vw,16px)] border-r-[3px] border-mauve pr-[clamp(18px,3vw,34px)]"
               >
-                <p className="type-quote text-right text-[color:color-mix(in_srgb,var(--color-plum)_92%,transparent)]">
+                <p className="type-quote text-right text-plum/92">
                   {block.text}
                 </p>
               </blockquote>

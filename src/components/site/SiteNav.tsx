@@ -31,8 +31,7 @@ const desktopLinkClass = `
     font-bold
     transition-opacity
     hover:opacity-75
-    focus-visible:outline-none
-    focus-visible:ring-2
+    focus-ring
     focus-visible:ring-cream
     rounded-tile
   `;

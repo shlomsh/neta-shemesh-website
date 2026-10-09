@@ -14,7 +14,7 @@ import { SectionTitle } from './SectionTitle';
 type SubtitleAlign = 'center' | 'column';
 
 const SUBTITLE_CLASS: Record<SubtitleAlign, string> = {
-  center: 'type-quote max-w-[65ch] mx-auto mt-3 md:mt-4',
+  center: 'type-quote max-w-prose mx-auto mt-3 md:mt-4',
   column: 'type-quote mt-5 md:mt-9 md:text-right',
 };
 

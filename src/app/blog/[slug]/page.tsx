@@ -110,7 +110,7 @@ export default async function BlogPostPage(
                 safariClip={false}
                 ratio="100/58"
                 loading="eager"
-                className="-mt-[clamp(64px,9vw,116px)] mb-[clamp(32px,5vw,56px)] w-full outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_15%,transparent)] shadow-[0_24px_60px_-30px_rgba(122,89,120,0.6)]"
+                className="-mt-[clamp(64px,9vw,116px)] mb-[clamp(32px,5vw,56px)] w-full outline outline-[1.5px] outline-plum/15 shadow-[0_24px_60px_-30px_rgba(122,89,120,0.6)]"
               />
             </ScrollReveal>
 

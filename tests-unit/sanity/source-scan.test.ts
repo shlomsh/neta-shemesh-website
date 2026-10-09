@@ -201,8 +201,8 @@ describe('D18: palette lock (hex colours)', () => {
    * so moving a file does not break the entry.
    */
   const ALLOWED: Array<{ hex: string; file: string; reason: string }> = [
-    { hex: '#25d366', file: 'ContactFAB.tsx', reason: 'WhatsApp brand green: owner ruling, stays green (re-confirmed 2026-10-09: owner kept the native WhatsApp colours)' },
-    { hex: '#1ebe5b', file: 'ContactFAB.tsx', reason: 'darker hover shade of the WhatsApp green (owner kept the native WhatsApp colours, 2026-10-09)' },
+    { hex: '#25d366', file: 'globals.css', reason: '--color-whatsapp in @theme: WhatsApp brand green, owner ruling, stays green (re-confirmed 2026-10-09: owner kept the native WhatsApp colours); used only as bg-whatsapp in ContactFAB' },
+    { hex: '#1ebe5b', file: 'globals.css', reason: '--color-whatsapp-hover in @theme: darker hover shade of the WhatsApp green (owner kept the native WhatsApp colours, 2026-10-09)' },
     { hex: '#ffffff', file: 'ContactFAB.tsx', reason: 'white label and glyph on the WhatsApp green (WhatsApp brand spec; owner kept the native WhatsApp colours, 2026-10-09; 1.98:1 is an owner-approved exception). The focus ring is cream + plum, not white (NS-41)' },
     { hex: '#000', file: 'globals.css', reason: '--color-black in @theme, kept (Tailwind default value) for the photo scrims only: bg-black/20, from-black/60 ...' },
   ];
@@ -291,6 +291,31 @@ describe('R9: colour utilities come from the @theme palette, not from arbitrary 
     const theme = css.match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
     for (const name of ['plum', 'mauve', 'blush', 'cream']) expect(theme, `--color-${name} in @theme`).toMatch(new RegExp(`--color-${name}\\s*:\\s*#`));
   });
+
+  it('the derived tokens exist once in @theme: WhatsApp green + hover, plum/cream hover tints, the 65ch measure, the focus-ring utility (NS-23)', () => {
+    const raw = stripCssComments(sourceNamed('globals.css').text);
+    const theme = raw.match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+    expect(theme).toMatch(/--color-whatsapp\s*:\s*#25D366\s*;/);
+    expect(theme).toMatch(/--color-whatsapp-hover\s*:\s*#1EBE5B\s*;/);
+    expect(theme).toMatch(/--color-plum-hover\s*:\s*color-mix\(in srgb, var\(--color-plum\) 88%, black\)\s*;/);
+    expect(theme).toMatch(/--color-cream-hover\s*:\s*color-mix\(in srgb, var\(--color-cream\) 85%, var\(--color-blush\)\)\s*;/);
+    expect(theme).toMatch(/--container-prose\s*:\s*65ch\s*;/);
+    expect(raw).toMatch(/@utility focus-ring\s*\{\s*@apply focus-visible:outline-none focus-visible:ring-2;\s*\}/);
+  });
+
+  it('no component re-spells what a token now owns: color-mix hover tints, max-w-[65ch], the WhatsApp hexes, the outline-none + ring-2 pair', () => {
+    const offenders = code
+      .filter((f) => f.name !== 'globals.css')
+      .flatMap((f) =>
+        [
+          [/color-mix\([^)]*(?:var\(--color-(?:plum|cream)\)\s*_?\s*\d+%?,?_?\s*(?:black|var\(--color-blush\))|\d+%,?_?transparent)/, 'color-mix hover/opacity tint (use bg-plum-hover, bg-cream-hover or an /NN modifier)'],
+          [/max-w-\[65ch\]/, 'max-w-[65ch] (use max-w-prose)'],
+          [/#25D366|#1EBE5B/i, 'WhatsApp hex (use bg-whatsapp / hover:bg-whatsapp-hover)'],
+          [/focus-visible:outline-none[\s\S]{0,12}focus-visible:ring-2(?![\w-])/, 'focus-visible:outline-none + ring-2 pair (use focus-ring)'],
+        ].flatMap(([re, why]) => (re as RegExp).test(f.text) ? [`${f.path}: ${why}`] : []),
+      );
+    expectNone(offenders, 'a token/utility exists for this');
+  });
 });
 
 describe('C1: RTL is declared once, on <html>', () => {
@@ -337,7 +362,8 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
       { file: 'HeroHeading.tsx', count: 1, reason: 'the hand-drawn underline stroke (aria-hidden svg, currentColor): decorative, carries no text' },
     ],
     'text-colour-mix-transparent': [
-      { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92%' },
+      { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92% (text-plum/92)' },
+      { file: 'StepCard.tsx', count: 1, reason: 'step bullets: cream at 90% over the dark photo scrim, measured 13-15:1 (text over a photo, listed in PHOTO_BACKDROP); first seen when the ban also began to catch the text-cream/90 opacity-modifier spelling' },
     ],
     // Rows marked OWNER EXCEPTION are permanent owner decisions (2026-10-09), not debt: leave them in place.
     'bg-mauve-with-text': [

@@ -51,7 +51,7 @@ export const OWNER_EXCEPTIONS: OwnerException[] = [
   { page: 'home', where: '#about-gallery', text: 'להצית מחדש', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite title. ${NS43_C}` },
   { page: 'home', where: '#about-gallery', text: 'תמיכה והכוונה', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite subtitle (type-quote 24px). ${NS43_C}` },
   { page: 'home', where: '#contact-office', text: 'המשרד שלי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `ContactOffice title. ${NS43_C}` },
-  { page: '*', where: '[data-testid=fab-whatsapp]', text: 'וואטסאפ', ratio: 1.98, decided: '2026-10-09', decision: 'WhatsApp green stays', reason: 'WhatsApp brand green #25D366 with a white label on the contact FAB: the owner keeps the brand colour (design decisions Oct 2026); 1.98:1' },
+  { page: '*', where: '[data-testid=fab-whatsapp]', text: 'וואטסאפ', ratio: 1.98, decided: '2026-10-09', decision: 'WhatsApp green stays', reason: 'WhatsApp brand green (bg-whatsapp = --color-whatsapp #25D366) with a white #FFFFFF label on the contact FAB: the owner keeps the brand colour (design decisions Oct 2026); 1.98:1' },
 ];
 
 /** Ratchet debt: known failures somebody is meant to fix. Empty since NS-33 landed (the PostCard / AuthorCard / pill / blog-meta rows are gone). Rows may only be deleted. */

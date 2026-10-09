@@ -42,7 +42,7 @@ The one title style: `type-title` (Elamy 700, -0.01em tracking, both baked into 
 
 ### `<SectionHeader id title subtitle align onPhoto? subtitleClassName?>` / `<SectionSubtitle align onPhoto? className?>`
 The title + subtitle lockup of CLAUDE.md typography rule 8, as two sibling elements (a fragment): the caller keeps its own wrapper and `ScrollReveal`. `SectionSubtitle` is a `BodyText` at `type-quote`.
-- `align` (required): `center` (title centred; subtitle `max-w-[65ch] mx-auto mt-3 md:mt-4`) | `column` (side column, centred below md and right-aligned from md: the Services exception, `mt-5 md:mt-9` for the Elamy "?" descender and no 65ch cap).
+- `align` (required): `center` (title centred; subtitle `max-w-prose mx-auto mt-3 md:mt-4`) | `column` (side column, centred below md and right-aligned from md: the Services exception, `mt-5 md:mt-9` for the Elamy "?" descender and no 65ch cap).
 - `onPhoto`: cream title + cream subtitle (`text-cream`), both with `drop-shadow-md` (the CTA band, which has no tone).
 - `subtitleClassName` / `className`: layout extras only (the margin to the next block).
 - When the title and the subtitle reveal separately (About gallery) use `SectionTitle` and `SectionSubtitle` directly.
@@ -77,7 +77,7 @@ Round 44px icon-only `<button type="button">` in the cream-on-plum header style 
 - `site/PageShell` is the `<main>` shell shared by the home page and both blog pages (`overflow` is a required prop: `clip` for home, `hidden` for blog; the surface is always `bg-cream`); `site/JsonLd` renders a JSON-LD script.
 
 ## Colour utilities
-Primitives and components write colours as the `@theme` names: `text-plum`, `bg-cream`, `ring-cream`, `outline-plum`, `border-mauve`, `ring-offset-cream` (and `/35` style opacity). Never `text-[var(--color-plum)]`, never `text-white` / `bg-white/35` (cream and white are the same computed colour here, say cream). Exceptions that stay arbitrary: `bg-[var(--surface-veil)]` (`Card` veil), `text-[color:var(--header-color)]` (`SectionTitle`, follows the tone), `color-mix(...)` tints.
+Primitives and components write colours as the `@theme` names: `text-plum`, `bg-cream`, `ring-cream`, `outline-plum`, `border-mauve`, `ring-offset-cream` (and `/35` style opacity). Never `text-[var(--color-plum)]`, never `text-white` / `bg-white/35` (cream and white are the same computed colour here, say cream). Exceptions that stay arbitrary: `bg-[var(--surface-veil)]` (`Card` veil), `text-[color:var(--header-color)]` (`SectionTitle`, follows the tone), `color-mix(...)` for the one opaque blush mix. Tints are `/NN` modifiers (`outline-plum/15`); hover tints are the `@theme` tokens `bg-plum-hover` / `bg-cream-hover`; the WhatsApp FAB colours are `bg-whatsapp` / `hover:bg-whatsapp-hover`; the focus ring pair is the `focus-ring` utility; the 65ch cap is `max-w-prose`.
 
 ## Spacing tokens
 `@theme` in `globals.css`: `--spacing-gutter`, `--spacing-gutter-wide`, `--spacing-section`, `--spacing-section-tight` (generate `px-gutter`, `px-gutter-wide`, `py-section`, `py-section-tight`). Only values repeated 3+ times are tokens. Note that a `--spacing-*` token also creates `gap-`, `w-`, `h-`, `m-`, `inset-` ... utilities with that name (e.g. `gap-section`), so keep the names unambiguous. Tailwind emits a `@theme` variable only when a utility that names it is used; a token consumed only through an arbitrary `[var(--x)]` utility must go in `@theme static`.
