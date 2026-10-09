@@ -28,6 +28,7 @@ describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
     const frame = wrap.querySelector('iframe')!;
     expect(svg.getAttribute('aria-hidden')).toBe('true');
     expect(svg.className.baseVal).toContain('absolute inset-0');
+    expect(svg.className.baseVal).toContain('pointer-events-none');
     expect(frame.className).toContain('absolute inset-0 w-full h-full');
     expect(svg.compareDocumentPosition(frame) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });

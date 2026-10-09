@@ -1,5 +1,5 @@
 /**
- * Decorative, abstract map for the map facade: invented streets, blocks, a park and a river in
+ * Decorative, abstract map for the map placeholder: invented streets, blocks, a park and a river in
  * palette tones, with a pin. Pure artwork (no Google tiles, no real geography), so it is
  * `aria-hidden`. It fills its box with `slice`, so the pin stays near the horizontal centre
  * at every aspect ratio. Server component; it ships as HTML only.
@@ -11,7 +11,7 @@ export function MapIllustration() {
       focusable="false"
       viewBox="0 0 400 300"
       preserveAspectRatio="xMidYMid slice"
-      className="absolute inset-0 h-full w-full"
+      className="pointer-events-none absolute inset-0 h-full w-full"
     >
       {/* park + river */}
       <path d="M-10 214 C70 186 120 238 196 214 S330 168 410 196 V310 H-10 Z" className="fill-mauve/25" />
