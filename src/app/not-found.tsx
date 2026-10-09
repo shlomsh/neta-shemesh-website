@@ -24,7 +24,7 @@ export default function NotFound() {
         <Container maxWidth="lg" className="flex flex-col items-center text-center gap-[clamp(16px,2vw,24px)]">
           <LineArt name="individual" className="w-[clamp(180px,26vw,280px)] aspect-square" />
           <SectionTitle as="h1">הדף הזה לא נמצא</SectionTitle>
-          <BodyText className="type-lead max-w-[45ch]">
+          <BodyText centered className="type-lead max-w-[45ch]">
             נראה שהדרך הזאת לא מובילה לשום מקום. אפשר לחזור לדף הבית ולהמשיך משם.
           </BodyText>
           <ButtonLink href="/" variant="primary" className="mt-4">
