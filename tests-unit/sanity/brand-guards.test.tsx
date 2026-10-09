@@ -76,9 +76,9 @@ describe('D20: no hand-drawn underline under section titles', () => {
     expectNone(offenders, 'section-title underline / decoration');
   });
 
-  it('the only stroke-drawn paths on the page live in the hero (h1 word stroke + couple art)', () => {
+  it('the only stroke-drawn paths on the page live in the hero (h1 word stroke + couple art; plus the NS-55 signature flourish)', () => {
     const hero = findSection(home, 'hero');
-    const outside = Array.from(home.querySelectorAll('path[pathLength]')).filter((p) => !hero.contains(p));
+    const outside = Array.from(home.querySelectorAll('path[pathLength]')).filter((p) => !hero.contains(p) && !p.closest('.sig-flourish')); // NS-55: the bio signature flourish is a signature, not a title underline
     expect(outside.length, 'drawn path outside the hero').toBe(0);
   });
 

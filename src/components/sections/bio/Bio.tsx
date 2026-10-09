@@ -8,6 +8,7 @@ import { ANCHOR, ID } from '@/content/ids';
 import { SITE } from '@/content/site';
 import { BIO_QUOTE_LINES, PROFILE_PHOTO, QUOTE_ICON } from '@/content/home/about';
 import { QuoteBlock } from './QuoteBlock';
+import { Signature } from './Signature';
 
 export function Bio() {
   return (
@@ -88,6 +89,10 @@ export function Bio() {
                   <QuoteBlock
                     lines={BIO_QUOTE_LINES}
                   />
+                </ScrollReveal>
+
+                <ScrollReveal className="relative z-10 pt-[8px] ps-[16px]">
+                  <Signature />
                 </ScrollReveal>
               </div>
 
