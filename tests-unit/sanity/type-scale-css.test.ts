@@ -94,11 +94,11 @@ describe('C10: .type-* classes in globals.css', () => {
 });
 
 describe('C10b: font tokens and the Latin companion', () => {
-  it('--font-body stack is stanga, latin, sans-serif (Latin must fall through to the companion, never Arial)', () => {
+  it('--font-body stack is stanga, stanga-fb (Hebrew-only), latin, sans-serif (Latin must fall through to the companion, never Arial)', () => {
     const m = clean.match(/--font-body\s*:\s*([^;]+);/);
     expect(m, '--font-body missing').not.toBeNull();
     const stack = m![1].split(',').map((x) => x.trim());
-    expect(stack.slice(0, 2)).toEqual(['var(--font-stanga)', 'var(--font-latin)']);
+    expect(stack.slice(0, 3)).toEqual(['var(--font-stanga)', '"stanga-fb"', 'var(--font-latin)']);
     expect(stack.at(-1)).toBe('sans-serif');
   });
 

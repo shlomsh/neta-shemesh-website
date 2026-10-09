@@ -8,6 +8,54 @@
  * text-white and gap-section). */
 @source not "../**/*.md";
 
+/* Metric-matched HEBREW-ONLY fallback faces (NS-35 / NS-46). Before Stanga / Elamy arrive the page paints in a
+ * system font that is ~1.6x wider per glyph than Stanga, so paragraphs re-wrap on swap (a 390px blog post
+ * reflowed ~800px). These scale local Arial to the real font's average Hebrew advance. `unicode-range` keeps
+ * them off A-Z / a-z, so Latin still falls to the Roboto Condensed companion (never to a local Arial); the
+ * range mirrors what Stanga itself carries (Hebrew, space, punctuation, digits). Numbers come from
+ * `node scripts/font-fallback-metrics.mjs` and are pinned by tests-unit/sanity/font-fallback.test.ts.
+ * Order in --font-body / --font-display: real font, this face, then the Latin companion / generic. */
+@font-face {
+  font-family: "stanga-fb";
+  font-weight: 400;
+  src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
+  unicode-range: U+20-25, U+27-39, U+3A-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+590-5FF, U+2013-2014, U+2018-201E, U+20AA, U+FB1D-FB4F;
+  size-adjust: 59.42%;
+  ascent-override: 115.82%;
+  descent-override: 39.32%;
+  line-gap-override: 2.89%;
+}
+@font-face {
+  font-family: "stanga-fb";
+  font-weight: 700;
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
+  unicode-range: U+20-25, U+27-39, U+3A-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+590-5FF, U+2013-2014, U+2018-201E, U+20AA, U+FB1D-FB4F;
+  size-adjust: 57.34%;
+  ascent-override: 120.03%;
+  descent-override: 40.74%;
+  line-gap-override: 2.99%;
+}
+@font-face {
+  font-family: "elamy-fb";
+  font-weight: 400;
+  src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
+  unicode-range: U+20-25, U+27-39, U+3A-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+590-5FF, U+2013-2014, U+2018-201E, U+20AA, U+FB1D-FB4F;
+  size-adjust: 90.94%;
+  ascent-override: 87.97%;
+  descent-override: 21.99%;
+  line-gap-override: 4.95%;
+}
+@font-face {
+  font-family: "elamy-fb";
+  font-weight: 700;
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
+  unicode-range: U+20-25, U+27-39, U+3A-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+590-5FF, U+2013-2014, U+2018-201E, U+20AA, U+FB1D-FB4F;
+  size-adjust: 92.88%;
+  ascent-override: 86.13%;
+  descent-override: 16.15%;
+  line-gap-override: 2.48%;
+}
+
 @theme {
   /* Palette guard: drop Tailwind's whole default palette so an off-brand utility (bg-red-500) compiles to
    * nothing, then declare exactly the colours the site uses. */
@@ -37,8 +85,8 @@
    * so phone/email read at the same weight as the Hebrew beside them. */
   --latin-scale: 0.88;
 
-  --font-body: var(--font-stanga), var(--font-latin), sans-serif;
-  --font-display: var(--font-elamy), cursive;
+  --font-body: var(--font-stanga), "stanga-fb", var(--font-latin), sans-serif;
+  --font-display: var(--font-elamy), "elamy-fb", cursive;
 
   /* Border-radius scale (3 steps). Generates `rounded-tile` / `rounded-card`.
    * Pills, buttons and avatars use the built-in `rounded-full`. */

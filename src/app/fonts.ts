@@ -16,8 +16,8 @@ import localFont from "next/font/local";
  * Regular face (step numerals + signature, below the fold) swaps in on demand. This relies on
  * Turbopack's unhashed family names: under webpack each call would get its own hashed family.
  *
- * `elamy` owns the `--font-elamy` variable and the "elamy Fallback" face (generated from Regular,
- * as before); `elamyBold` adds only its @font-face and so skips the variable and a second fallback.
+ * `elamy` owns the `--font-elamy` variable; `elamyBold` adds only its @font-face. Neither generates a
+ * next/font fallback: the metric-matched, Hebrew-only "elamy-fb" / "stanga-fb" faces live in globals.css.
  */
 export const elamy = localFont({
   src: [
@@ -30,6 +30,8 @@ export const elamy = localFont({
   variable: "--font-elamy",
   display: "swap",
   preload: false,
+  // No generated local(Arial) "elamy Fallback": the Hebrew-only "elamy-fb" face in globals.css replaces it.
+  adjustFontFallback: false,
   declarations: [{ prop: "font-family", value: "elamy" }],
 });
 
