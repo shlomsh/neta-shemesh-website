@@ -1,11 +1,13 @@
+import { cx } from '@/lib/cx';
+
 /** Decorative organic blob — z-0, pointer-events-none, aria-hidden */
-export function OrganicBg({ className = '' }: { className?: string }) {
+export function OrganicBg({ className }: { className?: string }) {
   return (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 600 600"
-      className={`absolute inset-0 w-full h-full pointer-events-none select-none z-0 ${className}`}
+      className={cx('absolute inset-0 w-full h-full pointer-events-none select-none z-0', className)}
     >
       <ellipse
         cx="300"

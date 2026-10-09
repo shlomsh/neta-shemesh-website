@@ -2,6 +2,7 @@
 
 import { CSSProperties, ReactNode, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { cx } from '@/lib/cx';
 
 interface ParallaxFrameProps {
   /**
@@ -34,7 +35,7 @@ interface ParallaxFrameProps {
  */
 export function ParallaxFrame({
   children,
-  className = '',
+  className,
   style,
   amount = 8,
 }: ParallaxFrameProps) {
@@ -52,11 +53,10 @@ export function ParallaxFrame({
   // Default to `relative`, but step aside if the caller positions it
   // themselves (e.g. `absolute inset-0` for a full-bleed band) — otherwise
   // Tailwind's `relative` would override their `absolute` and collapse it.
-  const hasPosition = /\b(absolute|fixed|sticky|relative)\b/.test(className);
-  const positionClass = hasPosition ? '' : 'relative';
+  const hasPosition = /\b(absolute|fixed|sticky|relative)\b/.test(className ?? '');
 
   return (
-    <div ref={ref} className={`${positionClass} overflow-hidden ${className}`} style={style}>
+    <div ref={ref} className={cx(!hasPosition && 'relative', 'overflow-hidden', className)} style={style}>
       <motion.div
         data-parallax=""
         className="absolute inset-0"

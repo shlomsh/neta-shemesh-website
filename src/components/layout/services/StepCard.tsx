@@ -1,4 +1,5 @@
 import { ScrollReveal } from '../../ui/ScrollReveal';
+import { cx } from '@/lib/cx';
 import { Photo } from '@/components/primitives/ui/Photo';
 import { StepNumber } from './StepNumber';
 import { StepTitle } from './StepTitle';
@@ -19,10 +20,10 @@ export function StepCard({
   title,
   bullets,
   delay,
-  staggerClass = '',
+  staggerClass,
 }: StepCardProps) {
   return (
-    <ScrollReveal delay={delay} className={`w-full h-full ${staggerClass}`}>
+    <ScrollReveal delay={delay} className={cx('w-full h-full', staggerClass)}>
       <Photo src={imageSrc} alt={title} radius="card" className="w-full h-full shadow-lg">
 
         {/* Legibility gradient so white text reads on any photo */}

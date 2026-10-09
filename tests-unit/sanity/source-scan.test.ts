@@ -162,7 +162,8 @@ describe('C17: fonts (declared in app/fonts.ts, applied in app/layout.tsx)', () 
   });
 
   it('layout.tsx applies all three font variables to <html> and imports globals.css after the fonts', () => {
-    for (const f of ['elamy', 'stanga', 'latin']) expect(root, `${f}.variable on <html>`).toContain(`\${${f}.variable}`);
+    // the <html> className is `cx(elamy.variable, stanga.variable, latin.variable)`
+    for (const f of ['elamy', 'stanga', 'latin']) expect(root, `${f}.variable on <html>`).toMatch(new RegExp(`<html[^>]*className=\\{cx\\([^)]*\\b${f}\\.variable\\b`));
     expect(root.indexOf('from "./fonts"'), 'fonts imported').toBeGreaterThan(-1);
     expect(root.indexOf('import "./globals.css"'), 'globals.css imported after ./fonts so our rules win').toBeGreaterThan(root.indexOf('from "./fonts"'));
   });

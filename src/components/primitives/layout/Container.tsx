@@ -1,4 +1,5 @@
 import React from 'react';
+import { cx } from '@/lib/cx';
 
 type MaxWidth = 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none';
 
@@ -38,13 +39,12 @@ const GUTTER_MAP: Record<Gutter, string> = {
 export function Container({
   maxWidth = '2xl',
   gutter = 'default',
-  className = '',
+  className,
   children,
   ...props
 }: ContainerProps) {
-  const classes = ['mx-auto w-full', GUTTER_MAP[gutter], MAX_W_MAP[maxWidth], className].filter(Boolean).join(' ');
   return (
-    <div className={classes} {...props}>
+    <div className={cx('mx-auto w-full', GUTTER_MAP[gutter], MAX_W_MAP[maxWidth], className)} {...props}>
       {children}
     </div>
   );

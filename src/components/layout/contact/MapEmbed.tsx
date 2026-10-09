@@ -1,4 +1,5 @@
 import { mapEmbedSrc } from '@/content/site';
+import { cx } from '@/lib/cx';
 
 interface MapEmbedProps {
   /** Classes that size the outer wrapper (height / min-height); it has no intrinsic height. */
@@ -7,7 +8,7 @@ interface MapEmbedProps {
 
 export function MapEmbed({ className }: MapEmbedProps) {
   return (
-    <div className={`relative w-full rounded-tile overflow-hidden ${className}`}>
+    <div className={cx('relative w-full rounded-tile overflow-hidden', className)}>
       <iframe
         src={mapEmbedSrc()}
         title="מיקום הקליניקה"

@@ -18,6 +18,7 @@
  */
 import { CoupleLineArt } from './CoupleLineArt';
 import styles from './HeroBlob.module.css';
+import { cx } from '@/lib/cx';
 
 export function HeroArt() {
   return (
@@ -33,14 +34,10 @@ export function HeroArt() {
       {/* Asymmetric organic blob */}
       <div
         aria-hidden="true"
-        className={`
-          ${styles.blob}
-          absolute
-          w-[clamp(280px,46vw,520px)]
-          h-[clamp(220px,38vw,420px)]
-          bg-mauve
-          [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]
-        `}
+        className={cx(
+          styles.blob,
+          'absolute w-[clamp(280px,46vw,520px)] h-[clamp(220px,38vw,420px)] bg-mauve [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]',
+        )}
       />
 
       {/* Line-art couple illustration */}

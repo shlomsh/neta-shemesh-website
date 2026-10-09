@@ -1,4 +1,5 @@
 import React from 'react';
+import { cx } from '@/lib/cx';
 
 interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   colsMobile?: 1 | 2;
@@ -32,7 +33,7 @@ export function Grid({
   colsMobile = 1,
   colsTablet = 2,
   colsDesktop = 2,
-  className = '',
+  className,
   children,
   ...props
 }: GridProps) {
@@ -42,7 +43,7 @@ export function Grid({
 
   return (
     <div
-      className={`grid ${mobileCols} ${tabletCols} ${desktopCols} gap-[clamp(16px,4vw,64px)] w-full ${className}`}
+      className={cx('grid', mobileCols, tabletCols, desktopCols, 'gap-[clamp(16px,4vw,64px)] w-full', className)}
       {...props}
     >
       {children}

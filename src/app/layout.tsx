@@ -7,6 +7,7 @@ import { SITE, IS_PRODUCTION_HOST } from '@/content/site';
 import { pageMeta } from '@/lib/seo/metadata';
 import { siteJsonLd } from '@/lib/seo/jsonld';
 import { JsonLd } from '@/components/site/JsonLd';
+import { cx } from '@/lib/cx';
 
 // Any build not pointed at the production domain is a staging copy (Azure SWA
 // via NEXT_PUBLIC_SITE_URL, a preview deploy, a tunnel). Those self-canonicalise
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="he" dir="rtl" className={`${elamy.variable} ${stanga.variable} ${latin.variable}`}>
+    <html lang="he" dir="rtl" className={cx(elamy.variable, stanga.variable, latin.variable)}>
       <body>
         <JsonLd data={siteJsonLd()} />
         {children}

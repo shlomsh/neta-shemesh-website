@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Footer from '@/components/layout/Footer';
+import { cx } from '@/lib/cx';
 import { ContactFAB } from '@/components/ui/ContactFAB';
 
 /**
@@ -29,7 +30,7 @@ interface PageShellProps {
 
 export function PageShell({ overflow, children, behaviors }: PageShellProps) {
   return (
-    <main className={`relative w-full bg-cream ${OVERFLOW[overflow]}`}>
+    <main className={cx('relative w-full bg-cream', OVERFLOW[overflow])}>
       {children}
       <Footer />
       <ContactFAB />

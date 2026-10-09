@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollAnchor } from './ScrollAnchor';
+import { cx } from '@/lib/cx';
 
 /**
  * Section tone -> `data-bg-tone` (globals.css paints background, text colour and --header-color).
@@ -116,9 +117,7 @@ export function Section({
   ...rest
 }: SectionProps) {
   const fitClass = fit ? (fit === 'lock' && !floor ? FIT_CLASS.lockNoFloor : FIT_CLASS[fit]) : '';
-  const classes = ['relative w-full overflow-hidden', seam && '-mt-px', PAD_CLASS[pad], fitClass, fit && CENTER_CLASS[center], className]
-    .filter(Boolean)
-    .join(' ');
+  const classes = cx('relative w-full overflow-hidden', seam && '-mt-px', PAD_CLASS[pad], fitClass, fit && CENTER_CLASS[center], className);
 
   const section = (
     <section

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { telHref, waHref } from '@/content/site';
+import { cx } from '@/lib/cx';
 
 const WA_URL = waHref();
 const PHONE_URL = telHref();
@@ -49,7 +50,7 @@ export function ContactFAB() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="שלחו הודעה בוואטסאפ"
-          className={`${HALF_BASE} ${WA_HALF} rounded-s-full md:rounded-full`}
+          className={cx(HALF_BASE, WA_HALF, 'rounded-s-full md:rounded-full')}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
             <path d={WA_PATH} />
@@ -63,7 +64,7 @@ export function ContactFAB() {
           data-testid="fab-phone"
           href={PHONE_URL}
           aria-label="התקשרו אליי"
-          className={`${HALF_BASE} ${PHONE_HALF} rounded-e-full md:hidden`}
+          className={cx(HALF_BASE, PHONE_HALF, 'rounded-e-full md:hidden')}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
             <path d={PHONE_PATH} />

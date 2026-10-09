@@ -1,4 +1,5 @@
 import React from 'react';
+import { cx } from '@/lib/cx';
 
 type ButtonVariant = 'primary' | 'secondary';
 type ButtonSize = 'md' | 'sm';
@@ -34,7 +35,7 @@ export function ButtonLink({
   href,
   variant = 'primary',
   size = 'md',
-  className = '',
+  className,
   children,
   ...props
 }: ButtonLinkProps) {
@@ -58,7 +59,7 @@ export function ButtonLink({
   return (
     <a
       href={href}
-      className={`${baseClasses} ${sizes[size]} ${variants[variant]} ${className}`}
+      className={cx(baseClasses, sizes[size], variants[variant], className)}
       {...props}
     >
       {children}

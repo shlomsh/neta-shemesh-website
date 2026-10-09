@@ -6,6 +6,7 @@ import { ButtonLink } from '../primitives/ui/ButtonLink';
 import { SectionHeader } from '../primitives/ui/SectionHeader';
 import { STEPS } from '@/content/home/steps';
 import { ANCHOR, ID, anchorHref } from '@/content/ids';
+import { cx } from '@/lib/cx';
 
 export default function Services() {
   return (
@@ -53,7 +54,10 @@ export default function Services() {
                 title={step.title}
                 bullets={step.bullets}
                 delay={0}
-                staggerClass={`w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-none lg:h-auto mx-auto rounded-card shadow-2xl aspect-[4/5] lg:aspect-auto ${i % 2 === 1 ? 'md:mt-[40px] lg:mt-10' : 'lg:mb-10'}`}
+                staggerClass={cx(
+                  'w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-none lg:h-auto mx-auto rounded-card shadow-2xl aspect-[4/5] lg:aspect-auto',
+                  i % 2 === 1 ? 'md:mt-[40px] lg:mt-10' : 'lg:mb-10',
+                )}
               />
             ))}
           </Grid>

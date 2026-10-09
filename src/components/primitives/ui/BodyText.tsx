@@ -1,4 +1,5 @@
 import React from 'react';
+import { cx } from '@/lib/cx';
 
 interface BodyTextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   centered?: boolean;
@@ -18,18 +19,18 @@ interface BodyTextProps extends React.HTMLAttributes<HTMLParagraphElement> {
  */
 export function BodyText({
   centered = false,
-  className = '',
+  className,
   children,
   ...props
 }: BodyTextProps) {
   const alignClass = centered ? 'text-center' : 'text-right';
   // Don't add type-body if caller already supplies a type-* scale class — their
   // class would lose to type-body due to CSS declaration order otherwise.
-  const sizeClass = /\btype-[a-z]/.test(className) ? '' : 'type-body';
+  const hasTypeClass = /\btype-[a-z]/.test(className ?? '');
 
   return (
     <p
-      className={`${sizeClass} ${alignClass} ${className}`}
+      className={cx(!hasTypeClass && 'type-body', alignClass, className)}
       {...props}
     >
       {children}
