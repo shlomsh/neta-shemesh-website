@@ -109,13 +109,12 @@ Because Light only passes WCAG AA for large text and Mid fails it entirely, **as
 - **Dark / Cream** → paragraph-heavy cards (running body text, captions, contact details, forms, credential lists). Full type freedom at any size/weight (AA).
 - **Light** → cards with display/quote-scale text only (`.type-title`, `.type-quote`, ≥24px) or image-dominant cards with minimal text.
 - **Mid** → no essential text. Reserve it for decorative surfaces, shapes and image-dominant cards; if a card needs readable text, move it to Dark or Cream.
-- Nested card surfaces (TestimonialCard, ExpertiseCard, StepCard) are judged by their **own visible background**, not the parent section tone.
+- Nested card surfaces (TestimonialCard, StepCard) are judged by their **own visible background**, not the parent section tone.
 - Inner cards on mid (mauve) sections use `--surface-veil` (cream 85% over mauve, 4.97:1 vs plum) so lead/body copy is allowed; solid blush inner cards need quote-scale text.
 
 **Owner-approved exceptions (2026-10-09)** — deliberate, not bugs; future contrast work must not "fix" them:
 - Cream titles stay directly on the mauve (mid) sections Intro, Reignite (title and subtitle) and ContactOffice, at 2.11–2.22, below even the large-text threshold. The owner saw the alternatives (a cream panel behind the title, or re-toning the sections to plum) and kept them as they are.
 - The WhatsApp half of the ContactFAB keeps WhatsApp's native green `#25D366` with a white label and glyph, at 1.98. It is the brand CTA; the owner overruled a contrast fix.
-- The Expertise card pills keep their mauve fill with cream text (`bg-mauve opacity-95`), measured at about 2.12–2.29. The owner saw the cream-pill alternative (plum text on cream, 5.55) and kept the mauve pills.
 
 The sanity suite's `OWNER_EXCEPTIONS` table (NS-42) holds the matching entries.
 
