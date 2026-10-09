@@ -10,7 +10,6 @@ import { ANCHOR, anchorHref } from '@/content/ids';
 export function HeroCTA() {
   return (
     <div
-      dir="rtl"
       className="flex flex-col items-start gap-[clamp(12px,1.5vw,20px)] w-full"
     >
       {/* Primary CTA → contact section */}

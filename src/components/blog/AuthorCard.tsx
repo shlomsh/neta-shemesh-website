@@ -9,7 +9,6 @@ import { SITE } from '@/content/site';
 export function AuthorCard() {
   return (
     <div
-      dir="rtl"
       className="flex flex-col items-center gap-[clamp(16px,2.5vw,24px)] rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-[clamp(24px,3.5vw,40px)] text-center sm:flex-row sm:text-right"
     >
       <div className="relative shrink-0 overflow-hidden rounded-full w-[clamp(84px,11vw,116px)] h-[clamp(84px,11vw,116px)]">

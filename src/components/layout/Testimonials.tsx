@@ -89,8 +89,8 @@ export default function Testimonials() {
       )}
 
       {/* CTA Section */}
-      {/* Photo band: no tone. dir={undefined} keeps today's markup (this section never had a dir). */}
-      <Section id={ID.ctaBand} fit="free" center="middle" dir={undefined} className="py-[clamp(80px,8vw,192px)]">
+      {/* Photo band: no tone. */}
+      <Section id={ID.ctaBand} fit="free" center="middle" className="py-[clamp(80px,8vw,192px)]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/cta-background.webp"
@@ -125,7 +125,7 @@ export default function Testimonials() {
       {/* Gallery Section */}
       {/* lg+: exactly one screen (100svh; floor 720px). The photo grid is height-driven (flex-1,
           frames fill their cell with object-cover) instead of aspect-driven. */}
-      <Section id={ID.photoGallery} tone="cream" fit="lock" pad="tight" dir={undefined}>
+      <Section id={ID.photoGallery} tone="cream" fit="lock" pad="tight">
         <Container maxWidth="2xl" className="lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
           <ScrollReveal delay={0.1}>
             <SectionHeader

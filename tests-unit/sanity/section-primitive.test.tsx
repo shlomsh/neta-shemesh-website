@@ -116,10 +116,11 @@ describe('Section: tone, pad, overflow, seam, anchor, dir', () => {
     expect(anchor.nextElementSibling!.tagName).toBe('SECTION');
     expect(anchor.nextElementSibling!.id).toBe('s');
   });
-  it('id is optional; dir is rtl until the 3c cleanup, and can be omitted with dir={undefined}', () => {
+  it('id is optional; Section emits no dir (<html dir="rtl"> sets it) and does not accept one', () => {
     expect(sectionOf(<Section>x</Section>).hasAttribute('id')).toBe(false);
-    expect(sectionOf(<Section>x</Section>).getAttribute('dir')).toBe('rtl');
-    expect(sectionOf(<Section dir={undefined}>x</Section>).hasAttribute('dir')).toBe(false);
+    expect(sectionOf(<Section>x</Section>).hasAttribute('dir')).toBe(false);
+    // @ts-expect-error `dir` is not a Section prop (checked by tsc)
+    expect(sectionOf(<Section dir="rtl">x</Section>).hasAttribute('dir')).toBe(true);
   });
 });
 

@@ -19,7 +19,7 @@ interface PostBodyProps {
  */
 export function PostBody({ blocks }: PostBodyProps) {
   return (
-    <div dir="rtl" className="flex flex-col gap-[clamp(20px,2.6vw,30px)]">
+    <div className="flex flex-col gap-[clamp(20px,2.6vw,30px)]">
       {blocks.map((block, i) => {
         switch (block.type) {
           case 'lead':

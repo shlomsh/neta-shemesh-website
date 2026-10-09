@@ -9,7 +9,7 @@ import { HeroNav } from '@/components/layout/hero/HeroNav';
  */
 export function BlogHeader() {
   return (
-    <header dir="rtl" className="w-full bg-plum">
+    <header className="w-full bg-plum">
       <div className="flex w-full items-center justify-between gap-[16px] px-[clamp(20px,5vw,80px)] py-[clamp(14px,2vw,22px)]">
         <BrandLogo />
         <HeroNav basePath="/" />

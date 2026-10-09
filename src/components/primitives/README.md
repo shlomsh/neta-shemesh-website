@@ -5,7 +5,7 @@ Small, typed building blocks the section components in `src/components/layout/*`
 ## Layout (`primitives/layout/`)
 
 ### `<Section id? tone? fit? floor? center? pad? seam? anchor? className? …props>`
-The `<section>` shell: always `relative w-full overflow-hidden`, `dir="rtl"`, plus whatever the props below ask for. `id` is optional (Expertise has none). `data-fit` and `data-bg-tone` are owned by `fit` and `tone`; a hand-passed attribute cannot override them.
+The `<section>` shell: always `relative w-full overflow-hidden` (no `dir`: `<html dir="rtl">` sets the direction, and `dir` is not a Section prop), plus whatever the props below ask for. `id` is optional (Expertise has none). `data-fit` and `data-bg-tone` are owned by `fit` and `tone`; a hand-passed attribute cannot override them.
 - `tone`: `dark | mid | light | cream`. Sets `data-bg-tone`; `globals.css` then paints the background, the text colour and `--header-color`, so children need no colour classes. Omit it for photo sections (CTA band): no `data-bg-tone`.
 - `fit` (published as `data-fit`; omit for content height, e.g. blog sections). Every fit is `min-h-[100svh]` at ALL breakpoints:
   - `free`: one screen at minimum, then grows with its content (about-credentials, contact-social, CTA band).

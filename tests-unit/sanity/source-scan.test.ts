@@ -276,3 +276,28 @@ describe('R9: colour utilities come from the @theme palette, not from arbitrary 
     for (const name of ['plum', 'mauve', 'blush', 'cream']) expect(theme, `--color-${name} in @theme`).toMatch(new RegExp(`--color-${name}\\s*:\\s*#`));
   });
 });
+
+describe('C1: RTL is declared once, on <html>', () => {
+  /**
+   * `dir="rtl"` below <html> that is legitimately kept, keyed by file NAME, each WITH a reason
+   * (e.g. an element whose mixed Hebrew / Latin inline run reorders without the bidi isolate).
+   * None today. `dir="ltr"` (phone, email, step numerals) is not covered by the rule.
+   */
+  const ALLOWED: Record<string, string> = {};
+
+  const hits = scan(code, rule('rtl-dir').re).filter((h) => !h.split(':')[0].endsWith('/app/layout.tsx'));
+
+  it('no component or page sets dir="rtl" (the document is already rtl); layout.tsx is the one place', () => {
+    const unknown = hits.filter((h) => !Object.keys(ALLOWED).some((name) => h.split(':')[0].endsWith('/' + name)));
+    expectNone(unknown, 'redundant dir="rtl" (add the file to ALLOWED with a reason only if removing it changes the rendering)');
+  });
+
+  it('every allow-list entry is still in use (prune ALLOWED when it is fixed)', () => {
+    for (const name of Object.keys(ALLOWED)) expect(hits.some((h) => h.split(':')[0].endsWith('/' + name)), `${name} no longer needs dir="rtl"`).toBe(true);
+  });
+
+  it('<html lang="he" dir="rtl"> in layout.tsx and `direction: rtl` on html/body in globals.css are still there', () => {
+    expect(sourceNamed('app/layout.tsx').text).toMatch(/<html[^>]*\bdir="rtl"/);
+    expect(stripCssComments(sourceNamed('globals.css').text)).toMatch(/direction\s*:\s*rtl/);
+  });
+});

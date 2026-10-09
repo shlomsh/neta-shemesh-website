@@ -9,7 +9,7 @@ export interface CredentialsListProps {
 export function CredentialsList({ items, checkIconSrc, onDark }: CredentialsListProps) {
   const icons = Array.isArray(checkIconSrc) ? checkIconSrc : [checkIconSrc];
   return (
-    <ul className="grid grid-cols-2 md:grid-cols-3 gap-[32px] md:gap-[64px]" dir="rtl">
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-[32px] md:gap-[64px]">
       {items.map((item, i) => (
         <li key={i} className="flex flex-col items-center text-center">
           <img

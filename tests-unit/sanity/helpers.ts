@@ -485,6 +485,10 @@ export const SCAN_RULES: ScanRule[] = [
     re: /(?<![\w-])(?:text|bg|border|ring-offset|ring|outline|fill|stroke|from|via|to|decoration|divide|caret|accent)-white(?![\w-])/,
     bad: ['text-white', 'text-white/90', 'ring-white/35', 'bg-white/35', 'lg:hover:text-white', 'focus-visible:ring-offset-white'],
     good: ['text-cream', 'bg-cream/35', 'bg-whitesmoke', 'text-whitespace', 'on-white'] },
+  { id: 'rtl-dir', label: 'dir="rtl" below <html> (the page is already rtl; keep dir="ltr" for phone / email / Latin)',
+    re: /\bdir=(?:"rtl"|'rtl'|\{\s*["'`]rtl["'`]\s*\})/,
+    bad: ['<header dir="rtl" className="x">', "<div dir='rtl'>", "<Section dir={'rtl'}>", '<p dir={"rtl"}>', 'dir="rtl"'],
+    good: ['<span dir="ltr">', '<html lang="he">', 'direction: rtl', 'dir={undefined}', 'cardir="rtlx"', 'rtl'] },
   { id: 'hex', label: 'hex colour literal', re: /#[0-9a-fA-F]{3,8}\b/, bad: ['bg-[#123456]', '#ABC', 'color:#fff5f0'], good: ['var(--color-plum)', 'issue #4', 'url(#grad)'] },
 ];
 

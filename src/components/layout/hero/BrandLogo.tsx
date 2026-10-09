@@ -15,7 +15,6 @@ export function BrandLogo() {
     <Link
       id={ID.brandLogo}
       href="/"
-      dir="rtl"
       aria-label="לעמוד הבית"
       className="flex items-center"
     >

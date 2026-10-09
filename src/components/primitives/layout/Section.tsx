@@ -69,8 +69,11 @@ type SectionOwnProps = {
   children: React.ReactNode;
 };
 
-/** `data-fit` / `data-bg-tone` are owned by `fit` / `tone`: callers cannot set them by hand. */
-type PassThrough = Omit<React.HTMLAttributes<HTMLElement>, 'id' | keyof SectionOwnProps>;
+/**
+ * `data-fit` / `data-bg-tone` are owned by `fit` / `tone`: callers cannot set them by hand.
+ * `dir` is not accepted either: `<html>` already sets the direction for the whole page.
+ */
+type PassThrough = Omit<React.HTMLAttributes<HTMLElement>, 'id' | 'dir' | keyof SectionOwnProps>;
 
 export type SectionProps = SectionOwnProps & FitProps & PassThrough;
 
@@ -123,9 +126,6 @@ export function Section({
     <section
       {...rest}
       id={id}
-      // TODO(3c): drop with the descendant dir="rtl" cleanup (<html> is already rtl). Until then
-      // a caller that never had a dir passes dir={undefined} to keep its markup byte-identical.
-      dir={'dir' in rest ? rest.dir : 'rtl'}
       data-bg-tone={tone}
       data-fit={fit}
       className={classes}

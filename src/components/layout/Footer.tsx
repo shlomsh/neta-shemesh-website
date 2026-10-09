@@ -17,7 +17,6 @@ import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 export default function Footer() {
   return (
     <footer
-      dir="rtl"
       className="relative w-full overflow-hidden flex flex-col items-center justify-between px-6 py-[clamp(48px,6vw,96px)] min-h-[100svh]"
     >
       {/* Background photo + scrim — absolutely positioned */}
@@ -28,7 +27,7 @@ export default function Footer() {
 
         {/* 1. Tagline */}
         <ScrollReveal className="h-full">
-          <SectionTitle as="p" onDark dir="rtl" className="text-center w-full h-full flex items-center justify-center">
+          <SectionTitle as="p" onDark className="text-center w-full h-full flex items-center justify-center">
             התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
           </SectionTitle>
         </ScrollReveal>

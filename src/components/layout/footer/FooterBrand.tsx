@@ -5,7 +5,6 @@ export function FooterBrand() {
   return (
     <p
       className="type-signature text-cream text-center"
-      dir="rtl"
     >
       נטע שמש
     </p>

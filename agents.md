@@ -37,7 +37,7 @@ Neta Shemesh is a couple and family therapist with **14 years of clinical experi
 - **Organic backgrounds:** decorative SVGs are absolute layers (`z-0 pointer-events-none`) with content on `z-10`.
 - **Faded background images:** render the `<img>` at full opacity and put a tinted overlay on top; lowering the image's own opacity over a dark base makes it vanish.
 - **Tailwind v4 arbitrary `clamp()` text sizes fail silently** and fall back to browser defaults. Use the `.type-*` classes from `globals.css`.
-- **RTL positioning:** `left-*`/`right-*` are physical. Prefer logical utilities (`start-*`, `end-*`, `ms-*`, `ps-*`, `text-start`); keep `dir="ltr"` on phone numbers, emails and step numerals.
+- **RTL positioning:** `left-*`/`right-*` are physical. Prefer logical utilities (`start-*`, `end-*`, `ms-*`, `ps-*`, `text-start`); `<html dir="rtl">` is the only `dir="rtl"` (the sanity suite fails on another one; `Section` has no `dir` prop); keep `dir="ltr"` on phone numbers, emails and step numerals.
 - **Stacked `type-*` classes:** never put two on one element (the later CSS rule wins). `BodyText` already handles this.
 - **Next head:** never hand-write `<head>`/`<link>` in `layout.tsx`; use `import` and the Metadata API.
 - **LCP:** never lazy-load the LCP image (hero logo, first blog cards); use `priority` / `loading="eager"`.

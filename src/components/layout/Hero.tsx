@@ -21,7 +21,6 @@ export default function Hero() {
 
       <section
         id={ID.hero}
-        dir="rtl"
         aria-label="כותרת ראשית"
         className="
           relative

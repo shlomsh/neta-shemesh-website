@@ -137,7 +137,6 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
     <>
       {/* ── Desktop nav (md and up) ── */}
       <nav
-        dir="rtl"
         aria-label="ניווט ראשי"
         className="hidden md:flex items-center justify-center gap-[clamp(24px,4vw,56px)]"
       >
@@ -175,7 +174,6 @@ export function HeroNav({ basePath = '' }: { basePath?: string }) {
           role="dialog"
           aria-modal="true"
           aria-label="תפריט ניווט"
-          dir="rtl"
           className="fixed inset-0 z-[100] md:hidden flex flex-col bg-plum"
         >
           <div className="flex items-center justify-end px-[clamp(20px,5vw,40px)] py-[clamp(20px,4vw,32px)]">

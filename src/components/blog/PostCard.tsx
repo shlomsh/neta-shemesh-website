@@ -18,7 +18,6 @@ export function PostCard({ post, priority = false }: PostCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      dir="rtl"
       className="group flex h-full flex-col overflow-hidden rounded-card bg-cream outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)] transition-all duration-300 hover:-translate-y-1 hover:outline-mauve hover:shadow-[0_18px_40px_-20px_rgba(122,89,120,0.45)]"
     >
       {/* Cover */}

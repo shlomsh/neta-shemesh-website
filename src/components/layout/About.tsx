@@ -114,7 +114,7 @@ export function AboutBio() {
               
               {/* Title */}
               <ScrollReveal>
-                <SectionTitle id={ID.aboutMeTitle} dir="rtl">קצת עלי</SectionTitle>
+                <SectionTitle id={ID.aboutMeTitle}>קצת עלי</SectionTitle>
               </ScrollReveal>
 
               {/* Introduction/Bio Narrative */}
@@ -202,7 +202,7 @@ export function AboutCredentials() {
           <div className="flex flex-col items-center gap-[clamp(56px,8vw,100px)]">
 
             <ScrollReveal>
-              <SectionTitle id={ID.aboutCredentialsTitle} className="text-center" dir="rtl">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
+              <SectionTitle id={ID.aboutCredentialsTitle} className="text-center">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
               </SectionTitle>
             </ScrollReveal>
 
@@ -230,7 +230,7 @@ export function AboutGallery() {
             {/* Heading + sub-text */}
             <div className="flex flex-col items-center text-center">
               <ScrollReveal>
-                <SectionTitle id={ID.aboutGalleryTitle} dir="rtl">להצית מחדש את הקשר הזוגי
+                <SectionTitle id={ID.aboutGalleryTitle}>להצית מחדש את הקשר הזוגי
                 </SectionTitle>
               </ScrollReveal>
 

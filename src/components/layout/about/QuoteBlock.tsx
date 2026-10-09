@@ -4,7 +4,7 @@ export interface QuoteBlockProps {
 
 export function QuoteBlock({ lines }: QuoteBlockProps) {
   return (
-    <div className="flex flex-col gap-[1.1em]" dir="rtl">
+    <div className="flex flex-col gap-[1.1em]">
       {lines.map((line, i) => (
         <p
           key={i}

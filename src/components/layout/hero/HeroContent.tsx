@@ -23,7 +23,6 @@ import { HeroArt } from './HeroArt';
 export function HeroContent() {
   return (
     <div
-      dir="rtl"
       className="
         relative z-10
         flex flex-col

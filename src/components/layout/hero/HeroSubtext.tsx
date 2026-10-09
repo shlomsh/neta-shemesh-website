@@ -7,7 +7,6 @@
 export function HeroSubtext() {
   return (
     <p
-      dir="rtl"
       className="
         type-quote
         text-blush

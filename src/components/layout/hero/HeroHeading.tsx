@@ -15,7 +15,6 @@ export function HeroHeading() {
   return (
     <h1
       id={ID.heroTitle}
-      dir="rtl"
       className="
         type-display
         text-cream
