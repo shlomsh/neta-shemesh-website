@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 
 /**
- * The three self-hosted font families (public/fonts/). `next/font/local` ONLY: the Vercel build
+ * The three self-hosted font families (src/app/fonts/). `next/font/local` ONLY: the Vercel build
  * once failed fetching the Google-hosted loader, so never reintroduce it. The CSS variables are
  * attached to <html> in layout.tsx and consumed by `--font-display` / `--font-body` /
  * `--font-latin` in globals.css.
@@ -22,7 +22,7 @@ import localFont from "next/font/local";
 export const elamy = localFont({
   src: [
     {
-      path: "../../public/fonts/Elamy-Regular.woff2",
+      path: "./fonts/Elamy-Regular.woff2",
       weight: "400",
       style: "normal",
     },
@@ -38,7 +38,7 @@ export const elamy = localFont({
 export const elamyBold = localFont({
   src: [
     {
-      path: "../../public/fonts/Elamy-Bold.woff2",
+      path: "./fonts/Elamy-Bold.woff2",
       weight: "700",
       style: "normal",
     },
@@ -53,12 +53,12 @@ export const elamyBold = localFont({
 export const stanga = localFont({
   src: [
     {
-      path: "../../public/fonts/stanga-regular-aaa.woff2",
+      path: "./fonts/stanga-regular-aaa.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/stanga-bold-aaa.woff2",
+      path: "./fonts/stanga-bold-aaa.woff2",
       weight: "700",
       style: "normal",
     },
@@ -78,12 +78,12 @@ export const stanga = localFont({
 export const latin = localFont({
   src: [
     {
-      path: "../../public/fonts/RobotoCondensed-Regular.woff2",
+      path: "./fonts/RobotoCondensed-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/RobotoCondensed-Bold.woff2",
+      path: "./fonts/RobotoCondensed-Bold.woff2",
       weight: "700",
       style: "normal",
     },

@@ -224,7 +224,7 @@ describe('C14c: the Elamy ink box (--ink-top / --ink-bottom) on the three Elamy 
   it.each(['Elamy-Bold.woff2', 'Elamy-Regular.woff2'])(
     '--ink-inline covers the real sideways overhang of every Hebrew letter and digit in %s (measured, NS-45)',
     (file) => {
-      const font = fontkit.openSync(path.join(process.cwd(), 'public/fonts', file));
+      const font = fontkit.openSync(path.join(process.cwd(), 'src/app/fonts', file));
       const chars = [...Array(0x5ea - 0x5d0 + 1).keys()].map((i) => String.fromCodePoint(0x5d0 + i)).concat([...'0123456789.?,!']);
       let worst = 0;
       for (const ch of chars) {

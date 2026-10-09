@@ -7,7 +7,7 @@ async function generate() {
   const page = await browser.newPage();
 
   // Font data
-  const fontPath = path.join(__dirname, '../public/fonts/Elamy-Bold.woff2');
+  const fontPath = path.join(__dirname, '../src/app/fonts/Elamy-Bold.woff2');
   const fontData = fs.readFileSync(fontPath).toString('base64');
   
   const htmlTemplate = (width, height, content, fontSize) => `

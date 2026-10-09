@@ -13,7 +13,7 @@
  *
  * The fallback font's numbers live in scripts/font-fallback-reference.json (advances of the glyphs the
  * faces cover, plus hhea metrics) so the unit test is machine-independent. Real fonts are read from
- * public/fonts (fontkit, a devDependency).
+ * src/app/fonts (fontkit, a devDependency).
  */
 import * as fontkit from 'fontkit';
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REF_FILE = path.join(ROOT, 'scripts/font-fallback-reference.json');
-const FONT_DIR = path.join(ROOT, 'public/fonts');
+const FONT_DIR = path.join(ROOT, 'src/app/fonts');
 
 /** What the fallback faces cover: Hebrew + the space/punctuation/digits Stanga itself carries (NOT A-Z/a-z). */
 export const COVERED = [

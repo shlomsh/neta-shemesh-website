@@ -187,10 +187,10 @@ describe('C17: fonts (declared in app/fonts.ts, applied in app/layout.tsx)', () 
     expect(root.indexOf('import "./globals.css"'), 'globals.css imported after ./fonts so our rules win').toBeGreaterThan(root.indexOf('from "./fonts"'));
   });
 
-  it('every woff2 referenced by fonts.ts is shipped in public/fonts', () => {
-    const files = [...layout.matchAll(/public\/fonts\/([\w.-]+\.woff2)/g)].map((m) => m[1]);
+  it('every woff2 referenced by fonts.ts is shipped in src/app/fonts', () => {
+    const files = [...layout.matchAll(/\.\/fonts\/([\w.-]+\.woff2)/g)].map((m) => m[1]);
     expect(files.length).toBe(6);
-    for (const f of files) expect(existsSync(join(ROOT, 'public/fonts', f)), `public/fonts/${f}`).toBe(true);
+    for (const f of files) expect(existsSync(join(ROOT, 'src/app/fonts', f)), `src/app/fonts/${f}`).toBe(true);
   });
 });
 

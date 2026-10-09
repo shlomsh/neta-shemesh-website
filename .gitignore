@@ -43,7 +43,7 @@ next-env.d.ts
 # template reference (local only)
 /reference/
 /pallets.html
-# /public/fonts/ — fonts are committed to git so Vercel can build them
+# /src/app/fonts/ — fonts are committed to git so Vercel can build them
 
 # claude local settings
 .claude/settings.local.json
