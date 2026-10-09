@@ -58,6 +58,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Git-ignored local scratch: the archived design reference and agent screenshot dirs.
+    "reference/**",
+    "**/*-out/**",
   ]),
   {
     // Standalone Node utilities run by hand (CommonJS, never bundled into the app).
