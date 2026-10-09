@@ -148,7 +148,7 @@ export default function Testimonials() {
                 radius="tile"
                 ratio="4/3"
                 fillCellAtLg
-                zoom
+                zoom="self"
                 motion={{ reveal: 0.1 * (i + 1) }}
                 className="w-full shadow-sm"
               />

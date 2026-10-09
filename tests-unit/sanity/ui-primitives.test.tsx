@@ -76,10 +76,21 @@ describe('Photo: clipped cover-fitted frame', () => {
     expect(noFill).not.toContain('lg:aspect-auto');
   });
   it('objectPosition lands on the image as a crop, outlined adds the plum outline, zoom scales on hover', () => {
-    const el = frame(<Photo src="/a" alt="" radius="card" outlined zoom objectPosition="30% 64%" />);
+    const el = frame(<Photo src="/a" alt="" radius="card" outlined zoom="self" objectPosition="30% 64%" />);
     expect(img(el).getAttribute('style')).toContain('object-position:30% 64%');
     expect(classTokens(el)).toEqual(expect.arrayContaining(['outline', 'outline-[1.5px]', 'outline-[var(--color-plum)]']));
     expect(hasClass(img(el), 'hover:scale-105')).toBe(true);
+    expect(hasClass(img(frame(<Photo src="/a" alt="" radius="none" zoom="group" />)), 'group-hover:scale-[1.04]')).toBe(true);
+  });
+  it('the blog cover ratios are aspect-ratio on the frame, not a padding-top spacer; loading is lazy unless eager', () => {
+    for (const [ratio, cls] of [['100/62', 'aspect-[100/62]'], ['100/58', 'aspect-[100/58]']] as const) {
+      // React 19 puts a <link rel="preload"> before a non-lazy image, so look the frame up by tag.
+      const el = root(<Photo src="/a" alt="" radius="none" ratio={ratio} loading="eager" />).querySelector('div')!;
+      expect(classTokens(el)).toContain(cls);
+      expect(el.children.length, 'the image is the only child: no spacer div').toBe(1);
+      expect(img(el).getAttribute('loading')).toBe('eager');
+    }
+    expect(img(frame(<Photo src="/a" alt="" radius="none" />)).getAttribute('loading')).toBe('lazy');
   });
   it('children are overlays drawn after the photo, inside the frame', () => {
     const el = frame(<Photo src="/a" alt="" radius="card"><div id="label" /></Photo>);
@@ -199,9 +210,9 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup', () 
 
 describe('the class lockups these primitives own are written once', () => {
   const code = (s: string) => s.split('\n').filter((l) => !/^\s*(\/\/|\*|\{?\/\*)/.test(l)).join('\n');
-  const outside = (owner: string, re: RegExp, allowed: string[] = []) =>
+  const outside = (owner: string | null, re: RegExp) =>
     readSources()
-      .filter((f) => /\.tsx?$/.test(f.name) && !f.path.endsWith(owner) && !allowed.some((a) => f.path.endsWith(a)))
+      .filter((f) => /\.tsx?$/.test(f.name) && (owner === null || !f.path.endsWith(owner)))
       .filter((f) => re.test(code(f.text)))
       .map((f) => f.path);
 
@@ -219,10 +230,13 @@ describe('the class lockups these primitives own are written once', () => {
     expect(outside('primitives/ui/MaskIcon.tsx', /WebkitMaskImage|maskImage/)).toEqual([]);
   });
   it('the cover-fit photo (absolute inset-0 ... object-cover) lives in Photo.tsx only', () => {
-    // The two blog covers still pair a padding-top spacer div with the image; they move to Photo with the
-    // spacer -> aspect-ratio change (batch 3b-2), which empties this list.
-    const pendingSpacerCovers = ['blog/PostCard.tsx', 'blog/[slug]/page.tsx'];
-    expect(outside('primitives/ui/Photo.tsx', /absolute inset-0 (?:h-full w-full|w-full h-full) object-cover/, pendingSpacerCovers)).toEqual([]);
+    expect(outside('primitives/ui/Photo.tsx', /absolute inset-0 (?:h-full w-full|w-full h-full) object-cover/)).toEqual([]);
+  });
+  it('no component fakes an aspect ratio with a padding-top spacer (use Photo ratio / aspect-[w/h])', () => {
+    const spacer = /(?<![\w-])pt-\[\d+(?:\.\d+)?%\]/;
+    expect(spacer.test('<div className="pt-[62%]" />'), 'positive control').toBe(true);
+    expect(spacer.test('pt-[clamp(20px,3vw,36px)] pt-8'), 'negative control').toBe(false);
+    expect(outside(null, spacer)).toEqual([]);
   });
   it('the 44px round icon-button class list lives in IconButton.tsx only', () => {
     expect(outside('primitives/ui/IconButton.tsx', /h-\[44px\] w-\[44px\] items-center justify-center rounded-full/)).toEqual([]);

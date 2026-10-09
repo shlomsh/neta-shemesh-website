@@ -10,8 +10,12 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal';
  */
 export type PhotoRadius = 'card' | 'tile' | 'none';
 
-/** Aspect ratio of the frame (width / height). Whole class strings in the maps: Tailwind reads them verbatim. */
-export type PhotoRatio = 'square' | '4/3' | '4/5' | '2/3' | '348/531';
+/**
+ * Aspect ratio of the frame (width / height). Whole class strings in the maps: Tailwind reads them
+ * verbatim. '100/62' and '100/58' are the blog covers (height = 62% / 58% of the width). Never fake a
+ * ratio with a `padding-top` spacer div: use `ratio`.
+ */
+export type PhotoRatio = 'square' | '4/3' | '4/5' | '2/3' | '348/531' | '100/62' | '100/58';
 
 const RADIUS_CLASS: Record<PhotoRadius, string> = {
   card: 'rounded-card',
@@ -25,12 +29,24 @@ const RATIO_CLASS: Record<PhotoRatio, string> = {
   '4/5': 'aspect-[4/5]',
   '2/3': 'aspect-[2/3]',
   '348/531': 'aspect-[348/531]',
+  '100/62': 'aspect-[100/62]',
+  '100/58': 'aspect-[100/58]',
 };
 
 /** From lg the grid cell decides the height; the ratio would fight the flex chain (see Section `fit="lock"`). */
 const FILL_CELL_AT_LG = 'lg:aspect-auto lg:h-full';
 const OUTLINE = 'outline outline-[1.5px] outline-[var(--color-plum)]';
-const ZOOM_ON_HOVER = 'hover:scale-105 transition-transform duration-700 ease-out';
+
+/**
+ * Slow scale-up of the photo.
+ *   'self'  when the photo itself is hovered (gallery tiles)
+ *   'group' when the enclosing `group` (a linked card) is hovered
+ */
+export type PhotoZoom = 'self' | 'group';
+const ZOOM_CLASS: Record<PhotoZoom, string> = {
+  self: 'hover:scale-105 transition-transform duration-700 ease-out',
+  group: 'transition-transform duration-500 group-hover:scale-[1.04]',
+};
 
 /**
  * How the image is delivered.
@@ -39,8 +55,8 @@ const ZOOM_ON_HOVER = 'hover:scale-105 transition-transform duration-700 ease-ou
  * Never switch an existing call site between the two: that changes the srcset and so the pixels.
  */
 type PhotoEngine =
-  | { engine?: 'img'; sizes?: never }
-  | { engine: 'next'; sizes: string };
+  | { engine?: 'img'; /** Lazy by default; `eager` for an above-the-fold photo (the first blog row, an article cover). */ loading?: 'lazy' | 'eager'; sizes?: never }
+  | { engine: 'next'; loading?: never; sizes: string };
 
 /**
  * What moves the frame.
@@ -73,8 +89,7 @@ type PhotoProps = PhotoEngine &
     safariClip?: boolean;
     /** Plum 1.5px outline (the framed portraits). */
     outlined?: boolean;
-    /** The photo scales up slowly when hovered. */
-    zoom?: boolean;
+    zoom?: PhotoZoom;
     /** Placement and one-off surface extras of the frame (`w-full`, `h-full`, `shadow-*`, grid placement). */
     className?: string;
   };
@@ -96,7 +111,7 @@ export function Photo(props: PhotoProps) {
     className,
   );
   const imageStyle: CSSProperties | undefined = objectPosition ? { objectPosition } : undefined;
-  const zoomClass = zoom ? ZOOM_ON_HOVER : undefined;
+  const zoomClass = zoom && ZOOM_CLASS[zoom];
 
   const image =
     props.engine === 'next' ? (
@@ -105,7 +120,7 @@ export function Photo(props: PhotoProps) {
       <img
         src={src}
         alt={alt}
-        loading="lazy"
+        loading={props.loading ?? 'lazy'}
         className={cx('absolute inset-0 w-full h-full object-cover', zoomClass)}
         style={imageStyle}
       />

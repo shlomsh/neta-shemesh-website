@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Photo } from '@/components/primitives/ui/Photo';
 import type { BlogPost } from '@/content/posts';
 
 interface PostCardProps {
@@ -21,15 +22,15 @@ export function PostCard({ post, priority = false }: PostCardProps) {
       className="group flex h-full flex-col overflow-hidden rounded-card bg-[var(--color-cream)] outline outline-[1.5px] outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)] transition-all duration-300 hover:-translate-y-1 hover:outline-[color:var(--color-mauve)] hover:shadow-[0_18px_40px_-20px_rgba(122,89,120,0.45)]"
     >
       {/* Cover */}
-      <div className="relative w-full overflow-hidden">
-        <div className="pt-[62%]" />
-        <img
-          src={post.coverImage}
-          alt={post.coverAlt}
-          loading={priority ? 'eager' : 'lazy'}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-        />
-      </div>
+      <Photo
+        src={post.coverImage}
+        alt={post.coverAlt}
+        radius="none"
+        ratio="100/62"
+        zoom="group"
+        loading={priority ? 'eager' : 'lazy'}
+        className="w-full"
+      />
 
       {/* Body */}
       <div className="flex flex-1 flex-col gap-[12px] p-[clamp(20px,2.5vw,28px)]">
