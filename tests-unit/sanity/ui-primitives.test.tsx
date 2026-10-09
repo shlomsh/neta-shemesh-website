@@ -142,14 +142,19 @@ describe('MaskIcon: a currentColor mask from an SVG file', () => {
     expect(style).toContain('mask-image:url(/i.svg)');
     expect(style).toContain('mask-size:contain');
   });
-  it('as="a": the anchor IS the painted box (no child), labelled, external opens a new tab safely', () => {
+  it('as="a": the anchor is the sized box and draws the focus ring, an inner span carries the mask, labelled, external opens a new tab safely', () => {
     const el = first(<MaskIcon as="a" href="https://x.test" label="X" external src="/i.svg" size="lg" className="hover:opacity-80" />);
     expect(el.tagName).toBe('A');
-    expect(el.children.length).toBe(0);
+    expect(el.getAttribute('style')).toBeNull(); // the mask is on the child, so the anchor's own outline is not clipped
+    expect(el.children.length).toBe(1);
+    const mask = el.children[0] as HTMLElement;
+    expect(mask.tagName).toBe('SPAN');
+    expect(mask.getAttribute('aria-hidden')).toBe('true');
+    expect(mask.getAttribute('style')).toContain('mask-image:url(/i.svg)');
     expect(el.getAttribute('aria-label')).toBe('X');
     expect(el.getAttribute('target')).toBe('_blank');
     expect(el.getAttribute('rel')).toBe('noopener noreferrer');
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['w-[44px]', 'h-[44px]', 'hover:opacity-80']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['w-[44px]', 'h-[44px]', 'hover:opacity-80', 'focus-visible:outline-2']));
     const internal = first(<MaskIcon as="a" href="/x" label="X" src="/i.svg" size="lg" />);
     expect(internal.hasAttribute('target')).toBe(false);
   });

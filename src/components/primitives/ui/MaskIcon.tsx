@@ -44,7 +44,9 @@ type MaskIconProps =
 
 /**
  * A single-colour icon from an SVG file, painted with `currentColor`. Renders an empty, decorative
- * `<span>`, or with `as="a"` an empty labelled link (the social icons), so no wrapper element is needed.
+ * `<span>`, or with `as="a"` a labelled link (the social icons). The link is the sized box and
+ * keeps no mask of its own: the mask lives on an inner span that fills it, because a mask clips
+ * everything painted on the same element, including that element's own focus outline.
  */
 export function MaskIcon(props: MaskIconProps) {
   const className = cx(SIZE_CLASS[props.size], props.className);
@@ -55,9 +57,10 @@ export function MaskIcon(props: MaskIconProps) {
         href={props.href}
         aria-label={props.label}
         {...(props.external ? { target: '_blank', rel: 'noopener noreferrer' } : null)}
-        className={className}
-        style={style}
-      />
+        className={cx(className, 'rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current')}
+      >
+        <span aria-hidden="true" className="block h-full w-full" style={style} />
+      </a>
     );
   }
   return <span className={className} style={style} />;

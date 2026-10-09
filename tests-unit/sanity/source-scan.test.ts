@@ -334,9 +334,7 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
     'focus-outline-none': [
       { file: 'PageShell.tsx', count: 1, reason: '<main tabIndex=-1> is the skip-link target: programmatic focus only, not reachable by Tab; NS-41 decides whether it needs a ring' },
     ],
-    'focus-mask-link': [
-      { file: 'SocialLinks.tsx', count: 1, reason: 'the three social links are empty mask-painted anchors with no focus-visible ring (NS-41)' },
-    ],
+    'focus-mask-link': [],
   };
 
   const bySource = (id: string) => {
