@@ -327,15 +327,16 @@ describe('NS-42: contrast and focus source bans (each with an allow-list that on
       { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92%' },
       { file: 'PostCard.tsx', count: 2, reason: 'card excerpt (plum 82%) and date/read-time row (plum 70%)' },
     ],
+    // Rows marked OWNER EXCEPTION are permanent owner decisions (2026-10-09), not debt: leave them in place.
     'bg-mauve-with-text': [
-      { file: 'ExpertiseCard.tsx', count: 1, reason: 'the title pill: bold cream 14px on bg-mauve, 2.26:1' },
+      { file: 'ExpertiseCard.tsx', count: 1, reason: 'OWNER EXCEPTION (permanent, ruling 2026-10-09, do not "fix"): Expertise pills keep the mauve chip with cream label; bold cream 14px on bg-mauve, 2.26:1' },
       { file: 'ContactFAB.tsx', count: 1, reason: 'the phone half turns bg-mauve on hover with cream text (2.26:1)' },
     ],
     'opacity-on-text': [
       { file: 'blog/[slug]/page.tsx', count: 1, reason: 'post page back link fades to opacity-75 on hover' },
       { file: 'IconButton.tsx', count: 1, reason: 'icon-only button: the child is an svg, not text; hover fades the icon (NS-41 may swap it for a colour change)' },
       { file: 'ContactDetails.tsx', count: 1, reason: 'phone / email link fades to opacity-80 on hover' },
-      { file: 'ExpertiseCard.tsx', count: 1, reason: 'the title pill is bg-mauve opacity-95' },
+      { file: 'ExpertiseCard.tsx', count: 1, reason: 'OWNER EXCEPTION (permanent, ruling 2026-10-09, do not "fix"): the Expertise pill chip is bg-mauve opacity-95' },
       { file: 'MobileMenu.tsx', count: 1, reason: 'overlay nav links fade to opacity-75 on hover' },
       { file: 'SiteNav.tsx', count: 1, reason: 'desktop nav links fade to opacity-75 on hover' },
     ],
