@@ -30,10 +30,9 @@ export function Bio() {
             {/* Right Column: Narrative Text */}
             <div className="w-full lg:w-[60%] flex flex-col gap-[28px]">
               
-              {/* Title (NS-54: the clinic armchair as a small marker above it) */}
-              <LineArt name="chair" className="w-[clamp(56px,6vw,76px)] aspect-square -mb-3" />
+              {/* Title (NS-54: the clinic armchair as a marker beside it, same row) */}
               <ScrollReveal>
-                <SectionTitle id={ID.aboutMeTitle}>קצת עלי</SectionTitle>
+                <SectionTitle id={ID.aboutMeTitle} marker={<LineArt name="chair" marker />}>קצת עלי</SectionTitle>
               </ScrollReveal>
 
               {/* Introduction/Bio Narrative */}

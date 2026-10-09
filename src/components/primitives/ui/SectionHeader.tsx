@@ -49,6 +49,8 @@ type SectionHeaderProps = {
   onPhoto?: boolean;
   /** Layout extras only (the margin from the subtitle to the next block). */
   subtitleClassName?: string;
+  /** A drawing beside the title in the same row (see SectionTitle `marker`). Centred with the title. */
+  marker?: React.ReactNode;
 };
 
 /**
@@ -56,10 +58,10 @@ type SectionHeaderProps = {
  * wrapper and any ScrollReveal around it. A lockup whose two lines reveal separately (About gallery)
  * uses `SectionTitle` and `SectionSubtitle` directly.
  */
-export function SectionHeader({ id, title, subtitle, align, onPhoto = false, subtitleClassName }: SectionHeaderProps) {
+export function SectionHeader({ id, title, subtitle, align, onPhoto = false, subtitleClassName, marker }: SectionHeaderProps) {
   return (
     <>
-      <SectionTitle id={id} onDark={onPhoto} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-right', onPhoto && 'drop-shadow-md')}>
+      <SectionTitle id={id} onDark={onPhoto} marker={marker} rowClassName={align === 'column' ? 'justify-center md:justify-start' : 'justify-center'} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-right', onPhoto && 'drop-shadow-md')}>
         {title}
       </SectionTitle>
       <SectionSubtitle align={align} onPhoto={onPhoto} className={subtitleClassName}>

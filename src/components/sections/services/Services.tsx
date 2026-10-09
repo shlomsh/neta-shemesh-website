@@ -28,8 +28,8 @@ export function Services() {
           <div className="text-center md:text-right md:w-[320px] md:shrink-0 lg:text-right lg:w-[400px] lg:shrink-0 lg:self-center z-10 mb-[48px] md:mb-0 lg:mb-0">
             {/* Section is blush (plum text = 3.89:1, AA large only), so the subtitle is
                 set at the quote scale (>=24px). */}
-            <LineArt name="parent-child" className="w-[clamp(60px,6vw,80px)] aspect-square mx-auto md:ms-0 md:me-auto mb-3 md:mb-4" />
             <SectionHeader
+              marker={<LineArt name="parent-child" marker />}
               id={ID.servicesTitle}
               align="column"
               title="איך זה עובד?"
