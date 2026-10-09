@@ -7,6 +7,7 @@ import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
 import { ANCHOR, ID } from '@/content/ids';
 import { SITE } from '@/content/site';
 import { BIO_QUOTE_LINES, PROFILE_PHOTO, QUOTE_ICON } from '@/content/home/about';
+import { LineArt } from '@/components/site/LineArt';
 import { QuoteBlock } from './QuoteBlock';
 import { Signature } from './Signature';
 
@@ -29,7 +30,8 @@ export function Bio() {
             {/* Right Column: Narrative Text */}
             <div className="w-full lg:w-[60%] flex flex-col gap-[28px]">
               
-              {/* Title */}
+              {/* Title (NS-54: the clinic armchair as a small marker above it) */}
+              <LineArt name="chair" className="w-[clamp(56px,6vw,76px)] aspect-square -mb-3" />
               <ScrollReveal>
                 <SectionTitle id={ID.aboutMeTitle}>קצת עלי</SectionTitle>
               </ScrollReveal>

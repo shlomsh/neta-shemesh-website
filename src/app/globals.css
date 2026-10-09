@@ -287,6 +287,20 @@
 }
 .sig-flourish path { stroke-dasharray: 1 2; stroke-dashoffset: 0; }
 
+/* LineArt pen draw-in (NS-54). Same hidden-state contract as the reveal above: only when armed, only under
+   no-preference. The wrapper's own fade/rise is cancelled (the drawing is the motion); the stroke dash
+   offset goes 1 -> 0 on reveal, one stroke after another via --pen-delay. */
+.line-art-pen { stroke-dasharray: 1 2; }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-armed] .line-art-reveal[data-reveal="io"]:not([data-revealed]) { opacity: 1; translate: none; }
+  html[data-reveal-armed] .line-art-reveal[data-reveal="io"][data-revealed] { transition: none; }
+  html[data-reveal-armed] .line-art-reveal:not([data-revealed]) .line-art-pen { stroke-dashoffset: 1; }
+  html[data-reveal-armed] .line-art-reveal[data-revealed] .line-art-pen {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset var(--pen-d) cubic-bezier(0.45, 0, 0.3, 1) calc(var(--reveal-delay, 0s) + var(--pen-delay));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; transform: none; }

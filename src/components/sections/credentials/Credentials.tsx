@@ -1,11 +1,10 @@
-import Image from 'next/image';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { SectionTitle } from '@/components/primitives/ui/SectionTitle';
-import { PHOTO_QUALITY } from '@/lib/image-quality';
 import { ANCHOR, ID } from '@/content/ids';
-import { CREDENTIALS, CREDENTIAL_ICONS, CREDENTIALS_ART } from '@/content/home/about';
+import { CREDENTIALS, CREDENTIAL_ICONS } from '@/content/home/about';
+import { LineArt } from '@/components/site/LineArt';
 import { CredentialsList } from './CredentialsList';
 
 export function Credentials() {
@@ -13,17 +12,10 @@ export function Credentials() {
     <>
       {/* ── Section 3: Credentials list ── */}
       <Section id={ID.aboutCredentials} anchor={ANCHOR.credentials} tone="dark" fit="free" phone="screen" pad="section" seam>
-        {/* Subtle couple line-art background at low opacity */}
-        <Image
-          src={CREDENTIALS_ART}
-          alt=""
-          aria-hidden="true"
-          width={1024}
-          height={768}
-          sizes="min(780px, 65vw)"
-          quality={PHOTO_QUALITY}
-          className="absolute bottom-0 left-0 w-[65%] h-[65%] object-contain object-bottom-left pointer-events-none select-none opacity-[0.18] z-0"
-        />
+        {/* Faint family line-art, drawn in with the pen when the card reveals (NS-54). Cream on plum at 18%. */}
+        <div aria-hidden="true" className="absolute bottom-0 left-0 w-[min(88%,380px)] md:w-[min(52%,720px)] aspect-square pointer-events-none select-none opacity-[0.18] z-0">
+          <LineArt name="family" className="w-full h-full" />
+        </div>
 
         <Container maxWidth="2xl" gutter="wide" className="relative z-[1]">
           <div className="flex flex-col items-center gap-[clamp(56px,8vw,100px)]">
