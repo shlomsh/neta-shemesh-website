@@ -180,7 +180,8 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup', () 
     const h2 = first(<SectionTitle id="t">Hi</SectionTitle>);
     expect(h2.tagName).toBe('H2');
     expect(typeClassesOf(h2)).toEqual(['type-title']);
-    expect(classTokens(h2)).toEqual(expect.arrayContaining(['font-bold', 'tracking-[-0.01em]', 'text-[color:var(--header-color)]']));
+    expect(classTokens(h2)).toEqual(expect.arrayContaining(['text-[color:var(--header-color)]']));
+    expect(classTokens(h2)).not.toEqual(expect.arrayContaining(['font-bold']));
     expect(h2.id).toBe('t');
     expect(first(<SectionTitle as="h1">x</SectionTitle>).tagName).toBe('H1');
     expect(first(<SectionTitle as="p">x</SectionTitle>).tagName).toBe('P');
@@ -222,14 +223,14 @@ describe('the class lockups these primitives own are written once', () => {
       .map((f) => f.path);
 
   it('positive control: each pattern flags its lockup and spares near-misses', () => {
-    expect(/type-title font-bold tracking-\[-0\.01em\]/.test('className="type-title font-bold tracking-[-0.01em] x"')).toBe(true);
+    expect(/type-title font-bold/.test('className="type-title font-bold x"')).toBe(true);
     expect(/WebkitMaskImage/.test('{ WebkitMaskImage: `url(${s})` }')).toBe(true);
     expect(/absolute inset-0 (?:h-full w-full|w-full h-full) object-cover/.test('className="absolute inset-0 h-full w-full object-cover"')).toBe(true);
     expect(/absolute inset-0 (?:h-full w-full|w-full h-full) object-cover/.test('className="absolute inset-0 bg-black/20"')).toBe(false);
     expect(/h-\[44px\] w-\[44px\] items-center justify-center rounded-full/.test('inline-flex h-[44px] w-[44px] items-center justify-center rounded-full')).toBe(true);
   });
-  it('the title class list lives in SectionTitle.tsx only (Elamy 700 title: use <SectionTitle as=...>)', () => {
-    expect(outside('primitives/ui/SectionTitle.tsx', /type-title font-bold tracking-\[-0\.01em\]/)).toEqual([]);
+  it('no component re-types a bold/tracked type-title (700 and -0.01em are in the class)', () => {
+    expect(outside(null, /type-title font-bold|type-title tracking-\[-0\.01em\]/)).toEqual([]);
   });
   it('the mask-image style lives in MaskIcon.tsx only', () => {
     expect(outside('primitives/ui/MaskIcon.tsx', /WebkitMaskImage|maskImage/)).toEqual([]);

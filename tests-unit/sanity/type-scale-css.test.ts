@@ -30,7 +30,7 @@ const DISPLAY = 'var(--font-display)';
 /** [name, min px, max px, font family, weight, line-height] — CLAUDE.md "The Type Scale". */
 const SCALE: Array<[string, number, number, string, string, string?]> = [
   ['display', 40, 72, DISPLAY, '400', '1.05'],
-  ['title', 30, 52, DISPLAY, '400', '1.15'],
+  ['title', 30, 52, DISPLAY, '700', '1.15'],
   ['card-title', 22, 30, BODY, '700', '1.25'],
   ['quote', 24, 32, BODY, '400', '1.5'],
   ['lead', 18, 22, BODY, '400', '1.6'],

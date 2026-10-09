@@ -435,9 +435,10 @@
 
   .type-title {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 700;
     font-size: clamp(30px, 5vw, 52px);
     line-height: 1.15;
+    letter-spacing: -0.01em;
     padding-block: var(--ink-top) var(--ink-bottom); /* Elamy ink box (see comment above) */
     margin-block: calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom));
     padding-inline: var(--ink-inline);

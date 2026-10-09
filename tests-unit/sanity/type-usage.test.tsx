@@ -175,12 +175,12 @@ describe('C15: about-me and about-intro copy', () => {
 });
 
 describe('C16: headings', () => {
-  it('every section h2 on the page is type-title font-bold (Elamy 700)', () => {
+  it('every section h2 on the page is bare type-title (Elamy 700 baked into the class)', () => {
     const h2s = Array.from(home.querySelectorAll('h2'));
     expect(h2s.length, 'section h2s').toBeGreaterThanOrEqual(10);
     for (const h of h2s) {
       expect(typeClassesOf(h), `h2 "${h.textContent!.trim()}"`).toEqual(['type-title']);
-      expect(hasClass(h, 'font-bold'), `h2 "${h.textContent!.trim()}" font-bold`).toBe(true);
+      expect(hasClass(h, 'font-bold'), `h2 "${h.textContent!.trim()}" has a redundant font-bold`).toBe(false);
     }
   });
 

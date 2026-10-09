@@ -23,13 +23,13 @@ type SectionTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
 
 /**
  * The one title style: `type-title` (Elamy 700), colour from `--header-color` so it follows the
- * nearest `[data-bg-tone]`. Sizes and weights come from the type class, never from here.
+ * nearest `[data-bg-tone]`. Size, weight (700) and tracking (-0.01em) come from the type class, never from here.
  */
 export function SectionTitle({ as: Tag = 'h2', id, className, onDark = false, marker, rowClassName, children, ...props }: SectionTitleProps) {
   const title = (
     <Tag
       id={id}
-      className={cx('type-title font-bold tracking-[-0.01em] text-[color:var(--header-color)]', onDark && 'on-dark', className)}
+      className={cx('type-title text-[color:var(--header-color)]', onDark && 'on-dark', className)}
       {...props}
     >
       {children}

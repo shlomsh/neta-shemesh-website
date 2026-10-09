@@ -38,7 +38,7 @@ Zero-height invisible anchor placed *before* a section so in-page links land at 
 ## UI (`primitives/ui/`)
 
 ### `<SectionTitle as? onDark? className? …props>`
-The one title style: `type-title font-bold tracking-[-0.01em]`, colour from `--header-color` (so it follows the nearest `[data-bg-tone]`). `as`: `h2` (default) | `h1` (blog page titles) | `p` (the footer tagline, a title-scale line that is not a heading). `onDark` is for a title on a photo band with no `data-bg-tone` (adds `.on-dark`). Renders no wrapper element.
+The one title style: `type-title` (Elamy 700, -0.01em tracking, both baked into the class), colour from `--header-color` (so it follows the nearest `[data-bg-tone]`). `as`: `h2` (default) | `h1` (blog page titles) | `p` (the footer tagline, a title-scale line that is not a heading). `onDark` is for a title on a photo band with no `data-bg-tone` (adds `.on-dark`). Renders no wrapper element.
 
 ### `<SectionHeader id title subtitle align onPhoto? subtitleClassName?>` / `<SectionSubtitle align onPhoto? className?>`
 The title + subtitle lockup of CLAUDE.md typography rule 8, as two sibling elements (a fragment): the caller keeps its own wrapper and `ScrollReveal`. `SectionSubtitle` is a `BodyText` at `type-quote`.
