@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test:unit": "vitest run",
     "test:sanity": "vitest run tests-unit/sanity",
-    "compare:deploys": "bash scripts/compare-deploys.sh"
+    "compare:deploys": "bash scripts/compare-deploys.sh",
+    "vr": "node tests/visual/run.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",

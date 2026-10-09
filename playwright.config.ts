@@ -14,6 +14,8 @@ const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(base.hostname);
  */
 export default defineConfig({
   testDir: './tests',
+  /* The visual-regression harness has its own config (tests/visual/playwright.config.ts, `npm run vr`). */
+  testIgnore: '**/visual/**',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

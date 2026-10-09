@@ -56,6 +56,9 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
+# visual-regression harness output (diff images); baselines are never committed
+/tests/visual/.out/
+
 # scratch / QA leftovers
 *.log
 qa_*.png
