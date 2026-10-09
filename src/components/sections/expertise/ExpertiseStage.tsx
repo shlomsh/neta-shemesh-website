@@ -28,6 +28,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
   const uid = useId();
   const [active, setActive] = useState(0);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastPointer = useRef<{ x: number; y: number } | null>(null);
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
 
   const clearHover = () => {
@@ -56,7 +57,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
           const buttonId = `${uid}-tab-${i}`;
           const panelId = `${uid}-panel-${i}`;
           return (
-            <div key={item.slug} className="relative" onMouseEnter={() => onEnter(i)} onMouseLeave={clearHover}>
+            <div key={item.slug} className="relative">
               {/* Active marker: a decorative mauve bar on the start edge (no text on mauve). */}
               <span
                 aria-hidden="true"
@@ -81,6 +82,14 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
                   clearHover();
                   setActive(i);
                 }}
+                onMouseMove={(e) => {
+                  // Real pointer movement only: when the stage re-flows under a resting pointer the browser replays
+                  // synthetic mouse events with no movement, which would otherwise cascade through the names.
+                  const last = lastPointer.current;
+                  lastPointer.current = { x: e.clientX, y: e.clientY };
+                  if (!last || last.x !== e.clientX || last.y !== e.clientY) onEnter(i);
+                }}
+                onMouseLeave={clearHover}
                 onKeyDown={(e) => onKeyDown(e, i)}
                 className="block w-full text-start ps-5 py-2 rounded-tile cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum"
               >
