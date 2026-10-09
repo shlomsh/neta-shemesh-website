@@ -171,6 +171,54 @@ cmp_header "/sitemap.xml" "Content-Type" soft
 cmp_header "/robots.txt" "Content-Type" soft
 
 # ---------------------------------------------------------------------------
+head_of "Caching (Cache-Control per asset class — the two configs are separate files)"
+# ---------------------------------------------------------------------------
+# next.config.ts headers() feeds Vercel and public/staticwebapp.config.json feeds
+# Azure, so a TTL edited in one place silently drifts from the other. Hashed
+# build assets get a different filename per build, so resolve one from each
+# host's own home markup instead of hardcoding a path (same approach as og:image).
+# Vercel emits "public,max-age=31536000,immutable" for Next's own assets and the
+# configured value verbatim elsewhere; spacing is not semantics, so compare
+# with whitespace removed.
+squash() { printf '%s' "$1" | tr -d ' '; }
+asset_of() {  # <base-url> <path-regex> -> first matching path in the home HTML
+  "${CURL[@]}" "$1/" 2>/dev/null | grep -oE "$2" | head -1
+}
+# The document itself is host policy (Vercel revalidates, SWA has its own
+# default), so a difference is reported but does not fail.
+cmp_header "/" "Cache-Control" soft
+
+static_az="$(asset_of "$AZ" '/_next/static/[^" ]*\.(js|css)')"
+static_vc="$(asset_of "$VC" '/_next/static/[^" ]*\.(js|css)')"
+if [ -z "$static_az" ] || [ -z "$static_vc" ]; then
+  fail "could not resolve a /_next/static/ asset from markup (azure:'${static_az:-none}' vercel:'${static_vc:-none}')"
+else
+  a="$(hdr "$AZ$static_az" "Cache-Control")"; b="$(hdr "$VC$static_vc" "Cache-Control")"
+  if [ "$(squash "$a")" = "$(squash "$b")" ] && [ -n "$a" ]; then
+    pass "Cache-Control on /_next/static/ asset ($a)"
+  else
+    fail "Cache-Control on /_next/static/ asset differs (hashed files should be immutable on both)
+          azure : ${a:-<absent>}  ($static_az)
+          vercel: ${b:-<absent>}  ($static_vc)"
+  fi
+fi
+
+img_az="$(asset_of "$AZ" '/images/[^" ]*\.(webp|png|jpg|jpeg)')"
+if [ -z "$img_az" ]; then
+  fail "could not resolve an /images/ file from the azure home markup"
+else
+  # Same file on both hosts: /images/ is served as-is, not content-hashed.
+  a="$(hdr "$AZ$img_az" "Cache-Control")"; b="$(hdr "$VC$img_az" "Cache-Control")"
+  if [ "$(squash "$a")" = "$(squash "$b")" ] && [ -n "$a" ]; then
+    pass "Cache-Control on $img_az ($a)"
+  else
+    fail "Cache-Control on $img_az differs
+          azure : ${a:-<absent>}
+          vercel: ${b:-<absent>}"
+  fi
+fi
+
+# ---------------------------------------------------------------------------
 head_of "Indexability (the staging host must not compete with production)"
 # ---------------------------------------------------------------------------
 # A publicly crawlable staging copy that self-canonicalises is duplicate
