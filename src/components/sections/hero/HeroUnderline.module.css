@@ -1,6 +1,6 @@
 /* Pen draw-in for the hero word underline. Pure CSS, no JS.
    Path carries pathLength="1"; "1 2" dasharray avoids the round-cap dot at offset 1.
-   Starts after the h1's .hero-enter-1 fade (0.08s delay + 0.7s) has finished. */
+   Starts after the h1's .hero-enter-1 settle (0.08s delay + 0.7s) has finished. */
 .stroke {
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1;

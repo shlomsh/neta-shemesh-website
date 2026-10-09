@@ -8,7 +8,7 @@
  * disabled under prefers-reduced-motion).
  *
  * Hero motion sequence (all CSS, no JS):
- *   h1 fade-in      0.08 - 0.78 s
+ *   h1 settle       0.08 - 0.78 s (transform only, text always visible)
  *   word stroke     1.05 - 1.85 s
  *   blob bloom      1.50 - 2.60 s  (HeroBlob.module.css)
  *   couple pen      2.00 - 4.20 s

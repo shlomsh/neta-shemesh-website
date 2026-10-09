@@ -139,11 +139,13 @@
   animation: floaty 7s ease-in-out infinite;
 }
 
-/* Hero entrance: pure CSS so the above-the-fold content animates on first
-   paint with zero JS dependency (no opacity:0 in the server HTML). */
+/* Hero entrance (NS-26): a transform-only settle. The text is fully visible, at opacity 1, from the very
+   first paint of the server HTML; the animation only slides it up 16px into place, so it can never hide
+   text (not on a slow phone, not before hydration, not if the animation is late to start). Do NOT add
+   opacity (or visibility) to these keyframes: the decorative strokes, blob and line art are what fade in. */
 @keyframes hero-enter {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: none; }
+  from { transform: translateY(16px); }
+  to   { transform: none; }
 }
 
 .hero-enter {
@@ -172,7 +174,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
-  .hero-enter { animation: none; opacity: 1; transform: none; }
+  .hero-enter { animation: none; transform: none; }
   /* Belt for every reveal wrapper. ScrollReveal ships no hidden state (RevealObserver arms it, and
      never under reduce), but ContactFAB still carries framer's inline opacity:0 / transform (NS-14),
      which only !important beats. Does not depend on hydration or JS. */

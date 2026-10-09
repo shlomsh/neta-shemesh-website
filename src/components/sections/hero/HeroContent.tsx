@@ -7,7 +7,9 @@
  *   - Art block (left in RTL): floating line-art illustration over a blob
  *
  * Each block is wrapped in a plain div with the pure-CSS `.hero-enter`
- * entrance (staggered via `.hero-enter-N` delay modifiers, see globals.css).
+ * settle (staggered via `.hero-enter-N` delay modifiers, see globals.css). It is transform-only:
+ * the text (logo/nav, H1, subtext, CTA) is visible in the first paint of the server HTML (NS-26).
+ * Only the decorative strokes, blob and line art fade/draw in afterwards.
  * The hero is above the fold, so it must never gate on JS (no framer-motion
  * ScrollReveal here: it would ship opacity:0 in the server HTML). Everything
  * in this file stays server-side.
