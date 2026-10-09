@@ -92,7 +92,7 @@ type PhotoProps = PhotoEngine &
     /**
      * The WebKit rounded-clip fix (`safari-clip`), on by default for `card` and `tile`. Turn it off only
      * where an ancestor already carries it: stacking it on a second, nested frame shifts the antialiasing
-     * of the rounded edge by a level in Chromium (ExpertiseCard, inside the `safari-clip` grid cell).
+     * of the rounded edge by a level in Chromium (e.g. a nested Photo inside a `safari-clip` grid cell).
      */
     safariClip?: boolean;
     /** Plum 1.5px outline (the framed portraits). */

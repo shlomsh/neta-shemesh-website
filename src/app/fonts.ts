@@ -72,7 +72,7 @@ export const stanga = localFont({
   adjustFontFallback: false,
 });
 
-// Latin / digit companion: Stanga has no A-Z / a-z (nor ©), so email addresses,
+// Latin companion: Stanga has no A-Z / a-z (nor © or gershayim; it does have 0-9), so email addresses,
 // "M.S.W." etc. fall through to this face instead of Arial. Self-hosted via
 // next/font/local (Latin subset, OFL-1.1) so the build never fetches Google Fonts.
 export const latin = localFont({

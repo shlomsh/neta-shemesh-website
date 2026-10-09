@@ -34,4 +34,3 @@ export const CREDENTIAL_ICONS = ['/images/jigsaw-puzzle-6.webp', '/images/jigsaw
 
 export const QUOTE_ICON = '/images/about-quote-mark.svg';
 export const PROFILE_PHOTO = '/images/about-profile-neta.webp';
-export const CREDENTIALS_ART = '/images/about-credentials-art.webp';
