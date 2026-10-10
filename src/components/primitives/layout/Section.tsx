@@ -15,11 +15,11 @@ type SectionTone = 'dark' | 'mid' | 'light' | 'cream';
  * height is the content's own unless `phone="screen"` (see SectionPhone).
  *   undefined : content height at every width (blog sections); no `data-fit`
  *   'free'    : one screen at minimum from lg, grows with its content at every width
- *   'lock'    : from lg exactly one screen (`lg:h-[max(100svh,720px)]`, `lg:py-12`).
- *               The content must fit inside (flex chain to a photo grid); on a viewport shorter
- *               than 720px the section is 720px tall.
- *   'grow'    : from lg one screen at least (`lg:min-h-[max(100svh,720px)]`, `lg:py-12`). For
- *               running text that must never be clipped.
+ *   'lock'    : from lg exactly one screen (`lg:screen-lock` = `height: max(var(--card-h), var(--card-floor))`,
+ *               `lg:py-12`). The content must fit inside (flex chain to a photo grid); on a viewport shorter
+ *               than the 720px floor the section is 720px tall.
+ *   'grow'    : from lg one screen at least (`lg:screen-grow` = the same value as `min-height`, `lg:py-12`).
+ *               For running text that must never be clipped.
  */
 
 /**
@@ -55,8 +55,8 @@ type FitProps =
       fit: 'lock';
       phone?: SectionPhone;
       /**
-       * false drops the 720px floor, so the section is exactly `lg:h-[100svh]` at lg
-       * (the Expertise cards). Keep the default (floor) unless a section is proven to fit 100svh.
+       * false drops the 720px floor, so the section is exactly `lg:screen-lock-exact` (`height: var(--card-h)`,
+       * 100svh) at lg (the Expertise cards). Keep the default (floor) unless a section is proven to fit 100svh.
        */
       floor?: boolean;
       center?: SectionCenter;
@@ -95,20 +95,21 @@ type SectionProps = SectionOwnProps & FitProps & PassThrough;
  * Whole class strings on purpose: Tailwind only emits utilities it can read verbatim from source.
  * `screen` is the phone one-screen minimum (all breakpoints); `content` is the same fit with no
  * min-height below lg (`lg:screen-fit` keeps the lg+ minimum identical). A grow needs no `lg:screen-fit`:
- * its own `lg:min-h-[max(100svh,720px)]` is the lg minimum (two lg min-heights would fight by source order).
+ * its own `lg:screen-grow` is the lg minimum (two lg min-heights would fight by source order). The unit and the
+ * 720px floor live in globals.css (`--card-h`, `--card-floor`), not here.
  */
 const FIT_CLASS = {
   screen: {
     free: 'screen-fit',
-    lock: 'screen-fit lg:h-[max(100svh,720px)] lg:py-12',
-    lockNoFloor: 'screen-fit lg:h-[100svh] lg:py-12',
-    grow: 'screen-fit lg:min-h-[max(100svh,720px)] lg:py-12',
+    lock: 'screen-fit lg:screen-lock lg:py-12',
+    lockNoFloor: 'screen-fit lg:screen-lock-exact lg:py-12',
+    grow: 'screen-fit lg:screen-grow lg:py-12',
   },
   content: {
     free: 'lg:screen-fit',
-    lock: 'lg:screen-fit lg:h-[max(100svh,720px)] lg:py-12',
-    lockNoFloor: 'lg:screen-fit lg:h-[100svh] lg:py-12',
-    grow: 'lg:min-h-[max(100svh,720px)] lg:py-12',
+    lock: 'lg:screen-fit lg:screen-lock lg:py-12',
+    lockNoFloor: 'lg:screen-fit lg:screen-lock-exact lg:py-12',
+    grow: 'lg:screen-grow lg:py-12',
   },
 } as const;
 

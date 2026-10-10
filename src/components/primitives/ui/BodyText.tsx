@@ -23,7 +23,7 @@ export function BodyText({
   children,
   ...props
 }: BodyTextProps) {
-  const alignClass = centered ? 'text-center' : 'text-right';
+  const alignClass = centered ? 'text-center' : 'text-start';
   // Don't add type-body if caller already supplies a type-* scale class — their
   // class would lose to type-body due to CSS declaration order otherwise.
   const hasTypeClass = /\btype-[a-z]/.test(className ?? '');

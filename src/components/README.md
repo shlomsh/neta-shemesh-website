@@ -28,7 +28,7 @@ Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint
 
 ## Motion (`motion/`)
 
-Reduced motion is CSS-only (`[data-reveal]`, `[data-parallax]` in `globals.css`).
+Reduced motion is CSS-only (the `[data-reveal="io"]` hidden state exists only under `no-preference`; `[data-parallax]` is forced static under `reduce`; both in `globals.css`).
 - `ScrollReveal`: server component, `<div data-reveal="io">`, delay as `--reveal-delay` (from `stagger(i)`); no hidden state in the HTML.
 - `RevealObserver`: the one client island (in `PageShell`). Arms `html[data-reveal-armed]` only after its first IntersectionObserver callback, never under reduced motion or in an iframe, so a failure leaves the page visible. A `ScrollReveal` mounted after its effect is never observed.
 - `ParallaxFrame`: server component, CSS `view()` drift; it, `Section` and the footer use `overflow-clip`, never `overflow-hidden`.
@@ -38,7 +38,7 @@ Reduced motion is CSS-only (`[data-reveal]`, `[data-parallax]` in `globals.css`)
 
 **`Section`** (`id? tone? fit? phone? floor? center? pad? seam? anchor?`): always `relative w-full overflow-clip`, no `dir` prop. `data-fit`/`data-phone`/`data-bg-tone` are owned by the props; tests check them against the implementing classes.
 - `tone` `dark | mid | light | cream` sets `data-bg-tone` (`globals.css` paints background, text, `--header-color`). Omit it for photo sections.
-- `fit` (omit for content height, e.g. blog): from lg at least one screen. `free` grows; `lock` is exactly `lg:h-[max(100svh,720px)]` + `lg:py-12`, content must fit via a `lg:flex-1 lg:min-h-0` chain to the photo grid; `grow` is at least that, for text that must never clip. `floor={false}` (lock only) drops the 720px floor (Expertise).
+- `fit` (omit for content height, e.g. blog): from lg at least one screen. `free` grows; `lock` is exactly `lg:screen-lock` (`max(var(--card-h), var(--card-floor))`, floor 720px, both in `globals.css`) + `lg:py-12`, content must fit via a `lg:flex-1 lg:min-h-0` chain to the photo grid; `grow` is at least that, for text that must never clip. `floor={false}` (lock only) drops the 720px floor (Expertise).
 - `phone` (needs a `fit`): below lg. `content` (default) = content + padding; `screen` = `min-height: var(--card-h)`. Only credentials and the CTA band use it; hero (`hero-fit`) and footer (`screen-visible`) are bespoke. Never write the unit by hand.
 - `center` (needs a `fit`): `column` (default), `start` (top-aligned from lg: Expertise), `middle` (one child centred: photo bands). `pad`: `section | tight | none`; never a second `py-*` in `className`. `seam` pulls up 1px to hide a sub-pixel gap; `anchor` renders an invisible scroll target before the section.
 

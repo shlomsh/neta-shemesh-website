@@ -98,7 +98,7 @@ Don't pass `onDark` to children. Bespoke `<section>`s add `data-bg-tone="dark|mi
 - **Reduced motion is CSS-only.** Never branch on `useReducedMotion()` (SSR ships `opacity:0`); no `delay={0}`; stagger with `stagger(i)` from `src/lib/motion.ts`.
 - **Fonts:** `next/font/local` only, never `next/font/google`; `./fonts` import stays before `globals.css` in `layout.tsx`.
 - **Head:** Metadata API, never a hand-written `<head>`/`<link>`. Never lazy-load the LCP image.
-- **RTL:** logical utilities (`start-*`, `end-*`, `ms-*`, `ps-*`); only `<html>` has `dir="rtl"`; `dir="ltr"` on phones, emails, numerals.
+- **RTL:** logical utilities (`text-start`, `start-*`, `end-*`, `ms-*`, `ps-*`, `border-s`); only `<html>` has `dir="rtl"`; `dir="ltr"` on phones, emails, numerals. ESLint enforces it (`eslint.config.mjs` bans `text-left/right`, `ml/mr/pl/pr-*`, `border-l/r`, `rounded-l/r`, `left/right-N` in `.tsx`); a real physical need takes `// eslint-disable-next-line no-restricted-syntax -- reason`.
 - **Rendering:** `safari-clip` on rounded `overflow-hidden` parents (`Photo` does it). Decorative SVG `absolute z-0 pointer-events-none`, content `z-10`. Faded bg image = full-opacity `<img>` + tinted overlay.
 - **Parked on purpose, not dead code:** testimonials (`SHOW_TESTIMONIALS = false` in `page.tsx`, `sections/testimonials/`).
 - **Next.js 16** differs from training data: read only the one guide in `node_modules/next/dist/docs/` for the API you touch, never the folder.

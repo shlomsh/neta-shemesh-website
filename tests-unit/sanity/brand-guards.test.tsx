@@ -34,11 +34,11 @@ describe('D19: ContactFAB', () => {
     expect(t, 'inner plum band').toEqual(expect.arrayContaining(['focus-visible:outline-2', 'focus-visible:outline-solid', 'focus-visible:outline-plum']));
   });
 
-  it('is fixed bottom-left on every breakpoint (left- at base and md, never right-)', () => {
+  it('is fixed bottom-left on every breakpoint (end- at base and md: the left edge under dir=rtl; never start- / right-)', () => {
     const t = classTokens(home.querySelector('[data-testid="contact-fab"]')!.parentElement!);
     expect(t).toContain('fixed');
-    for (const re of [/^bottom-/, /^left-/, /^md:left-/]) expect(t.some((x) => re.test(x)), String(re)).toBe(true);
-    expect(t.filter((x) => /(^|:)right-/.test(x)), 'must not be pinned right').toEqual([]);
+    for (const re of [/^bottom-/, /^end-/, /^md:end-/]) expect(t.some((x) => re.test(x)), String(re)).toBe(true);
+    expect(t.filter((x) => /(^|:)(start|right)-/.test(x)), 'must not be pinned right').toEqual([]);
   });
 
   it('the bg-whatsapp utility is used only by the FAB (the hex itself is locked in source-scan.test.ts)', () => {

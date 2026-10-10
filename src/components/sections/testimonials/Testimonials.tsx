@@ -52,10 +52,10 @@ export function Testimonials() {
               height={48}
               className="mb-[32px] opacity-80 w-[48px] h-[48px]"
             />
-            <p className="type-quote text-plum mb-[40px] text-right">
+            <p className="type-quote text-plum mb-[40px] text-start">
               למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
             </p>
-            <div className="text-right">
+            <div className="text-start">
               <p className="type-body font-bold text-plum">ויני ואלכסיי</p>
               <p className="type-small text-plum">נשואים באושר</p>
             </div>

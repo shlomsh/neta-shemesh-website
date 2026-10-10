@@ -71,7 +71,7 @@ export function Intro() {
             <ScrollReveal delay={0.12} className="relative z-10">
               {/* Veil card: cream 85% over mauve (--surface-veil) is 4.97:1 against plum, so the
                   copy can sit at the lead scale. data-bg-tone="cream" keeps plum text. */}
-              <Card surface="veil" pad="md" className="text-right flex flex-col gap-4">
+              <Card surface="veil" pad="md" className="text-start flex flex-col gap-4">
                 <BodyText className="type-lead max-w-prose">
                   מערכות יחסים הן מסע משותף ומורכב. לפעמים, אתגרי היומיום,
                   השחיקה או המשברים מעלים בנו תחושות של ריחוק ובדידות, דווקא

@@ -24,14 +24,14 @@ export function PostBody({ blocks }: PostBodyProps) {
         switch (block.type) {
           case 'lead':
             return (
-              <p key={i} className="type-read-lead text-right text-plum">
+              <p key={i} className="type-read-lead text-start text-plum">
                 {block.text}
               </p>
             );
 
           case 'paragraph':
             return (
-              <p key={i} className="type-read text-right text-plum">
+              <p key={i} className="type-read text-start text-plum">
                 {block.text}
               </p>
             );
@@ -40,7 +40,7 @@ export function PostBody({ blocks }: PostBodyProps) {
             return (
               <h2
                 key={i}
-                className="type-card-title mt-[clamp(12px,2vw,24px)] text-right text-plum"
+                className="type-card-title mt-[clamp(12px,2vw,24px)] text-start text-plum"
               >
                 <span className="block">{block.text}</span>
                 <span
@@ -54,9 +54,9 @@ export function PostBody({ blocks }: PostBodyProps) {
             return (
               <blockquote
                 key={i}
-                className="my-[clamp(8px,1.5vw,16px)] border-r-[3px] border-mauve pr-[clamp(18px,3vw,34px)]"
+                className="my-[clamp(8px,1.5vw,16px)] border-s-[3px] border-mauve ps-[clamp(18px,3vw,34px)]"
               >
-                <p className="type-quote text-right text-plum/92">
+                <p className="type-quote text-start text-plum/92">
                   {block.text}
                 </p>
               </blockquote>
@@ -71,7 +71,7 @@ export function PostBody({ blocks }: PostBodyProps) {
                       aria-hidden="true"
                       className="mt-[12px] h-[8px] w-[8px] shrink-0 rounded-full bg-mauve"
                     />
-                    <p className="type-read text-right text-plum">
+                    <p className="type-read text-start text-plum">
                       {item.lead && (
                         <span className="font-bold text-plum">{item.lead} </span>
                       )}

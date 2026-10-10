@@ -79,9 +79,6 @@
   --color-plum-hover: color-mix(in srgb, var(--color-plum) 88%, black);
   --color-cream-hover: color-mix(in srgb, var(--color-cream) 85%, var(--color-blush));
 
-  /* Reading measure (generates `max-w-prose`): the ~65ch line-length cap for running text and subtitles. */
-  --container-prose: 65ch;
-
   /* --font-elamy, --font-stanga and --font-latin-next are set by next/font on <html> (src/app/fonts.ts,
    * layout.tsx); they are deliberately not redeclared here (a self-referencing token is a cycle). */
 
@@ -105,6 +102,14 @@
    * Pills, buttons and avatars use the built-in `rounded-full`. */
   --radius-tile: 12px;   /* small tiles: gallery grid cells, map, inputs, blog thumbnails */
   --radius-card: 24px;   /* cards, photo frames, portrait, step/expertise cards, collage panels */
+
+  /* Elevations beyond Tailwind's shadow-sm..2xl (generate `shadow-cover`, `shadow-portrait`, `shadow-lift`,
+   * `shadow-fab`). Plum (122,89,120) or black tints at a fixed alpha, written once here instead of as a raw
+   * rgba() inside an arbitrary shadow-[...] at each call site. */
+  --shadow-cover: 0 24px 60px -30px rgba(122,89,120,0.6);     /* blog post cover image */
+  --shadow-portrait: 0 16px 30px -15px rgba(122,89,120,0.3);  /* bio portrait */
+  --shadow-lift: 0 18px 40px -20px rgba(122,89,120,0.45);     /* blog PostCard on hover */
+  --shadow-fab: 0 12px 30px -10px rgba(0,0,0,0.35);           /* ContactFAB pill */
 
   /* Layout rhythm (Section / Container primitives). Generate `px-gutter`, `px-gutter-wide`,
    * `py-section`, `py-section-tight`. Only values that were repeated 3+ times are tokens;
@@ -147,9 +152,12 @@
    * the same unit decision (NS-25). */
   --card-h: 100svh;
   --hero-h: 100svh;
+  /* The lg+ floor of a locked / grown card (`screen-lock`, `screen-grow` below): on a viewport shorter than this
+   * the card is this tall and the page scrolls, rather than clipping its content. */
+  --card-floor: 720px;
 }
 @supports (height: 100lvh) {
-  @media (width < 64rem) {
+  @media (width < theme(--breakpoint-lg)) {
     :root { --card-h: 100lvh; --hero-h: 100lvh; }
   }
 }
@@ -161,21 +169,37 @@
  * Gated to iOS WebKit (-webkit-touch-callout) that has CSS anchor
  * positioning (Safari 26+); iOS 18 and every other browser keep exactly 100lvh (NS-25). */
 @supports (-webkit-touch-callout: none) and (anchor-name: --a) {
-  @media (width < 64rem) {
+  @media (width < theme(--breakpoint-lg)) {
     :root { --hero-h: calc(100lvh + 80px); }
   }
 }
 
 /* The keyboard focus ring stack shared by every interactive element: no default outline, a 2px ring.
+ * `outline-hidden` (not `outline-none`) is `outline-style: none` at rest, so the ring is unchanged, but in
+ * forced-colors mode (Windows High Contrast) it becomes a real 2px outline, because the box-shadow ring is
+ * stripped there and would otherwise leave no focus indicator.
  * The ring colour (and offset / inset) stays at the call site: class="focus-ring focus-visible:ring-plum". */
 @utility focus-ring {
-  @apply focus-visible:outline-none focus-visible:ring-2;
+  @apply focus-visible:outline-hidden focus-visible:ring-2;
 }
 
 /* One screen at least: the height every full-screen card consumes (Section fit free/lock/grow, the CTA
  * band). The lg:h-/lg:min-h- utilities on lock/grow sort after this and override it from lg up. */
 @utility screen-fit {
   min-height: var(--card-h);
+}
+/* The lg+ heights of Section fit="lock" / "grow" (always written `lg:screen-lock` etc., by Section only): one
+ * screen (--card-h, = 100svh from lg) but never below --card-floor. lock is that height exactly (the content has to
+ * fit), grow is its minimum (running text that must never be clipped). `screen-lock-exact` has no floor
+ * (Section floor={false}: the Expertise cards). */
+@utility screen-lock {
+  height: max(var(--card-h), var(--card-floor));
+}
+@utility screen-lock-exact {
+  height: var(--card-h);
+}
+@utility screen-grow {
+  min-height: max(var(--card-h), var(--card-floor));
 }
 /* The hero's one-screen height (NS-25): --hero-h, which is the same unit decision as --card-h. */
 @utility hero-fit {
@@ -195,11 +219,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Hebrew RTL: `direction` comes from <html lang="he" dir="rtl"> (app/layout.tsx) and is inherited by body. */
   html, body {
     background-color: var(--color-cream);
     color: var(--color-plum);
     font-family: var(--font-body);
-    direction: rtl; /* Hebrew RTL */
   }
 }
 
@@ -372,14 +396,10 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; transform: none; }
-  /* Belt for every reveal wrapper. ScrollReveal ships no hidden state (RevealObserver arms it, and
-     never under reduce), but ContactFAB still carries framer's inline opacity:0 / transform (NS-14),
-     which only !important beats. Does not depend on hydration or JS. */
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
-  /* No `translate: none` here on purpose: the CSS minifier folds `transform: none; translate: none` into
-     `transform: translate(0)`, which is a real transform (stacking context, fixed-descendant containing
-     block) and cost ~1/255 colour shifts in the VR. Under reduce the hidden-state rule above is never
-     active (it only exists under no-preference), so there is no translate to cancel. */
+  /* Scroll reveal needs no override here: its hidden state (the no-preference block above) exists only when
+     JS has armed it AND the user has no reduced-motion preference, so under reduce every [data-reveal]
+     element is at rest and fully visible, with or without JS or hydration. (The old framer-motion inline
+     opacity:0 / transform is gone since NS-14; there is nothing left for an !important belt to beat.) */
   /* ParallaxFrame inner layer: static, no drift/scale (children fill it). */
   [data-parallax] { transform: none !important; translate: none !important; scale: none !important; }
 }

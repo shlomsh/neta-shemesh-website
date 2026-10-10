@@ -9,7 +9,7 @@ export function QuoteText({ text }: QuoteTextProps) {
         type-quote
         text-plum
         font-[family-name:var(--font-body)]
-        text-right
+        text-start
         mt-[64px]
         mb-[32px]
       "

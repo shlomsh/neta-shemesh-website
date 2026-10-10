@@ -15,7 +15,7 @@ type SubtitleAlign = 'center' | 'column';
 
 const SUBTITLE_CLASS: Record<SubtitleAlign, string> = {
   center: 'type-quote max-w-prose mx-auto mt-3 md:mt-4',
-  column: 'type-quote mt-5 md:mt-9 md:text-right',
+  column: 'type-quote mt-5 md:mt-9 md:text-start',
 };
 
 type SectionSubtitleProps = {
@@ -61,7 +61,7 @@ type SectionHeaderProps = {
 export function SectionHeader({ id, title, subtitle, align, onPhoto = false, subtitleClassName, marker }: SectionHeaderProps) {
   return (
     <>
-      <SectionTitle id={id} onDark={onPhoto} marker={marker} rowClassName={align === 'column' ? 'justify-center md:justify-start' : 'justify-center'} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-right', onPhoto && 'drop-shadow-md')}>
+      <SectionTitle id={id} onDark={onPhoto} marker={marker} rowClassName={align === 'column' ? 'justify-center md:justify-start' : 'justify-center'} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-start', onPhoto && 'drop-shadow-md')}>
         {title}
       </SectionTitle>
       <SectionSubtitle align={align} onPhoto={onPhoto} className={subtitleClassName}>

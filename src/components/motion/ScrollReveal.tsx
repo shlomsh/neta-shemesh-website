@@ -21,10 +21,9 @@ interface ScrollRevealProps {
  *
  * Same markup on the server and the client by construction: never branch on `useReducedMotion()`,
  * `matchMedia` or `window.top` here (8fcd901: a branch gave the server HTML a different `style` than the
- * client's, and React hydration does not patch `style`). `data-reveal="io"` (not a bare `data-reveal`)
- * is what `RevealObserver` and the hidden-state CSS select; ContactFAB's bare `data-reveal` is a leftover
- * that this mechanism never touches. Any `[data-reveal]` is still forced visible under
- * `prefers-reduced-motion: reduce`.
+ * client's, and React hydration does not patch `style`). `data-reveal="io"` is what `RevealObserver` and the
+ * hidden-state CSS select. Under `prefers-reduced-motion: reduce` the hidden state does not exist, so
+ * nothing needs forcing visible.
  */
 export function ScrollReveal({ children, delay = 0, className = '' }: ScrollRevealProps) {
   return (

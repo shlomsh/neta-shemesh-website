@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect } from 'react';
 
-/** The elements `ScrollReveal` renders. ContactFAB's bare `data-reveal` is deliberately not matched. */
+/** The elements `ScrollReveal` renders. */
 const SELECTOR = '[data-reveal="io"]';
 
 /** Largest share of an element that has to be on screen before it reveals. */

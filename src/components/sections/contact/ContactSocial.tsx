@@ -19,7 +19,7 @@ export function ContactSocial() {
         <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
 
           {/* Heading on mobile — shown above photos only on small screens */}
-          <div className="flex flex-col gap-[24px] text-right lg:hidden">
+          <div className="flex flex-col gap-[24px] text-start lg:hidden">
             <ScrollReveal>
               <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
             </ScrollReveal>
@@ -78,7 +78,7 @@ export function ContactSocial() {
           </ScrollReveal>
 
           {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
-          <div className="flex flex-col gap-[24px] text-right h-full lg:flex-1 justify-center">
+          <div className="flex flex-col gap-[24px] text-start h-full lg:flex-1 justify-center">
             <ScrollReveal delay={0.1} className="hidden lg:block">
               <SectionTitle id={ID.contactSocialTitle}>{SOCIAL_PANEL.heading}</SectionTitle>
             </ScrollReveal>

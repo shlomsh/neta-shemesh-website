@@ -46,13 +46,12 @@ function page() {
       <ScrollReveal className="a"><p>a</p></ScrollReveal>
       <ScrollReveal className="b"><p>b</p></ScrollReveal>
       <ScrollReveal className="c"><p>c</p></ScrollReveal>
-      <div data-reveal="" className="fab" />
       <RevealObserver />
     </>,
   );
 }
 const els = (c: HTMLElement) => ({
-  a: c.querySelector('.a')!, b: c.querySelector('.b')!, c: c.querySelector('.c')!, fab: c.querySelector('.fab')!,
+  a: c.querySelector('.a')!, b: c.querySelector('.b')!, c: c.querySelector('.c')!,
 });
 
 beforeEach(() => {
@@ -74,7 +73,7 @@ describe('RevealObserver', () => {
     expect(container.innerHTML).toBe('');
   });
 
-  it('uses ONE observer over the ScrollReveal elements only (not the bare data-reveal ContactFAB)', () => {
+  it('uses ONE observer over the ScrollReveal elements only (the [data-reveal="io"] ones)', () => {
     const { container } = page();
     expect(FakeIO.instances).toHaveLength(1);
     const e = els(container);

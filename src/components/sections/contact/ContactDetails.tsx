@@ -22,7 +22,7 @@ export function ContactDetails() {
       {CONTACT_ROWS.map(({ icon, href, text }) => (
         <li key={icon} className="flex items-center gap-[16px]">
           <MaskIcon src={icon} size="sm" />
-          <div className="text-right">
+          <div className="text-start">
             {href ? (
               <a
                 href={href}

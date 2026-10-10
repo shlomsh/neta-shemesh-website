@@ -68,7 +68,7 @@ export function Bio() {
                 ratio="4/3"
                 outlined
                 objectPosition="50% 35%"
-                className="w-full max-w-[320px] shadow-[0_16px_30px_-15px_rgba(122,89,120,0.3)]"
+                className="w-full max-w-[320px] shadow-portrait"
               />
             </ScrollReveal>
 

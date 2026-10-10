@@ -148,9 +148,9 @@ export function kindOf(section: Element): Tone | 'photo' {
 //   from lg         : lg:screen-fit (min-height: var(--card-h), = 100svh at lg)   (free + lock; grow has its own min-h)
 //   below lg        : data-phone="content" (default: no min-height, sized by content + padding)
 //                     data-phone="screen"  : screen-fit at every width (--card-h = 100lvh below lg); credentials + CTA band
-//   lock-720        : lg:h-[max(100svh,720px)]            (exactly a screen, floor 720, content must fit)
-//   lock-100        : lg:h-[100svh]                       (Section floor={false}; Expertise only)
-//   grow-720        : lg:min-h-[max(100svh,720px)]        (a screen at least; grows on short viewports)
+//   lock-720        : lg:screen-lock       (height: max(var(--card-h), var(--card-floor)); exactly a screen, floor 720, content must fit)
+//   lock-100        : lg:screen-lock-exact (height: var(--card-h); Section floor={false}; Expertise only)
+//   grow-720        : lg:screen-grow       (min-height: max(var(--card-h), var(--card-floor)); a screen at least; grows on short viewports)
 //   free            : min-h only, no desktop lock/grow    (content-driven past one screen)
 // plus lg:py-12 for the desktop vertical rhythm of lock/grow.
 //
@@ -178,10 +178,10 @@ export function hasMinScreen(el: Element): boolean {
 
 /**
  * True when the fit section is at least one screen tall FROM LG (every phone mode shares this): `screen-fit`
- * / `lg:screen-fit` (free, lock) or the grow's own `lg:min-h-[max(100svh,720px)]`.
+ * / `lg:screen-fit` (free, lock) or the grow's own `lg:screen-grow`.
  */
 export function hasLgMinScreen(el: Element): boolean {
-  return hasClass(el, 'screen-fit') || hasClass(el, 'lg:screen-fit') || hasClass(el, 'lg:min-h-[max(100svh,720px)]');
+  return hasClass(el, 'screen-fit') || hasClass(el, 'lg:screen-fit') || hasClass(el, 'lg:screen-grow');
 }
 
 /**
@@ -218,9 +218,9 @@ export function phoneMode(el: Element): PhoneState | null {
 
 /** What the CLASSES alone implement at lg (ignores data-fit). */
 function classMode(el: Element): Exclude<OneScreenMode, 'inconsistent'> {
-  if (hasClass(el, 'lg:h-[max(100svh,720px)]')) return 'lock-720';
-  if (hasClass(el, 'lg:h-[100svh]')) return 'lock-100';
-  if (hasClass(el, 'lg:min-h-[max(100svh,720px)]')) return 'grow-720';
+  if (hasClass(el, 'lg:screen-lock')) return 'lock-720';
+  if (hasClass(el, 'lg:screen-lock-exact')) return 'lock-100';
+  if (hasClass(el, 'lg:screen-grow')) return 'grow-720';
   return 'free';
 }
 
@@ -363,7 +363,7 @@ export interface SubtitleSpec {
   section: string;
   /** margin classes under the title; Services differs on purpose (Elamy "?" descender) */
   margin: string[];
-  /** max-w-prose (--container-prose = 65ch) required (Services' 320-400px column never reaches 65ch, so it has none) */
+  /** max-w-prose (Tailwind's own 65ch) required (Services' 320-400px column never reaches 65ch, so it has none) */
   needsMaxWidth: boolean;
 }
 

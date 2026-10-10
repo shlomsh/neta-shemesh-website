@@ -9,7 +9,7 @@ import { SITE } from '@/content/site';
 export function AuthorCard() {
   return (
     <div
-      className="flex flex-col items-center gap-[clamp(16px,2.5vw,24px)] rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-[clamp(24px,3.5vw,40px)] text-center sm:flex-row sm:text-right"
+      className="flex flex-col items-center gap-[clamp(16px,2.5vw,24px)] rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-[clamp(24px,3.5vw,40px)] text-center sm:flex-row sm:text-start"
     >
       <div className="relative shrink-0 overflow-hidden rounded-full w-[clamp(84px,11vw,116px)] h-[clamp(84px,11vw,116px)]">
         <img // eslint-disable-line @next/next/no-img-element -- fixed-size 116px author avatar, a static webp already sized in /public
@@ -18,7 +18,7 @@ export function AuthorCard() {
           loading="lazy"
           className="h-full w-full object-cover object-[50%_38%]"
         />
-        <div className="absolute inset-0 rounded-full shadow-[0_0_0_1.5px_var(--color-mauve)]" />
+        <div className="absolute inset-0 rounded-full ring-[1.5px] ring-mauve" />
       </div>
 
       <div className="flex flex-col gap-[6px]">

@@ -91,7 +91,7 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
 
   // "Written once" lockups: a primitive or token owns the spelling; the same text anywhere else is a copy that will drift.
   const LOCKUPS: Array<{ what: string; re: RegExp; only?: string[]; bad: string }> = [
-    { what: 'lock/grow one-screen height classes (use <Section fit>)', re: /lg:h-\[(?:max\(100svh,720px\)|100svh)\]|lg:min-h-\[max\(100svh,720px\)\]/, only: ['primitives/layout/Section.tsx'], bad: 'lg:h-[100svh]' },
+    { what: 'lock/grow one-screen height classes (use <Section fit>)', re: /lg:h-\[(?:max\(100svh,720px\)|100svh)\]|lg:min-h-\[max\(100svh,720px\)\]|(?<![\w-])screen-(?:lock|grow)\b/, only: ['primitives/layout/Section.tsx'], bad: 'lg:h-[100svh]' },
     { what: 'repeated clamp paddings (use Container gutter / Section pad)', re: /px-\[clamp\(24px,5vw,80px\)\]|py-\[clamp\(56px,8vw,120px\)\]|px-\[clamp\(16px,4vw,48px\)\]|py-\[clamp\(48px,5vw,96px\)\]/, bad: 'py-[clamp(56px,8vw,120px)]' },
     { what: 'a bold/tracked type-title (700 and -0.01em are in the class)', re: /type-title font-bold|type-title tracking-\[-0\.01em\]/, bad: 'type-title font-bold' },
     { what: 'the literal .on-dark class', re: /(?<![\w-])on-dark(?![\w-])/, only: ['SectionTitle.tsx'], bad: 'on-dark type-title' },
@@ -171,9 +171,9 @@ describe('colour bans (CLAUDE.md colour: four colours only, theme utilities, no 
     expectNone(scan(code, rule(id).re), `src contains ${rule(id).label}`);
   });
 
-  it('the theme owns the tokens components rely on: every NS-23 token, so bg-whatsapp / bg-plum-hover / max-w-prose / focus-ring generate CSS', () => {
+  it('the theme owns the tokens components rely on: every NS-23 token, so bg-whatsapp / bg-plum-hover / focus-ring generate CSS', () => {
     const raw = stripCssComments(sourceNamed('app/globals.css').text);
-    for (const t of ['--color-whatsapp', '--color-whatsapp-hover', '--color-plum-hover', '--color-cream-hover', '--container-prose']) expect(theme(raw), t).toContain(`${t}:`);
+    for (const t of ['--color-whatsapp', '--color-whatsapp-hover', '--color-plum-hover', '--color-cream-hover']) expect(theme(raw), t).toContain(`${t}:`);
     expect(raw).toMatch(/@utility focus-ring\s*\{/);
   });
 
@@ -232,8 +232,8 @@ describe('RTL is declared once, on <html>', () => {
     expectNone(scan(code, rule('rtl-dir').re).filter((h) => !h.split(':')[0].endsWith('/app/layout.tsx')), 'redundant dir="rtl"');
   });
 
-  it('<html lang="he" dir="rtl"> in layout.tsx and `direction: rtl` on html/body in globals.css are still there', () => {
+  it('<html lang="he" dir="rtl"> in layout.tsx is the one declaration: globals.css does not repeat it as `direction: rtl`', () => {
     expect(sourceNamed('app/layout.tsx').text).toMatch(/<html[^>]*\bdir="rtl"/);
-    expect(stripCssComments(sourceNamed('app/globals.css').text)).toMatch(/direction\s*:\s*rtl/);
+    expect(stripCssComments(sourceNamed('app/globals.css').text)).not.toMatch(/direction\s*:/);
   });
 });

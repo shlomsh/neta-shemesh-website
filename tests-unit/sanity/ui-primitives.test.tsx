@@ -127,7 +127,7 @@ describe('SectionTitle / SectionSubtitle / SectionHeader: the title lockup (CLAU
     const [h, p] = Array.from(root(<SectionHeader id="h" align="column" title="T" subtitle="S" />).children);
     expect(classTokens(p)).toEqual(expect.arrayContaining(['type-quote', 'mt-5', 'md:mt-9']));
     expect(hasClass(p, 'max-w-prose')).toBe(false);
-    for (const el of [h, p]) expect(classTokens(el), 'column alignment').toEqual(expect.arrayContaining(['text-center', 'md:text-right']));
+    for (const el of [h, p]) expect(classTokens(el), 'column alignment').toEqual(expect.arrayContaining(['text-center', 'md:text-start']));
   });
 
   it('SectionHeader onPhoto: cream title (on-dark) and cream subtitle', () => {

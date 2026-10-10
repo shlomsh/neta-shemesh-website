@@ -22,7 +22,7 @@ export function Services() {
       <Container maxWidth="3xl" className="flex flex-col md:flex-row md:items-start md:gap-[48px] lg:flex-row lg:gap-[64px] pt-[64px] pb-[96px] lg:py-0 lg:flex-1 lg:min-h-0 lg:items-stretch">
 
         {/* Text column — centered on mobile, right-aligned sticky on desktop */}
-        <div className="text-center md:text-right md:w-[320px] md:shrink-0 lg:text-right lg:w-[400px] lg:shrink-0 lg:self-center z-10 mb-[48px] md:mb-0 lg:mb-0">
+        <div className="text-center md:text-start md:w-[320px] md:shrink-0 lg:text-start lg:w-[400px] lg:shrink-0 lg:self-center z-10 mb-[48px] md:mb-0 lg:mb-0">
           {/* Section is blush (plum text = 3.89:1, AA large only), so the subtitle is
               set at the quote scale (>=24px). */}
           <SectionHeader

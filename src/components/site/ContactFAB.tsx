@@ -35,11 +35,10 @@ const PHONE_HALF =
  */
 export function ContactFAB() {
   return (
-    <div className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] left-4 z-50 md:bottom-6 md:left-6">
+    <div className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] end-4 z-50 md:bottom-6 md:end-6">
       <div
         data-testid="contact-fab"
-        data-reveal=""
-        className="fab-enter flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-cream/35 bg-plum text-cream shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 motion-safe:hover:-translate-y-0.5"
+        className="fab-enter flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-cream/35 bg-plum text-cream shadow-fab transition-transform duration-200 motion-safe:hover:-translate-y-0.5"
       >
         <a
           data-testid="fab-whatsapp"

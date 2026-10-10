@@ -33,7 +33,7 @@ export function StepCard({
         <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/10" />
 
         {/* Content anchored to bottom, RTL — direction inherited from <html>; font from body */}
-        <div className="absolute inset-0 flex flex-col justify-end p-[20px] text-right sm:p-[24px]">
+        <div className="absolute inset-0 flex flex-col justify-end p-[20px] text-start sm:p-[24px]">
           {/* Digits have no sideways overhang (fontkit: 0em), so the numeral opts out of the inline ink box
               (--ink-inline:0em zeroes padding AND margin together, the box stays balanced). Keeping it on
               would stretch the card-edge box 54px past the photo and shift a photo seam by 1/255 (VR, NS-45). */}

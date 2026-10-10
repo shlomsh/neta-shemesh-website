@@ -113,14 +113,14 @@ describe('structural guards (source + CSS)', () => {
     expect(html).toMatch(/class="fab-enter /);
   });
 
-  it('globals.css forces [data-reveal] visible and [data-parallax] static under reduce', () => {
+  it('under reduce [data-parallax] is static and no [data-reveal] override exists (its hidden state is gated on no-preference, nothing to force visible)', () => {
     const idx = css.indexOf('@media (prefers-reduced-motion: reduce)');
     expect(idx).toBeGreaterThan(-1);
     const block = css.slice(idx, css.indexOf('@utility safari-clip'));
-    expect(block).toMatch(/\[data-reveal\]\s*\{[^}]*opacity:\s*1\s*!important[^}]*transform:\s*none\s*!important/);
-    // the minifier turns `transform:none; translate:none` into `transform:translate(0)` (a real transform)
-    expect(block).not.toMatch(/\[data-reveal\]\s*\{[^}]*translate\s*:/);
     expect(block).toMatch(/\[data-parallax\]\s*\{[^}]*transform:\s*none\s*!important/);
+    // the framer-motion-era `[data-reveal] { opacity: 1 !important; transform: none !important }` belt is gone: the
+    // reveal hides nothing under reduce (next test), so there is no inline opacity:0 left for it to beat
+    expect(block).not.toMatch(/\[data-reveal\]\s*\{/);
   });
 
   it('the hidden state is gated on JS arming AND no-preference; the transition is on the revealed state only', () => {
