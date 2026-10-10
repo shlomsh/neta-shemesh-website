@@ -167,6 +167,9 @@
    * the same unit decision (NS-25). */
   --card-h: 100svh;
   --hero-h: 100svh;
+  /* How far the hero box extends below the visible screen (iOS 26 floating bottom bar, block below). HeroContent
+   * reserves it as bottom padding on phones so the content stays centred in the VISIBLE screen. */
+  --hero-overshoot: 0px;
   /* The lg+ floor of a locked / grown card (`screen-lock`, `screen-grow` below): on a viewport shorter than this
    * the card is this tall and the page scrolls, rather than clipping its content. */
   --card-floor: 45rem;
@@ -180,12 +183,12 @@
  * starts: measured on an iPhone 17 the layout viewport is 62pt below the screen top and 100lvh is 754pt,
  * so at scroll 0 the hero ends 58pt above the screen bottom and the next card shows beside the bar (env()
  * safe-area insets read 0 in Safari, viewport-fit=cover changes nothing, dvh is no taller than lvh). The hero
- * therefore overshoots lvh by 80px (overshoot is harmless; the measured gap is 58pt). Re-measure on each new iOS major; remove the +80px if lvh starts covering the area under the bottom bar.
+ * therefore overshoots lvh by 80px (--hero-overshoot, defined once here) (overshoot is harmless; the measured gap is 58pt). Re-measure on each new iOS major; remove the +80px if lvh starts covering the area under the bottom bar.
  * Gated to iOS WebKit (-webkit-touch-callout) that has CSS anchor
  * positioning (Safari 26+); iOS 18 and every other browser keep exactly 100lvh (NS-25). */
 @supports (-webkit-touch-callout: none) and (anchor-name: --a) {
   @media (width < theme(--breakpoint-lg)) {
-    :root { --hero-h: calc(100lvh + 80px); }
+    :root { --hero-overshoot: 80px; --hero-h: calc(100lvh + var(--hero-overshoot)); }
   }
 }
 

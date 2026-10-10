@@ -24,6 +24,8 @@ import { HeroArt } from './HeroArt';
 export function HeroContent() {
   // px stays a clamp() (NS-61): gutter-wide is 4px wider at 375, which narrows the hero text column by 8px and re-wraps
   // the subtext to three lines. Hero composition is not moved to a step.
+  // Phones: bottom padding = the iOS 26 overshoot (--hero-overshoot, 0 elsewhere) + the ContactFAB's footprint
+  // (1rem offset + 2.75rem pill) + 0.5rem gap, so the art ends above the pill. lg+ keeps py-region.
   return (
     <div
       className="
@@ -32,7 +34,8 @@ export function HeroContent() {
         w-full
         hero-fit
         px-[clamp(1.25rem,5vw,5rem)]
-        py-region
+        pt-region
+        pb-[calc(var(--hero-overshoot)+4.25rem)] lg:pb-region
         gap-panel
       "
     >
