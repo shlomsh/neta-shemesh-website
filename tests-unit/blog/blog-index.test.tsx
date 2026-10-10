@@ -17,13 +17,15 @@ describe('blog index page', () => {
     expect(h1s[0].textContent).toBe('מחשבות מהקליניקה');
   });
 
-  it('renders inside a <main id="main"> with a skip link, a banner header and a contentinfo footer', () => {
+  it('renders inside a <main id="main"> with a skip link, a header and a footer', () => {
     const { container } = render(<BlogIndexPage />);
     expect(container.querySelectorAll('main')).toHaveLength(1);
     expect(container.querySelector('main')!.id).toBe('main');
-    expect(container.querySelector('a[href="#main"]')).not.toBeNull();
-    expect(container.querySelector('header[role="banner"]')).not.toBeNull();
-    expect(container.querySelector('footer[role="contentinfo"]')).not.toBeNull();
+    expect(container.querySelector('a[href="#main-content"]')).not.toBeNull();
+    // header and footer sit inside <main>, so explicit banner / contentinfo roles would be invalid there
+    expect(container.querySelector('main > header')).not.toBeNull();
+    expect(container.querySelector('main > footer')).not.toBeNull();
+    expect(container.querySelector('[role="banner"], [role="contentinfo"]')).toBeNull();
   });
 
   it('has the intro and posts sections under their ids', () => {

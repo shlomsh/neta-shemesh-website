@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { elamy, stanga, latin } from "./fonts";
 import "./globals.css";
 import { SITE, IS_PRODUCTION_HOST } from '@/content/site';
-import { pageMeta } from '@/lib/seo/metadata';
 import { siteJsonLd } from '@/lib/seo/jsonld';
 import { JsonLd } from '@/components/site/JsonLd';
 import { cx } from '@/lib/cx';
@@ -25,19 +24,15 @@ import { cx } from '@/lib/cx';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   ...(IS_PRODUCTION_HOST ? {} : { robots: { index: false, follow: false } }),
-  ...pageMeta({
-    title: `${SITE.tagline} ב${SITE.city} | ${SITE.name}`,
-    description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה (פולג). ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
-    hreflang: true,
-    og: {
-      title: `${SITE.name} | ${SITE.tagline} ב${SITE.city}`,
-      description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה. ליווי לזוגות ומשפחות בתהליכי שינוי וצמיחה.',
-    },
-    twitter: {
-      title: `${SITE.name} | ${SITE.tagline} ב${SITE.city}`,
-      description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה.',
-    },
-  }),
+  // Site-wide fallback share card, inherited by every page that declares no `twitter` of its own (the
+  // home page, the blog index, the 404). Page-specific metadata (canonical, hreflang, title, description,
+  // Open Graph) lives with each page, never here: layout metadata is inherited by every page that
+  // declares none, so a layout-level canonical would ship the home URL on the 404.
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE.name} | ${SITE.tagline} ב${SITE.city}`,
+    description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה.',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

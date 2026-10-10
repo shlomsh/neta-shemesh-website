@@ -4,8 +4,8 @@ import type { BlogPost } from '@/content/posts';
 
 interface PostCardProps {
   post: BlogPost;
-  /** Eager-load the cover for above-the-fold cards (first row on the listing). */
-  priority?: boolean;
+  /** Eager-load the cover (`loading="eager"`) for above-the-fold cards: the first row on the listing. */
+  eager?: boolean;
   /** Heading level of the title: 3 under an h2 ("more posts"), 2 on the blog index under the h1. */
   headingLevel?: 2 | 3;
 }
@@ -16,7 +16,7 @@ interface PostCardProps {
  *
  * Lives on cream surfaces → dark plum text (AAA). The whole card is a link.
  */
-export function PostCard({ post, priority = false, headingLevel = 3 }: PostCardProps) {
+export function PostCard({ post, eager = false, headingLevel = 3 }: PostCardProps) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3';
   return (
     <Link
@@ -31,7 +31,7 @@ export function PostCard({ post, priority = false, headingLevel = 3 }: PostCardP
         radius="none"
         ratio="100/62"
         zoom="group"
-        loading={priority ? 'eager' : 'lazy'}
+        loading={eager ? 'eager' : 'lazy'}
         className="w-full"
       />
 

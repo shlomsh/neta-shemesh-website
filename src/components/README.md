@@ -4,7 +4,7 @@
 src/components/
   primitives/   content-agnostic blocks   layout/ (Section Container Card)  ui/ (BodyText ButtonLink HaloWrap SectionTitle SectionHeader Photo MaskIcon IconButton)
   motion/       behaviour, no content     ScrollReveal RevealObserver ParallaxFrame SoftSnap SlidePager
-  site/         shared chrome             PageShell JsonLd ContactFAB BrandLogo LineArt SiteNav MobileMenu NavLink footer/ hooks/ icons.tsx
+  site/         shared chrome             PageShell JsonLd ContactFAB BrandLogo LineArt SiteNav MobileNav MobileMenu NavLink footer/ hooks/ icons.tsx
   sections/     one folder per section    hero intro expertise bio credentials reignite services cta-band gallery contact testimonials (parked)
   blog/         blog-only                 BlogHeader PostBody PostCard AuthorCard
 ```

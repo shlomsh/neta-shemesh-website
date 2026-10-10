@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Photo } from '@/components/primitives/ui/Photo';
 import { cx } from '@/lib/cx';
 import { ID } from '@/content/ids';
@@ -35,6 +35,13 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
     if (hoverTimer.current) clearTimeout(hoverTimer.current);
     hoverTimer.current = null;
   };
+  // A pending hover-intent flip must not fire after unmount.
+  useEffect(
+    () => () => {
+      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    },
+    [],
+  );
   const onEnter = (i: number) => {
     clearHover();
     if (i === active) return;
@@ -93,7 +100,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
                 onKeyDown={(e) => onKeyDown(e, i)}
                 className="block w-full text-start ps-5 py-2 rounded-tile cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum"
               >
-                <span className={cx('type-title font-normal [letter-spacing:normal] block transition-transform duration-300 motion-reduce:transition-none', isActive ? '-translate-x-0 rtl:-translate-x-0' : '')}>
+                <span className="type-title font-normal [letter-spacing:normal] block transition-transform duration-300 motion-reduce:transition-none">
                   {item.title}
                 </span>
               </button>

@@ -19,7 +19,6 @@ import { FooterBackground } from './FooterBackground';
 export function Footer() {
   return (
     <footer
-      role="contentinfo"
       className="relative w-full overflow-clip flex flex-col items-center px-6 py-[clamp(48px,6vw,96px)] screen-visible"
     >
       {/* Background photo + scrim — absolutely positioned */}

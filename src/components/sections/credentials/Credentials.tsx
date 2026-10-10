@@ -25,7 +25,7 @@ export function Credentials() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.12}>
-            <CredentialsList items={CREDENTIALS} checkIconSrc={CREDENTIAL_ICONS} onDark />
+            <CredentialsList items={CREDENTIALS} iconSrcs={CREDENTIAL_ICONS} />
           </ScrollReveal>
         </div>
       </Container>

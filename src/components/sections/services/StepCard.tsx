@@ -7,8 +7,8 @@ interface StepCardProps {
   numberText: string;
   title: string;
   bullets: string[];
-  delay: number;
-  staggerClass?: string;
+  /** Classes for the reveal wrapper: the card's size, radius, shadow, max width and vertical offset. */
+  className?: string;
 }
 
 /**
@@ -23,11 +23,10 @@ export function StepCard({
   numberText,
   title,
   bullets,
-  delay,
-  staggerClass,
+  className,
 }: StepCardProps) {
   return (
-    <ScrollReveal delay={delay} className={cx('w-full h-full', staggerClass)}>
+    <ScrollReveal className={cx('w-full h-full', className)}>
       <Photo src={imageSrc} alt={title} sizes={CARD_SIZES} radius="card" className="w-full h-full shadow-lg">
 
         {/* Legibility gradient so white text reads on any photo */}

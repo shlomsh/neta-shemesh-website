@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect } from 'react';
 /** The elements `ScrollReveal` renders. ContactFAB's bare `data-reveal` is deliberately not matched. */
 const SELECTOR = '[data-reveal="io"]';
 
-/** Largest share of an element that has to be on screen before it reveals (framer's old `amount: .2`). */
+/** Largest share of an element that has to be on screen before it reveals. */
 const MAX_AMOUNT = 0.2;
 
 /**
@@ -18,7 +18,7 @@ const THRESHOLDS = Array.from({ length: Math.round(MAX_AMOUNT / STEP) + 1 }, (_,
 
 /**
  * The share of `el` that must be visible before it reveals: 20%, but never more than 90% of what a
- * viewport can show of it, so an element taller than 5 viewports (framer: never fires) still reveals.
+ * viewport can show of it, so an element taller than 5 viewports (20% of it never fits on screen at once) still reveals.
  */
 export function amountFor(el: HTMLElement, viewportHeight: number): number {
   const h = el.offsetHeight;

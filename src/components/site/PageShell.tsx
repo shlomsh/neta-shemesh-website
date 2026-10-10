@@ -35,9 +35,11 @@ export function PageShell({ overflow, children, behaviors }: PageShellProps) {
     <>
       {/* Skip link: the first focusable element on every page. Visually hidden (sr-only, out of flow)
           until keyboard focus, then a fixed cream pill with a plum ring (5.55:1). A sibling of <main>,
-          not a child, so the `main > section` selectors (SoftSnap, tests) never see it. */}
+          not a child, so the `main > section` selectors (SoftSnap, tests) never see it. It targets the first
+          content AFTER the nav (ID.mainContent, set by each page): the nav lives inside <main>, so
+          targeting <main> would land before it. */}
       <a
-        href={`#${ID.main}`}
+        href={`#${ID.mainContent}`}
         className="sr-only type-lead font-bold focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:start-3 focus-visible:z-[200] focus-visible:inline-flex focus-visible:min-h-[44px] focus-visible:items-center focus-visible:rounded-full focus-visible:bg-cream focus-visible:px-6 focus-visible:py-2 focus-visible:text-plum focus-ring focus-visible:ring-plum focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
       >
         דלגו לתוכן

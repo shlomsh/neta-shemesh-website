@@ -43,7 +43,7 @@ describe('hero server HTML shows its text from the first paint (owner ruling: he
       ['h1', hero.querySelector('h1')],
       ['subtext', hero.querySelector('p')],
       ['cta', cta()],
-      ['banner', hero.querySelector('[role="banner"]')],
+      ['logo/nav row', hero.querySelector('.hero-enter-0')],
     ];
     for (const [label, el] of targets) {
       expect(el, `hero ${label} is missing from the server markup`).not.toBeNull();

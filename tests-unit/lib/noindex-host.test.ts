@@ -14,7 +14,10 @@ async function loadWith(siteUrl: string | undefined) {
   else vi.stubEnv('NEXT_PUBLIC_SITE_URL', siteUrl);
   const site = await import('@/content/site');
   const layout = await import('@/app/layout');
-  return { site, metadata: layout.metadata };
+  const page = await import('@/app/page');
+  // The canonical lives with the home page (layout metadata is inherited by pages that declare none, the 404 included).
+  const home = await page.generateMetadata({}, Promise.resolve({}) as never);
+  return { site, metadata: layout.metadata, home };
 }
 
 afterEach(() => {
@@ -24,11 +27,18 @@ afterEach(() => {
 
 describe('noindex host guard', () => {
   it('production host (default URL): no robots directive, canonical on the production domain', async () => {
-    const { site, metadata } = await loadWith(undefined);
+    const { site, metadata, home } = await loadWith(undefined);
     expect(site.SITE.url).toBe(site.PRODUCTION_URL);
     expect(site.IS_PRODUCTION_HOST).toBe(true);
     expect(metadata.robots).toBeUndefined();
-    expect(metadata.alternates?.canonical).toBe(site.PRODUCTION_URL);
+    expect(home.alternates?.canonical).toBe(site.PRODUCTION_URL);
+  });
+
+  it('the root layout declares no page-specific metadata (the 404 would inherit it)', async () => {
+    const { metadata } = await loadWith(undefined);
+    for (const key of ['alternates', 'title', 'description', 'openGraph'] as const) {
+      expect(metadata[key], key).toBeUndefined();
+    }
   });
 
   it('explicit production URL is still production', async () => {
@@ -50,8 +60,8 @@ describe('noindex host guard', () => {
   });
 
   it('a staging host still self-canonicalises to its own URL (so noindex and canonical agree)', async () => {
-    const { metadata } = await loadWith('https://preview.example.test');
-    expect(metadata.alternates?.canonical).toBe('https://preview.example.test');
+    const { metadata, home } = await loadWith('https://preview.example.test');
+    expect(home.alternates?.canonical).toBe('https://preview.example.test');
     expect(metadata.robots).toEqual({ index: false, follow: false });
   });
 

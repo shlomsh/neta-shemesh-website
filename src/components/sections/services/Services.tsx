@@ -15,10 +15,9 @@ export function Services() {
   return (
     <Section id={ID.services} tone="light" fit="lock">
       {/*
-        P1 fix: replaced translate-y stagger with margin-top on even cards so the
-        container grows naturally (translate-y is out-of-flow and gets clipped by
-        Section overflow-hidden). pb-[96px] gives ~90px gap below card-4 at 1280.
-        P2 fix: md:flex-row makes tablet side-by-side (text col + 2-col card grid).
+        The stagger is a margin-top on the even cards, not a translate-y, so the container grows with it
+        (a translate is out-of-flow and would be clipped by the Section's overflow). pb-[96px] leaves ~90px
+        below card 4 at 1280. md:flex-row puts the text column and the 2-column card grid side by side on tablets.
       */}
       <Container maxWidth="3xl" className="flex flex-col md:flex-row md:items-start md:gap-[48px] lg:flex-row lg:gap-[64px] pt-[64px] pb-[96px] lg:py-0 lg:flex-1 lg:min-h-0 lg:items-stretch">
 
@@ -41,10 +40,7 @@ export function Services() {
           </div>
         </div>
 
-        {/*
-          P2 fix: grid-cols-1 → single column at 375px.
-          P3 fix: reduced gap to ~30px, stagger reduced to ~53px, max-width reduced to ~360px.
-        */}
+        {/* One column at 375px, two from md; ~30px gaps, cards capped at ~360px on tablets. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[clamp(16px,4vw,64px)] w-full gap-x-[30px] gap-y-[30px] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
           {STEPS.map((step, i) => (
             <StepCard
@@ -53,8 +49,7 @@ export function Services() {
               numberText={step.numberText}
               title={step.title}
               bullets={step.bullets}
-              delay={0}
-              staggerClass={cx(
+              className={cx(
                 'w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-none lg:h-auto mx-auto rounded-card shadow-2xl aspect-[4/5] lg:aspect-auto',
                 i % 2 === 1 ? 'md:mt-[40px] lg:mt-10' : 'lg:mb-10',
               )}

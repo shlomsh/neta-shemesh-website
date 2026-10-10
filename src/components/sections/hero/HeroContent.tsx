@@ -10,15 +10,14 @@
  * settle (staggered via `.hero-enter-N` delay modifiers, see globals.css). It is transform-only:
  * the text (logo/nav, H1, subtext, CTA) is visible in the first paint of the server HTML (NS-26).
  * Only the decorative strokes, blob and line art fade/draw in afterwards.
- * The hero is above the fold, so it must never gate on JS (no framer-motion
- * ScrollReveal here: it would ship opacity:0 in the server HTML). Everything
- * in this file stays server-side.
+ * The hero is above the fold, so it must never gate on JS (no ScrollReveal here: a reveal wrapper
+ * hides its content until the client observer arms it). Everything in this file stays server-side.
  */
 
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { BrandLogo } from '@/components/site/BrandLogo';
 import { SiteNav } from '@/components/site/SiteNav';
-import { ANCHOR, anchorHref } from '@/content/ids';
+import { ANCHOR, ID, anchorHref } from '@/content/ids';
 import { HeroHeading } from './HeroHeading';
 import { HeroArt } from './HeroArt';
 
@@ -36,13 +35,14 @@ export function HeroContent() {
       "
     >
       {/* ── Top bar: logo + nav ── */}
-      <div role="banner" className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-[16px]">
+      <div className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-[16px]">
         <BrandLogo />
         <SiteNav />
       </div>
 
-      {/* ── Two zones: text + art ── */}
+      {/* ── Two zones: text + art (the skip link lands here, past the nav) ── */}
       <div
+        id={ID.mainContent}
         className="
           flex flex-col lg:flex-row
           items-center

@@ -5,6 +5,9 @@
  */
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import BlogIndexPage from '../../src/app/blog/page';
+import BlogPostPage from '../../src/app/blog/[slug]/page';
+import NotFoundPage from '../../src/app/not-found';
 import { BlogHeader } from '../../src/components/blog/BlogHeader';
 import { PostCard } from '../../src/components/blog/PostCard';
 import { Hero } from '../../src/components/sections/hero/Hero';
@@ -12,6 +15,7 @@ import { PageShell } from '../../src/components/site/PageShell';
 import { SiteNav } from '../../src/components/site/SiteNav';
 import { ID } from '../../src/content/ids';
 import { getAllPosts } from '../../src/content/posts';
+import { renderHome } from '../sanity/helpers';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
@@ -21,7 +25,7 @@ afterEach(() => {
 });
 
 describe('skip link', () => {
-  it('is the first focusable element, targets #main and reads "דלגו לתוכן"', () => {
+  it('is the first focusable element, targets #main-content and reads "דלגו לתוכן"', () => {
     const { container } = render(
       <PageShell overflow="clip">
         <button type="button">first thing in the page</button>
@@ -29,7 +33,7 @@ describe('skip link', () => {
     );
     const first = container.querySelector<HTMLElement>(FOCUSABLE);
     expect(first?.tagName).toBe('A');
-    expect(first?.getAttribute('href')).toBe('#main');
+    expect(first?.getAttribute('href')).toBe('#main-content');
     expect(first?.textContent).toBe('דלגו לתוכן');
     // visually hidden until focused
     expect(first?.className).toContain('sr-only');
@@ -44,30 +48,60 @@ describe('skip link', () => {
     expect(container.querySelectorAll('#main')).toHaveLength(1);
     expect(ID.main).toBe('main');
     // the skip link is a sibling of main, so `main > section` selectors never see it
-    expect(main?.querySelector('a[href="#main"]')).toBeNull();
+    expect(main?.querySelector('a[href="#main-content"]')).toBeNull();
+  });
+
+  // The nav lives inside <main>, so the skip link has to land past it: every page marks the first content
+  // after its header / nav with ID.mainContent.
+  describe('lands on the first content after the nav, on every page', () => {
+    const pages: Array<[string, () => Promise<HTMLElement>]> = [
+      ['home', () => renderHome()],
+      ['blog index', async () => render(<BlogIndexPage />).container],
+      [
+        'blog post',
+        async () => {
+          const slug = getAllPosts()[0].slug;
+          return render(await BlogPostPage({ params: Promise.resolve({ slug }) })).container;
+        },
+      ],
+      ['404', async () => render(<NotFoundPage />).container],
+    ];
+
+    it.each(pages)('%s', async (_name, renderPage) => {
+      const root = await renderPage();
+      const link = root.querySelector<HTMLAnchorElement>('a.sr-only');
+      expect(link?.getAttribute('href')).toBe(`#${ID.mainContent}`);
+      const targets = root.querySelectorAll(`#${ID.mainContent}`);
+      expect(targets).toHaveLength(1);
+      const nav = root.querySelector('nav')!;
+      expect(nav.compareDocumentPosition(targets[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(nav.contains(targets[0])).toBe(false);
+    });
   });
 });
 
 describe('landmarks and labelling', () => {
-  it('the footer is contentinfo and the blog header is banner', () => {
+  it('the header and footer sit inside <main>, so they carry no explicit banner / contentinfo role (invalid when nested)', () => {
     const { container } = render(
       <PageShell overflow="hidden">
         <BlogHeader />
       </PageShell>,
     );
-    expect(container.querySelector('footer')?.getAttribute('role')).toBe('contentinfo');
-    expect(container.querySelector('header')?.getAttribute('role')).toBe('banner');
+    expect(container.querySelector('main > footer')).not.toBeNull();
+    expect(container.querySelector('main > header')).not.toBeNull();
+    expect(container.querySelector('[role="banner"], [role="contentinfo"]')).toBeNull();
   });
 
-  it('the hero is labelled by its h1 (no ad-hoc "main heading" aria-label) and has a banner top bar', () => {
+  it('the hero is labelled by its h1 (no ad-hoc "main heading" aria-label) and has a logo + nav top bar', () => {
     const { container } = render(<Hero />);
     const section = container.querySelector('section')!;
     expect(section.hasAttribute('aria-label')).toBe(false);
     expect(section.getAttribute('aria-labelledby')).toBe(ID.heroTitle);
     const h1 = container.querySelector('h1')!;
     expect(h1.id).toBe(ID.heroTitle);
-    const banner = container.querySelector('[role="banner"]')!;
-    expect(banner.querySelector('nav')).not.toBeNull();
+    expect(container.querySelector('[role="banner"]')).toBeNull();
+    const topBar = container.querySelector('.hero-enter-0')!;
+    expect(topBar.querySelector('nav')).not.toBeNull();
     expect(container.querySelector('[aria-hidden="false"]')).toBeNull();
   });
 });

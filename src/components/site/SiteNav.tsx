@@ -1,17 +1,14 @@
-'use client';
-
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
-import { IconButton } from '@/components/primitives/ui/IconButton';
 import { NAV_LINKS } from '@/content/home/nav';
-import { anchorHref, ID } from '@/content/ids';
+import { anchorHref } from '@/content/ids';
 import { SITE, telHref } from '@/content/site';
-import { MenuIcon } from './icons';
-import { MobileMenu } from './MobileMenu';
+import { MobileNav } from './MobileNav';
 import { NavLink } from './NavLink';
 
 /**
  * SiteNav: the navigation used both in the hero and the blog header.
+ *
+ * A server component. Only the hamburger and its overlay need client state, and they live in MobileNav.
  *
  * Responsive behaviour:
  *   - md and up  → inline pill nav (links + phone badge), as before.
@@ -37,24 +34,10 @@ const desktopLinkClass = `
   `;
 
 export function SiteNav({ crossRoute = false }: { crossRoute?: boolean }) {
-  const [open, setOpen] = useState(false);
-  const close = useCallback(() => setOpen(false), []);
-  const hamburgerRef = useRef<HTMLButtonElement>(null);
-  const wasOpenRef = useRef(false);
-
   const links = NAV_LINKS.map((link) => ({
     label: link.label,
     href: link.anchor !== undefined ? anchorHref(link.anchor, crossRoute ? '/' : '') : link.route,
   }));
-
-  // Return focus to the hamburger button when the overlay closes (not on initial mount).
-  useEffect(() => {
-    if (open) {
-      wasOpenRef.current = true;
-    } else if (wasOpenRef.current) {
-      hamburgerRef.current?.focus();
-    }
-  }, [open]);
 
   return (
     <>
@@ -72,19 +55,8 @@ export function SiteNav({ crossRoute = false }: { crossRoute?: boolean }) {
         </ButtonLink>
       </nav>
 
-      {/* ── Mobile hamburger (below md) ── */}
-      <IconButton
-        ref={hamburgerRef}
-        label="פתיחת תפריט"
-        onClick={() => setOpen(true)}
-        aria-expanded={open}
-        aria-controls={ID.mobileMenu}
-        className="md:hidden"
-      >
-        <MenuIcon />
-      </IconButton>
-
-      <MobileMenu open={open} links={links} onClose={close} />
+      {/* ── Mobile hamburger + overlay (below md) ── */}
+      <MobileNav links={links} />
     </>
   );
 }

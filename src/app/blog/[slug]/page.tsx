@@ -62,7 +62,7 @@ export default async function BlogPostPage(
 
       {/* Hero band — category, title, meta */}
       <Section id={ID.postHero} tone="dark" className="pt-[clamp(20px,3vw,36px)] pb-[clamp(48px,7vw,96px)]">
-        <Container maxWidth="md">
+        <Container id={ID.mainContent} maxWidth="md">
           <Link
             href="/blog"
             className="type-small mb-[clamp(20px,3vw,32px)] inline-flex items-center gap-[8px] font-bold text-cream underline-offset-4 hover:underline"

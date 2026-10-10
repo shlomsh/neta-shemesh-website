@@ -15,7 +15,7 @@ import { NavLink } from './NavLink';
 
 const subscribeNoop = () => () => {};
 
-interface NavItem {
+export interface NavItem {
   label: string;
   href: string;
 }
@@ -23,7 +23,7 @@ interface NavItem {
 /**
  * The full-screen overlay menu below md. Portaled to <body> for stacking safety: it renders out of the top
  * bar's stacking context and containing block (any `transform`, `translate` or `will-change` on an ancestor
- * would otherwise trap this position:fixed overlay inside the bar). `onClose` must be referentially stable.
+ * would otherwise trap this position:fixed overlay inside the bar). `onClose` may be an inline function.
  */
 export function MobileMenu({ open, links, onClose }: { open: boolean; links: NavItem[]; onClose: () => void }) {
   // false on the server / first hydration pass, true on the client afterwards

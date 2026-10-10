@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { cx } from '@/lib/cx';
 
 interface BodyTextProps extends React.HTMLAttributes<HTMLParagraphElement> {

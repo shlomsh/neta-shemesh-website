@@ -11,8 +11,11 @@
 
 /** Section ids and heading ids. */
 export const ID = {
-  // Page-level skip link target (the <main> element, see site/PageShell)
+  // The <main> element (see site/PageShell)
   main: 'main',
+  // Skip link target: the first element after the header / nav on every page (hero zones, or the first
+  // container under the blog header). The nav sits inside <main>, so the skip link cannot target <main> itself.
+  mainContent: 'main-content',
 
   // Hero
   hero: 'hero',

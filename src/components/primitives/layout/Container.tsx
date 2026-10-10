@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { cx } from '@/lib/cx';
 
 type MaxWidth = 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none';

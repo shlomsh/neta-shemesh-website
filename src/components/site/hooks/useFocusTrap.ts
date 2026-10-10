@@ -1,9 +1,9 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useEffectEvent, type RefObject } from 'react';
 
 /**
  * While `active`: move focus to `initialFocusRef`, keep Tab / Shift+Tab inside `containerRef`, and
- * call `onEscape` on Escape. `onEscape` must be referentially stable (the effect re-runs, and so
- * re-focuses, when it changes).
+ * call `onEscape` on Escape. `onEscape` can be an inline function: it is read through an effect event, so
+ * a new identity on every render neither re-runs the effect nor re-focuses.
  */
 export function useFocusTrap(
   active: boolean,
@@ -11,6 +11,8 @@ export function useFocusTrap(
   initialFocusRef: RefObject<HTMLElement | null>,
   onEscape: () => void,
 ) {
+  const escape = useEffectEvent(onEscape);
+
   useEffect(() => {
     if (!active) return;
 
@@ -19,7 +21,7 @@ export function useFocusTrap(
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onEscape();
+        escape();
         return;
       }
 
@@ -55,5 +57,5 @@ export function useFocusTrap(
     return () => {
       document.removeEventListener('keydown', onKey);
     };
-  }, [active, containerRef, initialFocusRef, onEscape]);
+  }, [active, containerRef, initialFocusRef]);
 }

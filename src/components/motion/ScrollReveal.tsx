@@ -11,8 +11,8 @@ interface ScrollRevealProps {
  * Fade/rise-in on scroll, in three parts:
  *
  *   1. this SERVER component: a plain `<div data-reveal="io">`. No inline opacity/transform, so the HTML
- *      is fully visible without JS (the old framer `initial={{ opacity: 0 }}` shipped `opacity:0` in the
- *      server HTML and left the page blank when hydration was slow, blocked, or in an iframe);
+ *      is fully visible without JS (an inline `opacity:0` in the server HTML would leave the page blank when
+ *      hydration is slow, blocked, or in an iframe);
  *   2. `RevealObserver` (the one client island, mounted in `PageShell`): once it is sure it can do the
  *      job (top-level page, IntersectionObserver present, no reduced motion), it sets
  *      `html[data-reveal-armed]` and marks elements `data-revealed` as they come into view;
@@ -22,9 +22,9 @@ interface ScrollRevealProps {
  * Same markup on the server and the client by construction: never branch on `useReducedMotion()`,
  * `matchMedia` or `window.top` here (8fcd901: a branch gave the server HTML a different `style` than the
  * client's, and React hydration does not patch `style`). `data-reveal="io"` (not a bare `data-reveal`)
- * is what `RevealObserver` and the hidden-state CSS select; ContactFAB's bare `data-reveal` stays on
- * framer until NS-14 and is untouched by this mechanism. Any `[data-reveal]` is still forced visible
- * under `prefers-reduced-motion: reduce`.
+ * is what `RevealObserver` and the hidden-state CSS select; ContactFAB's bare `data-reveal` is a leftover
+ * that this mechanism never touches. Any `[data-reveal]` is still forced visible under
+ * `prefers-reduced-motion: reduce`.
  */
 export function ScrollReveal({ children, delay = 0, className = '' }: ScrollRevealProps) {
   return (

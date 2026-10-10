@@ -282,4 +282,19 @@ describe('MobileMenu: controlled component', () => {
     fireEvent.click(screen.getByRole('link', { name: 'two' }));
     expect(onClose).toHaveBeenCalledTimes(4);
   });
+
+  it('onClose may change identity on every render: no re-focus, and the latest one handles Escape', () => {
+    const first = vi.fn();
+    const second = vi.fn();
+    const { rerender } = render(<MobileMenu open links={links} onClose={first} />);
+    const link = screen.getByRole('link', { name: 'two' });
+    link.focus();
+
+    rerender(<MobileMenu open links={links} onClose={second} />);
+    expect(document.activeElement).toBe(link); // the focus effect did not re-run and pull focus back to the close button
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
+  });
 });
