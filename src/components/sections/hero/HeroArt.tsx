@@ -20,22 +20,30 @@ import { CoupleLineArt } from './CoupleLineArt';
 import styles from './HeroBlob.module.css';
 import { cx } from '@/lib/cx';
 
+/**
+ * Phones: the art box is capped by what the hero leaves for it, so a short screen (375x667) still fits the hero in
+ * one screen with the art above the contact pill (NS-61). 28rem = everything else in the hero column at 375px (top
+ * bar, text block, gaps, paddings, the pill's footprint) plus 1rem of slack; --hero-h minus --hero-overshoot is the
+ * screen the content lays out in (100lvh on every browser, the overshoot cancels on iOS 26). The cap only bites below
+ * about 700px of screen height (375x812 and taller keep the full 17.5rem), never under 12rem, and never from lg up.
+ */
+const ART_FIT_PHONE = 'max-lg:h-[min(clamp(17.5rem,42vw,30rem),max(12rem,calc(var(--hero-h)_-_var(--hero-overshoot)_-_28rem)))]';
+
 export function HeroArt() {
   return (
     <div
-      className="
-        relative
-        flex items-center justify-center
-        w-full
-        h-[clamp(17.5rem,42vw,30rem)]
-      "
+      data-testid="hero-art"
+      className={cx(
+        'relative flex items-center justify-center w-full h-[clamp(17.5rem,42vw,30rem)]',
+        ART_FIT_PHONE,
+      )}
     >
       {/* Asymmetric organic blob */}
       <div
         aria-hidden="true"
         className={cx(
           styles.blob,
-          'absolute w-[clamp(17.5rem,46vw,32.5rem)] h-[clamp(13.75rem,38vw,26.25rem)] bg-mauve [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]',
+          'absolute w-[clamp(17.5rem,46vw,32.5rem)] h-[clamp(13.75rem,38vw,26.25rem)] max-lg:max-h-full bg-mauve [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]',
         )}
       />
 
