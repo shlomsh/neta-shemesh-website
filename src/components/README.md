@@ -2,48 +2,60 @@
 
 ```
 src/components/
-  primitives/   content-agnostic styled blocks        layout/ Section Container Grid Card ScrollAnchor
-                (see primitives/README.md)             ui/     BodyText ButtonLink SectionTitle SectionHeader Photo MaskIcon IconButton
-  motion/       behaviour, no content                  ScrollReveal RevealObserver ParallaxFrame SoftSnap SlidePager
-  site/         chrome shared by more than one page    PageShell JsonLd ContactFAB BrandLogo SiteNav MobileMenu NavLink
-                                                       footer/ (Footer FooterBackground) hooks/ icons.tsx
-  sections/     one folder per home-page section       hero intro expertise bio credentials reignite services
-                                                       cta-band gallery contact testimonials (parked)
-  blog/         blog-only components                   BlogHeader PostBody PostCard AuthorCard
+  primitives/   content-agnostic blocks   layout/ (Section Container Card)  ui/ (BodyText ButtonLink HaloWrap SectionTitle SectionHeader Photo MaskIcon IconButton)
+  motion/       behaviour, no content     ScrollReveal RevealObserver ParallaxFrame SoftSnap SlidePager
+  site/         shared chrome             PageShell JsonLd ContactFAB BrandLogo LineArt SiteNav MobileMenu NavLink footer/ hooks/ icons.tsx
+  sections/     one folder per section    hero intro expertise bio credentials reignite services cta-band gallery contact testimonials (parked)
+  blog/         blog-only                 BlogHeader PostBody PostCard AuthorCard
 ```
 
 ## Dependency direction
 
-```
-content  ->  lib  ->  motion  ->  primitives  ->  site  ->  (sections | blog)  ->  app
-```
+`content -> lib -> motion -> primitives -> site -> (sections | blog) -> app`: each layer imports only from layers to its left. `sections` and `blog` never import each other, and a section never imports another section (`app/page.tsx` composes them). `primitives` never import `content`; `motion` never imports a primitive (`Photo` builds on `ScrollReveal`/`ParallaxFrame`). `site` must not import `sections`, which is why the footer lives in `site/footer/`.
 
-It is a chain: each layer imports only from the layers before it (to its left), never after. `motion` sits before `primitives` because `primitives` use `motion` (`Photo` uses `ScrollReveal`) and `motion` never uses a primitive. `sections` and `blog` are the one fork: siblings that never import each other. Concretely:
-
-- `content/` is plain typed data: no component, no `lib` import.
-- `lib/` imports `content` only.
-- `primitives/` is content-agnostic: it imports `lib` and `motion`, never `content`. (`Photo` uses `ScrollReveal` and `ParallaxFrame`; that is why motion is its own folder and not a part of `primitives/`.)
-- `motion/` imports `lib` only. It never imports a primitive.
-- `site/` may use `content`, `lib`, `primitives` and `motion`. It must not import `sections/`: the footer lives in `site/footer/` (not in `sections/`) because the shell, `PageShell`, renders it on every page.
-- `sections/` and `blog/` may use everything to the left, including `site/`. They never import each other, and one section never imports another section (a section folder is a self-contained unit that `app/page.tsx` composes).
-- `app/` (pages, layouts) composes all of the above.
-
-Two guards enforce it: ESLint `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint`, so CI) fail on any import that goes against this, and `tests-unit/sanity/component-layers.test.ts` does the same plus fails on a new top-level folder that has no row in its table. A new layer or section folder needs its row in both (the section list in the ESLint config is read from the folder, so a new section is covered automatically).
+Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint`, so CI). A new top-level folder under `components/` makes the config throw; a new section folder is picked up automatically.
 
 ## Folder rules
 
-- **`primitives/`** earns a place only if it knows nothing about this site's copy, ids or facts. A one-off layout belongs in the section that uses it. Rules per primitive: `primitives/README.md`.
-- **`motion/`**: scroll reveal, parallax, the slide pager (`SoftSnap` is a client gate; `SlidePager` moves one card per scroll gesture and is loaded by dynamic `import()` only on `(min-width: 1024px) and (pointer: fine)`, never on touch). Reduced motion is handled in CSS (`[data-reveal]`, `[data-parallax]` in `globals.css`), not by branching in React.
-  - **Scroll reveal** = server `ScrollReveal` (`<div data-reveal="io">`, delay as `--reveal-delay`, no hidden state in the HTML) + the one client island `RevealObserver` (mounted in `PageShell`, renders `null`) + CSS. The observer sets `html[data-reveal-armed]` only after its first IntersectionObserver callback, and only for a top-level page with IntersectionObserver and no reduced motion; the hidden state (`opacity:0; translate:0 24px`) exists only under that attribute and `prefers-reduced-motion: no-preference`, so JS off, an iframe or a failed observer all leave the page visible. Elements already on screen at arming are revealed without a fade. A `ScrollReveal` must be in the server HTML or mounted before `RevealObserver`'s effect (one mounted later is never observed and would stay hidden); there are none today. ContactFAB's bare `data-reveal` is not part of this mechanism (its entrance is the `.fab-enter` CSS keyframe, NS-14).
-- **`site/`**: header pieces (`BrandLogo`, `SiteNav`, `MobileMenu`, `NavLink`), the `PageShell` `<main>` shell, the `Footer`, the contact pill, `JsonLd`. `hooks/` holds `useFocusTrap` and `useBodyScrollLock`; `icons.tsx` holds the reusable inline SVGs (menu, close, WhatsApp, phone). Decorative one-off SVG scaffolding (`CoupleLineArt`, `OrganicBg`, the hero underline) stays next to the section that owns it.
-- **`sections/<name>/`**: the section component has the PascalCase name of the folder (`intro/Intro.tsx`, `cta-band/CtaBand.tsx`) and renders exactly one `<section>` (plus its scroll anchor). Its sub-components live in the same folder. Folder = section slug, not file topic: `reignite/` is the "להצית מחדש" photo band, `gallery/` the "טיפול זוגי…" photo grid, `intro/` the "ליווי מקצועי לזוגות" collage, `bio/` the "קצת עלי" bio. `contact/` holds two sections (`ContactSocial`, `ContactOffice`) because they share their leaves.
-- **A component earns its own file** only if it is reused, has state or logic, or is a real visual unit (art, a background composition, a card with several slots). A logic-free single-use leaf (a paragraph, a number, a pill) is written inline in its parent. So `Step*`, `CardLabel`, `Footer{Brand,Copyright,CTA}`, `Hero{Background,Subtext,CTA}` are not files.
-- **The parked testimonials** block (`sections/testimonials/`) stays on purpose until the owner decides; `app/page.tsx` gates it with `SHOW_TESTIMONIALS = false`. Do not delete it as dead code.
-- **Exports:** named exports everywhere. Only Next route files (`page`, `layout`, `route`, `sitemap`, ...) use `export default`.
-- **Tests find sources by path suffix** (`sourceNamed('SoftSnap.tsx')` in `tests-unit/sanity/helpers.ts`), and render sections by their ids from `content/ids.ts`; a move needs the suffix updated, not an assertion loosened.
+- **`primitives/`** earns a place only if it knows nothing about this site's copy, ids or facts. A one-off layout belongs in the section that uses it.
+- **`sections/<slug>/`**: the component has the PascalCase folder name (`cta-band/CtaBand.tsx`), renders exactly one `<section>` (plus its scroll anchor), sub-components beside it. Folder = section slug, not topic: `reignite/` is the "להצית מחדש" band, `gallery/` the six-photo grid, `intro/` the "ליווי מקצועי לזוגות" collage, `bio/` "קצת עלי". `contact/` holds two sections (`ContactSocial`, `ContactOffice`) that share leaves.
+- **A component earns its own file** only if it is reused, has state or logic, or is a real visual unit (art, a background composition, a multi-slot card). A logic-free single-use leaf is written inline in its parent.
+- **`site/`** holds the header, `PageShell` (required `overflow` prop: `clip` for home and 404, `hidden` for blog), `Footer`, the contact pill, `JsonLd`. One-off decorative SVG stays beside its section.
+- Named exports everywhere; only Next route files use `export default`. The parked `sections/testimonials/` stays (see CLAUDE.md).
+- Tests find sources by path suffix (`sourceNamed('SoftSnap.tsx')` in `tests-unit/sanity/helpers.ts`) and sections by the ids in `content/ids.ts`: a move updates the suffix, never loosens an assertion.
 
-## Adding a section
+**Adding a section:** `sections/<slug>/<Name>.tsx` with one `Section`, ids from `content/ids.ts`, copy from `content/`; mount it in `app/page.tsx` in page order; add its row to `EXPECTED_SECTIONS` (`helpers.ts`) and `DESKTOP`/`PHONE` (`one-screen.test.tsx`); run `npm run test:sanity` and `npm run vr -- HEAD`.
 
-1. `sections/<slug>/<Name>.tsx` with one `Section` (tone, fit, pad; see the primitives README), ids from `content/ids.ts`, copy from `content/`.
-2. Mount it in `app/page.tsx` in page order; add its expected tone/fit row to the sanity tables (`EXPECTED_SECTIONS`, `DESKTOP` in `one-screen.test.tsx`).
-3. Run the sanity suite and a pixel diff (`docs/archive/tech-debt-plan-2026-10.md` section 6).
+## Motion (`motion/`)
+
+Reduced motion is CSS-only (`[data-reveal]`, `[data-parallax]` in `globals.css`).
+- `ScrollReveal`: server component, `<div data-reveal="io">`, delay as `--reveal-delay` (from `stagger(i)`); no hidden state in the HTML.
+- `RevealObserver`: the one client island (in `PageShell`). Arms `html[data-reveal-armed]` only after its first IntersectionObserver callback, never under reduced motion or in an iframe, so a failure leaves the page visible. A `ScrollReveal` mounted after its effect is never observed.
+- `ParallaxFrame`: server component, CSS `view()` drift; it, `Section` and the footer use `overflow-clip`, never `overflow-hidden`.
+- `SoftSnap` (client gate) dynamically imports `SlidePager` only where `SNAP_MEDIA` matches (`lib/soft-snap.ts`; logic in `lib/slide-pager.ts`).
+
+## Primitive contracts
+
+**`Section`** (`id? tone? fit? phone? floor? center? pad? seam? anchor?`): always `relative w-full overflow-clip`, no `dir` prop. `data-fit`/`data-phone`/`data-bg-tone` are owned by the props; tests check them against the implementing classes.
+- `tone` `dark | mid | light | cream` sets `data-bg-tone` (`globals.css` paints background, text, `--header-color`). Omit it for photo sections.
+- `fit` (omit for content height, e.g. blog): from lg at least one screen. `free` grows; `lock` is exactly `lg:h-[max(100svh,720px)]` + `lg:py-12`, content must fit via a `lg:flex-1 lg:min-h-0` chain to the photo grid; `grow` is at least that, for text that must never clip. `floor={false}` (lock only) drops the 720px floor (Expertise).
+- `phone` (needs a `fit`): below lg. `content` (default) = content + padding; `screen` = `min-height: var(--card-h)`. Only credentials and the CTA band use it; hero (`hero-fit`) and footer (`screen-visible`) are bespoke. Never write the unit by hand.
+- `center` (needs a `fit`): `column` (default), `start` (top-aligned from lg: Expertise), `middle` (one child centred: photo bands). `pad`: `section | tight | none`; never a second `py-*` in `className`. `seam` pulls up 1px to hide a sub-pixel gap; `anchor` renders an invisible scroll target before the section.
+
+**`Container`** (`maxWidth? gutter?`): `md | lg | xl | 2xl (default) | 3xl | none`; `gutter` `default | wide | none` (one `px-*` class).
+
+**`Card`** (`surface`, `pad` required): `cream` = solid cream, plum text (5.55:1); `veil` = cream 85% over mauve (`--surface-veil`, 4.97:1), mauve sections only. Both own `data-bg-tone="cream"`. `pad` `md | lg`. Content layout goes in `className`. Mixed-colour surfaces (`TestimonialCard`, `AuthorCard`, `PostCard`) stay on a bare `rounded-card`.
+
+**`SectionTitle`** is the one title style (`as` `h2 | h1 | p`; `onDark` for a toneless photo band; `marker` puts a decorative drawing beside the heading, never inside it). **`SectionHeader`** (`id title subtitle align onPhoto? marker?`) renders title and subtitle per CLAUDE.md typography rule 8; `align` `center | column` (Services: `mt-5 md:mt-9`, no 65ch cap, for the Elamy "?" descender). Use `SectionTitle` + `SectionSubtitle` when the two reveal separately. **`BodyText`**: `type-body` unless `className` has a `type-*`; colour from the tone.
+
+**`ButtonLink`**: the only button-shaped link, a pill. `primary` (plum) on light sections, `secondary` (cream) on plum and photos; never a mauve fill. One style (`.type-lead` bold); `size` `md | sm` changes only height. `halo` adds the breathing ring (`HaloWrap`). Layout extras via `className`, never fill, radius or padding.
+
+**`Photo`** (`src alt radius sizes` required): cover-fitted `next/image` in a clipped frame. `radius` `card | tile | none`; rounded frames get `safari-clip` unless `safariClip={false}` (nested in a clipped parent). `sizes` is the width the image renders at, not the frame's (a `ParallaxFrame` layer is scaled by `1 + (2 * amount + 1) / 100`). `ratio` is a closed set, never a `padding-top` spacer; `fillCellAtLg` lets the grid cell set the height from lg. `motion`: none (children are overlays) | `{ parallax: n }` | `{ reveal: delay }`. `quality` must be in `images.qualities`.
+
+**`MaskIcon`** (`src size`): single-colour SVG painted via CSS mask, `sm` 24px | `lg` 44px; `as="a"` (`href label external?`) makes the anchor the focus target. **`IconButton`** (`label`): round 44px icon-only button in the header style; `label` is the accessible name.
+
+The class lockups a primitive owns (title class list, mask style, cover-fit frame, icon-button classes) are written only there; `source-scan.test.ts` fails when a component re-types them.
+
+## Tokens
+
+`--spacing-gutter`, `-gutter-wide`, `-section`, `-section-tight` also generate `gap-`, `w-`, `h-`, `m-`... utilities of that name; a token used only through an arbitrary `[var(--x)]` must go in `@theme static`. Radii: `rounded-tile` (12px), `rounded-card` (24px), `rounded-full`; never `rounded-[Npx]`.

@@ -4,7 +4,7 @@
  * .github/, scripts/, public/, the root configs and every .md/test file and emit junk
  * rules such as .contents or .ease-in-out); `@source` re-adds src/ (path relative to this file: src/app -> src). */
 @source "../";
-/* ...except the docs inside src (src/components/primitives/README.md quotes sample classes such as
+/* ...except the docs inside src (src/components/README.md quotes sample classes such as
  * text-white and gap-section). */
 @source not "../**/*.md";
 

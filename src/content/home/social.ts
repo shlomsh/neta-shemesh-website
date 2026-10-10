@@ -1,6 +1,6 @@
 import type { SocialLink } from '../types';
 
-// TODO(owner, tech-debt Y3): these still point at the networks' home pages. Once Netta supplies
+// TODO(owner): these still point at the networks' home pages. Once Netta supplies
 // the real profile URLs, put them here and feed SITE.sameAs (content/site.ts) from this array.
 export const SOCIAL_LINKS: SocialLink[] = [
   { href: 'https://facebook.com', label: 'Facebook', iconSrc: '/images/social-icon-facebook.svg' },

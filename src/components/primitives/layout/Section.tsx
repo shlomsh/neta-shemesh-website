@@ -75,7 +75,7 @@ type SectionOwnProps = {
   /**
    * Pull the section up 1px over the previous one. Hides a sub-pixel gap between two toned
    * sections at fractional device pixel ratios.
-   * TODO(visual-roadmap #2): remove once the seams are solved in CSS.
+   * Remove once the seams are solved in CSS.
    */
   seam?: boolean;
   /** Renders an invisible zero-height anchor div with this id immediately before the section (nav scroll target). */

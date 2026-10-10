@@ -50,7 +50,7 @@ export const SITE = {
   /**
    * Real social profile URLs for JSON-LD `sameAs`. Empty on purpose: the footer icons in
    * content/home/social.ts still point at the networks' home pages (owner to supply the real
-   * profiles, tech-debt plan Y3), and those must not be advertised to search engines.
+   * profiles), and those must not be advertised to search engines.
    */
   sameAs: [] as string[],
 };

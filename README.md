@@ -1,93 +1,55 @@
-# Netta Shemesh — Couple & Family Therapist
+# Netta Shemesh — website
 
-> *"מקום בטוח לצמוח בו ביחד" — A safe place to grow together.*
+Marketing site for **Netta Shemesh** (נטע שמש), a couples and family therapist in Netanya. Hebrew only, right-to-left, mobile-first. Its job is a warm first impression and a low-friction first contact (WhatsApp, phone, email). Who she is and what the site is for: [docs/neta.md](docs/neta.md). Audience and design principles: [PRODUCT.md](PRODUCT.md). Design rules (type, colour, contrast, layout) and code rules: [CLAUDE.md](CLAUDE.md).
 
-This is the personal website of **Netta Shemesh**, a clinical social worker (M.S.W.) and licensed therapist with over 15 years of experience helping couples, families, and individuals navigate change, crisis, and growth.
+## Stack
 
----
+Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a small JS slide pager; no animation library. Fonts are self-hosted through `next/font/local`. Three runtime dependencies (`next`, `react`, `react-dom`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
 
-## What this site is about
-
-Therapy begins long before anyone walks through the clinic door. The first step — reaching out, reading a few words, feeling like *this* might be the right place — matters enormously. This website was built to make that first step feel warm, safe, and unhurried.
-
-Visitors arrive at a quiet moment in their lives: a couple drifting apart in silence, parents who feel stuck, someone searching for a steady hand through a personal storm. The site meets them there. It doesn't lecture. It listens. It gives a sense of who Netta is and what the work feels like before any appointment is ever booked.
-
-### The four areas of practice
-
-| Area | What it addresses |
-|---|---|
-| **Couple Therapy** | Loneliness inside a relationship, communication walls, growing back toward each other |
-| **Family Therapy** | Family dynamics, conflict, transitions, and finding a shared language again |
-| **Parenting Guidance** | Practical tools for parents — because one hour a week in a clinic can't do it alone; the real change happens at home, with you |
-| **Personal Accompaniment** | Individual support through life's harder seasons |
-
-The primary contact channel is **WhatsApp**, keeping the path to a first conversation as frictionless as possible.
-
----
-
-## Design philosophy
-
-The site has a visual identity built around four colors — a warm cream, soft blush, mid mauve, and deep plum — and two fonts: a handwritten display face for titles, and a clean, readable sans-serif for everything else. Every color pairing was tested for WCAG accessibility contrast. The layout moves through full-screen sections that progress through the palette like rooms in a home.
-
-The site is fully **Hebrew and RTL** (right-to-left), mobile-first, and designed to feel unhurried on every screen size.
-
----
-
-## What's under the hood
-
-For the curious: this site is built with some of the most modern web technology available, chosen deliberately to make it fast, accessible, and maintainable for years to come.
-
-### Core framework
-
-- **[Next.js 16](https://nextjs.org/) with the App Router** — the latest generation of Next.js, where pages are server-rendered by default. This means search engines can read every word of the site the moment it loads, and visitors get content immediately rather than waiting for JavaScript to run.
-- **[React 19](https://react.dev/)** — the newest version of the UI library that powers most of the modern web.
-- **[TypeScript](https://www.typescriptlang.org/)** — the entire codebase is fully type-safe, which means bugs are caught before they ever reach a visitor.
-
-### Styling
-
-- **[Tailwind CSS v4](https://tailwindcss.com/)** — the newest major version, with a redesigned configuration system (`@theme` in CSS rather than a separate config file). All spacing, colors, and typography tokens live in one place and cascade correctly across every component.
-- A **custom fluid type scale** built with CSS `clamp()` — text sizes adapt smoothly between mobile and desktop without any abrupt jumps. No text on the site is smaller than 14px on any device.
-- **Custom brand fonts** — loaded from `.woff2` files, self-hosted through `next/font/local` (fontkit is a dev-only dependency, used by a sanity test to measure the Elamy glyph ink). No Google Fonts, no third-party CDN dependency.
-
-### Motion & interactions
-
-- **CSS motion** — scroll-triggered reveals (one tiny IntersectionObserver island), a CSS scroll-driven photo parallax and the contact pill's entrance keyframe. No animation library. Respects the operating system's "reduce motion" accessibility preference.
-
-### Hebrew & RTL
-
-- The site is **single-locale Hebrew**. Right-to-left layout comes from `lang="he" dir="rtl"` on the root `<html>` element (`src/app/layout.tsx`) — Tailwind's logical properties handle the rest. No internationalization library is needed, and none is installed.
-
-### SEO & discoverability
-
-- **Open Graph preview card** — when the link is shared on WhatsApp, iMessage, or social media, it shows a branded 1200×630 card. This is a committed image at `src/app/opengraph-image.png`, **not** generated at build time, so it needs updating by hand if the branding or the wording on it changes. (It was previously generated from JSX, but that version hardcoded its Hebrew and faked RTL by reversing characters, which corrupts any mixed Hebrew/Latin text. A static asset is more predictable, and it also serves with the correct `image/png` type on Azure Static Web Apps, which the generated route did not.)
-- **Auto-generated sitemap** at `/sitemap.xml` and a `robots.txt`, so search engines always have an up-to-date map of the site.
-- Server-side rendering means every page is fully readable by Google without JavaScript.
-
-### Quality & testing
-
-- **[Playwright](https://playwright.dev/)** — an end-to-end browser test suite that takes visual screenshots and compares them against approved baselines. Any unintended visual change fails the build before it can be deployed.
-- **[Vitest](https://vitest.dev/)** — unit tests for component logic, run in milliseconds.
-- **GitHub Actions CI** — every code change is automatically built and tested before it can go live.
-
-### Deployment
-
-- **[Vercel](https://vercel.com/)** — production. The site deploys automatically on every merge to the main branch, and each pull request gets its own preview URL for review before anything goes public.
-- **[Azure Static Web Apps](https://azure.microsoft.com/products/app-service/static)** — a second, parallel deploy running from the same commits while a possible move off Vercel is evaluated. It is **not** indexable by search engines, and it serves images unoptimized, so it is slower than production by design.
-
-> Both hosts build from one codebase, switched by two environment variables. Before changing `next.config.ts`, `public/staticwebapp.config.json`, or anything touching canonical URLs, read **[docs/deployment.md](docs/deployment.md)** — it covers the env guard, the cutover checklist, the known image-optimization gap, and `npm run compare:deploys` for verifying the two hosts still agree.
-
----
-
-## Getting started (for developers)
+## Commands
 
 ```bash
 npm install
-npm run dev        # start local dev server at http://localhost:3000
-npm run build      # production build
-npm run test:unit  # run unit tests
-npx playwright test  # run visual regression tests
+npm run dev                 # http://localhost:3000
+npm run build && npm run start
+npm run lint                # eslint --max-warnings 0 (also enforces the component layer direction)
+npx tsc --noEmit
+npm run test:unit           # all of tests-unit/ (Vitest)
+npm run test:sanity         # tests-unit/sanity only: the fast design/structure guard
 ```
 
----
+Playwright (`tests/*.spec.ts`, runs the built site):
+
+```bash
+npm run build
+BASE_URL=http://localhost:3200 npx playwright test --project=chromium
+```
+
+Use a fresh port: when nothing listens there the config starts `npm run start -p 3200` itself, but it reuses whatever already listens, so a stale server silently tests old code.
+
+Pixel diff of the working tree against any git ref (0 px tolerance, no committed baselines): `npm run vr -- <ref>`, see [tests/visual/README.md](tests/visual/README.md).
+
+## Repo map
+
+- `src/app` routes (`page.tsx`, `blog/`, `layout.tsx`), `fonts.ts`, `globals.css`, `sitemap.ts`, Open Graph images (committed PNGs, not generated).
+- `src/content` plain typed data: `site.ts` (name, phone, email, address, URLs), `ids.ts` (DOM ids, anchors), `home/*.ts` (copy), `posts/*.ts` (blog).
+- `src/components/{sections,site,primitives,motion,blog}` one folder per home section, shared chrome, content-agnostic building blocks, scroll behaviour, blog parts. Layer direction `content → lib → motion → primitives → site → sections | blog → app` is enforced by ESLint (`eslint.config.mjs`); folder rules and primitive contracts: [src/components/README.md](src/components/README.md).
+- `src/lib` SEO (`seo/`), motion helpers, the slide pager's pure logic, `cx()`.
+- `tests-unit` Vitest; `tests-unit/sanity` is the structural guard ([README](tests-unit/sanity/README.md)). `tests` Playwright e2e; `tests/visual` the pixel-diff harness.
+- `scripts` font fallback metrics generator, Vercel ignored-build gate. `public` images, `robots.txt`, `llms.txt`.
+
+## Deploy
+
+Vercel deploys `main` through its Git integration. Before each build `vercel.json` runs `scripts/vercel-ignore-build.sh`, which runs `vitest run` and skips the build when tests fail (inverted exit codes, fail-open on infrastructure errors). GitHub Actions (`.github/workflows/playwright.yml`) runs lint, `tsc`, unit tests, build and the Playwright suite on every push and PR to `main`; Vercel does not wait for it, so it cannot block a deploy. Why the repo is public, DNS and rollback: [docs/deployment.md](docs/deployment.md).
+
+## Docs
+
+- [CLAUDE.md](CLAUDE.md) design rules and code rules (loaded automatically by Claude Code)
+- [PRODUCT.md](PRODUCT.md) audience, brand personality, design principles
+- [docs/neta.md](docs/neta.md) who Netta is, site goals, her voice
+- [docs/deployment.md](docs/deployment.md) Vercel, domain and DNS, test gate, rollback
+- [src/components/README.md](src/components/README.md) layers, folder rules, primitive contracts
+- [tests-unit/sanity/README.md](tests-unit/sanity/README.md) what each sanity guard protects
+- [tests/visual/README.md](tests/visual/README.md) the `npm run vr` harness
 
 *Built with care by [Shlomi Shemesh](https://github.com/shlomsh) for Netta Shemesh Therapy.*

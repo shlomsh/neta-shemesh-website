@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 /**
- * Visual-regression config. NOT used by `npm run test:e2e` / the default Playwright config:
+ * Visual-regression config. NOT used by `npx playwright test` / the default Playwright config:
  * the default config ignores tests/visual, and this one only matches `vr.shots.ts`.
  * Driven by `npm run vr` (tests/visual/run.mjs), which sets the VR_* env vars below.
  *

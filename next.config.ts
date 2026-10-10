@@ -3,8 +3,10 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig: NextConfig = {
-  // Stop `next dev` re-writing its "read node_modules/next/dist/docs/" block into agents.md
-  // (it made every agent crawl a 4.3 MB docs folder). agents.md carries narrow wording instead.
+  // Stop `next dev` writing its "read node_modules/next/dist/docs/" block into AGENTS.md (it made
+  // every agent crawl a 4.3 MB docs folder). With this off, Next only strips that managed block and
+  // never creates the file (node_modules/next/dist/server/lib/generate-agent-files.js). CLAUDE.md says
+  // to read only the one guide for the API being touched.
   agentRules: false,
   // Inline the (small) CSS into the HTML: removes the render-blocking stylesheet requests and lets
   // the font files be discovered from the document itself. Lighthouse mobile showed ~850 ms of
