@@ -491,6 +491,14 @@
   to { transform: translateY(var(--parallax-amount, 0%)) scale(var(--parallax-scale, 1)); }
 }
 
+/* The ink box of an Elamy title that carries a `filter` (CtaBand's drop-shadow). Safari clips a filter to the element's
+   layout box, and Elamy's swash ink (-0.86em..1.57em; ascent 0.8em) lies far outside it, so the final ץ lost its top. The
+   padding enlarges the box to cover the ink; the equal negative margin keeps the layout identical. Guard: elamy-static.spec.ts. */
+@utility ink-box {
+  padding: 0.75em 1rem;
+  margin: -0.75em -1rem;
+}
+
 @utility safari-clip {
   /* WebKit rendering bug workaround for border-radius overflow */
   -webkit-mask-image: -webkit-radial-gradient(white, black);

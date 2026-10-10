@@ -73,7 +73,7 @@ export function SectionHeader({ id, title, subtitle, align, onPhoto = false, sub
   );
   return (
     <>
-      <SectionTitle id={id} onDark={onPhoto} marker={marker} rowClassName={align === 'column' ? 'justify-center md:justify-start' : 'justify-center'} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-start', onPhoto && 'drop-shadow-md')}>
+      <SectionTitle id={id} onDark={onPhoto} marker={marker} rowClassName={align === 'column' ? 'justify-center md:justify-start' : 'justify-center'} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-start', onPhoto && 'drop-shadow-md ink-box')}>
         {title}
       </SectionTitle>
       {subtitleReveal === undefined ? sub : <ScrollReveal delay={subtitleReveal}>{sub}</ScrollReveal>}

@@ -17,9 +17,20 @@ import { test, expect } from '@playwright/test';
  * `lg:overflow-hidden!` for its sticky column (see Bio.tsx), and the Safari defect was only reproduced on phones.
  * The same test fails a title that a row flex/grid container centres (`items-center`) in a taller row: Safari cut the
  * Bio/Services swashes that way (SectionTitle with a `marker`).
+ *
+ * Third guard (any width): Safari clips a `filter` / `mask` / `clip-path` to the element's LAYOUT box, which for Elamy is
+ * far smaller than the ink (see INK_EM). The CTA band title carried `drop-shadow-md` and lost the top of its final ץ in
+ * Safari (Mac, iPad, iPhone; not Chromium) with nothing animating. So any such element at or above a title (up to its
+ * section) must reach INK_EM above and below the title's text and 1rem (the gutter) beside it: the `ink-box` utility
+ * (padding + equal negative margin) does that without moving anything.
  */
 const TITLES = '.type-title, h1.type-display';
 const SCROLLERS = ['hidden', 'auto', 'scroll'];
+// Elamy Bold ink beyond the text's content area, in em (fontkit, Hebrew glyphs): 0.72 above (ץ 1.516 - 0.8 ascent) and
+// 0.65 below (ך -0.8 - -0.15 descent). Sideways (up to 0.71em, נ ל ץ) only the title's line ends can reach a box edge, and
+// a wider box would leave the 1rem gutter at 375px, so the inline cover is 1rem.
+const INK_EM = 0.72;
+const INK_SIDE_REM = 1;
 
 for (const route of ['/', '/blog']) {
 test(`${route}: every .type-title and the hero H1 is static: no [data-reveal], transition or animation on it or its ancestors`, async ({ page }) => {
@@ -56,6 +67,42 @@ test(`${route}: every .type-title and the hero H1 is static: no [data-reveal], t
 
 // Scoped to the home page: the blog pages mount `<PageShell overflow="hidden">` (a deliberate, documented difference), so
 // their `main` is a scroll container. Not yet covered by this assertion (follow-up for the owner).
+test(`${route}: a filter, mask or clip-path at or above an Elamy title covers the swash ink (Safari clips it to the layout box)`, async ({ page }) => {
+  await page.goto(route);
+  await page.waitForSelector(TITLES);
+
+  const result = await page.evaluate(({ sel, ink, side }) => {
+    const describe = (el: Element) =>
+      `${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ''}${typeof el.className === 'string' && el.className ? `.${el.className.trim().split(/\s+/).slice(0, 3).join('.')}` : ''}`;
+    const none = (v: string) => v === 'none' || v === '';
+    const offenders: string[] = [];
+    const titles = [...document.querySelectorAll(sel)];
+    for (const title of titles) {
+      const label = `${describe(title)} "${(title.textContent ?? '').trim().slice(0, 30)}"`;
+      const em = parseFloat(getComputedStyle(title).fontSize);
+      const range = document.createRange();
+      range.selectNodeContents(title);
+      const text = range.getBoundingClientRect();
+      for (let el: Element | null = title; el && el !== document.body; el = el.parentElement) {
+        const cs = getComputedStyle(el);
+        const clipping = [['filter', cs.filter], ['mask-image', cs.maskImage], ['-webkit-mask-image', cs.webkitMaskImage], ['clip-path', cs.clipPath]].filter(([, v]) => !none(v));
+        if (clipping.length) {
+          const box = el.getBoundingClientRect();
+          const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+          const gaps = { top: [text.top - box.top, ink * em], bottom: [box.bottom - text.bottom, ink * em], start: [text.left - box.left, side * rem], end: [box.right - text.right, side * rem] };
+          const short = Object.entries(gaps).filter(([, [g, need]]) => g < need - 0.5).map(([where, [g]]) => `${where} ${(g / em).toFixed(2)}em`);
+          if (short.length) offenders.push(`${label}: ${clipping.map(([n]) => n).join('+')} on ${el === title ? 'itself' : `ancestor ${describe(el)}`} leaves the swash ink uncovered (${short.join(', ')}; needs ${ink}em above/below, ${side}rem beside)`);
+        }
+        if (el.tagName === 'SECTION') break;
+      }
+    }
+    return { count: titles.length, offenders };
+  }, { sel: TITLES, ink: INK_EM, side: INK_SIDE_REM });
+
+  expect(result.count).toBeGreaterThan(0);
+  expect(result.offenders, 'a filtered Elamy title needs the ink-box utility (Safari cuts the swash tops to the layout box)').toEqual([]);
+});
+
 if (route === '/')
 test(`${route}: no .type-title or hero H1 sits in a scroll container or is centred in a taller flex/grid row at 390px`, async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
