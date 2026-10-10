@@ -97,7 +97,7 @@ describe('MaskIcon / IconButton', () => {
   it('IconButton is a type=button with an aria-label, a 44px target and the shared focus ring; extras pass through', () => {
     const el = first(<IconButton label="Open" aria-expanded={false} className="md:hidden"><svg /></IconButton>);
     expect([el.tagName, el.getAttribute('type'), el.getAttribute('aria-label'), el.getAttribute('aria-expanded')]).toEqual(['BUTTON', 'button', 'Open', 'false']);
-    expect(classTokens(el)).toEqual(expect.arrayContaining(['h-[44px]', 'w-[44px]', 'focus-ring', 'md:hidden']));
+    expect(classTokens(el)).toEqual(expect.arrayContaining(['h-11', 'w-11', 'focus-ring', 'md:hidden']));
     // @ts-expect-error an icon-only button needs its accessible name
     first(<IconButton><svg /></IconButton>);
   });

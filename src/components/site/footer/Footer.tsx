@@ -19,13 +19,13 @@ import { FooterBackground } from './FooterBackground';
 export function Footer() {
   return (
     <footer
-      className="relative w-full overflow-clip flex flex-col items-center px-6 py-[clamp(48px,6vw,96px)] screen-visible"
+      className="relative w-full overflow-clip flex flex-col items-center px-6 py-[clamp(3rem,6vw,6rem)] screen-visible"
     >
       {/* Background photo + scrim — absolutely positioned */}
       <FooterBackground />
 
       {/* Content column — sits above the background via z-10; my-auto centres it between the top padding and the copyright */}
-      <div className="relative z-10 my-auto flex flex-col items-center gap-[clamp(32px,6vw,90px)] w-full max-w-[894px] text-center">
+      <div className="relative z-10 my-auto flex flex-col items-center gap-[clamp(2rem,6vw,5.625rem)] w-full max-w-[55.875rem] text-center">
 
         {/* 1. Tagline */}
         <ScrollReveal className="h-full">
@@ -38,7 +38,7 @@ export function Footer() {
         <ScrollReveal delay={0.1}>
           {/* A single cream ButtonLink pill (secondary variant) on the photo footer; the pill is its own fill. */}
           <div className="relative flex items-center justify-center">
-            <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" size="sm" halo className="relative z-10 min-h-[48px]">
+            <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" size="sm" halo className="relative z-10 min-h-12">
               מוזמנים ליצור איתי קשר
             </ButtonLink>
           </div>
@@ -56,7 +56,7 @@ export function Footer() {
       </div>
 
       {/* 4. Copyright — last flex item, so it rests at the bottom; extra bottom padding below md clears the ContactFAB pill (bottom-left) */}
-      <div className="relative z-10 pb-[calc(env(safe-area-inset-bottom)+72px)] md:pb-0">
+      <div className="relative z-10 pb-[calc(env(safe-area-inset-bottom)+4.5rem)] md:pb-0">
         <ScrollReveal delay={0.3}>
           <p
             className="type-small text-cream text-center"

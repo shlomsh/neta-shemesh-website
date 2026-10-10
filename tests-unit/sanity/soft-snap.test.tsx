@@ -7,7 +7,7 @@
  * made iPhones feel stuck and was deleted. NS-48 replaced it with a slide pager: one wheel/trackpad gesture
  * or key moves exactly one card (components/motion/SlidePager.tsx; the pure decisions are table-tested in
  * tests-unit/slide-pager.test.ts). SoftSnap.tsx is the tiny gate that mounts it (dynamic import) only where
- * `(min-width: 1024px) and (pointer: fine)` matches and motion is not reduced, so touch devices download and
+ * `(min-width: 64rem) and (pointer: fine)` (64rem = 1024px at the default root) matches and motion is not reduced, so touch devices download and
  * run no pager code at any width.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -63,8 +63,8 @@ describe('behaviour on the real page (jsdom, fake rAF)', () => {
   function evaluate(query: string, o: Env): boolean {
     if (query.includes('prefers-reduced-motion')) return o.reduced;
     return query.split(/\band\b/).every((term) => {
-      const minWidth = /min-width:\s*(\d+)px/.exec(term);
-      if (minWidth) return o.width >= Number(minWidth[1]);
+      const minWidth = /min-width:\s*(\d+(?:\.\d+)?)(px|rem)/.exec(term); // rem = the default 16px root here
+      if (minWidth) return o.width >= Number(minWidth[1]) * (minWidth[2] === 'rem' ? 16 : 1);
       const pointer = /pointer:\s*(fine|coarse)/.exec(term);
       return pointer ? o.pointer === pointer[1] : false;
     });

@@ -27,7 +27,7 @@ export function HeroArt() {
         relative
         flex items-center justify-center
         w-full
-        h-[clamp(280px,42vw,480px)]
+        h-[clamp(17.5rem,42vw,30rem)]
       "
     >
       {/* Asymmetric organic blob */}
@@ -35,7 +35,7 @@ export function HeroArt() {
         aria-hidden="true"
         className={cx(
           styles.blob,
-          'absolute w-[clamp(280px,46vw,520px)] h-[clamp(220px,38vw,420px)] bg-mauve [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]',
+          'absolute w-[clamp(17.5rem,46vw,32.5rem)] h-[clamp(13.75rem,38vw,26.25rem)] bg-mauve [border-radius:42%_58%_55%_45%/55%_48%_52%_45%]',
         )}
       />
 
@@ -43,7 +43,7 @@ export function HeroArt() {
       <CoupleLineArt
         className="
           relative
-          w-[clamp(240px,42vw,480px)]
+          w-[clamp(15rem,42vw,30rem)]
           h-auto
           hero-floaty
           text-cream

@@ -36,7 +36,7 @@ export function PostCard({ post, eager = false, headingLevel = 3 }: PostCardProp
       />
 
       {/* Body */}
-      <div className="flex flex-1 flex-col gap-[12px] p-[clamp(20px,2.5vw,28px)]">
+      <div className="flex flex-1 flex-col gap-3 p-[clamp(1.25rem,2.5vw,1.75rem)]">
         <span className="type-eyebrow text-plum">
           {post.category}
         </span>
@@ -49,7 +49,7 @@ export function PostCard({ post, eager = false, headingLevel = 3 }: PostCardProp
           {post.excerpt}
         </p>
 
-        <div className="mt-auto flex items-center gap-[10px] pt-[8px] type-small text-plum">
+        <div className="mt-auto flex items-center gap-2.5 pt-2 type-small text-plum">
           <time dateTime={post.date}>{post.dateDisplay}</time>
           <span aria-hidden="true">·</span>
           <span>{post.readTime}</span>

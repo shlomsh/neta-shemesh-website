@@ -5,8 +5,8 @@ type MaxWidth = 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none';
 
 /**
  * Side padding.
- *   'default' px-gutter       clamp(16px,4vw,48px)
- *   'wide'    px-gutter-wide  clamp(24px,5vw,80px)  (the About sections)
+ *   'default' px-gutter       clamp(1rem,4vw,3rem)
+ *   'wide'    px-gutter-wide  clamp(1.5rem,5vw,5rem)  (the About sections)
  *   'none'    no padding (the parent Section already pads the sides)
  * One class per Container, so there is no second `px-*` fighting it by CSS source order.
  */
@@ -18,12 +18,13 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
+// Widths in rem so the measure grows with the visitor's font size; the comments are px at the default 16px root.
 const MAX_W_MAP: Record<MaxWidth, string> = {
-  md: 'max-w-[768px]',
-  lg: 'max-w-[1024px]',
-  xl: 'max-w-[1100px]',
-  '2xl': 'max-w-[1280px]',
-  '3xl': 'max-w-[1440px]',
+  md: 'max-w-3xl', // 768
+  lg: 'max-w-5xl', // 1024
+  xl: 'max-w-[68.75rem]', // 1100
+  '2xl': 'max-w-7xl', // 1280
+  '3xl': 'max-w-[90rem]', // 1440
   none: '',
 };
 

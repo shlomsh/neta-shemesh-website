@@ -74,7 +74,7 @@ const PEN_STAGGER_SECONDS = 0.28;
 
 export function LineArt({ name, className, delay = 0, marker = false }: { name: LineArtName; className?: string; delay?: number; /** Title-marker size (about the title's cap height); use beside a SectionTitle `marker`. */ marker?: boolean }) {
   return (
-    <ScrollReveal delay={delay} className={cx('line-art-reveal', marker && 'w-[clamp(44px,5vw,64px)] aspect-square', className)}>
+    <ScrollReveal delay={delay} className={cx('line-art-reveal', marker && 'w-[clamp(2.75rem,5vw,4rem)] aspect-square', className)}>
       <svg
         viewBox="0 0 200 200"
         fill="none"

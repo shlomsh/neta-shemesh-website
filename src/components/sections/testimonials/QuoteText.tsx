@@ -10,8 +10,8 @@ export function QuoteText({ text }: QuoteTextProps) {
         text-plum
         font-[family-name:var(--font-body)]
         text-start
-        mt-[64px]
-        mb-[32px]
+        mt-16
+        mb-8
       "
     >
       {text}

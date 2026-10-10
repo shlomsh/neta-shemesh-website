@@ -22,10 +22,10 @@ export function Intro() {
   return (
     <Section id={ID.aboutIntro} anchor={ANCHOR.about} tone="mid" fit="lock" pad="section" seam>
       <Container maxWidth="2xl" gutter="wide" className="relative lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
-        <div className="flex flex-col gap-[40px] lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[1fr_1.25fr] lg:gap-[clamp(40px,5vw,80px)]">
+        <div className="flex flex-col gap-10 lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[1fr_1.25fr] lg:gap-[clamp(2.5rem,5vw,5rem)]">
 
           {/* Photo collage — left column on desktop (wider, height-driven to the section), top on mobile */}
-          <div className="relative w-full grid grid-cols-2 gap-[16px] lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">
+          <div className="relative w-full grid grid-cols-2 gap-4 lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">
             <ScrollReveal className="lg:min-h-0">
               <Photo
                 src={INTRO_PHOTOS[0].src}
@@ -61,7 +61,7 @@ export function Intro() {
           </div>
 
           {/* Text column */}
-          <div className="relative w-full flex flex-col justify-center gap-[24px] lg:order-1 lg:self-center">
+          <div className="relative w-full flex flex-col justify-center gap-6 lg:order-1 lg:self-center">
             <OrganicBg className="opacity-60 z-0 pointer-events-none" />
 
             <ScrollReveal className="relative z-10">

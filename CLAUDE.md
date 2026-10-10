@@ -14,6 +14,8 @@
 
 ### The Type Scale — use these classes, nothing else
 
+Sizes below are **px at the default 16px root; the CSS uses rem** (the root font size is never pinned, so the scale follows the visitor's browser setting).
+
 | Class | Mobile → Desktop | Font | Weight | Line-height | Use for |
 |---|---|---|---|---|---|
 | `.type-display` | 40px → 72px | accent | 400 (700 on the hero H1) | 1.05 | Hero H1, step numerals |
@@ -26,7 +28,7 @@
 | `.type-eyebrow` | 14px fixed | body | 700 | 1.40 | Labels (uppercase, +0.08em tracking) |
 | `.type-signature` | 32px → 56px | accent | 400 | 1.10 | Handwritten signature |
 
-**Blog exception:** `.type-read` (20 → 23px) and `.type-read-lead` (22 → 28px), `PostBody` only. **Floor: no text below 14px.**
+**Blog exception:** `.type-read` (20 → 23px) and `.type-read-lead` (22 → 28px), `PostBody` only. **Floor: no text below 0.875rem (14px).**
 
 ### Rules (numbers are cited from code and docs; keep them stable)
 
@@ -86,6 +88,7 @@ Don't pass `onDark` to children. Bespoke `<section>`s add `data-bg-tone="dark|mi
 - **Soft snap** (`SoftSnap` → `SlidePager`): one card per wheel/key gesture only at ≥1024px with a fine pointer; all else scrolls natively. **Do not reintroduce touch snap**; no CSS scroll-snap.
 - **Surfaces** (`src/components/primitives/`, contracts in `src/components/README.md`): inner cards `<Card surface="cream|veil">`, framed photos `<Photo radius>`, icons `<MaskIcon>`, round icon buttons `<IconButton label>`. No hand-written `bg-[var(--color-cream)]` or re-typed `object-cover` frames.
 - **Header/nav:** below `md` a hamburger opens a full-screen overlay (`SiteNav` + `MobileMenu`, portaled to `document.body`; no `transform` on ancestors). Never a squeezed inline nav.
+- **Units:** rem for text, spacing, sizes and max-widths (`gap-4`, `max-w-3xl`, `clamp(1rem,4vw,3rem)`); an arbitrary `[Npx]` that equals a Tailwind step takes the step. px stays only for hairlines (border, ring, outline), shadows, motion offsets, `sizes=` and image `width`/`height`, SVG geometry. Never set `font-size` on `html`.
 - **Mobile:** single column, test at 375px. **No horizontal overflow** (`scrollWidth > clientWidth`).
 - **No iframe embedding** (`frame-ancestors 'none'` in `next.config.ts`); `RevealObserver` already skips iframes.
 

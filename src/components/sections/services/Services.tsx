@@ -16,13 +16,13 @@ export function Services() {
     <Section id={ID.services} tone="light" fit="lock">
       {/*
         The stagger is a margin-top on the even cards, not a translate-y, so the container grows with it
-        (a translate is out-of-flow and would be clipped by the Section's overflow). pb-[96px] leaves ~90px
+        (a translate is out-of-flow and would be clipped by the Section's overflow). pb-24 leaves ~90px
         below card 4 at 1280. md:flex-row puts the text column and the 2-column card grid side by side on tablets.
       */}
-      <Container maxWidth="3xl" className="flex flex-col md:flex-row md:items-start md:gap-[48px] lg:flex-row lg:gap-[64px] pt-[64px] pb-[96px] lg:py-0 lg:flex-1 lg:min-h-0 lg:items-stretch">
+      <Container maxWidth="3xl" className="flex flex-col md:flex-row md:items-start md:gap-12 lg:flex-row lg:gap-16 pt-16 pb-24 lg:py-0 lg:flex-1 lg:min-h-0 lg:items-stretch">
 
         {/* Text column — centered on mobile, right-aligned sticky on desktop */}
-        <div className="text-center md:text-start md:w-[320px] md:shrink-0 lg:text-start lg:w-[400px] lg:shrink-0 lg:self-center z-10 mb-[48px] md:mb-0 lg:mb-0">
+        <div className="text-center md:text-start md:w-80 md:shrink-0 lg:text-start lg:w-[25rem] lg:shrink-0 lg:self-center z-10 mb-12 md:mb-0 lg:mb-0">
           {/* Section is blush (plum text = 3.89:1, AA large only), so the subtitle is
               set at the quote scale (>=24px). */}
           <SectionHeader
@@ -33,7 +33,7 @@ export function Services() {
             subtitle="התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי."
           />
 
-          <div className="mt-[48px]">
+          <div className="mt-12">
             <ButtonLink href={anchorHref(ANCHOR.contact)} variant="primary" className="w-full sm:w-auto">
               צרו קשר
             </ButtonLink>
@@ -41,7 +41,7 @@ export function Services() {
         </div>
 
         {/* One column at 375px, two from md; ~30px gaps, cards capped at ~360px on tablets. */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[clamp(16px,4vw,64px)] w-full gap-x-[30px] gap-y-[30px] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[clamp(1rem,4vw,4rem)] w-full gap-x-[1.875rem] gap-y-[1.875rem] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
           {STEPS.map((step, i) => (
             <StepCard
               key={step.imageSrc}
@@ -50,8 +50,8 @@ export function Services() {
               title={step.title}
               bullets={step.bullets}
               className={cx(
-                'w-full h-full max-w-[480px] md:max-w-[360px] lg:max-w-none lg:h-auto mx-auto rounded-card shadow-2xl aspect-[4/5] lg:aspect-auto',
-                i % 2 === 1 ? 'md:mt-[40px] lg:mt-10' : 'lg:mb-10',
+                'w-full h-full max-w-[30rem] md:max-w-[22.5rem] lg:max-w-none lg:h-auto mx-auto rounded-card shadow-2xl aspect-[4/5] lg:aspect-auto',
+                i % 2 === 1 ? 'md:mt-10 lg:mt-10' : 'lg:mb-10',
               )}
             />
           ))}

@@ -13,6 +13,7 @@ import { describe, expect, it } from 'vitest';
 import {
   CONTRAST_BANS,
   ROOT,
+  ROOT_PX,
   SCAN_RULES,
   classLiterals,
   containsBanSample,
@@ -70,13 +71,13 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
     expectNone(scan(id === 'card-height' ? code : sources, r.re), `src contains ${r.label}`);
   });
 
-  it('no css file sets a font-size under the 14px floor', () => {
+  it('no css file sets a font-size under the 14px floor (0.875rem at the default root)', () => {
     const offenders: string[] = [];
     let seen = 0;
     for (const f of sources.filter((s) => s.name.endsWith('.css'))) {
       for (const m of stripCssComments(f.text).matchAll(/font-size\s*:\s*([^;}]+)/g)) {
         seen++;
-        for (const px of m[1].matchAll(/(\d+(?:\.\d+)?)px/g)) if (Number(px[1]) < 14) offenders.push(`${f.path}: ${m[0]}`);
+        for (const len of m[1].matchAll(/(\d+(?:\.\d+)?|\.\d+)(rem|px)\b/g)) if (Number(len[1]) * (len[2] === 'rem' ? ROOT_PX : 1) < 14) offenders.push(`${f.path}: ${m[0]}`);
       }
     }
     expect(seen, 'the scan went blind').toBeGreaterThan(5);
@@ -91,15 +92,15 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
 
   // "Written once" lockups: a primitive or token owns the spelling; the same text anywhere else is a copy that will drift.
   const LOCKUPS: Array<{ what: string; re: RegExp; only?: string[]; bad: string }> = [
-    { what: 'lock/grow one-screen height classes (use <Section fit>)', re: /lg:h-\[(?:max\(100svh,720px\)|100svh)\]|lg:min-h-\[max\(100svh,720px\)\]|(?<![\w-])screen-(?:lock|grow)\b/, only: ['primitives/layout/Section.tsx'], bad: 'lg:h-[100svh]' },
-    { what: 'repeated clamp paddings (use Container gutter / Section pad)', re: /px-\[clamp\(24px,5vw,80px\)\]|py-\[clamp\(56px,8vw,120px\)\]|px-\[clamp\(16px,4vw,48px\)\]|py-\[clamp\(48px,5vw,96px\)\]/, bad: 'py-[clamp(56px,8vw,120px)]' },
+    { what: 'lock/grow one-screen height classes (use <Section fit>)', re: /lg:h-\[(?:max\(100svh,(?:720px|45rem)\)|100svh)\]|lg:min-h-\[max\(100svh,(?:720px|45rem)\)\]|(?<![\w-])screen-(?:lock|grow)\b/, only: ['primitives/layout/Section.tsx'], bad: 'lg:h-[100svh]' },
+    { what: 'repeated clamp paddings (use Container gutter / Section pad)', re: /px-\[clamp\((?:24px|1\.5rem),5vw,(?:80px|5rem)\)\]|py-\[clamp\((?:56px|3\.5rem),8vw,(?:120px|7\.5rem)\)\]|px-\[clamp\((?:16px|1rem),4vw,(?:48px|3rem)\)\]|py-\[clamp\((?:48px|3rem),5vw,(?:96px|6rem)\)\]/, bad: 'py-[clamp(3.5rem,8vw,7.5rem)]' },
     { what: 'a bold/tracked type-title (700 and -0.01em are in the class)', re: /type-title font-bold|type-title tracking-\[-0\.01em\]/, bad: 'type-title font-bold' },
     { what: 'the literal .on-dark class', re: /(?<![\w-])on-dark(?![\w-])/, only: ['SectionTitle.tsx'], bad: 'on-dark type-title' },
     { what: 'onDark / onPhoto on a title or header (photo bands only)', re: /<(?:SectionTitle|SectionHeader|SectionSubtitle)\b[^>]*?\b(?:onDark|onPhoto)\b/, only: ['CtaBand.tsx', 'Footer.tsx', 'SectionHeader.tsx'], bad: '<SectionHeader\n id="x"\n onPhoto' },
     { what: 'a bare font-[var(--font-*)] class (generates nothing: use font-[family-name:var(--font-*)])', re: /font-\[var\(--font-[\w-]+\)\]/, bad: 'font-[var(--font-body)]' },
     { what: 'the mask-image style (use <MaskIcon>)', re: /WebkitMaskImage|maskImage/, only: ['primitives/ui/MaskIcon.tsx'], bad: '{ WebkitMaskImage: x }' },
     { what: 'the cover-fit photo (use <Photo>)', re: /absolute inset-0 (?:h-full w-full|w-full h-full) object-cover/, only: ['primitives/ui/Photo.tsx'], bad: 'absolute inset-0 h-full w-full object-cover' },
-    { what: 'the round 44px icon button (use <IconButton>)', re: /h-\[44px\] w-\[44px\] items-center justify-center rounded-full/, only: ['primitives/ui/IconButton.tsx'], bad: 'h-[44px] w-[44px] items-center justify-center rounded-full' },
+    { what: 'the round 44px icon button (use <IconButton>)', re: /h-(?:11|\[44px\]|\[2\.75rem\]) w-(?:11|\[44px\]|\[2\.75rem\]) items-center justify-center rounded-full/, only: ['primitives/ui/IconButton.tsx'], bad: 'h-11 w-11 items-center justify-center rounded-full' },
     { what: 'a padding-top aspect-ratio spacer (use Photo ratio / aspect-[w/h])', re: /(?<![\w-])pt-\[\d+(?:\.\d+)?%\]/, bad: 'pt-[62%]' },
     { what: 'a static import of the slide pager (touch devices must not download it; the gate uses import())', re: /from\s+['"][^'"]*SlidePager['"]/, only: ['SlidePager.tsx'], bad: "import { SlidePager } from './SlidePager'" },
   ];

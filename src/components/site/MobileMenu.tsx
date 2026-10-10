@@ -37,7 +37,7 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
   useInertBackground(open);
   useFocusTrap(open, overlayRef, closeButtonRef, onClose);
   // The overlay is md:hidden: close it when the viewport grows past md (rotation, split view).
-  useCloseAtBreakpoint(open, '(min-width: 768px)', onClose);
+  useCloseAtBreakpoint(open, '(min-width: 48rem)', onClose);
 
   if (!(mounted && open)) return null;
 
@@ -50,7 +50,7 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
       aria-label="תפריט ניווט"
       className="fixed inset-0 z-[100] md:hidden flex flex-col bg-plum"
     >
-      <div className="flex items-center justify-end px-[clamp(20px,5vw,40px)] py-[clamp(20px,4vw,32px)]">
+      <div className="flex items-center justify-end px-[clamp(1.25rem,5vw,2.5rem)] py-[clamp(1.25rem,4vw,2rem)]">
         <IconButton ref={closeButtonRef} label="סגירת תפריט" onClick={onClose}>
           <CloseIcon />
         </IconButton>
@@ -58,7 +58,7 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
 
       <nav
         aria-label="ניווט ראשי"
-        className="flex flex-1 flex-col items-center justify-center gap-[clamp(28px,7vw,44px)] px-[24px] pb-[10vh]"
+        className="flex flex-1 flex-col items-center justify-center gap-[clamp(1.75rem,7vw,2.75rem)] px-6 pb-[10vh]"
       >
         {links.map(({ href, label }) => (
           <NavLink
@@ -74,7 +74,7 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
           href={telHref()}
           variant="secondary"
           onClick={onClose}
-          className="mt-[clamp(12px,4vw,24px)]"
+          className="mt-[clamp(0.75rem,4vw,1.5rem)]"
         >
           <span dir="ltr" className="font-latin">{SITE.phone.display}</span>
         </ButtonLink>

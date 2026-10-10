@@ -18,7 +18,7 @@ export function ContactOffice() {
   return (
     <Section id={ID.contactOffice} anchor={ANCHOR.contact} tone="mid" fit="lock" pad="section">
       <Container maxWidth="none" gutter="wide">
-        <div className="mx-auto flex w-full max-w-[1100px] flex-col">
+        <div className="mx-auto flex w-full max-w-[68.75rem] flex-col">
 
           {/* Title row: above the card, right-aligned (RTL) on the mauve */}
           <ScrollReveal className="mb-8 md:mb-12 text-start">
@@ -34,14 +34,14 @@ export function ContactOffice() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-stretch">
 
                 {/* Right cell (first in RTL DOM): lead + contact details */}
-                <div className="flex flex-col justify-center gap-[24px] text-start">
+                <div className="flex flex-col justify-center gap-6 text-start">
                   <RichParagraph line={OFFICE_PANEL.body} />
 
                   <ContactDetails />
                 </div>
 
                 {/* Left cell: map, 260px on mobile, matches the details height at lg */}
-                <MapEmbed className="h-[260px] lg:h-full lg:min-h-[360px] safari-clip" />
+                <MapEmbed className="h-[16.25rem] lg:h-full lg:min-h-[22.5rem] safari-clip" />
               </div>
             </Card>
           </ScrollReveal>

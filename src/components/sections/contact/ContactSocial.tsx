@@ -16,10 +16,10 @@ export function ContactSocial() {
   return (
     <Section id={ID.contactSocial} tone="dark" fit="free" pad="section">
       <Container maxWidth="none" gutter="wide">
-        <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-[48px] lg:flex-row lg:items-center lg:gap-[64px]">
+        <div className="mx-auto flex w-full max-w-[68.75rem] flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
 
           {/* Heading on mobile — shown above photos only on small screens */}
-          <div className="flex flex-col gap-[24px] text-start lg:hidden">
+          <div className="flex flex-col gap-6 text-start lg:hidden">
             <ScrollReveal>
               <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
             </ScrollReveal>
@@ -34,7 +34,7 @@ export function ContactSocial() {
           */}
           <ScrollReveal className="w-full lg:w-[55%] shrink-0 lg:h-[calc(100svh-2*var(--spacing-section))]">
             {/* Mobile: simple vertical stack */}
-            <div className="flex flex-col gap-[16px] lg:hidden">
+            <div className="flex flex-col gap-4 lg:hidden">
               {CONTACT_PHOTOS.map((photo) => (
                 <Photo
                   key={photo.src}
@@ -53,7 +53,7 @@ export function ContactSocial() {
 
             {/* Desktop/tablet: 2-column mosaic grid */}
             <div
-              className="hidden lg:grid gap-[16px] h-full"
+              className="hidden lg:grid gap-4 h-full"
               style={{
                 gridTemplateColumns: '1fr 1fr',
                 gridTemplateRows: '1fr 1fr',
@@ -78,7 +78,7 @@ export function ContactSocial() {
           </ScrollReveal>
 
           {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
-          <div className="flex flex-col gap-[24px] text-start h-full lg:flex-1 justify-center">
+          <div className="flex flex-col gap-6 text-start h-full lg:flex-1 justify-center">
             <ScrollReveal delay={0.1} className="hidden lg:block">
               <SectionTitle id={ID.contactSocialTitle}>{SOCIAL_PANEL.heading}</SectionTitle>
             </ScrollReveal>

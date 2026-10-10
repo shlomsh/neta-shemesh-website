@@ -23,7 +23,7 @@ export function Reignite() {
   return (
     <Section id={ID.aboutGallery} anchor={ANCHOR.reignite} tone="mid" fit="lock" pad="section" seam>
       <Container maxWidth="2xl" gutter="wide" className="relative z-[1] lg:flex lg:flex-1 lg:min-h-0 lg:flex-col">
-        <div className="flex flex-col gap-[40px] items-center lg:flex-1 lg:min-h-0 lg:gap-9">
+        <div className="flex flex-col gap-10 items-center lg:flex-1 lg:min-h-0 lg:gap-9">
 
           {/* Heading + sub-text */}
           <div className="flex flex-col items-center text-center">
@@ -42,7 +42,7 @@ export function Reignite() {
           </div>
 
           {/* Gallery row — three portrait photos with rounded corners + dark border */}
-          <div className="grid grid-cols-1 gap-[16px] w-full sm:grid-cols-3 lg:flex-1 lg:min-h-[320px] lg:grid-rows-1">
+          <div className="grid grid-cols-1 gap-4 w-full sm:grid-cols-3 lg:flex-1 lg:min-h-80 lg:grid-rows-1">
             {REIGNITE_PHOTOS.map((panel, i) => (
               <ScrollReveal key={i} delay={stagger(i)} className="lg:h-full lg:min-h-0">
                 {/* below lg: intrinsic aspect 348:531; lg+: frame fills the grid's remaining

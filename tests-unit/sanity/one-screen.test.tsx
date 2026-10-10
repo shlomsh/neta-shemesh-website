@@ -141,7 +141,7 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     expect(css, '--card-h and --hero-h are 100lvh below lg (theme(--breakpoint-lg) = 64rem), only where lvh is supported').toMatch(/@supports \(height: 100lvh\) \{ @media \(width < theme\(--breakpoint-lg\)\) \{ :root \{ --card-h: 100lvh; --hero-h: 100lvh; \} \} \}/);
     expect(css, '--hero-h overshoots 100lvh by 80px on iOS 26 Safari only (floating bottom bar), below lg').toMatch(/@supports \(-webkit-touch-callout: none\) and \(anchor-name: --a\) \{ @media \(width < theme\(--breakpoint-lg\)\) \{ :root \{ --hero-h: calc\(100lvh \+ 80px\); \} \} \}/);
     expect(css, 'hero-fit reads the hero token').toMatch(/@utility hero-fit \{ min-height: var\(--hero-h\); \}/);
-    expect(css, 'the lock / grow floor is one token, 720px').toMatch(/:root \{[^}]*--card-floor: 720px;/);
+    expect(css, 'the lock / grow floor is one token, 45rem (= 720px at the default root)').toMatch(/:root \{[^}]*--card-floor: 45rem;/);
     expect(css, 'screen-lock = one screen (the token) but never below the floor, exactly').toMatch(/@utility screen-lock \{ height: max\(var\(--card-h\), var\(--card-floor\)\); \}/);
     expect(css, 'screen-lock-exact = the token, no floor (Expertise)').toMatch(/@utility screen-lock-exact \{ height: var\(--card-h\); \}/);
     expect(css, 'screen-grow = the same value as a minimum').toMatch(/@utility screen-grow \{ min-height: max\(var\(--card-h\), var\(--card-floor\)\); \}/);

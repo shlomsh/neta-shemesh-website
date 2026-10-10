@@ -22,9 +22,9 @@ export default function NotFound() {
   return (
     <PageShell overflow="clip">
       <BlogHeader />
-      <Section id="not-found" tone="cream" className="py-[clamp(56px,9vw,120px)]">
-        <Container id={ID.mainContent} maxWidth="lg" className="flex flex-col items-center text-center gap-[clamp(16px,2vw,24px)]">
-          <LineArt name="individual" className="w-[clamp(180px,26vw,280px)] aspect-square" />
+      <Section id="not-found" tone="cream" className="py-[clamp(3.5rem,9vw,7.5rem)]">
+        <Container id={ID.mainContent} maxWidth="lg" className="flex flex-col items-center text-center gap-[clamp(1rem,2vw,1.5rem)]">
+          <LineArt name="individual" className="w-[clamp(11.25rem,26vw,17.5rem)] aspect-square" />
           <SectionTitle as="h1">הדף הזה לא נמצא</SectionTitle>
           <BodyText centered className="type-lead max-w-[45ch]">
             נראה שהדרך הזאת לא מובילה לשום מקום. אפשר לחזור לדף הבית ולהמשיך משם.

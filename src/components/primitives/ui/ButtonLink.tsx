@@ -49,8 +49,8 @@ export function ButtonLink({
   // No vertical padding: height comes from min-h alone, so a pill whose label is a
   // smaller-line-box `.font-latin` span (phone number) is exactly as tall as a Hebrew one.
   const sizes = {
-    md: 'min-h-[56px] px-[44px] shadow-lg hover:shadow-xl',
-    sm: 'min-h-[48px] px-[clamp(20px,2.5vw,32px)] shadow-md hover:shadow-lg',
+    md: 'min-h-14 px-11 shadow-lg hover:shadow-xl',
+    sm: 'min-h-12 px-[clamp(1.25rem,2.5vw,2rem)] shadow-md hover:shadow-lg',
   };
 
   const variants = {

@@ -11,7 +11,7 @@ const CREAM_ICON_FILTER = 'brightness(0) saturate(100%) invert(96%) sepia(13%) s
 
 export function CredentialsList({ items, iconSrcs }: CredentialsListProps) {
   return (
-    <ul className="grid grid-cols-2 md:grid-cols-3 gap-[32px] md:gap-[64px]">
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16">
       {items.map((item, i) => (
         <li key={i} className="flex flex-col items-center text-center">
           <img // eslint-disable-line @next/next/no-img-element -- small fixed-size static webp icons with a CSS filter, below the fold
@@ -20,7 +20,7 @@ export function CredentialsList({ items, iconSrcs }: CredentialsListProps) {
             aria-hidden="true"
             width={384}
             height={288}
-            className="w-[96px] h-auto shrink-0 mb-[16px]"
+            className="w-24 h-auto shrink-0 mb-4"
             style={{ filter: CREAM_ICON_FILTER }}
             loading="lazy"
           />

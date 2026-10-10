@@ -112,7 +112,7 @@ export const isGrowItem = (el: Element | null | undefined) => hasClass(el, 'lg:f
 export type MinHeightKind = 'zero' | 'floor-320';
 export function minHeightKind(el: Element | null | undefined): MinHeightKind | null {
   if (hasClass(el, 'lg:min-h-0')) return 'zero';
-  if (hasClass(el, 'lg:min-h-[320px]')) return 'floor-320';
+  if (hasClass(el, 'lg:min-h-80')) return 'floor-320'; // min-h-80 = 20rem = 320px at the default root
   return null;
 }
 /** fills the height of its grid cell / parent */
@@ -125,8 +125,8 @@ export function keepsAspectAtDesktop(el: Element | null | undefined): boolean {
   return t.some((x) => x.startsWith('aspect-[') || x === 'aspect-square') && !t.includes('lg:aspect-auto');
 }
 export const coversImage = (img: Element | null | undefined) => hasClass(img, 'object-cover');
-/** the map wrapper: fills the details column height at lg with a 360px floor */
-export const isStretchedMapFrame = (el: Element | null | undefined) => hasClass(el, 'lg:h-full') && hasClass(el, 'lg:min-h-[360px]');
+/** the map wrapper: fills the details column height at lg with a 360px floor (22.5rem at the default root) */
+export const isStretchedMapFrame = (el: Element | null | undefined) => hasClass(el, 'lg:h-full') && hasClass(el, 'lg:min-h-[22.5rem]');
 /** <main> overflow behaviour: clip keeps soft snap working, hidden breaks it */
 export function overflowOf(el: Element | null | undefined): 'clip' | 'hidden' | null {
   if (hasClass(el, 'overflow-hidden')) return 'hidden';
@@ -406,14 +406,23 @@ export function parseTypeRules(css = globalsCss()): Map<string, TypeRule> {
   return rules;
 }
 
-/** `clamp(40px, 9vw, 72px)` -> { min: 40, max: 72 }; `14px` -> { min: 14, max: 14 }. */
+/** px per rem at the DEFAULT root font size: the scale in CLAUDE.md is documented in px at this root, the CSS is in rem. */
+export const ROOT_PX = 16;
+/** `1.5rem` -> 24, `24px` -> 24 (px at the default 16px root); null when it is neither. */
+export function lengthPx(len: string): number | null {
+  const m = len.trim().match(/^(\d+(?:\.\d+)?|\.\d+)(rem|px)$/);
+  return m ? Number(m[1]) * (m[2] === 'rem' ? ROOT_PX : 1) : null;
+}
+/** `clamp(2.5rem, 9vw, 4.5rem)` -> { min: 40, max: 72 }; `0.875rem` -> { min: 14, max: 14 } (px at the default root; px input still parses). */
 export function sizeRange(size: string | undefined): { min: number; max: number } | null {
   if (!size) return null;
-  const clamp = size.match(/^clamp\(\s*(\d+(?:\.\d+)?)px\s*,\s*[^,]+,\s*(\d+(?:\.\d+)?)px\s*\)$/);
-  if (clamp) return { min: Number(clamp[1]), max: Number(clamp[2]) };
-  const fixed = size.match(/^(\d+(?:\.\d+)?)px$/);
-  if (fixed) return { min: Number(fixed[1]), max: Number(fixed[1]) };
-  return null;
+  const clamp = size.match(/^clamp\(\s*([^,\s]+)\s*,\s*[^,]+,\s*([^,\s)]+)\s*\)$/);
+  if (clamp) {
+    const [min, max] = [lengthPx(clamp[1]), lengthPx(clamp[2])];
+    return min !== null && max !== null ? { min, max } : null;
+  }
+  const fixed = lengthPx(size);
+  return fixed === null ? null : { min: fixed, max: fixed };
 }
 
 // ─── Buttons and nav ─────────────────────────────────────────────────────────
@@ -422,9 +431,9 @@ export function sizeRange(size: string | undefined): { min: number; max: number 
 export function buttons(root: ParentNode): HTMLElement[] {
   return Array.from(root.querySelectorAll<HTMLElement>('a')).filter((a) => hasClass(a, 'rounded-full') && hasClass(a, 'whitespace-nowrap'));
 }
-/** button height comes from min-h alone: sm = 48px, md = 56px */
-export const buttonHeightToken = (a: Element): 'min-h-[48px]' | 'min-h-[56px]' | null =>
-  hasClass(a, 'min-h-[48px]') ? 'min-h-[48px]' : hasClass(a, 'min-h-[56px]') ? 'min-h-[56px]' : null;
+/** button height comes from min-h alone: sm = min-h-12 (48px at the default root), md = min-h-14 (56px) */
+export const buttonHeightToken = (a: Element): 'min-h-12' | 'min-h-14' | null =>
+  hasClass(a, 'min-h-12') ? 'min-h-12' : hasClass(a, 'min-h-14') ? 'min-h-14' : null;
 /** the size-defining tokens of a button (height + horizontal padding), for same-variant comparisons */
 export const buttonSizeTokens = (a: Element) => classTokens(a).filter((t) => /^(min-h-|px-)/.test(t)).sort();
 
@@ -498,7 +507,7 @@ export const SCAN_RULES: ScanRule[] = [
   { id: 'card-height', label: 'a hand-written card height unit: h-screen, ungated h-[100svh], min-h-[100svh], *-lvh / *-dvh (use <Section fit> / screen-fit / screen-visible; --card-h owns the unit)',
     re: new RegExp([`(?<!\\w)${BP}(?:min-|max-)?h-screen(?![\\w-])`, String.raw`(?<![\w:-])h-\[100svh\]`, String.raw`(?<![\w-])(?:[a-z0-9-]+:)*min-h-\[100svh\]`, String.raw`(?<![\w-])(?:[a-z0-9-]+:)*(?:min-|max-)?h-(?:lvh|dvh|\[100[ld]vh\])`].join('|')),
     bad: ['h-screen', 'min-h-screen', 'flex h-[100svh] w-full', 'lg:min-h-[100svh]', 'max-lg:min-h-lvh', 'supports-[height:100dvh]:min-h-dvh', 'h-[100dvh]'],
-    good: ['lg:h-[100svh]', 'lg:h-[max(100svh,720px)]', 'lg:min-h-[max(100svh,720px)]', 'min-h-[48px]', 'h-screenful', 'screen-fit'] },
+    good: ['lg:h-[100svh]', 'lg:h-[max(100svh,720px)]', 'lg:min-h-[max(100svh,720px)]', 'min-h-12', 'h-screenful', 'screen-fit'] },
   { id: 'css-scroll-snap', label: 'CSS scroll-snap (the JS slide pager is the only snapping; CSS snap fights it)', re: /scroll-snap-type|scrollSnapType|\bsnap-(?:x|y|both|mandatory|proximity)\b/,
     bad: ['scroll-snap-type: y mandatory', 'snap-y snap-mandatory', "scrollSnapType: 'y'"], good: ['SoftSnap', 'slide-pager', '?snap=off'] },
   { id: 'google-fonts', label: 'Google Fonts fetch (breaks the Vercel prod build)', re: /next\/font\/google|fonts\.googleapis|fonts\.gstatic/,

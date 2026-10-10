@@ -53,7 +53,7 @@ export function Signature() {
           </text>
         </svg>
         <svg
-          className="sig-flourish pointer-events-none absolute inset-x-0 bottom-0 h-[14px] w-full"
+          className="sig-flourish pointer-events-none absolute inset-x-0 bottom-0 h-3.5 w-full"
           viewBox="0 0 200 14"
           preserveAspectRatio="none"
           fill="none"

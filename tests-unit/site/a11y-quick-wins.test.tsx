@@ -122,7 +122,7 @@ function mockMatchMedia() {
   const listeners = new Set<(e: { matches: boolean }) => void>();
   const mql = {
     matches: false,
-    media: '(min-width: 768px)',
+    media: '(min-width: 48rem)',
     addEventListener: (_: string, cb: (e: { matches: boolean }) => void) => listeners.add(cb),
     removeEventListener: (_: string, cb: (e: { matches: boolean }) => void) => listeners.delete(cb),
     addListener: () => {},
@@ -155,13 +155,13 @@ describe('MobileMenu', () => {
     return { ...view, main, hamburger };
   }
 
-  it('closes (scroll lock and inert released) when (min-width: 768px) starts matching', () => {
+  it('closes (scroll lock and inert released) when (min-width: 48rem) starts matching', () => {
     const mm = mockMatchMedia();
     const { main, hamburger } = setup();
     fireEvent.click(hamburger);
     expect(screen.getByRole('dialog')).toBeTruthy();
     expect(document.body.style.overflow).toBe('hidden');
-    expect(mm.spy).toHaveBeenCalledWith('(min-width: 768px)');
+    expect(mm.spy).toHaveBeenCalledWith('(min-width: 48rem)');
 
     act(() => mm.fire(false));
     expect(screen.getByRole('dialog')).toBeTruthy();

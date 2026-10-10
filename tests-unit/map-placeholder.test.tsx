@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 import { MapEmbed } from '../src/components/sections/contact/MapEmbed';
 import { mapEmbedSrc } from '../src/content/site';
 
-const BOX = 'h-[260px] lg:h-full lg:min-h-[360px]';
+const BOX = 'h-[16.25rem] lg:h-full lg:min-h-[22.5rem]';
 const source = (f: string) => readFileSync(join(process.cwd(), 'src/components/sections/contact', f), 'utf8');
 
 describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
@@ -37,7 +37,7 @@ describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
     const { container } = render(<MapEmbed className={BOX} />);
     const wrap = container.firstElementChild as HTMLElement;
     expect(wrap.hasAttribute('data-map-embed')).toBe(true);
-    for (const c of ['h-[260px]', 'lg:h-full', 'lg:min-h-[360px]', 'relative', 'rounded-tile', 'overflow-hidden', 'bg-plum']) {
+    for (const c of ['h-[16.25rem]', 'lg:h-full', 'lg:min-h-[22.5rem]', 'relative', 'rounded-tile', 'overflow-hidden', 'bg-plum']) {
       expect(wrap.className).toContain(c);
     }
   });

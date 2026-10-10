@@ -26,13 +26,13 @@ export function Testimonials() {
             align="center"
             title="לקוחות ממליצים"
             subtitle="מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה."
-            subtitleClassName="mb-[clamp(48px,6vw,96px)]"
+            subtitleClassName="mb-[clamp(3rem,6vw,6rem)]"
           />
         </ScrollReveal>
 
         {/* Featured quote with portrait */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
-          <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(2rem,5vw,5rem)] mb-[clamp(3rem,6vw,6rem)] max-w-5xl mx-auto">
+          <ScrollReveal delay={0.2} className="w-full lg:w-[22.5rem] shrink-0">
             <Photo
               src="/images/testimonial-featured.webp"
               alt="זוג בטיפול"
@@ -50,9 +50,9 @@ export function Testimonials() {
               alt="סימן ציטוט"
               width={48}
               height={48}
-              className="mb-[32px] opacity-80 w-[48px] h-[48px]"
+              className="mb-8 opacity-80 w-12 h-12"
             />
-            <p className="type-quote text-plum mb-[40px] text-start">
+            <p className="type-quote text-plum mb-10 text-start">
               למדנו לנווט בין אתגרים ביחד, לשקם את האמון ולגלות מחדש את הרגש שהביא אותנו ביחד. בזכות נטע שמש, הנישואין שלנו לא רק שרדו אלא פרחו.
             </p>
             <div className="text-start">
@@ -65,7 +65,7 @@ export function Testimonials() {
         {/* Three-card grid */}
         <div
           id={ID.testimonialsGrid}
-          className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(16px,2vw,32px)] max-w-[1200px] mx-auto"
+          className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(1rem,2vw,2rem)] max-w-[75rem] mx-auto"
         >
           {TESTIMONIALS.map((testimonial, index) => (
             <ScrollReveal

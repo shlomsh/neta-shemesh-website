@@ -29,13 +29,13 @@ export function HeroContent() {
         flex flex-col
         w-full
         hero-fit
-        px-[clamp(20px,5vw,80px)]
-        py-[clamp(32px,4vw,56px)]
-        gap-[clamp(24px,3vw,40px)]
+        px-[clamp(1.25rem,5vw,5rem)]
+        py-[clamp(2rem,4vw,3.5rem)]
+        gap-[clamp(1.5rem,3vw,2.5rem)]
       "
     >
       {/* ── Top bar: logo + nav ── */}
-      <div className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-[16px]">
+      <div className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-4">
         <BrandLogo />
         <SiteNav />
       </div>
@@ -46,12 +46,12 @@ export function HeroContent() {
         className="
           flex flex-col lg:flex-row
           items-center
-          gap-[clamp(32px,5vw,56px)]
+          gap-[clamp(2rem,5vw,3.5rem)]
           my-auto w-full
         "
       >
         {/* Text block */}
-        <div className="flex flex-col gap-[clamp(16px,2vw,28px)] w-full lg:flex-[0_0_520px] max-w-[560px]">
+        <div className="flex flex-col gap-[clamp(1rem,2vw,1.75rem)] w-full lg:flex-[0_0_32.5rem] max-w-[35rem]">
           <div className="hero-enter hero-enter-1">
             <HeroHeading />
           </div>
@@ -74,7 +74,7 @@ export function HeroContent() {
           {/* CTA → contact section: secondary ButtonLink (cream fill + plum text, 5.55:1 on the plum hero) */}
           <div className="hero-enter hero-enter-3">
             <div
-              className="flex flex-col items-start gap-[clamp(12px,1.5vw,20px)] w-full"
+              className="flex flex-col items-start gap-[clamp(0.75rem,1.5vw,1.25rem)] w-full"
             >
               <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary" size="sm">
                 ייעוץ עם נטע שמש

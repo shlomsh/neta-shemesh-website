@@ -3,7 +3,7 @@ import { SOCIAL_LINKS } from '@/content/home/social';
 
 export function SocialLinks() {
   return (
-    <div className="flex gap-[24px]">
+    <div className="flex gap-6">
       {SOCIAL_LINKS.map((link) => (
         <MaskIcon
           key={link.href}

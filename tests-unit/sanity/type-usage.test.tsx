@@ -94,7 +94,7 @@ describe('C14: buttons, nav and hero copy', () => {
       expect(typeClassesOf(a), desc(a)).toEqual(['type-lead']);
       expect(t, `${desc(a)} font-bold`).toContain('font-bold');
       expect(t.filter((x) => /^(?:[a-z]+:)?(uppercase|tracking-.*|py-.*|text-\[(?:clamp|\d).*)$/.test(x)), `${desc(a)} forbidden button classes`).toEqual([]);
-      expect(buttonHeightToken(a), `${desc(a)} needs min-h-[48px] (sm) or min-h-[56px] (md)`).not.toBeNull();
+      expect(buttonHeightToken(a), `${desc(a)} needs min-h-12 (sm, 48px) or min-h-14 (md, 56px)`).not.toBeNull();
     }
   });
 
@@ -105,14 +105,14 @@ describe('C14: buttons, nav and hero copy', () => {
     expect(pill, 'hero phone pill').not.toBeNull();
     expect(cta, 'hero consult CTA').not.toBeNull();
     expect(buttonSizeTokens(pill), 'hero phone pill vs consult CTA sizing').toEqual(buttonSizeTokens(cta));
-    expect(buttonHeightToken(pill), 'hero pills are the sm variant').toBe('min-h-[48px]');
+    expect(buttonHeightToken(pill), 'hero pills are the sm variant').toBe('min-h-12');
   });
 
   it('services + CTA-band buttons are the md variant (56px)', () => {
     for (const name of ['services', 'cta-band']) {
       const section = findSection(home, name);
       const a = buttons(section).find((x) => ['#contact', '/#contact'].includes(x.getAttribute('href')!))!;
-      expect(buttonHeightToken(a), `${labelOf(section, name)} CTA must be the md variant (min-h-[56px])`).toBe('min-h-[56px]');
+      expect(buttonHeightToken(a), `${labelOf(section, name)} CTA must be the md variant (min-h-14)`).toBe('min-h-14');
     }
   });
 

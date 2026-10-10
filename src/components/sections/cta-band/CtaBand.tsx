@@ -9,7 +9,7 @@ import { ANCHOR, ID, anchorHref } from '@/content/ids';
 /** The "קביעת פגישת ייעוץ" photo band. A photo section: no tone, so no data-bg-tone. */
 export function CtaBand() {
   return (
-    <Section id={ID.ctaBand} fit="free" phone="screen" center="middle" className="py-[clamp(80px,8vw,192px)]">
+    <Section id={ID.ctaBand} fit="free" phone="screen" center="middle" className="py-[clamp(5rem,8vw,12rem)]">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/cta-background.webp"
@@ -22,7 +22,7 @@ export function CtaBand() {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      <div className="relative z-10 max-w-[896px] mx-auto px-[clamp(16px,4vw,32px)] text-center w-full">
+      <div className="relative z-10 max-w-4xl mx-auto px-[clamp(1rem,4vw,2rem)] text-center w-full">
         <ScrollReveal delay={0.1}>
           <SectionHeader
             id={ID.ctaBandTitle}
@@ -30,7 +30,7 @@ export function CtaBand() {
             onPhoto
             title="קביעת פגישת ייעוץ"
             subtitle="הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם."
-            subtitleClassName="mb-[48px]"
+            subtitleClassName="mb-12"
           />
           {/* "/#contact" (route-absolute) so the button also works from /blog. `halo` adds the breathing ring. */}
           <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" halo>

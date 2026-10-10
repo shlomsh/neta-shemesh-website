@@ -6,7 +6,7 @@ const WA_URL = waHref();
 const PHONE_URL = telHref();
 
 const HALF_BASE =
-  'type-small font-bold flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 px-4 py-2.5 ' +
+  'type-small font-bold flex min-h-11 min-w-11 items-center justify-center gap-2 px-4 py-2.5 ' +
   'transition duration-200 motion-safe:active:scale-95 ' +
   'focus-ring focus-visible:ring-inset';
 
@@ -35,7 +35,7 @@ const PHONE_HALF =
  */
 export function ContactFAB() {
   return (
-    <div className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] end-4 z-50 md:bottom-6 md:end-6">
+    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] end-4 z-50 md:bottom-6 md:end-6">
       <div
         data-testid="contact-fab"
         className="fab-enter flex items-stretch overflow-hidden rounded-full ring-1 ring-inset ring-cream/35 bg-plum text-cream shadow-fab transition-transform duration-200 motion-safe:hover:-translate-y-0.5"

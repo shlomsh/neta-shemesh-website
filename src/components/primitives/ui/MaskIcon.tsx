@@ -10,8 +10,8 @@ import { cx } from '@/lib/cx';
 type MaskIconSize = 'sm' | 'lg';
 
 const SIZE_CLASS: Record<MaskIconSize, string> = {
-  sm: 'w-[24px] h-[24px] flex-shrink-0',
-  lg: 'w-[44px] h-[44px] flex-shrink-0',
+  sm: 'w-6 h-6 flex-shrink-0',
+  lg: 'w-11 h-11 flex-shrink-0',
 };
 
 /** Paints an SVG file as a mask filled with `currentColor`, so a single-colour icon follows the text colour. */

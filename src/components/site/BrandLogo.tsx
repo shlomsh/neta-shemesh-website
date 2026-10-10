@@ -25,7 +25,7 @@ export function BrandLogo() {
         width={1073}
         height={320}
         className="
-          h-[48px] sm:h-[58px] md:h-[68px]
+          h-12 sm:h-[3.625rem] md:h-[4.25rem]
           w-auto
           object-contain
         "

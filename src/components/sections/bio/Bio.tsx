@@ -16,7 +16,7 @@ export function Bio() {
   // lg+: one screen (min 100svh; floor 720px) with the bio vertically centred. fit="grow"
   // (min-h, not h) so a short viewport grows the section rather than clipping the running text.
   // `overflow-hidden!` (instead of the Section default `overflow-clip`) on purpose: the left column's
-  // `lg:sticky lg:top-[120px]` is NOT inert today. This section is a (never-scrolling) scroll container, so the
+  // `lg:sticky lg:top-[7.5rem]` is NOT inert today. This section is a (never-scrolling) scroll container, so the
   // sticky offset resolves against it and parks the column at the bottom of its slack (29px at 1280-1440x900,
   // 71px at 1024x768, 0 at 1920x1080). Under `overflow-clip` it would bind to the window instead and either
   // drift (sticky) or sit that many px higher (static): a visible change. No ParallaxFrame lives in this
@@ -24,10 +24,10 @@ export function Bio() {
   return (
     <Section id={ID.aboutMeSection} anchor={ANCHOR.aboutMe} tone="cream" fit="grow" pad="section" seam className="overflow-hidden!">
       <Container maxWidth="2xl" gutter="wide" className="relative z-10">
-        <div className="flex flex-col gap-[48px] lg:flex-row lg:items-start lg:gap-[clamp(40px,6vw,80px)]">
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-[clamp(2.5rem,6vw,5rem)]">
 
           {/* Right Column: Narrative Text */}
-          <div className="w-full lg:w-[60%] flex flex-col gap-[28px]">
+          <div className="w-full lg:w-[60%] flex flex-col gap-7">
             
             {/* Title (NS-54: the clinic armchair as a marker beside it, same row) */}
             <ScrollReveal>
@@ -35,7 +35,7 @@ export function Bio() {
             </ScrollReveal>
 
             {/* Introduction/Bio Narrative */}
-            <ScrollReveal delay={0.24} className="flex flex-col gap-[16px]">
+            <ScrollReveal delay={0.24} className="flex flex-col gap-4">
               <BodyText className="type-lead">
                 נעים להכיר, אני נטע שמש. עובדת סוציאלית קלינית (<span className="font-latin">M.S.W</span>) ומטפלת מוסמכת לטיפול זוגי ולטיפול משפחתי בנתניה, עם 14 שנות ניסיון בליווי אנשים, זוגות ומשפחות בתהליכי שינוי, משבר וצמיחה.
               </BodyText>
@@ -56,7 +56,7 @@ export function Bio() {
           </div>
 
           {/* Left Column: Personal Photo, Quote & Signature */}
-          <div className="w-full lg:w-[40%] flex flex-col gap-[32px] lg:sticky lg:top-[120px]">
+          <div className="w-full lg:w-[40%] flex flex-col gap-8 lg:sticky lg:top-[7.5rem]">
             
             {/* Personal Photo */}
             <ScrollReveal delay={0.24} className="w-full flex justify-start">
@@ -68,13 +68,13 @@ export function Bio() {
                 ratio="4/3"
                 outlined
                 objectPosition="50% 35%"
-                className="w-full max-w-[320px] shadow-portrait"
+                className="w-full max-w-xs shadow-portrait"
               />
             </ScrollReveal>
 
             {/* Quote Block & Signature */}
-            <div className="flex flex-col gap-[16px] relative mt-[8px]">
-              <ScrollReveal delay={0.28} className="absolute -top-[24px] start-0">
+            <div className="flex flex-col gap-4 relative mt-2">
+              <ScrollReveal delay={0.28} className="absolute -top-6 start-0">
                 <img // eslint-disable-line @next/next/no-img-element -- decorative SVG quote mark; next/image does not optimise SVG
                   src={`${QUOTE_ICON}?v=2`}
                   alt=""
@@ -82,17 +82,17 @@ export function Bio() {
                   width={71}
                   height={40}
                   loading="lazy"
-                  className="w-[clamp(28px,3.5vw,40px)] h-auto"
+                  className="w-[clamp(1.75rem,3.5vw,2.5rem)] h-auto"
                 />
               </ScrollReveal>
 
-              <ScrollReveal delay={0.36} className="relative z-10 pt-[12px] ps-[16px]">
+              <ScrollReveal delay={0.36} className="relative z-10 pt-3 ps-4">
                 <QuoteBlock
                   lines={BIO_QUOTE_LINES}
                 />
               </ScrollReveal>
 
-              <ScrollReveal className="relative z-10 pt-[8px] ps-[16px]">
+              <ScrollReveal className="relative z-10 pt-2 ps-4">
                 <Signature />
               </ScrollReveal>
             </div>

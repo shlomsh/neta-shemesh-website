@@ -14,7 +14,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
   if (variant === 'highlighted') {
     return (
-      <div className="flex flex-col justify-between p-[32px] relative rounded-card bg-cream min-h-[350px] overflow-hidden">
+      <div className="flex flex-col justify-between p-8 relative rounded-card bg-cream min-h-[21.875rem] overflow-hidden">
         {/* Decorative SVG background — id preserved for test selector */}
         <svg
           id={ID.testimonialCardArt}
@@ -36,7 +36,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   }
 
   return (
-    <div className="flex flex-col justify-between p-[32px] relative rounded-card bg-cream shadow-sm min-h-[350px]">
+    <div className="flex flex-col justify-between p-8 relative rounded-card bg-cream shadow-sm min-h-[21.875rem]">
       <QuoteIcon />
       <QuoteText text={quote} />
       <Attribution name={name} role={role} avatarSrc={avatarSrc} />
