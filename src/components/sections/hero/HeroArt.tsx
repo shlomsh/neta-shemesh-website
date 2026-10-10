@@ -21,21 +21,26 @@ import styles from './HeroBlob.module.css';
 import { cx } from '@/lib/cx';
 
 /**
- * Phones: the art box is capped by what the hero leaves for it, so a short screen (375x667) still fits the hero in
- * one screen with the art above the contact pill (NS-61). 28rem = everything else in the hero column at 375px (top
- * bar, text block, gaps, paddings, the pill's footprint) plus 1rem of slack; --hero-h minus --hero-overshoot is the
- * screen the content lays out in (100lvh on every browser, the overshoot cancels on iOS 26). The cap only bites below
- * about 700px of screen height (375x812 and taller keep the full 17.5rem), never under 12rem, and never from lg up.
+ * Phones: the art slot takes the room the rest of the hero leaves (it grows into it, capped, and is the one thing that
+ * shrinks), so a short screen (375x667) still fits the hero in one screen with the art above the contact pill (NS-61),
+ * and so a subtext that wraps to a third line (it does at 360px on every browser, and at 375px on engines that lay
+ * Stanga out a pixel wider, e.g. Linux Chromium) costs the art 36px instead of pushing the hero past the screen.
+ * The cap is what the hero leaves for the art when the subtext is two lines: 28rem = everything else in the hero column
+ * at 375px (top bar, text block, gaps, paddings, the pill's footprint) plus 1rem of slack; --hero-h minus
+ * --hero-overshoot is the screen the content lays out in (100lvh on every browser, the overshoot cancels on iOS 26).
+ * The cap only bites below about 700px of screen height (375x812 and taller keep the full 17.5rem), never under 12rem,
+ * and never from lg up. The slot is a row flex box so the art box stretches to its height; from lg up the art keeps its
+ * fixed clamp() height and the slot is the plain `lg:flex-1` column of the hero row.
  */
-const ART_FIT_PHONE = 'max-lg:h-[min(clamp(17.5rem,42vw,30rem),max(12rem,calc(var(--hero-h)_-_var(--hero-overshoot)_-_28rem)))]';
+export const ART_SLOT =
+  'w-full lg:flex-1 max-lg:flex max-lg:grow max-lg:basis-0 max-lg:min-h-48 max-lg:max-h-[min(clamp(17.5rem,42vw,30rem),max(12rem,calc(var(--hero-h)_-_var(--hero-overshoot)_-_28rem)))]';
 
 export function HeroArt() {
   return (
     <div
       data-testid="hero-art"
       className={cx(
-        'relative flex items-center justify-center w-full h-[clamp(17.5rem,42vw,30rem)]',
-        ART_FIT_PHONE,
+        'relative flex items-center justify-center w-full lg:h-[clamp(17.5rem,42vw,30rem)]',
       )}
     >
       {/* Asymmetric organic blob */}

@@ -19,7 +19,7 @@ import { BrandLogo } from '@/components/site/BrandLogo';
 import { SiteNav } from '@/components/site/SiteNav';
 import { ANCHOR, ID, anchorHref } from '@/content/ids';
 import { HeroHeading } from './HeroHeading';
-import { HeroArt } from './HeroArt';
+import { HeroArt, ART_SLOT } from './HeroArt';
 
 export function HeroContent() {
   // px stays a clamp() (NS-61): gutter-wide is 4px wider at 375, which narrows the hero text column by 8px and re-wraps
@@ -53,6 +53,7 @@ export function HeroContent() {
           items-center
           gap-region
           my-auto w-full
+          max-lg:my-0 max-lg:flex-1 max-lg:justify-center
         "
       >
         {/* Text block */}
@@ -90,7 +91,7 @@ export function HeroContent() {
         </div>
 
         {/* Art block */}
-        <div className="w-full lg:flex-1">
+        <div className={ART_SLOT}>
           <HeroArt />
         </div>
       </div>
