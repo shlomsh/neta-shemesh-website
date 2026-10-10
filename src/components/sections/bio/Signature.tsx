@@ -39,18 +39,20 @@ export function Signature() {
             {/* Finale: fades the whole name in once the pen is done, so no mask seam can remain. Opaque (static) by default. */}
             <rect className="sig-full" x="0" y="0" width="1500" height="560" fill="white" style={{ '--delay': `${SIG_FLOURISH_DELAY}s` } as CSSProperties} />
           </mask>
-          <text
-            mask="url(#sig-mask)"
-            x={SIG_TEXT.x}
-            y={SIG_TEXT.y}
-            direction="rtl"
-            fill="currentColor"
-            fontSize={SIG_TEXT.size}
-            fontWeight={400}
-            className="sig-text"
-          >
-            {SITE.name}
-          </text>
+          <g mask="url(#sig-mask)">
+            <rect x="0" y="0" width="1500" height="560" fill="none" />
+            <text
+              x={SIG_TEXT.x}
+              y={SIG_TEXT.y}
+              direction="rtl"
+              fill="currentColor"
+              fontSize={SIG_TEXT.size}
+              fontWeight={400}
+              className="sig-text"
+            >
+              {SITE.name}
+            </text>
+          </g>
         </svg>
         <svg
           className="sig-flourish pointer-events-none absolute inset-x-0 bottom-0 h-3.5 w-full"

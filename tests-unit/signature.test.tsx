@@ -15,7 +15,8 @@ describe('NS-56 Signature (Elamy text revealed through a pen-stroke mask)', () =
     expect(html).not.toMatch(/opacity|visibility|display:\s*none|stroke-dashoffset/);
   });
   it('shows the real Elamy text through the mask, with an opaque finale rect', () => {
-    expect(html).toMatch(/<text[^>]*mask="url\(#sig-mask\)"[^>]*class="sig-text"[^>]*>/);
+    // The mask sits on a <g> with a sizing rect, not on the <text>: Safari clips an SVG text mask to the font-metric box (tail cut).
+    expect(html).toMatch(/<g mask="url\(#sig-mask\)"><rect[^>]*><\/rect><text[^>]*class="sig-text"[^>]*>/);
     expect(html).toContain('class="sig-full"');
     expect(css).toMatch(/\.sig-full \{ opacity: 1; \}/);
   });

@@ -8,8 +8,8 @@ import { test, expect } from '@playwright/test';
  * opacity or transform change, a colour transition) therefore cuts the tops of the tall swashes (ל צ ק and the
  * final forms), and they stay cut until a scroll repaints them. So no `.type-title` may be, or sit inside,
  * a `[data-reveal]` wrapper, nor carry a running-capable `transition` / `animation` on itself or on an
- * ancestor up to its section. No allowlist. The hero H1 is held to the same rule; the step numerals and the
- * signature are out of scope.
+ * ancestor up to its section. No allowlist. The hero H1 is held to the same rule; the step numerals are out of scope
+ * (the signatures have their own guard, last test below).
  *
  * Second guard: iPhone Safari also cuts the swash tops inside an `overflow: hidden|auto|scroll` ancestor. So at a phone
  * width (390px; every project is forced to it for this test) no `.type-title` and no hero H1 may have such an ancestor
@@ -101,6 +101,41 @@ test(`${route}: a filter, mask or clip-path at or above an Elamy title covers th
 
   expect(result.count).toBeGreaterThan(0);
   expect(result.offenders, 'a filtered Elamy title needs the ink-box utility (Safari cuts the swash tops to the layout box)').toEqual([]);
+});
+
+if (route === '/')
+test(`${route}: the footer signature carries ink room and the Bio signature masks a <g> with a full-size rect (iOS Safari clips the tails)`, async ({ page }) => {
+  await page.goto(route);
+  await page.waitForSelector('.type-signature');
+
+  const result = await page.evaluate((ink) => {
+    const offenders: string[] = [];
+    // 1. Footer `.type-signature` (Elamy 400, the last item of a column that sits over a parallax photo): iOS Safari
+    // composites that column and clips it to its layout box, so the long tail of the final letter was cut. The `ink-box`
+    // utility (padding + equal negative margin) must give it ink room above and below, with no layout change.
+    for (const sig of document.querySelectorAll('.type-signature')) {
+      const em = parseFloat(getComputedStyle(sig).fontSize);
+      const range = document.createRange();
+      range.selectNodeContents(sig);
+      const text = range.getBoundingClientRect();
+      const box = sig.getBoundingClientRect();
+      const top = (text.top - box.top) / em;
+      const bottom = (box.bottom - text.bottom) / em;
+      if (top < ink - 0.01 || bottom < ink - 0.01) offenders.push(`.type-signature: ink room above ${top.toFixed(2)}em / below ${bottom.toFixed(2)}em, needs ${ink}em (use ink-box)`);
+    }
+    // 2. Bio signature (SVG): Safari clips an SVG <text mask> to the text's font-metric box, which ends above the tail of
+    // the final letter. The mask must sit on a <g> that also holds a full-size rect, never directly on the <text>.
+    for (const text of document.querySelectorAll('text.sig-text')) {
+      if (text.hasAttribute('mask')) offenders.push('text.sig-text carries mask directly (Safari clips it to the font-metric box)');
+      const g = text.parentElement;
+      if (!g || g.tagName.toLowerCase() !== 'g' || !g.hasAttribute('mask')) offenders.push('text.sig-text is not inside a <g mask>');
+      else if (!g.querySelector(':scope > rect')) offenders.push('<g mask> around text.sig-text has no sizing <rect>');
+    }
+    return { sigs: document.querySelectorAll('.type-signature').length + document.querySelectorAll('text.sig-text').length, offenders };
+  }, INK_EM);
+
+  expect(result.sigs).toBeGreaterThan(0);
+  expect(result.offenders, 'signature tails must not be clipped (iOS Safari)').toEqual([]);
 });
 
 if (route === '/')

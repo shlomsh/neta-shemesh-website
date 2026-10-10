@@ -46,7 +46,7 @@ export function Footer() {
         {/* 3. Brand name, in the handwritten signature style (.type-signature) */}
         <ScrollReveal delay={0.2}>
           <p
-            className="type-signature text-cream text-center"
+            className="type-signature ink-box text-cream text-center"
           >
             נטע שמש
           </p>
