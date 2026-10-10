@@ -1,9 +1,8 @@
 import { Photo } from '@/components/primitives/ui/Photo';
 
 /**
- * Full-bleed background photo + a local scrim so the cream text stays legible.
- * Uses next/image for optimized loading; the photo stays at full opacity and the scrim is a CSS
- * gradient overlay: darkest behind the text column, clear toward the edges (no whole-photo tint).
+ * Full-bleed background photo + dark gradient scrim so white text stays legible.
+ * Uses next/image for optimized loading; scrim is a CSS gradient overlay.
  * The photo drifts gently within the band (parallax); the scrim does not.
  */
 export function FooterBackground() {
@@ -18,8 +17,8 @@ export function FooterBackground() {
         motion={{ parallax: 8 }}
         className="absolute inset-0"
       />
-      {/* Local scrim for legibility: strongest behind the text column, fading to the clear photo at the edges */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-radial-[ellipse_70%_60%_at_50%_50%] from-black/50 via-black/30 to-black/0" />
+      {/* Dark gradient scrim for legibility */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-black/20" />
     </div>
   );
 }
