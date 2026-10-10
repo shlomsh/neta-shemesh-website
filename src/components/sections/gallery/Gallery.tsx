@@ -1,4 +1,3 @@
-import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
@@ -25,15 +24,14 @@ export function Gallery() {
   return (
     <Section id={ID.photoGallery} anchor={ANCHOR.gallery} tone="cream" fit="lock" pad="tight">
       <Container maxWidth="2xl" className="lg:flex-1 lg:min-h-0 lg:flex lg:flex-col">
-        <ScrollReveal delay={0.1}>
-          <SectionHeader
-            id={ID.photoGalleryTitle}
-            align="center"
-            title="טיפול זוגי לקשר בריא ותומך"
-            subtitle="השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב."
-            subtitleClassName="mb-16 lg:mb-8"
-          />
-        </ScrollReveal>
+        <SectionHeader
+          id={ID.photoGalleryTitle}
+          align="center"
+          title="טיפול זוגי לקשר בריא ותומך"
+          subtitle="השקעה בקשר הזוגי שלכם היא הדרך הטובה ביותר ליצור שינוי עמוק, לשבור דפוסי התנהגות מעכבים ולמצוא חיבור חדש ומקרב."
+          subtitleClassName="mb-16 lg:mb-8"
+          subtitleReveal={0.1}
+        />
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-stack lg:grid-rows-2 lg:flex-1 lg:min-h-80">
           {GALLERY_IMAGES.map((img, i) => (

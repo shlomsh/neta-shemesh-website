@@ -20,9 +20,7 @@ export function ContactSocial() {
 
           {/* Heading on mobile — shown above photos only on small screens */}
           <div className="flex flex-col gap-6 text-start lg:hidden">
-            <ScrollReveal>
-              <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
-            </ScrollReveal>
+            <SectionTitle id={ID.contactSocialTitleMobile}>{SOCIAL_PANEL.heading}</SectionTitle>
           </div>
 
           {/* Photo mosaic grid — mosaic of 3 portraits */}
@@ -79,9 +77,7 @@ export function ContactSocial() {
 
           {/* Heading + body + social icons — hidden on mobile (heading shown above) */}
           <div className="flex flex-col gap-6 text-start h-full lg:flex-1 justify-center">
-            <ScrollReveal delay={0.1} className="hidden lg:block">
-              <SectionTitle id={ID.contactSocialTitle}>{SOCIAL_PANEL.heading}</SectionTitle>
-            </ScrollReveal>
+            <SectionTitle id={ID.contactSocialTitle} className="hidden lg:block">{SOCIAL_PANEL.heading}</SectionTitle>
 
             <ScrollReveal delay={0.2}>
               <RichParagraph line={SOCIAL_PANEL.body} />

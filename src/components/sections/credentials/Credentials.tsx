@@ -20,10 +20,8 @@ export function Credentials() {
         {/* gap stays a clamp (NS-61): one-screen phone card, and 56/8vw/100 is 15px under `section` at 1440. */}
         <div className="flex flex-col items-center gap-[clamp(3.5rem,8vw,6.25rem)]">
 
-          <ScrollReveal>
-            <SectionTitle id={ID.aboutCredentialsTitle} className="text-center">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
-            </SectionTitle>
-          </ScrollReveal>
+          <SectionTitle id={ID.aboutCredentialsTitle} className="text-center">ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג
+          </SectionTitle>
 
           <ScrollReveal delay={0.12}>
             <CredentialsList items={CREDENTIALS} iconSrcs={CREDENTIAL_ICONS} />

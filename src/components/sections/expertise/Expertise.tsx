@@ -1,4 +1,3 @@
-import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
 import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
@@ -13,22 +12,22 @@ export function Expertise() {
     <Section anchor={ANCHOR.expertise} tone="light" fit="grow" center="start" pad="section">
       <Container maxWidth="none" gutter="wide" className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
         {/* Section header */}
-        <ScrollReveal>
-          <div className="text-center mb-region lg:mb-9">
+        <div className="text-center mb-region lg:mb-9">
             {/* Blush section (plum = 3.89:1, AA large only): subtitle at the quote scale (>=24px). */}
             <SectionHeader
               id={ID.expertiseTitle}
               align="center"
               title="טיפול זוגי ומשפחתי בנתניה"
               subtitle="תמיכה והכוונה מקצועית לבניית אמון וחיזוק הביטחון בקשר."
+              subtitleReveal={0}
             />
           </div>
-        </ScrollReveal>
 
         {/* Editorial stage: names + crossfading photo + the active description (client island). */}
-        <ScrollReveal className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+        {/* No ScrollReveal: the names inside the stage are Elamy titles and must stay static (CLAUDE.md typography rule 9). */}
+        <div className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
           <ExpertiseStage items={EXPERTISE_CARDS} />
-        </ScrollReveal>
+        </div>
       </Container>
     </Section>
   );

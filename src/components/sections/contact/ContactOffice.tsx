@@ -21,9 +21,7 @@ export function ContactOffice() {
         <div className="mx-auto flex w-full max-w-[68.75rem] flex-col">
 
           {/* Title row: above the card, right-aligned (RTL) on the mauve */}
-          <ScrollReveal className="mb-8 md:mb-12 text-start">
-            <SectionTitle id={ID.contactOfficeTitle}>{OFFICE_PANEL.heading}</SectionTitle>
-          </ScrollReveal>
+          <SectionTitle id={ID.contactOfficeTitle} className="mb-8 md:mb-12 text-start">{OFFICE_PANEL.heading}</SectionTitle>
 
           {/* One cream card frames both details and map. Mauve fails contrast for any text
               (2.26:1); plum on cream is 5.55:1 (AA at any size). The card hugs its content

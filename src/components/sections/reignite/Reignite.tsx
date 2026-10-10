@@ -27,10 +27,8 @@ export function Reignite() {
 
           {/* Heading + sub-text */}
           <div className="flex flex-col items-center text-center">
-            <ScrollReveal>
-              <SectionTitle id={ID.aboutGalleryTitle}>להצית מחדש את הקשר הזוגי
-              </SectionTitle>
-            </ScrollReveal>
+            <SectionTitle id={ID.aboutGalleryTitle}>להצית מחדש את הקשר הזוגי
+            </SectionTitle>
 
             {/* Subtitle sits on mauve by owner decision (decorative title lockup, same
                 exception as the Elamy titles; 2.26:1). Inherits the section's cream text. */}

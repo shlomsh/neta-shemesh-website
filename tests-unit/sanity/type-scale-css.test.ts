@@ -7,18 +7,8 @@
  * `--surface-veil` vanished because Tailwind v4 drops unreferenced theme vars, and the Latin
  * companion's size scale compounded. Every one of those regressed at least once.
  */
-import path from 'node:path';
-import { createRequire } from 'node:module';
 import { describe, expect, it } from 'vitest';
 import { cssVar, displayFontSelectors, expectNone, globalsCss, parseToneRules, parseTypeRules, sizeRange, stripCssComments, readSources } from './helpers';
-
-// fontkit ships no types: load it untyped (it is a devDependency used for the Elamy ink measurements)
-const fontkit = createRequire(import.meta.url)('fontkit') as {
-  openSync: (file: string) => {
-    unitsPerEm: number;
-    glyphForCodePoint: (cp: number) => { bbox: { minX: number; maxX: number }; advanceWidth: number };
-  };
-};
 
 const css = globalsCss();
 const clean = stripCssComments(css);
@@ -139,74 +129,5 @@ describe('C14: Elamy (the display font) is reserved for display, title and signa
       .filter((f) => displayFontSelectors(f.text).length > 0)
       .map((f) => f.path);
     expectNone(offenders, 'css module using Elamy');
-  });
-});
-
-describe('C14c: the Elamy ink box (--ink-top / --ink-bottom) on the three Elamy classes', () => {
-  const norm = (v: string | undefined) => (v ?? '').replace(/\s+/g, ' ').trim();
-  const rootBlocks = [...clean.matchAll(/:root\s*\{([^}]*)\}/g)].map((m) => m[1]);
-  const rootVar = (name: string) => rootBlocks.map((b) => b.match(new RegExp(`${name}\\s*:\\s*([^;]+);`))?.[1].trim()).find(Boolean);
-  // floors from the fontkit measurement of Elamy (see globals.css): ink reaches +1.106em / -0.562em on
-  // צ ק and further on the final forms; below these values a reveal animation clips glyphs on iOS
-  const FLOOR = { top: 0.72, bottom: 0.62 };
-  // NS-45: the INLINE floor. fontkit over Elamy 700/400 and every live title string: lamed (ל) and some
-  // finals swash up to +0.513em left / +0.506em right of the advance box (whole-font worst case 0.706em lsb,
-  // 0.506em rsb). A reveal layer is clipped at its border box, so the swash was cut mid-fade on iOS.
-  const INLINE_FLOOR = 0.52;
-
-  it('--ink-top and --ink-bottom are declared on :root, in em, at or above the measured floor', () => {
-    const top = rootVar('--ink-top');
-    const bottom = rootVar('--ink-bottom');
-    expect(top, '--ink-top missing from :root').toBeDefined();
-    expect(bottom, '--ink-bottom missing from :root').toBeDefined();
-    expect(top, '--ink-top must be an em length').toMatch(/^\d*\.?\d+em$/);
-    expect(bottom, '--ink-bottom must be an em length').toMatch(/^\d*\.?\d+em$/);
-    expect(parseFloat(top!), '--ink-top shrank below the measured ink overshoot').toBeGreaterThanOrEqual(FLOOR.top);
-    expect(parseFloat(bottom!), '--ink-bottom shrank below the measured ink overshoot').toBeGreaterThanOrEqual(FLOOR.bottom);
-  });
-
-  it('--ink-inline is declared on :root, in em, and covers the measured sideways overhang (NS-45)', () => {
-    const inline = rootVar('--ink-inline');
-    expect(inline, '--ink-inline missing from :root').toBeDefined();
-    expect(inline, '--ink-inline must be an em length').toMatch(/^\d*\.?\d+em$/);
-    expect(parseFloat(inline!), '--ink-inline shrank below the measured swash overhang').toBeGreaterThanOrEqual(INLINE_FLOOR);
-  });
-
-  it.each(['Elamy-Bold.woff2', 'Elamy-Regular.woff2'])(
-    '--ink-inline covers the real sideways overhang of every Hebrew letter and digit in %s (measured, NS-45)',
-    (file) => {
-      const font = fontkit.openSync(path.join(process.cwd(), 'src/app/fonts', file));
-      const chars = [...Array(0x5ea - 0x5d0 + 1).keys()].map((i) => String.fromCodePoint(0x5d0 + i)).concat([...'0123456789.?,!']);
-      let worst = 0;
-      for (const ch of chars) {
-        const g = font.glyphForCodePoint(ch.codePointAt(0)!);
-        const { minX, maxX } = g.bbox;
-        if (maxX <= minX) continue;
-        worst = Math.max(worst, -minX / font.unitsPerEm, (maxX - g.advanceWidth) / font.unitsPerEm);
-      }
-      const inline = parseFloat(rootVar('--ink-inline')!);
-      expect(worst, 'sanity: the font really overhangs (otherwise the measurement is broken)').toBeGreaterThan(0.3);
-      expect(inline, `--ink-inline (${inline}em) must enclose the worst glyph overhang (${worst.toFixed(3)}em) in ${file}`).toBeGreaterThanOrEqual(worst);
-    },
-  );
-
-  it.each(['display', 'title', 'signature'])(
-    '.type-%s pads by the ink box and cancels it with an equal negative margin (layout stays put)',
-    (name) => {
-      const body = clean.match(new RegExp(`\\.type-${name}\\s*\\{([^}]*)\\}`))?.[1];
-      expect(body, `.type-${name} rule missing`).toBeDefined();
-      const get = (prop: string) => norm(body!.match(new RegExp(`(?:^|[;\\s])${prop}\\s*:\\s*([^;]+);`))?.[1]);
-      expect(get('padding-block'), `.type-${name} padding-block`).toBe('var(--ink-top) var(--ink-bottom)');
-      expect(get('margin-block'), `.type-${name} margin-block`).toBe('calc(-1 * var(--ink-top)) calc(-1 * var(--ink-bottom))');
-      expect(get('padding-inline'), `.type-${name} padding-inline`).toBe('var(--ink-inline)');
-      expect(get('margin-inline'), `.type-${name} margin-inline`).toBe('calc(-1 * var(--ink-inline))');
-    },
-  );
-
-  it('no other .type-* class carries the ink box (it is Elamy-only)', () => {
-    const offenders = [...clean.matchAll(/\.type-([a-z-]+)\s*\{([^}]*)\}/g)]
-      .filter(([, name, body]) => !['display', 'title', 'signature'].includes(name) && /--ink-/.test(body))
-      .map(([, name]) => `.type-${name}`);
-    expectNone(offenders, 'ink-box vars on a non-Elamy class');
   });
 });

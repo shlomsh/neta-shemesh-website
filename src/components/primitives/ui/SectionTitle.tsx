@@ -24,6 +24,9 @@ type SectionTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
 /**
  * The one title style: `type-title` (Elamy 700), colour from `--header-color` so it follows the
  * nearest `[data-bg-tone]`. Size, weight (700) and tracking (-0.01em) come from the type class, never from here.
+ * Static by rule (CLAUDE.md typography rule 9): never inside a ScrollReveal, never given an opacity, transform or
+ * colour transition (iPhone Safari repaints Elamy only inside its declared height and cuts the swash tops).
+ * Guarded by tests/elamy-static.spec.ts.
  */
 export function SectionTitle({ as: Tag = 'h2', id, className, onDark = false, marker, rowClassName, children, ...props }: SectionTitleProps) {
   const title = (

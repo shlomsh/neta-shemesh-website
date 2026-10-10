@@ -34,12 +34,9 @@ export function StepCard({
 
         {/* Content anchored to bottom, RTL — direction inherited from <html>; font from body */}
         <div className="absolute inset-0 flex flex-col justify-end p-5 text-start sm:p-6">
-          {/* Digits have no sideways overhang (fontkit: 0em), so the numeral opts out of the inline ink box
-              (--ink-inline:0em zeroes padding AND margin together, the box stays balanced). Keeping it on
-              would stretch the card-edge box 54px past the photo and shift a photo seam by 1/255 (VR, NS-45). */}
           <span
             dir="ltr"
-            className="type-display [--ink-inline:0em] self-end text-cream drop-shadow-md"
+            className="type-display self-end text-cream drop-shadow-md"
           >
             {numberText}
           </span>

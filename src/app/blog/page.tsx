@@ -34,16 +34,21 @@ export default function BlogIndexPage() {
       {/* Intro band */}
       <Section id={ID.blogIntro} tone="dark" className="pt-region pb-section-mid">
         <Container id={ID.mainContent} maxWidth="lg" className="text-center">
-          <ScrollReveal className="flex flex-col items-center gap-stack">
-            <span className="type-eyebrow text-cream">
-              הבלוג
-            </span>
+          {/* The title is static (CLAUDE.md typography rule 9); the eyebrow and the lead reveal around it. */}
+          <div className="flex flex-col items-center gap-stack">
+            <ScrollReveal>
+              <span className="type-eyebrow block text-cream">
+                הבלוג
+              </span>
+            </ScrollReveal>
             <SectionTitle as="h1">מחשבות מהקליניקה</SectionTitle>
-            <p className="type-lead mx-auto max-w-[60ch] text-cream">
-              רעיונות, כלים ותובנות על זוגיות, הורות והקשרים שאנחנו הכי רוצים
-              לטפח. סדרת מאמרים שנכתבת מהלב ומהניסיון בחדר הטיפול.
-            </p>
-          </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <p className="type-lead mx-auto max-w-[60ch] text-cream">
+                רעיונות, כלים ותובנות על זוגיות, הורות והקשרים שאנחנו הכי רוצים
+                לטפח. סדרת מאמרים שנכתבת מהלב ומהניסיון בחדר הטיפול.
+              </p>
+            </ScrollReveal>
+          </div>
         </Container>
       </Section>
 

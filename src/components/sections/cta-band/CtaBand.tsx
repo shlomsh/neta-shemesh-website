@@ -25,15 +25,16 @@ export function CtaBand() {
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-[clamp(1rem,4vw,2rem)] text-center w-full">
+        <SectionHeader
+          id={ID.ctaBandTitle}
+          align="center"
+          onPhoto
+          title="קביעת פגישת ייעוץ"
+          subtitle="הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם."
+          subtitleClassName="mb-12"
+          subtitleReveal={0.1}
+        />
         <ScrollReveal delay={0.1}>
-          <SectionHeader
-            id={ID.ctaBandTitle}
-            align="center"
-            onPhoto
-            title="קביעת פגישת ייעוץ"
-            subtitle="הצעד הראשון לשינוי מתחיל כאן. בואו לתאם פגישה ראשונית ולגלות מחדש את החיבור שלכם."
-            subtitleClassName="mb-12"
-          />
           {/* "/#contact" (route-absolute) so the button also works from /blog. `halo` adds the breathing ring. */}
           <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" halo>
             מוזמנים ליצור קשר

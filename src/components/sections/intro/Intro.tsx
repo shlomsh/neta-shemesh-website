@@ -30,9 +30,7 @@ export function Intro() {
           <div className="contents lg:relative lg:flex lg:w-full lg:flex-col lg:justify-center lg:gap-6 lg:self-center">
             <OrganicBg className="opacity-60 z-0 pointer-events-none" />
 
-            <ScrollReveal className="relative z-10 order-1 lg:order-none">
-              <SectionTitle id={ID.aboutIntroTitle}>ליווי מקצועי לזוגות</SectionTitle>
-            </ScrollReveal>
+            <SectionTitle id={ID.aboutIntroTitle} className="relative z-10 order-1 lg:order-none">ליווי מקצועי לזוגות</SectionTitle>
 
             <ScrollReveal delay={0.12} className="relative z-10 order-3 lg:order-none">
               {/* Veil card: cream 85% over mauve (--surface-veil) is 4.97:1 against plum, so the

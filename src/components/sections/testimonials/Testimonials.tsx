@@ -20,15 +20,14 @@ export function Testimonials() {
       <Container maxWidth="2xl">
 
         {/* Section heading */}
-        <ScrollReveal delay={0.1}>
-          <SectionHeader
-            id={ID.testimonialsTitle}
-            align="center"
-            title="לקוחות ממליצים"
-            subtitle="מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה."
-            subtitleClassName="mb-section-mid"
-          />
-        </ScrollReveal>
+        <SectionHeader
+          id={ID.testimonialsTitle}
+          align="center"
+          title="לקוחות ממליצים"
+          subtitle="מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה."
+          subtitleClassName="mb-section-mid"
+          subtitleReveal={0.1}
+        />
 
         {/* Featured quote with portrait. The gap stays a clamp (NS-61, parked block): 32/5vw/80 is 16px past every step at 1440. */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(2rem,5vw,5rem)] mb-section-mid max-w-5xl mx-auto">

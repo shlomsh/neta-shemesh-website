@@ -29,11 +29,9 @@ export function Footer() {
       <div className="relative z-10 my-auto flex flex-col items-center gap-[clamp(2rem,6vw,5.625rem)] w-full max-w-[55.875rem] text-center">
 
         {/* 1. Tagline */}
-        <ScrollReveal className="h-full">
-          <SectionTitle as="p" onDark className="text-center h-full flex items-center justify-center">
-            התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
-          </SectionTitle>
-        </ScrollReveal>
+        <SectionTitle as="p" onDark className="text-center h-full flex items-center justify-center">
+          התגברו על אתגרים וחדשו את הקשר הרגשי והפיזי.
+        </SectionTitle>
 
         {/* 2. CTA link */}
         <ScrollReveal delay={0.1}>

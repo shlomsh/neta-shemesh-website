@@ -100,7 +100,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
                 onKeyDown={(e) => onKeyDown(e, i)}
                 className="block w-full text-start ps-5 py-2 rounded-tile cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum"
               >
-                <span className="type-title font-normal [letter-spacing:normal] block transition-transform duration-300 motion-reduce:transition-none">
+                <span className="type-title font-normal [letter-spacing:normal] block">
                   {item.title}
                 </span>
               </button>

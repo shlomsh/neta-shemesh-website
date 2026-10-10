@@ -1,5 +1,6 @@
 import type React from 'react';
 import { cx } from '@/lib/cx';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { BodyText } from './BodyText';
 import { SectionTitle } from './SectionTitle';
 
@@ -51,22 +52,31 @@ type SectionHeaderProps = {
   subtitleClassName?: string;
   /** A drawing beside the title in the same row (see SectionTitle `marker`). Centred with the title. */
   marker?: React.ReactNode;
+  /**
+   * Reveal the subtitle on scroll, after this many seconds of delay. Omit for no reveal. The TITLE never
+   * reveals (CLAUDE.md typography rule 9: Elamy titles are static), so a caller must not wrap the header in a
+   * ScrollReveal; this prop is how the subtitle keeps its fade-in.
+   */
+  subtitleReveal?: number;
 };
 
 /**
  * The title + subtitle lockup as two sibling elements (a fragment, no wrapper): the caller owns the
- * wrapper and any ScrollReveal around it. A lockup whose two lines reveal separately (About gallery)
- * uses `SectionTitle` and `SectionSubtitle` directly.
+ * wrapper. The title is static; only the subtitle can reveal (`subtitleReveal`). A lockup whose two lines
+ * reveal separately (About gallery) uses `SectionTitle` and `SectionSubtitle` directly.
  */
-export function SectionHeader({ id, title, subtitle, align, onPhoto = false, subtitleClassName, marker }: SectionHeaderProps) {
+export function SectionHeader({ id, title, subtitle, align, onPhoto = false, subtitleClassName, marker, subtitleReveal }: SectionHeaderProps) {
+  const sub = (
+    <SectionSubtitle align={align} onPhoto={onPhoto} className={subtitleClassName}>
+      {subtitle}
+    </SectionSubtitle>
+  );
   return (
     <>
       <SectionTitle id={id} onDark={onPhoto} marker={marker} rowClassName={align === 'column' ? 'justify-center md:justify-start' : 'justify-center'} className={cx(align === 'center' && 'text-center', align === 'column' && 'text-center md:text-start', onPhoto && 'drop-shadow-md')}>
         {title}
       </SectionTitle>
-      <SectionSubtitle align={align} onPhoto={onPhoto} className={subtitleClassName}>
-        {subtitle}
-      </SectionSubtitle>
+      {subtitleReveal === undefined ? sub : <ScrollReveal delay={subtitleReveal}>{sub}</ScrollReveal>}
     </>
   );
 }

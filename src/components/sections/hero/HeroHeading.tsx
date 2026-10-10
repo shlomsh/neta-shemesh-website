@@ -2,15 +2,6 @@
  * HeroHeading — main hero title: `.type-display` (Elamy, 40-72px) at weight 700
  * (headings are Elamy Bold by owner decision; numerals/signature stay 400).
  *
- * Elamy's glyphs overshoot the 1.05 line box (ink reaches ~1.11em above the
- * baseline vs an 0.8em ascent; descenders ~0.56em below). The h1 therefore
- * gets symmetric padding with an equal negative margin from the shared
- * `.type-display` rule in globals.css (layout is unchanged, but the box,
- * and the compositing layer ScrollReveal's animation creates around it,
- * encloses the full ink, so tall ascenders/descenders can't be clipped).
- * The same holds sideways (--ink-inline). No width utility here (a block h1
- * already fills its parent): `w-full` + inline padding would shift the box.
- *
  * Keeps ID.heroTitle (content/ids.ts), which the layout-fit and header-fidelity specs select on.
  * Server component.
  */

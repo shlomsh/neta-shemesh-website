@@ -30,9 +30,7 @@ export function Bio() {
           <div className="w-full lg:w-[60%] flex flex-col gap-7">
             
             {/* Title (NS-54: the clinic armchair as a marker beside it, same row) */}
-            <ScrollReveal>
-              <SectionTitle id={ID.aboutMeTitle} marker={<LineArt name="chair" marker />}>קצת עלי</SectionTitle>
-            </ScrollReveal>
+            <SectionTitle id={ID.aboutMeTitle} marker={<LineArt name="chair" marker />}>קצת עלי</SectionTitle>
 
             {/* Introduction/Bio Narrative */}
             <ScrollReveal delay={0.24} className="flex flex-col gap-4">

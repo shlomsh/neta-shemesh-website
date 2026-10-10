@@ -65,7 +65,7 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
   // The whole-source rules live in helpers.SCAN_RULES (with samples). An exception needs a named table with a reason.
   const BANNED = [
     'px-size', 'clamp-size', 'tw-named-size', 'font-off-scale', 'removed-classes', 'fontSize-style',
-    'card-height', 'display-font-in-component', 'ink-box-margin', 'ink-box-inline', 'css-scroll-snap', 'google-fonts',
+    'card-height', 'display-font-in-component', 'css-scroll-snap', 'google-fonts',
   ];
   it.each(BANNED)('src has no %s', (id) => {
     const r = rule(id);
