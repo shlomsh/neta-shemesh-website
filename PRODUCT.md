@@ -30,7 +30,7 @@ The site should feel like the practitioner herself: emotionally intelligent, app
 2. **Warmth through restraint.** The brand palette (plum, mauve, blush, cream) and Elamy display font carry emotional warmth — don't over-animate or over-decorate on top of it.
 3. **Credibility is earned in specifics.** Credentials, years of experience, location — concrete details that a hesitant client needs to see. Abstract platitudes undermine trust.
 4. **RTL is first-class.** Hebrew is the primary language. Every layout, spacing, and reading-direction decision must be designed for RTL first.
-5. **Contact is the conversion.** Every section leads toward contact — WhatsApp, phone, or form. Friction-free access to contact is the most important UX goal.
+5. **Contact is the conversion.** Every section leads toward contact — WhatsApp, phone, or email. Friction-free access to contact is the most important UX goal.
 
 ## Accessibility & Inclusion
 

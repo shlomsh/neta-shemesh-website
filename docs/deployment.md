@@ -4,7 +4,7 @@ The site ships to **one target: Vercel**, production at `https://www.netashemesh
 
 ## Environment variables
 
-Only one is read by code: `NEXT_PUBLIC_SITE_URL` (`src/content/site.ts`, inlined at build time). Production leaves it unset and gets `https://www.netashemesh.co.il`. It drives the canonical, `og:url`, the sitemap and the JSON-LD `@id`s. When it points anywhere else (a preview, a tunnel), `layout.tsx` emits `robots: noindex, nofollow`, so a staging copy never competes with production (`tests-unit/lib/noindex-host.test.ts`). Never add `Disallow: /` to `robots.txt` for that: a blocked crawler never sees the `noindex`. `.env.example` also lists `NEXT_PUBLIC_GA_ID`; no code reads it.
+Only one is read by code: `NEXT_PUBLIC_SITE_URL` (`src/content/site.ts`, inlined at build time). Production leaves it unset and gets `https://www.netashemesh.co.il`. It drives the canonical, `og:url`, the sitemap and the JSON-LD `@id`s. When it points anywhere else (a preview, a tunnel), `layout.tsx` emits `robots: noindex, nofollow`, so a staging copy never competes with production (`tests-unit/lib/noindex-host.test.ts`). Never add `Disallow: /` to `robots.txt` for that: a blocked crawler never sees the `noindex`.
 
 ## The test gate
 
