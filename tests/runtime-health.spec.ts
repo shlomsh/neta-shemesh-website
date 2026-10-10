@@ -45,6 +45,13 @@ test.describe('Runtime Health Guards', () => {
     
     await page.waitForTimeout(2000);
 
+    // Readiness, not a fixed sleep: on a cold CI runner the first /_next/image request of each size is resized on the fly
+    // and can outlast the 2 s above, which showed as "Zero-width image" on WebKit. Wait until every image that is on the
+    // page has finished loading (the assertions below still fail on one that loaded as zero-width or never loaded).
+    await page
+      .waitForFunction(() => Array.from(document.querySelectorAll('img')).every((img) => img.complete || img.getClientRects().length === 0), undefined, { timeout: 30000 })
+      .catch(() => undefined);
+
     // Guard 4: Console Errors & Warnings
     if (pageErrors.length > 0 || consoleLogs.length > 0) {
       const errorMsg = [

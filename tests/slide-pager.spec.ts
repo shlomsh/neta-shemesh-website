@@ -77,6 +77,33 @@ async function expectRestsAt(page: Page, top: number, what: string) {
   expect(Math.abs(y - top), `${what}: rested at ${y.toFixed(1)}, wanted the card top ${top.toFixed(1)}`).toBeLessThanOrEqual(LANDING_TOLERANCE_PX);
 }
 
+/**
+ * One finger flick: `deltas` as wheel events dispatched from inside the page, `intervalMs` apart, on the element under
+ * the pointer. A trackpad delivers its events at that cadence; `page.mouse.wheel` cannot, because every call is a round
+ * trip to the browser and on a loaded Linux WebKit (CI) one call takes 400-900 ms, which turns one flick into a dozen
+ * separate gestures (the pager rightly pages once per gesture: QUIET_MS in src/lib/slide-pager.ts). Real wheel input is
+ * still covered by the single-notch test above. Returns the longest gap between two events (ms), for the failure message.
+ */
+const flickInPage = (page: Page, deltas: number[], intervalMs: number) =>
+  page.evaluate(
+    async ({ deltas, intervalMs }) => {
+      const x = Math.round(window.innerWidth / 2);
+      const y = Math.round(window.innerHeight / 2);
+      const target = document.elementFromPoint(x, y) ?? document.body;
+      let last = performance.now();
+      let slowest = 0;
+      for (const dy of deltas) {
+        const now = performance.now();
+        slowest = Math.max(slowest, now - last);
+        last = now;
+        target.dispatchEvent(new WheelEvent('wheel', { deltaY: dy, deltaMode: 0, clientX: x, clientY: y, bubbles: true, cancelable: true }));
+        await new Promise((r) => setTimeout(r, intervalMs));
+      }
+      return slowest;
+    },
+    { deltas, intervalMs },
+  );
+
 test.describe('slide pager: desktop width, fine pointer', () => {
   test.skip(({ isMobile, browserName }) => isMobile || browserName === 'firefox', 'engines with a mouse and a fine pointer: Chromium and Safari');
   // Tall enough that every card is exactly one screen high (a taller card scrolls natively until its edge, by design).
@@ -127,11 +154,8 @@ test.describe('slide pager: desktop width, fine pointer', () => {
     // ~15 events, 16 ms apart, the shape of one finger flick; the tail keeps coming while the slide runs.
     const flick = [4, 14, 30, 48, 62, 66, 58, 46, 34, 24, 16, 10, 6, 4, 2];
     for (let i = 1; i <= 2; i++) {
-      for (const dy of flick) {
-        await page.mouse.wheel(0, dy);
-        await page.waitForTimeout(16);
-      }
-      await expectRestsAt(page, cards[i].top, `flick ${i}`);
+      const slowestGap = await flickInPage(page, flick, 16);
+      await expectRestsAt(page, cards[i].top, `flick ${i} (events ${Math.round(slowestGap)} ms apart at the slowest; a gap above the pager's 180 ms quiet time is a new gesture by design)`);
     }
   });
 
