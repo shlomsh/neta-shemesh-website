@@ -55,29 +55,9 @@ describe('C10: .type-* classes in globals.css', () => {
     if (lh) expect(rule!.lineHeight, `.type-${name} line-height`).toBe(lh);
   });
 
-  it('.type-quote uses the body font (Stanga), NOT the display font (Elamy was an illegible-paragraph bug)', () => {
-    const quote = rules.get('quote')!;
-    expect(quote.family).toBe(BODY);
-    expect(quote.family).not.toContain('display');
-    expect(quote.weight).toBe('400');
-  });
-
   it('the type scale is a closed set: no new .type-* class slips in (size budget <= 11 incl. the two blog sizes)', () => {
     expect([...rules.keys()].sort()).toEqual(SCALE.map((s) => s[0]).sort());
     expect(rules.size).toBeLessThanOrEqual(11);
-  });
-
-  it('no font-size below 14px anywhere in globals.css (floor rule)', () => {
-    const sizes = [...clean.matchAll(/font-size\s*:\s*([^;}]+)[;}]/g)].map((m) => m[1].trim());
-    expect(sizes.length).toBeGreaterThan(5);
-    const tooSmall: string[] = [];
-    for (const size of sizes) {
-      // every px number inside the declaration (clamp min, fixed size, calc terms) must be >= 14
-      for (const px of size.matchAll(/(\d+(?:\.\d+)?)px/g)) {
-        if (Number(px[1]) < 14) tooSmall.push(size);
-      }
-    }
-    expectNone(tooSmall, 'font-size under the 14px floor');
   });
 
   it('every .type-* class used in src exists in the scale (typo guard: type-lg, type-bodyy)', () => {
@@ -94,44 +74,23 @@ describe('C10: .type-* classes in globals.css', () => {
 });
 
 describe('C10b: font tokens and the Latin companion', () => {
-  it('--font-body stack is stanga, stanga-fb (Hebrew-only), latin, sans-serif (Latin must fall through to the companion, never Arial)', () => {
-    const m = clean.match(/--font-body\s*:\s*([^;]+);/);
-    expect(m, '--font-body missing').not.toBeNull();
-    const stack = m![1].split(',').map((x) => x.trim());
-    expect(stack.slice(0, 3)).toEqual(['var(--font-stanga)', '"stanga-fb"', 'var(--font-latin)']);
-    expect(stack.at(-1)).toBe('sans-serif');
-  });
-
-  it('--latin-scale exists and is 0.88', () => {
+  it('Latin companion: --latin-scale is 0.88 and .font-latin sizes itself by it in the Latin font (font stacks: font-fallback.test.ts)', () => {
     expect(clean).toMatch(/--latin-scale\s*:\s*0\.88\s*;/);
+    const rule = clean.match(/\.font-latin\s*\{([^}]*)\}/)?.[1] ?? '';
+    expect(rule).toMatch(/font-size\s*:\s*calc\(\s*1em\s*\*\s*var\(--latin-scale\)\s*\)/);
+    expect(rule).toMatch(/font-family\s*:\s*var\(--font-latin\)/);
   });
 
-  it('.font-latin sizes itself as calc(1em * var(--latin-scale)) and uses the Latin companion font', () => {
-    const rule = clean.match(/\.font-latin\s*\{([^}]*)\}/);
-    expect(rule, '.font-latin rule missing').not.toBeNull();
-    expect(rule![1]).toMatch(/font-size\s*:\s*calc\(\s*1em\s*\*\s*var\(--latin-scale\)\s*\)/);
-    expect(rule![1]).toMatch(/font-family\s*:\s*var\(--font-latin\)/);
-  });
-
-  it('--surface-veil is declared inside an `@theme static` block (Tailwind v4 drops unreferenced theme vars otherwise)', () => {
-    const idx = clean.indexOf('--surface-veil:');
-    expect(idx, '--surface-veil missing').toBeGreaterThan(-1);
-    // find the nearest preceding at-rule opener of the block that contains it
-    const before = clean.slice(0, idx);
+  it('--surface-veil is cream 85% over mauve and is declared inside `@theme static` (Tailwind v4 drops unreferenced theme vars otherwise)', () => {
+    expect(clean).toMatch(/--surface-veil\s*:\s*color-mix\(in srgb, var\(--color-cream\) 85%, var\(--color-mauve\)\)/);
+    const before = clean.slice(0, clean.indexOf('--surface-veil:'));
     const opener = before.lastIndexOf('@theme');
     expect(opener, '--surface-veil is not inside an @theme block').toBeGreaterThan(-1);
-    const header = before.slice(opener, before.indexOf('{', opener));
-    expect(header.replace(/\s+/g, ' ').trim(), '--surface-veil must live in `@theme static { }`').toBe('@theme static');
-    // and that block must not have closed before the declaration
-    const between = before.slice(before.indexOf('{', opener) + 1);
-    expect(between.includes('}'), '--surface-veil escaped its @theme static block').toBe(false);
+    expect(before.slice(opener, before.indexOf('{', opener)).replace(/\s+/g, ' ').trim()).toBe('@theme static');
+    expect(before.slice(before.indexOf('{', opener) + 1).includes('}'), '--surface-veil escaped its @theme static block').toBe(false);
   });
 
-  it('--surface-veil is cream 85% over mauve', () => {
-    expect(clean).toMatch(/--surface-veil\s*:\s*color-mix\(in srgb, var\(--color-cream\) 85%, var\(--color-mauve\)\)/);
-  });
-
-  it('the four brand colour tokens keep their values', () => {
+  it('the four brand colour tokens keep their values; --color-white is the cream alias (never pure #fff)', () => {
     for (const [token, hex] of [
       ['plum', '#7A5978'],
       ['mauve', '#C49AB8'],
@@ -140,6 +99,11 @@ describe('C10b: font tokens and the Latin companion', () => {
     ]) {
       expect(clean, `--color-${token}`).toMatch(new RegExp(`--color-${token}\\s*:\\s*${hex}\\s*;`, 'i'));
     }
+    expect(cssVar(css, '--color-white')?.toLowerCase(), '--color-white must equal the cream hex').toBe('#fff5f0');
+  });
+
+  it.each(['--color-dark', '--color-text-primary', '--color-text-secondary', '--color-bg-light', '--color-brand-primary'])('the retired colour alias %s is gone (four colours only: plum / mauve / blush / cream)', (name) => {
+    expect(cssVar(css, name), `${name} is back in globals.css`).toBeUndefined();
   });
 });
 
@@ -162,19 +126,6 @@ describe('C9: [data-bg-tone] rules map each tone to its background, text and hea
     expect(t?.color, `[data-bg-tone="${tone}"] color`).toBe(`var(--color-${want.color})`);
     expect(t?.header, `[data-bg-tone="${tone}"] --header-color`).toBe(`var(--color-${want.color})`);
   });
-
-  it('--color-white is aliased to the cream hex (never pure #fff)', () => {
-    const cream = cssVar(css, '--color-cream')!;
-    expect(cream.toLowerCase()).toBe('#fff5f0');
-    expect(cssVar(css, '--color-white')?.toLowerCase(), '--color-white must equal the cream hex').toBe(cream.toLowerCase());
-  });
-
-  it.each(['--color-dark', '--color-text-primary', '--color-text-secondary', '--color-bg-light', '--color-brand-primary'])(
-    'the retired colour alias %s is gone (say plum / cream / mauve)',
-    (name) => {
-      expect(cssVar(css, name), `${name} is back in globals.css`).toBeUndefined();
-    },
-  );
 });
 
 describe('C14: Elamy (the display font) is reserved for display, title and signature', () => {

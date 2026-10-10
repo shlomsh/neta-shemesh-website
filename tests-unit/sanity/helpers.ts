@@ -5,8 +5,8 @@
  * refactor (moving files under sections/, a change in how Section implements `fit`, ...) is
  * absorbed by editing this one file, not 10 tests.
  *
- *   - fitOf / isOneScreen / oneScreenMode   one-screen predicate (data-fit AND the implementing classes)
- *   - toneOf(el)                            nearest data-bg-tone ('mid' | 'light' | ...)
+ *   - fitOf / oneScreenMode / phoneMode     one-screen predicates (data-fit / data-phone AND the implementing classes)
+ *   - kindOf(section)                       the data-bg-tone of a top-level section, or 'photo'
  *   - topLevelSections(root)                main > section + main > footer, in order
  *   - typeClassesOf(el)                     the .type-* tokens on an element
  *   - readSources()                         cached src/**\/*.{ts,tsx,css} contents
@@ -18,7 +18,7 @@ import React from 'react';
 import { expect } from 'vitest';
 
 export const ROOT = resolve(__dirname, '../..');
-export const SRC = join(ROOT, 'src');
+const SRC = join(ROOT, 'src');
 
 // ─── Source files ────────────────────────────────────────────────────────────
 
@@ -66,7 +66,7 @@ export function sourceNamed(suffix: string): SourceFile {
 }
 
 /** Pure form of sourceNamed (unit-testable with fake files). */
-export function pickSource(files: SourceFile[], suffix: string): SourceFile {
+function pickSource(files: SourceFile[], suffix: string): SourceFile {
   const hits = files.filter((s) => s.path === `src/${suffix}` || s.path.endsWith(`/${suffix}`));
   if (hits.length === 0) throw new Error(`sanity: no source file matching ${suffix} under src/`);
   if (hits.length > 1) throw new Error(`sanity: ${suffix} is ambiguous, use a longer path suffix: ${hits.map((h) => h.path).join(', ')}`);
@@ -102,9 +102,6 @@ export function typeClassesOf(el: Element | null | undefined): string[] {
   return classTokens(el).filter((t) => /^type-[a-z-]+$/.test(t));
 }
 
-/** Largest-first ranking used by "paragraphs on blush must be quote scale or larger". */
-export const QUOTE_OR_LARGER = ['type-quote', 'type-title', 'type-display', 'type-card-title', 'type-signature'];
-
 // ─── Structure predicates (class based today; the ONE place to change for data-fit etc.) ───
 
 export const isFlexContainer = (el: Element | null | undefined) => hasClass(el, 'flex') || hasClass(el, 'lg:flex');
@@ -128,8 +125,6 @@ export function keepsAspectAtDesktop(el: Element | null | undefined): boolean {
   return t.some((x) => x.startsWith('aspect-[') || x === 'aspect-square') && !t.includes('lg:aspect-auto');
 }
 export const coversImage = (img: Element | null | undefined) => hasClass(img, 'object-cover');
-export const isVerticallyCentered = (el: Element | null | undefined) => hasClass(el, 'justify-center');
-export const stretchesItems = (el: Element | null | undefined) => hasClass(el, 'items-stretch');
 /** the map wrapper: fills the details column height at lg with a 360px floor */
 export const isStretchedMapFrame = (el: Element | null | undefined) => hasClass(el, 'lg:h-full') && hasClass(el, 'lg:min-h-[360px]');
 /** <main> overflow behaviour: clip keeps soft snap working, hidden breaks it */
@@ -138,30 +133,9 @@ export function overflowOf(el: Element | null | undefined): 'clip' | 'hidden' | 
   if (hasClass(el, 'overflow-clip')) return 'clip';
   return null;
 }
-/**
- * a card/photo surface class (not bg-cover/bg-center/bg-no-repeat): veil, brand colour (the named
- * theme utility `bg-cream`, or the legacy arbitrary `bg-[var(--color-*)]` form), black scrim, gradient
- */
-export function isSurfaceBg(token: string): boolean {
-  return (
-    /^bg-\[var\(--(?:surface-veil|color-[a-z-]+)\)\]$/.test(token) ||
-    /^bg-(?:plum|mauve|blush|cream)(?:\/\d+)?$/.test(token) ||
-    /^bg-(?:black|white)(?:\/\d+)?$/.test(token) ||
-    /^bg-gradient-/.test(token) ||
-    /^bg-linear-/.test(token) ||
-    /^bg-\[#/i.test(token)
-  );
-}
-
 // ─── Tone / kind ─────────────────────────────────────────────────────────────
 
 export type Tone = 'dark' | 'mid' | 'light' | 'cream';
-
-/** Tone of the nearest [data-bg-tone] ancestor-or-self, or null when on a photo / nothing. */
-export function toneOf(el: Element | null | undefined): Tone | null {
-  const surface = el?.closest('[data-bg-tone]');
-  return (surface?.getAttribute('data-bg-tone') as Tone | null) ?? null;
-}
 
 /** Top-level kind: a tone, or 'photo' for sections that carry no data-bg-tone (hero, CTA band, footer). */
 export function kindOf(section: Element): Tone | 'photo' {
@@ -243,7 +217,7 @@ export function phoneMode(el: Element): PhoneState | null {
 }
 
 /** What the CLASSES alone implement at lg (ignores data-fit). */
-export function classMode(el: Element): Exclude<OneScreenMode, 'inconsistent'> {
+function classMode(el: Element): Exclude<OneScreenMode, 'inconsistent'> {
   if (hasClass(el, 'lg:h-[max(100svh,720px)]')) return 'lock-720';
   if (hasClass(el, 'lg:h-[100svh]')) return 'lock-100';
   if (hasClass(el, 'lg:min-h-[max(100svh,720px)]')) return 'grow-720';
@@ -263,15 +237,6 @@ export function oneScreenMode(el: Element): OneScreenMode {
 
 /** the desktop vertical rhythm of a one-screen card */
 export const hasDesktopRhythm = (el: Element) => hasClass(el, 'lg:py-12');
-
-/**
- * True when the section is a full one-screen card on desktop: data-fit lock|grow that the classes
- * back up (consistent mode) + min screen from lg + lg:py-12.
- */
-export function isOneScreen(el: Element): boolean {
-  const mode = oneScreenMode(el);
-  return hasLgMinScreen(el) && (mode === 'lock-720' || mode === 'lock-100' || mode === 'grow-720') && hasDesktopRhythm(el);
-}
 
 // ─── Expected page structure (single source of truth for the suite) ──────────
 
@@ -333,7 +298,7 @@ export function headingOf(section: Element): HTMLElement | null {
   return section.querySelector<HTMLElement>('h1, h2');
 }
 
-export function headingTextOf(section: Element): string {
+function headingTextOf(section: Element): string {
   return (headingOf(section)?.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
@@ -400,13 +365,11 @@ export interface SubtitleSpec {
   margin: string[];
   /** max-w-prose (--container-prose = 65ch) required (Services' 320-400px column never reaches 65ch, so it has none) */
   needsMaxWidth: boolean;
-  /** Sits directly on a mauve surface by owner decision (decorative title lockup). */
-  onMid?: boolean;
 }
 
 export const SUBTITLES: SubtitleSpec[] = [
   { section: 'expertise', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
-  { section: 'about-gallery', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true, onMid: true },
+  { section: 'about-gallery', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
   // Exception: more room under the title for the Elamy "?" descender in "איך זה עובד?".
   { section: 'services', margin: ['mt-5', 'md:mt-9'], needsMaxWidth: false },
   { section: 'cta-band', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
@@ -474,7 +437,7 @@ export function hamburger(root: ParentNode): HTMLElement | null {
   return Array.from(root.querySelectorAll<HTMLElement>('button')).find((b) => b.getAttribute('aria-controls') === 'mobile-menu' && hasClass(b, 'md:hidden')) ?? null;
 }
 
-// ─── Source-scan rules (each carries known-bad / known-good samples; see source-scan.test.ts) ───
+// ─── Source-scan rules (each carries known-bad / known-good samples; source-scan.test.ts checks them) ───
 
 export interface ScanRule {
   id: string;
@@ -521,63 +484,51 @@ const INK_INLINE_RE = new RegExp(
 
 export const SCAN_RULES: ScanRule[] = [
   { id: 'px-size', label: 'arbitrary px/number text size  text-[18px]', re: /(?<![\w-])text-\[(?:\d|\.\d|length:|calc\()/,
-    bad: ['className="text-[18px]"', 'md:text-[15px]', 'text-[.9rem]', 'text-[0]'], good: ['text-plum', 'text-[color:var(--header-color)]', 'context-[1]'] },
+    bad: ['className="text-[18px]"', 'md:text-[15px]', 'text-[.9rem]'], good: ['text-plum', 'text-[color:var(--header-color)]', 'context-[1]'] },
   { id: 'clamp-size', label: 'clamp() text size  text-[clamp(', re: /(?<![\w-])text-\[clamp\(/,
-    bad: ['text-[clamp(1rem,2vw,2rem)]'], good: ['py-[clamp(32px,5vw,64px)]', 'gap-[clamp(1px,2px,3px)]'] },
+    bad: ['text-[clamp(1rem,2vw,2rem)]'], good: ['py-[clamp(32px,5vw,64px)]'] },
   { id: 'tw-named-size', label: 'Tailwind named text size (xs/sm/base/lg/xl/2xl..)', re: new RegExp(`(?<![\\w:-])${BP}text-(?:xs|sm|base|lg|xl|[2-9]xl)(?![\\w-])`),
-    bad: ['text-sm', 'md:text-xl', 'text-2xl', 'class="text-xs"'], good: ['text-white/90', 'type-small', 'text-center', 'text-right'] },
-  { id: 'font-black', label: 'font-black', re: /(?<![\w-])font-black(?![\w-])/, bad: ['font-black', 'type-display font-black'], good: ['font-bold', 'font-blacksmith'] },
-  { id: 'font-sans', label: 'font-sans', re: /(?<![\w-])font-sans(?![\w-])/, bad: ['font-sans', 'md:font-sans'], good: ['font-bold', 'font-sans-serif', 'sans-serif'] },
-  { id: 'extra-weights', label: 'extra weights (only 400 + 700 exist)', re: /(?<![\w-])font-(?:thin|extralight|light|medium|semibold|extrabold)(?![\w-])/,
-    bad: ['font-medium', 'font-light', 'font-semibold'], good: ['font-bold', 'font-normal', 'font-mediumish'] },
-  { id: 'numeric-weight', label: 'numeric font weight utility font-[600]', re: /(?<![\w-])font-\[\d/,
-    bad: ['font-[600]'], good: ['font-[family-name:var(--font-body)]'] },
-  { id: 'data-body-large', label: 'removed attribute data-body-large', re: /data-body-large/, bad: ['<p data-body-large>'], good: ['data-bg-tone'] },
-  { id: 'section-header', label: 'removed class section-header', re: /section-header/, bad: ['className="section-header"'], good: ['SectionTitle', 'header-color'] },
-  { id: 'hero-title', label: 'removed class hero-title', re: /hero-title/, bad: ['hero-title'], good: ['hero-enter'] },
-  { id: 'sub-header', label: 'removed class sub-header', re: /sub-header/, bad: ['sub-header'], good: ['subtitle'] },
-  { id: 'contact-email-link', label: 'removed class contact-email-link', re: /contact-email-link/, bad: ['contact-email-link'], good: ['mailto:'] },
+    bad: ['text-sm', 'md:text-xl', 'class="text-xs"'], good: ['text-white/90', 'type-small', 'text-center'] },
+  { id: 'font-off-scale', label: 'font-black / font-sans / a weight other than 400 + 700 / numeric font-[600]', re: /(?<![\w-])font-(?:black|sans|thin|extralight|light|medium|semibold|extrabold)(?![\w-])|(?<![\w-])font-\[\d/,
+    bad: ['type-display font-black', 'md:font-sans', 'font-medium', 'font-[600]'], good: ['font-bold', 'font-normal', 'font-sans-serif', 'font-[family-name:var(--font-body)]'] },
+  { id: 'removed-classes', label: 'template-export classes that were removed (data-body-large, section-header, hero-title, sub-header, contact-email-link)', re: /data-body-large|section-header|hero-title|sub-header|contact-email-link/,
+    bad: ['<p data-body-large>', 'className="section-header"', 'contact-email-link'], good: ['data-bg-tone', 'SectionTitle', 'header-color', 'hero-enter', 'subtitle'] },
   { id: 'fontSize-style', label: 'inline fontSize in a style object', re: /\bfontSize\s*:/,
     bad: ["style={{ fontSize: 18 }}", "style={{fontSize:'1rem'}}"], good: ['fontSizeAdjust', "const x = 'font size'"] },
-  { id: 'h-screen', label: 'h-screen / min-h-screen (use svh)', re: new RegExp(`(?<!\\w)${BP}(?:min-|max-)?h-screen(?![\\w-])`),
-    bad: ['h-screen', 'min-h-screen', 'lg:h-screen'], good: ['min-h-[100svh]', 'h-screenful'] },
-  { id: 'ungated-h-100svh', label: 'ungated h-[100svh] (only lg:-gated or min-h is allowed)', re: /(?<![\w:-])h-\[100svh\]/,
-    bad: ['h-[100svh]', 'flex h-[100svh] w-full'], good: ['lg:h-[100svh]', 'min-h-[100svh]', 'lg:min-h-[100svh]', 'lg:h-[max(100svh,720px)]'] },
-  { id: 'main-overflow-hidden', label: '<main> with overflow-hidden', re: /<main\b[^>]*\boverflow-hidden/,
-    bad: ['<main className="relative w-full overflow-hidden" style={{}}>'], good: ['<main className="relative w-full overflow-clip">', '<section className="overflow-hidden">'] },
-  { id: 'pageshell-overflow-hidden', label: '<PageShell overflow="hidden"> (the PageShell form of <main overflow-hidden>)', re: /<PageShell\b[^>]*\boverflow=\{?["']hidden/,
-    bad: ['<PageShell overflow="hidden">', "<PageShell behaviors={x} overflow={'hidden'}>"], good: ['<PageShell overflow="clip">', '<PageShell overflow="clip" behaviors={<SoftSnap />}>'] },
+  { id: 'card-height', label: 'a hand-written card height unit: h-screen, ungated h-[100svh], min-h-[100svh], *-lvh / *-dvh (use <Section fit> / screen-fit / screen-visible; --card-h owns the unit)',
+    re: new RegExp([`(?<!\\w)${BP}(?:min-|max-)?h-screen(?![\\w-])`, String.raw`(?<![\w:-])h-\[100svh\]`, String.raw`(?<![\w-])(?:[a-z0-9-]+:)*min-h-\[100svh\]`, String.raw`(?<![\w-])(?:[a-z0-9-]+:)*(?:min-|max-)?h-(?:lvh|dvh|\[100[ld]vh\])`].join('|')),
+    bad: ['h-screen', 'min-h-screen', 'flex h-[100svh] w-full', 'lg:min-h-[100svh]', 'max-lg:min-h-lvh', 'supports-[height:100dvh]:min-h-dvh', 'h-[100dvh]'],
+    good: ['lg:h-[100svh]', 'lg:h-[max(100svh,720px)]', 'lg:min-h-[max(100svh,720px)]', 'min-h-[48px]', 'h-screenful', 'screen-fit'] },
+  { id: 'css-scroll-snap', label: 'CSS scroll-snap (the JS slide pager is the only snapping; CSS snap fights it)', re: /scroll-snap-type|scrollSnapType|\bsnap-(?:x|y|both|mandatory|proximity)\b/,
+    bad: ['scroll-snap-type: y mandatory', 'snap-y snap-mandatory', "scrollSnapType: 'y'"], good: ['SoftSnap', 'slide-pager', '?snap=off'] },
   { id: 'google-fonts', label: 'Google Fonts fetch (breaks the Vercel prod build)', re: /next\/font\/google|fonts\.googleapis|fonts\.gstatic/,
     bad: ['import { Roboto } from "next/font/google"', 'https://fonts.googleapis.com/css'], good: ['next/font/local'] },
   { id: 'display-font-in-component', label: 'Elamy / display font set directly on a component', re: /(?<![\w-])font-(?:display|elamy)(?![\w-])|family-name:var\(--font-(?:display|elamy)\)|font-\[var\(--font-(?:display|elamy)\)\]|\bfontFamily\b/,
-    bad: ['font-display', 'font-[family-name:var(--font-display)]', 'font-[var(--font-elamy)]', "style={{ fontFamily: 'x' }}"], good: ['font-[family-name:var(--font-body)]', 'type-title', 'font-displayed'] },
+    bad: ['font-display', 'font-[family-name:var(--font-display)]', "style={{ fontFamily: 'x' }}"], good: ['font-[family-name:var(--font-body)]', 'type-title', 'font-displayed'] },
   { id: 'stock-palette', label: 'stock Tailwind palette colour', re: /(?<![\w-])(?:bg|text|border|ring|outline|fill|stroke|from|via|to|divide|decoration|shadow)-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)-\d{2,3}/,
-    bad: ['bg-red-500', 'text-gray-600', 'border-blue-300'], good: ['bg-plum', 'text-cream', 'bg-black/20'] },
+    bad: ['bg-red-500', 'text-gray-600'], good: ['bg-plum', 'text-cream', 'bg-black/20'] },
   { id: 'arbitrary-colour-var', label: 'arbitrary colour utility  text-[var(--color-plum)]  (use the theme utility: text-plum, bg-cream, ring-mauve ...)',
     re: /(?<![\w-])(?:text|bg|border|ring-offset|ring|outline|fill|stroke|from|via|to|decoration|divide|caret|accent|shadow)-\[(?:color:)?var\(--color-[a-z-]+\)\]/,
-    bad: ['text-[var(--color-plum)]', 'focus-visible:ring-[var(--color-white)]', 'text-[color:var(--color-white)]', 'bg-[var(--color-dark)]', 'hover:outline-[color:var(--color-mauve)]', 'focus-visible:ring-offset-[var(--color-cream)]'],
-    good: ['text-plum', 'bg-cream/35', 'bg-[var(--surface-veil)]', 'text-[color:var(--header-color)]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]', 'outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]'] },
-  { id: 'white-utility', label: 'named white utility  text-white / bg-white / bg-white/35 / ring-white  (bg-white is pure #fff; the others resolve through the :root --color-white override; use the -cream utility)',
+    bad: ['text-[var(--color-plum)]', 'focus-visible:ring-[var(--color-white)]', 'hover:outline-[color:var(--color-mauve)]'],
+    good: ['text-plum', 'bg-cream/35', 'bg-[var(--surface-veil)]', 'text-[color:var(--header-color)]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]'] },
+  { id: 'white-utility', label: 'named white utility  text-white / bg-white / ring-white  (bg-white is pure #fff; use the -cream utility)',
     re: /(?<![\w-])(?:text|bg|border|ring-offset|ring|outline|fill|stroke|from|via|to|decoration|divide|caret|accent)-white(?![\w-])/,
-    bad: ['text-white', 'text-white/90', 'ring-white/35', 'bg-white', 'rounded-card bg-white shadow-sm', 'bg-white/35', 'lg:hover:text-white', 'focus-visible:ring-offset-white'],
-    good: ['text-cream', 'bg-cream/35', 'bg-whitesmoke', 'text-whitespace', 'on-white'] },
+    bad: ['text-white', 'rounded-card bg-white shadow-sm', 'bg-white/35', 'lg:hover:text-white', 'focus-visible:ring-offset-white'],
+    good: ['text-cream', 'bg-cream/35', 'bg-whitesmoke', 'on-white'] },
   { id: 'rtl-dir', label: 'dir="rtl" below <html> (the page is already rtl; keep dir="ltr" for phone / email / Latin)',
     re: /\bdir=(?:"rtl"|'rtl'|\{\s*["'`]rtl["'`]\s*\})/,
-    bad: ['<header dir="rtl" className="x">', "<div dir='rtl'>", "<Section dir={'rtl'}>", '<p dir={"rtl"}>', 'dir="rtl"'],
-    good: ['<span dir="ltr">', '<html lang="he">', 'direction: rtl', 'dir={undefined}', 'cardir="rtlx"', 'rtl'] },
+    bad: ['<header dir="rtl" className="x">', "<div dir='rtl'>", "<Section dir={'rtl'}>"],
+    good: ['<span dir="ltr">', '<html lang="he">', 'direction: rtl', 'dir={undefined}', 'cardir="rtlx"'] },
   { id: 'ink-box-margin', label: 'margin utility on an Elamy heading (.type-display/.type-title/.type-signature, or SectionTitle className): it replaces the ink-box negative margin and shifts the layout; put the spacing on a wrapper or the neighbouring element',
     re: INK_MARGIN_RE,
-    bad: ['<h2 className="type-title mb-6">', '<p className="mt-3 type-signature text-cream">', '<span className="type-display md:-mt-2 self-end">', '<SectionTitle className="mb-[clamp(28px,4vw,48px)] text-center">',
-      '<SectionTitle\n  id={ID.x}\n  className="text-center my-4"\n>', '<h1 className={cx("type-title", wide && "mx-auto")}>', '<h2 className="type-title [margin-top:8px]">', '<SectionTitle className={cx("a", x && "mt-2")}>'],
+    bad: ['<h2 className="type-title mb-6">', '<p className="mt-3 type-signature text-cream">', '<SectionTitle className="mb-[clamp(28px,4vw,48px)] text-center">', '<h1 className={cx("type-title", wide && "mx-auto")}>', '<h2 className="type-title [margin-top:8px]">'],
     good: ['<h2 className="type-title font-bold tracking-[-0.01em] text-center">', '<SectionTitle className="text-center">', '<div className="mb-[clamp(28px,4vw,48px)]"><SectionTitle className="text-center">',
-      '<p className="type-quote max-w-prose mx-auto mt-3 md:mt-4">', '<h3 className="type-card-title mt-2 mb-3 text-cream">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve max-w-prose min-h-[2em]">',
-      '<SectionTitle as="p" onDark className="text-center w-full h-full flex items-center justify-center">', '.type-title { margin-block: 0 }'] },
+      '<p className="type-quote max-w-prose mx-auto mt-3 md:mt-4">', '<h3 className="type-card-title mt-2 mb-3 text-cream">', '.type-title { margin-block: 0 }'] },
   { id: 'ink-box-inline', label: 'width or inline-padding utility on an Elamy heading (.type-display/.type-title/.type-signature, or SectionTitle className): the ink box pads inline with an equal negative margin (NS-45), so it shifts the title; put widths and padding on a wrapper',
     re: INK_INLINE_RE,
-    bad: ['<h1 className="type-display text-cream font-bold w-full">', '<h2 className="type-title max-w-prose">', '<p className="min-w-0 type-signature">', '<h2 className="type-title px-4">', '<SectionTitle as="p" onDark className="text-center w-full h-full">',
-      '<span className="type-display ps-2 self-end">', '<h1 className={cx("type-title", wide && "max-w-prose")}>', '<h2 className="type-title [width:80%]">'],
+    bad: ['<h1 className="type-display text-cream font-bold w-full">', '<h2 className="type-title max-w-prose">', '<h2 className="type-title px-4">', '<SectionTitle as="p" onDark className="text-center w-full h-full">', '<h2 className="type-title [width:80%]">'],
     good: ['<h2 className="type-title font-bold tracking-[-0.01em] text-center">', '<SectionTitle className="text-center h-full flex items-center justify-center">', '<div className="w-full"><SectionTitle>', '<h3 className="type-card-title w-full px-4">',
-      '<p className="type-quote max-w-prose mx-auto mt-3 md:mt-4">', '<span className="type-display self-end text-cream drop-shadow-md">', '<h2 className="type-title bg-mauve min-h-[2em] opacity-90">', 'type-title { padding-inline: 0 }'] },
+      '<p className="type-quote max-w-prose mx-auto mt-3 md:mt-4">', 'type-title { padding-inline: 0 }'] },
   { id: 'hex', label: 'hex colour literal', re: /#[0-9a-fA-F]{3,8}\b/, bad: ['bg-[#123456]', '#ABC', 'color:#fff5f0'], good: ['var(--color-plum)', 'issue #4', 'url(#grad)'] },
 ];
 
@@ -595,7 +546,7 @@ export function classLiterals(files: SourceFile[]): Array<{ file: string; text: 
   return out;
 }
 
-export const TYPE_TOKEN = /(?<![\w-])type-(?:display|title|card-title|quote|lead|body|small|read-lead|read|eyebrow|signature)(?![\w-])/g;
+const TYPE_TOKEN = /(?<![\w-])type-(?:display|title|card-title|quote|lead|body|small|read-lead|read|eyebrow|signature)(?![\w-])/g;
 
 /** Problems in ONE class list that carries a type-* class (empty array = fine). */
 export function typeLiteralOffenses(text: string): string[] {
@@ -612,22 +563,6 @@ export function typeLiteralOffenses(text: string): string[] {
     out.push(`${m[0]} next to ${types.join(', ')} (line-height and tracking come from the type class)`);
   }
   return out;
-}
-
-// ─── Tolerant source parsing (SoftSnap) ──────────────────────────────────────
-
-/** `export const X = 1024;`  `export const X: number = 1024`  without semicolon, any spacing. */
-export function parseExportedNumber(text: string, name: string): number | null {
-  const m = text.match(new RegExp(`export\\s+const\\s+${name}\\s*(?::\\s*number\\s*)?=\\s*(\\d+(?:\\.\\d+)?)\\s*;?`));
-  return m ? Number(m[1]) : null;
-}
-
-/** The section-selecting string literal passed to any querySelectorAll call (any quote style, optional generic). */
-export function findTargetSelector(text: string): string | undefined {
-  for (const m of text.matchAll(/querySelectorAll(?:<[^>]*>)?\(\s*(['"`])((?:(?!\1).)*)\1/g)) {
-    if (m[2].includes('section')) return m[2];
-  }
-  return undefined;
 }
 
 // ─── globals.css: tone mapping and font-family usage ─────────────────────────
@@ -687,7 +622,7 @@ export function hexToRgb(hex: string): RGB {
 }
 
 /** WCAG 2.x relative luminance. */
-export function relativeLuminance(c: RGB): number {
+function relativeLuminance(c: RGB): number {
   const lin = (v: number) => {
     const s = v / 255;
     return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
@@ -703,7 +638,7 @@ export function contrastRatio(a: RGB, b: RGB): number {
 }
 
 /** Source-over compositing of a (possibly translucent) colour on an opaque one, in sRGB like browsers do. */
-export function compositeOver(fg: RGBA, bg: RGB): RGB {
+function compositeOver(fg: RGBA, bg: RGB): RGB {
   return { r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a) };
 }
 
@@ -797,7 +732,7 @@ export function evalColour(expr: string, env: ColourEnv = colourEnv(), depth = 0
 }
 
 /** [variant, utility] of a class token; the variant chain is whatever precedes the last top-level ':' (outside [...] and (...)). */
-export function splitVariant(token: string): { variant: string; util: string } {
+function splitVariant(token: string): { variant: string; util: string } {
   let depth = 0;
   let cut = -1;
   for (let i = 0; i < token.length; i++) {
@@ -810,7 +745,7 @@ export function splitVariant(token: string): { variant: string; util: string } {
 }
 
 /** Class tokens that apply in the base state (no hover:/md:/focus-visible: ... prefix). */
-export function baseTokens(el: Element): string[] {
+function baseTokens(el: Element): string[] {
   return classTokens(el).filter((t) => splitVariant(t).variant === '');
 }
 
@@ -826,7 +761,7 @@ export type ColourToken = { kind: 'inherit' } | { kind: 'colour'; value: RGBA } 
 const NON_COLOUR_ARBITRARY = /^(?:\((?:length|percentage|position|size|url|image|angle|number):|\[(?:length|percentage|position|size|url|image|angle|number):|\[url\(|\[(?:\d|\.\d|calc\(|clamp\(|min\(|max\()|\[[^\]]*gradient\()/;
 
 /** Interpret one base `text-*` / `bg-*` utility as a colour; null when it is not a colour utility at all (text-right, bg-cover, text-[14px] ...). */
-export function colourFromToken(prefix: 'text' | 'bg', token: string, env: ColourEnv): ColourToken | null {
+function colourFromToken(prefix: 'text' | 'bg', token: string, env: ColourEnv): ColourToken | null {
   if (prefix === 'text' && (token === 'text-inherit' || token === 'text-current')) return { kind: 'inherit' };
   const named = token.match(new RegExp(`^${prefix}-${NAMED_COLOUR}(?:/(\\d+))?$`));
   if (named) {
@@ -857,7 +792,7 @@ export function colourFromToken(prefix: 'text' | 'bg', token: string, env: Colou
 }
 
 /** `--header-color` as seen by this element: its own/ancestor `.on-dark` (cream) or the nearest `[data-bg-tone]` rule. */
-export function headerColourAt(el: Element, env: ColourEnv = colourEnv()): RGBA {
+function headerColourAt(el: Element, env: ColourEnv = colourEnv()): RGBA {
   const tones = parseToneRules();
   for (let a: Element | null = el; a; a = a.parentElement) {
     if (hasClass(a, 'on-dark')) return { ...env.palette.cream, a: 1 };
@@ -883,7 +818,7 @@ function inlineStyleColour(el: Element, prop: 'color' | 'background-color', env:
 export type Resolved<T> = { ok: true; value: T } | { ok: false; reason: string };
 
 /** The text colour that applies to text directly inside `el` (before opacity). Translucent colours keep their alpha. */
-export function foregroundOf(el: Element, base: ColourEnv = colourEnv()): Resolved<RGBA> {
+function foregroundOf(el: Element, base: ColourEnv = colourEnv()): Resolved<RGBA> {
   const tones = parseToneRules();
   for (let a: Element | null = el; a; a = a.parentElement) {
     const env = envAt(a, base);
@@ -908,7 +843,7 @@ export function foregroundOf(el: Element, base: ColourEnv = colourEnv()): Resolv
 }
 
 /** opacity contributed by `el` itself: opacity-60, opacity-[0.18], inline opacity:.5 (base state only). */
-export function ownOpacity(el: Element): number {
+function ownOpacity(el: Element): number {
   let o = 1;
   for (const t of baseTokens(el)) {
     const m = t.match(/^opacity-(\d+)$/) ?? t.match(/^opacity-\[(0?\.\d+|1)\]$/);
@@ -934,7 +869,7 @@ function isCoverLayer(c: Element): boolean {
  * whose parent backdrop is unknowable (a photo) is ignored, so the Expertise pill (`bg-mauve opacity-95`
  * over a photo) keeps its plain 2.26:1.
  */
-export function composeGroupOpacity(fg: RGB, bg: RGB, supplier: Element | null, base: ColourEnv = colourEnv()): { fg: RGB; bg: RGB } {
+function composeGroupOpacity(fg: RGB, bg: RGB, supplier: Element | null, base: ColourEnv = colourEnv()): { fg: RGB; bg: RGB } {
   const mix = (behind: RGB, c: RGB, o: number): RGB => compositeOver({ ...c, a: o }, behind);
   for (let g: Element | null = supplier; g; g = g.parentElement) {
     const o = ownOpacity(g);
@@ -955,7 +890,7 @@ export function composeGroupOpacity(fg: RGB, bg: RGB, supplier: Element | null, 
  * opacity and its ancestors' fade BOTH colours (see `composeGroupOpacity`). `photo` marks a top-level
  * section/footer with no tone and no background of its own: the backdrop is an image we cannot see.
  */
-export function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved<{ colour: RGB; faded: number; via: string; supplier: Element | null }> | { ok: false; photo: true; reason: string } {
+function backdropOf(el: Element, base: ColourEnv = colourEnv()): Resolved<{ colour: RGB; faded: number; via: string; supplier: Element | null }> | { ok: false; photo: true; reason: string } {
   const tones = parseToneRules();
   const layers: RGBA[] = [];
   let faded = 1;
@@ -1026,7 +961,7 @@ const HIDING_DISPLAY = /^(?:flex|block|inline|inline-block|inline-flex|grid|inli
 const BREAKPOINTS = ['sm', 'md', 'lg', 'xl', '2xl'];
 
 /** display:none at the mobile (375px) or desktop (1280px) width, from `hidden` plus `md:flex` style overrides. */
-export function isHiddenAt(el: Element, viewport: 'mobile' | 'desktop'): boolean {
+function isHiddenAt(el: Element, viewport: 'mobile' | 'desktop'): boolean {
   let hidden = false;
   const toks = classTokens(el);
   if (toks.includes('hidden')) hidden = true;
@@ -1050,12 +985,12 @@ export function isHiddenAt(el: Element, viewport: 'mobile' | 'desktop'): boolean
 }
 
 /** Visually hidden text (`sr-only`) is not part of the visible contrast matrix. */
-export const isSrOnly = (el: Element) => baseTokens(el).includes('sr-only');
+const isSrOnly = (el: Element) => baseTokens(el).includes('sr-only');
 
 export interface TextStyle { size: number; bold: boolean; typeClass: string | null }
 
 /** Mobile-minimum size and weight of text in `el`: nearest `.type-*` for size (x0.88 per `.font-latin` span), nearest font-bold / type weight for weight. */
-export function textStyleOf(el: Element): TextStyle {
+function textStyleOf(el: Element): TextStyle {
   const rules = parseTypeRules();
   let scale = 1;
   let size: number | null = null;
@@ -1115,7 +1050,7 @@ const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'TITLE', '
 const hex2 = (c: RGB) => '#' + [c.r, c.g, c.b].map((n) => Math.round(n).toString(16).padStart(2, '0')).join('');
 const HAS_LETTER = /[\p{L}\p{N}]/u;
 
-export function whereOf(el: Element): string {
+function whereOf(el: Element): string {
   const s = el.closest('section[id], footer, header, nav');
   if (s) return s.id ? `#${s.id}` : s.tagName.toLowerCase();
   const bare = el.closest('section');
@@ -1177,26 +1112,18 @@ export function contrastReport(root: Element, page: string): ContrastReport {
 // ─── Ratchet: an allow-table that may only shrink ────────────────────────────
 
 export interface ContrastAllow {
-  /** page id, `*` wildcards allowed: `home`, `blog`, `blog/*`, `*` */
+  /** page id (`home`, `blog`, `blog/<slug>`), or `*` for any page */
   page: string;
-  /** `#section-id` or landmark tag as reported in the failure; `a|b` lists alternatives */
+  /** `#section-id`, landmark tag or `[data-testid=x]` as reported in the failure */
   where: string;
-  /** start of the failing text (after whitespace normalisation); `*` = any text (use it for CMS-driven blog copy, with `type`) */
+  /** start of the failing text (after whitespace normalisation) */
   text: string;
-  /** narrow a `*` entry to one type class, e.g. `type-eyebrow` */
-  type?: string;
   /** the ratio measured when the entry was written (+-0.02) */
   ratio: number;
   reason: string;
 }
 
-const globToRe = (g: string) => new RegExp('^' + g.split('*').map((p) => p.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$');
-
-export const allowMatches = (a: ContrastAllow, f: ContrastFinding) =>
-  globToRe(a.page).test(f.page) &&
-  a.where.split('|').includes(f.where) &&
-  (a.text === '*' || f.text.startsWith(a.text)) &&
-  (a.type === undefined || a.type === f.typeClass);
+const allowMatches = (a: ContrastAllow, f: ContrastFinding) => (a.page === '*' || a.page === f.page) && a.where === f.where && f.text.startsWith(a.text);
 
 /** New failures (not allow-listed), stale entries (match no failure), and entries whose ratio drifted. Empty arrays = pass. */
 export function ratchetContrast(findings: ContrastFinding[], allow: ContrastAllow[]): { fresh: string[]; stale: string[]; drifted: string[] } {
@@ -1207,7 +1134,7 @@ export function ratchetContrast(findings: ContrastFinding[], allow: ContrastAllo
   const drifted: string[] = [];
   for (const a of allow) {
     const hits = findings.filter((f) => allowMatches(a, f));
-    if (hits.length === 0) stale.push(`stale allow entry, remove it: [${a.page}] ${a.where} "${a.text}"${a.type ? ' ' + a.type : ''} (was ${a.ratio}:1; ${a.reason})`);
+    if (hits.length === 0) stale.push(`stale allow entry, remove it: [${a.page}] ${a.where} "${a.text}" (was ${a.ratio}:1; ${a.reason})`);
     else for (const h of hits) if (Math.abs(h.ratio - a.ratio) > 0.02) drifted.push(`allow entry ratio changed, update it: [${h.page}] ${a.where} "${a.text}" table ${a.ratio}:1, now ${h.ratio}:1`);
   }
   return { fresh, stale, drifted };
@@ -1263,7 +1190,7 @@ function regexBan(re: RegExp, kinds: RegExp): (f: SourceFile) => BanHit[] {
 }
 
 /** Class-list-looking string literals in a code file (quotes / backticks; Hebrew prose and sentences are excluded). */
-export function classStrings(f: SourceFile): Array<{ index: number; text: string }> {
+function classStrings(f: SourceFile): Array<{ index: number; text: string }> {
   const out: Array<{ index: number; text: string }> = [];
   if (!/\.tsx?$/.test(f.name)) return out;
   for (const m of f.text.matchAll(/"([^"]*)"|'([^'\n]*)'|`([^`]*)`/g)) {
@@ -1275,150 +1202,22 @@ export function classStrings(f: SourceFile): Array<{ index: number; text: string
   return out;
 }
 
-export interface JsxElement {
-  name: string;
-  /** index of `<` */
-  start: number;
-  /** text of the opening tag between the name and `>` (attributes, className expressions, style) */
-  attrs: string;
-  selfClosing: boolean;
-  /** any descendant text: JSX text with a letter/digit, or a `{expression}` child other than a comment / blank string */
-  hasText: boolean;
-}
-
-/**
- * A small JSX scanner (no dependency on a TS parser): every opening tag with its attribute text and
- * whether it carries text below it. Tolerant by design: `<` counts as a tag only after `( , = ? : & | { > ;`
- * or `return`, which spares generics (`Record<string,...>`) and comparisons.
- */
-/** self-closing components whose `label` prop is rendered as visible text */
-const LABEL_AS_TEXT = new Set(['NavLink']);
-
-export function scanJsx(text: string): JsxElement[] {
-  const out: JsxElement[] = [];
-  const stack: Array<{ el: JsxElement }> = [];
-  const n = text.length;
-  let i = 0;
-  const skipString = (j: number): number => {
-    const q = text[j];
-    j++;
-    while (j < n && text[j] !== q) j += text[j] === '\\' ? 2 : 1;
-    return j + 1;
-  };
-  const skipBraces = (j: number): number => {
-    // text[j] === '{' ; returns index after the matching '}'
-    let depth = 0;
-    while (j < n) {
-      const ch = text[j];
-      if (ch === '"' || ch === "'" || ch === '`') j = skipString(j);
-      else if (ch === '/' && text[j + 1] === '/') j = text.indexOf('\n', j) < 0 ? n : text.indexOf('\n', j);
-      else if (ch === '/' && text[j + 1] === '*') j = text.indexOf('*/', j) < 0 ? n : text.indexOf('*/', j) + 2;
-      else {
-        if (ch === '{') depth++;
-        if (ch === '}') {
-          depth--;
-          if (depth === 0) return j + 1;
-        }
-        j++;
-      }
-    }
-    return n;
-  };
-  const markText = () => {
-    for (const f of stack) f.el.hasText = true;
-  };
-  while (i < n) {
-    const ch = text[i];
-    if (ch === '<' && text[i + 1] === '/') {
-      const end = text.indexOf('>', i);
-      if (stack.length) stack.pop();
-      i = end < 0 ? n : end + 1;
-      continue;
-    }
-    if (ch === '<' && /[A-Za-z]/.test(text[i + 1] ?? '')) {
-      const before = text.slice(Math.max(0, i - 12), i).trimEnd();
-      const last = before.slice(-1);
-      const tagLike = stack.length > 0 || before === '' || /[(,=?:&|{>;]/.test(last) || /return$/.test(before);
-      if (tagLike) {
-        const nameM = text.slice(i + 1).match(/^[A-Za-z][\w.:-]*/)!;
-        let j = i + 1 + nameM[0].length;
-        const attrStart = j;
-        let selfClosing = false;
-        while (j < n) {
-          const c = text[j];
-          if (c === '"' || c === "'" || c === '`') j = skipString(j);
-          else if (c === '{') j = skipBraces(j);
-          else if (c === '/' && text[j + 1] === '>') { selfClosing = true; break; }
-          else if (c === '>') break;
-          else j++;
-        }
-        const attrs = text.slice(attrStart, j);
-        // components that render their `label` prop as visible text without children
-        const hasText = selfClosing && LABEL_AS_TEXT.has(nameM[0]) && /\blabel=/.test(attrs);
-        const el: JsxElement = { name: nameM[0], start: i, attrs, selfClosing, hasText };
-        out.push(el);
-        i = j + (selfClosing ? 2 : 1);
-        if (!selfClosing) stack.push({ el });
-        continue;
-      }
-    }
-    if (stack.length) {
-      if (ch === '{') {
-        const end = skipBraces(i);
-        const inner = text.slice(i + 1, end - 1).replace(/\/\*[\s\S]*?\*\//g, '').trim();
-        if (inner && !/^(['"`])\s*\1$/.test(inner)) markText();
-        i++; // descend: elements inside a .map(...) callback are scanned too
-        continue;
-      }
-      if (/[\p{L}\p{N}]/u.test(ch)) markText();
-    }
-    i++;
-  }
-  return out;
-}
-
-/**
- * Elements whose class list carries `tokenRe`. A token that lives in a module-level string const
- * (`const PHONE = 'hover:bg-mauve ...'`) is attributed to every element that mentions that const.
- */
-export function elementsWithClass(f: SourceFile, tokenRe: RegExp): Array<{ el: JsxElement; token: string }> {
-  if (!/\.tsx$/.test(f.name)) return [];
-  const els = scanJsx(f.text);
-  const re = new RegExp(tokenRe.source, tokenRe.flags.replace('g', ''));
-  const out: Array<{ el: JsxElement; token: string }> = [];
-  const seen = new Set<JsxElement>();
-  const add = (el: JsxElement, token: string) => {
-    if (!seen.has(el)) {
-      seen.add(el);
-      out.push({ el, token });
-    }
-  };
-  for (const el of els) {
-    const m = el.attrs.match(new RegExp(tokenRe.source, tokenRe.flags.replace('g', '')));
-    if (m) add(el, m[0]);
-  }
-  for (const m of f.text.matchAll(/\b(?:const|let)\s+([A-Za-z_]\w*)\s*(?::[^=\n]+)?=\s*((?:(?:'[^'\n]*'|"[^"\n]*"|`[^`]*`)\s*\+?\s*)+);/g)) {
-    const tok = m[2].match(re);
-    if (!tok) continue;
-    const name = m[1];
-    for (const el of els) if (new RegExp(`(?<![\\w.])${name}(?![\\w])`).test(el.attrs)) add(el, tok[0]);
-  }
-  return out;
-}
-
 const VARIANTS = String.raw`(?:[a-z0-9-]+:)*`;
 const TQ = ['type-quote', 'type-title', 'type-display', 'type-card-title', 'type-signature'];
-
-const frag = (body: string) => `export const X = () => (\n${body}\n);\n`;
 const fakeFile = (text: string): SourceFile => ({ path: 'src/components/x/Sample.tsx', name: 'Sample.tsx', text });
 
+/**
+ * Source-level contrast and focus bans. The rendered contrast matrix (contrast.test.tsx) is the main guard
+ * (it measures what ships); these catch the spellings it cannot see: code that is not rendered on a measured
+ * page, and translucent text or removed focus indicators that still pass a ratio.
+ */
 export const CONTRAST_BANS: BanRule[] = [
   {
     id: 'text-mauve',
-    label: 'text-mauve (mauve on cream is 2.26:1, on blush 1.7:1: it has no compliant text pair; use plum)',
+    label: 'text-mauve (mauve on cream is 2.26:1, on plum 2.46:1: it has no compliant text pair; use plum)',
     find: regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-mauve(?:/\\d+)?(?![\\w-])`), /\.tsx?$/),
     bad: ['<p className="type-small text-mauve">x</p>', 'className="hover:text-mauve"', 'text-mauve/80'],
-    good: ['<i className="bg-mauve" />', 'border-mauve pr-4', 'ring-mauve', 'text-mauvelous', 'text-plum'],
+    good: ['<i className="bg-mauve" />', 'border-mauve pr-4', 'text-mauvelous', 'text-plum'],
   },
   {
     id: 'small-text-blush',
@@ -1427,57 +1226,20 @@ export const CONTRAST_BANS: BanRule[] = [
       classStrings(f)
         .filter(({ text }) => new RegExp(`(?<![\\w-])${VARIANTS}text-blush(?![\\w-])`).test(text) && !TQ.some((t) => new RegExp(`(?<![\\w-])${t}(?![\\w-])`).test(text)))
         .map(({ index, text }) => hit(f, index, text)),
-    bad: ['<span className="type-eyebrow text-blush">x</span>', '<p className="type-small text-blush">', 'className="font-bold text-blush"', '<p className="type-lead text-blush">', 'className="\n type-body\n text-blush\n"'],
-    good: ['<p className="type-quote text-blush w-full">', '<h1 className="type-title text-blush">', '<p className="type-card-title text-blush">', '<i className="bg-blush" />', 'className="type-small text-cream"'],
+    bad: ['<span className="type-eyebrow text-blush">x</span>', 'className="font-bold text-blush"', '<p className="type-lead text-blush">'],
+    good: ['<p className="type-quote text-blush w-full">', '<h1 className="type-title text-blush">', '<i className="bg-blush" />', 'className="type-small text-cream"'],
   },
   {
     id: 'text-colour-mix-transparent',
-    label: 'color-mix(... transparent) used as a TEXT colour (a translucent text colour has no fixed contrast: use a solid palette colour)',
+    label: 'a translucent TEXT colour (color-mix(... transparent), text-plum/92): it has no fixed contrast; use a solid palette colour',
     find: (f) => [
       ...regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-\\[(?:color:)?color-mix\\([^\\]]*transparent`), /\.tsx?$/)(f),
       // the Tailwind opacity-modifier spelling of the same thing: text-plum/92, md:text-cream/90 (a /N below 100)
       ...regexBan(new RegExp(`(?<![\\w-])${VARIANTS}text-(?:plum|mauve|blush|cream|white|black)/(?:\\d{1,2}|\\[[^\\]]+\\])(?![\\w%-])`), /\.tsx?$/)(f),
       ...regexBan(/(?<![\w\-[])color\s*:\s*['"`]?color-mix\([^;\n]*transparent/, /\.(?:tsx?|css)$/)(f),
     ],
-    bad: ['text-[color:color-mix(in_srgb,var(--color-plum)_70%,transparent)]', 'md:text-[color:color-mix(in_srgb,var(--color-cream)_88%,transparent)]', "style={{ color: 'color-mix(in srgb, red 50%, transparent)' }}", '.x { color: color-mix(in srgb, var(--color-plum) 50%, transparent); }', 'text-plum/92', 'md:text-cream/90', 'text-plum/[0.3]'],
-    good: ['bg-plum/60', 'outline-plum/18', 'text-plum', 'text-cream/100', 'outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]', 'bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))]', 'hover:bg-[color:color-mix(in_srgb,var(--color-plum)_88%,black)]', 'text-[color:var(--header-color)]', '.x { background-color: color-mix(in srgb, red 50%, transparent); }', '--surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));'],
-  },
-  {
-    id: 'bg-mauve-with-text',
-    label: 'bg-mauve on an element that has text inside it (mauve has no compliant text pair: 2.26:1 with cream, 2.46:1 with plum; use plum, cream or blush for the surface)',
-    find: (f) => elementsWithClass(f, new RegExp(`(?<![\\w-])${VARIANTS}bg-mauve(?![\\w-])`)).filter(({ el }) => el.hasText).map(({ el }) => hit(f, el.start, `<${el.name}> ${el.attrs}`)),
-    bad: [
-      frag('<div className="rounded-full bg-mauve px-4"><span className="type-small">{title}</span></div>'),
-      frag('<div className="bg-mauve"><p>שלום עולם</p></div>'),
-      "const PHONE = 'hover:bg-mauve focus-visible:ring-cream';\n" + frag('<a href="/x" className={cx(BASE, PHONE)}><span>טלפון</span></a>'),
-    ],
-    good: [
-      frag('<span aria-hidden="true" className="h-[3px] w-[44px] rounded-full bg-mauve" />'),
-      frag('<div className="absolute bg-mauve"><svg viewBox="0 0 1 1" /></div>'),
-      frag('<div className="bg-plum"><p>שלום</p></div>'),
-      "const BLOB = 'bg-mauve';\n" + frag('<div className={cx(styles.blob, BLOB)} />'),
-    ],
-  },
-  {
-    id: 'opacity-on-text',
-    label: 'opacity-* on an element that has text inside it (opacity fades text below its audited contrast; pick a solid palette colour instead)',
-    find: (f) => elementsWithClass(f, new RegExp(`(?<![\\w-])${VARIANTS}opacity-(?:\\d+|\\[[\\d.]+\\])(?![\\w-])`)).filter(({ el }) => el.hasText).map(({ el }) => hit(f, el.start, `<${el.name}> ${el.attrs}`)),
-    bad: [
-      frag('<a href="/x" className="type-lead hover:opacity-80 transition-opacity">שלום</a>'),
-      frag('<span className="opacity-60"><b>{name}</b></span>'),
-      frag('<Link className="font-bold opacity-[0.6]">{label}</Link>'),
-      // NavLink renders its `label` prop as the link text (LABEL_AS_TEXT)
-      frag('<NavLink href="/x" label="שלום" className="hover:opacity-75" />'),
-    ],
-    good: [
-      frag('<img src="/a.webp" alt="" className="opacity-60" />'),
-      frag('<div className="opacity-[0.18]"><svg viewBox="0 0 1 1" /></div>'),
-      frag('<OrganicBg className="opacity-60 z-0" />'),
-      frag('<p className="type-body text-plum">שלום</p>'),
-      // `label` is only visible text on the components in LABEL_AS_TEXT: a MaskIcon label is an aria-label
-      frag('<MaskIcon as="a" href="/x" label="x" src="/i.svg" size="lg" className="hover:opacity-80" />'),
-      frag('<NavLink href="/x" className="opacity-60" />'),
-    ],
+    bad: ['text-[color:color-mix(in_srgb,var(--color-plum)_70%,transparent)]', "style={{ color: 'color-mix(in srgb, red 50%, transparent)' }}", 'text-plum/92', 'md:text-cream/90'],
+    good: ['bg-plum/60', 'text-plum', 'text-cream/100', 'outline-[color:color-mix(in_srgb,var(--color-plum)_18%,transparent)]', 'text-[color:var(--header-color)]', '.x { background-color: color-mix(in srgb, red 50%, transparent); }'],
   },
   {
     id: 'focus-outline-none',
@@ -1486,38 +1248,10 @@ export const CONTRAST_BANS: BanRule[] = [
       classStrings(f)
         .filter(({ text }) => new RegExp(`(?<![\\w-])${VARIANTS}outline-(?:none|hidden)(?![\\w-])`).test(text) && !/(?<![\w-])(?:focus-visible|focus-within|focus):(?:ring-(?!0)[\w[\]/#-]+|outline-(?!none|hidden)[\w[\]/#-]+|outline(?![\w-])|shadow-[\w[\]/#-]+)/.test(text))
         .map(({ index, text }) => hit(f, index, text)),
-    bad: ['className="focus:outline-none"', 'className="outline-none"', 'className="rounded-full focus-visible:outline-none"', 'className="focus-visible:outline-none focus-visible:ring-0"', 'className="outline-hidden hover:underline"'],
-    good: ['className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream"', 'className="focus:outline-none focus:ring-2"', 'className="outline-none focus-visible:outline-2 focus-visible:outline-plum"', 'className="outline outline-[1.5px] outline-plum"', 'className="rounded-full"'],
-  },
-  {
-    id: 'focus-mask-link',
-    label: 'a mask-painted link / button (MaskIcon as="a", or an <a>/<button> with mask-image) with no focus-visible: ring or outline (an empty box with a mask has no default focus indicator a keyboard user can see)',
-    find: (f) => {
-      if (!/\.tsx$/.test(f.name)) return [];
-      const hits: BanHit[] = [];
-      for (const el of scanJsx(f.text)) {
-        const focusOk = /focus-visible:/.test(el.attrs);
-        if (el.name === 'MaskIcon' && /\bas=["{']*a["'}]*/.test(el.attrs) && !focusOk) hits.push(hit(f, el.start, `<MaskIcon ${el.attrs}`));
-        else if (/^(?:a|button)$/.test(el.name) && /mask-?image|\bmask-\[/i.test(el.attrs) && !focusOk) hits.push(hit(f, el.start, `<${el.name} ${el.attrs}`));
-      }
-      return hits;
-    },
-    bad: [
-      frag('<MaskIcon as="a" href="/x" label="x" src="/i.svg" size="lg" className="hover:opacity-80" />'),
-      frag('<a href="/x" style={{ maskImage: "url(/i.svg)" }} className="w-4 h-4" />'),
-    ],
-    good: [
-      frag('<MaskIcon as="a" href="/x" label="x" src="/i.svg" size="lg" className="focus-visible:ring-2 focus-visible:ring-cream" />'),
-      frag('<MaskIcon src="/i.svg" size="sm" />'),
-      frag('<a href="/x" className="focus-visible:ring-2">שלום</a>'),
-    ],
+    bad: ['className="focus:outline-none"', 'className="rounded-full focus-visible:outline-none"', 'className="focus-visible:outline-none focus-visible:ring-0"'],
+    good: ['className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream"', 'className="outline-none focus-visible:outline-2 focus-visible:outline-plum"', 'className="outline outline-[1.5px] outline-plum"'],
   },
 ];
-
-/** MaskIcon's own anchor branch ships a focus-visible: ring/outline: then a bare `<MaskIcon as="a">` usage is fine. */
-export function maskIconHasDefaultFocus(): boolean {
-  return /focus-visible:/.test(sourceNamed('MaskIcon.tsx').text);
-}
 
 export const containsBanSample = (rule: BanRule, sample: string) => rule.find(fakeFile(sample)).length > 0;
 

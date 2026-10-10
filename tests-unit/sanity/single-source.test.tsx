@@ -58,11 +58,11 @@ describe('F2: the rendered home page uses the shared ids', () => {
 });
 
 describe('F3: site facts live only in content/site.ts', () => {
-  /** [what, regex matching a hand-typed copy, the SITE value it must match]. */
+  /** [what, regex matching a hand-typed copy, the SITE value it must match]. The phone and email patterns are generic on purpose: a different number is still a copy. */
   const FACTS: Array<[string, RegExp, string]> = [
-    ['phone (display)', /054-?571-?1060/, SITE.phone.display],
-    ['phone (E.164 / WhatsApp)', /972-?54-?571-?1060/, SITE.phone.e164.replace('+', '')],
-    ['email', /nettabe@/, SITE.email],
+    // ANY Israeli phone number in any format (display, E.164, WhatsApp, spaced), not only the current one
+    ['phone', /(?<![\d.])(?:\+?972[\s-]?|0)\d{1,2}[\s-]?\d{3}[\s-]?\d{4}(?!\d)/, SITE.phone.display],
+    ['email', /[\w.+-]+@(?!\dx\b)[\w-]+\.(?:com|co\.il|org|net|il)\b/i, SITE.email],
     ['street', /אמנון ותמר/, SITE.address.street],
     ['postal code', /4220209/, SITE.address.postalCode],
     ['map query', /Amnon\+?ve-Tamar/i, SITE.address.mapQuery],
@@ -73,8 +73,9 @@ describe('F3: site facts live only in content/site.ts', () => {
     home = await renderHome();
   });
 
-  it('each scan regex matches the SITE value it guards (so the scan below is not blind)', () => {
+  it('each scan regex matches the SITE value it guards (so the scan below is not blind), in E.164 form too', () => {
     for (const [what, re, value] of FACTS) expect(re.test(value), `${what} regex no longer matches SITE`).toBe(true);
+    expect(FACTS[0][1].test(SITE.phone.e164), 'E.164 / wa.me form of the phone').toBe(true);
   });
 
   it('no component, route or lib file re-types a contact fact', () => {

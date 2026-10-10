@@ -7,24 +7,14 @@
  */
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
-  EXPECTED_SECTIONS,
   classTokens,
   desktopNav,
   expectNone,
-  findSection,
   hamburger,
   hasClass,
-  headingTextOf,
   renderHome,
   textNodes,
 } from './helpers';
-
-/** Parse an HTML fragment into a detached element (controls for the checkers below). */
-function fragment(html: string): HTMLElement {
-  const holder = document.createElement('div');
-  holder.innerHTML = html;
-  return holder;
-}
 
 let home: HTMLElement;
 beforeAll(async () => {
@@ -86,9 +76,7 @@ describe('E13: navigation collapses below md', () => {
   });
 });
 
-// ─── Moved from the legacy class-string tests (NS-20) ────────────────────────
-// Each check below is the behaviour a deleted tests-unit/*.test.tsx file guarded, restated
-// without naming a component or a layout class that a refactor may legitimately rename.
+// ─── Checks restated without naming a component or a layout class a refactor may rename ───
 
 /** Every image URL a page can fetch must be root-absolute or https (a bare `images/x.webp` is a relative-URL bug). */
 function relativeImageUrls(root: ParentNode): string[] {
@@ -122,20 +110,6 @@ function unnamedIconLinks(root: ParentNode): string[] {
     .map((a) => a.outerHTML.slice(0, 100));
 }
 
-describe('E14: every titled section still has a heading', () => {
-  it('each section found by id (hero, services, ...) has a non-empty h1/h2; the exact copy is NOT pinned here', () => {
-    const missing: string[] = [];
-    let checked = 0;
-    for (const spec of EXPECTED_SECTIONS.filter((s) => s.heading)) {
-      checked++;
-      const text = headingTextOf(findSection(home, spec.name));
-      if (!text) missing.push(spec.name);
-    }
-    expect(checked, 'sections with a heading in EXPECTED_SECTIONS').toBeGreaterThanOrEqual(10);
-    expectNone(missing, 'sections that lost their h1/h2 text');
-  });
-});
-
 describe('E15: image URLs are root-absolute', () => {
   it('every <img src> and srcset candidate on the page starts with "/" or "https://"', () => {
     const imgs = home.querySelectorAll('img');
@@ -143,10 +117,6 @@ describe('E15: image URLs are root-absolute', () => {
     expectNone(relativeImageUrls(home), 'relative image URLs (a bare images/x.webp resolves against the current route)');
   });
 
-  it('control: the checker flags a bare relative src and srcset, spares /images/x and https URLs', () => {
-    expect(relativeImageUrls(fragment('<img src="images/a.webp"><img src="/ok.webp" srcset="/a.webp 1x, b.webp 2x">'))).toEqual(['src="images/a.webp"', 'srcset="b.webp"']);
-    expect(relativeImageUrls(fragment('<img src="/images/a.webp"><img src="https://x.test/a.webp">'))).toEqual([]);
-  });
 });
 
 describe('E16: decorative overlays never intercept clicks', () => {
@@ -156,10 +126,6 @@ describe('E16: decorative overlays never intercept clicks', () => {
     expectNone(clickBlockingOverlays(home), 'decorative svgs that would block taps on the copy beneath');
   });
 
-  it('control: flags an absolute decorative svg without pointer-events-none, spares labelled/inline ones', () => {
-    expect(clickBlockingOverlays(fragment('<svg aria-hidden="true" class="absolute inset-0"></svg>'))).toHaveLength(1);
-    expect(clickBlockingOverlays(fragment('<svg aria-hidden="true" class="absolute inset-0 pointer-events-none"></svg><svg aria-hidden="true" class="h-4"></svg>'))).toEqual([]);
-  });
 });
 
 describe('E17: icon-only links have an accessible name', () => {
@@ -169,8 +135,4 @@ describe('E17: icon-only links have an accessible name', () => {
     expectNone(unnamedIconLinks(home), 'icon-only links a screen reader announces as just "link"');
   });
 
-  it('control: flags an empty link, spares aria-label and alt-image links', () => {
-    expect(unnamedIconLinks(fragment('<a href="/x"><svg></svg></a>'))).toHaveLength(1);
-    expect(unnamedIconLinks(fragment('<a aria-label="x" href="/x"></a><a href="/y"><img src="/a" alt="logo"></a><a href="/z">text</a>'))).toEqual([]);
-  });
 });

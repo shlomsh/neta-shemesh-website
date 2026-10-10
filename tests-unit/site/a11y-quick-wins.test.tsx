@@ -1,10 +1,10 @@
 /**
  * NS-09 accessibility quick wins: skip link + main target, landmarks, hero labelling,
- * blog index heading order, and the MobileMenu inert / breakpoint behaviour.
+ * PostCard heading level, and the MobileMenu breakpoint auto-close (the rest of the menu behaviour is
+ * site/mobile-menu.test.tsx).
  */
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import BlogIndexPage from '../../src/app/blog/page';
 import { BlogHeader } from '../../src/components/blog/BlogHeader';
 import { PostCard } from '../../src/components/blog/PostCard';
 import { Hero } from '../../src/components/sections/hero/Hero';
@@ -72,16 +72,7 @@ describe('landmarks and labelling', () => {
   });
 });
 
-describe('blog heading order', () => {
-  it('the blog index renders post-card titles as h2 under the h1', () => {
-    const { container } = render(<BlogIndexPage />);
-    expect(container.querySelectorAll('h1')).toHaveLength(1);
-    expect(container.querySelectorAll('h3')).toHaveLength(0);
-    const titles = getAllPosts().map((p) => p.title);
-    const h2s = Array.from(container.querySelectorAll('h2')).map((h) => h.textContent);
-    for (const t of titles) expect(h2s).toContain(t);
-  });
-
+describe('blog heading order (the index outline itself: blog/blog-index.test.tsx)', () => {
   it('PostCard defaults to h3 (the "more posts" row under an h2) with identical classes', () => {
     const post = getAllPosts()[0];
     const a = render(<PostCard post={post} />).container;
@@ -129,33 +120,6 @@ describe('MobileMenu', () => {
     const hamburger = screen.getByRole('button', { name: 'פתיחת תפריט' });
     return { ...view, main, hamburger };
   }
-
-  it('sets inert on <main> while open and removes it on close; the overlay is outside <main>', () => {
-    const { main, hamburger } = setup();
-    expect(main.hasAttribute('inert')).toBe(false);
-
-    fireEvent.click(hamburger);
-    const dialog = screen.getByRole('dialog');
-    expect(main.hasAttribute('inert')).toBe(true);
-    expect(main.contains(dialog)).toBe(false);
-    expect(dialog.parentElement).toBe(document.body);
-    expect(dialog.hasAttribute('inert')).toBe(false);
-
-    fireEvent.click(screen.getByRole('button', { name: 'סגירת תפריט' }));
-    expect(screen.queryByRole('dialog')).toBeNull();
-    expect(main.hasAttribute('inert')).toBe(false);
-  });
-
-  it('Escape closes the menu and returns focus to the hamburger', () => {
-    const { main, hamburger } = setup();
-    fireEvent.click(hamburger);
-    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'סגירת תפריט' }));
-
-    fireEvent.keyDown(document, { key: 'Escape' });
-    expect(screen.queryByRole('dialog')).toBeNull();
-    expect(main.hasAttribute('inert')).toBe(false);
-    expect(document.activeElement).toBe(hamburger);
-  });
 
   it('closes (scroll lock and inert released) when (min-width: 768px) starts matching', () => {
     const mm = mockMatchMedia();

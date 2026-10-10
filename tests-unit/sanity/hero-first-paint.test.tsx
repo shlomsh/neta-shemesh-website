@@ -10,11 +10,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { ROOT, expectNone, renderHome } from './helpers';
+import { ROOT, buttons, expectNone, renderHome } from './helpers';
 
 let hero: HTMLElement;
-const cta = () =>
-  Array.from(hero.querySelectorAll('a')).find((a) => a.textContent?.includes('ייעוץ עם נטע שמש'))!;
+const cta = () => buttons(hero).find((a) => a.getAttribute('href') === '#contact')!;
 beforeAll(async () => {
   const home = await renderHome();
   hero = home.querySelector<HTMLElement>('section#hero')!;
@@ -38,25 +37,17 @@ function hidingReasons(el: Element, stopAt: Element): string[] {
   return out;
 }
 
-describe('hero server HTML shows its text from the first paint', () => {
-  it('has the H1, the subtext and the CTA in the server markup', () => {
-    expect(hero).not.toBeNull();
-    expect(hero.querySelector('h1')?.textContent).toContain('מקום בטוח לצמוח בו');
-    expect(hero.textContent).toContain('ליווי מקצועי בתהליכי שינוי');
-    expect(cta(), 'hero CTA').toBeDefined();
-    expect(cta().getAttribute('href')).toBe('#contact');
-  });
-
+describe('hero server HTML shows its text from the first paint (owner ruling: hero text never starts at opacity 0)', () => {
   it('no opacity:0, visibility:hidden, display:none or reveal gate on the H1, subtext, CTA or logo/nav row', () => {
-    const subtext = Array.from(hero.querySelectorAll('p')).find((p) => p.textContent?.includes('ליווי מקצועי'))!;
-    const targets: Array<[string, Element]> = [
-      ['h1', hero.querySelector('h1')!],
-      ['subtext', subtext],
+    const targets: Array<[string, Element | null]> = [
+      ['h1', hero.querySelector('h1')],
+      ['subtext', hero.querySelector('p')],
       ['cta', cta()],
-      ['banner', hero.querySelector('[role="banner"]')!],
+      ['banner', hero.querySelector('[role="banner"]')],
     ];
     for (const [label, el] of targets) {
-      expectNone(hidingReasons(el, hero), `hero ${label} is hidden in the server HTML`);
+      expect(el, `hero ${label} is missing from the server markup`).not.toBeNull();
+      expectNone(hidingReasons(el!, hero), `hero ${label} is hidden in the server HTML`);
     }
   });
 });

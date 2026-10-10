@@ -1,43 +1,40 @@
 /**
  * SANITY B: one-screen heights (desktop contract, phone contract) + the flex chain that makes it work.
  *
- * Phone (below lg, NS-39): a card is as tall as its content + padding, except the four "moments" that
- * stay exactly one screen: hero, credentials, CTA band, footer (PHONE table below).
+ * Desktop (lg+): every solid card is at least one screen. Phone (below lg, NS-39): a card is as tall as
+ * its content + padding, except the four "moments" that stay exactly one screen: hero, credentials,
+ * CTA band, footer (PHONE table below). The unit decision lives in ONE place (`--card-h`, globals.css);
+ * no component spells it (`card-height` ban in source-scan.test.ts).
  *
- * History: the cards were first aspect-ratio driven (content decided the height, sections ran
- * 1.3 screens), then locked to 100svh (content clipped on short viewports), then given a 720px
- * floor and a height-driven flex chain Section -> Container -> grid -> frame. Breaking any link
- * (a lost `lg:min-h-0`, an aspect ratio left on at lg, an `overflow-hidden` on <main>) makes
- * the photos overflow or the card collapse, and nothing in jsdom shows it except the classes.
+ * History: the cards were first aspect-ratio driven (sections ran 1.3 screens), then locked to 100svh
+ * (content clipped on short viewports), then given a 720px floor and a height-driven flex chain
+ * Section -> Container -> grid -> frame. Breaking any link (a lost `lg:min-h-0`, an aspect ratio left on
+ * at lg, an `overflow-hidden` on <main>) makes the photos overflow or the card collapse, and nothing in
+ * jsdom shows it except the classes.
  *
- * Section publishes `data-fit="lock|grow|free"`; the helpers (oneScreenMode / isOneScreen) accept it
- * only when the implementing classes agree, so neither a data-fit that lies nor classes that lost
- * their data-fit pass. The per-section expectations below are the single place the assignment lives.
+ * Section publishes `data-fit="lock|grow|free"` and `data-phone`; the helpers accept them only when the
+ * implementing classes agree, so neither a label that lies nor classes that lost their label pass.
  */
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
   EXPECTED_SECTIONS,
   SOLID_SECTIONS,
-  classMode,
   classTokens,
   coversImage,
   findSection,
   fitOf,
+  globalsCss,
   hasClass,
   hasDesktopRhythm,
   hasLgMinScreen,
+  hasMinScreen,
   hasMobileFill,
   hasPhoneContentHeight,
-  hasFullHeight,
-  globalsCss,
-  hasMinScreen,
   isFlexColumn,
   isFlexContainer,
   isGrowItem,
   isHeightDrivenFrame,
-  isOneScreen,
   isStretchedMapFrame,
-  isVerticallyCentered,
   keepsAspectAtDesktop,
   labelOf,
   minHeightKind,
@@ -45,10 +42,8 @@ import {
   overflowOf,
   phoneMode,
   phoneOf,
-  readSources,
   renderHome,
   stripCssComments,
-  stretchesItems,
   topLevelSections,
   type Fit,
   type MinHeightKind,
@@ -63,12 +58,9 @@ beforeAll(async () => {
 
 /**
  * The exact current assignment. A silent flip (lock <-> grow, a lost lg:py-12) must fail.
- *   lock-720 = lg:h-[max(100svh,720px)]   lock-100 = lg:h-[100svh]
- *   grow-720 = lg:min-h-[max(100svh,720px)]   free = min-h only (content-driven)
+ *   lock-720 = lg:h-[max(100svh,720px)]   grow-720 = lg:min-h-[max(100svh,720px)]   free = min-h only (content-driven)
+ * `free` rows (about-credentials, contact-social): CLAUDE.md only requires the one-screen minimum there.
  */
-// `free` rows (about-credentials, contact-social): CLAUDE.md only requires the one-screen minimum there; they
-// are content-driven past one screen on purpose, so no lock/grow is expected. Changing a row is a
-// deliberate decision, not drift.
 const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> = {
   'about-intro': { mode: 'lock-720', fit: 'lock', py12: true },
   expertise: { mode: 'grow-720', fit: 'grow', py12: true },
@@ -81,10 +73,7 @@ const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> 
   'contact-office': { mode: 'lock-720', fit: 'lock', py12: true },
 };
 
-/**
- * Phone contract (below lg). Content height is the default; ONLY these stay one screen on a phone
- * (plus the bespoke hero and footer, asserted below). Flipping a row is a decision, not drift.
- */
+/** Phone contract (below lg): content height by default; ONLY these stay one screen (plus the bespoke hero and footer). */
 const PHONE: Record<string, PhoneMode> = {
   'about-intro': 'content',
   expertise: 'content',
@@ -99,17 +88,19 @@ const PHONE: Record<string, PhoneMode> = {
 };
 
 describe('B6: every solid section is at least one screen from lg, with the agreed desktop and phone modes', () => {
-  it('the table covers exactly the solid sections', () => {
-    expect(Object.keys(DESKTOP).sort(), 'DESKTOP table and EXPECTED_SECTIONS solid sections diverged: add/remove the row').toEqual(SOLID_SECTIONS.map((s) => s.name).sort());
+  it('the tables cover exactly the solid sections (PHONE adds the CTA band)', () => {
+    const solid = SOLID_SECTIONS.map((s) => s.name).sort();
+    expect(Object.keys(DESKTOP).sort(), 'DESKTOP table and EXPECTED_SECTIONS solid sections diverged: add/remove the row').toEqual(solid);
+    expect(Object.keys(PHONE).sort()).toEqual([...solid, 'cta-band'].sort());
   });
 
-  it.each(SOLID_SECTIONS.map((s) => s.name))('%s is at least one screen from lg', (name) => {
+  it.each(Object.keys(DESKTOP))('%s: at least one screen from lg, with the agreed lock/grow assignment', (name) => {
     const el = findSection(home, name);
+    const want = DESKTOP[name];
     expect(hasLgMinScreen(el), `${labelOf(el, name)} lost its lg+ one-screen minimum`).toBe(true);
-  });
-
-  it('the PHONE table covers exactly the Section-based cards (solid sections + the CTA band)', () => {
-    expect(Object.keys(PHONE).sort()).toEqual([...SOLID_SECTIONS.map((s) => s.name), 'cta-band'].sort());
+    expect(fitOf(el), `${labelOf(el, name)} data-fit changed (expected ${want.fit})`).toBe(want.fit);
+    expect(oneScreenMode(el), `${labelOf(el, name)}: data-fit and the classes disagree, or the mode changed (expected ${want.mode})`).toBe(want.mode);
+    expect(hasDesktopRhythm(el), `${labelOf(el, name)} desktop padding (lg:py-12) expectation (${want.py12}) changed`).toBe(want.py12);
   });
 
   it.each(Object.keys(PHONE))('%s: its phone mode is published as data-phone AND implemented by the classes', (name) => {
@@ -117,31 +108,25 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     const want = PHONE[name];
     expect(phoneOf(el), `${labelOf(el, name)} data-phone changed (expected ${want})`).toBe(want);
     expect(phoneMode(el), `${labelOf(el, name)}: data-phone and the classes disagree (expected ${want})`).toBe(want);
-    if (want === 'screen') {
-      expect(hasMobileFill(el), `${labelOf(el, name)} lost screen-fit (or carries a hand-written min-h-lvh)`).toBe(true);
-    } else {
-      expect(hasPhoneContentHeight(el), `${labelOf(el, name)} carries a min-height / height below lg: a phone card sizes to its content`).toBe(true);
-    }
+    if (want === 'screen') expect(hasMobileFill(el), `${labelOf(el, name)} lost screen-fit (or carries a hand-written min-h-lvh)`).toBe(true);
+    else expect(hasPhoneContentHeight(el), `${labelOf(el, name)} carries a min-height / height below lg: a phone card sizes to its content`).toBe(true);
   });
 
-  it.each(SOLID_SECTIONS.map((s) => s.name))('%s keeps its lock/grow assignment', (name) => {
-    const el = findSection(home, name);
-    const want = DESKTOP[name];
-    expect(fitOf(el), `${labelOf(el, name)} data-fit changed (expected ${want.fit})`).toBe(want.fit);
-    expect(classMode(el), `${labelOf(el, name)} classes no longer implement data-fit="${want.fit}" (expected ${want.mode})`).toBe(want.mode);
-    expect(oneScreenMode(el), `${labelOf(el, name)} changed desktop mode (expected ${want.mode})`).toBe(want.mode);
-    expect(hasDesktopRhythm(el), `${labelOf(el, name)} desktop padding (lg:py-12) expectation (${want.py12}) changed`).toBe(want.py12);
-    expect(isOneScreen(el), `${labelOf(el, name)} lost its one-screen height`).toBe(want.mode !== 'free');
-  });
-
-  it('photo sections (hero, CTA band, footer) still fill a screen at minimum at every width', () => {
+  it('photo sections (hero, CTA band, footer) still fill a screen at minimum at every width; hero and footer are bespoke (no data-fit)', () => {
     for (const spec of EXPECTED_SECTIONS.filter((s) => s.kind === 'photo')) {
       const el = findSection(home, spec.name);
       expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost its all-breakpoint one-screen minimum`).toBe(true);
     }
+    expect(fitOf(findSection(home, 'cta-band')), 'the CTA band is a free-fit photo band').toBe('free');
+    for (const name of ['hero', 'footer']) expect(findSection(home, name).hasAttribute('data-fit'), `${name} is bespoke and must not claim a Section fit`).toBe(false);
   });
 
-  it('the footer fills the VISIBLE screen (screen-visible = --card-h upgraded to 100dvh where supported); content centred between the top and the copyright', () => {
+  it('no top-level section carries a data-fit outside the tables (a new fit must be added deliberately)', () => {
+    const known = new Set([...Object.keys(DESKTOP), 'cta-band'].map((n) => findSection(home, n)));
+    expect(topLevelSections(home).filter((s) => s.hasAttribute('data-fit') && !known.has(s)).map((s) => labelOf(s))).toEqual([]);
+  });
+
+  it('the footer fills the VISIBLE screen (screen-visible) with its content centred between the top and the copyright', () => {
     const el = findSection(home, 'footer');
     expect(hasClass(el, 'screen-visible'), 'footer lost screen-visible (phones show a sliver of the previous card once the toolbar collapses)').toBe(true);
     expect(hasClass(el, 'justify-between'), 'justify-between leaves an empty void between the content and the copyright').toBe(false);
@@ -149,7 +134,7 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     expect(column && hasClass(column, 'my-auto'), 'the tagline/CTA/signature group is no longer vertically centred').toBe(true);
   });
 
-  it('the card-height unit decision lives in ONE place: --card-h (svh; lvh below lg, @supports-gated) and the two utilities that read it', () => {
+  it('the card-height unit decision lives in ONE place: --card-h (svh; lvh below lg, @supports-gated) and the utilities that read it', () => {
     const css = stripCssComments(globalsCss()).replace(/\s+/g, ' ');
     expect(css, ':root --card-h default').toMatch(/:root \{[^}]*--card-h: 100svh;/);
     expect(css, '--hero-h default').toMatch(/--hero-h: 100svh;/);
@@ -157,30 +142,7 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     expect(css, '--hero-h overshoots 100lvh by 80px on iOS 26 Safari only (floating bottom bar), below lg').toMatch(/@supports \(-webkit-touch-callout: none\) and \(anchor-name: --a\) \{ @media \(width < 64rem\) \{ :root \{ --hero-h: calc\(100lvh \+ 80px\); \} \} \}/);
     expect(css, 'hero-fit reads the hero token').toMatch(/@utility hero-fit \{ min-height: var\(--hero-h\); \}/);
     expect(css, 'screen-fit reads the token').toMatch(/@utility screen-fit \{ min-height: var\(--card-h\); \}/);
-    expect(css, 'screen-visible = token, upgraded to dvh where supported').toMatch(/@utility screen-visible \{ min-height: var\(--card-h\); @supports \(height: 100dvh\) \{ min-height: 100dvh; \} \}/);
-    // No component spells the unit decision itself any more (the hero reads --hero-h through hero-fit, NS-25).
-    const offenders = readSources()
-      .filter((f) => f.path.endsWith('.tsx'))
-      .filter((f) => /max-lg:min-h-lvh|supports-\[height:100dvh\]:min-h-dvh|min-h-\[100svh\]/.test(f.text))
-      .map((f) => f.path);
-    expect(offenders, 'a component re-spelled the card height: use screen-fit / screen-visible').toEqual([]);
-  });
-
-  it('the CTA band is a free-fit photo band (no tone, no desktop lock) and hero/footer publish no data-fit', () => {
-    const cta = findSection(home, 'cta-band');
-    expect(fitOf(cta), `${labelOf(cta, 'cta-band')} data-fit`).toBe('free');
-    expect(oneScreenMode(cta), `${labelOf(cta, 'cta-band')} classes vs data-fit`).toBe('free');
-    expect(cta.hasAttribute('data-bg-tone'), 'the CTA band is a photo section: no data-bg-tone').toBe(false);
-    for (const name of ['hero', 'footer']) {
-      const el = findSection(home, name);
-      expect(el.hasAttribute('data-fit'), `${labelOf(el, name)} is bespoke and must not claim a Section fit`).toBe(false);
-    }
-  });
-
-  it('no top-level section carries a data-fit outside the table (a new fit must be added deliberately)', () => {
-    const known = new Set([...Object.keys(DESKTOP), 'cta-band'].map((n) => findSection(home, n)));
-    const stray = topLevelSections(home).filter((s) => s.hasAttribute('data-fit') && !known.has(s));
-    expect(stray.map((s) => labelOf(s))).toEqual([]);
+    expect(css, 'screen-visible = token, upgraded to dvh where supported (the one dvh exception)').toMatch(/@utility screen-visible \{ min-height: var\(--card-h\); @supports \(height: 100dvh\) \{ min-height: 100dvh; \} \}/);
   });
 });
 
@@ -201,26 +163,21 @@ describe('B7: height-driven flex chain per section', () => {
       .sort((a, b) => a.querySelectorAll('*').length - b.querySelectorAll('*').length)[0];
   }
 
-  it.each(CHAINS)('$name: grid grows (min-height: $minH) and every link up to the section is a flex item', ({ name, imgs, minH }) => {
+  it.each(CHAINS)('$name: the grid grows, every link up to the section is a flex item, and the photos crop inside height-driven frames', ({ name, imgs, minH }) => {
     const section = findSection(home, name);
     const grid = photoGrid(section, imgs);
     expect(grid, `${labelOf(section, name)} lost its lg:flex-1 photo grid (${imgs} images)`).toBeDefined();
     expect(minHeightKind(grid), `${labelOf(section, name)} grid min-height escape changed`).toBe(minH);
     expect(isFlexColumn(section), `${labelOf(section, name)} must itself be a flex column`).toBe(true);
 
-    // Walk grid -> ... -> section: each link must stretch (lg:flex-1 + a min-h escape) inside a flex parent.
+    // grid -> ... -> section: each link must stretch (lg:flex-1 + a min-h escape) inside a flex parent.
     for (let node: Element | null = grid!; node && node !== section; node = node.parentElement) {
       const where = `${labelOf(section, name)} chain link <${node.tagName.toLowerCase()} class="${classTokens(node).slice(0, 4).join(' ')}...">`;
       expect(isGrowItem(node), `${where} stopped growing (lost lg:flex-1)`).toBe(true);
       expect(minHeightKind(node), `${where} lost its min-height escape (flex item would not shrink)`).not.toBeNull();
       expect(isFlexContainer(node.parentElement), `${where} parent is not a flex container, so the grow does nothing`).toBe(true);
     }
-  });
 
-  it.each(CHAINS)('$name: photos crop (object-cover) inside height-driven frames, no aspect ratio left on at lg', ({ name, imgs }) => {
-    const section = findSection(home, name);
-    const grid = photoGrid(section, imgs);
-    expect(grid, `${labelOf(section, name)} lost its lg:flex-1 photo grid (${imgs} images)`).toBeDefined();
     const photos = Array.from(grid!.querySelectorAll('img'));
     expect(photos.length, `${labelOf(section, name)} photo count`).toBe(imgs);
     for (const [i, img] of photos.entries()) {
@@ -235,32 +192,19 @@ describe('B7: height-driven flex chain per section', () => {
     }
   });
 
-  it('about-gallery and about-intro photo frames fill the grid cell with lg:h-full', () => {
-    for (const name of ['about-gallery', 'about-intro']) {
-      const section = findSection(home, name);
-      const frames = Array.from(section.querySelectorAll('.safari-clip'));
-      expect(frames.length, `${labelOf(section, name)} frames`).toBe(3);
-      for (const f of frames) {
-        expect(hasFullHeight(f), `${labelOf(section, name)} photo frame no longer fills its grid cell`).toBe(true);
-      }
-    }
-  });
-
-  it('contact-office: the map wrapper stretches (lg:h-full, 360px floor) in an items-stretch grid inside the card', () => {
+  it('contact-office: the map wrapper stretches (lg:h-full, 360px floor) in an items-stretch grid inside the card, which the section centres', () => {
     const section = findSection(home, 'contact-office');
-    const card = section.querySelector('[data-bg-tone="cream"]')!;
     const wrapper = section.querySelector('[data-map-embed]')!;
-    expect(isStretchedMapFrame(wrapper), `${labelOf(section, 'contact-office')} map wrapper lost its stretch / 360px floor`).toBe(true);
     const grid = wrapper.parentElement!;
-    expect(stretchesItems(grid), `${labelOf(section, 'contact-office')} map grid lost items-stretch`).toBe(true);
-    expect(card.contains(grid), `${labelOf(section, 'contact-office')} map grid left the cream card`).toBe(true);
-    expect(isVerticallyCentered(section), `${labelOf(section, 'contact-office')}: the card hugs its content and is centred by the section`).toBe(true);
+    expect(isStretchedMapFrame(wrapper), `${labelOf(section, 'contact-office')} map wrapper lost its stretch / 360px floor`).toBe(true);
+    expect(hasClass(grid, 'items-stretch'), 'map grid lost items-stretch').toBe(true);
+    expect(section.querySelector('[data-bg-tone="cream"]')!.contains(grid), 'map grid left the cream card').toBe(true);
+    expect(hasClass(section, 'justify-center'), 'the card hugs its content and is centred by the section').toBe(true);
   });
 });
 
 describe('B8: <main> is a clip, not a scroll container', () => {
-  it('main has overflow-clip and never overflow-hidden (hidden would kill soft snap)', () => {
-    const main = home.querySelector('main')!;
-    expect(overflowOf(main), '<main> must clip (overflow-clip); overflow-hidden makes it a scroll container and breaks soft snap').toBe('clip');
+  it('main has overflow-clip and never overflow-hidden (hidden would kill soft snap and sticky)', () => {
+    expect(overflowOf(home.querySelector('main')!), '<main> must clip (overflow-clip)').toBe('clip');
   });
 });

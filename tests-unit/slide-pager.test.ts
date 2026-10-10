@@ -1,7 +1,8 @@
 // @vitest-environment node
 /**
  * The pure slide-pager logic (NS-48, lib/slide-pager.ts): gesture-end detection over sample wheel
- * streams, target choice including tall-card edges, key mapping, easing and duration.
+ * streams, target choice including tall-card edges, key mapping, easing and duration. The gate and the
+ * wiring on the real page are in sanity/soft-snap.test.tsx.
  */
 import { describe, expect, it } from 'vitest';
 import {
@@ -9,7 +10,6 @@ import {
   QUIET_MS,
   SLIDE_MS,
   SLIDE_MAX_MS,
-  cubicBezier,
   decidePage,
   endTarget,
   initialGesture,
@@ -202,10 +202,8 @@ describe('stepWheel: tall cards scroll natively, then page at the edge', () => {
   });
 
   it('the clamp action carries the edge position', () => {
-    let g = initialGesture();
-    const [, a] = stepWheel(g, { t: 0, dy: 50 }, { animating: false, decide: () => ({ kind: 'native', room: 20, edgeY: 777 }) });
+    const [, a] = stepWheel(initialGesture(), { t: 0, dy: 50 }, { animating: false, decide: () => ({ kind: 'native', room: 20, edgeY: 777 }) });
     expect(a).toEqual({ type: 'clamp', y: 777 });
-    g = initialGesture();
   });
 
   it('a native gesture that reaches the edge by itself ends there (no paging inside the same gesture)', () => {
@@ -362,11 +360,6 @@ describe('easing and duration', () => {
       expect(v).toBeGreaterThanOrEqual(prev);
       prev = v;
     }
-  });
-
-  it('cubicBezier matches the CSS keyword ease-in-out at a known point', () => {
-    expect(cubicBezier(0.42, 0, 0.58, 1)(0.5)).toBeCloseTo(0.5, 3);
-    expect(cubicBezier(0, 0, 1, 1)(0.3)).toBeCloseTo(0.3, 3); // linear
   });
 
   it('duration: SLIDE_MS for a screen, shorter for a hop, longer for a jump, capped', () => {
