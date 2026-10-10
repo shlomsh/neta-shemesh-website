@@ -35,7 +35,7 @@ export function Gallery() {
           />
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-[clamp(0.75rem,1.5vw,1.5rem)] lg:grid-rows-2 lg:flex-1 lg:min-h-80">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-stack lg:grid-rows-2 lg:flex-1 lg:min-h-80">
           {GALLERY_IMAGES.map((img, i) => (
             <Photo
               key={img}

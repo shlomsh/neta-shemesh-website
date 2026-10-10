@@ -50,12 +50,13 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
       aria-label="תפריט ניווט"
       className="fixed inset-0 z-[100] md:hidden flex flex-col bg-plum"
     >
-      <div className="flex items-center justify-end px-[clamp(1.25rem,5vw,2.5rem)] py-[clamp(1.25rem,4vw,2rem)]">
+      <div className="flex items-center justify-end px-gutter py-panel">
         <IconButton ref={closeButtonRef} label="סגירת תפריט" onClick={onClose}>
           <CloseIcon />
         </IconButton>
       </div>
 
+      {/* gap stays a clamp (NS-61): phone-only overlay, 28/7vw/44 is 14px off every step at 640px. */}
       <nav
         aria-label="ניווט ראשי"
         className="flex flex-1 flex-col items-center justify-center gap-[clamp(1.75rem,7vw,2.75rem)] px-6 pb-[10vh]"
@@ -74,7 +75,7 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
           href={telHref()}
           variant="secondary"
           onClick={onClose}
-          className="mt-[clamp(0.75rem,4vw,1.5rem)]"
+          className="mt-stack"
         >
           <span dir="ltr" className="font-latin">{SITE.phone.display}</span>
         </ButtonLink>

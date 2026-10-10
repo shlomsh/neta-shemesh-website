@@ -32,9 +32,9 @@ export default function BlogIndexPage() {
       <BlogHeader />
 
       {/* Intro band */}
-      <Section id={ID.blogIntro} tone="dark" className="pt-[clamp(1.75rem,4vw,3.25rem)] pb-[clamp(3rem,7vw,6rem)]">
+      <Section id={ID.blogIntro} tone="dark" className="pt-region pb-section-mid">
         <Container id={ID.mainContent} maxWidth="lg" className="text-center">
-          <ScrollReveal className="flex flex-col items-center gap-[clamp(0.875rem,2vw,1.375rem)]">
+          <ScrollReveal className="flex flex-col items-center gap-stack">
             <span className="type-eyebrow text-cream">
               הבלוג
             </span>
@@ -48,9 +48,9 @@ export default function BlogIndexPage() {
       </Section>
 
       {/* Posts grid */}
-      <Section id={ID.blogPosts} tone="cream" className="py-[clamp(3rem,7vw,6rem)]">
+      <Section id={ID.blogPosts} tone="cream" className="py-section-mid">
         <Container maxWidth="2xl">
-          <div className="grid grid-cols-1 gap-[clamp(1.5rem,3vw,2.5rem)] md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-panel md:grid-cols-2">
             {posts.map((post, i) => (
               <ScrollReveal key={post.slug} delay={stagger(i % 2)} className="h-full">
                 <PostCard post={post} eager={i < 2} headingLevel={2} />

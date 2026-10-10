@@ -61,11 +61,11 @@ export default async function BlogPostPage(
       <BlogHeader />
 
       {/* Hero band — category, title, meta */}
-      <Section id={ID.postHero} tone="dark" className="pt-[clamp(1.25rem,3vw,2.25rem)] pb-[clamp(3rem,7vw,6rem)]">
+      <Section id={ID.postHero} tone="dark" className="pt-panel pb-section-mid">
         <Container id={ID.mainContent} maxWidth="md">
           <Link
             href="/blog"
-            className="type-small mb-[clamp(1.25rem,3vw,2rem)] inline-flex items-center gap-2 font-bold text-cream underline-offset-4 hover:underline"
+            className="type-small mb-panel inline-flex items-center gap-2 font-bold text-cream underline-offset-4 hover:underline"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="4" y1="12" x2="20" y2="12" />
@@ -74,7 +74,7 @@ export default async function BlogPostPage(
             חזרה לכל המאמרים
           </Link>
 
-          <div className="flex flex-col items-center gap-[clamp(0.875rem,2vw,1.375rem)] text-center">
+          <div className="flex flex-col items-center gap-stack text-center">
             <span className="type-eyebrow text-cream">
               {post.category}
             </span>
@@ -94,7 +94,7 @@ export default async function BlogPostPage(
       </Section>
 
       {/* Body — capped at a comfortable reading measure (~800px) */}
-      <Section id={ID.postBody} tone="cream" className="py-[clamp(2.5rem,6vw,5rem)]">
+      <Section id={ID.postBody} tone="cream" className="py-section-mid">
         <Container maxWidth="lg">
           <div className="mx-auto max-w-[50rem]">
             {/* Cover — pulled up to overlap the seam with the dark hero */}
@@ -109,7 +109,9 @@ export default async function BlogPostPage(
                 safariClip={false}
                 ratio="100/58"
                 loading="eager"
-                className="-mt-[clamp(4rem,9vw,7.25rem)] mb-[clamp(2rem,5vw,3.5rem)] w-full outline outline-[1.5px] outline-plum/15 shadow-cover"
+                // -mt stays a clamp (NS-61): the cover rides up over the hero bottom padding (pb-section-mid) by that
+                // padding + ~1.25rem; no spacing step is within 8px of 64/9vw/116 at 1280.
+                className="-mt-[clamp(4rem,9vw,7.25rem)] mb-region w-full outline outline-[1.5px] outline-plum/15 shadow-cover"
               />
             </ScrollReveal>
 
@@ -117,7 +119,7 @@ export default async function BlogPostPage(
               <PostBody blocks={post.body} />
             </article>
 
-            <div className="mt-[clamp(3rem,7vw,5rem)]">
+            <div className="mt-section-mid">
               <AuthorCard />
             </div>
           </div>
@@ -125,9 +127,9 @@ export default async function BlogPostPage(
       </Section>
 
       {/* Closing CTA */}
-      <Section id={ID.postCta} tone="dark" className="py-[clamp(3.5rem,8vw,6.875rem)]">
+      <Section id={ID.postCta} tone="dark" className="py-section">
         <Container maxWidth="md">
-          <div className="flex flex-col items-center gap-[clamp(1.5rem,3.5vw,2.5rem)] text-center">
+          <div className="flex flex-col items-center gap-panel text-center">
             <p className="type-quote mx-auto max-w-[55ch] text-cream">
               {post.cta.text}
             </p>
@@ -138,12 +140,12 @@ export default async function BlogPostPage(
 
       {/* More from the series */}
       {others.length > 0 && (
-        <Section id={ID.postMore} tone="cream" className="py-[clamp(3rem,7vw,6rem)]">
+        <Section id={ID.postMore} tone="cream" className="py-section-mid">
           <Container maxWidth="2xl">
-            <div className="mb-[clamp(1.75rem,4vw,3rem)]">
+            <div className="mb-region">
               <SectionTitle className="text-center">עוד מהבלוג</SectionTitle>
             </div>
-            <div className="grid grid-cols-1 gap-[clamp(1.5rem,3vw,2.5rem)] md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-panel md:grid-cols-2">
               {others.map((other, i) => (
                 <ScrollReveal key={other.slug} delay={stagger(i % 2)} className="h-full">
                   <PostCard post={other} />

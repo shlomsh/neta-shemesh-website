@@ -22,8 +22,9 @@ export default function NotFound() {
   return (
     <PageShell overflow="clip">
       <BlogHeader />
+      {/* py stays a clamp (NS-61): 56/9vw/120 is 13px past `section` at 1280, no spacing step is within 8px. 404 only. */}
       <Section id="not-found" tone="cream" className="py-[clamp(3.5rem,9vw,7.5rem)]">
-        <Container id={ID.mainContent} maxWidth="lg" className="flex flex-col items-center text-center gap-[clamp(1rem,2vw,1.5rem)]">
+        <Container id={ID.mainContent} maxWidth="lg" className="flex flex-col items-center text-center gap-stack">
           <LineArt name="individual" className="w-[clamp(11.25rem,26vw,17.5rem)] aspect-square" />
           <SectionTitle as="h1">הדף הזה לא נמצא</SectionTitle>
           <BodyText centered className="type-lead max-w-[45ch]">

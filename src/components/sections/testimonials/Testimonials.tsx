@@ -26,12 +26,12 @@ export function Testimonials() {
             align="center"
             title="לקוחות ממליצים"
             subtitle="מילים של זוגות שליוויתי בקליניקה – על הדרך שעברו, ועל הבחירה מחדש בחיבור ובקרבה."
-            subtitleClassName="mb-[clamp(3rem,6vw,6rem)]"
+            subtitleClassName="mb-section-mid"
           />
         </ScrollReveal>
 
-        {/* Featured quote with portrait */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(2rem,5vw,5rem)] mb-[clamp(3rem,6vw,6rem)] max-w-5xl mx-auto">
+        {/* Featured quote with portrait. The gap stays a clamp (NS-61, parked block): 32/5vw/80 is 16px past every step at 1440. */}
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(2rem,5vw,5rem)] mb-section-mid max-w-5xl mx-auto">
           <ScrollReveal delay={0.2} className="w-full lg:w-[22.5rem] shrink-0">
             <Photo
               src="/images/testimonial-featured.webp"
@@ -65,7 +65,7 @@ export function Testimonials() {
         {/* Three-card grid */}
         <div
           id={ID.testimonialsGrid}
-          className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(1rem,2vw,2rem)] max-w-[75rem] mx-auto"
+          className="grid grid-cols-1 md:grid-cols-3 gap-stack max-w-[75rem] mx-auto"
         >
           {TESTIMONIALS.map((testimonial, index) => (
             <ScrollReveal

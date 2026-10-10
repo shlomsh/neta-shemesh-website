@@ -22,6 +22,8 @@ import { HeroHeading } from './HeroHeading';
 import { HeroArt } from './HeroArt';
 
 export function HeroContent() {
+  // px stays a clamp() (NS-61): gutter-wide is 4px wider at 375, which narrows the hero text column by 8px and re-wraps
+  // the subtext to three lines. Hero composition is not moved to a step.
   return (
     <div
       className="
@@ -30,8 +32,8 @@ export function HeroContent() {
         w-full
         hero-fit
         px-[clamp(1.25rem,5vw,5rem)]
-        py-[clamp(2rem,4vw,3.5rem)]
-        gap-[clamp(1.5rem,3vw,2.5rem)]
+        py-region
+        gap-panel
       "
     >
       {/* ── Top bar: logo + nav ── */}
@@ -46,12 +48,12 @@ export function HeroContent() {
         className="
           flex flex-col lg:flex-row
           items-center
-          gap-[clamp(2rem,5vw,3.5rem)]
+          gap-region
           my-auto w-full
         "
       >
         {/* Text block */}
-        <div className="flex flex-col gap-[clamp(1rem,2vw,1.75rem)] w-full lg:flex-[0_0_32.5rem] max-w-[35rem]">
+        <div className="flex flex-col gap-stack w-full lg:flex-[0_0_32.5rem] max-w-[35rem]">
           <div className="hero-enter hero-enter-1">
             <HeroHeading />
           </div>
@@ -74,7 +76,7 @@ export function HeroContent() {
           {/* CTA → contact section: secondary ButtonLink (cream fill + plum text, 5.55:1 on the plum hero) */}
           <div className="hero-enter hero-enter-3">
             <div
-              className="flex flex-col items-start gap-[clamp(0.75rem,1.5vw,1.25rem)] w-full"
+              className="flex flex-col items-start gap-stack w-full"
             >
               <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary" size="sm">
                 ייעוץ עם נטע שמש

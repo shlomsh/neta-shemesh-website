@@ -18,6 +18,7 @@ import {
   classLiterals,
   containsBanSample,
   expectNone,
+  globalsCss,
   ratchetBan,
   readSources,
   sourceNamed,
@@ -108,6 +109,65 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
     expect(l.re.test(l.bad), 'the regex went blind').toBe(true);
     const offenders = code.filter((f) => !l.only?.some((o) => f.path.endsWith(o)) && l.re.test(noComments(f.text))).map((f) => f.path);
     expectNone(offenders, 'written outside its owner');
+  });
+});
+
+describe('fluid spacing steps (CLAUDE.md Layout, NS-61)', () => {
+  // The eight steps in globals.css @theme; px are at the default 16px root (stack 16-24 ... section 56-120).
+  const STEPS: Record<string, string> = {
+    gutter: 'clamp(1rem, 4vw, 3rem)',
+    'gutter-wide': 'clamp(1.5rem, 5vw, 5rem)',
+    stack: 'clamp(1rem, 2vw, 1.5rem)',
+    panel: 'clamp(1.5rem, 3vw, 2.5rem)',
+    region: 'clamp(1.75rem, 4.5vw, 3.5rem)',
+    'section-tight': 'clamp(3rem, 5vw, 6rem)',
+    'section-mid': 'clamp(2.75rem, 6.5vw, 5.5rem)',
+    section: 'clamp(3.5rem, 8vw, 7.5rem)',
+  };
+  // A padding / margin / gap that scales with the viewport is a step (`gap-stack`, `py-section`), never an inline
+  // clamp()/min()/max() (safe-area insets and calc() are not matched). These are the documented exceptions, each
+  // with a comment in the file saying which step is out of reach and why; a new one needs a reason here.
+  const AD_HOC = /(?<![\w-])(?:[a-z0-9-]+:)*-?(?:p|px|py|pt|pb|ps|pe|m|mx|my|mt|mb|ms|me|gap|gap-x|gap-y|space-x|space-y)-\[(?:clamp|min|max)\(/g;
+  const KEPT: Record<string, number> = {
+    'app/not-found.tsx': 1, // py 56/9vw/120: 13px past `section` at 1280
+    'app/blog/[slug]/page.tsx': 1, // -mt: the cover rides over the hero padding
+    'sections/testimonials/Testimonials.tsx': 1, // parked block: 32/5vw/80
+    'sections/cta-band/CtaBand.tsx': 2, // one-screen phone card: py 80/8vw/192, px 16/4vw/32
+    'sections/credentials/Credentials.tsx': 1, // one-screen phone card: gap 56/8vw/100
+    'sections/hero/HeroContent.tsx': 1, // px 20/5vw/80: gutter-wide is 4px wider at 375 and re-wraps the hero subtext
+    'site/MobileMenu.tsx': 1, // phone-only overlay: gap 28/7vw/44
+    'site/footer/Footer.tsx': 1, // one-screen phone card: gap 32/6vw/90
+  };
+
+  it('the eight steps are declared once in @theme with these values', () => {
+    const block = theme(globalsCss());
+    for (const [name, value] of Object.entries(STEPS)) {
+      expect(block.replace(/\s+/g, ' '), `--spacing-${name}`).toContain(`--spacing-${name}: ${value};`);
+    }
+    expect([...block.matchAll(/--spacing-([\w-]+)\s*:/g)].map((m) => m[1]).sort(), 'a ninth spacing step, or one removed').toEqual(Object.keys(STEPS).sort());
+  });
+
+  it('no step is named after a CSS display word: Tailwind builds `inline-<step>` / `block-<step>` sizes from --spacing-*, so a step called `block` would turn every `inline-block` into `inline-size: var(--spacing-block)`', () => {
+    const words = ['block', 'inline', 'flex', 'grid', 'table', 'contents', 'flow-root', 'list-item', 'hidden', 'none'];
+    expect(Object.keys(STEPS).filter((n) => words.includes(n))).toEqual([]);
+  });
+
+  it('no inline clamp()/min()/max() spacing outside the documented exceptions', () => {
+    const found: Record<string, number> = {};
+    for (const f of code.filter((c) => c.name.endsWith('.tsx'))) {
+      const n = [...noComments(f.text).matchAll(AD_HOC)].length;
+      if (n) found[f.path.replace(/^.*?src\/components\/|^.*?src\//, '')] = n;
+    }
+    expect(found, 'ad-hoc clamp() spacing: use a --spacing-* step (globals.css) or document the exception here and in the file').toEqual(KEPT);
+  });
+
+  it('the regex flags the ad-hoc spellings and spares steps, safe-area insets and sizes', () => {
+    for (const bad of ['gap-[clamp(1rem,2vw,2rem)]', 'lg:py-[clamp(1rem,2vw,2rem)]', '-mt-[clamp(1rem,2vw,2rem)]', 'px-[min(4vw,2rem)]', 'mb-[max(1rem,3vw)]']) {
+      expect([...bad.matchAll(AD_HOC)].length, `must flag: ${bad}`).toBe(1);
+    }
+    for (const good of ['gap-stack', 'py-section', 'bottom-[max(1rem,env(safe-area-inset-bottom))]', 'pb-[calc(env(safe-area-inset-bottom)+4.5rem)]', 'w-[clamp(11.25rem,26vw,17.5rem)]', 'h-[clamp(17.5rem,42vw,30rem)]']) {
+      expect([...good.matchAll(AD_HOC)].length, `must NOT flag: ${good}`).toBe(0);
+    }
   });
 });
 

@@ -37,7 +37,7 @@ export function SectionTitle({ as: Tag = 'h2', id, className, onDark = false, ma
   );
   if (!marker) return title;
   return (
-    <div className={cx('flex flex-nowrap items-center gap-[clamp(0.625rem,1.4vw,1.125rem)]', rowClassName ?? 'justify-start')}>
+    <div className={cx('flex flex-nowrap items-center gap-stack', rowClassName ?? 'justify-start')}>
       <span className="shrink-0">{marker}</span>
       {title}
     </div>

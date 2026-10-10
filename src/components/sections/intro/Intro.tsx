@@ -22,7 +22,7 @@ export function Intro() {
   return (
     <Section id={ID.aboutIntro} anchor={ANCHOR.about} tone="mid" fit="lock" pad="section" seam>
       <Container maxWidth="2xl" gutter="wide" className="relative lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
-        <div className="flex flex-col gap-10 lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[1fr_1.25fr] lg:gap-[clamp(2.5rem,5vw,5rem)]">
+        <div className="flex flex-col gap-10 lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[1fr_1.25fr] lg:gap-section-tight">
 
           {/* Photo collage — left column on desktop (wider, height-driven to the section), top on mobile */}
           <div className="relative w-full grid grid-cols-2 gap-4 lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">

@@ -41,7 +41,7 @@ export function Services() {
         </div>
 
         {/* One column at 375px, two from md; ~30px gaps, cards capped at ~360px on tablets. */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[clamp(1rem,4vw,4rem)] w-full gap-x-[1.875rem] gap-y-[1.875rem] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 w-full gap-x-[1.875rem] gap-y-[1.875rem] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
           {STEPS.map((step, i) => (
             <StepCard
               key={step.imageSrc}

@@ -44,7 +44,7 @@ export function SiteNav({ crossRoute = false }: { crossRoute?: boolean }) {
       {/* ── Desktop nav (md and up) ── */}
       <nav
         aria-label="ניווט ראשי"
-        className="hidden md:flex items-center justify-center gap-[clamp(1.5rem,4vw,3.5rem)]"
+        className="hidden md:flex items-center justify-center gap-region"
       >
         {links.map(({ href, label }) => (
           <NavLink key={href} href={href} label={label} className={desktopLinkClass} />

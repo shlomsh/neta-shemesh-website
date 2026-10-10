@@ -36,7 +36,7 @@ export function PostCard({ post, eager = false, headingLevel = 3 }: PostCardProp
       />
 
       {/* Body */}
-      <div className="flex flex-1 flex-col gap-3 p-[clamp(1.25rem,2.5vw,1.75rem)]">
+      <div className="flex flex-1 flex-col gap-3 p-stack">
         <span className="type-eyebrow text-plum">
           {post.category}
         </span>

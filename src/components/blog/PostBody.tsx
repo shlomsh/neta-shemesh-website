@@ -19,7 +19,7 @@ interface PostBodyProps {
  */
 export function PostBody({ blocks }: PostBodyProps) {
   return (
-    <div className="flex flex-col gap-[clamp(1.25rem,2.6vw,1.875rem)]">
+    <div className="flex flex-col gap-stack">
       {blocks.map((block, i) => {
         switch (block.type) {
           case 'lead':
@@ -40,7 +40,7 @@ export function PostBody({ blocks }: PostBodyProps) {
             return (
               <h2
                 key={i}
-                className="type-card-title mt-[clamp(0.75rem,2vw,1.5rem)] text-start text-plum"
+                className="type-card-title mt-stack text-start text-plum"
               >
                 <span className="block">{block.text}</span>
                 <span
@@ -54,7 +54,7 @@ export function PostBody({ blocks }: PostBodyProps) {
             return (
               <blockquote
                 key={i}
-                className="my-[clamp(0.5rem,1.5vw,1rem)] border-s-[3px] border-mauve ps-[clamp(1.125rem,3vw,2.125rem)]"
+                className="my-stack border-s-[3px] border-mauve ps-panel"
               >
                 <p className="type-quote text-start text-plum/92">
                   {block.text}

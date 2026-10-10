@@ -56,7 +56,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-[clamp(1.25rem,4vw,3.5rem)] items-stretch w-full max-w-[75rem] mx-auto lg:flex-1 lg:min-h-80">
+    <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-region items-stretch w-full max-w-[75rem] mx-auto lg:flex-1 lg:min-h-80">
       {/* Names: first in the DOM so reading order and Tab order start here; at lg this is the start (right, RTL) column. On phones each photo opens inside its own panel. */}
       <div role="group" aria-labelledby={ID.expertiseTitle} className="order-2 lg:order-1 flex flex-col justify-center gap-1 lg:gap-2">
         {items.map((item, i) => {

@@ -19,12 +19,13 @@ import { FooterBackground } from './FooterBackground';
 export function Footer() {
   return (
     <footer
-      className="relative w-full overflow-clip flex flex-col items-center px-6 py-[clamp(3rem,6vw,6rem)] screen-visible"
+      className="relative w-full overflow-clip flex flex-col items-center px-6 py-section-mid screen-visible"
     >
       {/* Background photo + scrim — absolutely positioned */}
       <FooterBackground />
 
       {/* Content column — sits above the background via z-10; my-auto centres it between the top padding and the copyright */}
+      {/* gap stays a clamp (NS-61): one-screen phone card, 32/6vw/90 is 12px past `section-mid` at 375. */}
       <div className="relative z-10 my-auto flex flex-col items-center gap-[clamp(2rem,6vw,5.625rem)] w-full max-w-[55.875rem] text-center">
 
         {/* 1. Tagline */}

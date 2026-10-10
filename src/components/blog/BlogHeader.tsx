@@ -10,7 +10,7 @@ import { SiteNav } from '@/components/site/SiteNav';
 export function BlogHeader() {
   return (
     <header className="w-full bg-plum">
-      <div className="flex w-full items-center justify-between gap-4 px-[clamp(1.25rem,5vw,5rem)] py-[clamp(0.875rem,2vw,1.375rem)]">
+      <div className="flex w-full items-center justify-between gap-4 px-gutter-wide py-stack">
         <BrandLogo />
         <SiteNav crossRoute />
       </div>

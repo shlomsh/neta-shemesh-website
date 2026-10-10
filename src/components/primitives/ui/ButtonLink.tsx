@@ -50,7 +50,7 @@ export function ButtonLink({
   // smaller-line-box `.font-latin` span (phone number) is exactly as tall as a Hebrew one.
   const sizes = {
     md: 'min-h-14 px-11 shadow-lg hover:shadow-xl',
-    sm: 'min-h-12 px-[clamp(1.25rem,2.5vw,2rem)] shadow-md hover:shadow-lg',
+    sm: 'min-h-12 px-panel shadow-md hover:shadow-lg',
   };
 
   const variants = {

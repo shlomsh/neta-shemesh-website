@@ -9,7 +9,7 @@ import { SITE } from '@/content/site';
 export function AuthorCard() {
   return (
     <div
-      className="flex flex-col items-center gap-[clamp(1rem,2.5vw,1.5rem)] rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-[clamp(1.5rem,3.5vw,2.5rem)] text-center sm:flex-row sm:text-start"
+      className="flex flex-col items-center gap-stack rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-panel text-center sm:flex-row sm:text-start"
     >
       <div className="relative shrink-0 overflow-hidden rounded-full w-[clamp(5.25rem,11vw,7.25rem)] h-[clamp(5.25rem,11vw,7.25rem)]">
         <img // eslint-disable-line @next/next/no-img-element -- fixed-size 116px author avatar, a static webp already sized in /public

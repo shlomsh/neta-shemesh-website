@@ -8,6 +8,8 @@ import { ANCHOR, ID, anchorHref } from '@/content/ids';
 
 /** The "קביעת פגישת ייעוץ" photo band. A photo section: no tone, so no data-bg-tone. */
 export function CtaBand() {
+  // py and px stay clamp()s (NS-61): this is a one-screen phone card, py has an 80px floor (18-24px above any step
+  // at 375/768) and px is capped at 32px (gutter would be 16px wider at 1280).
   return (
     <Section id={ID.ctaBand} fit="free" phone="screen" center="middle" className="py-[clamp(5rem,8vw,12rem)]">
       <div className="absolute inset-0 z-0">

@@ -89,6 +89,7 @@ Don't pass `onDark` to children. Bespoke `<section>`s add `data-bg-tone="dark|mi
 - **Surfaces** (`src/components/primitives/`, contracts in `src/components/README.md`): inner cards `<Card surface="cream|veil">`, framed photos `<Photo radius>`, icons `<MaskIcon>`, round icon buttons `<IconButton label>`. No hand-written `bg-[var(--color-cream)]` or re-typed `object-cover` frames.
 - **Header/nav:** below `md` a hamburger opens a full-screen overlay (`SiteNav` + `MobileMenu`, portaled to `document.body`; no `transform` on ancestors). Never a squeezed inline nav.
 - **Units:** rem for text, spacing, sizes and max-widths (`gap-4`, `max-w-3xl`, `clamp(1rem,4vw,3rem)`); an arbitrary `[Npx]` that equals a Tailwind step takes the step. px stays only for hairlines (border, ring, outline), shadows, motion offsets, `sizes=` and image `width`/`height`, SVG geometry. Never set `font-size` on `html`.
+- **Spacing:** fluid padding, margin and gap come from eight steps in `@theme` (`globals.css`): `gutter`, `gutter-wide` (sides), `stack` 16-24, `panel` 24-40, `region` 28-56 (gaps), `section-tight` 48-96, `section-mid` 44-88, `section` 56-120 (vertical; also big gaps), px at the 16px root. Write `gap-stack`, `py-section-mid`, `mb-region`; **no ad-hoc `clamp()` spacing** (sanity `source-scan` lists the nine documented exceptions).
 - **Mobile:** single column, test at 375px. **No horizontal overflow** (`scrollWidth > clientWidth`).
 - **No iframe embedding** (`frame-ancestors 'none'` in `next.config.ts`); `RevealObserver` already skips iframes.
 

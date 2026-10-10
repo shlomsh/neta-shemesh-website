@@ -24,7 +24,7 @@ export function Bio() {
   return (
     <Section id={ID.aboutMeSection} anchor={ANCHOR.aboutMe} tone="cream" fit="grow" pad="section" seam className="overflow-hidden!">
       <Container maxWidth="2xl" gutter="wide" className="relative z-10">
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-[clamp(2.5rem,6vw,5rem)]">
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-section-mid">
 
           {/* Right Column: Narrative Text */}
           <div className="w-full lg:w-[60%] flex flex-col gap-7">

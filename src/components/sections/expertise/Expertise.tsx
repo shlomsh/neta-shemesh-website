@@ -14,7 +14,7 @@ export function Expertise() {
       <Container maxWidth="none" gutter="wide" className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
         {/* Section header */}
         <ScrollReveal>
-          <div className="text-center mb-[clamp(1.5rem,4vw,3rem)] lg:mb-9">
+          <div className="text-center mb-region lg:mb-9">
             {/* Blush section (plum = 3.89:1, AA large only): subtitle at the quote scale (>=24px). */}
             <SectionHeader
               id={ID.expertiseTitle}

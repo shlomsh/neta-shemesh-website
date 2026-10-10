@@ -111,13 +111,28 @@
   --shadow-lift: 0 18px 40px -20px rgba(122,89,120,0.45);     /* blog PostCard on hover */
   --shadow-fab: 0 12px 30px -10px rgba(0,0,0,0.35);           /* ContactFAB pill */
 
-  /* Layout rhythm (Section / Container primitives). Generate `px-gutter`, `px-gutter-wide`,
-   * `py-section`, `py-section-tight`. Only values that were repeated 3+ times are tokens;
-   * one-off paddings stay inline. */
-  --spacing-gutter: clamp(1rem, 4vw, 3rem);          /* Container default side padding */
-  --spacing-gutter-wide: clamp(1.5rem, 5vw, 5rem);    /* Container gutter="wide" (About sections) */
-  --spacing-section: clamp(3.5rem, 8vw, 7.5rem);    /* Section pad="section" (vertical) */
-  --spacing-section-tight: clamp(3rem, 5vw, 6rem);   /* Section pad="tight" (vertical) */
+  /* Fluid spacing: THE steps (NS-61). Every padding / margin / gap that scales with the viewport is one of these
+   * (`py-section`, `gap-stack`, `mb-region`, `px-gutter`...); no ad-hoc clamp() spacing (tests-unit/sanity/source-scan).
+   * Each is clamp(min, vw, max); the px are at the default 16px root. Never name a step after a CSS display word:
+   * Tailwind's `inline-<step>` size utility would turn every `inline-block` into `inline-size: var(--spacing-block)`.
+   *   inline    gutter         16 -> 48    Container side padding (default)
+   *             gutter-wide    24 -> 80    Container gutter="wide" (About sections), blog header sides
+   *   gaps      stack          16 -> 24    between items in a row / list / card, card padding, small margins
+   *             panel          24 -> 40    between cards / blocks in a grid or column, button side padding, callout inset
+   *             region         28 -> 56    header to content, between columns, the hero rhythm
+   *   vertical  section-tight  48 -> 96    Section pad="tight"
+   *             section-mid    44 -> 88    blog sections, footer, wide column gaps (`lg:gap-section-mid`)
+   *             section        56 -> 120   Section pad="section"
+   * The section steps may size a big gap too. A use that no step is within 8px of at 375/768/1280/1440 stays a
+   * clamp() with a comment saying why. */
+  --spacing-gutter: clamp(1rem, 4vw, 3rem);
+  --spacing-gutter-wide: clamp(1.5rem, 5vw, 5rem);
+  --spacing-stack: clamp(1rem, 2vw, 1.5rem);
+  --spacing-panel: clamp(1.5rem, 3vw, 2.5rem);
+  --spacing-region: clamp(1.75rem, 4.5vw, 3.5rem);
+  --spacing-section-tight: clamp(3rem, 5vw, 6rem);
+  --spacing-section-mid: clamp(2.75rem, 6.5vw, 5.5rem);
+  --spacing-section: clamp(3.5rem, 8vw, 7.5rem);
 }
 
 /* `static` so the token is always emitted to :root (Tailwind drops unreferenced theme vars,
