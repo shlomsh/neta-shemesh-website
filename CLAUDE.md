@@ -1,6 +1,6 @@
 # Netta Shemesh Website — Design Guidelines
 
-> Project context: `agents.md`. Long form of every rule: `docs/design-system-reference.md` (§1 typography, §2 Latin + fallbacks, §3 colour utilities, §4 contrast, §5 exceptions, §6 Section, §7 layout, §8 iframe). Read it before touching fonts, tokens, card heights, the pager, or contrast.
+> Architecture, repo map, commands: `agents.md` (open it only when you need to find code or run tests). Full rule text: `docs/design-system-reference.md`, see the 'When to read' note at its bottom.
 
 ## Typography
 

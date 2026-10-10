@@ -1,6 +1,6 @@
 # Agent reference (long-form detail moved out of agents.md)
 
-> Read only the section you need; `agents.md` points here as "read docs/agent-reference.md §N". Content below is moved verbatim from the former `agents.md` (section numbers match). Not a startup read.
+> Open only the section you need (grep the `## N` headings). Content was moved verbatim from the former `agents.md` (section numbers match). Not a startup read.
 
 ## 1. Architecture
 
@@ -16,7 +16,7 @@
 
 ## 2. Client persona and voice
 
-Neta Shemesh is a couple and family therapist with **14 years of clinical experience** (M.S.W. clinical social worker). Tone: warm, calm, safe, never clinical. Tagline: "מקום בטוח לצמוח בו ביחד". Primary CTA: "תיאום פגישת ייעוץ" (WhatsApp). The site must make a warm first impression, build trust, explain the four service areas (couple therapy, family therapy, parenting guidance, personal accompaniment) and convert visitors into a low-friction first contact. Voice reference: `netta_voice.md`.
+Neta Shemesh is a couple and family therapist with **14 years of clinical experience** (M.S.W. clinical social worker). Tone: warm, calm, safe, never clinical. Tagline: "מקום בטוח לצמוח בו ביחד". Primary CTA: "תיאום פגישת ייעוץ" (WhatsApp). The site must make a warm first impression, build trust, explain the four service areas (couple therapy, family therapy, parenting guidance, personal accompaniment) and convert visitors into a low-friction first contact. Voice reference: `docs/netta_voice.md`.
 
 ## 3. Tests
 
@@ -55,7 +55,7 @@ Neta Shemesh is a couple and family therapist with **14 years of clinical experi
 - Content + site facts + ids: `src/content/` (`site.ts`, `ids.ts`, `types.ts`, `home/`) · motion delays: `src/lib/motion.ts` · class-list helper: `src/lib/cx.ts` (`cx()`, used for every conditional/composed class list)
 - Tests: `tests-unit/` (vitest), `tests/` (Playwright)
 - Docs: `CLAUDE.md` (design rules), `docs/archive/typography-guideline-2026-10.md`, `docs/archive/visual-roadmap-2026-10.md`, `docs/archive/tech-debt-plan-2026-10.md`, `docs/deployment.md`
-- Copy tone: `netta_voice.md`
+- Copy tone: `docs/netta_voice.md`
 - **Deployment: `docs/deployment.md`.** The site ships to Vercel *and* Azure SWA from the same commits, switched by `BUILD_STATIC_EXPORT` and `NEXT_PUBLIC_SITE_URL`. Read it before touching `next.config.ts`, `public/staticwebapp.config.json`, canonical URLs or anything image-related: the two hosts hold the same header policy in two files that drift silently, and the Azure copy must stay non-indexable. `npm run compare:deploys` checks that they still agree.
 
 ## 7. Former Next.js generated block (removed from agents.md)

@@ -107,3 +107,9 @@ The site is not iframe-embeddable by design (`frame-ancestors 'none'` in the CSP
 
 1. Relax the CSP `frame-ancestors` directive.
 2. The reveal side needs no change: IntersectionObserver doesn't fire reliably inside an iframe (content would stay at `opacity: 0`), so `RevealObserver.tsx` already skips iframes (it never arms the hidden state there and everything stays visible).
+
+---
+
+## When to read
+
+Open this file only when the task touches fonts, colour tokens or contrast, card heights, the soft-snap pager, or an iframe embed. For anything else the rules in `CLAUDE.md` (already loaded) are enough. Go straight to the matching section (§1 typography, §2 Latin + fallbacks, §3 colour utilities, §4 contrast, §5 exceptions, §6 Section, §7 layout, §8 iframe).
