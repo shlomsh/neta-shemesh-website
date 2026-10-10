@@ -6,6 +6,9 @@ const isDev = process.env.NODE_ENV === 'development';
 const isStaticExport = process.env.BUILD_STATIC_EXPORT === 'true';
 
 const nextConfig: NextConfig = {
+  // Stop `next dev` re-writing its "read node_modules/next/dist/docs/" block into agents.md
+  // (it made every agent crawl a 4.3 MB docs folder). agents.md carries narrow wording instead.
+  agentRules: false,
   ...(isStaticExport ? { output: 'export' as const } : {}),
   // Inline the (small) CSS into the HTML: removes the render-blocking stylesheet requests and lets
   // the font files be discovered from the document itself. Lighthouse mobile showed ~850 ms of

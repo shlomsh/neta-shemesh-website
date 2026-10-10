@@ -78,7 +78,7 @@ _(to be appended: root-cause report from A; measured numbers from B)_
 
 ## 9. Decisions and outcome
 
-The architect's answers to the questions in §6 are in `docs/architecture-review-2026-10.md` §6; that section is the record of the decisions. What shipped from this plan (ticket ids refer to the live board):
+The architect's answers to the questions in §6 are in `docs/archive/architecture-review-2026-10.md` §6; that section is the record of the decisions. What shipped from this plan (ticket ids refer to the live board):
 
 - **NS-11** shared Elamy ink-box fix for headings (replaces the per-heading hero patch).
 - **NS-13** CSS reveal with one IntersectionObserver instead of framer-motion reveals.

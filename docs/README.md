@@ -6,7 +6,6 @@
 
 | Doc | What it is for |
 |---|---|
-| `architecture-review-2026-10.md` | The architect's review: findings, target APIs, execution plan, and the decisions (section 6). |
 | `stability-perf-plan-2026-10.md` | The iPhone stability and performance problem statement, hypotheses and evidence; section 9 summarises the outcome. |
 | `typography-guideline-2026-10.md` | Record of the typography audit and the decisions taken. Where it disagrees with `CLAUDE.md`, `CLAUDE.md` wins. |
 | `visual-roadmap-2026-10.md` | What shipped visually, what the owner rejected (do not re-propose), and the open ideas. |
@@ -17,6 +16,7 @@
 
 Superseded or point-in-time documents, kept for history. Each starts with a banner saying what replaced it.
 
+- `architecture-review-2026-10.md`: the architect's review (82 KB): findings, target APIs, execution plan, and the decisions (section 6). History; read only when a task names it.
 - `sprint-board-2026-10.md`: snapshot of the ticket list, superseded by the live kanban.
 - `tech-debt-plan-2026-10.md`: the behaviour-neutral refactor plan (executed). Its section 6 describes the pixel-diff method still cited from `agents.md`.
 - `ACTION-PLAN.md`, `FULL-AUDIT-REPORT.md`: the June 2026 SEO audit, written before launch.
