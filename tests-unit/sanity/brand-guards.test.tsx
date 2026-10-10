@@ -75,11 +75,12 @@ describe('D20: no hand-drawn underline under section titles', () => {
 });
 
 describe('D21: hero entrance and couple line-art', () => {
-  it('four .hero-enter blocks with delay modifiers 0-3, in order, in the hero; the animation is off under reduced motion', () => {
+  it('three .hero-enter blocks with delay modifiers 0, 2, 3, in order, in the hero (the H1 is static, rule 9); the animation is off under reduced motion', () => {
     const hero = findSection(home, 'hero');
     const blocks = Array.from(hero.querySelectorAll('.hero-enter'));
-    expect(blocks.length, `${labelOf(hero)} hero-enter blocks`).toBe(4);
-    blocks.forEach((b, i) => expect(hasClass(b, `hero-enter-${i}`), `hero-enter block #${i} lost hero-enter-${i}`).toBe(true));
+    expect(blocks.length, `${labelOf(hero)} hero-enter blocks`).toBe(3);
+    [0, 2, 3].forEach((n, i) => expect(hasClass(blocks[i], `hero-enter-${n}`), `hero-enter block #${i} lost hero-enter-${n}`).toBe(true));
+    expect(hero.querySelector('h1')!.closest('.hero-enter'), 'the hero H1 must not sit in a .hero-enter block (Elamy static, rule 9)').toBeNull();
     const css = stripCssComments(readSources().find((s) => s.name === 'globals.css')!.text);
     expect(css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'))).toMatch(/\.hero-enter\s*\{[^}]*animation:\s*none/);
   });

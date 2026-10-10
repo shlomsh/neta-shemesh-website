@@ -24,7 +24,7 @@ export function Hero() {
         className="
           relative
           w-full
-          overflow-hidden
+          overflow-clip
           hero-fit
         "
       >

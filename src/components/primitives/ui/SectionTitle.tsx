@@ -40,8 +40,10 @@ export function SectionTitle({ as: Tag = 'h2', id, className, onDark = false, ma
   );
   if (!marker) return title;
   return (
-    <div className={cx('flex flex-nowrap items-center gap-stack', rowClassName ?? 'justify-start')}>
-      <span className="shrink-0">{marker}</span>
+    // `items-start`, not `items-center`: iPhone Safari cuts the Elamy swash tops when the title box is centred in a taller
+    // flex row (the marker is taller than the title on phones). The marker centres itself instead (`self-center`).
+    <div className={cx('flex flex-nowrap items-start gap-stack', rowClassName ?? 'justify-start')}>
+      <span className="shrink-0 self-center">{marker}</span>
       {title}
     </div>
   );

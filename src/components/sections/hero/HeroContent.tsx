@@ -57,7 +57,8 @@ export function HeroContent() {
       >
         {/* Text block */}
         <div className="flex flex-col gap-stack w-full lg:flex-[0_0_32.5rem] max-w-[35rem]">
-          <div className="hero-enter hero-enter-1">
+          {/* The H1 is static (CLAUDE.md rule 9): Elamy swash tops are cut by iPhone Safari after any animated repaint. */}
+          <div>
             <HeroHeading />
           </div>
 
