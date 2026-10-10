@@ -48,7 +48,6 @@ export function Reignite() {
                 {/* below lg: intrinsic aspect 348:531; lg+: frame fills the grid's remaining
                     height and the photo crops (object-cover) while drifting within it */}
                 <Photo
-                  engine="next"
                   src={panel.src}
                   sizes={GALLERY_SIZES}
                   alt=""

@@ -34,7 +34,6 @@ export function Testimonials() {
         <div className="flex flex-col lg:flex-row items-center justify-center gap-[clamp(32px,5vw,80px)] mb-[clamp(48px,6vw,96px)] max-w-[1024px] mx-auto">
           <ScrollReveal delay={0.2} className="w-full lg:w-[360px] shrink-0">
             <Photo
-              engine="next"
               src="/images/testimonial-featured.webp"
               alt="זוג בטיפול"
               sizes="(max-width: 1024px) 100vw, 360px"

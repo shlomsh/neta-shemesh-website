@@ -39,7 +39,6 @@ export function Gallery() {
           {GALLERY_IMAGES.map((img, i) => (
             <Photo
               key={img}
-              engine="next"
               src={`/images/${img}`}
               alt=""
               sizes="(max-width: 768px) 50vw, 33vw"

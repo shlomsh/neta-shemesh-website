@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollAnchor } from './ScrollAnchor';
 import { cx } from '@/lib/cx';
 
 /**
@@ -79,7 +78,7 @@ type SectionOwnProps = {
    * TODO(visual-roadmap #2): remove once the seams are solved in CSS.
    */
   seam?: boolean;
-  /** Renders a zero-height `ScrollAnchor` with this id immediately before the section. */
+  /** Renders an invisible zero-height anchor div with this id immediately before the section (nav scroll target). */
   anchor?: string;
   children: React.ReactNode;
 };
@@ -169,7 +168,7 @@ export function Section({
   if (!anchor) return section;
   return (
     <>
-      <ScrollAnchor id={anchor} />
+      <div id={anchor} className="invisible h-0" aria-hidden="true" />
       {section}
     </>
   );

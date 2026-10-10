@@ -50,85 +50,86 @@ describe('Photo: clipped cover-fitted frame', () => {
   const img = (el: Element) => el.querySelector('img')!;
 
   it('plain frame: relative overflow-hidden + rounded-card safari-clip, image covers the frame, lazy, alt kept', () => {
-    const el = frame(<Photo src="/a.webp" alt="alt" radius="card" />);
+    const el = frame(<Photo src="/a.webp" alt="alt" sizes="100vw" radius="card" />);
     expect(classTokens(el)).toEqual(expect.arrayContaining(['relative', 'overflow-hidden', 'rounded-card', 'safari-clip']));
-    expect(classTokens(img(el))).toEqual(expect.arrayContaining(['absolute', 'inset-0', 'w-full', 'h-full', 'object-cover']));
+    // next/image `fill` pins the image to the frame with an inline style (absolute, 100% x 100%, inset 0).
+    expect(classTokens(img(el))).toContain('object-cover');
+    expect(img(el).getAttribute('data-nimg')).toBe('fill');
+    expect(img(el).getAttribute('style')).toContain('position:absolute');
     expect(img(el).getAttribute('loading')).toBe('lazy');
     expect(img(el).getAttribute('alt')).toBe('alt');
-    expect(img(el).hasAttribute('style')).toBe(false);
+    expect(img(el).getAttribute('style')).not.toContain('object-position');
   });
   it('safariClip={false} drops only the clip (a nested frame whose ancestor already has it)', () => {
-    const t = classTokens(frame(<Photo src="/a" alt="" radius="card" safariClip={false} />));
+    const t = classTokens(frame(<Photo src="/a" alt="" sizes="100vw" radius="card" safariClip={false} />));
     expect(t).toContain('rounded-card');
     expect(t).not.toContain('safari-clip');
   });
   it('radius: tile = rounded-tile + safari-clip; none = neither', () => {
-    expect(classTokens(frame(<Photo src="/a" alt="" radius="tile" />))).toEqual(expect.arrayContaining(['rounded-tile', 'safari-clip']));
-    const none = classTokens(frame(<Photo src="/a" alt="" radius="none" />));
+    expect(classTokens(frame(<Photo src="/a" alt="" sizes="100vw" radius="tile" />))).toEqual(expect.arrayContaining(['rounded-tile', 'safari-clip']));
+    const none = classTokens(frame(<Photo src="/a" alt="" sizes="100vw" radius="none" />));
     expect(none).not.toContain('safari-clip');
     expect(none.filter((t) => t.startsWith('rounded-'))).toEqual([]);
   });
   it('ratio + fillCellAtLg: the ratio holds below lg, the grid cell decides from lg', () => {
-    const t = classTokens(frame(<Photo src="/a" alt="" radius="card" ratio="square" fillCellAtLg />));
+    const t = classTokens(frame(<Photo src="/a" alt="" sizes="100vw" radius="card" ratio="square" fillCellAtLg />));
     expect(t).toEqual(expect.arrayContaining(['aspect-square', 'lg:aspect-auto', 'lg:h-full']));
-    const noFill = classTokens(frame(<Photo src="/a" alt="" radius="card" ratio="4/3" />));
+    const noFill = classTokens(frame(<Photo src="/a" alt="" sizes="100vw" radius="card" ratio="4/3" />));
     expect(noFill).toContain('aspect-[4/3]');
     expect(noFill).not.toContain('lg:aspect-auto');
   });
   it('objectPosition lands on the image as a crop, outlined adds the plum outline, zoom scales on hover', () => {
-    const el = frame(<Photo src="/a" alt="" radius="card" outlined zoom="self" objectPosition="30% 64%" />);
+    const el = frame(<Photo src="/a" alt="" sizes="100vw" radius="card" outlined zoom="self" objectPosition="30% 64%" />);
     expect(img(el).getAttribute('style')).toContain('object-position:30% 64%');
     expect(classTokens(el)).toEqual(expect.arrayContaining(['outline', 'outline-[1.5px]', 'outline-plum']));
     expect(hasClass(img(el), 'motion-safe:hover:scale-105')).toBe(true);
-    expect(hasClass(img(frame(<Photo src="/a" alt="" radius="none" zoom="group" />)), 'motion-safe:group-hover:scale-[1.04]')).toBe(true);
+    expect(hasClass(img(frame(<Photo src="/a" alt="" sizes="100vw" radius="none" zoom="group" />)), 'motion-safe:group-hover:scale-[1.04]')).toBe(true);
   });
   it('the blog cover ratios are aspect-ratio on the frame, not a padding-top spacer; loading is lazy unless eager', () => {
     for (const [ratio, cls] of [['100/62', 'aspect-[100/62]'], ['100/58', 'aspect-[100/58]']] as const) {
       // React 19 puts a <link rel="preload"> before a non-lazy image, so look the frame up by tag.
-      const el = root(<Photo src="/a" alt="" radius="none" ratio={ratio} loading="eager" />).querySelector('div')!;
+      const el = root(<Photo src="/a" alt="" sizes="100vw" radius="none" ratio={ratio} loading="eager" />).querySelector('div')!;
       expect(classTokens(el)).toContain(cls);
       expect(el.children.length, 'the image is the only child: no spacer div').toBe(1);
       expect(img(el).getAttribute('loading')).toBe('eager');
     }
-    expect(img(frame(<Photo src="/a" alt="" radius="none" />)).getAttribute('loading')).toBe('lazy');
+    expect(img(frame(<Photo src="/a" alt="" sizes="100vw" radius="none" />)).getAttribute('loading')).toBe('lazy');
   });
   it('children are overlays drawn after the photo, inside the frame', () => {
-    const el = frame(<Photo src="/a" alt="" radius="card"><div id="label" /></Photo>);
+    const el = frame(<Photo src="/a" alt="" sizes="100vw" radius="card"><div id="label" /></Photo>);
     expect(el.children[0].tagName).toBe('IMG');
     expect(el.children[1].id).toBe('label');
   });
   it('parallax: the photo sits in the drifting layer, the frame keeps its radius; no `relative` of its own (ParallaxFrame decides)', () => {
-    const el = frame(<Photo src="/a" alt="" radius="card" motion={{ parallax: 9 }} className="w-full" />);
+    const el = frame(<Photo src="/a" alt="" sizes="100vw" radius="card" motion={{ parallax: 9 }} className="w-full" />);
     expect(el.querySelector('[data-parallax]')!.querySelector('img')).not.toBeNull();
     expect(classTokens(el)).toEqual(expect.arrayContaining(['overflow-clip', 'rounded-card', 'safari-clip', 'w-full']));
-    const band = classTokens(frame(<Photo src="/a" alt="" radius="none" motion={{ parallax: 8 }} className="absolute inset-0" />));
+    const band = classTokens(frame(<Photo src="/a" alt="" sizes="100vw" radius="none" motion={{ parallax: 8 }} className="absolute inset-0" />));
     expect(band).toContain('absolute');
     expect(band).not.toContain('relative');
   });
   it('reveal: the ScrollReveal element is the frame (no wrapper), photo directly inside', () => {
-    const el = frame(<Photo src="/a" alt="" radius="tile" motion={{ reveal: 0.2 }} />);
+    const el = frame(<Photo src="/a" alt="" sizes="100vw" radius="tile" motion={{ reveal: 0.2 }} />);
     expect(el.hasAttribute('data-reveal')).toBe(true);
     expect(classTokens(el)).toEqual(expect.arrayContaining(['relative', 'overflow-hidden', 'rounded-tile', 'safari-clip']));
     expect(el.firstElementChild!.tagName).toBe('IMG');
   });
-  it('next engine renders next/image with the given sizes', () => {
-    const el = frame(<Photo engine="next" src="/a.webp" alt="" sizes="100vw" radius="card" />);
+  it('renders next/image with the given sizes', () => {
+    const el = frame(<Photo src="/a.webp" alt="" sizes="100vw" radius="card" />);
     expect(img(el).getAttribute('sizes')).toBe('100vw');
     expect(img(el).getAttribute('src')).toContain('a.webp');
     expect(hasClass(img(el), 'object-cover')).toBe(true);
   });
-  it('types: sizes only with engine="next", overlays/style only where they make sense', () => {
+  it('types: sizes is required, overlays/style only where they make sense', () => {
     // Checked by `tsc --noEmit` (vitest does not type-check); at runtime they just render.
-    // @ts-expect-error engine="next" needs sizes
-    frame(<Photo engine="next" src="/a" alt="" radius="card" />);
-    // @ts-expect-error sizes belongs to engine="next"
-    frame(<Photo src="/a" alt="" radius="card" sizes="100vw" />);
+    // @ts-expect-error sizes is required (it decides the srcset)
+    frame(<Photo src="/a" alt="" radius="card" />);
     // @ts-expect-error a parallax frame cannot carry overlays (they would drift with the photo)
-    frame(<Photo src="/a" alt="" radius="card" motion={{ parallax: 9 }}><i /></Photo>);
+    frame(<Photo src="/a" alt="" sizes="100vw" radius="card" motion={{ parallax: 9 }}><i /></Photo>);
     // @ts-expect-error a reveal frame is the ScrollReveal element: no inline style
-    frame(<Photo src="/a" alt="" radius="card" motion={{ reveal: 0.1 }} style={{ gridArea: 'x' }} />);
+    frame(<Photo src="/a" alt="" sizes="100vw" radius="card" motion={{ reveal: 0.1 }} style={{ gridArea: 'x' }} />);
     // @ts-expect-error radius is required (no silent default)
-    frame(<Photo src="/a" alt="" />);
+    frame(<Photo src="/a" alt="" sizes="100vw" />);
   });
 });
 

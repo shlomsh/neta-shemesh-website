@@ -28,7 +28,7 @@ export function StepCard({
 }: StepCardProps) {
   return (
     <ScrollReveal delay={delay} className={cx('w-full h-full', staggerClass)}>
-      <Photo engine="next" src={imageSrc} alt={title} sizes={CARD_SIZES} radius="card" className="w-full h-full shadow-lg">
+      <Photo src={imageSrc} alt={title} sizes={CARD_SIZES} radius="card" className="w-full h-full shadow-lg">
 
         {/* Legibility gradient so white text reads on any photo */}
         <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/10" />

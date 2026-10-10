@@ -1,6 +1,5 @@
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
-import { Grid } from '@/components/primitives/layout/Grid';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
 import { LineArt } from '@/components/site/LineArt';
@@ -11,7 +10,7 @@ import { StepCard } from './StepCard';
 
 export function Services() {
   // lg+: exactly one screen (100svh; floor 720px so a short viewport grows rather than clips).
-  // Flex chain Section -> Container -> Grid hands the remaining height to the 2x2 step
+  // Flex chain Section -> Container -> grid hands the remaining height to the 2x2 step
   // grid, so the cards size from the available height instead of an aspect ratio.
   return (
     <Section id={ID.services} tone="light" fit="lock">
@@ -43,10 +42,10 @@ export function Services() {
         </div>
 
         {/*
-          P2 fix: colsMobile={1} → single column at 375px.
+          P2 fix: grid-cols-1 → single column at 375px.
           P3 fix: reduced gap to ~30px, stagger reduced to ~53px, max-width reduced to ~360px.
         */}
-        <Grid colsMobile={1} colsTablet={2} colsDesktop={2} className="gap-x-[30px] gap-y-[30px] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[clamp(16px,4vw,64px)] w-full gap-x-[30px] gap-y-[30px] lg:flex-1 lg:min-w-0 lg:min-h-0 lg:grid-rows-2">
           {STEPS.map((step, i) => (
             <StepCard
               key={step.imageSrc}
@@ -61,7 +60,7 @@ export function Services() {
               )}
             />
           ))}
-        </Grid>
+        </div>
       </Container>
     </Section>
 

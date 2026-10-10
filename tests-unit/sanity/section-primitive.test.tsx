@@ -138,7 +138,7 @@ describe('Section: tone, pad, overflow, seam, anchor, dir', () => {
     expect(classTokens(sectionOf(<Section seam>x</Section>))).toContain('-mt-px');
     expect(classTokens(sectionOf(<Section>x</Section>))).not.toContain('-mt-px');
   });
-  it('anchor renders a zero-height ScrollAnchor immediately before the section', () => {
+  it('anchor renders an invisible zero-height anchor div immediately before the section', () => {
     const root = html(<Section id="s" anchor="a">x</Section>);
     const anchor = root.firstElementChild!;
     expect(anchor.id).toBe('a');

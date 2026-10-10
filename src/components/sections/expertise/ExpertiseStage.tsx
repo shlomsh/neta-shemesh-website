@@ -129,7 +129,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
               i === active ? 'opacity-100' : 'opacity-0',
             )}
           >
-            <Photo engine="next" src={item.imageSrc} alt="" sizes="(min-width: 1024px) 46vw, 100vw" radius="none" className="w-full h-full" />
+            <Photo src={item.imageSrc} alt="" sizes="(min-width: 1024px) 46vw, 100vw" radius="none" className="w-full h-full" />
           </div>
         ))}
       </div>

@@ -52,21 +52,6 @@ const ZOOM_CLASS: Record<PhotoZoom, string> = {
 };
 
 /**
- * How the image is delivered.
- *   engine 'img' (default): a plain `<img>` of the raw file, lazy unless told otherwise. No call site uses it
- *                     since NS-30; it stays as the escape hatch for a file that must be served untouched.
- *   engine 'next': `next/image` with `fill` (AVIF/WebP, DPR-aware srcset). `sizes` is required because it
- *                     decides the srcset: write the width the IMAGE renders at (a cover-fitted photo in a
- *                     frame of another ratio overflows the frame on one axis, and a ParallaxFrame layer is
- *                     scaled up by 1 + (2 * amount + 1) / 100), not the frame width.
- * Switching a call site between the two changes the srcset and so the pixels: check it visually.
- * The Azure static export serves both unoptimised (`images.unoptimized` in next.config.ts).
- */
-type PhotoEngine =
-  | { engine?: 'img'; quality?: never; /** Lazy by default; `eager` for an above-the-fold photo (the first blog row, an article cover). */ loading?: 'lazy' | 'eager'; sizes?: never }
-  | { engine: 'next'; /** Lazy by default; `eager` for an above-the-fold photo. No `priority`: no photo is the LCP element. */ loading?: 'lazy' | 'eager'; sizes: string; /** Optimizer quality; defaults to `PHOTO_QUALITY` (84). Must be listed in `images.qualities`. */ quality?: number };
-
-/**
  * What moves the frame.
  *   none:               a plain `<div>` frame; `children` are overlays drawn over the photo.
  *   { parallax: n }:    the photo drifts n% inside the frame while it scrolls (ParallaxFrame); no overlays.
@@ -77,38 +62,47 @@ type PhotoMotion =
   | { motion: { parallax: number }; style?: CSSProperties; children?: never }
   | { motion: { reveal: number }; style?: never; children?: never };
 
-type PhotoProps = PhotoEngine &
-  PhotoMotion & {
-    src: string;
-    /** Required: pass `""` for a decorative photo. */
-    alt: string;
-    radius: PhotoRadius;
-    /** Aspect ratio of the frame; without it the caller sizes the frame (`h-full`, a grid cell, ...). */
-    ratio?: PhotoRatio;
-    /** Drop the ratio from lg and take the grid cell's height instead (`lg:aspect-auto lg:h-full`). */
-    fillCellAtLg?: boolean;
-    /** CSS `object-position` crop, e.g. `"48.1% 47.7%"`. Centre when omitted. */
-    objectPosition?: string;
-    /**
-     * The WebKit rounded-clip fix (`safari-clip`), on by default for `card` and `tile`. Turn it off only
-     * where an ancestor already carries it: stacking it on a second, nested frame shifts the antialiasing
-     * of the rounded edge by a level in Chromium (e.g. a nested Photo inside a `safari-clip` grid cell).
-     */
-    safariClip?: boolean;
-    /** Plum 1.5px outline (the framed portraits). */
-    outlined?: boolean;
-    zoom?: PhotoZoom;
-    /** Placement and one-off surface extras of the frame (`w-full`, `h-full`, `shadow-*`, grid placement). */
-    className?: string;
-  };
+type PhotoProps = PhotoMotion & {
+  src: string;
+  /** Required: pass `""` for a decorative photo. */
+  alt: string;
+  radius: PhotoRadius;
+  /**
+   * The `next/image` `sizes` (it decides the srcset, hence required): write the width the IMAGE renders
+   * at (a cover-fitted photo in a frame of another ratio overflows the frame on one axis, and a
+   * ParallaxFrame layer is scaled up by 1 + (2 * amount + 1) / 100), not the frame width.
+   */
+  sizes: string;
+  /** Lazy by default; `eager` for an above-the-fold photo. No `priority`: no photo is the LCP element. */
+  loading?: 'lazy' | 'eager';
+  /** Optimizer quality; defaults to `PHOTO_QUALITY` (84). Must be listed in `images.qualities`. */
+  quality?: number;
+  /** Aspect ratio of the frame; without it the caller sizes the frame (`h-full`, a grid cell, ...). */
+  ratio?: PhotoRatio;
+  /** Drop the ratio from lg and take the grid cell's height instead (`lg:aspect-auto lg:h-full`). */
+  fillCellAtLg?: boolean;
+  /** CSS `object-position` crop, e.g. `"48.1% 47.7%"`. Centre when omitted. */
+  objectPosition?: string;
+  /**
+   * The WebKit rounded-clip fix (`safari-clip`), on by default for `card` and `tile`. Turn it off only
+   * where an ancestor already carries it: stacking it on a second, nested frame shifts the antialiasing
+   * of the rounded edge by a level in Chromium (e.g. a nested Photo inside a `safari-clip` grid cell).
+   */
+  safariClip?: boolean;
+  /** Plum 1.5px outline (the framed portraits). */
+  outlined?: boolean;
+  zoom?: PhotoZoom;
+  /** Placement and one-off surface extras of the frame (`w-full`, `h-full`, `shadow-*`, grid placement). */
+  className?: string;
+};
 
 /**
  * A photo in a clipped frame, cover-fitted: the frame is `relative overflow-hidden` with the radius
- * and optional aspect ratio, the photo fills it (`absolute inset-0 object-cover`). One component for
+ * and optional aspect ratio, the photo fills it (`next/image` `fill` + `object-cover`). One component for
  * every framed photo on the site, so the radius, the Safari clip and the cover fit are written once.
  */
 export function Photo(props: PhotoProps) {
-  const { src, alt, radius, ratio, fillCellAtLg, objectPosition, outlined, zoom, className, motion, safariClip = true } = props;
+  const { src, alt, radius, sizes, loading, quality, ratio, fillCellAtLg, objectPosition, outlined, zoom, className, motion, safariClip = true } = props;
 
   const frame = cx(
     ratio && RATIO_CLASS[ratio],
@@ -121,18 +115,9 @@ export function Photo(props: PhotoProps) {
   const imageStyle: CSSProperties | undefined = objectPosition ? { objectPosition } : undefined;
   const zoomClass = zoom && ZOOM_CLASS[zoom];
 
-  const image =
-    props.engine === 'next' ? (
-      <Image src={src} alt={alt} fill sizes={props.sizes} quality={props.quality ?? PHOTO_QUALITY} loading={props.loading} className={cx('object-cover', zoomClass)} style={imageStyle} />
-    ) : (
-      <img // eslint-disable-line @next/next/no-img-element -- raw-file escape hatch (engine="img"); every call site uses engine="next"
-        src={src}
-        alt={alt}
-        loading={props.loading ?? 'lazy'}
-        className={cx('absolute inset-0 w-full h-full object-cover', zoomClass)}
-        style={imageStyle}
-      />
-    );
+  const image = (
+    <Image src={src} alt={alt} fill sizes={sizes} quality={quality ?? PHOTO_QUALITY} loading={loading} className={cx('object-cover', zoomClass)} style={imageStyle} />
+  );
 
   if (motion && 'parallax' in motion) {
     return (

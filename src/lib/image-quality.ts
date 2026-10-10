@@ -1,5 +1,5 @@
 /**
- * Quality passed to every `next/image` photo (Photo `engine="next"`, the CTA band).
+ * Quality passed to every `next/image` photo (every Photo, the CTA band).
  *
  * Next 16.3+ scales the requested quality down for AVIF (`round(q * 50 / 80)`; 16.2.9 used `q - 20`),
  * so the default 75 became AVIF 47 instead of 55 and the photos came out softer. Next 16.4 also ships

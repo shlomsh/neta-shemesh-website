@@ -28,7 +28,6 @@ export function Intro() {
           <div className="relative w-full grid grid-cols-2 gap-[16px] lg:order-2 lg:min-h-0 lg:h-full lg:grid-rows-2">
             <ScrollReveal className="lg:min-h-0">
               <Photo
-                engine="next"
                 src={INTRO_PHOTOS[0].src}
                 sizes={COLLAGE_SQUARE_SIZES}
                 alt=""
@@ -40,7 +39,6 @@ export function Intro() {
             </ScrollReveal>
             <ScrollReveal delay={0.24} className="row-span-2 lg:min-h-0">
               <Photo
-                engine="next"
                 src={INTRO_PHOTOS[2].src}
                 sizes={COLLAGE_TALL_SIZES}
                 alt=""
@@ -51,7 +49,6 @@ export function Intro() {
             </ScrollReveal>
             <ScrollReveal delay={0.12} className="lg:min-h-0">
               <Photo
-                engine="next"
                 src={INTRO_PHOTOS[1].src}
                 sizes={COLLAGE_SQUARE_SIZES}
                 alt=""

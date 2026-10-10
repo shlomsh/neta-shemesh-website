@@ -10,7 +10,6 @@ export function FooterBackground() {
     <div className="absolute inset-0 overflow-clip">
       {/* Photo — drifts within the band as it scrolls */}
       <Photo
-        engine="next"
         src="/images/footer-background.webp"
         alt=""
         sizes="(max-width: 375px) 315vw, (max-width: 480px) 258vw, (max-width: 768px) 172vw, (max-width: 1024px) 139vw, 100vw"

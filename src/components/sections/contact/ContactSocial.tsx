@@ -38,7 +38,6 @@ export function ContactSocial() {
               {CONTACT_PHOTOS.map((photo) => (
                 <Photo
                   key={photo.src}
-                  engine="next"
                   src={photo.src}
                   alt={photo.alt}
                   quality={photo.detail ? PHOTO_QUALITY_DETAIL : undefined}
@@ -64,7 +63,6 @@ export function ContactSocial() {
               {CONTACT_PHOTOS.map((photo) => (
                 <Photo
                   key={photo.src}
-                  engine="next"
                   src={photo.src}
                   alt={photo.alt}
                   quality={photo.detail ? PHOTO_QUALITY_DETAIL : undefined}

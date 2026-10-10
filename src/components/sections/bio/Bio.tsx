@@ -61,7 +61,6 @@ export function Bio() {
             {/* Personal Photo */}
             <ScrollReveal delay={0.24} className="w-full flex justify-start">
               <Photo
-                engine="next"
                 src={PROFILE_PHOTO}
                 alt={SITE.name}
                 sizes="(max-width: 1024px) 320px, 320px"

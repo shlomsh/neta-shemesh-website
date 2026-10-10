@@ -100,7 +100,6 @@ export default async function BlogPostPage(
             {/* Cover — pulled up to overlap the seam with the dark hero */}
             <ScrollReveal>
               <Photo
-                engine="next"
                 src={post.coverImage}
                 sizes="(min-width: 880px) 800px, 92vw"
                 alt={post.coverAlt}
