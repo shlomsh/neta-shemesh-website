@@ -50,7 +50,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-[clamp(20px,4vw,56px)] items-stretch w-full max-w-[1200px] mx-auto lg:flex-1 lg:min-h-[320px]">
-      {/* Names: first in the DOM so reading order and Tab order start here; at lg this is the start (right, RTL) column. On phones the photo sits above (order). */}
+      {/* Names: first in the DOM so reading order and Tab order start here; at lg this is the start (right, RTL) column. On phones each photo opens inside its own panel. */}
       <div role="group" aria-labelledby={ID.expertiseTitle} className="order-2 lg:order-1 flex flex-col justify-center gap-1 lg:gap-2">
         {items.map((item, i) => {
           const isActive = i === active;
@@ -109,6 +109,10 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
                 <div className="overflow-hidden min-h-0">
                   {/* Blush section (plum = 3.89:1, AA large only): the description must stay at the quote scale (>=24px). */}
                   <p className="type-quote max-w-prose ps-5 pt-1 pb-3">{item.description}</p>
+                  {/* Phones: the photo travels with its own name (the shared stage below is lg+ only). */}
+                  <div aria-hidden="true" className="lg:hidden ps-5 pb-3">
+                    <Photo src={item.imageSrc} alt="" sizes="100vw" radius="card" ratio="4/3" className="w-full shadow-xl" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,10 +120,10 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
         })}
       </div>
 
-      {/* Photo stage: all four stacked, the active one opaque. Height-driven from lg (grid cell), 4/3 above. */}
+      {/* Photo stage: all four stacked, the active one opaque. lg+ only, height-driven (grid cell). */}
       <div
         aria-hidden="true"
-        className="order-1 lg:order-2 relative overflow-hidden rounded-card safari-clip shadow-2xl bg-plum aspect-[4/3] lg:aspect-auto lg:min-h-0"
+        className="hidden lg:block lg:order-2 relative overflow-hidden rounded-card safari-clip shadow-2xl bg-plum lg:min-h-0"
       >
         {items.map((item, i) => (
           <div

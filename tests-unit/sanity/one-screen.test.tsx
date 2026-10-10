@@ -178,7 +178,8 @@ describe('B7: height-driven flex chain per section', () => {
       expect(isFlexContainer(node.parentElement), `${where} parent is not a flex container, so the grow does nothing`).toBe(true);
     }
 
-    const photos = Array.from(grid!.querySelectorAll('img'));
+    // The lg+ stage photos only: phone-only copies (inside an `lg:hidden` panel) have no desktop frame.
+    const photos = Array.from(grid!.querySelectorAll('img')).filter((img) => !img.closest('.lg\\:hidden'));
     expect(photos.length, `${labelOf(section, name)} photo count`).toBe(imgs);
     for (const [i, img] of photos.entries()) {
       const where = `${labelOf(section, name)} photo #${i + 1}`;
