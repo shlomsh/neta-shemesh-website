@@ -24,7 +24,7 @@ Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint
 - Named exports everywhere; only Next route files use `export default`. The parked `sections/testimonials/` stays (see CLAUDE.md).
 - Tests find sources by path suffix (`sourceNamed('SoftSnap.tsx')` in `tests-unit/sanity/helpers.ts`) and sections by the ids in `content/ids.ts`: a move updates the suffix, never loosens an assertion.
 
-**Adding a section:** `sections/<slug>/<Name>.tsx` with one `Section`, ids from `content/ids.ts`, copy from `content/`; mount it in `app/page.tsx` in page order; add its row to `EXPECTED_SECTIONS` (`helpers.ts`) and `DESKTOP`/`PHONE` (`one-screen.test.tsx`); run `npm run test:sanity` and `npm run vr -- HEAD`.
+**Adding a section:** `sections/<slug>/<Name>.tsx` with one `Section`, ids from `content/ids.ts`, copy from `content/`; mount it in `app/page.tsx` in page order; add its row to `EXPECTED_SECTIONS` (`helpers.ts`) and `DESKTOP` (`one-screen.test.tsx`; the phone list derives from it); run `npm run test:sanity` and `npm run vr -- HEAD`.
 
 ## Motion (`motion/`)
 
@@ -36,10 +36,9 @@ Reduced motion is CSS-only (the `[data-reveal="io"]` hidden state exists only un
 
 ## Primitive contracts
 
-**`Section`** (`id? tone? fit? phone? floor? center? pad? seam? anchor?`): always `relative w-full overflow-clip`, no `dir` prop. `data-fit`/`data-phone`/`data-bg-tone` are owned by the props; tests check them against the implementing classes.
+**`Section`** (`id? tone? fit? floor? center? pad? seam? anchor?`): always `relative w-full overflow-clip`, no `dir` prop. `data-fit`/`data-bg-tone` are owned by the props; tests check them against the implementing classes.
 - `tone` `dark | mid | light | cream` sets `data-bg-tone` (`globals.css` paints background, text, `--header-color`). Omit it for photo sections.
-- `fit` (omit for content height, e.g. blog): from lg at least one screen. `free` grows; `lock` is exactly `lg:screen-lock` (`max(var(--card-h), var(--card-floor))`, floor 45rem = 720px at the default root, both in `globals.css`) + `lg:py-12`, content must fit via a `lg:flex-1 lg:min-h-0` chain to the photo grid; `grow` is at least that, for text that must never clip. `floor={false}` (lock only) drops the 720px floor (Expertise).
-- `phone` (needs a `fit`): below lg. `content` (default) = content + padding; `screen` = `min-height: var(--card-h)`. Only credentials and the CTA band use it; hero (`hero-fit`) and footer (`screen-visible`) are bespoke. Never write the unit by hand.
+- `fit` (omit for content height, e.g. blog): at least one screen at every width (`screen-fit` = `min-height: var(--card-h)`: `100lvh` below lg, `100svh` from lg; a taller card grows, the page scrolls; content centred vertically). `free` grows; `lock` is exactly `lg:screen-lock` (`max(var(--card-h), var(--card-floor))`, floor 45rem = 720px at the default root, both in `globals.css`) + `lg:py-12`, content must fit via a `lg:flex-1 lg:min-h-0` chain to the photo grid; `grow` is at least that, for text that must never clip. `floor={false}` (lock only) drops the 720px floor (Expertise). The hero (`hero-fit`) and footer (`screen-visible`) are bespoke. Never write the unit by hand.
 - `center` (needs a `fit`): `column` (default), `start` (top-aligned from lg: Expertise), `middle` (one child centred: photo bands). `pad`: `section | tight | none`; never a second `py-*` in `className`. `seam` pulls up 1px to hide a sub-pixel gap; `anchor` renders an invisible scroll target before the section.
 
 **`Container`** (`maxWidth? gutter?`): `md | lg | xl | 2xl (default) | 3xl | none`; `gutter` `default | wide | none` (one `px-*` class).

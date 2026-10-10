@@ -5,7 +5,7 @@
  * refactor (moving files under sections/, a change in how Section implements `fit`, ...) is
  * absorbed by editing this one file, not 10 tests.
  *
- *   - fitOf / oneScreenMode / phoneMode     one-screen predicates (data-fit / data-phone AND the implementing classes)
+ *   - fitOf / oneScreenMode / hasMobileFill one-screen predicates (data-fit AND the implementing classes)
  *   - kindOf(section)                       the data-bg-tone of a top-level section, or 'photo'
  *   - topLevelSections(root)                main > section + main > footer, in order
  *   - typeClassesOf(el)                     the .type-* tokens on an element
@@ -142,12 +142,10 @@ export function kindOf(section: Element): Tone | 'photo' {
   return (section.getAttribute('data-bg-tone') as Tone | null) ?? 'photo';
 }
 
-// ─── One-screen contract (desktop) ───────────────────────────────────────────
+// ─── One-screen contract (desktop and phone) ─────────────────────────────────
 //
 // Section publishes its height contract as `data-fit="lock|grow|free"` and implements it with classes:
-//   from lg         : lg:screen-fit (min-height: var(--card-h), = 100svh at lg)   (free + lock; grow has its own min-h)
-//   below lg        : data-phone="content" (default: no min-height, sized by content + padding)
-//                     data-phone="screen"  : screen-fit at every width (--card-h = 100lvh below lg); credentials + CTA band
+//   every width     : screen-fit (min-height: var(--card-h); --card-h = 100svh, 100lvh below lg)   (all three fits; NS-61)
 //   lock-720        : lg:screen-lock       (height: max(var(--card-h), var(--card-floor)); exactly a screen, floor 720, content must fit)
 //   lock-100        : lg:screen-lock-exact (height: var(--card-h); Section floor={false}; Expertise only)
 //   grow-720        : lg:screen-grow       (min-height: max(var(--card-h), var(--card-floor)); a screen at least; grows on short viewports)
@@ -168,52 +166,36 @@ export function fitOf(el: Element | null | undefined): Fit | null {
 }
 
 /**
- * True when the element is at least one screen tall at EVERY breakpoint: a Section with
- * `phone="screen"` (`screen-fit`), the footer (`screen-visible`, which is `--card-h` upgraded to dvh) or
- * the hero (`hero-fit` = `min-height: var(--hero-h)`).
+ * True when the element is at least one screen tall at EVERY breakpoint: a Section fit (`screen-fit`), the
+ * footer (`screen-visible`, which is `--card-h` upgraded to dvh) or the hero (`hero-fit` = `min-height: var(--hero-h)`).
  */
 export function hasMinScreen(el: Element): boolean {
   return hasClass(el, 'screen-fit') || hasClass(el, 'screen-visible') || hasClass(el, 'hero-fit');
 }
 
 /**
- * True when the fit section is at least one screen tall FROM LG (every phone mode shares this): `screen-fit`
- * / `lg:screen-fit` (free, lock) or the grow's own `lg:screen-grow`.
+ * True when the fit section is at least one screen tall FROM LG: `screen-fit` (free, lock, grow all carry it)
+ * or the grow's own `lg:screen-grow`.
  */
 export function hasLgMinScreen(el: Element): boolean {
   return hasClass(el, 'screen-fit') || hasClass(el, 'lg:screen-fit') || hasClass(el, 'lg:screen-grow');
 }
 
 /**
- * Below lg a `phone="screen"` section's one-screen minimum is `screen-fit` (`min-height: var(--card-h)`);
- * the token is `100svh`, and the LARGE viewport (`100lvh`, static) below lg so a collapsed phone toolbar
- * leaves no strip of the next card (the unit decision is asserted on globals.css in one-screen.test.tsx).
- * A hand-written `min-h-lvh` would change desktop or bypass the token, so it must never appear next to it.
+ * A fit section's one-screen minimum BELOW lg is the unprefixed `screen-fit` (`min-height: var(--card-h)`); the
+ * token is `100svh`, and the LARGE viewport (`100lvh`, static) below lg so a collapsed phone toolbar leaves no
+ * strip of the next card under a short card (the unit decision is asserted on globals.css in one-screen.test.tsx).
+ * A hand-written `min-h-lvh` would change desktop or bypass the token, and an unprefixed or `max-lg:` / `sm:` / `md:`
+ * height utility (`min-h-0`, `h-auto`, ...) would cancel the minimum on the phone range, so none may sit next to it.
  */
 export function hasMobileFill(el: Element): boolean {
-  return hasClass(el, 'screen-fit') && !hasClass(el, 'min-h-lvh') && !hasClass(el, 'lg:min-h-lvh') && !hasClass(el, 'max-lg:min-h-lvh');
-}
-
-/** No unprefixed height/min-height at all: below lg the element is as tall as its content + padding. */
-export function hasPhoneContentHeight(el: Element): boolean {
-  return !classTokens(el).some((t) => /^(screen-fit|screen-visible|min-h-|h-)/.test(t));
-}
-
-export type PhoneMode = 'screen' | 'content';
-export type PhoneState = PhoneMode | 'inconsistent';
-
-/** The published phone contract (`data-phone`), or null when absent / not one of screen|content. */
-export function phoneOf(el: Element | null | undefined): PhoneMode | null {
-  const v = el?.getAttribute('data-phone');
-  return v === 'screen' || v === 'content' ? v : null;
-}
-
-/** data-phone and the classes below lg must tell the same story; otherwise 'inconsistent' (null without data-phone). */
-export function phoneMode(el: Element): PhoneState | null {
-  const declared = phoneOf(el);
-  if (!declared) return null;
-  const byClass: PhoneMode | null = hasMobileFill(el) ? 'screen' : hasPhoneContentHeight(el) ? 'content' : null;
-  return byClass === declared ? declared : 'inconsistent';
+  return (
+    hasClass(el, 'screen-fit') &&
+    !hasClass(el, 'min-h-lvh') &&
+    !hasClass(el, 'lg:min-h-lvh') &&
+    !hasClass(el, 'max-lg:min-h-lvh') &&
+    !classTokens(el).some((t) => /^((max-[a-z0-9]+|sm|md):)?-?(min-h|max-h|h)-/.test(t))
+  );
 }
 
 /** What the CLASSES alone implement at lg (ignores data-fit). */

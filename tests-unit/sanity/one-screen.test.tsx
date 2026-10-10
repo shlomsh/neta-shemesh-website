@@ -1,10 +1,11 @@
 /**
- * SANITY B: one-screen heights (desktop contract, phone contract) + the flex chain that makes it work.
+ * SANITY B: one-screen heights (desktop and phone contract) + the flex chain that makes it work.
  *
- * Desktop (lg+): every solid card is at least one screen. Phone (below lg, NS-39): a card is as tall as
- * its content + padding, except the four "moments" that stay exactly one screen: hero, credentials,
- * CTA band, footer (PHONE table below). The unit decision lives in ONE place (`--card-h`, globals.css);
- * no component spells it (`card-height` ban in source-scan.test.ts).
+ * Every solid card is at least one screen at EVERY width (NS-61 reverses NS-39's content-height phone
+ * cards: a short card let the next one peek in under it): `screen-fit` below lg, plus the lock / grow height
+ * from lg (DESKTOP table). The hero (`hero-fit`) and the footer (`screen-visible`) are bespoke. The unit
+ * decision lives in ONE place (`--card-h`, globals.css); no component spells it (`card-height` ban in
+ * source-scan.test.ts).
  *
  * History: the cards were first aspect-ratio driven (sections ran 1.3 screens), then locked to 100svh
  * (content clipped on short viewports), then given a 720px floor and a height-driven flex chain
@@ -12,8 +13,8 @@
  * at lg, an `overflow-hidden` on <main>) makes the photos overflow or the card collapse, and nothing in
  * jsdom shows it except the classes.
  *
- * Section publishes `data-fit="lock|grow|free"` and `data-phone`; the helpers accept them only when the
- * implementing classes agree, so neither a label that lies nor classes that lost their label pass.
+ * Section publishes `data-fit="lock|grow|free"`; the helpers accept it only when the implementing classes
+ * agree, so neither a label that lies nor classes that lost their label pass.
  */
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
@@ -29,7 +30,6 @@ import {
   hasLgMinScreen,
   hasMinScreen,
   hasMobileFill,
-  hasPhoneContentHeight,
   isFlexColumn,
   isFlexContainer,
   isGrowItem,
@@ -40,15 +40,12 @@ import {
   minHeightKind,
   oneScreenMode,
   overflowOf,
-  phoneMode,
-  phoneOf,
   renderHome,
   stripCssComments,
   topLevelSections,
   type Fit,
   type MinHeightKind,
   type OneScreenMode,
-  type PhoneMode,
 } from './helpers';
 
 let home: HTMLElement;
@@ -73,25 +70,17 @@ const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> 
   'contact-office': { mode: 'lock-720', fit: 'lock', py12: true },
 };
 
-/** Phone contract (below lg): content height by default; ONLY these stay one screen (plus the bespoke hero and footer). */
-const PHONE: Record<string, PhoneMode> = {
-  'about-intro': 'content',
-  expertise: 'content',
-  'about-me': 'content',
-  'about-credentials': 'screen',
-  'about-gallery': 'content',
-  services: 'content',
-  'testimonials-gallery': 'content',
-  'contact-social': 'content',
-  'contact-office': 'content',
-  'cta-band': 'screen',
-};
+/**
+ * Phone contract (below lg): EVERY Section-based card is at least one screen (the solid sections + the CTA band);
+ * the bespoke hero and footer are asserted in the photo-section test below. Dropping a row is a decision, not drift.
+ */
+const PHONE_CARDS = [...Object.keys(DESKTOP), 'cta-band'];
 
-describe('B6: every solid section is at least one screen from lg, with the agreed desktop and phone modes', () => {
-  it('the tables cover exactly the solid sections (PHONE adds the CTA band)', () => {
+describe('B6: every card is at least one screen (phone and desktop), with the agreed desktop lock/grow modes', () => {
+  it('the table covers exactly the solid sections (the phone list adds the CTA band)', () => {
     const solid = SOLID_SECTIONS.map((s) => s.name).sort();
     expect(Object.keys(DESKTOP).sort(), 'DESKTOP table and EXPECTED_SECTIONS solid sections diverged: add/remove the row').toEqual(solid);
-    expect(Object.keys(PHONE).sort()).toEqual([...solid, 'cta-band'].sort());
+    expect([...PHONE_CARDS].sort()).toEqual([...solid, 'cta-band'].sort());
   });
 
   it.each(Object.keys(DESKTOP))('%s: at least one screen from lg, with the agreed lock/grow assignment', (name) => {
@@ -103,13 +92,10 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     expect(hasDesktopRhythm(el), `${labelOf(el, name)} desktop padding (lg:py-12) expectation (${want.py12}) changed`).toBe(want.py12);
   });
 
-  it.each(Object.keys(PHONE))('%s: its phone mode is published as data-phone AND implemented by the classes', (name) => {
+  it.each(PHONE_CARDS)('%s: at least one screen below lg too (screen-fit = min-height: var(--card-h), 100lvh), data-fit published', (name) => {
     const el = findSection(home, name);
-    const want = PHONE[name];
-    expect(phoneOf(el), `${labelOf(el, name)} data-phone changed (expected ${want})`).toBe(want);
-    expect(phoneMode(el), `${labelOf(el, name)}: data-phone and the classes disagree (expected ${want})`).toBe(want);
-    if (want === 'screen') expect(hasMobileFill(el), `${labelOf(el, name)} lost screen-fit (or carries a hand-written min-h-lvh)`).toBe(true);
-    else expect(hasPhoneContentHeight(el), `${labelOf(el, name)} carries a min-height / height below lg: a phone card sizes to its content`).toBe(true);
+    expect(fitOf(el), `${labelOf(el, name)} lost its data-fit (the Section fit prop)`).not.toBeNull();
+    expect(hasMobileFill(el), `${labelOf(el, name)} lost its phone one-screen minimum (screen-fit), or carries a hand-written min-h-lvh / a min-h-*, h-*, max-lg:, sm: or md: height utility that cancels it`).toBe(true);
   });
 
   it('photo sections (hero, CTA band, footer) still fill a screen at minimum at every width; hero and footer are bespoke (no data-fit)', () => {
@@ -139,7 +125,7 @@ describe('B6: every solid section is at least one screen from lg, with the agree
     expect(css, ':root --card-h default').toMatch(/:root \{[^}]*--card-h: 100svh;/);
     expect(css, '--hero-h default').toMatch(/--hero-h: 100svh;/);
     expect(css, '--card-h and --hero-h are 100lvh below lg (theme(--breakpoint-lg) = 64rem), only where lvh is supported').toMatch(/@supports \(height: 100lvh\) \{ @media \(width < theme\(--breakpoint-lg\)\) \{ :root \{ --card-h: 100lvh; --hero-h: 100lvh; \} \} \}/);
-    expect(css, '--hero-h overshoots 100lvh by --hero-overshoot (80px) on iOS 26 Safari only (floating bottom bar), below lg').toMatch(/@supports \(-webkit-touch-callout: none\) and \(anchor-name: --a\) \{ @media \(width < theme\(--breakpoint-lg\)\) \{ :root \{ --hero-overshoot: 80px; --hero-h: calc\(100lvh \+ var\(--hero-overshoot\)\); \} \} \}/);
+    expect(css, '--card-h (and --hero-h = --card-h) overshoot 100lvh by --hero-overshoot (80px) on iOS 26 Safari only (floating bottom bar), below lg: no next-card strip under a card scrolled to the top of the screen').toMatch(/@supports \(-webkit-touch-callout: none\) and \(anchor-name: --a\) \{ @media \(width < theme\(--breakpoint-lg\)\) \{ :root \{ --hero-overshoot: 80px; --card-h: calc\(100lvh \+ var\(--hero-overshoot\)\); --hero-h: var\(--card-h\); \} \} \}/);
     expect(css, 'hero-fit reads the hero token').toMatch(/@utility hero-fit \{ min-height: var\(--hero-h\); \}/);
     expect(css, 'the lock / grow floor is one token, 45rem (= 720px at the default root)').toMatch(/:root \{[^}]*--card-floor: 45rem;/);
     expect(css, 'screen-lock = one screen (the token) but never below the floor, exactly').toMatch(/@utility screen-lock \{ height: max\(var\(--card-h\), var\(--card-floor\)\); \}/);

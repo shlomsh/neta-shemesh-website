@@ -181,14 +181,16 @@
 }
 /* iOS 26 Safari draws the page edge to edge, under the floating bottom bar, but 100lvh stops where that bar
  * starts: measured on an iPhone 17 the layout viewport is 62pt below the screen top and 100lvh is 754pt,
- * so at scroll 0 the hero ends 58pt above the screen bottom and the next card shows beside the bar (env()
- * safe-area insets read 0 in Safari, viewport-fit=cover changes nothing, dvh is no taller than lvh). The hero
- * therefore overshoots lvh by 80px (--hero-overshoot, defined once here) (overshoot is harmless; the measured gap is 58pt). Re-measure on each new iOS major; remove the +80px if lvh starts covering the area under the bottom bar.
- * Gated to iOS WebKit (-webkit-touch-callout) that has CSS anchor
- * positioning (Safari 26+); iOS 18 and every other browser keep exactly 100lvh (NS-25). */
+ * so a card scrolled to the top of the screen ends 58pt above the screen bottom and the next card shows beside
+ * the bar (env() safe-area insets read 0 in Safari, viewport-fit=cover changes nothing, dvh is no taller than
+ * lvh). Every card and the hero therefore overshoot lvh by 80px (--hero-overshoot, defined once here; the
+ * overshoot is harmless, the measured gap is 58pt, and a card's content stays centred in the visible screen).
+ * Re-measure on each new iOS major; remove the +80px if lvh starts covering the area under the bottom bar.
+ * Gated to iOS WebKit (-webkit-touch-callout) that has CSS anchor positioning (Safari 26+); iOS 18 and every
+ * other browser keep exactly 100lvh (NS-25, NS-61). */
 @supports (-webkit-touch-callout: none) and (anchor-name: --a) {
   @media (width < theme(--breakpoint-lg)) {
-    :root { --hero-overshoot: 80px; --hero-h: calc(100lvh + var(--hero-overshoot)); }
+    :root { --hero-overshoot: 80px; --card-h: calc(100lvh + var(--hero-overshoot)); --hero-h: var(--card-h); }
   }
 }
 

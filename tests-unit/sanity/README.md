@@ -14,8 +14,8 @@ npm run test:unit       # all of tests-unit/ (what the Vercel gate runs)
 | `helpers.ts` | Shared predicates, `SCAN_RULES`, `CONTRAST_BANS`, the contrast resolver, ratchet helpers. Not a test. |
 | `source-scan.test.ts` | All static bans: type/size/weight and removed classes, card-height units, CSS scroll-snap, Google Fonts, hex palette lock, white/arbitrary-var colour utilities, NS-42 contrast/focus bans, lockups written once, font declarations, RTL only on `<html>`. |
 | `cards-rotation.test.tsx` | Strict 4-tone rotation, no adjacent same tone, `.on-dark` only on photo bands, mid veil card, office card. |
-| `one-screen.test.tsx` | Desktop: every solid card is at least one screen (`DESKTOP` lock/grow table). Phone: `PHONE` table. Footer `screen-visible`, `--card-h`, flex chain to the photo grid, `<main>` is `overflow-clip`. |
-| `section-primitive.test.tsx` | `Section` `fit`/`phone`/`tone` contract (`data-*` plus implementing classes, not overridable). |
+| `one-screen.test.tsx` | Every card is at least one screen at every width: below lg `screen-fit` (a card that loses it fails), from lg the `DESKTOP` lock/grow table. Hero `hero-fit`, footer `screen-visible`, `--card-h`, flex chain to the photo grid, `<main>` is `overflow-clip`. |
+| `section-primitive.test.tsx` | `Section` `fit`/`tone` contract (`data-*` plus implementing classes, not overridable). |
 | `ui-primitives.test.tsx` | `Card`, `Photo`, `MaskIcon`, `IconButton`, `SectionTitle`/`SectionHeader` contracts. |
 | `type-scale-css.test.ts` | `.type-*` values, closed set, 14px floor, Latin scale, font tokens, Elamy reserved roles. |
 | `type-usage.test.tsx` | Rendered type usage: no stacked `type-*`, `font-latin`, subtitle lockup, buttons/nav, headings. |
