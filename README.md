@@ -1,21 +1,23 @@
 # Netta Shemesh — website
 
-Marketing site for **Netta Shemesh** (נטע שמש), a couples and family therapist in Netanya. Hebrew only, right-to-left, mobile-first. Its job is a warm first impression and a low-friction first contact (WhatsApp, phone, email). Who she is and what the site is for: [docs/neta.md](docs/neta.md). Audience and design principles: [PRODUCT.md](PRODUCT.md). Design rules (type, colour, contrast, layout) and code rules: [CLAUDE.md](CLAUDE.md). Why this is not a stock Next.js site: [What is custom and why](#what-is-custom-and-why).
+Marketing site for **Netta Shemesh** (נטע שמש), a couples and family therapist in Netanya. Hebrew only, right-to-left, mobile-first. Its job is a warm first impression and a low-friction first contact (WhatsApp, phone, email). Who she is and what the site is for: [docs/neta.md](docs/neta.md). Audience and design principles: [PRODUCT.md](PRODUCT.md). Design rules (type, colour, contrast, layout) and code rules: [CLAUDE.md](CLAUDE.md). What is layered on top of Next.js: [Next.js, plus these requirements](#nextjs-plus-these-requirements).
 
 ## Stack
 
 Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a small JS slide pager; no animation library. Fonts are self-hosted through `next/font/local`. Three runtime dependencies (`next`, `react`, `react-dom`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
 
-### What is custom and why
+### Next.js, plus these requirements
 
-Not a stock Next.js + Tailwind app. The runtime is plain Next (server components, static prerender, strict CSP, no UI, animation or state library); what is custom is the rules and tests around it, because the brand is fixed and agents edit the code.
+This is a Next.js app: App Router, server components, static prerender, `next/image`, `next/font/local`, the Metadata API, `app/sitemap.ts`, Tailwind v4 via `@theme`, three runtime dependencies (`next`, `react`, `react-dom`). Nothing replaces or bypasses Next; everything below is added on top for a stated requirement.
 
-- **Design system as code.** Type scale (`.type-*`), four checked colours, section tones (`data-bg-tone`), tokens in `@theme`. Why: built from a Canva export, an audit found 21 font sizes. Enforced by sanity tests and ESLint. Cost: tests are as big as the app.
-- **Motion in CSS.** One observer arms reveals; parallax, hero entrance and signature are CSS; reduced motion switches them off. Why: no JS cost, HTML never hidden before hydration. Cost: hand-written keyframes.
-- **Desktop-only slide pager** (1024px+, fine pointer: one wheel gesture, one card). Why: desktop cards are at least a screen tall. Dynamically imported: touch devices download none. Cost: own gesture code.
-- **Hebrew and RTL.** `dir="rtl"` once on `<html>`, logical utilities only (ESLint). Fonts self-hosted via `next/font/local`, Hebrew fallbacks sized to match, so text does not jump. Cost: a third font (Latin).
-- **Content as typed data.** `src/content/site.ts` holds phone, email, address once; posts are `.ts` modules (no CMS or MDX for two posts). Cost: copy edits need a developer.
-- **Gates.** Vercel runs lint, typecheck and Vitest before each build (the only gate); Playwright CI (Chrome, Safari, iPhone, iPad) does not block. `npm run vr -- <ref>` pixel-diffs refactors.
+- **A fixed brand** (four checked colours, one closed type scale, section tones): `@theme` tokens, `.type-*` classes and `data-bg-tone`, guarded by sanity tests and ESLint so the identity cannot drift. Cost: a large test suite.
+- **Hebrew, right to left, first:** `dir="rtl"` once on `<html>`, logical utilities (ESLint), self-hosted fonts with size-matched Hebrew fallbacks so text does not jump. Cost: a third (Latin) font.
+- **Live motion without a library:** CSS reveals armed by one small observer, CSS scroll-driven parallax, hero sequence and signature; reduced motion switches it off in CSS. Cost: hand-written keyframes.
+- **Desktop slide-through scrolling** (1024px+, fine pointer), dynamically imported so touch devices download none. Cost: our own gesture code.
+- **Every contact fact in one place:** `src/content/site.ts` and `ids.ts`. Cost: copy edits need a developer.
+- **Release safety:** Vercel runs lint, typecheck and Vitest before each build; Playwright CI (Chrome, Safari, iPhone, iPad) does not block; `npm run vr -- <ref>` pixel-diffs refactors.
+
+Where we are more custom than stock Next + Tailwind, and could converge: the type scale is plain classes under `@layer components` in `globals.css`, not `--text-*` theme tokens; the motion CSS there sits outside Tailwind's layers; `tests-unit` is about as large as `src`.
 
 ## Commands
 
