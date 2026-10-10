@@ -24,7 +24,7 @@ export function Expertise() {
           </div>
 
         {/* Editorial stage: names + crossfading photo + the active description (client island). */}
-        {/* No ScrollReveal: the names inside the stage are Elamy titles and must stay static (CLAUDE.md typography rule 9). */}
+        {/* No ScrollReveal here: the names inside the stage are Elamy titles and must stay static (CLAUDE.md typography rule 9). The stage reveals only its descriptions and photo. */}
         <div className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
           <ExpertiseStage items={EXPERTISE_CARDS} />
         </div>

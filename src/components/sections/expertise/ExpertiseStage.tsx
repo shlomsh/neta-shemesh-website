@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { Photo } from '@/components/primitives/ui/Photo';
 import { cx } from '@/lib/cx';
 import { ID } from '@/content/ids';
@@ -23,9 +24,41 @@ const HOVER_INTENT_MS = 70;
  * focus between the names. The first item is active in the server HTML, so no-JS and first paint are complete.
  * Motion is CSS only (crossfade + grid-rows reveal) and switched off under `prefers-reduced-motion`.
  * The photos are decorative copies of the names (aria-hidden, alt=""): the names and descriptions carry the content.
+ *
+ * Scroll reveal: ONLY the descriptions and the photo fade in (each in its own ScrollReveal), never the names or an
+ * ancestor of them (the names are Elamy titles, CLAUDE.md typography rule 9). The closed panels' wrappers sit in a
+ * collapsed, invisible grid row, so the observer would not reveal them until their first opening and the swap would
+ * then fade. `usePanelRevealSync` copies the open panel's revealed state to the others, so the fade plays once, on scroll-in.
  */
+/**
+ * Mirrors the first panel's `data-revealed` (set by RevealObserver) onto the same-position reveal wrappers of the
+ * other panels, so a panel opened later is already revealed (no fade on swap, the fade plays once on scroll-in).
+ * Attribute-only DOM writes on elements React never sets that attribute on, so re-renders keep them.
+ */
+function usePanelRevealSync(group: React.RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const panels = Array.from(group.current?.querySelectorAll<HTMLElement>('[role="region"]') ?? []);
+    const [first, ...rest] = panels;
+    if (!first) return;
+    const sources = Array.from(first.querySelectorAll<HTMLElement>('[data-reveal="io"]'));
+    const mirror = (index: number) => {
+      if (!sources[index]?.hasAttribute('data-revealed')) return;
+      for (const panel of rest) panel.querySelectorAll('[data-reveal="io"]')[index]?.setAttribute('data-revealed', '');
+    };
+    const observers = sources.map((source, index) => {
+      mirror(index);
+      const mo = new MutationObserver(() => mirror(index));
+      mo.observe(source, { attributes: true, attributeFilter: ['data-revealed'] });
+      return mo;
+    });
+    return () => observers.forEach((mo) => mo.disconnect());
+  }, [group]);
+}
+
 export function ExpertiseStage({ items }: ExpertiseStageProps) {
   const uid = useId();
+  const group = useRef<HTMLDivElement>(null);
+  usePanelRevealSync(group);
   const [active, setActive] = useState(0);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastPointer = useRef<{ x: number; y: number } | null>(null);
@@ -58,7 +91,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-region items-stretch w-full max-w-[75rem] mx-auto lg:flex-1 lg:min-h-80">
       {/* Names: first in the DOM so reading order and Tab order start here; at lg this is the start (right, RTL) column. On phones each photo opens inside its own panel. */}
-      <div role="group" aria-labelledby={ID.expertiseTitle} className="order-2 lg:order-1 flex flex-col justify-center gap-1 lg:gap-2">
+      <div ref={group} role="group" aria-labelledby={ID.expertiseTitle} className="order-2 lg:order-1 flex flex-col justify-center gap-1 lg:gap-2">
         {items.map((item, i) => {
           const isActive = i === active;
           const buttonId = `${uid}-tab-${i}`;
@@ -115,11 +148,15 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
               >
                 <div className="overflow-hidden min-h-0">
                   {/* Blush section (plum = 3.89:1, AA large only): the description must stay at the quote scale (>=24px). */}
-                  <p className="type-quote max-w-prose ps-5 pt-1 pb-3">{item.description}</p>
+                  <ScrollReveal>
+                    <p className="type-quote max-w-prose ps-5 pt-1 pb-3">{item.description}</p>
+                  </ScrollReveal>
                   {/* Phones: the photo travels with its own name (the shared stage below is lg+ only). */}
-                  <div aria-hidden="true" className="lg:hidden ps-5 pb-3">
-                    <Photo src={item.imageSrc} alt="" sizes="100vw" radius="card" ratio="4/3" className="w-full shadow-xl" />
-                  </div>
+                  <ScrollReveal className="lg:hidden">
+                    <div aria-hidden="true" className="ps-5 pb-3">
+                      <Photo src={item.imageSrc} alt="" sizes="100vw" radius="card" ratio="4/3" className="w-full shadow-xl" />
+                    </div>
+                  </ScrollReveal>
                 </div>
               </div>
             </div>
@@ -127,23 +164,22 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
         })}
       </div>
 
-      {/* Photo stage: all four stacked, the active one opaque. lg+ only, height-driven (grid cell). */}
-      <div
-        aria-hidden="true"
-        className="hidden lg:block lg:order-2 relative overflow-hidden rounded-card safari-clip shadow-2xl bg-plum lg:min-h-0"
-      >
-        {items.map((item, i) => (
-          <div
-            key={item.slug}
-            className={cx(
-              'absolute inset-0 transition-opacity duration-500 ease-in-out motion-reduce:transition-none',
-              i === active ? 'opacity-100' : 'opacity-0',
-            )}
-          >
-            <Photo src={item.imageSrc} alt="" sizes="(min-width: 1024px) 46vw, 100vw" radius="none" className="w-full h-full" />
-          </div>
-        ))}
-      </div>
+      {/* Photo stage: all four stacked, the active one opaque. lg+ only, height-driven (grid cell). The reveal wrapper is the grid cell itself. */}
+      <ScrollReveal className="hidden lg:block lg:order-2 relative overflow-hidden rounded-card safari-clip shadow-2xl bg-plum lg:min-h-0">
+        <div aria-hidden="true" className="absolute inset-0">
+          {items.map((item, i) => (
+            <div
+              key={item.slug}
+              className={cx(
+                'absolute inset-0 transition-opacity duration-500 ease-in-out motion-reduce:transition-none',
+                i === active ? 'opacity-100' : 'opacity-0',
+              )}
+            >
+              <Photo src={item.imageSrc} alt="" sizes="(min-width: 1024px) 46vw, 100vw" radius="none" className="w-full h-full" />
+            </div>
+          ))}
+        </div>
+      </ScrollReveal>
     </div>
   );
 }
