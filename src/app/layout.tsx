@@ -9,14 +9,14 @@ import { siteJsonLd } from '@/lib/seo/jsonld';
 import { JsonLd } from '@/components/site/JsonLd';
 import { cx } from '@/lib/cx';
 
-// Any build not pointed at the production domain is a staging copy (Azure SWA
-// via NEXT_PUBLIC_SITE_URL, a preview deploy, a tunnel). Those self-canonicalise
+// Any build not pointed at the production domain is a staging copy (a preview deploy or a
+// tunnel with NEXT_PUBLIC_SITE_URL set to its own host). Those self-canonicalise
 // to their own host, which makes them a crawlable duplicate of the real site, so
 // they must not be indexed.
 //
 // Deriving this from SITE.url rather than a per-host config means the robots
 // directive and the canonical can never disagree, and indexing switches back on
-// by itself the moment a build points at production — no cutover checklist.
+// by itself the moment a build points at production — no manual step.
 //
 // Note: do NOT also add `Disallow: /` to robots.txt on those hosts. Disallow
 // blocks crawling, not indexing — Google can still index an uncrawlable URL it

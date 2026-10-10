@@ -1,6 +1,6 @@
 /**
  * NS-21: the noindex host guard. Any build not pointed at the production domain (a preview deploy,
- * the Azure SWA copy, a tunnel) must ship `robots: noindex, nofollow`; the production host must not.
+ * a tunnel) must ship `robots: noindex, nofollow`; the production host must not.
  * The guard is decided at module load from NEXT_PUBLIC_SITE_URL, so each case re-imports with a stubbed env.
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -39,7 +39,7 @@ describe('noindex host guard', () => {
 
   it.each([
     'https://preview-abc123.vercel.app',
-    'https://netta.azurestaticapps.net',
+    'https://staging.example.test',
     'http://localhost:3000',
     'https://netashemesh.co.il', // apex without www is not the canonical production host
     'https://www.netashemesh.co.il/', // trailing slash is a different string: fail safe to noindex

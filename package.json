@@ -12,7 +12,6 @@
     "lint": "eslint --max-warnings 0",
     "test:unit": "vitest run",
     "test:sanity": "vitest run tests-unit/sanity",
-    "compare:deploys": "bash scripts/compare-deploys.sh",
     "vr": "node tests/visual/run.mjs"
   },
   "dependencies": {

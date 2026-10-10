@@ -1,35 +1,24 @@
 import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === 'development';
-// Static export is only enabled when BUILD_STATIC_EXPORT=true (used for Azure
-// Static Web Apps). Vercel builds without this env, keeping full SSR/image support.
-const isStaticExport = process.env.BUILD_STATIC_EXPORT === 'true';
 
 const nextConfig: NextConfig = {
   // Stop `next dev` re-writing its "read node_modules/next/dist/docs/" block into agents.md
   // (it made every agent crawl a 4.3 MB docs folder). agents.md carries narrow wording instead.
   agentRules: false,
-  ...(isStaticExport ? { output: 'export' as const } : {}),
   // Inline the (small) CSS into the HTML: removes the render-blocking stylesheet requests and lets
   // the font files be discovered from the document itself. Lighthouse mobile showed ~850 ms of
   // render blocking from two chunks (13 KiB + 1.5 KiB); with real throttling (devtools, mobile) FCP/LCP went
   // 1.58 s -> 0.85 s locally. Cross-page CSS caching is moot on a 4-page site.
   experimental: { inlineCss: true },
-  // Kept as one conditional key rather than folded into the spread above: a
-  // second `images` key after the spread would silently override it and break
-  // the static export.
-  //
-  // Static export has no optimizer, so images ship as-is. Everywhere else,
-  // offer AVIF ahead of WebP — Next's default is WebP-only, and measurement
+  // Offer AVIF ahead of WebP — Next's default is WebP-only, and measurement
   // against production showed AVIF was never being served.
-  images: isStaticExport
-    ? { unoptimized: true }
-    : {
-        formats: ['image/avif' as const, 'image/webp' as const],
-        // Allowed `quality` values: 75 is Next's default, 84 is PHOTO_QUALITY, 96 is PHOTO_QUALITY_DETAIL (src/lib/image-quality.ts;
-        // keep the two in step: next.config.ts cannot use the `@/` alias).
-        qualities: [75, 84, 96],
-      },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    // Allowed `quality` values: 75 is Next's default, 84 is PHOTO_QUALITY, 96 is PHOTO_QUALITY_DETAIL (src/lib/image-quality.ts;
+    // keep the two in step: next.config.ts cannot use the `@/` alias).
+    qualities: [75, 84, 96],
+  },
   async redirects() {
     return [
       {

@@ -20,8 +20,9 @@ export const SITE = {
   jobTitle: 'עו״ס קלינית ומטפלת זוגית ומשפחתית',
   /** City of the clinic, in prose ("... בנתניה"). */
   city: CITY,
-  // Overridable at build time (POC: point OG/canonical URLs at the Azure host).
-  // Falls back to the production domain, so Vercel builds are unaffected.
+  // Overridable at build time (a preview deploy or tunnel can point OG/canonical URLs at its own
+  // host; IS_PRODUCTION_HOST then turns the noindex guard on). Production leaves it unset and
+  // falls back to the production domain.
   // Keep the literal `process.env.NEXT_PUBLIC_SITE_URL` so Next inlines it into client bundles.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? PRODUCTION_URL,
   phone: {
