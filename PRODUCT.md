@@ -6,7 +6,7 @@ brand
 
 ## Users
 
-Couples and families in the Sharon region of Israel (primarily Netanya) considering therapy. Visitors are in a state of emotional vulnerability — they arrive with hesitation, looking for safety signals before making contact. The primary job: decide whether to trust Netta enough to book a first session.
+Couples and families in Netanya considering therapy. Visitors are in a state of emotional vulnerability — they arrive with hesitation, looking for safety signals before making contact. The primary job: decide whether to trust Netta enough to book a first session.
 
 ## Product Purpose
 
