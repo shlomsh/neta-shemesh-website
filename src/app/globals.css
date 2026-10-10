@@ -157,11 +157,6 @@
   /* How far the hero box extends below the visible screen (iOS 26 floating bottom bar, block below). HeroContent
    * reserves it as bottom padding on phones so the content stays centred in the VISIBLE screen. */
   --hero-overshoot: 0px;
-  /* How far from the bottom edge of a phone card its content must stay so the fixed ContactFAB pill (below lg:
-   * 1rem offset + 2.75rem tall) never covers it: the pill's footprint 3.75rem + a 0.5rem gap, plus the overshoot,
-   * because on iOS 26 a card scrolled to the top of the screen ends --hero-overshoot below the pill's edge. The one
-   * definition: `fab-clear` (below) is its bottom padding, used by the hero and by every Section `fit` below lg. */
-  --fab-clearance: calc(var(--hero-overshoot) + 4.25rem);
   /* The lg+ floor of a locked / grown card (`screen-lock`, `screen-grow` below): on a viewport shorter than this
    * the card is this tall and the page scrolls, rather than clipping its content. */
   --card-floor: 45rem;
@@ -212,11 +207,6 @@
 }
 @utility screen-grow {
   min-height: max(var(--card-h), var(--card-floor));
-}
-/* Bottom padding that keeps a phone card's content clear of the fixed ContactFAB pill (--fab-clearance). Always
- * written `max-lg:fab-clear` (or with an lg: padding of its own after it): the pill is only that tall below lg. */
-@utility fab-clear {
-  padding-bottom: var(--fab-clearance);
 }
 /* The hero's one-screen height (NS-25): --hero-h, which is the same unit decision as --card-h. */
 @utility hero-fit {

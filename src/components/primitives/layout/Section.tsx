@@ -83,11 +83,7 @@ type SectionProps = SectionOwnProps & FitProps & PassThrough;
  * `screen-fit` is the one-screen minimum at every width (a lock/grow then adds its own lg height). A grow's
  * `lg:screen-grow` is the same minimum from lg, so it needs no second min-height (two would fight by
  * source order). The unit and the 720px floor live in globals.css (`--card-h`, `--card-floor`), not here.
- * `FAB_CLEAR` is the bottom padding below lg of a `fit` section that takes its padding from a `pad` token (it replaces
- * the token's bottom half there): the fixed ContactFAB pill sits over the bottom of a card on phones and must never
- * cover content (`--fab-clearance`). `pad="none"` sections own their bottom padding (Services, the CTA band) and keep it.
  */
-const FAB_CLEAR = 'max-lg:fab-clear';
 const FIT_CLASS = {
   free: 'screen-fit',
   lock: 'screen-fit lg:screen-lock lg:py-12',
@@ -131,8 +127,7 @@ export function Section({
   ...rest
 }: SectionProps) {
   const fitClass = fit ? (fit === 'lock' && !floor ? FIT_CLASS.lockNoFloor : FIT_CLASS[fit]) : '';
-  const fabClass = fit && pad !== 'none' ? FAB_CLEAR : '';
-  const classes = cx('relative w-full overflow-clip', seam && '-mt-px', PAD_CLASS[pad], fabClass, fitClass, fit && CENTER_CLASS[center], className);
+  const classes = cx('relative w-full overflow-clip', seam && '-mt-px', PAD_CLASS[pad], fitClass, fit && CENTER_CLASS[center], className);
 
   const section = (
     <section

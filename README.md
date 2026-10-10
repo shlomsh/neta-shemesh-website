@@ -40,7 +40,7 @@ BASE_URL=http://localhost:3200 npx playwright test --project=iphone     # one pr
 npx playwright install chromium webkit                                  # browsers, once (add firefox for the local-only project)
 ```
 
-Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/slide-pager.spec.ts` checks that the pager moves exactly one card on desktop and is never downloaded on `iphone` and `ipad`. `tests/hero-fab-overlap.spec.ts` checks at 375x812, 375x667 and 393x754 (iOS 26 overshoot simulated) that the hero fits one screen and the contact pill never covers hero content, a card title, or a card's text lines / buttons / images at its bottom (and, for a one-screen card, top) resting position. CI installs `chromium webkit` and runs the four projects.
+Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/slide-pager.spec.ts` checks that the pager moves exactly one card on desktop and is never downloaded on `iphone` and `ipad`. `tests/hero-fab-overlap.spec.ts` checks at 375x812 and 375x667 (iOS 26 overshoot simulated) that the hero fits one screen and the contact pill never covers hero content or a card title. CI installs `chromium webkit` and runs the four projects.
 
 Use a fresh port: when nothing listens there the config starts `npm run start -p 3200` itself, but it reuses whatever already listens, so a stale server silently tests old code.
 

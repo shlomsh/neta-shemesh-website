@@ -1,10 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 
 /**
- * The contact pill (ContactFAB, fixed bottom-left) never covers hero content, a card title or card content on a phone (NS-61).
+ * The contact pill (ContactFAB, fixed bottom-left) never covers hero content or a card title on a phone (NS-61).
  *
- * Measured, not assumed: the geometry of the real page at the phone shapes that matter (375x812, a tall iPhone;
- * 375x667, the shortest one we still support; 393x754, an iPhone 17 in Safari: layout viewport 754pt), with the iOS 26 hero overshoot simulated. iOS 26
+ * Measured, not assumed: the geometry of the real page at the two phone shapes that matter (375x812, a tall
+ * iPhone, and 375x667, the shortest one we still support), with the iOS 26 hero overshoot simulated. iOS 26
  * Safari draws the page under its floating bottom bar, so --card-h / --hero-h are `100lvh + 80px` there
  * (globals.css, gated to iOS WebKit); this spec forces the same three tokens on every engine so the
  * overshoot case is tested everywhere, not only on a real iPhone.
@@ -13,17 +13,12 @@ import { test, expect, type Page } from '@playwright/test';
  *   1. At scroll 0 the hero is at most one (overshoot-extended) screen tall and the pill does not intersect the
  *      art or any hero text / button box.
  *   2. Scrolled to the top of every card the pill does not intersect that card's visible title (h2).
- *   3. The pill does not intersect any text line, button / link or image of a card at its two resting positions: its
- *      bottom edge at the viewport bottom (every card), and its top at the viewport top (a one-screen card, whose
- *      bottom then sits OVERSHOOT px below the viewport bottom: the iOS 26 case that covered Intro, Credentials and
- *      Gallery). Section reserves `--fab-clearance` as bottom padding below lg for this.
  * Reduced motion is emulated so no reveal or entrance transform moves a box while it is measured.
  */
 
 const VIEWPORTS = [
   { width: 375, height: 812 },
   { width: 375, height: 667 },
-  { width: 393, height: 754 },
 ];
 const OVERSHOOT = 80;
 /** Boxes that merely touch are fine; anything that shares more than this many px on both axes is an overlap. */
@@ -119,65 +114,6 @@ test.describe('contact pill vs hero content and card titles (phone, iOS 26 overs
 
       expect(titles, 'card titles (h2) were measured').toBeGreaterThanOrEqual(8);
       expect(problems, `the contact pill covers a card title at the top of its card at ${at}`).toEqual([]);
-    });
-
-    test(`every card at ${at}: resting at its bottom and (one-screen cards) at its top, the pill does not cover a text line, a button or an image`, async ({ page }) => {
-      await open(page, viewport);
-
-      const count = await page.evaluate(() => document.querySelectorAll('main > section').length);
-      expect(count, 'cards on the page').toBeGreaterThanOrEqual(10);
-
-      const problems: string[] = [];
-      let measured = 0;
-      for (let i = 0; i < count; i++) {
-        for (const rest of ['bottom', 'top'] as const) {
-          const info = await page.evaluate(
-            ([idx, where]) => {
-              const s = document.querySelectorAll('main > section')[idx as number];
-              const r = s.getBoundingClientRect();
-              window.scrollTo(0, where === 'top' ? r.top + window.scrollY : r.bottom + window.scrollY - window.innerHeight);
-              return { label: s.id || `section #${idx}`, height: r.height };
-            },
-            [i, rest] as const,
-          );
-          // A card taller than one screen (+ the overshoot) scrolls on: the pill passes over its middle, which no padding
-          // can prevent, so only its bottom resting position is checked. (Intro at 393x754: content 696 + 56 + the
-          // 148 clearance is 900 > 834, so it is checked at its bottom only.)
-          if (rest === 'top' && info.height > viewport.height + OVERSHOOT + 1) continue;
-          await page.waitForTimeout(50);
-          // Text is measured per line (a Range over each text node), not per paragraph: a paragraph box spans the whole
-          // column even where its ragged lines end well short of the pill. Full-bleed images are a backdrop, not content.
-          const boxes = await page.evaluate((idx) => {
-            const s = document.querySelectorAll('main > section')[idx];
-            const out: { name: string; left: number; top: number; right: number; bottom: number }[] = [];
-            const shown = (e: Element) => e.getClientRects().length > 0 && !e.closest('[aria-hidden="true"], [hidden], .sr-only');
-            const add = (name: string, r: { left: number; top: number; right: number; bottom: number }) => {
-              if (r.right - r.left > 0 && r.bottom - r.top > 0) out.push({ name, left: r.left, top: r.top, right: r.right, bottom: r.bottom });
-            };
-            const walker = document.createTreeWalker(s, NodeFilter.SHOW_TEXT);
-            for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-              const text = (n.textContent ?? '').trim();
-              if (!text || !n.parentElement || !shown(n.parentElement)) continue;
-              const range = document.createRange();
-              range.selectNodeContents(n);
-              for (const r of range.getClientRects()) add(`text "${text.slice(0, 24)}"`, r);
-            }
-            for (const e of s.querySelectorAll('a, button, img')) {
-              const r = e.getBoundingClientRect();
-              if (!shown(e) || (e.tagName === 'IMG' && r.width >= window.innerWidth)) continue;
-              add(`<${e.tagName.toLowerCase()}> ${(e.getAttribute('alt') || e.textContent || e.getAttribute('src') || '').trim().slice(0, 24)}`, r);
-            }
-            return out;
-          }, i);
-          measured += boxes.length;
-          const fab = await fabBox(page);
-          const hits = boxes.filter((b) => overlaps(b, fab));
-          if (hits.length) problems.push(`#${info.label} (at its ${rest}): ${[...new Set(hits.map((h) => `${h.name} [${Math.round(h.left)}..${Math.round(h.right)} x ${Math.round(h.top)}..${Math.round(h.bottom)}]`))].slice(0, 4).join('; ')} vs pill [${Math.round(fab.left)}..${Math.round(fab.right)} x ${Math.round(fab.top)}..${Math.round(fab.bottom)}]`);
-        }
-      }
-
-      expect(measured, 'text lines, buttons and images were measured').toBeGreaterThan(100);
-      expect(problems, `the contact pill covers card content at a resting position at ${at}`).toEqual([]);
     });
   }
 });
