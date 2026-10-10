@@ -6,7 +6,7 @@
 | Status | **Review complete.** Contrast audit H is in (section 3.3): 16 failing sites, 90 of 390 text instances. Colour fixes need owner approval; focus fixes are keyboard only. NS-11 (Elamy ink box) passed its gate as commit `206a875` (0 px at 1440/390 on home, blog and both posts; Simulator crops clean) and is merging. It is on local `main`; the push needs the owner. |
 | Live board (source of truth for ticket status) | https://claude.ai/artifact/GV4NpXrzjzc4wQ1XgBthwt |
 | Board snapshot (git history only, may lag) | `docs/archive/sprint-board-2026-10.md` |
-| Peer plan this review answers | `docs/stability-perf-plan-2026-10.md` (§6 decisions are answered in section 6 below) |
+| Peer plan this review answers | `docs/archive/stability-perf-plan-2026-10.md` (§6 decisions are answered in section 6 below) |
 | Previous refactor (already executed) | `docs/archive/tech-debt-plan-2026-10.md` |
 | Design contract | `CLAUDE.md` |
 
@@ -632,7 +632,7 @@ Rules for all gates (board protocol and lean-gates rule): at most 2 builds per t
 
 ---
 
-## 6. Architect decisions (answers to `docs/stability-perf-plan-2026-10.md` §6)
+## 6. Architect decisions (answers to `docs/archive/stability-perf-plan-2026-10.md` §6)
 
 ### 6.1 Reveal technology (plan §6.1)
 

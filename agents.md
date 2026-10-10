@@ -38,7 +38,7 @@ Next's generated "read the docs" block is disabled (`agentRules: false` in `next
 ## Where to read more (docs/agent-reference.md)
 
 - Touching architecture, sections, motion, soft snap, fonts, JSON-LD? read §1. Persona/voice? §2. Playwright/pixel-diff detail? §3. Full gotchas? §4. Deploy, Vercel/Azure, governance? §5. File map? §6. The old Next.js block? §7.
-- `docs/archive/*` and `docs/*-2026-10.md` plans are history; do not read unless the task names them.
+- `docs/archive/*` is history; do not read unless the task names it.
 
 ## Agent context hygiene
 

@@ -10,7 +10,7 @@ The single shared ticket list for every session and subagent working on the site
 
 - **Sessions:**
   - **ARCH** is the "architecture review" session; its findings are in `docs/archive/architecture-review-2026-10.md`.
-  - **VIS** is the "Netashemesh site visual improvements" session; its plan is in `docs/stability-perf-plan-2026-10.md`.
+  - **VIS** is the "Netashemesh site visual improvements" session; its plan is in `docs/archive/stability-perf-plan-2026-10.md`.
 - **Source findings:** the audit reports in each session's scratchpad. Finding ids (A*, M*, X*, C*, R*, Q*, L*, T*, D*, E1) refer to them, and the review doc will consolidate them.
 - **Owner:** Shlomi. Any item marked **VC** (visual change) needs the owner's approval before it merges. Pushes to `main` always need the owner's approval.
 
