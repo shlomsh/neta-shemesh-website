@@ -42,7 +42,6 @@ const MIN_FONT_SIZE = 12;   // px, below this text is effectively collapsed/ille
 test.describe.configure({ timeout: 120000 });
 
 test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)', () => {
-  test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium only');
 
   for (const vp of VIEWPORTS) {
     test(`section titles fit on-screen and stay legible at ${vp.name} (${vp.width}px)`, async ({ page }) => {

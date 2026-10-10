@@ -8,14 +8,14 @@ Only one is read by code: `NEXT_PUBLIC_SITE_URL` (`src/content/site.ts`, inlined
 
 ## The test gate
 
-Vercel does not wait for GitHub Actions, so a red `playwright.yml` cannot stop a deploy. The gate is `vercel.json` `ignoreCommand` → `scripts/vercel-ignore-build.sh`, which runs `vitest run` before every build. **Exit codes are inverted:**
+Vercel does not wait for GitHub Actions, so a red `playwright.yml` cannot stop a deploy. The gate is `vercel.json` `ignoreCommand` → `scripts/vercel-ignore-build.sh`, which runs `eslint --max-warnings 0`, `tsc --noEmit` and `vitest run` before every build (all three always run, so one log shows every failure; a few seconds locally). `installCommand` is `npm ci`. **Exit codes are inverted:**
 
 | Exit | Meaning |
 |---|---|
-| `1` | tests passed (or the runner could not be installed): **build proceeds** |
-| `0` | tests failed: **build skipped**, production keeps the previous deploy |
+| `1` | lint, types and tests passed (or the runners could not be installed): **build proceeds** |
+| `0` | a check failed: **build skipped**, production keeps the previous deploy |
 
-It fails open on infrastructure problems and closed on real test failures: a suite that cannot run must not silently freeze the site. A skipped build still reports **green** on GitHub (status "Canceled by Ignored Build Step"); check the deployment list, not the check mark. `playwright.yml` (lint, `tsc`, unit, build, Playwright) is the backstop and shows the failing test in red.
+It fails open on infrastructure problems and closed on real check failures: a check that cannot run must not silently freeze the site. A skipped build still reports **green** on GitHub (status "Canceled by Ignored Build Step"); check the deployment list, not the check mark. `playwright.yml` (workflow `CI`: lint, `tsc`, unit, build, Playwright on chromium, webkit, iphone, ipad) is the backstop and shows the failing test in red.
 
 ## Why the repository is public
 

@@ -52,8 +52,11 @@ const nextConfig: NextConfig = {
               isDev ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'" : "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data:",
-              "font-src 'self' https://fonts.gstatic.com",
-              "frame-src 'self' https://maps.google.com https://www.google.com https://*.google.com",
+              // Fonts are next/font/local (same origin). Nothing loads from fonts.gstatic.com.
+              "font-src 'self'",
+              // The contact map (src/content/site.ts `mapEmbedSrc`) navigates maps.google.com/maps?output=embed,
+              // which redirects to www.google.com/maps/embed; frame-src is checked on every redirect hop.
+              "frame-src 'self' https://maps.google.com https://www.google.com",
               "frame-ancestors 'none'",
               "media-src 'self'",
               "connect-src 'self'",

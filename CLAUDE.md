@@ -106,6 +106,6 @@ Don't pass `onDark` to children. Bespoke `<section>`s add `data-bg-tone="dark|mi
 - **Rendering:** `safari-clip` on rounded `overflow-hidden` parents (`Photo` does it). Decorative SVG `absolute z-0 pointer-events-none`, content `z-10`. Faded bg image = full-opacity `<img>` + tinted overlay.
 - **Parked on purpose, not dead code:** testimonials (`SHOW_TESTIMONIALS = false` in `page.tsx`, `sections/testimonials/`).
 - **Next.js 16** differs from training data: read only the one guide in `node_modules/next/dist/docs/` for the API you touch, never the folder.
-- **Tests:** never re-baseline or relax an assertion to get green (fix `helpers.ts`/`SCAN_RULES`). Fade-ins: assert `toHaveCSS('opacity','1')`, not `toBeVisible()`. Playwright on a fresh port (`README.md`): a stale server tests old code.
+- **Tests:** never re-baseline or relax an assertion to get green (fix `helpers.ts`/`SCAN_RULES`). Fade-ins: assert `toHaveCSS('opacity','1')`, not `toBeVisible()`. Gate: `npm run lint`, `npm run typecheck`, `npm run test:unit`, then Playwright on a fresh port (`README.md`; projects chromium, webkit, iphone, ipad): a stale server tests old code.
 - **Git:** `main` only. No `stash`, `checkout .`, `clean`, `reset`, `rebase`, force-push. Don't commit scratch, screenshots, logs.
 - **Context hygiene:** pipe build/test output through `tail`; grep, don't open, `tests-unit/sanity/helpers.ts` and `globals.css`.

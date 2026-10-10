@@ -9,11 +9,11 @@ Next.js 16 (App Router, server components by default), React 19, TypeScript, Tai
 ## Commands
 
 ```bash
-npm install
+npm ci                      # exact lockfile install (what Vercel and CI run); `npm install` only when changing dependencies
 npm run dev                 # http://localhost:3000
 npm run build && npm run start
 npm run lint                # eslint --max-warnings 0 (also enforces the component layer direction)
-npx tsc --noEmit
+npm run typecheck           # tsc --noEmit
 npm run test:unit           # all of tests-unit/ (Vitest)
 npm run test:sanity         # tests-unit/sanity only: the fast design/structure guard
 ```
@@ -22,8 +22,12 @@ Playwright (`tests/*.spec.ts`, runs the built site):
 
 ```bash
 npm run build
-BASE_URL=http://localhost:3200 npx playwright test --project=chromium
+BASE_URL=http://localhost:3200 npx playwright test                      # every project
+BASE_URL=http://localhost:3200 npx playwright test --project=iphone     # one project
+npx playwright install chromium webkit                                  # browsers, once (add firefox for the local-only project)
 ```
+
+Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/slide-pager.spec.ts` checks that the pager moves exactly one card on desktop and is never downloaded on `iphone` and `ipad`. CI installs `chromium webkit` and runs the four projects.
 
 Use a fresh port: when nothing listens there the config starts `npm run start -p 3200` itself, but it reuses whatever already listens, so a stale server silently tests old code.
 
@@ -40,7 +44,7 @@ Pixel diff of the working tree against any git ref (0 px tolerance, no committed
 
 ## Deploy
 
-Vercel deploys `main` through its Git integration. Before each build `vercel.json` runs `scripts/vercel-ignore-build.sh`, which runs `vitest run` and skips the build when tests fail (inverted exit codes, fail-open on infrastructure errors). GitHub Actions (`.github/workflows/playwright.yml`) runs lint, `tsc`, unit tests, build and the Playwright suite on every push and PR to `main`; Vercel does not wait for it, so it cannot block a deploy. Why the repo is public, DNS and rollback: [docs/deployment.md](docs/deployment.md).
+Vercel deploys `main` through its Git integration. Before each build `vercel.json` runs `scripts/vercel-ignore-build.sh`, which runs `eslint`, `tsc --noEmit` and `vitest run` and skips the build when any of them fails (inverted exit codes, fail-open on infrastructure errors). GitHub Actions (`.github/workflows/playwright.yml`, workflow name `CI`) runs lint, typecheck, unit tests, build and the Playwright suite on every push and PR to `main`; Vercel does not wait for it, so it cannot block a deploy. Why the repo is public, DNS and rollback: [docs/deployment.md](docs/deployment.md).
 
 ## Docs
 

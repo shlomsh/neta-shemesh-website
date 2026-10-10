@@ -1,10 +1,16 @@
-name: Playwright Tests
+name: CI
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+
+# One run per ref: a newer push to the same branch or PR cancels the one still going.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     timeout-minutes: 60
@@ -16,24 +22,27 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 24
+        cache: npm
     - name: Install dependencies
       run: npm ci
     - name: Lint
       run: npm run lint
     - name: Type check
-      run: npx tsc --noEmit
+      run: npm run typecheck
     - name: Unit tests
       run: npm run test:unit
     - name: Cache Playwright browsers
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ hashFiles('package-lock.json') }}
+        key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
+      # WebKit is the engine behind every iPhone and iPad browser; the iphone and ipad projects use it too.
+      run: npx playwright install --with-deps chromium webkit
     - name: Build Next.js app for testing
       run: npm run build
 
+    # Projects (playwright.config.ts): chromium, webkit, iphone, ipad. Firefox is local-only.
     - name: Run Playwright tests
       run: BASE_URL=http://localhost:3000 npx playwright test
 

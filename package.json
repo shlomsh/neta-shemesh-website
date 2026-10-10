@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
+    "typecheck": "tsc --noEmit",
     "test:unit": "vitest run",
     "test:sanity": "vitest run tests-unit/sanity",
     "vr": "node tests/visual/run.mjs"
@@ -24,7 +25,7 @@
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.3",
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.2",

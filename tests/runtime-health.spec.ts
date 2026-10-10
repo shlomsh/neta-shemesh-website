@@ -2,15 +2,25 @@ import { test, expect } from '@playwright/test';
 
 test.describe.configure({ timeout: 120000 });
 
-test.describe('Runtime Health Guards', () => {
-  test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium only');
+/**
+ * Console chatter that is not ours to fix, so it must not fail the guard:
+ *  - Firefox parses the Google map iframe's own Content-Security-Policy and logs its "Ignoring 'unsafe-inline' ..."
+ *    warnings into our console (the message carries the frame's file URL, https://www.google.com/maps/embed...).
+ *  - Firefox's font sanitizer notes the OS/2 sxHeight (-1) of the self-hosted Elamy files and repairs it;
+ *    nothing renders differently.
+ */
+const IGNORED_CONSOLE = [
+  /Content-Security-Policy: Ignoring [\s\S]*https:\/\/www\.google\.com\/maps\/embed/,
+  /downloadable font: OS\/2: Bad sxHeight [\s\S]*Elamy/i,
+];
 
+test.describe('Runtime Health Guards', () => {
   test('Guard 3 & 4: Console Health and Image Integrity', async ({ page, request }) => {
     const consoleLogs: { type: string, text: string }[] = [];
     const pageErrors: Error[] = [];
 
     page.on('console', msg => {
-      if (msg.type() === 'error' || msg.type() === 'warning') {
+      if ((msg.type() === 'error' || msg.type() === 'warning') && !IGNORED_CONSOLE.some((re) => re.test(msg.text()))) {
         consoleLogs.push({ type: msg.type(), text: msg.text() });
       }
     });
@@ -53,7 +63,8 @@ test.describe('Runtime Health Guards', () => {
       const isElementHidden = (el: HTMLElement | null): boolean => {
         if (!el) return false;
         const style = window.getComputedStyle(el);
-        if (style.display === 'none') return true;
+        // display:none (the other breakpoint's copy) or visibility:hidden (a closed accordion panel): lazy, so never loaded.
+        if (style.display === 'none' || style.visibility === 'hidden') return true;
         return isElementHidden(el.parentElement);
       };
 
@@ -92,7 +103,7 @@ test.describe('Runtime Health Guards', () => {
     const brokenImages: string[] = [];
     
     for (const img of imageElements) {
-      if (img.isHidden) continue; // Skip hidden elements (like mobile images on desktop viewports)
+      if (img.isHidden) continue; // Skip hidden elements (the other breakpoint's images, closed accordion panels)
 
       if (img.naturalWidth === 0) {
         brokenImages.push(`Zero-width image: ${img.src}`);
