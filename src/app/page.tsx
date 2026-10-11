@@ -26,7 +26,7 @@ import { pageMeta } from '@/lib/seo/metadata';
 export async function generateMetadata(_props: unknown, parent: ResolvingMetadata): Promise<Metadata> {
   const meta = pageMeta({
     title: `${SITE.tagline} ב${SITE.city} | ${SITE.name}`,
-    description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה (פולג). ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
+    description: 'מטפלת זוגית ומשפחתית מוסמכת בנתניה (אגמים). ליווי אישי לזוגות ומשפחות בתהליכי שינוי, משבר וצמיחה. קבעו פגישת ייעוץ ראשונה עוד היום.',
     hreflang: true,
     og: {
       title: `${SITE.name} | ${SITE.tagline} ב${SITE.city}`,

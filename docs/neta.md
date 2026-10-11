@@ -17,7 +17,7 @@ combines **psychodynamic, systemic, and trauma-informed perspectives**.
 - **Social Services Department** (Ra'anana municipality and others): Diverse roles including family social worker (from infancy to adolescence), social worker for women leaving shelters, clubhouses social worker, and "The New Way" (הדרך החדשה) social worker.
 - **Group Facilitation**: Led parenting guidance groups and therapeutic styling groups.
 - **"Shachar" Organization**: Guided foster families and conducted family assessments for the Ministry of Welfare.
-- **Current Practice**: Couple and family therapist at the Couple and Family Therapy Station in the Lev HaSharon Regional Council, and owner of a private clinic in Netanya (Poleg neighborhood).
+- **Current Practice**: Couple and family therapist at the Couple and Family Therapy Station in the Lev HaSharon Regional Council, and owner of a private clinic in Netanya (Agamim neighborhood).
 
 
 ### Tone & brand voice
@@ -49,7 +49,7 @@ The credentials card does state a consistent 5-star rating from clients.
   "ייעוץ עם נטע שמש", CTA band "קביעת פגישת ייעוץ", and the floating pill (WhatsApp / call).
 - Channel: **WhatsApp** — a short introductory call, no commitment. Phone and email are
   secondary; there is no contact form.
-- Where: one clinic in **Netanya** (Poleg). Sessions are **in person only**; no online therapy,
+- Where: one clinic in **Netanya** (Agamim). Sessions are **in person only**; no online therapy,
   and no other cities are claimed.
 - The contact section has two panels: **עקבו אחריי** (social) and **המשרד שלי** (clinic details + map).
   Facts live in `src/content/site.ts`.
