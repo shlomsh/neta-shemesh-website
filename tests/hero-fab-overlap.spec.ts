@@ -6,7 +6,7 @@ import { test, expect, type Page } from '@playwright/test';
  * Measured, not assumed: the geometry of the real page at the phone shapes that matter (375x812, a tall iPhone;
  * 375x667, the shortest iPhone we support; 360x640, the smallest Android, where the subtext wraps to three lines;
  * 390x844 and 430x932 for the common and the large ones), with the iOS 26 hero overshoot simulated. iOS 26
- * Safari draws the page under its floating bottom bar, so --card-h / --hero-h are `100lvh + 58px` there
+ * Safari draws the page under its floating bottom bar, so --card-h / --hero-h are `100lvh + 60px` there
  * (globals.css, gated to iOS WebKit); this spec forces the same three tokens on every engine so the
  * overshoot case is tested everywhere, not only on a real iPhone.
  *
@@ -28,7 +28,7 @@ const HERO_VIEWPORTS = [
   { width: 390, height: 844 },
   { width: 430, height: 932 },
 ];
-const OVERSHOOT = 58;
+const OVERSHOOT = 60;
 /** Boxes that merely touch are fine; anything that shares more than this many px on both axes is an overlap. */
 const TOUCH_TOLERANCE = 1;
 
