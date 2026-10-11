@@ -1,7 +1,7 @@
 // @vitest-environment node
 /**
  * SANITY: static bans over src/**\/*.{ts,tsx,css}. Every ban is stated once, here, with a bad/good
- * sample table in helpers.ts (SCAN_RULES, CONTRAST_BANS) so a regex that goes blind fails loudly.
+ * sample table in lib/ (scan-*.ts for SCAN_RULES, ban-rules.ts for CONTRAST_BANS) so a regex that goes blind fails loudly.
  *
  * History: ad-hoc `text-[18px]`, `font-black` and removed template classes crept back with every
  * re-export; the Vercel prod build failed on next/font/google; off-palette hexes appeared with each
@@ -63,7 +63,7 @@ describe('scan rules: each regex flags its known-bad samples and spares its know
 });
 
 describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', () => {
-  // The whole-source rules live in helpers.SCAN_RULES (with samples). An exception needs a named table with a reason.
+  // The whole-source rules live in lib/scan-*.ts SCAN_RULES (with samples). An exception needs a named table with a reason.
   const BANNED = [
     'px-size', 'clamp-size', 'tw-named-size', 'font-off-scale', 'removed-classes', 'fontSize-style',
     'card-height', 'display-font-in-component', 'css-scroll-snap', 'google-fonts',

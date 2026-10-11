@@ -5,7 +5,7 @@
  * color-mix, `--header-color`, ancestor `opacity-*`) against the effective backdrop (nearest opaque
  * background, stacking translucent layers), at the type class's MOBILE MINIMUM size: >= 24px regular
  * or >= 18.67px bold needs 3:1, everything else 4.5:1. jsdom has no Tailwind CSS, so the resolver in
- * helpers.ts (`contrastReport`) reads class lists; its limits are listed in README.md. Anything it cannot
+ * lib/contrast-report.ts (`contrastReport`) reads class lists; its limits are listed in README.md. Anything it cannot
  * evaluate is reported as skipped and fails the matrix, never silently passed.
  *
  * The only failures allowed are the owner's documented decisions below. A row whose text disappears
@@ -215,7 +215,7 @@ describe('contrast matrix: home, /blog, every post', () => {
 
   it('nothing is skipped except text over photos (no unresolved colour syntax, no unknown backdrop)', () => {
     const odd = reports.flatMap((r) => r.skipped).filter((s) => !s.reason.startsWith('photo backdrop'));
-    expectNone(odd.map((s) => `[${s.page}] ${s.where} "${s.text}": ${s.reason}`), 'text the resolver could not measure (teach helpers.ts the new class / colour syntax)');
+    expectNone(odd.map((s) => `[${s.page}] ${s.where} "${s.text}": ${s.reason}`), 'text the resolver could not measure (teach lib/colour-resolve.ts the new class / colour syntax)');
   });
 
   it('photo-backed text sits only in the sections listed in PHOTO_BACKDROP, and each entry still has such text', () => {

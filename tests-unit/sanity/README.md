@@ -7,11 +7,26 @@ npm run test:sanity     # this folder only
 npm run test:unit       # all of tests-unit/ (what the Vercel gate runs)
 ```
 
-**One guard per rule, stated once in the file that owns it.** After a refactor, edit `helpers.ts` (predicates, `SCAN_RULES`, `CONTRAST_BANS`, `EXPECTED_SECTIONS`, `SUBTITLES`), never relax a test. Sections are found by literal ids in `EXPECTED_SECTIONS` (not imported from `content/ids.ts`, so a wrong rename fails), source files by path suffix (`sourceNamed('app/layout.tsx')`). Every scan rule carries bad/good samples, so a blind regex fails. `helpers.ts` is ~70 KB: grep it.
+**One guard per rule, stated once in the file that owns it.** After a refactor, edit the matching `lib/` file (predicates, `SCAN_RULES`, `CONTRAST_BANS`, `EXPECTED_SECTIONS`, `SUBTITLES`), never relax a test. Sections are found by literal ids in `EXPECTED_SECTIONS` (not imported from `content/ids.ts`, so a wrong rename fails), source files by path suffix (`sourceNamed('app/layout.tsx')`). Every scan rule carries bad/good samples, so a blind regex fails.
+
+**Helpers are split by concern in `lib/`** (each file 1-12 KB, 3-line header naming what it guards and the CLAUDE.md rule). `helpers.ts` is only a barrel with a map; tests import from it, you open one `lib/` file:
+
+| Helper | Holds |
+|---|---|
+| `lib/source.ts` | Read `src/**` once, `sourceNamed`, `globalsCss`, `expectNone`, `classStrings`. |
+| `lib/dom.ts` | `classTokens`, `hasClass`, `typeClassesOf`, `textNodes`. |
+| `lib/page.ts` | `EXPECTED_SECTIONS`, `renderHome`, section finders, `SUBTITLES`/`subtitleOf`, `buttons`, nav, `kindOf`. |
+| `lib/one-screen.ts` | `data-fit` plus `screen-fit` predicates (`oneScreenMode`, `hasMobileFill`), desktop flex-chain predicates. |
+| `lib/css.ts` | `parseTypeRules`, `sizeRange`, `parseToneRules`, `cssVar`, `displayFontSelectors`. |
+| `lib/scan-rules.ts` | `SCAN_RULES` = `scan-typography.ts` + `scan-layout.ts` + `scan-code.ts` + `scan-colour.ts`; shape in `scan-types.ts`. |
+| `lib/type-literals.ts` | `classLiterals`, `typeLiteralOffenses` (stacked `type-*`, leading/tracking overrides). |
+| `lib/ban-rules.ts` | `CONTRAST_BANS` (NS-42), `ratchetBan`, `containsBanSample`. |
+| `lib/colour-math.ts` | `hexToRgb`, `contrastRatio`, `themeColours`, `evalColour`. |
+| `lib/colour-resolve.ts` | Class list to text colour and backdrop (`foregroundOf`, `backdropOf`). |
+| `lib/contrast-report.ts` | `contrastReport`, `renderContrastPages`, `requiredRatio`, `ratchetContrast`. |
 
 | File | Guards |
 |---|---|
-| `helpers.ts` | Shared predicates, `SCAN_RULES`, `CONTRAST_BANS`, the contrast resolver, ratchet helpers. Not a test. |
 | `source-scan.test.ts` | All static bans: type/size/weight and removed classes, card-height units, the one scoped CSS scroll-snap rule, Google Fonts, hex palette lock, white/arbitrary-var colour utilities, NS-42 contrast/focus bans, lockups written once, font declarations, RTL only on `<html>`. |
 | `cards-rotation.test.tsx` | Strict 4-tone rotation, no adjacent same tone, `.on-dark` only on photo bands, mid veil card, office card. |
 | `one-screen.test.tsx` | Every card is at least one screen at every width: below lg `screen-fit` (a card that loses it fails), from lg the `DESKTOP` lock/grow table. Hero `hero-fit`, footer `screen-visible`, `--card-h`, flex chain to the photo grid, `<main>` is `overflow-clip`. |
@@ -37,7 +52,7 @@ Other folders in `tests-unit/`: `reduced-motion-hydration`, `reveal-observer`, `
 - Size is the nearest `.type-*` mobile minimum (x0.88 per `.font-latin` span); no type class means 16px regular. Large = >= 24px, or >= 18.67px bold.
 - Text over a photo cannot be measured: it is skipped and must be listed in `PHOTO_BACKDROP`.
 - The paper grain is not modelled (mauve measures 2.26:1, a real render 2.11-2.22). Gradients, `mix-blend-mode`, images and CSS outside class names are not resolved.
-- A colour token the resolver cannot evaluate (`text-plum/[0.3]`, `oklch(...)`) is reported as skipped and fails the matrix: teach it in `helpers.ts` (`colourFromToken`, `foregroundOf`, `backdropOf`) with a fixture.
+- A colour token the resolver cannot evaluate (`text-plum/[0.3]`, `oklch(...)`) is reported as skipped and fails the matrix: teach it in `lib/colour-resolve.ts` (`colourFromToken`, `foregroundOf`, `backdropOf`) with a fixture.
 
 ## Ratchet tables
 
