@@ -30,3 +30,15 @@ Deterministic: `reducedMotion: 'reduce'` (final static frames, SoftSnap off), `a
 - `--keep`: keep the temp worktree for debugging (`git worktree remove --force <path>` when done).
 
 The default `playwright.config.ts` has `testIgnore: '**/visual/**'`, so `npx playwright test` never runs these. Files: `run.mjs` (runner), `vr.shots.ts` (shots, driven by `VR_*` env vars), `playwright.config.ts`.
+
+## Reproducing iOS Safari rendering bugs
+
+Bugs like Elamy swash clipping show up only in a **production build in the iOS simulator**, not in `next dev` and not in Playwright WebKit.
+
+1. Copy the tree to a scratch dir: `rsync -a --exclude .next --exclude node_modules --exclude .git ./ <scratch>/`, then `cp -cR node_modules <scratch>/`.
+2. In the scratch dir: `npm run build`, then `npx next start -p <free port>`.
+3. Open it with the simulator (`open_url`). Take **two** screenshots after each `open_url`: the first is stale.
+4. Render the same page in Chromium at the same width and compare.
+5. Toggle one CSS thing at a time to find the cause.
+6. For before/after, build HEAD and the fix in two scratch trees side by side, on two ports.
+7. Stop servers by PID. Delete scratch trees only after every agent using them is done.

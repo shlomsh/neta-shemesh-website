@@ -8,8 +8,8 @@ import { test, expect } from '@playwright/test';
  * opacity or transform change, a colour transition) therefore cuts the tops of the tall swashes (ל צ ק and the
  * final forms), and they stay cut until a scroll repaints them. So no `.type-title` may be, or sit inside,
  * a `[data-reveal]` wrapper, nor carry a running-capable `transition` / `animation` on itself or on an
- * ancestor up to its section. No allowlist. The hero H1 is held to the same rule; the step numerals are out of scope
- * (the signatures have their own guard, last test below).
+ * ancestor up to its section. No allowlist. The hero H1 is held to the same rule (it carries no `hero-enter`);
+ * `SectionHeader`'s `subtitleReveal` reveals the subtitle only. The step numerals are out of scope.
  *
  * Second guard: iPhone Safari also cuts the swash tops inside an `overflow: hidden|auto|scroll` ancestor. So at a phone
  * width (390px; every project is forced to it for this test) no `.type-title` and no hero H1 may have such an ancestor
@@ -23,6 +23,11 @@ import { test, expect } from '@playwright/test';
  * Safari (Mac, iPad, iPhone; not Chromium) with nothing animating. So any such element at or above a title (up to its
  * section) must reach INK_EM above and below the title's text and 1rem (the gutter) beside it: the `ink-box` utility
  * (padding + equal negative margin) does that without moving anything.
+ *
+ * Signatures (last test) are not animation cases: iOS Safari clips them to a box smaller than their tail. The footer
+ * `.type-signature` (last item of a composited column over a parallax photo) takes `ink-box`; the Bio SVG signature
+ * masks a `<g>` holding a full-size sizing `<rect>`, never `<text mask>` directly (Safari clips that to the
+ * font-metric box).
  */
 const TITLES = '.type-title, h1.type-display';
 const SCROLLERS = ['hidden', 'auto', 'scroll'];

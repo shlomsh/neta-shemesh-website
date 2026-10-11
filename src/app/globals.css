@@ -300,7 +300,6 @@
   animation: hero-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 /* .hero-enter-0 needs no rule: its delay is the default 0s (the class stays as a marker). */
-.hero-enter-1 { animation-delay: 0.08s; }
 .hero-enter-2 { animation-delay: 0.16s; }
 .hero-enter-3 { animation-delay: 0.24s; }
 
