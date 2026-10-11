@@ -9,6 +9,14 @@ const SELECTOR = '[data-reveal="io"]';
 const MAX_AMOUNT = 0.5;
 
 /**
+ * The hidden state in `globals.css` parks an element 40px below its resting place, and an observer
+ * measures that parked rect. Without compensation, an element resting 50% on screen (small ones, and
+ * anything at the bottom edge) is measured at less and never reveals. Growing the root 40px at the
+ * bottom measures the parked rect as if it sat at rest. Keep it equal to the CSS `translate`.
+ */
+const TRAVEL = 40;
+
+/**
  * One IntersectionObserver cannot hold a threshold per target, so the ladder is fine-grained
  * (0, .01 ... .5) and `amountFor` snaps each element's own amount down onto it. Snapping down
  * (never up) guarantees the callback fires at or before the element's real maximum ratio.
@@ -67,10 +75,11 @@ export function RevealObserver() {
       (entries) => {
         for (const entry of entries) {
           const el = entry.target as HTMLElement;
-          // First batch: whatever is on screen at all stays put (no hide-then-fade for a peeking element).
+          // First batch (nothing is parked yet): whatever is on screen at all stays put (no hide-then-fade
+          // for a peeking element). The grown root would also count the 40px strip below the fold.
           const reveal = armed
             ? entry.isIntersecting && entry.intersectionRatio + 1e-3 >= amountFor(el, window.innerHeight)
-            : entry.isIntersecting && entry.intersectionRatio > 0;
+            : entry.isIntersecting && el.getBoundingClientRect().top < window.innerHeight;
           if (reveal) {
             el.setAttribute('data-revealed', '');
             observer.unobserve(el);
@@ -81,7 +90,7 @@ export function RevealObserver() {
           document.documentElement.dataset.revealArmed = '';
         }
       },
-      { threshold: THRESHOLDS },
+      { threshold: THRESHOLDS, rootMargin: `0px 0px ${TRAVEL}px 0px` },
     );
 
     document.querySelectorAll(SELECTOR).forEach((el) => observer.observe(el));

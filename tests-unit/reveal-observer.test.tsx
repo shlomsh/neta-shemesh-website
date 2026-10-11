@@ -79,6 +79,17 @@ describe('RevealObserver', () => {
     const e = els(container);
     expect([...FakeIO.instances[0].observed]).toEqual([e.a, e.b, e.c]);
     expect(FakeIO.instances[0].options.threshold).toEqual(expect.arrayContaining([0, 0.1, 0.25, 0.4, 0.5]));
+    // The root grows by the CSS `translate: 0 40px` park distance, so a parked element is measured as if at rest.
+    expect(FakeIO.instances[0].options.rootMargin).toBe('0px 0px 40px 0px');
+  });
+
+  it('first batch: the 40px strip the grown root adds below the fold is not "on screen"', () => {
+    const { container } = page();
+    const e = els(container);
+    vi.spyOn(e.b, 'getBoundingClientRect').mockReturnValue({ top: window.innerHeight + 10 } as DOMRect);
+    act(() => FakeIO.instances[0].fire([[e.a, 1], [e.b, 0.3]]));
+    expect(e.a.hasAttribute('data-revealed')).toBe(true);
+    expect(e.b.hasAttribute('data-revealed')).toBe(false);
   });
 
   it('arms only after the first callback, revealing what is on screen first', () => {

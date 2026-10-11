@@ -132,28 +132,61 @@ test.describe('Runtime Health Guards', () => {
     }
   });
 
-  test('Scroll reveal: after scrolling to the very bottom, every [data-reveal="io"] is revealed and fully opaque', async ({ page }) => {
+  test('Scroll reveal: stepping down the page, whatever rests on screen at its reveal amount is revealed and opaque', async ({ page }) => {
     await page.goto('/', { waitUntil: 'load' });
     await page.waitForSelector('html[data-reveal-armed]', { state: 'attached', timeout: 10_000 });
-    // Wheel-like steps down the page, then rest at the bottom (the page cannot scroll further: the footer items and the
-    // last photos must still reach the reveal amount there, phones included).
-    await page.evaluate(async () => {
-      const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
-      const step = Math.max(window.innerHeight / 2, 100);
-      for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
-        window.scrollTo(0, y);
-        await delay(120);
-      }
-      window.scrollTo(0, document.documentElement.scrollHeight);
-    });
-    const unrevealed = () =>
-      page.evaluate(() =>
-        Array.from(document.querySelectorAll('[data-reveal="io"]'))
+
+    // The elements on screen at the current (resting) scroll position that must be revealed. `minShare` is the
+    // share of the element's resting place that has to be in view: its reveal amount (50%, at most 90% of what a
+    // viewport can show: `amountFor` in RevealObserver) for `'amount'`, any visible sliver for `'any'`. A hidden
+    // element is parked by its `translate`, which is subtracted to get the resting place a visitor would see.
+    const unrevealed = (minShare: 'amount' | 'any') =>
+      page.evaluate((mode) => {
+        const vh = window.innerHeight;
+        return Array.from(document.querySelectorAll<HTMLElement>('[data-reveal="io"]'))
           .filter((el) => el.getClientRects().length > 0) // a breakpoint-hidden variant (display: none) is never on screen
-          .filter((el) => !el.hasAttribute('data-revealed') || getComputedStyle(el).opacity !== '1')
-          .map((el) => `${el.tagName}.${el.className}`.slice(0, 80)),
+          .filter((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.height === 0) return false;
+            const parked = parseFloat(getComputedStyle(el).translate.split(' ')[1] ?? '0') || 0;
+            const shown = Math.min(r.bottom - parked, vh) - Math.max(r.top - parked, 0);
+            const need = mode === 'any' ? 0.02 : Math.floor(Math.min(0.5, (0.9 * vh) / el.offsetHeight) * 100 + 1e-6) / 100;
+            return shown / r.height >= need && (!el.hasAttribute('data-revealed') || getComputedStyle(el).opacity !== '1');
+          })
+          .map((el) => `${el.tagName}.${el.className}`.slice(0, 80));
+      }, minShare);
+
+    // Scroll, then wait for the scroll position to stop moving (a visitor looks at the page at rest).
+    const rest = async (y: number) => {
+      await page.evaluate(
+        (top) =>
+          new Promise<void>((resolve) => {
+            window.scrollTo(0, top);
+            let last = -1;
+            let still = 0;
+            const tick = () => {
+              still = window.scrollY === last ? still + 1 : 0;
+              last = window.scrollY;
+              if (still >= 5) resolve();
+              else requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }),
+        y,
       );
-    // Fade-ins: poll the computed opacity (the footer items start their 0.9s transition with a stagger delay at the very end).
-    await expect.poll(unrevealed, { timeout: 5_000 }).toEqual([]);
+    };
+
+    const { vh, max } = await page.evaluate(() => ({
+      vh: window.innerHeight,
+      max: document.documentElement.scrollHeight - window.innerHeight,
+    }));
+    // Fade-ins: poll the computed opacity (the footer items start their 0.9s transition with a stagger delay).
+    for (let y = 0; y < max; y += vh / 2) {
+      await rest(y);
+      await expect.poll(() => unrevealed('amount'), { message: `resting at scrollY ${Math.round(y)}`, timeout: 5_000 }).toEqual([]);
+    }
+    // The bottom of the page cannot scroll further: everything visible there must still have revealed.
+    await rest(max);
+    await expect.poll(() => unrevealed('any'), { message: 'resting at the bottom', timeout: 5_000 }).toEqual([]);
   });
 });
