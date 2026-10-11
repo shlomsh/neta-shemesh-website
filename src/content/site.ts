@@ -33,14 +33,14 @@ export const SITE = {
   },
   email: 'nettabe@gmail.com',
   address: {
-    street: 'רחוב אמנון ותמר 6',
+    street: 'קרל פופר 7, שכונת אגמים',
     city: CITY,
     region: 'השרון',
-    postalCode: '4220209',
+    postalCode: '4250708',
     country: 'IL',
-    geo: { latitude: 32.2568, longitude: 34.8585 },
+    geo: { latitude: 32.2915701, longitude: 34.854951 },
     /** Pre-encoded `q=` value of the Google Maps embed. */
-    mapQuery: 'Amnon+ve-Tamar+6,+Netanya',
+    mapQuery: 'Karl+Popper+7,+Netanya',
   },
   /** schema.org openingHours. */
   openingHours: ['Su-Th 09:00-19:00'],
@@ -65,7 +65,7 @@ export const mailHref = () => `mailto:${SITE.email}`;
 export const waHref = () =>
   `https://wa.me/${SITE.phone.e164.replace('+', '')}?text=${SITE.whatsappMessage.replace(/ /g, '+')}`;
 
-/** "רחוב אמנון ותמר 6, נתניה" */
+/** "קרל פופר 7, שכונת אגמים, נתניה" */
 export const addressLine = () => `${SITE.address.street}, ${SITE.address.city}`;
 
 /** Google Maps embed URL for the clinic. */

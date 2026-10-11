@@ -63,9 +63,9 @@ describe('F3: site facts live only in content/site.ts', () => {
     // ANY Israeli phone number in any format (display, E.164, WhatsApp, spaced), not only the current one
     ['phone', /(?<![\d.])(?:\+?972[\s-]?|0)\d{1,2}[\s-]?\d{3}[\s-]?\d{4}(?!\d)/, SITE.phone.display],
     ['email', /[\w.+-]+@(?!\dx\b)[\w-]+\.(?:com|co\.il|org|net|il)\b/i, SITE.email],
-    ['street', /אמנון ותמר/, SITE.address.street],
-    ['postal code', /4220209/, SITE.address.postalCode],
-    ['map query', /Amnon\+?ve-Tamar/i, SITE.address.mapQuery],
+    ['street', /קרל פופר/, SITE.address.street],
+    ['postal code', /4250708/, SITE.address.postalCode],
+    ['map query', /Karl\+?Popper/i, SITE.address.mapQuery],
   ];
 
   let home: HTMLElement;
