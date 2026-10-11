@@ -22,7 +22,7 @@ export function MapEmbed({ className }: MapEmbedProps) {
         title="מיקום הקליניקה"
         className="absolute inset-0 w-full h-full border-0"
         allowFullScreen
-        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms"
         loading="lazy"
       />
     </div>

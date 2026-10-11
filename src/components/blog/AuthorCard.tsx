@@ -1,4 +1,5 @@
 import { SITE } from '@/content/site';
+import { PROFILE_PHOTO } from '@/content/home/about';
 
 /**
  * AuthorCard — compact bio shown at the foot of each article, echoing the
@@ -12,8 +13,8 @@ export function AuthorCard() {
       className="flex flex-col items-center gap-stack rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-panel text-center sm:flex-row sm:text-start"
     >
       <div className="relative shrink-0 overflow-hidden rounded-full w-[clamp(5.25rem,11vw,7.25rem)] h-[clamp(5.25rem,11vw,7.25rem)]">
-        <img // eslint-disable-line @next/next/no-img-element -- fixed-size 116px author avatar, a static webp already sized in /public
-          src="/images/about-profile-neta.webp"
+        <img // eslint-disable-line @next/next/no-img-element -- fixed-size author avatar from the shared profile asset
+          src={PROFILE_PHOTO}
           alt={SITE.name}
           loading="lazy"
           className="h-full w-full object-cover object-[50%_38%]"
