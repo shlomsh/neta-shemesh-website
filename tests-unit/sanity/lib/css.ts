@@ -1,6 +1,6 @@
 /**
  * Parsers over globals.css: `.type-*` rules, tone rules, custom properties, display-font selectors.
- * CLAUDE.md "Typography" (scale values), "Section primitive" (tone mapping). Grep globals.css, never open it.
+ * CLAUDE.md "Typography" (scale values), "Section primitive" (tone mapping).
  */
 import { globalsCss, stripCssComments } from './source';
 
