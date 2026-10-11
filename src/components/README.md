@@ -3,7 +3,7 @@
 ```
 src/components/
   primitives/   content-agnostic blocks   layout/ (Section Container Card)  ui/ (BodyText ButtonLink HaloWrap SectionTitle SectionHeader Photo MaskIcon IconButton)
-  motion/       behaviour, no content     ScrollReveal RevealObserver ParallaxFrame SoftSnap SlidePager
+  motion/       behaviour, no content     ScrollReveal RevealObserver ParallaxFrame
   site/         shared chrome             PageShell JsonLd ContactFAB BrandLogo LineArt SiteNav MobileNav MobileMenu NavLink footer/ hooks/ icons.tsx
   sections/     one folder per section    hero intro expertise bio credentials reignite services cta-band gallery contact testimonials (parked)
   blog/         blog-only                 BlogHeader PostBody PostCard AuthorCard
@@ -22,7 +22,7 @@ Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint
 - **A component earns its own file** only if it is reused, has state or logic, or is a real visual unit (art, a background composition, a multi-slot card). A logic-free single-use leaf is written inline in its parent.
 - **`site/`** holds the header, `PageShell` (required `overflow` prop: `clip` for home and 404, `hidden` for blog), `Footer`, the contact pill, `JsonLd`. One-off decorative SVG stays beside its section.
 - Named exports everywhere; only Next route files use `export default`. The parked `sections/testimonials/` stays (see CLAUDE.md).
-- Tests find sources by path suffix (`sourceNamed('SoftSnap.tsx')` in `tests-unit/sanity/helpers.ts`) and sections by the ids in `content/ids.ts`: a move updates the suffix, never loosens an assertion.
+- Tests find sources by path suffix (`sourceNamed('PageShell.tsx')` in `tests-unit/sanity/helpers.ts`) and sections by the ids in `content/ids.ts`: a move updates the suffix, never loosens an assertion.
 
 **Adding a section:** `sections/<slug>/<Name>.tsx` with one `Section`, ids from `content/ids.ts`, copy from `content/`; mount it in `app/page.tsx` in page order; add its row to `EXPECTED_SECTIONS` (`helpers.ts`) and `DESKTOP` (`one-screen.test.tsx`; the phone list derives from it); run `npm run test:sanity` and `npm run vr -- HEAD`.
 
@@ -32,7 +32,7 @@ Reduced motion is CSS-only (the `[data-reveal="io"]` hidden state exists only un
 - `ScrollReveal`: server component, `<div data-reveal="io">`, delay as `--reveal-delay` (from `stagger(i)`); no hidden state in the HTML.
 - `RevealObserver`: the one client island (in `PageShell`). Arms `html[data-reveal-armed]` only after its first IntersectionObserver callback, never under reduced motion or in an iframe, so a failure leaves the page visible. A `ScrollReveal` mounted after its effect is never observed.
 - `ParallaxFrame`: server component, CSS `view()` drift; it, `Section` and the footer use `overflow-clip`, never `overflow-hidden`.
-- `SoftSnap` (client gate) dynamically imports `SlidePager` only where `SNAP_MEDIA` matches (`lib/soft-snap.ts`; logic in `lib/slide-pager.ts`).
+- Card snap has no component: `PageShell snapCards` (home only) sets `data-snap-cards` on `<main>`, and one CSS rule in `globals.css` does the rest (`tests/scroll-snap.spec.ts`).
 
 ## Primitive contracts
 

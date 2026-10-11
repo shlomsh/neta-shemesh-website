@@ -86,7 +86,7 @@ Don't pass `onDark` to children. Bespoke `<section>`s add `data-bg-tone="dark|mi
 
 - **Every solid card is ≥ one screen at every width.** Desktop (lg+) ≥ 100svh; below lg ≥ 100lvh (NS-61, reverses NS-39: a content-height card let the next one peek in under it). Via `Section`'s `fit` (`screen-fit` = `min-height: var(--card-h)`, content centred with `flex flex-col justify-center`) or `screen-fit flex flex-col justify-center` on bespoke sections. A taller card grows and the page scrolls; never clip. Never write `min-h-[100svh]`/`min-h-lvh` in a component; the unit lives in `--card-h` (`globals.css`).
 - **Below lg** the hero uses `hero-fit` (`--hero-h`) and the footer `screen-visible` (the one `dvh` exception); `--card-h`/`--hero-h` are `100lvh`, so **never `dvh` on a card**. iOS 26 Safari: `--hero-h` is `calc(100lvh + 80px)` below lg (rationale in `globals.css`).
-- **Soft snap** (`SoftSnap` → `SlidePager`): one card per wheel/key gesture only at ≥1024px with a fine pointer; all else scrolls natively. **Do not reintroduce touch snap**; no CSS scroll-snap.
+- **Desktop snap is CSS only:** home cards snap one per gesture at ≥1024px with a fine pointer, no reduced motion (`globals.css`); no touch snap, no JS pager.
 - **Surfaces** (`src/components/primitives/`, contracts in `src/components/README.md`): inner cards `<Card surface="cream|veil">`, framed photos `<Photo radius>`, icons `<MaskIcon>`, round icon buttons `<IconButton label>`. No hand-written `bg-[var(--color-cream)]` or re-typed `object-cover` frames.
 - **Header/nav:** below `md` a hamburger opens a full-screen overlay (`SiteNav` + `MobileMenu`, portaled to `document.body`; no `transform` on ancestors). Never a squeezed inline nav.
 - **Units:** rem for text, spacing, sizes and max-widths (`gap-4`, `max-w-3xl`, `clamp(1rem,4vw,3rem)`); an arbitrary `[Npx]` that equals a Tailwind step takes the step. px stays only for hairlines (border, ring, outline), shadows, motion offsets, `sizes=` and image `width`/`height`, SVG geometry. Never set `font-size` on `html`.
@@ -99,7 +99,7 @@ Don't pass `onDark` to children. Bespoke `<section>`s add `data-bg-tone="dark|mi
 ## Code rules
 
 - **Content is single source:** `src/content/` (`site.ts` facts, `ids.ts` ids/anchors, `home/*.ts` copy). No phone, email, street or id literal in a component.
-- **Home** is `<PageShell overflow="clip">`, never `hidden` (kills soft snap, sticky); only the blog passes `hidden`. Sections, parallax and footer clip with `overflow-clip`.
+- **Home** is `<PageShell overflow="clip">`, never `hidden` (overflow-hidden on `main`/ancestors would break the CSS snap and sticky); only the blog passes `hidden`. Sections, parallax and footer clip with `overflow-clip`.
 - **Reduced motion is CSS-only.** Never branch on `useReducedMotion()` (SSR ships `opacity:0`); no `delay={0}`; stagger with `stagger(i)` from `src/lib/motion.ts`.
 - **Fonts:** `next/font/local` only, never `next/font/google`; `./fonts` import stays before `globals.css` in `layout.tsx`.
 - **Head:** Metadata API, never a hand-written `<head>`/`<link>`. Never lazy-load the LCP image.

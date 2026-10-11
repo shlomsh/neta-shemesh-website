@@ -37,11 +37,11 @@ export default defineConfig({
 
   /*
    * Projects: the same specs run on every engine and form factor the site is used on.
-   *   chromium  Desktop Chrome: fine pointer, so the slide pager runs (tests/slide-pager.spec.ts)
+   *   chromium  Desktop Chrome: fine pointer, so the CSS card snap applies (tests/scroll-snap.spec.ts)
    *   webkit    Desktop Safari: the engine behind every iOS browser, on a desktop
    *   iphone    iPhone 17, WebKit with isMobile + hasTouch: coarse pointer, narrow viewport, native scroll
    *   ipad      iPad Pro 11 in landscape, 1194px wide but touch: the width where a desktop-only
-   *             assumption (pager, hover, fine pointer) would break first
+   *             assumption (snap, hover, fine pointer) would break first
    * firefox is added locally only (CI installs `chromium webkit`, see .github/workflows/playwright.yml).
    * No project uses toHaveScreenshot: there are no snapshot baselines; pixel comparison is `npm run vr`.
    */

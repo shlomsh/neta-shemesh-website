@@ -1,5 +1,4 @@
 import type { Metadata, ResolvingMetadata } from 'next';
-import { SoftSnap } from '@/components/motion/SoftSnap';
 import { PageShell } from '@/components/site/PageShell';
 import { Hero } from '@/components/sections/hero/Hero';
 import { Intro } from '@/components/sections/intro/Intro';
@@ -44,8 +43,8 @@ const SHOW_TESTIMONIALS = false;
 
 export default function Home() {
   return (
-    // overflow 'clip', never 'hidden': SoftSnap and sticky need <main> not to be a scroll container.
-    <PageShell overflow="clip" behaviors={<SoftSnap />}>
+    // overflow 'clip', never 'hidden': CSS snap and sticky need <main> not to be a scroll container.
+    <PageShell overflow="clip" snapCards>
       <Hero />
       <Intro />
       <Expertise />

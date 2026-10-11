@@ -20,7 +20,7 @@ npm run vr -- main --pages home --viewports 375     # scope the gate to the blas
 - **home**: one element shot per top-level `main > section` plus `footer`, keyed by position (`home-03`) so an id rename is not a diff, at 1280x900, 1440x900, 1920x1080, 768x1024, 375x812.
 - **blog** (index) and **post** (the first post), full page, at 1280, 768 and 375.
 
-Deterministic: `reducedMotion: 'reduce'` (final static frames, SoftSnap off), `animations: 'disabled'`, map iframe masked, fonts and images awaited. **Hover, focus and in-flight animation are not covered.**
+Deterministic: `reducedMotion: 'reduce'` (final static frames, CSS snap off), `animations: 'disabled'`, map iframe masked, fonts and images awaited. **Hover, focus and in-flight animation are not covered.**
 
 ## Flags
 

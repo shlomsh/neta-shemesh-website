@@ -12,7 +12,7 @@ import { FooterBackground } from './FooterBackground';
  * once Safari's toolbar collapsed, because the visible height is then larger than svh.
  * Centered RTL column: the tagline → CTA → brand name group sits in the vertical middle of the
  * free space (`my-auto`), the copyright at the bottom. Each block fades in via ScrollReveal with
- * a small stagger. SoftSnap treats this footer as the last snap target.
+ * a small stagger. the CSS card snap treats this footer as the last snap target.
  *
  * All styling via Tailwind utility classes + CSS vars.
  */

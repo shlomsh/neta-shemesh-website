@@ -15,6 +15,7 @@ import {
   ROOT,
   ROOT_PX,
   SCAN_RULES,
+  SNAP_RULE,
   classLiterals,
   containsBanSample,
   expectNone,
@@ -69,7 +70,19 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
   ];
   it.each(BANNED)('src has no %s', (id) => {
     const r = rule(id);
-    expectNone(scan(id === 'card-height' ? code : sources, r.re), `src contains ${r.label}`);
+    // css-scroll-snap: the one approved block (SNAP_RULE) is cut out of globals.css first; everything else is scanned as is.
+    const files = (id === 'card-height' ? code : sources).map((f) => (id === 'css-scroll-snap' ? { ...f, text: f.text.replace(SNAP_RULE, '') } : f));
+    expectNone(scan(files, r.re), `src contains ${r.label}`);
+  });
+
+  it('the one scroll-snap rule exists exactly once, in globals.css (desktop, fine pointer, no reduced motion, home only)', () => {
+    const holders = sources.filter((f) => SNAP_RULE.test(f.text));
+    expect(holders.map((f) => f.path)).toEqual(['src/app/globals.css']);
+    expect(holders[0].text.match(new RegExp(SNAP_RULE.source, 'g'))).toHaveLength(1);
+    expect(sourceNamed('PageShell.tsx').text, 'PageShell must emit data-snap-cards').toContain('data-snap-cards');
+    expect(sourceNamed('app/page.tsx').text, 'the home page opts in').toMatch(/<PageShell[^>]*\bsnapCards\b/);
+    const blog = sources.filter((f) => /^src\/app\/blog\//.test(f.path) && /snapCards|data-snap-cards/.test(f.text));
+    expect(blog.map((f) => f.path), 'the blog must not snap').toEqual([]);
   });
 
   it('no css file sets a font-size under the 14px floor (0.875rem at the default root)', () => {
@@ -103,7 +116,6 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
     { what: 'the cover-fit photo (use <Photo>)', re: /absolute inset-0 (?:h-full w-full|w-full h-full) object-cover/, only: ['primitives/ui/Photo.tsx'], bad: 'absolute inset-0 h-full w-full object-cover' },
     { what: 'the round 44px icon button (use <IconButton>)', re: /h-(?:11|\[44px\]|\[2\.75rem\]) w-(?:11|\[44px\]|\[2\.75rem\]) items-center justify-center rounded-full/, only: ['primitives/ui/IconButton.tsx'], bad: 'h-11 w-11 items-center justify-center rounded-full' },
     { what: 'a padding-top aspect-ratio spacer (use Photo ratio / aspect-[w/h])', re: /(?<![\w-])pt-\[\d+(?:\.\d+)?%\]/, bad: 'pt-[62%]' },
-    { what: 'a static import of the slide pager (touch devices must not download it; the gate uses import())', re: /from\s+['"][^'"]*SlidePager['"]/, only: ['SlidePager.tsx'], bad: "import { SlidePager } from './SlidePager'" },
   ];
   it.each(LOCKUPS.map((l) => [l.what, l] as const))('%s is written in one place only', (_what, l) => {
     expect(l.re.test(l.bad), 'the regex went blind').toBe(true);

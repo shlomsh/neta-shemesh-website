@@ -4,7 +4,7 @@ Marketing site for **Netta Shemesh** (נטע שמש), a couples and family thera
 
 ## Stack
 
-Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a small JS slide pager; no animation library. Fonts are self-hosted through `next/font/local`. Three runtime dependencies (`next`, `react`, `react-dom`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
+Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a CSS-only card snap; no animation library. Fonts are self-hosted through `next/font/local`. Three runtime dependencies (`next`, `react`, `react-dom`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
 
 ### Next.js, plus these requirements
 
@@ -40,7 +40,7 @@ BASE_URL=http://localhost:3200 npx playwright test --project=iphone     # one pr
 npx playwright install chromium webkit                                  # browsers, once (add firefox for the local-only project)
 ```
 
-Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/slide-pager.spec.ts` checks that the pager moves exactly one card on desktop and is never downloaded on `iphone` and `ipad`. `tests/hero-fab-overlap.spec.ts` checks at 375x812 and 375x667 (iOS 26 overshoot simulated) that the hero fits one screen and the contact pill never covers hero content or a card title. CI installs `chromium webkit` and runs the four projects.
+Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/scroll-snap.spec.ts` checks by computed style that the CSS card snap is on for the home page at desktop width with a fine pointer, and off on `/blog`, on phones and under reduced motion. `tests/hero-fab-overlap.spec.ts` checks at 375x812 and 375x667 (iOS 26 overshoot simulated) that the hero fits one screen and the contact pill never covers hero content or a card title. CI installs `chromium webkit` and runs the four projects.
 
 Use a fresh port: when nothing listens there the config starts `npm run start -p 3200` itself, but it reuses whatever already listens, so a stale server silently tests old code.
 
@@ -51,7 +51,7 @@ Pixel diff of the working tree against any git ref (0 px tolerance, no committed
 - `src/app` routes (`page.tsx`, `blog/`, `layout.tsx`), `fonts.ts`, `globals.css`, `sitemap.ts`, Open Graph images (committed PNGs, not generated).
 - `src/content` plain typed data: `site.ts` (name, phone, email, address, URLs), `ids.ts` (DOM ids, anchors), `home/*.ts` (copy), `posts/*.ts` (blog).
 - `src/components/{sections,site,primitives,motion,blog}` one folder per home section, shared chrome, content-agnostic building blocks, scroll behaviour, blog parts. Layer direction `content → lib → motion → primitives → site → sections | blog → app` is enforced by ESLint (`eslint.config.mjs`); folder rules and primitive contracts: [src/components/README.md](src/components/README.md).
-- `src/lib` SEO (`seo/`), motion helpers, the slide pager's pure logic, `cx()`.
+- `src/lib` SEO (`seo/`), motion helpers, `cx()`.
 - `tests-unit` Vitest; `tests-unit/sanity` is the structural guard ([README](tests-unit/sanity/README.md)). `tests` Playwright e2e; `tests/visual` the pixel-diff harness.
 - `scripts` font fallback metrics generator, Vercel ignored-build gate. `public` images, `robots.txt`, `llms.txt`.
 

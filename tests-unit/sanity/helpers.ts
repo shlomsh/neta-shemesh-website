@@ -58,7 +58,7 @@ export function readSources(): SourceFile[] {
 }
 
 /**
- * Find a source by file name OR path suffix (`SoftSnap.tsx`, `app/layout.tsx`). Throws when nothing
+ * Find a source by file name OR path suffix (`PageShell.tsx`, `app/layout.tsx`). Throws when nothing
  * matches or when it is ambiguous (e.g. a future src/app/blog/layout.tsx must not be picked silently).
  */
 export function sourceNamed(suffix: string): SourceFile {
@@ -127,7 +127,7 @@ export function keepsAspectAtDesktop(el: Element | null | undefined): boolean {
 export const coversImage = (img: Element | null | undefined) => hasClass(img, 'object-cover');
 /** the map wrapper: fills the details column height at lg with a 360px floor (22.5rem at the default root) */
 export const isStretchedMapFrame = (el: Element | null | undefined) => hasClass(el, 'lg:h-full') && hasClass(el, 'lg:min-h-[22.5rem]');
-/** <main> overflow behaviour: clip keeps soft snap working, hidden breaks it */
+/** <main> overflow behaviour: clip keeps CSS snap working, hidden breaks it */
 export function overflowOf(el: Element | null | undefined): 'clip' | 'hidden' | null {
   if (hasClass(el, 'overflow-hidden')) return 'hidden';
   if (hasClass(el, 'overflow-clip')) return 'clip';
@@ -442,6 +442,14 @@ export interface ScanRule {
 
 const BP = '(?:[a-z0-9]+:)*'; // optional responsive/state prefix chain: md:, lg:hover:
 
+/**
+ * The ONE scroll-snap rule the site ships (globals.css): home cards, desktop, fine pointer, no reduced motion, scoped by
+ * `main[data-snap-cards]` (home only). The `css-scroll-snap` ban removes exactly this block before it scans, so touch snap,
+ * an unscoped rule, or snap in any other file still fails.
+ */
+export const SNAP_RULE =
+  /@media \(min-width: 1024px\) and \(pointer: fine\) and \(prefers-reduced-motion: no-preference\) \{\s*html:has\(main\[data-snap-cards\]\) \{ scroll-snap-type: y mandatory; \}\s*main\[data-snap-cards\] > section,\s*main\[data-snap-cards\] > footer \{ scroll-snap-align: start; scroll-snap-stop: always; \}\s*\}/;
+
 export const SCAN_RULES: ScanRule[] = [
   { id: 'px-size', label: 'arbitrary px/number text size  text-[18px]', re: /(?<![\w-])text-\[(?:\d|\.\d|length:|calc\()/,
     bad: ['className="text-[18px]"', 'md:text-[15px]', 'text-[.9rem]'], good: ['text-plum', 'text-[color:var(--header-color)]', 'context-[1]'] },
@@ -459,8 +467,8 @@ export const SCAN_RULES: ScanRule[] = [
     re: new RegExp([`(?<!\\w)${BP}(?:min-|max-)?h-screen(?![\\w-])`, String.raw`(?<![\w:-])h-\[100svh\]`, String.raw`(?<![\w-])(?:[a-z0-9-]+:)*min-h-\[100svh\]`, String.raw`(?<![\w-])(?:[a-z0-9-]+:)*(?:min-|max-)?h-(?:lvh|dvh|\[100[ld]vh\])`].join('|')),
     bad: ['h-screen', 'min-h-screen', 'flex h-[100svh] w-full', 'lg:min-h-[100svh]', 'max-lg:min-h-lvh', 'supports-[height:100dvh]:min-h-dvh', 'h-[100dvh]'],
     good: ['lg:h-[100svh]', 'lg:h-[max(100svh,720px)]', 'lg:min-h-[max(100svh,720px)]', 'min-h-12', 'h-screenful', 'screen-fit'] },
-  { id: 'css-scroll-snap', label: 'CSS scroll-snap (the JS slide pager is the only snapping; CSS snap fights it)', re: /scroll-snap-type|scrollSnapType|\bsnap-(?:x|y|both|mandatory|proximity)\b/,
-    bad: ['scroll-snap-type: y mandatory', 'snap-y snap-mandatory', "scrollSnapType: 'y'"], good: ['SoftSnap', 'slide-pager', '?snap=off'] },
+  { id: 'css-scroll-snap', label: 'CSS scroll-snap outside the one desktop fine-pointer home rule in globals.css (SNAP_RULE); no touch snap', re: /scroll-snap-type|scrollSnapType|\bsnap-(?:x|y|both|mandatory|proximity)\b/,
+    bad: ['scroll-snap-type: y mandatory', 'snap-y snap-mandatory', "scrollSnapType: 'y'"], good: ['scroll-snap-align: start', 'data-snap-cards', 'scroll-behavior: smooth'] },
   { id: 'google-fonts', label: 'Google Fonts fetch (breaks the Vercel prod build)', re: /next\/font\/google|fonts\.googleapis|fonts\.gstatic/,
     bad: ['import { Roboto } from "next/font/google"', 'https://fonts.googleapis.com/css'], good: ['next/font/local'] },
   { id: 'display-font-in-component', label: 'Elamy / display font set directly on a component', re: /(?<![\w-])font-(?:display|elamy)(?![\w-])|family-name:var\(--font-(?:display|elamy)\)|font-\[var\(--font-(?:display|elamy)\)\]|\bfontFamily\b/,

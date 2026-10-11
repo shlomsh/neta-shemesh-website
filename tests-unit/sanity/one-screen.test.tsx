@@ -195,7 +195,7 @@ describe('B7: height-driven flex chain per section', () => {
 });
 
 describe('B8: <main> is a clip, not a scroll container', () => {
-  it('main has overflow-clip and never overflow-hidden (hidden would kill soft snap and sticky)', () => {
+  it('main has overflow-clip and never overflow-hidden (hidden would break CSS snap and sticky)', () => {
     expect(overflowOf(home.querySelector('main')!), '<main> must clip (overflow-clip)').toBe('clip');
   });
 });

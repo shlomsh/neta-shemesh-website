@@ -4,7 +4,7 @@ import { appendFileSync } from 'node:fs';
 /**
  * Visual-regression shots. One test per (page, viewport). Driven by `npm run vr`; see README.md.
  *
- * reducedMotion: 'reduce' (config) renders the final static frames and turns SoftSnap off,
+ * reducedMotion: 'reduce' (config) renders the final static frames and turns the CSS card snap off,
  * so the output is deterministic. Hover states are therefore NOT exercised.
  */
 

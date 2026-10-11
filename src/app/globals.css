@@ -236,7 +236,12 @@
   }
 }
 
-/* Card snapping (desktop only; the footer is the last target) is handled in JS by src/components/motion/SoftSnap.tsx (no CSS scroll-snap). */
+/* Home card snap, CSS only: viewport scroller, every home card + the footer is a target; taller cards scroll freely inside. Desktop, fine pointer, no reduced motion; the blog has no [data-snap-cards]. */
+@media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html:has(main[data-snap-cards]) { scroll-snap-type: y mandatory; }
+  main[data-snap-cards] > section,
+  main[data-snap-cards] > footer { scroll-snap-align: start; scroll-snap-stop: always; }
+}
 
 @layer components {
   :root { --header-color: var(--color-plum); }   /* default: dark plum, for light surfaces */

@@ -12,7 +12,7 @@ npm run test:unit       # all of tests-unit/ (what the Vercel gate runs)
 | File | Guards |
 |---|---|
 | `helpers.ts` | Shared predicates, `SCAN_RULES`, `CONTRAST_BANS`, the contrast resolver, ratchet helpers. Not a test. |
-| `source-scan.test.ts` | All static bans: type/size/weight and removed classes, card-height units, CSS scroll-snap, Google Fonts, hex palette lock, white/arbitrary-var colour utilities, NS-42 contrast/focus bans, lockups written once, font declarations, RTL only on `<html>`. |
+| `source-scan.test.ts` | All static bans: type/size/weight and removed classes, card-height units, the one scoped CSS scroll-snap rule, Google Fonts, hex palette lock, white/arbitrary-var colour utilities, NS-42 contrast/focus bans, lockups written once, font declarations, RTL only on `<html>`. |
 | `cards-rotation.test.tsx` | Strict 4-tone rotation, no adjacent same tone, `.on-dark` only on photo bands, mid veil card, office card. |
 | `one-screen.test.tsx` | Every card is at least one screen at every width: below lg `screen-fit` (a card that loses it fails), from lg the `DESKTOP` lock/grow table. Hero `hero-fit`, footer `screen-visible`, `--card-h`, flex chain to the photo grid, `<main>` is `overflow-clip`. |
 | `section-primitive.test.tsx` | `Section` `fit`/`tone` contract (`data-*` plus implementing classes, not overridable). |
@@ -25,10 +25,9 @@ npm run test:unit       # all of tests-unit/ (what the Vercel gate runs)
 | `single-source.test.tsx` | Ids, no phone/email/street literals in any format, links from `SITE`, JSON-LD from content. |
 | `hero-first-paint.test.tsx` | The hero never starts hidden. |
 | `font-fallback.test.ts` | Metric-matched Hebrew fallbacks match `scripts/font-fallback-metrics.mjs`. |
-| `soft-snap.test.tsx` | Pager gate and wiring on the real page (desktop only, no touch, reduced motion, menu open). |
 | `component-guards.test.tsx` | Gallery stagger, `LineArt`, parked Testimonials still render. |
 
-Other folders in `tests-unit/`: `slide-pager.test.ts` (pure pager logic), `reduced-motion-hydration`, `reveal-observer`, `cta-band`, `signature`, `map-placeholder`, `cx`, `blog/`, `lib/` (SEO, JSON-LD, sitemap, `llms.txt`, noindex host), `site/` (menu, a11y).
+Other folders in `tests-unit/`: `reduced-motion-hydration`, `reveal-observer`, `cta-band`, `signature`, `map-placeholder`, `cx`, `blog/`, `lib/` (SEO, JSON-LD, sitemap, `llms.txt`, noindex host), `site/` (menu, a11y).
 
 ## Contrast resolver limits
 
