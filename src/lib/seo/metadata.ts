@@ -18,14 +18,14 @@ interface PageMetaInput {
   description: string;
   /** Path under the site root with a leading slash; '' for the home page. */
   path?: string;
-  /** Also declare the page as its own `he-IL` alternate (home page only). */
+  /** Also declare the page as its own `he-IL` alternate (every indexable page: home, blog index, articles). */
   hreflang?: boolean;
   /** Open Graph copy (usually a shorter title/description than the <title>/<meta>). */
   og: { title: string; description: string };
   /** Twitter card copy; omit to inherit the parent layout's card. */
   twitter?: { title: string; description: string };
-  /** Turns the page into an `article` with its cover image. */
-  article?: { publishedTime: string; imageUrl: string };
+  /** Turns the page into an `article` with its share image (1200x630 JPG/PNG with declared size, type and alt). */
+  article?: { publishedTime: string; image: { url: string; width: number; height: number; type: string; alt: string } };
 }
 
 /**
@@ -53,11 +53,19 @@ export function pageMeta({ title, description, path = '', hreflang = false, og, 
           type: 'article',
           ...common,
           publishedTime: article.publishedTime,
-          images: [{ url: article.imageUrl }],
+          images: [article.image],
         }
       : { type: 'website', ...common, images: [DEFAULT_OG_IMAGE] },
     ...(twitter
-      ? { twitter: { card: 'summary_large_image', title: twitter.title, description: twitter.description } }
+      ? {
+          twitter: {
+            card: 'summary_large_image',
+            title: twitter.title,
+            description: twitter.description,
+            // The articles' own share image; other pages inherit nothing here, so they fall back to og:image.
+            ...(article ? { images: [{ url: article.image.url, alt: article.image.alt }] } : {}),
+          },
+        }
       : {}),
   };
 }

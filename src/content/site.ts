@@ -44,7 +44,6 @@ export const SITE = {
   },
   /** schema.org openingHours. */
   openingHours: ['Su-Th 09:00-19:00'],
-  priceRange: '₪₪₪',
   /** Prefilled first message of the WhatsApp contact pill. */
   whatsappMessage: 'שלום נטע, אשמח לשמוע קצת יותר פרטים',
   /**

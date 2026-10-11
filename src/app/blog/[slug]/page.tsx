@@ -39,9 +39,13 @@ export async function generateMetadata(
     title: `${post.title} | ${SITE.name}`,
     description: post.excerpt,
     path: `/blog/${post.slug}`,
+    hreflang: true,
     og: { title: post.title, description: post.excerpt },
     twitter: { title: post.title, description: post.excerpt },
-    article: { publishedTime: post.date, imageUrl: `${SITE.url}${post.coverImage}` },
+    article: {
+      publishedTime: post.date,
+      image: { url: `${SITE.url}${post.shareImage}`, width: 1200, height: 630, type: 'image/jpeg', alt: post.coverAlt },
+    },
   });
 }
 
@@ -109,6 +113,7 @@ export default async function BlogPostPage(
                 safariClip={false}
                 ratio="100/58"
                 loading="eager"
+                fetchPriority="high"
                 // -mt stays a clamp (NS-61): the cover rides up over the hero bottom padding (pb-section-mid) by that
                 // padding + ~1.25rem; no spacing step is within 8px of 64/9vw/116 at 1280.
                 className="-mt-[clamp(4rem,9vw,7.25rem)] mb-region w-full outline outline-[1.5px] outline-plum/15 shadow-cover"

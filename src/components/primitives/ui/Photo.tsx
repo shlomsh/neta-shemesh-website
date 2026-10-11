@@ -73,8 +73,10 @@ type PhotoProps = PhotoMotion & {
    * ParallaxFrame layer is scaled up by 1 + (2 * amount + 1) / 100), not the frame width.
    */
   sizes: string;
-  /** Lazy by default; `eager` for an above-the-fold photo. No `priority`: no photo is the LCP element. */
+  /** Lazy by default; `eager` for an above-the-fold photo. */
   loading?: 'lazy' | 'eager';
+  /** `high` for the one photo that is the LCP element (the blog post cover); omitted everywhere else. */
+  fetchPriority?: 'high' | 'low' | 'auto';
   /** Optimizer quality; defaults to `PHOTO_QUALITY` (84). Must be listed in `images.qualities`. */
   quality?: number;
   /** Aspect ratio of the frame; without it the caller sizes the frame (`h-full`, a grid cell, ...). */
@@ -102,7 +104,7 @@ type PhotoProps = PhotoMotion & {
  * every framed photo on the site, so the radius, the Safari clip and the cover fit are written once.
  */
 export function Photo(props: PhotoProps) {
-  const { src, alt, radius, sizes, loading, quality, ratio, fillCellAtLg, objectPosition, outlined, zoom, className, motion, safariClip = true } = props;
+  const { src, alt, radius, sizes, loading, fetchPriority, quality, ratio, fillCellAtLg, objectPosition, outlined, zoom, className, motion, safariClip = true } = props;
 
   const frame = cx(
     ratio && RATIO_CLASS[ratio],
@@ -116,7 +118,7 @@ export function Photo(props: PhotoProps) {
   const zoomClass = zoom && ZOOM_CLASS[zoom];
 
   const image = (
-    <Image src={src} alt={alt} fill sizes={sizes} quality={quality ?? PHOTO_QUALITY} loading={loading} className={cx('object-cover', zoomClass)} style={imageStyle} />
+    <Image src={src} alt={alt} fill sizes={sizes} quality={quality ?? PHOTO_QUALITY} loading={loading} fetchPriority={fetchPriority} className={cx('object-cover', zoomClass)} style={imageStyle} />
   );
 
   if (motion && 'parallax' in motion) {

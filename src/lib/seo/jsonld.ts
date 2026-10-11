@@ -17,7 +17,7 @@ export function siteJsonLd() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': ['LocalBusiness', 'HealthAndBeautyBusiness'],
+        '@type': ['LocalBusiness', 'ProfessionalService'],
         '@id': `${url}/#business`,
         name: `${SITE.name} - ${SITE.tagline}`,
         description: `מטפלת זוגית ומשפחתית מוסמכת ב${SITE.city}`,
@@ -28,7 +28,6 @@ export function siteJsonLd() {
         // (src/app/opengraph-image.png), not the generated route it used to be.
         // The extensionless path 404s.
         image: `${url}/opengraph-image.png`,
-        priceRange: SITE.priceRange,
         openingHours: SITE.openingHours,
         address: {
           '@type': 'PostalAddress',
@@ -75,7 +74,7 @@ export function blogPostingJsonLd(post: BlogPost) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: `${url}${post.coverImage}`,
+    image: `${url}${post.shareImage}`,
     datePublished: post.date,
     dateModified: post.date,
     articleSection: post.category,

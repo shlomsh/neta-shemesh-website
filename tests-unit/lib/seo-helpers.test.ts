@@ -49,7 +49,7 @@ describe('pageMeta', () => {
     const m = pageMeta({
       ...base,
       path: '/blog/p',
-      article: { publishedTime: '2026-06-12', imageUrl: 'https://e.test/c.webp' },
+      article: { publishedTime: '2026-06-12', image: { url: 'https://e.test/c.jpg', width: 1200, height: 630, type: 'image/jpeg', alt: 'a' } },
     });
     expect(m.openGraph).toMatchObject({
       type: 'article',
@@ -67,6 +67,16 @@ describe('pageMeta', () => {
       title: 'tw t',
       description: 'tw d',
     });
+  });
+
+  it('an article with a twitter card names its share image there too', () => {
+    const m = pageMeta({
+      ...base,
+      path: '/blog/p',
+      twitter: { title: 'tw t', description: 'tw d' },
+      article: { publishedTime: '2026-06-12', image: { url: 'https://e.test/c.jpg', width: 1200, height: 630, type: 'image/jpeg', alt: 'a' } },
+    });
+    expect(m.twitter).toMatchObject({ card: 'summary_large_image', images: [{ url: 'https://e.test/c.jpg', alt: 'a' }] });
   });
 
   it('openGraph url always equals the canonical (they cannot drift)', () => {
@@ -97,6 +107,12 @@ describe('siteJsonLd', () => {
     expect(biz['@id']).toBe(`${SITE.url}/#business`);
   });
 
+  it('the business is a ProfessionalService (no medical claim) and states no price range', () => {
+    const biz = graph.find((n) => n['@id'] === `${SITE.url}/#business`)!;
+    expect(biz['@type']).toEqual(['LocalBusiness', 'ProfessionalService']);
+    expect(biz).not.toHaveProperty('priceRange');
+  });
+
   it('every @id is unique and every provider / worksFor reference resolves to a node', () => {
     const ids = graph.map((n) => n['@id'] as string);
     expect(new Set(ids).size).toBe(ids.length);
@@ -122,7 +138,7 @@ describe('blogPostingJsonLd', () => {
     expect(ld.description).toBe(post.excerpt);
     expect(ld.datePublished).toBe(post.date);
     expect(ld.inLanguage).toBe('he-IL');
-    expect(ld.image).toBe(`${SITE.url}${post.coverImage}`);
+    expect(ld.image).toBe(`${SITE.url}${post.shareImage}`);
     expect(ld.image).toMatch(/^https?:\/\//);
     expect(ld.mainEntityOfPage['@id']).toBe(`${SITE.url}/blog/${post.slug}`);
     expect(ld.author.name).toBe(SITE.name);

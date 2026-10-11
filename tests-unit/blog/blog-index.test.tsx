@@ -88,7 +88,11 @@ describe('blog index metadata', () => {
     expect(og.images?.length).toBeGreaterThan(0);
   });
 
-  it('does not set its own twitter block (inherits the site-wide card)', () => {
-    expect(metadata.twitter).toBeUndefined();
+  it('has its own twitter title and description (not the home page card) and the he-IL alternate', () => {
+    expect(metadata.twitter).toMatchObject({ card: 'summary_large_image' });
+    const tw = metadata.twitter as { title?: string; description?: string };
+    expect(tw.title).toContain('מאמרים');
+    expect(tw.description).toBeTruthy();
+    expect(metadata.alternates?.languages).toEqual({ 'he-IL': `${SITE.url}/blog` });
   });
 });

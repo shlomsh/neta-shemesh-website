@@ -36,6 +36,11 @@ export interface BlogPost {
   /** Path under /public, e.g. "/images/expertise-parenting.webp" */
   coverImage: string;
   coverAlt: string;
+  /**
+   * Link-preview card for Open Graph / Twitter: a 1200x630 JPG under /public (WhatsApp, Facebook and X
+   * reject or crop raw cover webps), e.g. "/images/share/<slug>.jpg". A centred 1200x630 crop of the cover.
+   */
+  shareImage: string;
   body: ContentBlock[];
   /** Closing call-to-action rendered as its own band after the body. */
   cta: {

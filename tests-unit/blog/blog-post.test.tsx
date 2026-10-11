@@ -100,19 +100,28 @@ describe('blog post static params and metadata', () => {
     for (const s of slugs) expect(s).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
   });
 
-  it.each(getAllPosts().map((p) => [p.slug]))('%s metadata: canonical, article OG with absolute cover, twitter', async (slug) => {
+  it.each(getAllPosts().map((p) => [p.slug]))('%s metadata: canonical, hreflang, article OG with a 1200x630 JPG share card, twitter', async (slug) => {
     const post = getPostBySlug(slug)!;
     const meta = await generateMetadata(params(slug));
     expect(String(meta.title)).toContain(post.title);
     expect(meta.description).toBe(post.excerpt);
     expect(meta.alternates?.canonical).toBe(`${SITE.url}/blog/${slug}`);
 
+    expect(meta.alternates?.languages).toEqual({ 'he-IL': `${SITE.url}/blog/${slug}` });
+
     const og = meta.openGraph as { type?: string; publishedTime?: string; images?: { url: string }[] };
     expect(og.type).toBe('article');
     expect(og.publishedTime).toBe(post.date);
-    expect(og.images).toEqual([{ url: `${SITE.url}${post.coverImage}` }]);
+    expect(og.images).toEqual([
+      { url: `${SITE.url}${post.shareImage}`, width: 1200, height: 630, type: 'image/jpeg', alt: post.coverAlt },
+    ]);
+    expect(post.shareImage).toMatch(/\.jpg$/);
 
-    expect(meta.twitter).toMatchObject({ title: post.title, description: post.excerpt });
+    expect(meta.twitter).toMatchObject({
+      title: post.title,
+      description: post.excerpt,
+      images: [{ url: `${SITE.url}${post.shareImage}` }],
+    });
   });
 
   it('metadata for an unknown slug is empty (no throw)', async () => {

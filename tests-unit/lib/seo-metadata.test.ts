@@ -17,11 +17,11 @@ describe('pageMeta og:image', () => {
     expect((meta.openGraph as { images?: unknown[] }).images).toEqual([DEFAULT_OG_IMAGE]);
   });
 
-  it('articles keep their cover image instead of the default', () => {
+  it('articles name their own 1200x630 share image (with size and type) instead of the default', () => {
     const meta = pageMeta({
       title: 'x', description: 'y', path: '/blog/p', og,
-      article: { publishedTime: '2026-06-12', imageUrl: 'https://e.test/c.webp' },
+      article: { publishedTime: '2026-06-12', image: { url: 'https://e.test/c.jpg', width: 1200, height: 630, type: 'image/jpeg', alt: 'a' } },
     });
-    expect((meta.openGraph as { images?: unknown[] }).images).toEqual([{ url: 'https://e.test/c.webp' }]);
+    expect((meta.openGraph as { images?: unknown[] }).images).toEqual([{ url: 'https://e.test/c.jpg', width: 1200, height: 630, type: 'image/jpeg', alt: 'a' }]);
   });
 });

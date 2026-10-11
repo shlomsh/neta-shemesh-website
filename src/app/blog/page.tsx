@@ -13,12 +13,16 @@ import { ID } from '@/content/ids';
 import { stagger } from '@/lib/motion';
 import { pageMeta } from '@/lib/seo/metadata';
 
-// No `twitter` block on purpose: the index inherits the site-wide card from the root layout.
 export const metadata: Metadata = pageMeta({
   title: `מאמרים | ${SITE.name} — ${SITE.tagline}`,
   description: `מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה — סדרת מאמרים מאת ${SITE.name}, מטפלת זוגית ומשפחתית ב${SITE.city}.`,
   path: '/blog',
+  hreflang: true,
   og: {
+    title: `מאמרים | ${SITE.name}`,
+    description: 'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה.',
+  },
+  twitter: {
     title: `מאמרים | ${SITE.name}`,
     description: 'מחשבות, כלים ותובנות מהקליניקה על זוגיות, הורות ומשפחה.',
   },
