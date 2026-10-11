@@ -37,8 +37,7 @@ const SCROLLERS = ['hidden', 'auto', 'scroll'];
 const INK_EM = 0.72;
 const INK_SIDE_REM = 1;
 
-// The `?reveal=` previews (RevealObserver) change how everything else reveals; the titles must stay static in each.
-for (const route of ['/', '/blog', '/?reveal=late', '/?reveal=settle', '/?reveal=scale']) {
+for (const route of ['/', '/blog']) {
 test(`${route}: every .type-title and the hero H1 is static: no [data-reveal], transition or animation on it or its ancestors`, async ({ page }) => {
   await page.goto(route);
   await page.waitForSelector(TITLES);

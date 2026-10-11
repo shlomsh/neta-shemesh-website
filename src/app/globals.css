@@ -233,26 +233,12 @@
 @media (prefers-reduced-motion: no-preference) {
   html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) {
     opacity: 0;
-    translate: 0 24px;
+    translate: 0 40px;
   }
   html[data-reveal-armed] [data-reveal="io"][data-revealed] {
     transition:
-      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
-      translate 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
-  }
-
-  /* ?reveal= previews (RevealObserver sets html[data-reveal-mode]): longer travel and duration, same easing. Never on titles. */
-  html[data-reveal-armed][data-reveal-mode] [data-reveal="io"]:not([data-revealed]) {
-    translate: 0 40px;
-  }
-  html[data-reveal-armed][data-reveal-mode="scale"] [data-reveal="io"]:not([data-revealed]):has(> .safari-clip) {
-    scale: 0.96;
-  }
-  html[data-reveal-armed][data-reveal-mode] [data-reveal="io"][data-revealed] {
-    transition:
       opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
-      translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
-      scale 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+      translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
   }
 }
 

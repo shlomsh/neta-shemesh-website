@@ -30,7 +30,7 @@ Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint
 
 Reduced motion is CSS-only (the `[data-reveal="io"]` hidden state exists only under `no-preference`; `[data-parallax]` is forced static under `reduce`; both in `globals.css`).
 - `ScrollReveal`: server component, `<div data-reveal="io">`, delay as `--reveal-delay` (from `stagger(i)`); no hidden state in the HTML.
-- `RevealObserver`: the one client island (in `PageShell`). Arms `html[data-reveal-armed]` only after its first IntersectionObserver callback, never under reduced motion or in an iframe, so a failure leaves the page visible. A `ScrollReveal` mounted after its effect is never observed.
+- `RevealObserver`: the one client island (in `PageShell`). Arms `html[data-reveal-armed]` only after its first IntersectionObserver callback, never under reduced motion or in an iframe, so a failure leaves the page visible. An element reveals once half of it is on screen (less for one taller than the viewport allows; `amountFor`). A `ScrollReveal` mounted after its effect is never observed.
 - `ParallaxFrame`: server component, CSS `view()` drift; it, `Section` and the footer use `overflow-clip`, never `overflow-hidden`.
 - Card snap has no component: `PageShell snapCards` (home only) sets `data-snap-cards` on `<main>`, and one CSS rule in `globals.css` does the rest (`tests/scroll-snap.spec.ts`).
 

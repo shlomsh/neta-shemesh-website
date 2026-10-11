@@ -132,4 +132,28 @@ test.describe('Runtime Health Guards', () => {
     }
   });
 
+  test('Scroll reveal: after scrolling to the very bottom, every [data-reveal="io"] is revealed and fully opaque', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'load' });
+    await page.waitForSelector('html[data-reveal-armed]', { state: 'attached', timeout: 10_000 });
+    // Wheel-like steps down the page, then rest at the bottom (the page cannot scroll further: the footer items and the
+    // last photos must still reach the reveal amount there, phones included).
+    await page.evaluate(async () => {
+      const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const step = Math.max(window.innerHeight / 2, 100);
+      for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+        window.scrollTo(0, y);
+        await delay(120);
+      }
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    });
+    const unrevealed = () =>
+      page.evaluate(() =>
+        Array.from(document.querySelectorAll('[data-reveal="io"]'))
+          .filter((el) => el.getClientRects().length > 0) // a breakpoint-hidden variant (display: none) is never on screen
+          .filter((el) => !el.hasAttribute('data-revealed') || getComputedStyle(el).opacity !== '1')
+          .map((el) => `${el.tagName}.${el.className}`.slice(0, 80)),
+      );
+    // Fade-ins: poll the computed opacity (the footer items start their 0.9s transition with a stagger delay at the very end).
+    await expect.poll(unrevealed, { timeout: 5_000 }).toEqual([]);
+  });
 });
