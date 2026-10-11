@@ -16,7 +16,9 @@ describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
     expect(frame.replace(/&amp;/g, '&')).toContain(`src="${mapEmbedSrc()}"`);
     expect(frame).toContain('title="מיקום הקליניקה"');
     expect(frame).toContain('loading="lazy"');
-    expect(frame).toContain('sandbox="allow-same-origin allow-scripts allow-popups allow-forms"');
+    expect(frame).toContain(
+      'sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms"',
+    );
     expect(frame).toMatch(/allowfullscreen/i);
     expect(html).not.toContain('<noscript');
   });
