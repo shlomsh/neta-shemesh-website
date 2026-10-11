@@ -39,20 +39,18 @@ log() { echo "[test-gate] $*"; }
 
 BIN=node_modules/.bin
 
-# Vercel does not guarantee dependencies are installed before the Ignored Build
-# Step runs, and all three runners are devDependencies. Install only if one is
-# missing.
+# Always install from the lockfile: Vercel may restore a cached node_modules
+# that predates a newly added dependency (2026-10-11: @vercel/analytics was
+# missing, every check failed, and production silently froze for 6 deploys).
 runners_present() {
   [ -x "$BIN/eslint" ] && [ -x "$BIN/tsc" ] && [ -x "$BIN/vitest" ]
 }
 
-if ! runners_present; then
-  log "eslint, tsc or vitest not present — installing dependencies"
-  if ! npm ci --no-audit --no-fund >/dev/null 2>&1; then
-    log "WARNING: dependency install failed. Cannot run the gate."
-    log "Allowing the build so the site does not silently stop deploying."
-    exit 1
-  fi
+log "installing dependencies (npm ci)"
+if ! npm ci --no-audit --no-fund >/dev/null 2>&1; then
+  log "WARNING: dependency install failed. Cannot run the gate."
+  log "Allowing the build so the site does not silently stop deploying."
+  exit 1
 fi
 
 if ! runners_present; then
