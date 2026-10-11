@@ -33,4 +33,4 @@ export const CREDENTIALS: Credential[] = [
 export const CREDENTIAL_ICONS = ['/images/jigsaw-puzzle-6.webp', '/images/jigsaw-puzzle-7.webp'];
 
 export const QUOTE_ICON = '/images/about-quote-mark.svg';
-export const PROFILE_PHOTO = '/images/about-profile-neta.webp';
+export const PROFILE_PHOTO = '/images/about-profile-neta-2026.webp';
