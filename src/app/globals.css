@@ -1,20 +1,11 @@
 @import "tailwindcss" source(none);
 
-/* Tailwind scans only the app source. `source(none)` turns off auto-detection (which would also read
- * .github/, scripts/, public/, the root configs and every .md/test file and emit junk
- * rules such as .contents or .ease-in-out); `@source` re-adds src/ (path relative to this file: src/app -> src). */
+/* Tailwind scans only src/ (source(none) disables auto-detect, which emitted junk rules). */
 @source "../";
-/* ...except the docs inside src (src/components/README.md quotes sample classes such as
- * text-white and gap-section). */
+/* ...but not the docs inside src. */
 @source not "../**/*.md";
 
-/* Metric-matched HEBREW-ONLY fallback faces (NS-35 / NS-46). Before Stanga / Elamy arrive the page paints in a
- * system font that is ~1.6x wider per glyph than Stanga, so paragraphs re-wrap on swap (a 390px blog post
- * reflowed ~800px). These scale local Arial to the real font's average Hebrew advance. `unicode-range` keeps
- * them off A-Z / a-z, so Latin still falls to the Roboto Condensed companion (never to a local Arial); the
- * range of each face is exactly what its real font carries (Hebrew, space, punctuation, digits; e.g. NOT gershayim U+05F4, which Stanga lacks), so the at-rest render is unchanged. Numbers come from
- * `node scripts/font-fallback-metrics.mjs` and are pinned by tests-unit/sanity/font-fallback.test.ts.
- * Order in --font-body / --font-display: real font, this face, then the Latin companion / generic. */
+/* Hebrew-only metric-matched fallback faces (NS-35/NS-46); values from scripts/font-fallback-metrics.mjs, pinned by font-fallback.test.ts. */
 @font-face {
   font-family: "stanga-fb";
   font-weight: 400;
@@ -57,74 +48,46 @@
 }
 
 @theme {
-  /* Palette guard: drop Tailwind's whole default palette so an off-brand utility (bg-red-500) compiles to
-   * nothing, then declare exactly the colours the site uses. */
+  /* Palette guard: drop Tailwind's default palette. */
   --color-*: initial;
   --color-plum: #7A5978;
   --color-mauve: #C49AB8;
   --color-blush: #ECC8CE;
   --color-cream: #FFF5F0;
-  /* white is the brand cream, never pure #fff (read by .on-dark) */
   --color-white: #FFF5F0;
-  /* black only for photo scrims (bg-black/20, from-black/60 ...) */
+  /* photo scrims only */
   --color-black: #000;
 
-  /* WhatsApp brand green and its hover shade: the ContactFAB WhatsApp half only (owner-approved exception,
-   * 2026-10-09; the label and glyph stay #FFFFFF at 1.98:1). The only colours outside the four-colour palette. */
+  /* WhatsApp green: ContactFAB only (owner-approved exception, 2026-10-09). */
   --color-whatsapp: #25D366;
   --color-whatsapp-hover: #1EBE5B;
 
-  /* Derived hover tints (generate `bg-plum-hover`, `bg-cream-hover`): solid plum/cream pressed a step darker /
-   * toward blush. Written once here instead of as a color-mix(...) at each call site. */
+  /* Derived hover tints (bg-plum-hover, bg-cream-hover). */
   --color-plum-hover: color-mix(in srgb, var(--color-plum) 88%, black);
   --color-cream-hover: color-mix(in srgb, var(--color-cream) 85%, var(--color-blush));
 
-  /* --font-elamy, --font-stanga and --font-latin-next are set by next/font on <html> (src/app/fonts.ts,
-   * layout.tsx); they are deliberately not redeclared here (a self-referencing token is a cycle). */
+  /* --font-elamy/--font-stanga/--font-latin-next come from next/font on <html>; not redeclared (cycle). */
 
-  /* Latin/digit companion (Roboto Condensed via next/font, see layout.tsx).
-   * Stanga has no Latin glyphs; the browser falls through Stanga -> companion
-   * per character, so Latin inside Hebrew text renders in the companion. */
+  /* Latin companion (Roboto Condensed); Stanga has no Latin glyphs. */
   --font-latin: var(--font-latin-next), sans-serif;
 
-  /* Optical size correction for the Latin companion. Roboto Condensed is set
-   * on a much larger body than Stanga: at 18px, its digits are 13.2px tall vs
-   * 9.3px for Stanga's Hebrew letters (lamed ascender 11.0px), and its
-   * lowercase x-height is 9.7px vs 9.3px. 0.88 puts digits at ~11.6px (about
-   * the Hebrew ascender) and lowercase at ~8.5px (just below the Hebrew body),
-   * so phone/email read at the same weight as the Hebrew beside them. */
+  /* Optical size correction: Roboto Condensed runs larger than Stanga. */
   --latin-scale: 0.88;
 
   --font-body: var(--font-stanga), "stanga-fb", var(--font-latin), sans-serif;
   --font-display: var(--font-elamy), "elamy-fb", cursive;
 
-  /* Border-radius scale (3 steps). Generates `rounded-tile` / `rounded-card`.
-   * Pills, buttons and avatars use the built-in `rounded-full`. */
+  /* Radius scale: rounded-tile, rounded-card. */
   --radius-tile: 0.75rem; /* small tiles: gallery grid cells, map, inputs, blog thumbnails */
   --radius-card: 1.5rem;  /* cards, photo frames, portrait, step/expertise cards, collage panels */
 
-  /* Elevations beyond Tailwind's shadow-sm..2xl (generate `shadow-cover`, `shadow-portrait`, `shadow-lift`,
-   * `shadow-fab`). Plum (122,89,120) or black tints at a fixed alpha, written once here instead of as a raw
-   * rgba() inside an arbitrary shadow-[...] at each call site. */
+  /* Elevations beyond Tailwind's shadow scale. */
   --shadow-cover: 0 24px 60px -30px rgba(122,89,120,0.6);     /* blog post cover image */
   --shadow-portrait: 0 16px 30px -15px rgba(122,89,120,0.3);  /* bio portrait */
   --shadow-lift: 0 18px 40px -20px rgba(122,89,120,0.45);     /* blog PostCard on hover */
   --shadow-fab: 0 12px 30px -10px rgba(0,0,0,0.35);           /* ContactFAB pill */
 
-  /* Fluid spacing: THE steps (NS-61). Every padding / margin / gap that scales with the viewport is one of these
-   * (`py-section`, `gap-stack`, `mb-region`, `px-gutter`...); no ad-hoc clamp() spacing (tests-unit/sanity/source-scan).
-   * Each is clamp(min, vw, max); the px are at the default 16px root. Never name a step after a CSS display word:
-   * Tailwind's `inline-<step>` size utility would turn every `inline-block` into `inline-size: var(--spacing-block)`.
-   *   inline    gutter         16 -> 48    Container side padding (default)
-   *             gutter-wide    24 -> 80    Container gutter="wide" (About sections), blog header sides
-   *   gaps      stack          16 -> 24    between items in a row / list / card, card padding, small margins
-   *             panel          24 -> 40    between cards / blocks in a grid or column, button side padding, callout inset
-   *             region         28 -> 56    header to content, between columns, the hero rhythm
-   *   vertical  section-tight  48 -> 96    Section pad="tight"
-   *             section-mid    44 -> 88    blog sections, footer, wide column gaps (`lg:gap-section-mid`)
-   *             section        56 -> 120   Section pad="section"
-   * The section steps may size a big gap too. A use that no step is within 8px of at 375/768/1280/1440 stays a
-   * clamp() with a comment saying why. */
+  /* Fluid spacing steps (NS-61, CLAUDE.md "Spacing"). Never name one after a CSS display word (`inline-<step>` breaks `inline-block`). */
   --spacing-gutter: clamp(1rem, 4vw, 3rem);
   --spacing-gutter-wide: clamp(1.5rem, 5vw, 5rem);
   --spacing-stack: clamp(1rem, 2vw, 1.5rem);
@@ -135,30 +98,20 @@
   --spacing-section: clamp(3.5rem, 8vw, 7.5rem);
 }
 
-/* `static` so the token is always emitted to :root (Tailwind drops unreferenced theme vars,
- * and it is only consumed through the arbitrary utility `bg-[var(--surface-veil)]`). */
+/* static: always emitted to :root (used only via bg-[var(--surface-veil)]). */
 @theme static {
-  /* Cream veil over mauve for inner cards on mid sections; measured >=4.5:1 against plum
-   * (cream 85% over mauve ~ #F6E7E8 -> 4.97:1), so lead/body text is allowed. */
+  /* Cream veil over mauve for inner cards: 4.97:1 against plum. */
   --surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));
 }
 
 :root {
-  /* --color-white is the brand cream, declared in @theme. The other colour aliases (--color-dark,
-   * --color-text-*, --color-bg-light, --color-brand-primary) are retired: say plum / cream / mauve. */
-
-  /* Card height contract (NS-37): the one place the unit decision lives. svh everywhere; lvh below lg
-   * (see the @supports block after this one), where the collapsed-toolbar height is static, so no strip of
-   * the next card shows and nothing resizes when the toolbar toggles. dvh is only for the footer
-   * (screen-visible). Never dvh on cards. The hero reads its own token, --hero-h (hero-fit), which follows
-   * the same unit decision (NS-25). */
+  /* Card height contract (NS-37, NS-25): svh, lvh below lg (static: no next-card strip, no resize on toolbar toggle);
+   * dvh only on the footer (screen-visible). */
   --card-h: 100svh;
   --hero-h: 100svh;
-  /* How far the hero box extends below the visible screen (iOS 26 floating bottom bar, block below). HeroContent
-   * reserves it as bottom padding on phones so the content stays centred in the VISIBLE screen. */
+  /* Hero extent below the visible screen (iOS 26 block below); HeroContent pads the bottom by it. */
   --hero-overshoot: 0px;
-  /* The lg+ floor of a locked / grown card (`screen-lock`, `screen-grow` below): on a viewport shorter than this
-   * the card is this tall and the page scrolls, rather than clipping its content. */
+  /* lg+ floor of screen-lock / screen-grow: a shorter viewport scrolls instead of clipping. */
   --card-floor: 45rem;
 }
 @supports (height: 100lvh) {
@@ -166,41 +119,24 @@
     :root { --card-h: 100lvh; --hero-h: 100lvh; }
   }
 }
-/* iOS 26 Safari draws the page edge to edge, under the floating bottom bar, but 100lvh stops short of the
- * screen bottom. Measured 2026-10-11 in the iOS 26.2 simulator (iPhone 17: lvh 754, page area 812; iPhone 16e:
- * lvh 739, page area 797), Safari Compact and Bottom layouts: the measured gap is 58pt, so a card scrolled to
- * the top ends 58pt above the screen bottom and the next card shows beside the bar. 58px itself left a 1pt
- * rounding sliver of the next card on iPhone 17, so the overshoot is 60px. The Top layout has ~0 gap (not
- * detectable in CSS) and simply gets the extra, which is harmless. env() safe-area insets read 0 in
- * Safari, viewport-fit=cover changes nothing, dvh is no taller than lvh. Every card and the hero therefore
- * overshoot lvh by 60px (--hero-overshoot, defined once here; content stays centred in the visible screen).
- * Re-measure on each new iOS major; remove the overshoot if lvh starts covering the area under the bottom bar.
- * Gated to iOS WebKit (-webkit-touch-callout) that has CSS anchor positioning (Safari 26+); iOS 18 and every
- * other browser keep exactly 100lvh (NS-25, NS-61). */
+/* iOS 26 Safari draws under the floating bottom bar but 100lvh stops 58pt short (measured 2026-10-11, iPhone 17/16e
+ * simulators; 58px left a 1pt sliver). Gated to iOS WebKit with anchor positioning (Safari 26+). Re-measure per iOS major. */
 @supports (-webkit-touch-callout: none) and (anchor-name: --a) {
   @media (width < theme(--breakpoint-lg)) {
     :root { --hero-overshoot: 60px; --card-h: calc(100lvh + var(--hero-overshoot)); --hero-h: var(--card-h); }
   }
 }
 
-/* The keyboard focus ring stack shared by every interactive element: no default outline, a 2px ring.
- * `outline-hidden` (not `outline-none`) is `outline-style: none` at rest, so the ring is unchanged, but in
- * forced-colors mode (Windows High Contrast) it becomes a real 2px outline, because the box-shadow ring is
- * stripped there and would otherwise leave no focus indicator.
- * The ring colour (and offset / inset) stays at the call site: class="focus-ring focus-visible:ring-plum". */
+/* Keyboard focus ring; outline-hidden stays a real outline in forced-colors. Ring colour is set at the call site. */
 @utility focus-ring {
   @apply focus-visible:outline-hidden focus-visible:ring-2;
 }
 
-/* One screen at least: the height every full-screen card consumes (Section fit free/lock/grow, the CTA
- * band). The lg:h-/lg:min-h- utilities on lock/grow sort after this and override it from lg up. */
+/* One screen at least (Section fit, CTA band). */
 @utility screen-fit {
   min-height: var(--card-h);
 }
-/* The lg+ heights of Section fit="lock" / "grow" (always written `lg:screen-lock` etc., by Section only): one
- * screen (--card-h, = 100svh from lg) but never below --card-floor. lock is that height exactly (the content has to
- * fit), grow is its minimum (running text that must never be clipped). `screen-lock-exact` has no floor
- * (Section floor={false}: the Expertise cards). */
+/* lg+ heights of Section fit="lock"/"grow": one screen, never below --card-floor; -exact has no floor. */
 @utility screen-lock {
   height: max(var(--card-h), var(--card-floor));
 }
@@ -210,11 +146,10 @@
 @utility screen-grow {
   min-height: max(var(--card-h), var(--card-floor));
 }
-/* The hero's one-screen height (NS-25): --hero-h, which is the same unit decision as --card-h. */
 @utility hero-fit {
   min-height: var(--hero-h);
 }
-/* The footer fills the VISIBLE screen at the bottom of the page: --card-h, upgraded to dvh where supported. */
+/* Footer fills the visible screen (the one dvh exception). */
 @utility screen-visible {
   min-height: var(--card-h);
   @supports (height: 100dvh) {
@@ -223,14 +158,11 @@
 }
 
 @layer base {
-  /* The root font size is deliberately NOT set: it stays the visitor's browser default (16px unless they raised
-   * it), and every size below is in rem so it follows. px is kept only for hairlines, shadows, motion offsets
-   * and the iOS hero overshoot. */
+  /* Root font size is never set: it follows the visitor's setting; sizes are rem. */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Hebrew RTL: `direction` comes from <html lang="he" dir="rtl"> (app/layout.tsx) and is inherited by body. */
   html, body {
     background-color: var(--color-cream);
     color: var(--color-plum);
@@ -238,7 +170,7 @@
   }
 }
 
-/* Home card snap, CSS only: viewport scroller, every home card + the footer is a target; taller cards scroll freely inside. Desktop, fine pointer, no reduced motion; the blog has no [data-snap-cards]. */
+/* Home card snap, CSS only: desktop, fine pointer, no reduced motion. */
 @media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   html:has(main[data-snap-cards]) { scroll-snap-type: y mandatory; }
   main[data-snap-cards] > section,
@@ -246,37 +178,29 @@
 }
 
 @layer components {
-  :root { --header-color: var(--color-plum); }   /* default: dark plum, for light surfaces */
-  .on-dark { --header-color: var(--color-white); }      /* cream, for titles on dark bands */
+  :root { --header-color: var(--color-plum); }
+  .on-dark { --header-color: var(--color-white); }
 
-  /* ── 4-tone section system ───────────────────────────────────────────────
-   * Each tone sets its own background, foreground text color, and
-   * --header-color so descendant title primitives auto-adjust.
-   * data-bg-tone is set by <Section tone=…>.
-   * ──────────────────────────────────────────────────────────────────────── */
+  /* 4-tone section system: <Section tone> sets data-bg-tone: background, text, --header-color. */
 
-  /* Dark (#7A5978) — cream text */
   [data-bg-tone="dark"] {
     background-color: var(--color-plum);
     color: var(--color-cream);
     --header-color: var(--color-cream);
   }
 
-  /* Mid (#C49AB8) — cream text */
   [data-bg-tone="mid"] {
     background-color: var(--color-mauve);
     color: var(--color-cream);
     --header-color: var(--color-cream);
   }
 
-  /* Light (#ECC8CE) — dark text */
   [data-bg-tone="light"] {
     background-color: var(--color-blush);
     color: var(--color-plum);
     --header-color: var(--color-plum);
   }
 
-  /* Cream (#FFF5F0) — dark text */
   [data-bg-tone="cream"] {
     background-color: var(--color-cream);
     color: var(--color-plum);
@@ -284,7 +208,6 @@
   }
 }
 
-/* Hero illustration gentle float (05B Dark Ground). */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-14px); }
@@ -294,10 +217,7 @@
   animation: floaty 7s ease-in-out infinite;
 }
 
-/* Hero entrance (NS-26): a transform-only settle. The text is fully visible, at opacity 1, from the very
-   first paint of the server HTML; the animation only slides it up 16px into place, so it can never hide
-   text (not on a slow phone, not before hydration, not if the animation is late to start). Do NOT add
-   opacity (or visibility) to these keyframes: the decorative strokes, blob and line art are what fade in. */
+/* Hero entrance (NS-26): transform-only; never add opacity/visibility (text must be visible at first paint). */
 @keyframes hero-enter {
   from { transform: translateY(16px); }
   to   { transform: none; }
@@ -306,14 +226,10 @@
 .hero-enter {
   animation: hero-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-/* .hero-enter-0 needs no rule: its delay is the default 0s (the class stays as a marker). */
 .hero-enter-2 { animation-delay: 0.16s; }
 .hero-enter-3 { animation-delay: 0.24s; }
 
-/* Scroll reveal (ScrollReveal + RevealObserver). The hidden state exists ONLY when JS has armed it
-   (html[data-reveal-armed], set after the observer's first callback) AND the user has no reduced-motion
-   preference; the server HTML and the base CSS hide nothing. The transition sits on the REVEALED state so
-   that arming never animates a fade-out of every below-the-fold element. */
+/* Scroll reveal: hidden only when armed (html[data-reveal-armed]) and no reduced-motion preference. */
 @media (prefers-reduced-motion: no-preference) {
   html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) {
     opacity: 0;
@@ -326,17 +242,12 @@
   }
 }
 
-/* Signature "writes itself" (NS-55, redrawn as a pen in NS-56, bio quote). Same arming rules as the scroll
-   reveal: the hidden state exists only under html[data-reveal-armed] AND no-preference, so JS-off / reduced
-   motion / iframes are static and fully drawn. The name is real Elamy <text> unveiled through a mask of centerline strokes, one thick .sig-pen path per pen stroke
-   (pathLength=1, "1 2" dasharray as in the hero pen: gap > 1 avoids a round-cap dot at offset 1), each with its own
-   --d / --delay (inline, writing order, right to left). Ease-in-out per stroke so it reads as a hand, not a plotter.
-   The flourish pen-draws right to left after the name. */
-.sig-wrap { font-size: clamp(2rem, 5vw, 3.5rem); padding-bottom: calc(0.28em + 0.875rem); } /* room for the flourish 0.1em below the end of the long tail (NS-56) */
-.sig-mark { font-size: clamp(2rem, 5vw, 3.5rem); width: 3.175em; height: 1.325em; margin-block: -0.1em -0.125em; overflow: visible; } /* same footprint as the old Elamy text at .type-signature */
+/* Signature pen-draw (NS-55/NS-56): same arming rules as the scroll reveal. */
+.sig-wrap { font-size: clamp(2rem, 5vw, 3.5rem); padding-bottom: calc(0.28em + 0.875rem); } /* room for the flourish below the long tail */
+.sig-mark { font-size: clamp(2rem, 5vw, 3.5rem); width: 3.175em; height: 1.325em; margin-block: -0.1em -0.125em; overflow: visible; }
 .sig-pen, .sig-flourish path { stroke-dasharray: 1 2; stroke-dashoffset: 0; }
 .sig-full { opacity: 1; }
-.sig-text { font-family: var(--font-display); } /* the real Elamy, as .type-signature */
+.sig-text { font-family: var(--font-display); }
 @media (prefers-reduced-motion: no-preference) {
   html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) :is(.sig-pen, .sig-flourish path) { stroke-dashoffset: 1; }
   html[data-reveal-armed] [data-reveal="io"]:not([data-revealed]) .sig-full { opacity: 0; }
@@ -354,9 +265,7 @@
   }
 }
 
-/* LineArt pen draw-in (NS-54). Same hidden-state contract as the reveal above: only when armed, only under
-   no-preference. The wrapper's own fade/rise is cancelled (the drawing is the motion); the stroke dash
-   offset goes 1 -> 0 on reveal, one stroke after another via --pen-delay. */
+/* LineArt pen draw-in (NS-54): same arming contract as the reveal. */
 .line-art-pen { stroke-dasharray: 1 2; }
 @media (prefers-reduced-motion: no-preference) {
   html[data-reveal-armed] .line-art-reveal[data-reveal="io"]:not([data-revealed]) { opacity: 1; translate: none; }
@@ -368,11 +277,7 @@
   }
 }
 
-/* Button breathing halo (NS-57; ButtonLink `halo`: CTA band + footer). A soft static cream/blush glow around the pill (the whole treatment under reduced
-   motion) plus, with motion, ONE thin ring that swells gently outward and fades once every 6.5 s (about 3.4 s of
-   breath, then rest). transform / opacity only, peak ring opacity 0.35, paused while the band is off screen
-   (.btn-halo-wrap carries [data-in-view], set by HaloWrap). The button label stays plum on cream (5.55:1). The halo
-   sits after the button in the DOM so hover / focus-visible on the button can brighten it. */
+/* Button breathing halo (NS-57): static glow plus one slow ring; transform/opacity only, paused off screen. */
 .btn-halo {
   position: absolute;
   inset: 0;
@@ -411,34 +316,16 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-floaty { animation: none; }
   .hero-enter { animation: none; transform: none; }
-  /* Scroll reveal needs no override here: its hidden state (the no-preference block above) exists only when
-     JS has armed it AND the user has no reduced-motion preference, so under reduce every [data-reveal]
-     element is at rest and fully visible, with or without JS or hydration. (The old framer-motion inline
-     opacity:0 / transform is gone since NS-14; there is nothing left for an !important belt to beat.) */
-  /* ParallaxFrame inner layer: static, no drift/scale (children fill it). */
+  /* [data-reveal] needs no override under reduce; ParallaxFrame inner layer: static. */
   [data-parallax] { transform: none !important; translate: none !important; scale: none !important; }
 }
 
-/* Anchor jumps (nav links, "#contact") must not glide under reduced motion. Unlayered on purpose:
-   it beats the `scroll-behavior: smooth` set in @layer base regardless of source order. */
+/* No smooth anchor jumps under reduce; unlayered on purpose, beats the base layer. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
 
-/* ContactFAB entrance (NS-14). Reproduces what framer-motion actually rendered for
-   `initial {y:24, opacity:0}` -> `animate {y:0, opacity:1}`, `transition {delay: .8, duration: .5}`, measured frame by
-   frame in the production build (see the NS-14 report):
-   - opacity: a plain 0.5s ease-out tween, cubic-bezier(0, 0, .58, 1) (framer's default ease for a duration-only
-     tween; fits the measured curve to 0.001 RMS).
-   - rise: framer drives `y` through the same easeOut over 0.5s, but the pill carries Tailwind's
-     `transition-transform duration-200`, which re-targets on every frame framer writes, so the pill barely moves
-     during the fade (24px -> 20.6px) and then settles the last ~21px in the 0.2s after framer finishes (done at
-     0.72s). That lagged curve is the look today, so it is kept as measured (piecewise-linear, 20ms steps where it
-     moves fast). The intended single easeOut rise would be: `fab-rise 0.5s cubic-bezier(0, 0, .58, 1) .8s backwards`
-     with keyframes from translateY(24px) to none.
-   `backwards` fill: the pill is hidden only during the 0.8s delay; its rest state (no animation) is fully visible,
-   so it shows with JS off and the server HTML has no inline opacity:0. Own keyframes and class; the hero and reveal
-   rules are separate. Both animations start at first paint (framer started at hydration, ~50-100ms later). */
+/* ContactFAB entrance (NS-14): reproduces the measured framer-motion curve; rest state is visible (JS-off safe). */
 @keyframes fab-fade {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -474,11 +361,7 @@
   .fab-enter { animation: none; }
 }
 
-/* ParallaxFrame drift (NS-15). Static midpoint everywhere (translateY 0 + the oversize scale, which is what
-   framer showed at scroll progress 0.5); a scroll-driven animation replaces it where supported and motion is
-   welcome. `view()` binds to the nearest scroll container, so the frame, Section and Footer clip with
-   `overflow-clip` (hidden would freeze it). `translateY(%)` is relative to the layer's own height, exactly like
-   framer's `y: "N%"`. Under reduce, the `[data-parallax]` rule in the reduce block above wins (!important). */
+/* ParallaxFrame drift (NS-15): static midpoint; scroll-driven where supported. Needs `overflow-clip` ancestors. */
 [data-parallax] { transform: translateY(0) scale(var(--parallax-scale, 1)); }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
@@ -497,30 +380,21 @@
   to { transform: translateY(var(--parallax-amount, 0%)) scale(var(--parallax-scale, 1)); }
 }
 
-/* The ink box of an Elamy title that carries a `filter` (CtaBand's drop-shadow). Safari clips a filter to the element's
-   layout box, and Elamy's swash ink (-0.86em..1.57em; ascent 0.8em) lies far outside it, so the final ץ lost its top. The
-   padding enlarges the box to cover the ink; the equal negative margin keeps the layout identical. Guard: elamy-static.spec.ts. */
+/* Ink box for an Elamy title with a `filter` (CtaBand): Safari clips filters to the layout box; see tests/elamy-static.spec.ts. */
 @utility ink-box {
   padding: 0.75em 1rem;
   margin: -0.75em -1rem;
 }
 
 @utility safari-clip {
-  /* WebKit rendering bug workaround for border-radius overflow */
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   isolation: isolate;
 }
 
 @layer components {
-  /* ── Centralized responsive type scale ───────────────────────────────────
-   * Mobile-first fluid clamp utilities. Use these classes instead of
-   * ad-hoc font/size/weight combos throughout the site.
-   * ──────────────────────────────────────────────────────────────────────── */
+  /* Type scale (CLAUDE.md "Typography"): no ad-hoc sizes. */
 
-  /* Elamy's declared ascent/descent (0.8em / 0.15em) are far smaller than its glyph ink (up to 1.5em), and iPhone
-   * Safari repaints text only inside the declared height. Any animated repaint of an Elamy title therefore cuts the
-   * swash tops (NS-61), so Elamy section titles are static: no ScrollReveal, opacity, transform or colour
-   * transition (CLAUDE.md typography rule 9; tests/elamy-static.spec.ts). No padding or margin trick helps. */
+  /* Elamy titles are static (NS-61, CLAUDE.md rule 9): its ink exceeds the declared ascent; see tests/elamy-static.spec.ts. */
   .type-display {
     font-family: var(--font-display);
     font-weight: 400;
@@ -572,17 +446,10 @@
     line-height: 1.5;
   }
 
-  /* ── Long-form article reading sizes ─────────────────────────────────────
-   * type-body (max 18px) reads too small inside a narrow article column on
-   * large desktops. These read-* sizes scale higher (body→21px, lead→25px)
-   * for comfortable sustained reading. Used only by the blog PostBody.
-   * ──────────────────────────────────────────────────────────────────────── */
+  /* Long-form article sizes (blog PostBody only). */
   .type-read {
     font-family: var(--font-body);
     font-weight: 400;
-    /* Long-form blog body. Generous sizing for sustained reading: 20px on the
-     * smallest phones, scaling to 23px on desktop. The vw mid-term keeps it
-     * growing across the phone/tablet range instead of pinning to the floor. */
     font-size: clamp(1.25rem, 5vw, 1.4375rem);
     line-height: 1.8;
   }
@@ -610,24 +477,14 @@
     line-height: 1.1;
   }
 
-  /* Latin/digit companion for phone numbers and email addresses.
-   * This is the ONE allowed size rule outside the type scale: it only applies
-   * an optical correction (--latin-scale) relative to the surrounding
-   * `.type-*` size, so it MUST sit on a child <span> of the element that
-   * carries the `.type-*` class (on the same element it would override that
-   * class's size and resolve 1em against the parent instead). */
+  /* Latin companion: sits on a child <span> of the .type-* element (a same-element size would override it). */
   .font-latin {
     font-family: var(--font-latin), sans-serif;
     font-size: calc(1em * var(--latin-scale));
   }
 }
 
-/* ── Paper grain on solid sections ───────────────────────────────────────
- * Faint noise over the section's own background-colour, beneath all in-flow
- * content (isolation + z-index:-1 on the pseudo). Photo sections carry no
- * data-bg-tone, so they are untouched. Layered so Tailwind position utilities
- * (absolute/fixed/sticky) still win over `position: relative`.
- * ──────────────────────────────────────────────────────────────────────── */
+/* Paper grain on solid sections (photo sections have no data-bg-tone). */
 @layer components {
   :root {
     --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
