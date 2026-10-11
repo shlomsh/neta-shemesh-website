@@ -3,8 +3,9 @@ import { test, expect, type Page } from '@playwright/test';
 /**
  * The contact pill (ContactFAB, fixed bottom-left) never covers hero content or a card title on a phone (NS-61).
  *
- * Measured, not assumed: the geometry of the real page at the two phone shapes that matter (375x812, a tall
- * iPhone, and 375x667, the shortest one we still support), with the iOS 26 hero overshoot simulated. iOS 26
+ * Measured, not assumed: the geometry of the real page at the phone shapes that matter (375x812, a tall iPhone;
+ * 375x667, the shortest iPhone we support; 360x640, the smallest Android, where the subtext wraps to three lines;
+ * 390x844 and 430x932 for the common and the large ones), with the iOS 26 hero overshoot simulated. iOS 26
  * Safari draws the page under its floating bottom bar, so --card-h / --hero-h are `100lvh + 80px` there
  * (globals.css, gated to iOS WebKit); this spec forces the same three tokens on every engine so the
  * overshoot case is tested everywhere, not only on a real iPhone.
@@ -19,6 +20,13 @@ import { test, expect, type Page } from '@playwright/test';
 const VIEWPORTS = [
   { width: 375, height: 812 },
   { width: 375, height: 667 },
+];
+/** The hero guard runs on all of these; the per-card title guard on the first two. */
+const HERO_VIEWPORTS = [
+  ...VIEWPORTS,
+  { width: 360, height: 640 },
+  { width: 390, height: 844 },
+  { width: 430, height: 932 },
 ];
 const OVERSHOOT = 80;
 /** Boxes that merely touch are fine; anything that shares more than this many px on both axes is an overlap. */
@@ -53,7 +61,7 @@ const fabBox = (page: Page) =>
   });
 
 test.describe('contact pill vs hero content and card titles (phone, iOS 26 overshoot simulated)', () => {
-  for (const viewport of VIEWPORTS) {
+  for (const viewport of HERO_VIEWPORTS) {
     const at = `${viewport.width}x${viewport.height}`;
 
     test(`hero at ${at}: at most one screen, pill clear of the art and every text / button box`, async ({ page }) => {
@@ -82,6 +90,11 @@ test.describe('contact pill vs hero content and card titles (phone, iOS 26 overs
       const hits = (boxes as Named[]).filter((b) => overlaps(b, fab)).map((b) => `${b.name} [${Math.round(b.top)}..${Math.round(b.bottom)}]`);
       expect(hits, `the contact pill [${Math.round(fab.top)}..${Math.round(fab.bottom)}] covers hero content at ${at}`).toEqual([]);
     });
+
+  }
+
+  for (const viewport of VIEWPORTS) {
+    const at = `${viewport.width}x${viewport.height}`;
 
     test(`every card at ${at}: scrolled to its top, the pill does not cover its title`, async ({ page }) => {
       await open(page, viewport);
