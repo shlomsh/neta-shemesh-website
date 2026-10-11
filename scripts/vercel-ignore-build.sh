@@ -11,7 +11,7 @@
 # Three checks run, all of them, so one log shows every failure:
 #
 #   eslint --max-warnings 0   (same as `npm run lint`)
-#   tsc --noEmit              (same as `npm run typecheck`)
+#   tsc --noEmit              (same as `npm run typecheck`: src, then -p tsconfig.tests.json for the tests)
 #   vitest run                (same as `npm run test:unit`)
 #
 # `next build` would catch a type error too, but only after Vercel has spent the
@@ -76,6 +76,7 @@ run_check() {
 
 run_check lint "$BIN/eslint" --max-warnings 0
 run_check typecheck "$BIN/tsc" --noEmit
+run_check typecheck-tests "$BIN/tsc" --noEmit -p tsconfig.tests.json
 run_check unit "$BIN/vitest" run
 
 if [ "${#failed[@]}" -eq 0 ]; then

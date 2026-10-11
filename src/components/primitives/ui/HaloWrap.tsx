@@ -11,7 +11,9 @@ export function HaloWrap({ children }: { children: ReactNode }) {
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
-    const io = new IntersectionObserver(([e]) => el.toggleAttribute('data-in-view', e.isIntersecting));
+    const io = new IntersectionObserver(([e]) => {
+      if (e) el.toggleAttribute('data-in-view', e.isIntersecting);
+    });
     io.observe(el);
     return () => io.disconnect();
   }, []);

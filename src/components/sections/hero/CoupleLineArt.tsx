@@ -90,20 +90,24 @@ export function CoupleLineArt({ className }: CoupleLineArtProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {LINE_PATHS.map((d, i) => (
-          <path
-            key={i}
-            d={d}
-            pathLength={1}
-            className={styles.pen}
-            style={
-              {
-                "--d": `${TIMINGS[i].duration.toFixed(3)}s`,
-                "--delay": `${TIMINGS[i].delay.toFixed(3)}s`,
-              } as CSSProperties
-            }
-          />
-        ))}
+        {LINE_PATHS.map((d, i) => {
+          const timing = TIMINGS[i];
+          if (!timing) return null; // LINE_PATHS and LINE_LENGTHS are parallel; never happens
+          return (
+            <path
+              key={i}
+              d={d}
+              pathLength={1}
+              className={styles.pen}
+              style={
+                {
+                  "--d": `${timing.duration.toFixed(3)}s`,
+                  "--delay": `${timing.delay.toFixed(3)}s`,
+                } as CSSProperties
+              }
+            />
+          );
+        })}
       </g>
       <g fill="currentColor">
         {HEART_PATHS.map((d, i) => (

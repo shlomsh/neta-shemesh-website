@@ -26,7 +26,7 @@ npm ci                      # exact lockfile install (what Vercel and CI run); `
 npm run dev                 # http://localhost:3000
 npm run build && npm run start
 npm run lint                # eslint --max-warnings 0 (also enforces the component layer direction)
-npm run typecheck           # tsc --noEmit
+npm run typecheck           # tsc --noEmit (src, noUncheckedIndexedAccess) + tsconfig.tests.json (tests)
 npm run test:unit           # all of tests-unit/ (Vitest)
 npm run test:sanity         # tests-unit/sanity only: the fast design/structure guard
 ```
