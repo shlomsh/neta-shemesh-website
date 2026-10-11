@@ -4,7 +4,7 @@ Marketing site for **Netta Shemesh** (נטע שמש), a couples and family thera
 
 ## Stack
 
-Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a CSS-only card snap; no animation library. Fonts are self-hosted through `next/font/local`. Three runtime dependencies (`next`, `react`, `react-dom`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
+Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a CSS-only card snap; no animation library. Fonts are self-hosted through `next/font/local`. Four runtime dependencies (`next`, `react`, `react-dom`, `@vercel/analytics`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
 
 ### Next.js, plus these requirements
 

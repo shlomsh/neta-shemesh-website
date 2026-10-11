@@ -6,6 +6,8 @@ The site ships to **one target: Vercel**, production at `https://www.netashemesh
 
 Only one is read by code: `NEXT_PUBLIC_SITE_URL` (`src/content/site.ts`, inlined at build time). Production leaves it unset and gets `https://www.netashemesh.co.il`. It drives the canonical, `og:url`, the sitemap and the JSON-LD `@id`s. When it points anywhere else (a preview, a tunnel), `layout.tsx` emits `robots: noindex, nofollow`, so a staging copy never competes with production (`tests-unit/lib/noindex-host.test.ts`). Never add `Disallow: /` to `robots.txt` for that: a blocked crawler never sees the `noindex`.
 
+**Web Analytics** (`@vercel/analytics`, rendered in `layout.tsx` only when `VERCEL` is set, so local runs and tests stay silent) is cookieless, needs no consent banner and is served same-origin under `/_vercel/insights/` (covered by the CSP's `'self'`). Eran must enable it once in the Vercel project (Project → Analytics → Enable); until then it collects nothing.
+
 ## The test gate
 
 Vercel does not wait for GitHub Actions, so a red `playwright.yml` cannot stop a deploy. The gate is `vercel.json` `ignoreCommand` → `scripts/vercel-ignore-build.sh`, which runs `eslint --max-warnings 0`, `tsc --noEmit` and `vitest run` before every build (all three always run, so one log shows every failure; a few seconds locally). `installCommand` is `npm ci`. **Exit codes are inverted:**

@@ -7,6 +7,7 @@ import { SITE, IS_PRODUCTION_HOST } from '@/content/site';
 import { siteJsonLd } from '@/lib/seo/jsonld';
 import { JsonLd } from '@/components/site/JsonLd';
 import { cx } from '@/lib/cx';
+import { Analytics } from '@vercel/analytics/next';
 
 // Any build not pointed at the production domain is a staging copy (a preview deploy or a
 // tunnel with NEXT_PUBLIC_SITE_URL set to its own host). Those self-canonicalise
@@ -41,6 +42,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <JsonLd data={siteJsonLd()} />
         {children}
+        {/* Vercel Web Analytics: cookieless, same-origin (/_vercel/insights/*, covered by 'self' in the CSP).
+            Rendered only on Vercel builds (VERCEL=1): elsewhere that script 404s and trips the console-clean tests. */}
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );
