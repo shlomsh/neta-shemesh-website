@@ -26,7 +26,6 @@ export const CREDENTIALS: Credential[] = [
   { text: 'הדרכת הורים' },
   { text: 'M.S.W. עובדת סוציאלית קלינית' },
   { text: 'מנחת קבוצות' },
-  { text: 'דירוג 5 כוכבים עקבי מלקוחות' },
 ];
 
 /** Check-mark icons of the credentials grid, alternating. */

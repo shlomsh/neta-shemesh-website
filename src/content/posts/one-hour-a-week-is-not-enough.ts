@@ -10,6 +10,7 @@ export const oneHourAWeekIsNotEnough: BlogPost = {
   dateDisplay: '12 ביוני 2026',
   readTime: '4 דקות קריאה',
   coverImage: '/images/expertise-parenting.webp',
+  shareImage: '/images/share/one-hour-a-week-is-not-enough.jpg',
   coverAlt: 'הורה וילד יושבים יחד בשיחה רגועה',
   body: [
     {
@@ -18,7 +19,7 @@ export const oneHourAWeekIsNotEnough: BlogPost = {
     },
     {
       type: 'quote',
-      text: 'אבל הנה האמת המקצועית שחשוב להגיד בקול רם: שעה אחת בשבוע בקליניקה, קסומה ככל תהיה, לא יכולה לחולל שינוי רגשי או התנהגותי עמוק אם היא נשארת רק שם.',
+      text: 'אבל הנה האמת המקצועית שחשוב להגיד בקול רם: שעה אחת בשבוע בקליניקה, קסומה ככל שתהיה, לא יכולה לחולל שינוי רגשי או התנהגותי עמוק אם היא נשארת רק שם.',
     },
     { type: 'heading', text: 'המתמטיקה של ההורות' },
     {

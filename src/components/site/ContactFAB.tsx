@@ -4,6 +4,7 @@ import { PhoneIcon, WhatsAppIcon } from './icons';
 
 const WA_URL = waHref();
 const PHONE_URL = telHref();
+// aria-labels start with the visible text (WCAG 2.5.3 label in name).
 
 const HALF_BASE =
   'type-small font-bold flex min-h-11 min-w-11 items-center justify-center gap-2 px-4 py-2.5 ' +
@@ -45,7 +46,7 @@ export function ContactFAB() {
           href={WA_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="שלחו הודעה בוואטסאפ"
+          aria-label="וואטסאפ, שלחו הודעה"
           className={cx(HALF_BASE, WA_HALF, 'rounded-s-full md:rounded-full')}
         >
           <WhatsAppIcon />
@@ -57,7 +58,7 @@ export function ContactFAB() {
         <a
           data-testid="fab-phone"
           href={PHONE_URL}
-          aria-label="התקשרו אליי"
+          aria-label="חייגו לנטע"
           className={cx(HALF_BASE, PHONE_HALF, 'rounded-e-full md:hidden')}
         >
           <PhoneIcon />
