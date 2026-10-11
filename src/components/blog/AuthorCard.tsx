@@ -1,3 +1,4 @@
+import { Photo } from '@/components/primitives/ui/Photo';
 import { SITE } from '@/content/site';
 import { PROFILE_PHOTO } from '@/content/home/about';
 
@@ -12,15 +13,16 @@ export function AuthorCard() {
     <div
       className="flex flex-col items-center gap-stack rounded-card bg-[color:color-mix(in_srgb,var(--color-blush)_28%,var(--color-cream))] p-panel text-center sm:flex-row sm:text-start"
     >
-      <div className="relative shrink-0 overflow-hidden rounded-full w-[clamp(5.25rem,11vw,7.25rem)] h-[clamp(5.25rem,11vw,7.25rem)]">
-        <img // eslint-disable-line @next/next/no-img-element -- fixed-size author avatar from the shared profile asset
-          src={PROFILE_PHOTO}
-          alt={SITE.name}
-          loading="lazy"
-          className="h-full w-full object-cover object-[50%_38%]"
-        />
+      <Photo
+        src={PROFILE_PHOTO}
+        alt={SITE.name}
+        radius="none"
+        sizes="116px"
+        objectPosition="50% 38%"
+        className="shrink-0 rounded-full w-[clamp(5.25rem,11vw,7.25rem)] h-[clamp(5.25rem,11vw,7.25rem)]"
+      >
         <div className="absolute inset-0 rounded-full ring-[1.5px] ring-mauve" />
-      </div>
+      </Photo>
 
       <div className="flex flex-col gap-1.5">
         <span className="type-eyebrow text-plum">
