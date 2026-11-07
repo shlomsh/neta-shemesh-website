@@ -1,10 +1,9 @@
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
-import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { SectionHeader } from '@/components/primitives/ui/SectionHeader';
 import { LineArt } from '@/components/site/LineArt';
 import { STEPS } from '@/content/home/steps';
-import { ANCHOR, ID, anchorHref } from '@/content/ids';
+import { ID } from '@/content/ids';
 import { cx } from '@/lib/cx';
 import { StepCard } from './StepCard';
 
@@ -23,8 +22,7 @@ export function Services() {
 
         {/* Text column — centered on mobile, right-aligned sticky on desktop */}
         <div className="text-center md:text-start md:w-80 md:shrink-0 lg:text-start lg:w-[25rem] lg:shrink-0 lg:self-center z-10 mb-12 md:mb-0 lg:mb-0">
-          {/* Section is blush (plum text = 3.89:1, AA large only), so the subtitle is
-              set at the quote scale (>=24px). */}
+          {/* The subtitle stays at the quote scale for hierarchy on the paper surface. */}
           <SectionHeader
             marker={<LineArt name="parent-child" marker />}
             id={ID.servicesTitle}
@@ -33,11 +31,6 @@ export function Services() {
             subtitle="התהליך בקליניקה מבוסס על שלבים מובנים שמאפשרים יצירת קשר בטוח, הבנת שורש הבעיה ורכישת כלים פרקטיים לשינוי."
           />
 
-          <div className="mt-12">
-            <ButtonLink href={anchorHref(ANCHOR.contact)} variant="primary" className="w-full sm:w-auto">
-              צרו קשר
-            </ButtonLink>
-          </div>
         </div>
 
         {/* One column at 375px, two from md; ~30px gaps, cards capped at ~360px on tablets. */}

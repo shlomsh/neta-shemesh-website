@@ -6,8 +6,8 @@ interface CredentialsListProps {
   iconSrcs: string[];
 }
 
-/** Turns the icon artwork cream, for the dark credentials card (the list is only used there). */
-const CREAM_ICON_FILTER = 'brightness(0) saturate(100%) invert(96%) sepia(13%) saturate(1034%) hue-rotate(314deg) brightness(105%) contrast(101%)';
+/** Turns the credential artwork plum to match the paper surface. */
+const PLUM_ICON_FILTER = 'brightness(0) saturate(100%) invert(35%) sepia(12%) saturate(1100%) hue-rotate(248deg) brightness(88%) contrast(90%)';
 
 export function CredentialsList({ items, iconSrcs }: CredentialsListProps) {
   // Wrapped flex, not a grid: a short last row (5 items = 2+2+1, or 3+2) stays centred instead of hanging off one
@@ -23,7 +23,7 @@ export function CredentialsList({ items, iconSrcs }: CredentialsListProps) {
             width={384}
             height={288}
             className="w-24 h-auto shrink-0 mb-4"
-            style={{ filter: CREAM_ICON_FILTER }}
+            style={{ filter: PLUM_ICON_FILTER }}
             loading="lazy"
           />
           <span

@@ -1,18 +1,4 @@
-import type { CroppedPhoto, Credential } from '../types';
-
-/** Intro collage (three portraits). */
-export const INTRO_PHOTOS: readonly [CroppedPhoto, CroppedPhoto, CroppedPhoto] = [
-  { src: '/images/about-collage-1.webp', objectPosition: '50% 50%' },
-  { src: '/images/about-collage-2.webp', objectPosition: '48.1% 47.7%' },
-  { src: '/images/about-collage-3.webp', objectPosition: '55.3% 50%' },
-];
-
-/** "להצית מחדש" gallery (three portraits). */
-export const REIGNITE_PHOTOS: readonly CroppedPhoto[] = [
-  { src: '/images/about-gallery-1.webp', objectPosition: '50% 50%' },
-  { src: '/images/gallery-item-3.webp', objectPosition: '50% 50%' },
-  { src: '/images/about-gallery-3.webp', objectPosition: '50% 50%' },
-];
+import type { Credential } from '../types';
 
 /** Pull-quote beside the bio; the last line is the attribution. */
 export const BIO_QUOTE_LINES = [

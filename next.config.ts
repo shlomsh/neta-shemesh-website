@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig: NextConfig = {
+  // Keep loopback previews and opt in only the selected LAN host; do not broaden dev asset access globally.
+  allowedDevOrigins: isDev
+    ? ['127.0.0.1', ...(process.env.NEXT_ALLOWED_DEV_ORIGIN ? [process.env.NEXT_ALLOWED_DEV_ORIGIN] : [])]
+    : [],
   // Stop `next dev` writing its "read node_modules/next/dist/docs/" block into AGENTS.md (it made
   // every agent crawl a 4.3 MB docs folder). With this off, Next only strips that managed block and
   // never creates the file (node_modules/next/dist/server/lib/generate-agent-files.js). CLAUDE.md says
@@ -71,4 +75,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-

@@ -29,6 +29,14 @@ npm run lint                # eslint --max-warnings 0 (also enforces the compone
 npm run typecheck           # tsc --noEmit (src, noUncheckedIndexedAccess) + tsconfig.tests.json (tests)
 npm run test:unit           # all of tests-unit/ (Vitest)
 npm run test:sanity         # tests-unit/sanity only: the fast design/structure guard
+node scripts/generate-brand-logo.mjs # regenerate light and plum tagline wordmarks with Elamy and the original house artwork
+```
+
+For a phone preview on the same Wi-Fi (PowerShell), set `NEXT_ALLOWED_DEV_ORIGIN` to this computer's LAN IPv4 address and bind Next to all interfaces:
+
+```powershell
+$env:NEXT_ALLOWED_DEV_ORIGIN = "192.168.x.x"
+npm run dev -- --hostname 0.0.0.0
 ```
 
 Playwright (`tests/*.spec.ts`, runs the built site):

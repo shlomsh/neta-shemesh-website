@@ -59,28 +59,26 @@ beforeAll(async () => {
  * `free` rows (about-credentials, contact-social): CLAUDE.md only requires the one-screen minimum there.
  */
 const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> = {
-  'about-intro': { mode: 'lock-720', fit: 'lock', py12: true },
   expertise: { mode: 'grow-720', fit: 'grow', py12: true },
+  faq: { mode: 'grow-720', fit: 'grow', py12: true },
   'about-me': { mode: 'grow-720', fit: 'grow', py12: true },
   'about-credentials': { mode: 'free', fit: 'free', py12: false },
-  'about-gallery': { mode: 'lock-720', fit: 'lock', py12: true },
   services: { mode: 'lock-720', fit: 'lock', py12: true },
-  'testimonials-gallery': { mode: 'lock-720', fit: 'lock', py12: true },
   'contact-social': { mode: 'free', fit: 'free', py12: false },
   'contact-office': { mode: 'lock-720', fit: 'lock', py12: true },
 };
 
 /**
- * Phone contract (below lg): EVERY Section-based card is at least one screen (the solid sections + the CTA band);
+ * Phone contract (below lg): EVERY Section-based card is at least one screen (the solid sections);
  * the bespoke hero and footer are asserted in the photo-section test below. Dropping a row is a decision, not drift.
  */
-const PHONE_CARDS = [...Object.keys(DESKTOP), 'cta-band'];
+const PHONE_CARDS = Object.keys(DESKTOP);
 
 describe('B6: every card is at least one screen (phone and desktop), with the agreed desktop lock/grow modes', () => {
-  it('the table covers exactly the solid sections (the phone list adds the CTA band)', () => {
+  it('the tables cover exactly the solid sections', () => {
     const solid = SOLID_SECTIONS.map((s) => s.name).sort();
     expect(Object.keys(DESKTOP).sort(), 'DESKTOP table and EXPECTED_SECTIONS solid sections diverged: add/remove the row').toEqual(solid);
-    expect([...PHONE_CARDS].sort()).toEqual([...solid, 'cta-band'].sort());
+    expect([...PHONE_CARDS].sort()).toEqual(solid);
   });
 
   it.each(Object.keys(DESKTOP))('%s: at least one screen from lg, with the agreed lock/grow assignment', (name) => {
@@ -98,17 +96,16 @@ describe('B6: every card is at least one screen (phone and desktop), with the ag
     expect(hasMobileFill(el), `${labelOf(el, name)} lost its phone one-screen minimum (screen-fit), or carries a hand-written min-h-lvh / a min-h-*, h-*, max-lg:, sm: or md: height utility that cancels it`).toBe(true);
   });
 
-  it('photo sections (hero, CTA band, footer) still fill a screen at minimum at every width; hero and footer are bespoke (no data-fit)', () => {
+  it('photo sections (hero and footer) still fill a screen at minimum at every width and are bespoke (no data-fit)', () => {
     for (const spec of EXPECTED_SECTIONS.filter((s) => s.kind === 'photo')) {
       const el = findSection(home, spec.name);
       expect(hasMinScreen(el), `${labelOf(el, spec.name)} lost its all-breakpoint one-screen minimum`).toBe(true);
     }
-    expect(fitOf(findSection(home, 'cta-band')), 'the CTA band is a free-fit photo band').toBe('free');
     for (const name of ['hero', 'footer']) expect(findSection(home, name).hasAttribute('data-fit'), `${name} is bespoke and must not claim a Section fit`).toBe(false);
   });
 
   it('no top-level section carries a data-fit outside the tables (a new fit must be added deliberately)', () => {
-    const known = new Set([...Object.keys(DESKTOP), 'cta-band'].map((n) => findSection(home, n)));
+    const known = new Set(Object.keys(DESKTOP).map((n) => findSection(home, n)));
     expect(topLevelSections(home).filter((s) => s.hasAttribute('data-fit') && !known.has(s)).map((s) => labelOf(s))).toEqual([]);
   });
 
@@ -139,11 +136,8 @@ describe('B6: every card is at least one screen (phone and desktop), with the ag
 describe('B7: height-driven flex chain per section', () => {
   /** Photo-bearing locked sections: how many cover images the grid holds, and its min-height token. */
   const CHAINS: Array<{ name: string; imgs: number; minH: MinHeightKind }> = [
-    { name: 'about-intro', imgs: 3, minH: 'zero' },
     { name: 'expertise', imgs: 4, minH: 'floor-320' },
-    { name: 'about-gallery', imgs: 3, minH: 'floor-320' },
     { name: 'services', imgs: 4, minH: 'zero' },
-    { name: 'testimonials-gallery', imgs: 6, minH: 'floor-320' },
   ];
 
   /** Deepest element that is `lg:flex-1` and holds all the section's cover images = the photo grid. */

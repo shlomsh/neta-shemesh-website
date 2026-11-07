@@ -9,7 +9,8 @@
  */
 import { describe, expect, it } from 'vitest';
 import { FACES, unicodeRange, compute, corpus, isCovered, loadRef, loadReal } from '../../scripts/font-fallback-metrics.mjs';
-import { cssVar, globalsCss, stripCssComments } from './helpers';
+import { cssVar } from './lib/css';
+import { globalsCss, stripCssComments } from './lib/source';
 
 const css = stripCssComments(globalsCss());
 

@@ -22,9 +22,17 @@ beforeAll(async () => {
 });
 
 describe('E10: in-page anchors resolve', () => {
+  it('does not render the removed consultation and relationship gallery sections', () => {
+    expect(home.querySelector('#cta-band')).toBeNull();
+    expect(home.querySelector('#photo-gallery')).toBeNull();
+    expect(home.textContent).not.toContain('קביעת פגישת ייעוץ');
+    expect(home.textContent).not.toContain('טיפול זוגי לקשר בריא ותומך');
+    expect(home.querySelector('#gallery')).not.toBeNull();
+  });
+
   it('every href="#x" on the page targets an element with id x', () => {
     const links = Array.from(home.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
-    expect(links.length, 'in-page anchors (nav, hero, CTAs)').toBeGreaterThanOrEqual(6);
+    expect(links.length, 'in-page anchors (nav, hero, CTAs)').toBeGreaterThanOrEqual(5);
     const ids = new Set(Array.from(home.querySelectorAll('[id]')).map((e) => e.id));
     const dead = links
       .map((a) => a.getAttribute('href')!.slice(1))
@@ -64,15 +72,15 @@ describe('E11: all visible text lives under a type-* class', () => {
   });
 });
 
-describe('E13: navigation collapses below md', () => {
-  it('the inline link row is hidden below md (hidden md:flex) and a hamburger exists for < md', () => {
+describe('E13: hero navigation stays expanded below md', () => {
+  it('all primary links are rendered in the hero without a hamburger', () => {
     const nav = desktopNav(home);
-    expect(nav, 'desktop nav row (a labelled <nav> with `hidden md:flex`) not found: the squeezed inline nav may be back on mobile').not.toBeNull();
-    expect(nav!.querySelectorAll('a').length, 'desktop nav links incl. the phone pill').toBeGreaterThanOrEqual(5);
-    const burger = hamburger(home);
-    expect(burger, 'hamburger button (aria-controls=mobile-menu, md:hidden) not found').not.toBeNull();
-    expect(burger!.getAttribute('aria-label'), 'hamburger needs an accessible name').toBeTruthy();
-    expect(hasClass(burger, 'md:hidden'), 'hamburger must disappear from md up').toBe(true);
+    expect(nav, 'primary navigation not found').not.toBeNull();
+    expect(nav!.querySelectorAll('a').length, 'primary links').toBeGreaterThanOrEqual(4);
+    expect(nav!.querySelector('a[href="#faq"]')?.textContent).toBe('שאלות נפוצות');
+    expect(nav!.querySelector('a[href="#contact"]')).toBeNull();
+    expect(hasClass(nav, 'flex'), 'primary navigation remains visible on mobile').toBe(true);
+    expect(hamburger(home), 'homepage hero should not collapse its navigation').toBeNull();
   });
 });
 
@@ -121,9 +129,7 @@ describe('E15: image URLs are root-absolute', () => {
 
 describe('E16: decorative overlays never intercept clicks', () => {
   it('every absolutely-positioned aria-hidden svg carries pointer-events-none', () => {
-    const overlays = Array.from(home.querySelectorAll('svg[aria-hidden="true"]')).filter((svg) => hasClass(svg, 'absolute'));
-    expect(overlays.length, 'the page lost its decorative overlay (the about-intro organic background)').toBeGreaterThanOrEqual(1);
-    expectNone(clickBlockingOverlays(home), 'decorative svgs that would block taps on the copy beneath');
+    expectNone(clickBlockingOverlays(home), 'absolutely-positioned decorative svgs that would block taps on the copy beneath');
   });
 
 });

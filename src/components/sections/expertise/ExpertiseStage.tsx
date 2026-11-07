@@ -131,11 +131,31 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
                 }}
                 onMouseLeave={clearHover}
                 onKeyDown={(e) => onKeyDown(e, i)}
-                className="block w-full text-start ps-5 py-2 rounded-tile cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum"
+                className={cx(
+                  'flex w-full items-start justify-between gap-4 text-start ps-5 pe-4 py-2 rounded-tile border cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum',
+                  isActive
+                    ? 'border-plum/35 bg-plum/5'
+                    : 'border-transparent hover:border-plum/25 hover:bg-plum/5',
+                )}
               >
                 <span className="type-title font-normal [letter-spacing:normal] block">
                   {item.title}
                 </span>
+                <svg
+                  aria-hidden="true"
+                  className={cx(
+                    'size-5 shrink-0 self-center text-plum transition-transform duration-200 motion-reduce:transition-none',
+                    isActive && 'rotate-180',
+                  )}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
               </button>
               <div
                 id={panelId}
@@ -147,7 +167,7 @@ export function ExpertiseStage({ items }: ExpertiseStageProps) {
                 )}
               >
                 <div className="overflow-hidden min-h-0">
-                  {/* Blush section (plum = 3.89:1, AA large only): the description must stay at the quote scale (>=24px). */}
+                  {/* Keep the description at the quote scale for hierarchy. */}
                   <ScrollReveal>
                     <p className="type-quote max-w-prose ps-5 pt-1 pb-3">{item.description}</p>
                   </ScrollReveal>

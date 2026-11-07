@@ -69,7 +69,7 @@ export default async function BlogPostPage(
         <Container id={ID.mainContent} maxWidth="md">
           <Link
             href="/blog"
-            className="type-small mb-panel inline-flex items-center gap-2 font-bold text-cream underline-offset-4 hover:underline"
+            className="type-small mb-panel inline-flex items-center gap-2 font-bold text-plum underline-offset-4 hover:underline"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="4" y1="12" x2="20" y2="12" />
@@ -79,14 +79,14 @@ export default async function BlogPostPage(
           </Link>
 
           <div className="flex flex-col items-center gap-stack text-center">
-            <span className="type-eyebrow text-cream">
+            <span className="type-eyebrow">
               {post.category}
             </span>
             <SectionTitle as="h1">{post.title}</SectionTitle>
-            <p className="type-lead mx-auto max-w-[60ch] text-cream">
+            <p className="type-lead mx-auto max-w-[60ch]">
               {post.excerpt}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-2.5 type-small text-cream">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 type-small text-plum">
               <span>{SITE.name}</span>
               <span aria-hidden="true">·</span>
               <time dateTime={post.date}>{post.dateDisplay}</time>
@@ -101,7 +101,7 @@ export default async function BlogPostPage(
       <Section id={ID.postBody} tone="cream" className="py-section-mid">
         <Container maxWidth="lg">
           <div className="mx-auto max-w-[50rem]">
-            {/* Cover — pulled up to overlap the seam with the dark hero */}
+            {/* Cover — pulled up to overlap the seam with the paper hero */}
             <ScrollReveal>
               <Photo
                 src={post.coverImage}
@@ -135,10 +135,10 @@ export default async function BlogPostPage(
       <Section id={ID.postCta} tone="dark" className="py-section">
         <Container maxWidth="md">
           <div className="flex flex-col items-center gap-panel text-center">
-            <p className="type-quote mx-auto max-w-[55ch] text-cream">
+            <p className="type-quote mx-auto max-w-[55ch] text-plum">
               {post.cta.text}
             </p>
-            <ButtonLink href={post.cta.href} variant="secondary">{post.cta.buttonLabel}</ButtonLink>
+            <ButtonLink href={post.cta.href} variant="primary">{post.cta.buttonLabel}</ButtonLink>
           </div>
         </Container>
       </Section>

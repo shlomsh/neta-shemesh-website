@@ -10,7 +10,6 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import {
   SUBTITLES,
   buttonHeightToken,
-  buttonSizeTokens,
   buttons,
   classTokens,
   desktopNav,
@@ -44,7 +43,7 @@ describe('C12: one type-* class per element, font-latin only on inner spans', ()
 
   it('font-latin spans exist and live inside a type-* element (so 1em resolves against the scale)', () => {
     const spans = Array.from(home.querySelectorAll('.font-latin'));
-    expect(spans.length, 'phone, email, M.S.W and © spans').toBeGreaterThanOrEqual(5);
+    expect(spans.length, 'phone, email, M.S.W and © spans').toBeGreaterThanOrEqual(4);
     for (const s of spans) {
       expect(s.tagName, `${desc(s)} should be an inline span`).toBe('SPAN');
       expect(s.closest('[class*="type-"]'), `${desc(s)} is not inside a type-* element`).not.toBeNull();
@@ -61,7 +60,7 @@ describe('C12: one type-* class per element, font-latin only on inner spans', ()
       }
     }
     expectNone(offenders, 'phone/email/© text outside span.font-latin');
-    expect(seen, 'hero pill, contact phone, contact email, footer ©').toBeGreaterThanOrEqual(4);
+    expect(seen, 'contact phone, contact email, footer ©').toBeGreaterThanOrEqual(3);
   });
 });
 
@@ -84,8 +83,8 @@ describe('C13: section subtitle lockup', () => {
 });
 
 describe('C14: buttons, nav and hero copy', () => {
-  it('finds the ButtonLinks (hero phone pill, hero CTA, services CTA, CTA band, footer CTA)', () => {
-    expect(buttons(home).length, 'ButtonLink count').toBeGreaterThanOrEqual(4);
+  it('finds the ButtonLinks (hero CTA and footer CTA)', () => {
+    expect(buttons(home).length, 'ButtonLink count').toBeGreaterThanOrEqual(2);
   });
 
   it('every ButtonLink is type-lead font-bold, no uppercase, no tracking, no py-*; height comes from min-h 48 or 56', () => {
@@ -98,27 +97,16 @@ describe('C14: buttons, nav and hero copy', () => {
     }
   });
 
-  it('the hero phone pill and the hero consult CTA are the same size variant', () => {
+  it('the hero contact CTA uses the compact size variant', () => {
     const hero = findSection(home, 'hero');
-    const pill = hero.querySelector<HTMLElement>('a[href^="tel:"]')!;
     const cta = buttons(hero).find((a) => a.getAttribute('href') === '#contact')!;
-    expect(pill, 'hero phone pill').not.toBeNull();
     expect(cta, 'hero consult CTA').not.toBeNull();
-    expect(buttonSizeTokens(pill), 'hero phone pill vs consult CTA sizing').toEqual(buttonSizeTokens(cta));
-    expect(buttonHeightToken(pill), 'hero pills are the sm variant').toBe('min-h-12');
-  });
-
-  it('services + CTA-band buttons are the md variant (56px)', () => {
-    for (const name of ['services', 'cta-band']) {
-      const section = findSection(home, name);
-      const a = buttons(section).find((x) => ['#contact', '/#contact'].includes(x.getAttribute('href')!))!;
-      expect(buttonHeightToken(a), `${labelOf(section, name)} CTA must be the md variant (min-h-14)`).toBe('min-h-14');
-    }
+    expect(buttonHeightToken(cta), 'hero CTA is the sm variant').toBe('min-h-12');
   });
 
   it('desktop nav links are type-lead font-bold (no tracking, no uppercase)', () => {
     const nav = desktopNav(home);
-    expect(nav, 'desktop nav row (hidden md:flex) not found').not.toBeNull();
+    expect(nav, 'primary navigation not found').not.toBeNull();
     const links = Array.from(nav!.querySelectorAll<HTMLElement>('a')).filter((a) => !buttons(nav!).includes(a));
     expect(links.length, 'nav text links').toBeGreaterThanOrEqual(4);
     for (const a of links) {
@@ -151,7 +139,7 @@ describe('C14: buttons, nav and hero copy', () => {
   });
 });
 
-describe('C15: about-me copy (the about-intro veil card is in cards-rotation)', () => {
+describe('C15: about-me copy', () => {
   it('about-me bio is type-lead running copy (no type-body)', () => {
     const section = findSection(home, 'about-me');
     expect(section.querySelectorAll('p.type-lead').length, `${labelOf(section, 'about-me')} bio paragraphs`).toBeGreaterThanOrEqual(3);
@@ -161,8 +149,9 @@ describe('C15: about-me copy (the about-intro veil card is in cards-rotation)', 
 
 describe('C16: headings', () => {
   it('every section h2 on the page is bare type-title (Elamy 700 baked into the class)', () => {
-    const h2s = Array.from(home.querySelectorAll('h2'));
-    expect(h2s.length, 'section h2s').toBeGreaterThanOrEqual(10);
+    const h2s = Array.from(home.querySelectorAll('h2:not(.sr-only)'));
+    expect(h2s.length, 'visible section h2s').toBe(6);
+    expect(findSection(home, 'contact-social').querySelector('h2.sr-only')?.textContent).toBe('קישורים לרשתות החברתיות');
     for (const h of h2s) {
       expect(typeClassesOf(h), `h2 "${h.textContent!.trim()}"`).toEqual(['type-title']);
       expect(hasClass(h, 'font-bold'), `h2 "${h.textContent!.trim()}" has a redundant font-bold`).toBe(false);

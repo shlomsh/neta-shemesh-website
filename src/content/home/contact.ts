@@ -1,9 +1,9 @@
 import { SITE } from '../site';
 import type { ContactPhoto, RichLine } from '../types';
 
-/** Panel 1: "עקבו אחריי". */
+/** Panel 1: social links, with an accessible section heading. */
 export const SOCIAL_PANEL = {
-  heading: 'עקבו אחריי',
+  heading: 'קישורים לרשתות החברתיות',
   body: {
     start: 'בואו נשמור על קשר גם ברשתות החברתיות. שם אני משתפת תובנות, כלים ומחשבות על ',
     bold: 'זוגיות, הורות',
@@ -11,9 +11,9 @@ export const SOCIAL_PANEL = {
   } satisfies RichLine,
 };
 
-/** Panel 2: "המשרד שלי". Phone, email and address come from content/site.ts. */
+/** Panel 2: "הקליניקה שלי". Phone, email and address come from content/site.ts. */
 export const OFFICE_PANEL = {
-  heading: 'המשרד שלי',
+  heading: 'הקליניקה שלי',
   body: {
     start: 'קליניקה נעימה ובטוחה, מרחב שבו תרגישו ',
     bold: 'עטופים, מובנים',

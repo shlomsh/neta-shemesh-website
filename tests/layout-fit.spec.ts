@@ -17,16 +17,12 @@ import { test, expect } from '@playwright/test';
 // the other `display:none`): at least one of them must be rendered, on-screen and legible.
 const TITLE_IDS: string[][] = [
   [ID.heroTitle], // Hero
-  [ID.aboutIntroTitle], // About-Intro-Dark
   [ID.aboutMeTitle],   // About-Me-Cream
   [ID.aboutCredentialsTitle], // About-Light
-  [ID.aboutGalleryTitle], // Reignite
   [ID.expertiseTitle], // SafeSpace
+  [ID.faqTitle], // Frequently asked questions
   [ID.servicesTitle], // HowItWorks
   // [ID.testimonialsTitle], // Testimonials — hidden behind SHOW_TESTIMONIALS flag
-  [ID.ctaBandTitle], // Scheduling
-  [ID.photoGalleryTitle], // CoupleTherapy
-  [ID.contactSocialTitle, ID.contactSocialTitleMobile], // Contact-Follow
   [ID.contactOfficeTitle], // Contact-Office
 ];
 
@@ -122,7 +118,7 @@ test.describe('Layout-fit invariant (no off-screen clipping, no font collapse)',
       ids.map((id) => {
         const el = document.getElementById(id);
         return { id, family: el ? window.getComputedStyle(el).fontFamily.toLowerCase() : null };
-      }), [ID.aboutGalleryTitle]);
+      }), [ID.expertiseTitle]);
     for (const f of families) {
       expect(f.family, `#${f.id} should exist`).not.toBeNull();
       expect(f.family, `#${f.id} must use Elamy`).toContain('elamy');

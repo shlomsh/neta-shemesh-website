@@ -48,10 +48,10 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
       role="dialog"
       aria-modal="true"
       aria-label="תפריט ניווט"
-      className="fixed inset-0 z-[100] md:hidden flex flex-col bg-plum"
+      className="paper-surface fixed inset-0 z-[100] md:hidden flex flex-col"
     >
       <div className="flex items-center justify-end px-gutter py-panel">
-        <IconButton ref={closeButtonRef} label="סגירת תפריט" onClick={onClose}>
+        <IconButton ref={closeButtonRef} label="סגירת תפריט" onClick={onClose} className="text-plum focus-visible:ring-plum">
           <CloseIcon />
         </IconButton>
       </div>
@@ -66,14 +66,14 @@ export function MobileMenu({ open, links, onClose }: { open: boolean; links: Nav
             key={href}
             href={href}
             label={label}
-            className="type-card-title text-cream transition-opacity hover:opacity-75"
+            className="type-card-title text-plum transition-opacity hover:opacity-75"
             onClick={onClose}
           />
         ))}
 
         <ButtonLink
           href={telHref()}
-          variant="secondary"
+          variant="primary"
           onClick={onClose}
           className="mt-stack"
         >

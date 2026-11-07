@@ -11,9 +11,9 @@
   font-weight: 400;
   src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5B9, U+5BB-5C2, U+5D0-5EA, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB2A-FB2D, U+FB31-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB44, U+FB46-FB47, U+FB49-FB4B;
-  size-adjust: 59.42%;
-  ascent-override: 115.82%;
-  descent-override: 39.32%;
+  size-adjust: 59.38%;
+  ascent-override: 115.89%;
+  descent-override: 39.34%;
   line-gap-override: 2.89%;
 }
 @font-face {
@@ -21,30 +21,30 @@
   font-weight: 700;
   src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5B9, U+5BB-5C2, U+5D0-5EA, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB2A-FB2D, U+FB31-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB44, U+FB46-FB47, U+FB49-FB4B;
-  size-adjust: 57.34%;
-  ascent-override: 120.03%;
-  descent-override: 40.74%;
-  line-gap-override: 2.99%;
+  size-adjust: 57.30%;
+  ascent-override: 120.10%;
+  descent-override: 40.77%;
+  line-gap-override: 3.00%;
 }
 @font-face {
   font-family: "elamy-fb";
   font-weight: 400;
   src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5C5, U+5C7, U+5D0-5EA, U+5F0-5F4, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB1F, U+FB29-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB43-FB44, U+FB46-FB4F;
-  size-adjust: 90.94%;
-  ascent-override: 87.97%;
-  descent-override: 21.99%;
-  line-gap-override: 4.95%;
+  size-adjust: 91.01%;
+  ascent-override: 87.90%;
+  descent-override: 21.98%;
+  line-gap-override: 4.94%;
 }
 @font-face {
   font-family: "elamy-fb";
   font-weight: 700;
   src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B9, U+5BC, U+5BE-5C5, U+5D0-5EA, U+5F0-5F4, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB1F, U+FB29-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB43-FB44, U+FB46-FB4F;
-  size-adjust: 92.88%;
-  ascent-override: 86.13%;
-  descent-override: 16.15%;
-  line-gap-override: 2.48%;
+  size-adjust: 92.96%;
+  ascent-override: 86.06%;
+  descent-override: 16.14%;
+  line-gap-override: 2.47%;
 }
 
 @theme {
@@ -76,7 +76,6 @@
 
   --font-body: var(--font-stanga), "stanga-fb", var(--font-latin), sans-serif;
   --font-display: var(--font-elamy), "elamy-fb", cursive;
-
   /* Radius scale: rounded-tile, rounded-card. */
   --radius-tile: 0.75rem; /* small tiles: gallery grid cells, map, inputs, blog thumbnails */
   --radius-card: 1.5rem;  /* cards, photo frames, portrait, step/expertise cards, collage panels */
@@ -184,19 +183,27 @@
   /* 4-tone section system: <Section tone> sets data-bg-tone: background, text, --header-color. */
 
   [data-bg-tone="dark"] {
-    background-color: var(--color-plum);
-    color: var(--color-cream);
-    --header-color: var(--color-cream);
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(ellipse at 12% 10%, color-mix(in srgb, var(--color-blush) 18%, transparent), transparent 44%),
+      radial-gradient(ellipse at 88% 92%, color-mix(in srgb, var(--color-mauve) 12%, transparent), transparent 40%);
+    color: var(--color-plum);
+    --header-color: var(--color-plum);
   }
 
   [data-bg-tone="mid"] {
-    background-color: var(--color-mauve);
-    color: var(--color-cream);
-    --header-color: var(--color-cream);
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(ellipse at 92% 12%, color-mix(in srgb, var(--color-mauve) 14%, transparent), transparent 42%),
+      radial-gradient(ellipse at 8% 88%, color-mix(in srgb, var(--color-blush) 16%, transparent), transparent 38%);
+    color: var(--color-plum);
+    --header-color: var(--color-plum);
   }
 
   [data-bg-tone="light"] {
-    background-color: var(--color-blush);
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--color-blush) 16%, transparent), transparent 48%);
     color: var(--color-plum);
     --header-color: var(--color-plum);
   }
@@ -205,6 +212,27 @@
     background-color: var(--color-cream);
     color: var(--color-plum);
     --header-color: var(--color-plum);
+  }
+
+  [data-bg-tone]::after,
+  .paper-surface::after {
+    content: '';
+    position: absolute;
+    inset: 1rem;
+    z-index: 0;
+    border: 1px solid color-mix(in srgb, var(--color-plum) 12%, transparent);
+    border-radius: var(--radius-tile);
+    pointer-events: none;
+  }
+
+  .paper-surface {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(ellipse at 8% 12%, color-mix(in srgb, var(--color-blush) 18%, transparent), transparent 46%),
+      radial-gradient(ellipse at 92% 88%, color-mix(in srgb, var(--color-mauve) 12%, transparent), transparent 40%);
+    color: var(--color-plum);
   }
 }
 
@@ -491,12 +519,14 @@
   }
 
   [data-bg-tone],
+  .paper-surface,
   .grain-surface {
     position: relative;
     isolation: isolate;
   }
 
   [data-bg-tone]::before,
+  .paper-surface::before,
   .grain-surface::before {
     content: '';
     position: absolute;
@@ -509,8 +539,8 @@
     mix-blend-mode: soft-light;
   }
 
-  [data-bg-tone="light"]::before,
-  [data-bg-tone="cream"]::before {
+  [data-bg-tone]::before,
+  .paper-surface::before {
     --grain-opacity: 0.08;
     mix-blend-mode: multiply;
   }
@@ -518,6 +548,9 @@
 
 @media print {
   [data-bg-tone]::before,
+  [data-bg-tone]::after,
+  .paper-surface::before,
+  .paper-surface::after,
   .grain-surface::before {
     display: none;
   }

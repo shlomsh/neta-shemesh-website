@@ -2,9 +2,8 @@ import type React from 'react';
 import { cx } from '@/lib/cx';
 
 /**
- * Section tone -> `data-bg-tone` (globals.css paints background, text colour and --header-color).
- *   'dark'  #7A5978 + cream text      'mid'   #C49AB8 (decorative surface; no essential text)
- *   'light' #ECC8CE + plum text       'cream' #FFF5F0 + plum text
+ * Section tone -> `data-bg-tone` (globals.css paints a cream paper surface, soft wash, plum text and --header-color).
+ * The legacy tone names select subtly different blush/mauve wash placements, never different text contrast.
  * Omit `tone` for photo sections (CTA band): no `data-bg-tone`, the photo carries the surface.
  */
 type SectionTone = 'dark' | 'mid' | 'light' | 'cream';

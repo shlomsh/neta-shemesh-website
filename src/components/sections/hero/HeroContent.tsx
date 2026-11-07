@@ -1,10 +1,8 @@
 /**
- * HeroContent — composes the "05B Dark Ground" hero.
+ * HeroContent — composes the warm, framed-paper hero.
  *
  * Top bar (logo + nav) is pinned at the top. Below it, two zones sit
- * side-by-side on desktop and stack on mobile:
- *   - Text block (right in RTL): heading → subtext → CTA
- *   - Art block (left in RTL): floating line-art illustration over a blob
+ * centered in a vertical stack at every width, with the illustration below the text.
  *
  * Each block is wrapped in a plain div with the pure-CSS `.hero-enter`
  * settle (staggered via `.hero-enter-N` delay modifiers, see globals.css). It is transform-only:
@@ -25,7 +23,7 @@ export function HeroContent() {
   // px stays a clamp() (NS-61): gutter-wide is 4px wider at 375, which narrows the hero text column by 8px and re-wraps
   // the subtext to three lines. Hero composition is not moved to a step.
   // Phones: bottom padding = the iOS 26 overshoot (--hero-overshoot, 0 elsewhere) + the ContactFAB's footprint
-  // (1rem offset + 2.75rem pill) + 0.5rem gap, so the art ends above the pill. lg+ keeps py-region.
+  // (1rem offset + 2.75rem pill) + 0.5rem gap, so the art ends above the pill. Desktop uses compact panel padding.
   return (
     <div
       className="
@@ -34,15 +32,15 @@ export function HeroContent() {
         w-full
         hero-fit
         px-[clamp(1.25rem,5vw,5rem)]
-        pt-region
-        pb-[calc(var(--hero-overshoot)+4.25rem)] lg:pb-region
+        pt-region lg:pt-panel
+        pb-[calc(var(--hero-overshoot)+4.25rem)] lg:pb-panel
         gap-panel
       "
     >
       {/* ── Top bar: logo + nav ── */}
-      <div className="hero-enter hero-enter-0 flex items-center justify-between w-full flex-wrap gap-4">
-        <BrandLogo />
-        <SiteNav />
+      <div className="hero-enter hero-enter-0 flex flex-col items-center justify-between w-full gap-stack md:flex-row md:gap-4">
+        <BrandLogo tone="plum" compact />
+        <SiteNav lightSurface expandedOnMobile />
       </div>
 
       {/* ── Two zones: text + art (the skip link lands here, past the nav) ── */}
@@ -50,14 +48,14 @@ export function HeroContent() {
         id={ID.mainContent}
         className="
           flex flex-col lg:flex-row
-          items-center
-          gap-region
+          items-center justify-center
+          gap-stack lg:gap-region
           my-auto w-full
           max-lg:my-0 max-lg:flex-1 max-lg:justify-center
         "
       >
         {/* Text block */}
-        <div className="flex flex-col gap-stack w-full lg:flex-[0_0_32.5rem] max-w-[35rem]">
+        <div className="flex flex-col items-center gap-stack w-full max-w-3xl text-center lg:flex-1 lg:items-start lg:text-start">
           {/* The H1 is static (CLAUDE.md rule 9): Elamy swash tops are cut by iPhone Safari after any animated repaint. */}
           <div>
             <HeroHeading />
@@ -68,8 +66,8 @@ export function HeroContent() {
             <p
               className="
         type-quote
-        text-blush
-        w-full
+        text-plum
+        w-full max-w-prose
       "
             >
               ליווי מקצועי בתהליכי שינוי, משבר וצמיחה זוגית ומשפחתית.
@@ -78,13 +76,13 @@ export function HeroContent() {
             </p>
           </div>
 
-          {/* CTA → contact section: secondary ButtonLink (cream fill + plum text, 5.55:1 on the plum hero) */}
+          {/* CTA → contact section: plum button on the cream paper surface. */}
           <div className="hero-enter hero-enter-3">
             <div
-              className="flex flex-col items-start gap-stack w-full"
+              className="flex flex-col items-center gap-stack w-full lg:items-start"
             >
-              <ButtonLink href={anchorHref(ANCHOR.contact)} variant="secondary" size="sm">
-                ייעוץ עם נטע שמש
+              <ButtonLink href={anchorHref(ANCHOR.contact)} variant="primary" size="sm">
+                ליצירת קשר
               </ButtonLink>
             </div>
           </div>

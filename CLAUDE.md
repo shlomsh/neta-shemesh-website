@@ -69,9 +69,9 @@ Thresholds: AA normal ≥ 4.5, AA large ≥ 3 (large = ≥24px regular or ≥18.
 | Mauve `#C49AB8` | Plum | 2.46 ❌ | Fails even large |
 | Blush `#ECC8CE` | Cream | 1.43 ❌ | Never |
 
-Dark bg → cream text; light/cream bg → plum text. **Mauve has no compliant text pair**: use it for shapes, fills, frames only. Choose tone by content: running body, captions, forms, credentials → plum/cream; blush → only `.type-title`/`.type-quote`-scale (≥24px) text or image cards. Never fix contrast by bolding body copy. Nested cards (TestimonialCard, StepCard) are judged by their own background; inner cards on mauve use `--surface-veil` (4.97 vs plum).
+Paper sections use cream surfaces and plum text; blush and mauve are soft decorative washes, never text backdrops. On photo cards and overlays use cream text over the dark scrim. **Mauve has no compliant text pair**: use it for shapes, fills, frames only. Nested cards (TestimonialCard, StepCard) are judged by their own background; inner cards use a pale surface with plum text.
 
-**Owner-approved exceptions: do NOT "fix" these.** Cream titles directly on the mauve Intro, Reignite and ContactOffice sections (2.11–2.22); the ContactFAB WhatsApp half keeps native green `#25D366` with a white label (1.98). See `OWNER_EXCEPTIONS`.
+**Owner-approved exception: do NOT "fix" this.** The ContactFAB WhatsApp half keeps native green `#25D366` with a white label (1.98). See `OWNER_EXCEPTIONS`.
 
 ### Section primitive
 

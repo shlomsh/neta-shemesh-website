@@ -20,15 +20,15 @@ export function ContactOffice() {
       <Container maxWidth="none" gutter="wide">
         <div className="mx-auto flex w-full max-w-[68.75rem] flex-col">
 
-          {/* Title row: above the card, right-aligned (RTL) on the mauve */}
+          {/* Title row: above the card, right-aligned (RTL) on the paper surface */}
           <SectionTitle id={ID.contactOfficeTitle} className="mb-8 md:mb-12 text-start">{OFFICE_PANEL.heading}</SectionTitle>
 
-          {/* One cream card frames both details and map. Mauve fails contrast for any text
-              (2.26:1); plum on cream is 5.55:1 (AA at any size). The card hugs its content
+          {/* One lightly tinted card frames both details and map. Plum remains readable on its
+              pale surface. The card hugs its content
               (the section centres it vertically); at lg the map stretches to the details
               column's height via items-stretch, with a 360px floor. */}
           <ScrollReveal delay={0.1} className="w-full">
-            <Card surface="cream" pad="lg" className="w-full">
+            <Card surface="veil" pad="lg" className="w-full">
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-stretch">
 
                 {/* Right cell (first in RTL DOM): lead + contact details */}

@@ -269,7 +269,7 @@ describe('colour bans (CLAUDE.md colour: four colours only, theme utilities, no 
     /** Today's offenders per rule: path suffix under src/ + how many offences. A new one fails; a vanished one fails ("stale"). */
     const BAN_ALLOW: Record<string, BanAllow[]> = {
       'text-mauve': [{ file: 'Attribution.tsx', count: 1, reason: 'parked testimonial role line in mauve (type-small)' }],
-      'small-text-blush': [{ file: 'HeroHeading.tsx', count: 1, reason: 'the hand-drawn underline stroke (aria-hidden svg, currentColor): decorative, carries no text' }],
+      'small-text-blush': [],
       'text-colour-mix-transparent': [
         { file: 'PostBody.tsx', count: 1, reason: 'pull-quote: plum at 92% (text-plum/92)' },
         { file: 'StepCard.tsx', count: 1, reason: 'step bullets: cream at 90% over the dark photo scrim, measured 13-15:1 (listed in PHOTO_BACKDROP)' },

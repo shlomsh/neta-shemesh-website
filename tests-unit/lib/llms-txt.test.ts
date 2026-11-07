@@ -13,7 +13,7 @@ const txt = readFileSync(join(process.cwd(), 'public/llms.txt'), 'utf8');
 
 describe('public/llms.txt', () => {
   it('opens with the llms.txt H1 and blockquote summary', () => {
-    expect(txt).toMatch(/^# .+\n\n> .+/);
+    expect(txt).toMatch(/^# .+\r?\n\r?\n> .+/);
   });
 
   it('carries the site facts from SITE', () => {

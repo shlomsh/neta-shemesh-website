@@ -100,9 +100,9 @@ describe('C10b: font tokens and the Latin companion', () => {
 describe('C9: [data-bg-tone] rules map each tone to its background, text and header colour', () => {
   const tones = parseToneRules(css);
   const EXPECTED: Record<string, { bg: string; color: string }> = {
-    dark: { bg: 'plum', color: 'cream' },
-    mid: { bg: 'mauve', color: 'cream' },
-    light: { bg: 'blush', color: 'plum' },
+    dark: { bg: 'cream', color: 'plum' },
+    mid: { bg: 'cream', color: 'plum' },
+    light: { bg: 'cream', color: 'plum' },
     cream: { bg: 'cream', color: 'plum' },
   };
 

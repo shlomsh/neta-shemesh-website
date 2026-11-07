@@ -45,13 +45,12 @@ quote from Netta's notes, unpublished and unverified:
 The credentials card does state a consistent 5-star rating from clients.
 
 ## Contact
-- Primary CTA: **תיאום פגישת ייעוץ** (schedule a consultation). On the site today: hero
-  "ייעוץ עם נטע שמש", CTA band "קביעת פגישת ייעוץ", and the floating pill (WhatsApp / call).
+- Primary CTA: hero "ליצירת קשר", the footer contact link, and the floating pill (WhatsApp / call).
 - Channel: **WhatsApp** — a short introductory call, no commitment. Phone and email are
   secondary; there is no contact form.
 - Where: one clinic in **Netanya** (Agamim). Sessions are **in person only**; no online therapy,
   and no other cities are claimed.
-- The contact section has two panels: **עקבו אחריי** (social) and **המשרד שלי** (clinic details + map).
+- The contact section has two panels: social links and **הקליניקה שלי** (clinic details + map).
   Facts live in `src/content/site.ts`.
 
 ---
@@ -70,19 +69,16 @@ bright, busy, or corporate design.
 
 ### Page outline (home page, anchored sections, in order)
 1. **Hero** — name, tagline, primary CTA.
-2. **Intro** — "ליווי מקצועי לזוגות", photo collage.
-3. **Expertise** — the four service areas as cards.
+2. **Expertise** — the four service areas as cards.
+3. **FAQ** — common questions about treatment and the clinic.
 4. **Bio** — "קצת עלי": background, philosophy pull-quote, signature.
 5. **Credentials** — 14 years of clinical experience, couple and family therapist, parent
    guidance, M.S.W. clinical social worker, group facilitator, consistent 5-star client rating.
-6. **Reignite** — "להצית מחדש", photo band.
-7. **Services** — "איך זה עובד?", the four steps of the process.
-8. **CTA band** — "קביעת פגישת ייעוץ" over a photo.
-9. **Gallery** — six-photo grid.
-10. **Contact** — social panel and clinic panel with map.
-11. **Footer** — tagline, contact link, signature, © line.
+6. **Services** — "איך זה עובד?", the four steps of the process.
+7. **Contact** — social panel and clinic panel with map.
+8. **Footer** — contact link, signature, © line.
 
-Testimonials would sit between Services and the CTA band when un-parked. Blog: `/blog` and two
+Testimonials are parked. Blog: `/blog` and two
 posts (couple loneliness; why one hour a week is not enough).
 
 ### Reference

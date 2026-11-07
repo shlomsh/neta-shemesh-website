@@ -65,12 +65,10 @@ describe('D20: no hand-drawn underline under section titles', () => {
     expect(outside.length, 'drawn path outside the hero').toBe(0);
   });
 
-  it('the hero "ביחד." stroke still exists inside the h1', () => {
+  it('the hero h1 has no hand-drawn underline decoration', () => {
     const h1 = home.querySelector('h1')!;
-    expect(h1.textContent).toContain('ביחד.');
-    const stroke = h1.querySelector('svg path[pathLength="1"]');
-    expect(stroke, 'the hand-drawn stroke under "ביחד." is gone').not.toBeNull();
-    expect([stroke!.getAttribute('stroke'), stroke!.getAttribute('stroke-linecap')]).toEqual(['currentColor', 'round']);
+    expect(h1.textContent).toContain('נטע שמש');
+    expect(h1.querySelector('svg, path')).toBeNull();
   });
 });
 

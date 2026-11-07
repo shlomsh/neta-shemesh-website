@@ -11,7 +11,7 @@ export const EXPERTISE_CARDS: ExpertiseCardData[] = [
     title: 'טיפול זוגי',
     description:
       'עבודה משותפת על הדינמיקה הזוגית, דפוסי תקשורת, קרבה רגשית ובניית אמון מחדש. שיטות מבוססות מחקר ליצירת שינוי אמיתי.',
-    imageSrc: '/images/expertise-couple.webp',
+    imageSrc: '/images/couples-therapy-session.webp',
     imageAlt: 'טיפול זוגי',
   },
   {
@@ -19,7 +19,7 @@ export const EXPERTISE_CARDS: ExpertiseCardData[] = [
     title: 'טיפול משפחתי',
     description:
       'חיזוק הקשרים בתוך המשפחה, הבנת הדינמיקה המשפחתית ומציאת דרכים חדשות להתמודד עם אתגרים יחד.',
-    imageSrc: '/images/expertise-family.webp',
+    imageSrc: '/images/family-therapy-session.webp',
     imageAlt: 'טיפול משפחתי',
   },
   {
@@ -27,7 +27,7 @@ export const EXPERTISE_CARDS: ExpertiseCardData[] = [
     title: 'הדרכת הורים',
     description:
       'כלים מעשיים להורות מיטבית, התמודדות עם אתגרי הגיל, תקשורת עם ילדים ובני נוער וחיזוק הביטחון ההורי.',
-    imageSrc: '/images/expertise-parenting.webp',
+    imageSrc: '/images/parent-guidance-session.webp',
     imageAlt: 'הדרכת הורים',
   },
   {

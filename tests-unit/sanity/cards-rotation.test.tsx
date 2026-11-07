@@ -10,17 +10,13 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
   EXPECTED_SECTIONS,
-  classTokens,
   expectNone,
   findSection,
-  hasClass,
   kindOf,
   labelOf,
   matchesSpec,
   renderHome,
-  subtitleOf,
   topLevelSections,
-  typeClassesOf,
 } from './helpers';
 
 let home: HTMLElement;
@@ -60,26 +56,14 @@ describe('A1: rotation order (strict 4-tone rotation anchored on the plum hero)'
       expect(el.hasAttribute('data-bg-tone'), `${labelOf(el, spec.name)} must stay a photo section`).toBe(false);
     }
     const onDark = Array.from(home.querySelectorAll('.on-dark'));
-    expect(onDark.length, 'the CTA band title and the footer tagline use it').toBeGreaterThanOrEqual(2);
+    expect(onDark.length, 'no displayed section needs the photo title override').toBe(0);
     expectNone(onDark.filter((el) => el.closest('[data-bg-tone]')).map((el) => el.outerHTML.slice(0, 60)), '.on-dark inside a toned section (the title already follows --header-color)');
   });
 });
 
 describe('A2: mauve (mid) sections', () => {
-  it('there are exactly three: intro, gallery, office (a new one needs its text re-audited in the contrast matrix)', () => {
-    expect(EXPECTED_SECTIONS.filter((s) => s.kind === 'mid').map((s) => s.name)).toEqual(['about-intro', 'about-gallery', 'contact-office']);
-  });
-
-  it('about-intro copy sits on the veil card (cream tone, rounded-card, surface-veil) at type-lead; the h2 stays outside it', () => {
-    const section = findSection(home, 'about-intro');
-    const card = section.querySelector<HTMLElement>('[data-bg-tone="cream"]');
-    expect(card, `${labelOf(section, 'about-intro')} lost its veil card`).not.toBeNull();
-    expect(hasClass(card, 'rounded-card'), 'about-intro card lost rounded-card').toBe(true);
-    expect(hasClass(card, 'bg-[var(--surface-veil)]'), 'about-intro card must use the veil, not solid blush').toBe(true);
-    const paras = Array.from(card!.querySelectorAll('p'));
-    expect(paras.length, 'about-intro card paragraphs').toBeGreaterThan(0);
-    for (const p of paras) expect(typeClassesOf(p), 'about-intro card paragraph').toEqual(['type-lead']);
-    expect(card!.contains(section.querySelector('h2')), 'about-intro h2 must stay on the mauve, outside the card').toBe(false);
+  it('FAQ and contact-office use the mid tone (a new one needs its text re-audited in the contrast matrix)', () => {
+    expect(EXPECTED_SECTIONS.filter((s) => s.kind === 'mid').map((s) => s.name)).toEqual(['faq', 'contact-office']);
   });
 });
 
@@ -107,16 +91,6 @@ describe('A4: office card (owner option B)', () => {
 });
 
 describe('A5/A6: copy that must NOT sit in a card', () => {
-  it('about-gallery subtitle sits directly on the section: no tone card, no bg, no rounded-card between', () => {
-    const section = findSection(home, 'about-gallery');
-    const sub = subtitleOf(section.querySelector('h2')!);
-    expect(sub, `${labelOf(section, 'about-gallery')} subtitle not found`).not.toBeNull();
-    expect(sub!.closest('[data-bg-tone]'), 'subtitle wrapped in a tone card').toBe(section);
-    for (let node: Element | null = sub; node && node !== section; node = node.parentElement) {
-      expect(classTokens(node).filter((t) => t === 'rounded-card' || t.startsWith('bg-') || t === 'shadow-lg'), `<${node.tagName.toLowerCase()}> looks like a card`).toEqual([]);
-    }
-  });
-
   it('contact-social holds no nested tone card (its lead copy sits on the plum itself) and still has its social icon links', () => {
     const section = findSection(home, 'contact-social');
     expect(section.querySelectorAll('[data-bg-tone]').length, `${labelOf(section, 'contact-social')} grew a nested tone card`).toBe(0);

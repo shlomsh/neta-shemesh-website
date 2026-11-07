@@ -43,8 +43,11 @@ describe('F2: the rendered home page uses the shared ids', () => {
     expectNone(ids.filter((id) => /^[A-Za-z0-9]{16}(?:-[\w-]+)?$/.test(id)), 'random export ids on the page');
   });
 
-  it('every id the home page declares in content/ids.ts is on the page (hidden testimonials excluded)', () => {
-    const PARKED = new Set<string>([ID.testimonials, ID.testimonialsTitle, ID.testimonialsGrid, ID.testimonialCardArt]);
+  it('every id the home page declares in content/ids.ts is on the page (parked sections excluded)', () => {
+    const PARKED = new Set<string>([
+      ID.testimonials, ID.testimonialsTitle, ID.testimonialsGrid, ID.testimonialCardArt,
+      ID.ctaBand, ID.ctaBandTitle, ID.photoGallery, ID.photoGalleryTitle,
+    ]);
     const BLOG = new Set<string>([ID.blogIntro, ID.blogPosts, ID.postHero, ID.postBody, ID.postCta, ID.postMore]);
     const MENU = new Set<string>([ID.mobileMenu]); // portaled on open, not in the static markup
     const missing = Object.entries(ID)
@@ -89,7 +92,7 @@ describe('F3: site facts live only in content/site.ts', () => {
   it('every tel:, mailto: and wa.me link on the page is built from SITE', () => {
     const hrefs = (sel: string) => Array.from(home.querySelectorAll<HTMLAnchorElement>(sel)).map((a) => a.getAttribute('href'));
     const tels = hrefs('a[href^="tel:"]');
-    expect(tels.length, 'tel links (hero pill, FAB, office row)').toBeGreaterThanOrEqual(3);
+    expect(tels.length, 'tel links (FAB, office row)').toBeGreaterThanOrEqual(2);
     expect(new Set(tels), 'every tel: link must be the same E.164 href').toEqual(new Set([telHref()]));
     expect(new Set(hrefs('a[href^="mailto:"]'))).toEqual(new Set([mailHref()]));
     expect(new Set(hrefs('a[href*="wa.me"]'))).toEqual(new Set([waHref()]));

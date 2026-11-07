@@ -69,6 +69,8 @@ describe('blog index page', () => {
       a.getAttribute('href'),
     );
     expect(hrefs).toContain('/blog');
+    expect(hrefs).toContain('/#faq');
+    expect(hrefs).not.toContain('/#contact');
     expect(hrefs.filter((h) => h?.includes('#')).every((h) => h!.startsWith('/#'))).toBe(true);
   });
 });

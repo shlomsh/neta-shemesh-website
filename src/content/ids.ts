@@ -23,12 +23,12 @@ export const ID = {
   heroTitle: 'hero-heading',
   brandLogo: 'brand-logo',
 
-  // Intro ("ליווי מקצועי לזוגות")
-  aboutIntro: 'about-intro',
-  aboutIntroTitle: 'about-intro-title',
-
   // Expertise: the section has no id of its own, the scroll anchor is ANCHOR.expertise
   expertiseTitle: 'expertise-title',
+
+  // Frequently asked questions
+  faq: 'faq-section',
+  faqTitle: 'faq-title',
 
   // Bio ("קצת עלי")
   aboutMeSection: 'about-me-section',
@@ -37,10 +37,6 @@ export const ID = {
   // Credentials
   aboutCredentials: 'about-credentials',
   aboutCredentialsTitle: 'about-credentials-title',
-
-  // Re-ignite gallery ("להצית מחדש")
-  aboutGallery: 'about-gallery',
-  aboutGalleryTitle: 'about-gallery-title',
 
   // Services ("איך זה עובד?")
   services: 'services',
@@ -54,10 +50,9 @@ export const ID = {
   photoGallery: 'photo-gallery',
   photoGalleryTitle: 'photo-gallery-title',
 
-  // Contact, panel 1 (social). The title is rendered twice (mobile stack / desktop column).
+  // Contact, panel 1 (social).
   contactSocial: 'contact-social',
   contactSocialTitle: 'contact-social-title',
-  contactSocialTitleMobile: 'contact-social-title-mobile',
 
   // Contact, panel 2 (office + map)
   contactOffice: 'contact-office',
@@ -80,17 +75,18 @@ export const ID = {
 } as const;
 
 /**
- * Zero-height scroll anchors. Only `aboutMe`, `expertise` and `contact` are linked to (nav and
+ * Zero-height scroll anchors. `aboutMe`, `expertise`, `faq` and `contact` are linked to (nav and
  * CTAs); the others are historical landing points kept so old shared URLs still scroll to the
  * same place. `anchorHref(ANCHOR.contact)` builds the `#contact` link.
  */
 export const ANCHOR = {
   /** before the hero */
   pageTop: 'page-1',
-  /** before the intro section */
+  /** legacy #about URL; now before expertise */
   about: 'about',
   aboutMe: 'about-me',
   expertise: 'expertise',
+  faq: 'faq',
   /** before the credentials section */
   credentials: 'page-4',
   /** before the re-ignite gallery */

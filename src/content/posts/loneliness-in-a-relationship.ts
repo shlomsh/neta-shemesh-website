@@ -9,9 +9,9 @@ export const lonelinessInARelationship: BlogPost = {
   date: '2026-06-19',
   dateDisplay: '19 ביוני 2026',
   readTime: '5 דקות קריאה',
-  coverImage: '/images/expertise-couple.webp',
+  coverImage: '/images/couples-therapy-session.webp',
   shareImage: '/images/share/loneliness-in-a-relationship.jpg',
-  coverAlt: 'בני זוג יושבים יחד בערב, כל אחד עם המחשבות שלו',
+  coverAlt: 'בני זוג משוחחים עם המטפלת במהלך מפגש טיפול זוגי',
   body: [
     {
       type: 'lead',

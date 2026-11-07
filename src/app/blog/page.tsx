@@ -41,13 +41,13 @@ export default function BlogIndexPage() {
           {/* The title is static (CLAUDE.md typography rule 9); the eyebrow and the lead reveal around it. */}
           <div className="flex flex-col items-center gap-stack">
             <ScrollReveal>
-              <span className="type-eyebrow block text-cream">
+              <span className="type-eyebrow block">
                 הבלוג
               </span>
             </ScrollReveal>
             <SectionTitle as="h1">מחשבות מהקליניקה</SectionTitle>
             <ScrollReveal delay={0.1}>
-              <p className="type-lead mx-auto max-w-[60ch] text-cream">
+              <p className="type-lead mx-auto max-w-[60ch]">
                 רעיונות, כלים ותובנות על זוגיות, הורות והקשרים שאנחנו הכי רוצים
                 לטפח. סדרת מאמרים שנכתבת מהלב ומהניסיון בחדר הטיפול.
               </p>

@@ -27,7 +27,7 @@ import {
   type ContrastReport,
 } from './helpers';
 
-/** Permanent owner decisions (2026-10-09). NOT debt: documented choices. Do NOT "fix" these (CLAUDE.md). */
+/** The native WhatsApp label is an owner-approved brand exception. */
 export interface OwnerException extends ContrastAllow {
   /** the day the owner decided */
   decided: string;
@@ -35,13 +35,7 @@ export interface OwnerException extends ContrastAllow {
   decision: string;
 }
 
-const NS43_C = 'NS-43 option C: the cream titles on the mauve sections stay as designed (2.26:1; a real render measures 2.11-2.22 because the soft-light paper grain darkens the mauve)';
-
 export const OWNER_EXCEPTIONS: OwnerException[] = [
-  { page: 'home', where: '#about-intro', text: 'ליווי מקצועי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Intro title. ${NS43_C}` },
-  { page: 'home', where: '#about-gallery', text: 'להצית מחדש', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite title. ${NS43_C}` },
-  { page: 'home', where: '#about-gallery', text: 'תמיכה והכוונה', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `Reignite subtitle (type-quote 24px). ${NS43_C}` },
-  { page: 'home', where: '#contact-office', text: 'המשרד שלי', ratio: 2.26, decided: '2026-10-09', decision: 'NS-43 C', reason: `ContactOffice title. ${NS43_C}` },
   { page: '*', where: '[data-testid=fab-whatsapp]', text: 'וואטסאפ', ratio: 1.98, decided: '2026-10-09', decision: 'WhatsApp green stays', reason: 'WhatsApp brand green (bg-whatsapp = --color-whatsapp #25D366) with a white #FFFFFF label on the contact FAB: the owner keeps the brand colour (design decisions Oct 2026); 1.98:1' },
 ];
 
@@ -51,7 +45,6 @@ export const OWNER_EXCEPTIONS: OwnerException[] = [
  */
 const PHOTO_BACKDROP: Array<{ where: string; reason: string }> = [
   { where: '#services', reason: 'StepCard: cream text over a photo with a from-black/85 gradient scrim' },
-  { where: '#cta-band', reason: 'CTA band: cream title + subtitle over cta-background.webp with bg-black/20' },
   { where: 'footer', reason: 'Footer: cream text over the footer photo with a dark overlay' },
 ];
 
@@ -98,35 +91,36 @@ describe('resolver controls (small DOM fixtures with a known ratio)', () => {
     return r.all[0];
   };
 
-  it('the tone sets the colours: plum on cream 5.55 passes; mid tone is cream on mauve 2.26 and fails even as large text', () => {
+  it('every tone uses a plum-on-cream paper surface; washes never change the contrast pair', () => {
     expect(one('<div data-bg-tone="cream"><p class="type-body">hello</p></div>').ratio).toBe(5.55);
     expect(run('<div data-bg-tone="cream"><p class="type-body">hello</p></div>').findings).toEqual([]);
     const title = run('<div data-bg-tone="mid"><h2 class="type-title font-bold text-[color:var(--header-color)]">שלום</h2></div>');
-    expect(title.findings.map((f) => [f.ratio, f.required])).toEqual([[2.26, 3]]);
+    expect(title.findings).toEqual([]);
+    expect(title.all[0].ratio).toBe(5.55);
   });
 
-  it('a text-* class beats the tone colour (text-inherit gives it back); a nested Card is judged on its own surface; on-dark flips --header-color', () => {
-    expect(one('<div data-bg-tone="dark"><p class="type-body text-plum">x</p></div>').ratio).toBe(1);
-    expect(one('<div data-bg-tone="dark"><p class="type-body text-plum"><span class="text-inherit">y</span></p></div>').ratio).toBe(1);
+  it('a text-* class beats the tone colour; a nested Card is judged on its own surface; on-dark still selects cream for photo backdrops', () => {
+    expect(one('<div data-bg-tone="dark"><p class="type-body text-plum">x</p></div>').ratio).toBe(5.55);
+    expect(one('<div data-bg-tone="dark"><p class="type-body text-plum"><span class="text-inherit">y</span></p></div>').ratio).toBe(5.55);
     expect(one('<section data-bg-tone="dark"><div data-bg-tone="cream"><p class="type-body">x</p></div></section>').ratio).toBe(5.55);
     expect(one('<div data-bg-tone="dark"><h2 class="on-dark type-title text-[color:var(--header-color)]">x</h2></div>').fg).toBe('#fff5f0');
   });
 
   it('size decides the threshold: blush on plum (3.89) passes at type-quote / type-card-title, fails at type-small, type-eyebrow and bold type-lead; .font-latin shrinks by x0.88', () => {
-    const wrap = (cls: string) => `<div data-bg-tone="dark"><p class="${cls} text-blush">x</p></div>`;
+    const wrap = (cls: string) => `<div class="bg-plum"><p class="${cls} text-blush">x</p></div>`;
     expect(run(wrap('type-quote')).findings).toEqual([]);
     expect(run(wrap('type-card-title')).findings).toEqual([]);
     for (const cls of ['type-small', 'type-eyebrow', 'type-lead font-bold']) expect(run(wrap(cls)).findings.length, cls).toBe(1);
-    const latin = run('<div data-bg-tone="dark"><p class="type-quote text-blush"><span class="font-latin">abc</span></p></div>');
+    const latin = run('<div class="bg-plum"><p class="type-quote text-blush"><span class="font-latin">abc</span></p></div>');
     expect(latin.findings.map((f) => [f.ratio, f.required])).toEqual([[3.89, 4.5]]);
   });
 
-  it('alpha and opacity are composited: text-plum/50 on cream, an opacity-60 ancestor, a bg-cream/35 layer stacked on mauve', () => {
+  it('alpha and opacity are composited: text-plum/50 on cream, an opacity-60 ancestor, a bg-mauve/35 layer stacked on paper', () => {
     const half = one('<div data-bg-tone="cream"><p class="type-body text-plum/50">x</p></div>');
     expect([half.fg, half.ratio < 2.5]).toEqual(['#bda7b4', true]);
     const plain = one('<div data-bg-tone="cream"><p class="type-body">x</p></div>').ratio;
     expect(one('<div data-bg-tone="cream"><div class="opacity-60"><p class="type-body">x</p></div></div>').ratio).toBeLessThan(plain);
-    expect(one('<div data-bg-tone="mid"><div class="bg-cream/35"><p class="type-body text-plum">x</p></div></div>').bg).toBe('#d9bacc');
+    expect(one('<div data-bg-tone="cream"><div class="bg-mauve/35"><p class="type-body text-plum">x</p></div></div>').bg).toBe('#ead5dc');
   });
 
   it('group opacity on the backdrop fades both colours against what is behind it; a group over a photo is left alone (the Expertise pill stays 2.26)', () => {
@@ -146,7 +140,7 @@ describe('resolver controls (small DOM fixtures with a known ratio)', () => {
   it('base state only: hover:/md: colour variants are ignored; sr-only, display:none and punctuation-only text are not measured; hidden-below-md text still is', () => {
     expect(one('<div data-bg-tone="cream"><p class="type-body hover:text-cream md:text-cream">x</p></div>').ratio).toBe(5.55);
     expect(run('<div data-bg-tone="cream"><p class="sr-only text-cream">x</p><p class="hidden text-cream">y</p><p>·</p></div>').measured).toBe(0);
-    expect(run('<div data-bg-tone="dark"><nav class="hidden md:flex"><a class="text-plum">z</a></nav></div>').findings.length).toBe(1);
+    expect(run('<div data-bg-tone="cream"><nav class="hidden md:flex"><a class="text-cream">z</a></nav></div>').findings.length).toBe(1);
   });
 
   it('a passing copy of a text never hides a failing copy of the same text', () => {

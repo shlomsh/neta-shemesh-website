@@ -1,18 +1,16 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import { PageShell } from '@/components/site/PageShell';
 import { Hero } from '@/components/sections/hero/Hero';
-import { Intro } from '@/components/sections/intro/Intro';
 import { Expertise } from '@/components/sections/expertise/Expertise';
+import { Faq } from '@/components/sections/faq/Faq';
 import { Bio } from '@/components/sections/bio/Bio';
 import { Credentials } from '@/components/sections/credentials/Credentials';
-import { Reignite } from '@/components/sections/reignite/Reignite';
 import { Services } from '@/components/sections/services/Services';
 import { Testimonials } from '@/components/sections/testimonials/Testimonials';
-import { CtaBand } from '@/components/sections/cta-band/CtaBand';
-import { Gallery } from '@/components/sections/gallery/Gallery';
 import { ContactSocial } from '@/components/sections/contact/ContactSocial';
 import { ContactOffice } from '@/components/sections/contact/ContactOffice';
 import { SITE } from '@/content/site';
+import { ANCHOR } from '@/content/ids';
 import { pageMeta } from '@/lib/seo/metadata';
 
 /**
@@ -46,15 +44,14 @@ export default function Home() {
     // overflow 'clip', never 'hidden': CSS snap and sticky need <main> not to be a scroll container.
     <PageShell overflow="clip" snapCards>
       <Hero />
-      <Intro />
       <Expertise />
+      <Faq />
       <Bio />
       <Credentials />
-      <Reignite />
+      <div id={ANCHOR.reignite} className="invisible h-0" aria-hidden="true" />
       <Services />
       {SHOW_TESTIMONIALS && <Testimonials />}
-      <CtaBand />
-      <Gallery />
+      <div id={ANCHOR.gallery} className="invisible h-0" aria-hidden="true" />
       <ContactSocial />
       <ContactOffice />
     </PageShell>

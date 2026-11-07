@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Metric-matched Hebrew fallback faces (NS-35 / NS-46).
  *

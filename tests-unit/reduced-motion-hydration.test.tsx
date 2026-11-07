@@ -97,7 +97,7 @@ describe('structural guards (source + CSS)', () => {
   });
 
   it('the parallax drift is CSS-only: a scroll-driven animation only under no-preference AND where animation-timeline is supported, static otherwise', () => {
-    const m = css.match(/@media \(prefers-reduced-motion: no-preference\)\s*\{\s*@supports \(animation-timeline: view\(\)\)\s*\{([\s\S]*?)\n  \}\n\}/);
+    const m = css.match(/@media \(prefers-reduced-motion: no-preference\)\s*\{\s*@supports \(animation-timeline: view\(\)\)\s*\{([\s\S]*?)\r?\n  \}\r?\n\}/);
     expect(m).not.toBeNull();
     expect(m![1]).toMatch(/animation-name:\s*parallax-drift/);
     expect(css).toMatch(/\[data-parallax\]\s*\{\s*transform:\s*translateY\(0\) scale\(var\(--parallax-scale, 1\)\)/); // static midpoint outside the gate

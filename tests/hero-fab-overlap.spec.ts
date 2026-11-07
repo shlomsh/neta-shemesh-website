@@ -100,7 +100,7 @@ test.describe('contact pill vs hero content and card titles (phone, iOS 26 overs
       await open(page, viewport);
 
       const count = await page.evaluate(() => document.querySelectorAll('main > section').length);
-      expect(count, 'cards on the page').toBeGreaterThanOrEqual(10);
+      expect(count, 'cards on the page').toBe(8);
 
       const problems: string[] = [];
       let titles = 0;
@@ -125,7 +125,7 @@ test.describe('contact pill vs hero content and card titles (phone, iOS 26 overs
         for (const h of headings) if (overlaps(h, fab)) problems.push(`#${label} title "${h.text}" [${Math.round(h.top)}..${Math.round(h.bottom)}] vs pill [${Math.round(fab.top)}..${Math.round(fab.bottom)}]`);
       }
 
-      expect(titles, 'card titles (h2) were measured').toBeGreaterThanOrEqual(8);
+      expect(titles, 'card titles (h2) were measured').toBeGreaterThanOrEqual(6);
       expect(problems, `the contact pill covers a card title at the top of its card at ${at}`).toEqual([]);
     });
   }

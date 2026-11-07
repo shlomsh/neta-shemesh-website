@@ -11,6 +11,7 @@
 
 import { ANCHOR, ID } from '@/content/ids';
 import { HeroContent } from './HeroContent';
+import styles from './HeroPaper.module.css';
 
 export function Hero() {
   return (
@@ -28,12 +29,11 @@ export function Hero() {
           hero-fit
         "
       >
-        {/* "05B Dark Ground": a solid deep-plum field (--color-plum / #7A5978); all hero text and
-            the line-art illustration sit on top of it in lighter palette tones. */}
         <div
-          className="grain-surface absolute inset-0 bg-plum"
+          className={`${styles.wash} absolute inset-0 bg-cream`}
           aria-hidden="true"
         />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-4 border border-plum/35 sm:inset-6" />
         <HeroContent />
       </section>
     </>

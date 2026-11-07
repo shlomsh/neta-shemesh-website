@@ -10,7 +10,7 @@ export const ROOT = resolve(__dirname, '../../..');
 const SRC = join(ROOT, 'src');
 
 export interface SourceFile {
-  /** posix path relative to the repo root, e.g. src/components/sections/intro/Intro.tsx */
+  /** posix path relative to the repo root, e.g. src/components/sections/expertise/Expertise.tsx */
   path: string;
   /** file name only; allow-lists key on this so moving a file does not break them */
   name: string;

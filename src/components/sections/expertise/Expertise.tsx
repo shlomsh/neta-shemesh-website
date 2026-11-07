@@ -9,26 +9,29 @@ export function Expertise() {
   // lg+: one screen at least (grow: the stage's descriptions are running text and must never clip on a short
   // viewport); center="start" lets the stage take the remaining height (Container is the flex column that passes it down).
   return (
-    <Section anchor={ANCHOR.expertise} tone="light" fit="grow" center="start" pad="section">
-      <Container maxWidth="none" gutter="wide" className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
-        {/* Section header */}
-        <div className="text-center mb-region lg:mb-9">
-            {/* Blush section (plum = 3.89:1, AA large only): subtitle at the quote scale (>=24px). */}
-            <SectionHeader
-              id={ID.expertiseTitle}
-              align="center"
-              title="טיפול זוגי ומשפחתי בנתניה"
-              subtitle="תמיכה והכוונה מקצועית לבניית אמון וחיזוק הביטחון בקשר."
-              subtitleReveal={0}
-            />
-          </div>
+    <>
+      <div id={ANCHOR.about} className="invisible h-0" aria-hidden="true" />
+      <Section anchor={ANCHOR.expertise} tone="light" fit="grow" center="start" pad="section">
+        <Container maxWidth="none" gutter="wide" className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+          {/* Section header */}
+          <div className="text-center mb-region lg:mb-9">
+              {/* Large subtitle scale is retained for hierarchy on the paper surface. */}
+              <SectionHeader
+                id={ID.expertiseTitle}
+                align="center"
+                title="טיפול זוגי ומשפחתי בנתניה"
+                subtitle="תמיכה והכוונה מקצועית לבניית אמון וחיזוק הביטחון בקשר."
+                subtitleReveal={0}
+              />
+            </div>
 
-        {/* Editorial stage: names + crossfading photo + the active description (client island). */}
-        {/* No ScrollReveal here: the names inside the stage are Elamy titles and must stay static (CLAUDE.md typography rule 9). The stage reveals only its descriptions and photo. */}
-        <div className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
-          <ExpertiseStage items={EXPERTISE_CARDS} />
-        </div>
-      </Container>
-    </Section>
+          {/* Editorial stage: names + crossfading photo + the active description (client island). */}
+          {/* No ScrollReveal here: the names inside the stage are Elamy titles and must stay static (CLAUDE.md typography rule 9). The stage reveals only its descriptions and photo. */}
+          <div className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+            <ExpertiseStage items={EXPERTISE_CARDS} />
+          </div>
+        </Container>
+      </Section>
+    </>
   );
 }

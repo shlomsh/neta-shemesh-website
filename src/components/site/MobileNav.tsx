@@ -10,7 +10,7 @@ import { MobileMenu, type NavItem } from './MobileMenu';
  * The below-md half of SiteNav, and the only part of the nav that needs state: the hamburger button and
  * the full-screen overlay it opens (MobileMenu). The desktop links are server-rendered by SiteNav.
  */
-export function MobileNav({ links }: { links: NavItem[] }) {
+export function MobileNav({ links, lightSurface = false }: { links: NavItem[]; lightSurface?: boolean }) {
   const [open, setOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
@@ -32,7 +32,7 @@ export function MobileNav({ links }: { links: NavItem[] }) {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls={ID.mobileMenu}
-        className="md:hidden"
+        className={lightSurface ? 'md:hidden text-plum focus-visible:ring-plum' : 'md:hidden'}
       >
         <MenuIcon />
       </IconButton>

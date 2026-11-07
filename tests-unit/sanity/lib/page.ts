@@ -29,17 +29,14 @@ export interface SectionSpec {
 }
 
 export const EXPECTED_SECTIONS: SectionSpec[] = [
-  { name: 'hero', ids: ['hero'], heading: 'מקום בטוח לצמוח בו ביחד.', kind: 'photo' },
-  { name: 'about-intro', ids: ['about-intro'], heading: 'ליווי מקצועי לזוגות', kind: 'mid' },
+  { name: 'hero', ids: ['hero'], heading: 'נטע שמש מטפלת זוגית ומשפחתית', kind: 'photo' },
   { name: 'expertise', ids: [], heading: 'טיפול זוגי ומשפחתי בנתניה', kind: 'light' },
+  { name: 'faq', ids: ['faq'], heading: 'שאלות נפוצות', kind: 'mid' },
   { name: 'about-me', ids: ['about-me-section'], heading: 'קצת עלי', kind: 'cream' },
   { name: 'about-credentials', ids: ['about-credentials'], heading: 'ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג', kind: 'dark' },
-  { name: 'about-gallery', ids: ['about-gallery'], heading: 'להצית מחדש את הקשר הזוגי', kind: 'mid' },
   { name: 'services', ids: ['services'], heading: 'איך זה עובד?', kind: 'light' },
-  { name: 'cta-band', ids: ['cta-band'], heading: 'קביעת פגישת ייעוץ', kind: 'photo' },
-  { name: 'testimonials-gallery', ids: ['photo-gallery'], heading: 'טיפול זוגי לקשר בריא ותומך', kind: 'cream' },
-  { name: 'contact-social', ids: ['contact-social'], heading: 'עקבו אחריי', kind: 'dark' },
-  { name: 'contact-office', ids: ['contact-office'], heading: 'המשרד שלי', kind: 'mid' },
+  { name: 'contact-social', ids: ['contact-social'], heading: 'קישורים לרשתות החברתיות', kind: 'dark' },
+  { name: 'contact-office', ids: ['contact-office'], heading: 'הקליניקה שלי', kind: 'mid' },
   { name: 'footer', ids: [], kind: 'photo' },
 ];
 
@@ -77,7 +74,7 @@ function headingTextOf(section: Element): string {
   return (headingOf(section)?.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
-/** Human label used in every assertion message: `about-gallery (#about-gallery "להצית...")`. */
+/** Human label used in every assertion message: `contact-office (#contact-office "הקליניקה שלי")`. */
 export function labelOf(section: Element, name?: string): string {
   const id = section.id ? `#${section.id}` : section.tagName.toLowerCase();
   const text = headingTextOf(section);
@@ -132,11 +129,8 @@ export interface SubtitleSpec {
 
 export const SUBTITLES: SubtitleSpec[] = [
   { section: 'expertise', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
-  { section: 'about-gallery', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
   // Exception: more room under the title for the Elamy "?" descender in "איך זה עובד?".
   { section: 'services', margin: ['mt-5', 'md:mt-9'], needsMaxWidth: false },
-  { section: 'cta-band', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
-  { section: 'testimonials-gallery', margin: ['mt-3', 'md:mt-4'], needsMaxWidth: true },
 ];
 
 // ─── Buttons and nav ─────────────────────────────────────────────────────────
@@ -151,9 +145,9 @@ export const buttonHeightToken = (a: Element): 'min-h-12' | 'min-h-14' | null =>
 /** the size-defining tokens of a button (height + horizontal padding), for same-variant comparisons */
 export const buttonSizeTokens = (a: Element) => classTokens(a).filter((t) => /^(min-h-|px-)/.test(t)).sort();
 
-/** the inline desktop link row: a labelled <nav> that is hidden below md */
+/** the labelled primary navigation */
 export function desktopNav(root: ParentNode): HTMLElement | null {
-  return Array.from(root.querySelectorAll<HTMLElement>('nav[aria-label]')).find((n) => hasClass(n, 'hidden') && hasClass(n, 'md:flex')) ?? null;
+  return root.querySelector<HTMLElement>('nav[aria-label="ניווט ראשי"]');
 }
 /** the below-md menu toggle */
 export function hamburger(root: ParentNode): HTMLElement | null {

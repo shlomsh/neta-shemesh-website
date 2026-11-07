@@ -38,6 +38,17 @@ function hidingReasons(el: Element, stopAt: Element): string[] {
 }
 
 describe('hero server HTML shows its text from the first paint (owner ruling: hero text never starts at opacity 0)', () => {
+  it('shows the tagline image above the therapist name and profession', () => {
+    const logo = hero.querySelector<HTMLImageElement>('#brand-logo img')!;
+    expect(logo.getAttribute('src')).toBe('/images/logo-tagline-plum-compact.webp');
+    expect(logo.alt).toBe('מקום בטוח לצמוח בו ביחד');
+    expect(hero.querySelector('.bg-cream')).not.toBeNull();
+    const heading = hero.querySelector('h1')!;
+    expect(heading.textContent?.replace(/\s+/g, ' ').trim())
+      .toBe('נטע שמש מטפלת זוגית ומשפחתית');
+    expect(heading.querySelector('.type-title')?.textContent).toBe('מטפלת זוגית ומשפחתית');
+  });
+
   it('no opacity:0, visibility:hidden, display:none or reveal gate on the H1, subtext, CTA or logo/nav row', () => {
     const targets: Array<[string, Element | null]> = [
       ['h1', hero.querySelector('h1')],

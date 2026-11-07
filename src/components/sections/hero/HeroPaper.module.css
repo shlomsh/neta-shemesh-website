@@ -1,0 +1,6 @@
+.wash {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(ellipse at 4% 8%, color-mix(in srgb, var(--color-blush) 50%, transparent), transparent 34%),
+    radial-gradient(ellipse at 96% 92%, color-mix(in srgb, var(--color-mauve) 24%, transparent), transparent 30%);
+}
