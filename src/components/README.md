@@ -5,7 +5,7 @@ src/components/
   primitives/   content-agnostic blocks   layout/ (Section Container Card)  ui/ (BodyText ButtonLink HaloWrap SectionTitle SectionHeader Photo MaskIcon IconButton)
   motion/       behaviour, no content     ScrollReveal RevealObserver ParallaxFrame
   site/         shared chrome             PageShell JsonLd ContactFAB BrandLogo LineArt SiteNav MobileNav MobileMenu NavLink footer/ hooks/ icons.tsx
-  sections/     one folder per section    hero expertise faq bio credentials services contact; cta-band, gallery and testimonials (parked)
+  sections/     one folder per section    hero expertise faq bio credentials services contact; cta-band, gallery, contact-social and testimonials (parked)
   blog/         blog-only                 BlogHeader PostBody PostCard AuthorCard
 ```
 
@@ -18,7 +18,7 @@ Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint
 ## Folder rules
 
 - **`primitives/`** earns a place only if it knows nothing about this site's copy, ids or facts. A one-off layout belongs in the section that uses it.
-- **`sections/<slug>/`**: the component has the PascalCase folder name (`cta-band/CtaBand.tsx`), renders exactly one `<section>` (plus its scroll anchor), sub-components beside it. Folder = section slug, not topic: `gallery/` is the six-photo grid, `bio/` "קצת עלי". `contact/` holds two sections (`ContactSocial`, `ContactOffice`) that share leaves.
+- **`sections/<slug>/`**: the component has the PascalCase folder name (`cta-band/CtaBand.tsx`), renders exactly one `<section>` (plus its scroll anchor), sub-components beside it. Folder = section slug, not topic: `gallery/` is the parked six-photo grid, `bio/` "קצת עלי". `contact/` holds the office section and the parked social section.
 - **A component earns its own file** only if it is reused, has state or logic, or is a real visual unit (art, a background composition, a multi-slot card). A logic-free single-use leaf is written inline in its parent.
 - **`site/`** holds the header, `PageShell` (required `overflow` prop: `clip` for home and 404, `hidden` for blog), `Footer`, the contact pill, `JsonLd`. One-off decorative SVG stays beside its section.
 - Named exports everywhere; only Next route files use `export default`. The parked `sections/testimonials/` stays (see CLAUDE.md).

@@ -151,7 +151,6 @@ describe('C16: headings', () => {
   it('every section h2 on the page is bare type-title (Elamy 700 baked into the class)', () => {
     const h2s = Array.from(home.querySelectorAll('h2:not(.sr-only)'));
     expect(h2s.length, 'visible section h2s').toBe(6);
-    expect(findSection(home, 'contact-social').querySelector('h2.sr-only')?.textContent).toBe('קישורים לרשתות החברתיות');
     for (const h of h2s) {
       expect(typeClassesOf(h), `h2 "${h.textContent!.trim()}"`).toEqual(['type-title']);
       expect(hasClass(h, 'font-bold'), `h2 "${h.textContent!.trim()}" has a redundant font-bold`).toBe(false);

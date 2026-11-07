@@ -47,6 +47,7 @@ describe('F2: the rendered home page uses the shared ids', () => {
     const PARKED = new Set<string>([
       ID.testimonials, ID.testimonialsTitle, ID.testimonialsGrid, ID.testimonialCardArt,
       ID.ctaBand, ID.ctaBandTitle, ID.photoGallery, ID.photoGalleryTitle,
+      ID.contactSocial, ID.contactSocialTitle,
     ]);
     const BLOG = new Set<string>([ID.blogIntro, ID.blogPosts, ID.postHero, ID.postBody, ID.postCta, ID.postMore]);
     const MENU = new Set<string>([ID.mobileMenu]); // portaled on open, not in the static markup

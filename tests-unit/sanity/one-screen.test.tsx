@@ -56,7 +56,7 @@ beforeAll(async () => {
 /**
  * The exact current assignment. A silent flip (lock <-> grow, a lost lg:py-12) must fail.
  *   lock-720 = lg:screen-lock   grow-720 = lg:screen-grow   free = min-h only (content-driven)   (floor 720px = --card-floor)
- * `free` rows (about-credentials, contact-social): CLAUDE.md only requires the one-screen minimum there.
+ * The `free` row (about-credentials): CLAUDE.md only requires the one-screen minimum there.
  */
 const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> = {
   expertise: { mode: 'grow-720', fit: 'grow', py12: true },
@@ -64,7 +64,6 @@ const DESKTOP: Record<string, { mode: OneScreenMode; fit: Fit; py12: boolean }> 
   'about-me': { mode: 'grow-720', fit: 'grow', py12: true },
   'about-credentials': { mode: 'free', fit: 'free', py12: false },
   services: { mode: 'lock-720', fit: 'lock', py12: true },
-  'contact-social': { mode: 'free', fit: 'free', py12: false },
   'contact-office': { mode: 'lock-720', fit: 'lock', py12: true },
 };
 

@@ -7,7 +7,6 @@ import { Bio } from '@/components/sections/bio/Bio';
 import { Credentials } from '@/components/sections/credentials/Credentials';
 import { Services } from '@/components/sections/services/Services';
 import { Testimonials } from '@/components/sections/testimonials/Testimonials';
-import { ContactSocial } from '@/components/sections/contact/ContactSocial';
 import { ContactOffice } from '@/components/sections/contact/ContactOffice';
 import { SITE } from '@/content/site';
 import { ANCHOR } from '@/content/ids';
@@ -52,7 +51,6 @@ export default function Home() {
       <Services />
       {SHOW_TESTIMONIALS && <Testimonials />}
       <div id={ANCHOR.gallery} className="invisible h-0" aria-hidden="true" />
-      <ContactSocial />
       <ContactOffice />
     </PageShell>
   );

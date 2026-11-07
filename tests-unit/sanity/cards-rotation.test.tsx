@@ -89,11 +89,3 @@ describe('A4: office card (owner option B)', () => {
     expect(card.contains(section.querySelector('h2')), 'h2 moved inside the card').toBe(false);
   });
 });
-
-describe('A5/A6: copy that must NOT sit in a card', () => {
-  it('contact-social holds no nested tone card (its lead copy sits on the plum itself) and still has its social icon links', () => {
-    const section = findSection(home, 'contact-social');
-    expect(section.querySelectorAll('[data-bg-tone]').length, `${labelOf(section, 'contact-social')} grew a nested tone card`).toBe(0);
-    expect(section.querySelectorAll('a[aria-label]').length, 'social icon links').toBeGreaterThanOrEqual(1);
-  });
-});

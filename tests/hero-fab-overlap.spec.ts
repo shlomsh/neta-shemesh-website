@@ -100,7 +100,7 @@ test.describe('contact pill vs hero content and card titles (phone, iOS 26 overs
       await open(page, viewport);
 
       const count = await page.evaluate(() => document.querySelectorAll('main > section').length);
-      expect(count, 'cards on the page').toBe(8);
+      expect(count, 'cards on the page').toBe(7);
 
       const problems: string[] = [];
       let titles = 0;

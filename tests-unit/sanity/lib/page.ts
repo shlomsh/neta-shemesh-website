@@ -35,7 +35,6 @@ export const EXPECTED_SECTIONS: SectionSpec[] = [
   { name: 'about-me', ids: ['about-me-section'], heading: 'קצת עלי', kind: 'cream' },
   { name: 'about-credentials', ids: ['about-credentials'], heading: 'ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג', kind: 'dark' },
   { name: 'services', ids: ['services'], heading: 'איך זה עובד?', kind: 'light' },
-  { name: 'contact-social', ids: ['contact-social'], heading: 'קישורים לרשתות החברתיות', kind: 'dark' },
   { name: 'contact-office', ids: ['contact-office'], heading: 'הקליניקה שלי', kind: 'mid' },
   { name: 'footer', ids: [], kind: 'photo' },
 ];

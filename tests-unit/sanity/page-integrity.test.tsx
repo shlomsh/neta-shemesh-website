@@ -22,11 +22,13 @@ beforeAll(async () => {
 });
 
 describe('E10: in-page anchors resolve', () => {
-  it('does not render the removed consultation and relationship gallery sections', () => {
+  it('does not render the removed consultation, relationship gallery and social sections', () => {
     expect(home.querySelector('#cta-band')).toBeNull();
     expect(home.querySelector('#photo-gallery')).toBeNull();
+    expect(home.querySelector('#contact-social')).toBeNull();
     expect(home.textContent).not.toContain('קביעת פגישת ייעוץ');
     expect(home.textContent).not.toContain('טיפול זוגי לקשר בריא ותומך');
+    expect(home.textContent).not.toContain('בואו נשמור על קשר גם ברשתות החברתיות');
     expect(home.querySelector('#gallery')).not.toBeNull();
   });
 
@@ -135,9 +137,9 @@ describe('E16: decorative overlays never intercept clicks', () => {
 });
 
 describe('E17: icon-only links have an accessible name', () => {
-  it('every link without visible text (logo, social icons) has an aria-label or a labelled image', () => {
+  it('every link without visible text has an aria-label or a labelled image', () => {
     const iconLinks = Array.from(home.querySelectorAll('a')).filter((a) => !(a.textContent ?? '').trim());
-    expect(iconLinks.length, 'no icon-only links found: the walker went blind').toBeGreaterThanOrEqual(2);
+    expect(iconLinks.length, 'no icon-only links found: the walker went blind').toBeGreaterThanOrEqual(1);
     expectNone(unnamedIconLinks(home), 'icon-only links a screen reader announces as just "link"');
   });
 

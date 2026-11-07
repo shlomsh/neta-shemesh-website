@@ -50,7 +50,7 @@ The credentials card does state a consistent 5-star rating from clients.
   secondary; there is no contact form.
 - Where: one clinic in **Netanya** (Agamim). Sessions are **in person only**; no online therapy,
   and no other cities are claimed.
-- The contact section has two panels: social links and **הקליניקה שלי** (clinic details + map).
+- The contact section is **הקליניקה שלי** (clinic details + map).
   Facts live in `src/content/site.ts`.
 
 ---
@@ -75,7 +75,7 @@ bright, busy, or corporate design.
 5. **Credentials** — 14 years of clinical experience, couple and family therapist, parent
    guidance, M.S.W. clinical social worker, group facilitator, consistent 5-star client rating.
 6. **Services** — "איך זה עובד?", the four steps of the process.
-7. **Contact** — social panel and clinic panel with map.
+7. **Contact** — clinic details and map.
 8. **Footer** — contact link, signature, © line.
 
 Testimonials are parked. Blog: `/blog` and two
