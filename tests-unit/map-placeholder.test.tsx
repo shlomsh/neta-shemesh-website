@@ -4,12 +4,22 @@ import { renderToString } from 'react-dom/server';
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { MapEmbed } from '../src/components/sections/contact/MapEmbed';
-import { mapEmbedSrc } from '../src/content/site';
+import { addressLine, mapEmbedSrc, mapSearchHref, SITE } from '../src/content/site';
+import { ContactDetails } from '../src/components/sections/contact/ContactDetails';
 
 const BOX = 'h-[16.25rem] lg:h-full lg:min-h-[22.5rem]';
 const source = (f: string) => readFileSync(join(process.cwd(), 'src/components/sections/contact', f), 'utf8');
 
 describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
+  it('the map and address link search the same Hebrew street and city', () => {
+    const embed = new URL(mapEmbedSrc());
+    const search = new URL(mapSearchHref());
+    expect(embed.searchParams.get('q')).toBe('קרל פופר 7, נתניה');
+    expect(search.searchParams.get('query')).toBe(SITE.address.mapQuery);
+    const { getByRole } = render(<ContactDetails />);
+    expect(getByRole('link', { name: addressLine() }).getAttribute('href')).toBe(mapSearchHref());
+  });
+
   it('server HTML has the plain lazy iframe with the same src, title and sandbox', () => {
     const html = renderToString(<MapEmbed className={BOX} />);
     const frame = html.match(/<iframe[^>]*>/)![0];

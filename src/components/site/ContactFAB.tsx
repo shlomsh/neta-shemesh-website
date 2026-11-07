@@ -7,7 +7,7 @@ const PHONE_URL = telHref();
 // aria-labels start with the visible text (WCAG 2.5.3 label in name).
 
 const HALF_BASE =
-  'type-small font-bold flex min-h-11 min-w-11 items-center justify-center gap-2 px-4 py-2.5 ' +
+  'type-lead font-bold flex min-h-11 min-w-11 items-center justify-center gap-2 px-4 py-2.5 ' +
   'transition duration-200 motion-safe:active:scale-95 ' +
   'focus-ring focus-visible:ring-inset';
 

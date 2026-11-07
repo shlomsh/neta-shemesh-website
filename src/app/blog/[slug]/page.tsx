@@ -69,7 +69,7 @@ export default async function BlogPostPage(
         <Container id={ID.mainContent} maxWidth="md">
           <Link
             href="/blog"
-            className="type-small mb-panel inline-flex items-center gap-2 font-bold text-plum underline-offset-4 hover:underline"
+            className="type-body mb-panel inline-flex items-center gap-2 font-bold text-plum underline-offset-4 hover:underline"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="4" y1="12" x2="20" y2="12" />
@@ -86,7 +86,7 @@ export default async function BlogPostPage(
             <p className="type-lead mx-auto max-w-[60ch]">
               {post.excerpt}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-2.5 type-small text-plum">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 type-body text-plum">
               <span>{SITE.name}</span>
               <span aria-hidden="true">·</span>
               <time dateTime={post.date}>{post.dateDisplay}</time>

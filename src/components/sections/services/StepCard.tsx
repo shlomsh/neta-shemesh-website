@@ -47,7 +47,7 @@ export function StepCard({
             {bullets.map((item, i) => (
               <li
                 key={i}
-                className="type-small text-cream/90"
+                className="type-body text-cream/90"
               >
                 {item}
               </li>

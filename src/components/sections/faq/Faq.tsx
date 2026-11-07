@@ -30,7 +30,7 @@ export function Faq() {
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </summary>
-              <BodyText className="type-body max-w-prose pb-5">
+              <BodyText className="type-lead max-w-prose pb-5">
                 {answer}
               </BodyText>
             </details>

@@ -69,7 +69,6 @@ describe('F3: site facts live only in content/site.ts', () => {
     ['email', /[\w.+-]+@(?!\dx\b)[\w-]+\.(?:com|co\.il|org|net|il)\b/i, SITE.email],
     ['street', /קרל פופר/, SITE.address.street],
     ['postal code', /4250708/, SITE.address.postalCode],
-    ['map query', /Karl\+?Popper/i, SITE.address.mapQuery],
   ];
 
   let home: HTMLElement;

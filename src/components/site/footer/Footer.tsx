@@ -52,7 +52,7 @@ export function Footer() {
       <div className="relative z-10 pb-[calc(env(safe-area-inset-bottom)+4.5rem)] md:pb-0">
         <ScrollReveal delay={0.3}>
           <p
-            className="type-small text-cream text-center"
+            className="type-body text-cream text-center"
           >
             כל הזכויות שמורות <span className="font-latin">©</span> 2026.
           </p>

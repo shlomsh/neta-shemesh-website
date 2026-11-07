@@ -45,11 +45,11 @@ export function PostCard({ post, eager = false, headingLevel = 3 }: PostCardProp
           {post.title}
         </Heading>
 
-        <p className="type-body text-plum">
+        <p className="type-lead text-plum">
           {post.excerpt}
         </p>
 
-        <div className="mt-auto flex items-center gap-2.5 pt-2 type-small text-plum">
+        <div className="mt-auto flex items-center gap-2.5 pt-2 type-body text-plum">
           <time dateTime={post.date}>{post.dateDisplay}</time>
           <span aria-hidden="true">·</span>
           <span>{post.readTime}</span>

@@ -74,6 +74,20 @@ describe('E11: all visible text lives under a type-* class', () => {
   });
 });
 
+describe('Readable running text', () => {
+  it('uses larger type for FAQ answers, service steps, and the contact pill', () => {
+    const answers = home.querySelectorAll('#faq-section details p');
+    const bullets = home.querySelectorAll('#services li');
+    const contact = home.querySelectorAll('[data-testid="contact-fab"] a');
+    expect(answers.length).toBeGreaterThan(0);
+    expect(bullets.length).toBeGreaterThan(0);
+    expect(contact.length).toBe(2);
+    answers.forEach((element) => expect(hasClass(element, 'type-lead')).toBe(true));
+    bullets.forEach((element) => expect(hasClass(element, 'type-body')).toBe(true));
+    contact.forEach((element) => expect(hasClass(element, 'type-lead')).toBe(true));
+  });
+});
+
 describe('E13: hero navigation stays expanded below md', () => {
   it('all primary links are rendered in the hero without a hamburger', () => {
     const nav = desktopNav(home);

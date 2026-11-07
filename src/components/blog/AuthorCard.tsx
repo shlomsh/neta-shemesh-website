@@ -29,8 +29,8 @@ export function AuthorCard() {
           על הכותבת
         </span>
         <p className="type-card-title text-plum">{SITE.name}</p>
-        <p className="type-small text-plum">{SITE.jobTitle} &middot; {SITE.city}</p>
-        <p className="type-body text-plum">
+        <p className="type-body text-plum">{SITE.jobTitle} &middot; {SITE.city}</p>
+        <p className="type-lead text-plum">
           מלווה זוגות, הורים ומשפחות בתהליכי שינוי, משבר וצמיחה — מתוך אמונה שכל
           קשר יכול למצוא מחדש את הדרך אל הקרבה והביטחון.
         </p>

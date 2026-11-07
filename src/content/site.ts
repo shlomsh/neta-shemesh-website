@@ -11,6 +11,7 @@ export const PRODUCTION_URL = 'https://www.netashemesh.co.il';
 
 /** The clinic's city: one literal feeds both `SITE.city` (prose) and `SITE.address.city`. */
 const CITY = 'נתניה';
+const STREET = 'קרל פופר 7';
 
 export const SITE = {
   name: 'נטע שמש',
@@ -33,14 +34,14 @@ export const SITE = {
   },
   email: 'nettabe@gmail.com',
   address: {
-    street: 'קרל פופר 7, שכונת אגמים',
+    street: `${STREET}, שכונת אגמים`,
     city: CITY,
     region: 'השרון',
     postalCode: '4250708',
     country: 'IL',
     geo: { latitude: 32.2915701, longitude: 34.854951 },
-    /** Pre-encoded `q=` value of the Google Maps embed. */
-    mapQuery: 'Karl+Popper+7,+Netanya',
+    /** Google Maps resolves the Hebrew address more reliably without the neighborhood. */
+    mapQuery: `${STREET}, ${CITY}`,
   },
   /** schema.org openingHours. */
   openingHours: ['Su-Th 09:00-19:00'],
@@ -67,9 +68,13 @@ export const waHref = () =>
 /** "קרל פופר 7, שכונת אגמים, נתניה" */
 export const addressLine = () => `${SITE.address.street}, ${SITE.address.city}`;
 
+/** Google Maps search for the same address as the embedded map. */
+export const mapSearchHref = () =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.address.mapQuery)}`;
+
 /** Google Maps embed URL for the clinic. */
 export const mapEmbedSrc = () =>
-  `https://maps.google.com/maps?q=${SITE.address.mapQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  `https://maps.google.com/maps?q=${encodeURIComponent(SITE.address.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
 /** True when this build is the production site (staging copies must stay non-indexable). */
 export const IS_PRODUCTION_HOST = SITE.url === PRODUCTION_URL;
