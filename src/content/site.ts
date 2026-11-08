@@ -17,6 +17,7 @@ export const SITE = {
   name: 'נטע שמש',
   /** Short service line used in titles / OG ("נטע שמש | טיפול זוגי ומשפחתי"). */
   tagline: 'טיפול זוגי ומשפחתי',
+  contactCta: 'לשיחת יעוץ טלפונית לא מחייבת',
   /** Professional title shown on the author card and in the Person JSON-LD. */
   jobTitle: 'עו״ס קלינית ומטפלת זוגית ומשפחתית',
   /** City of the clinic, in prose ("... בנתניה"). */

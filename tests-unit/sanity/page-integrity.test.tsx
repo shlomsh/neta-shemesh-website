@@ -6,6 +6,7 @@
  * back on mobile (13px links).
  */
 import { beforeAll, describe, expect, it } from 'vitest';
+import { SITE } from '@/content/site';
 import {
   classTokens,
   desktopNav,
@@ -22,6 +23,13 @@ beforeAll(async () => {
 });
 
 describe('E10: in-page anchors resolve', () => {
+  it('shows the same consultation invitation in the hero and footer', () => {
+    const hero = home.querySelector('#hero a[href="#contact"]');
+    const footer = home.querySelector('footer a[href="/#contact"]');
+    expect(hero?.textContent?.trim()).toBe('לשיחת יעוץ טלפונית לא מחייבת');
+    expect(footer?.textContent?.trim()).toBe(SITE.contactCta);
+  });
+
   it('does not render the removed consultation, relationship gallery and social sections', () => {
     expect(home.querySelector('#cta-band')).toBeNull();
     expect(home.querySelector('#photo-gallery')).toBeNull();

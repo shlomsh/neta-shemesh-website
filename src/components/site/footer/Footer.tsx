@@ -1,6 +1,7 @@
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { ANCHOR, anchorHref } from '@/content/ids';
+import { SITE } from '@/content/site';
 import { FooterBackground } from './FooterBackground';
 
 /**
@@ -32,7 +33,7 @@ export function Footer() {
           {/* A single cream ButtonLink pill (secondary variant) on the photo footer; the pill is its own fill. */}
           <div className="relative flex items-center justify-center">
             <ButtonLink href={anchorHref(ANCHOR.contact, '/')} variant="secondary" size="sm" halo className="relative z-10 min-h-12">
-              מוזמנים ליצור איתי קשר
+              {SITE.contactCta}
             </ButtonLink>
           </div>
         </ScrollReveal>

@@ -16,6 +16,7 @@ import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { BrandLogo } from '@/components/site/BrandLogo';
 import { SiteNav } from '@/components/site/SiteNav';
 import { ANCHOR, ID, anchorHref } from '@/content/ids';
+import { SITE } from '@/content/site';
 import { HeroHeading } from './HeroHeading';
 import { HeroArt, ART_SLOT } from './HeroArt';
 
@@ -82,7 +83,7 @@ export function HeroContent() {
               className="flex flex-col items-center gap-stack w-full lg:items-start"
             >
               <ButtonLink href={anchorHref(ANCHOR.contact)} variant="primary" size="sm">
-                ליצירת קשר
+                {SITE.contactCta}
               </ButtonLink>
             </div>
           </div>

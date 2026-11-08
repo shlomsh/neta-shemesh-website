@@ -25,8 +25,22 @@ test.describe('Responsive Layout Tests', () => {
     const hasHorizontalScroll = await page.evaluate(() => {
       return document.documentElement.scrollWidth > document.documentElement.clientWidth;
     });
-    
+
     expect(hasHorizontalScroll).toBe(false);
+  });
+
+  test('Consultation buttons fit within narrow and desktop viewports', async ({ page }) => {
+    for (const width of [320, 375, 1280]) {
+      await page.setViewportSize({ width, height: 812 });
+      await page.evaluate(() => document.fonts.ready);
+      for (const selector of ['#hero', 'footer']) {
+        const link = page.locator(selector).getByRole('link', { name: 'לשיחת יעוץ טלפונית לא מחייבת' });
+        const box = await link.boundingBox();
+        expect(box, `${selector} at ${width}px`).not.toBeNull();
+        expect(box!.x, `${selector} left edge at ${width}px`).toBeGreaterThanOrEqual(0);
+        expect(box!.x + box!.width, `${selector} right edge at ${width}px`).toBeLessThanOrEqual(width);
+      }
+    }
   });
 
   test('Mobile hero shows the full navigation above the title', async ({ page }) => {
