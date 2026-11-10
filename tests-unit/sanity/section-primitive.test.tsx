@@ -11,7 +11,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { Section } from '@/components/primitives/layout/Section';
 import { Container } from '@/components/primitives/layout/Container';
-import { classTokens, fitOf, globalsCss, hasLgMinScreen, hasMobileFill, oneScreenMode, stripCssComments } from './helpers';
+import { classTokens, fitOf, hasLgMinScreen, hasMobileFill, oneScreenMode, themeDeclarations } from './helpers';
 
 function html(node: React.ReactElement): HTMLElement {
   const holder = document.createElement('div');
@@ -76,7 +76,7 @@ describe('Section: fit publishes data-fit AND emits the classes that implement i
 
 describe('spacing tokens behind the utilities Section/Container emit', () => {
   it('every px-gutter* / py-section* utility they emit has its --spacing-* token in @theme', () => {
-    const themeBlock = stripCssComments(globalsCss()).match(/@theme\s*\{([\s\S]*?)\n\}/)![1];
+    const themeBlock = themeDeclarations();
     const emitted = new Set<string>();
     const collect = (el: Element) => classTokens(el).filter((t) => /^p[xy]-[a-z-]+$/.test(t)).forEach((t) => emitted.add(t.slice(3)));
     for (const pad of ['section', 'tight'] as const) collect(sectionOf(<Section pad={pad}>x</Section>));

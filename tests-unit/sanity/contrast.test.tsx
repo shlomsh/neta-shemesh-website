@@ -22,6 +22,7 @@ import {
   ratchetContrast,
   renderContrastPages,
   requiredRatio,
+  sourceNamed,
   themeColours,
   type ContrastAllow,
   type ContrastReport,
@@ -48,10 +49,16 @@ const PHOTO_BACKDROP: Array<{ where: string; reason: string }> = [
   { where: 'footer', reason: 'Footer: cream text over the footer photo with a dark overlay' },
 ];
 
-// ─── 1. The ratio maths matches CLAUDE.md ────────────────────────────────────
+// ─── 1. Known-answer ratio controls ────────────────────────────────────────
 
-describe('colour maths: the palette pairs match the CLAUDE.md contrast table to two decimals', () => {
-  const pal = themeColours();
+// Keep known-answer resolver controls independent of the site's selected preset.
+const fixtureEnv = {
+  palette: themeColours(sourceNamed('app/palettes/airy-rose.css').text),
+  vars: colourEnv().vars,
+};
+
+describe('colour maths: the Airy Rose fixture pairs match known ratios to two decimals', () => {
+  const pal = fixtureEnv.palette;
 
   it.each([
     ['plum/cream', 'plum', 'cream', 5.55],
@@ -64,8 +71,8 @@ describe('colour maths: the palette pairs match the CLAUDE.md contrast table to 
     expect(Math.round(contrastRatio(pal[a], pal[b]) * 100) / 100).toBe(want);
   });
 
-  it('--surface-veil is ~#F6E7E8, 4.97:1 against plum (quoted in CLAUDE.md)', () => {
-    const veil = evalColour('var(--surface-veil)', colourEnv())!;
+  it('the Airy Rose fixture veil is ~#F6E7E8, 4.97:1 against plum', () => {
+    const veil = evalColour('var(--surface-veil)', fixtureEnv)!;
     expect(veil.a).toBe(1);
     expect({ r: Math.round(veil.r), g: Math.round(veil.g), b: Math.round(veil.b) }).toEqual(hexToRgb('#F6E7E8'));
     expect(Math.abs(contrastRatio(pal.plum, veil) - 4.97)).toBeLessThan(0.02);
@@ -83,7 +90,7 @@ describe('resolver controls (small DOM fixtures with a known ratio)', () => {
   const run = (html: string): ContrastReport => {
     const holder = document.createElement('div');
     holder.innerHTML = html;
-    return contrastReport(holder, 'fixture');
+    return contrastReport(holder, 'fixture', fixtureEnv);
   };
   const one = (html: string) => {
     const r = run(html);

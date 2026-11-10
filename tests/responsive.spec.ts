@@ -57,6 +57,35 @@ test.describe('Responsive Layout Tests', () => {
     expect(navBottom).toBeLessThan(headingTop);
   });
 
+  test('Mobile hero keeps the compact wordmark right-aligned and the navigation enlarged', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    const hero = page.locator('#hero');
+    const logo = hero.locator('#brand-logo img');
+    await expect(logo).toHaveCSS('width', '156px');
+    const alignment = await logo.evaluate((image) => {
+      const link = image.closest('a')!;
+      return {
+        right: image.getBoundingClientRect().right,
+        parentRight: link.parentElement!.getBoundingClientRect().right,
+      };
+    });
+    expect(Math.abs(alignment.right - alignment.parentRight)).toBeLessThanOrEqual(1);
+    const nav = hero.getByRole('navigation', { name: 'ניווט ראשי' });
+    for (const link of await nav.getByRole('link').all()) {
+      await expect(link).toHaveCSS('font-size', '24px');
+    }
+  });
+
+  test('Blog headers match the hero wordmark size at every responsive breakpoint', async ({ page }) => {
+    for (const [width, logoWidth] of [[375, 156], [640, 192], [768, 216], [1280, 216]]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const route of ['/', '/blog', '/blog/loneliness-in-a-relationship', '/blog/one-hour-a-week-is-not-enough']) {
+        await page.goto(route);
+        await expect(page.locator('#brand-logo img'), `${route} at ${width}px`).toHaveCSS('width', `${logoWidth}px`);
+      }
+    }
+  });
+
   test('Desktop hero fits within the first viewport', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     const hero = page.locator('#hero');
@@ -83,6 +112,31 @@ test.describe('Responsive Layout Tests', () => {
     await firstAnswer.locator('summary').click();
     await expect(firstAnswer).toHaveAttribute('open', '');
     await expect(firstAnswer).toContainText('אפשר בהחלט להתחיל במפגש אישי שלך');
+  });
+
+  test('FAQ answers use larger text and the full available row width', async ({ page }) => {
+    for (const [width, fontSize] of [[375, 24], [1440, 32]]) {
+      await page.setViewportSize({ width, height: 900 });
+      const faq = page.locator('#faq-section');
+      const item = faq.locator('details').first();
+      await item.locator('summary').click();
+      const answer = item.locator('p');
+      await expect(answer).toHaveCSS('font-size', `${fontSize}px`);
+      await expect(answer).toHaveCSS('white-space', 'pre-line');
+      expect(await answer.textContent()).toContain('שכיח.\nבמערכת');
+      const widths = await item.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return {
+          available: element.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight),
+          answer: element.querySelector('p')!.getBoundingClientRect().width,
+          row: element.getBoundingClientRect().width,
+        };
+      });
+      expect(Math.abs(widths.answer - widths.available)).toBeLessThanOrEqual(1);
+      if (width === 1440) expect(widths.row).toBeGreaterThan(1100);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+      await item.locator('summary').click();
+    }
   });
 
 });

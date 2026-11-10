@@ -4,7 +4,7 @@ Marketing site for **Netta Shemesh** (נטע שמש), a couples and family thera
 
 ## Stack
 
-Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and, on desktop with a mouse, a CSS-only card snap; no animation library. Fonts are self-hosted through `next/font/local`. Four runtime dependencies (`next`, `react`, `react-dom`, `@vercel/analytics`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
+Next.js 16 (App Router, server components by default), React 19, TypeScript, Tailwind CSS v4 (theme tokens in `@theme` in `src/app/globals.css`, no `tailwind.config`). Motion is plain CSS plus a tiny IntersectionObserver island and CSS-only homepage card snap on desktop and mobile (disabled for reduced motion); no animation library. Fonts are self-hosted through `next/font/local`. Four runtime dependencies (`next`, `react`, `react-dom`, `@vercel/analytics`). Tests: Vitest + jsdom, Playwright. Node 24 (`.nvmrc`).
 
 ### Next.js, plus these requirements
 
@@ -29,6 +29,8 @@ npm run lint                # eslint --max-warnings 0 (also enforces the compone
 npm run typecheck           # tsc --noEmit (src, noUncheckedIndexedAccess) + tsconfig.tests.json (tests)
 npm run test:unit           # all of tests-unit/ (Vitest)
 npm run test:sanity         # tests-unit/sanity only: the fast design/structure guard
+npm run palette             # show selected and available palettes
+npm run palette -- color-hunt # select the Color Hunt palette and regenerate matching wordmarks
 node scripts/generate-brand-logo.mjs # regenerate light and plum tagline wordmarks with Elamy and the original house artwork
 ```
 
@@ -48,11 +50,19 @@ BASE_URL=http://localhost:3200 npx playwright test --project=iphone     # one pr
 npx playwright install chromium webkit                                  # browsers, once (add firefox for the local-only project)
 ```
 
-Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/scroll-snap.spec.ts` checks by computed style that the CSS card snap is on for the home page at desktop width with a fine pointer, and off on `/blog`, on phones and under reduced motion. `tests/hero-fab-overlap.spec.ts` checks at 375x812 and 375x667 (iOS 26 overshoot simulated) that the hero fits one screen and the contact pill never covers hero content or a card title. CI installs `chromium webkit` and runs the four projects.
+Projects (`playwright.config.ts`): `chromium` (Desktop Chrome), `webkit` (Desktop Safari), `iphone` (iPhone 17), `ipad` (iPad Pro 11 landscape, 1194px wide but touch); `firefox` runs locally only. `tests/scroll-snap.spec.ts` checks homepage snap on desktop and mobile, actual mobile-width card transitions and scrolling inside tall cards, and no snap on `/blog` or under reduced motion. `tests/hero-fab-overlap.spec.ts` checks at 375x812 and 375x667 (iOS 26 overshoot simulated) that the hero fits one screen and the contact pill never covers hero content or a card title. CI installs `chromium webkit` and runs the four projects.
 
 Use a fresh port: when nothing listens there the config starts `npm run start -p 3200` itself, but it reuses whatever already listens, so a stale server silently tests old code.
 
 Pixel diff of the working tree against any git ref (0 px tolerance, no committed baselines): `npm run vr -- <ref>`, see [tests/visual/README.md](tests/visual/README.md).
+
+## Palette selection
+
+The selected preset is the single `./palettes/<name>.css` import at the top of `src/app/globals.css`. Use `npm run palette -- <name>` to switch it and regenerate the four wordmark images (lettering and house artwork). Available presets: `color-hunt` (selected, [Color Hunt source](https://colorhunt.co/palette/fdf3f3f8e7e7a070a1724060)) and `airy-rose` (the previous site colors).
+
+Each preset in `src/app/palettes/` supplies the same four roles: `plum` (dark/text), `mauve` (accent), `blush` (light accent), and `cream` (page/paper). Components keep using those roles; white aliases cream, and hover shades, shadows, veils, and decorative washes derive from them. Native WhatsApp green/white and neutral photo scrims remain intentional exceptions. Photography and committed social-share artwork are not recolored.
+
+To add a preset, copy an existing preset's structure, keep its default-palette reset, and add its source colors to `tests-unit/sanity/palette.test.ts`. After selecting it, run lint, typecheck, unit tests, and a fresh production build/Playwright run. The same WCAG thresholds and owner exceptions apply to every selection; no component color edits or contrast-test rebaselining are needed.
 
 ## Repo map
 

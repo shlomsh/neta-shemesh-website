@@ -1,0 +1,8 @@
+/* Previous site palette, retained as a selectable preset. */
+@theme {
+  --color-*: initial;
+  --color-plum: #7A5978;
+  --color-mauve: #C49AB8;
+  --color-blush: #ECC8CE;
+  --color-cream: #FFF5F0;
+}

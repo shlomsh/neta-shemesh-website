@@ -37,7 +37,7 @@ export default defineConfig({
 
   /*
    * Projects: the same specs run on every engine and form factor the site is used on.
-   *   chromium  Desktop Chrome: fine pointer, so the CSS card snap applies (tests/scroll-snap.spec.ts)
+   *   chromium  Desktop Chrome: homepage CSS card snap, also checked on the touch profiles (tests/scroll-snap.spec.ts)
    *   webkit    Desktop Safari: the engine behind every iOS browser, on a desktop
    *   iphone    iPhone 17, WebKit with isMobile + hasTouch: coarse pointer, narrow viewport, native scroll
    *   ipad      iPad Pro 11 in landscape, 1194px wide but touch: the width where a desktop-only

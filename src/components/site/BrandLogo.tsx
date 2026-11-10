@@ -17,14 +17,14 @@ export function BrandLogo({ tone = 'light', compact = false }: { tone?: 'light' 
       href="/"
       prefetch={false}
       aria-label="לעמוד הבית"
-      className="flex items-center"
+      className={`flex items-center${compact ? ' self-start md:self-auto' : ''}`}
     >
       <img // eslint-disable-line @next/next/no-img-element -- above-the-fold logo with explicit size, preloaded as a static webp (LCP); kept raw on purpose
-        src={`/images/logo-tagline-${tone}${compact ? '-compact' : ''}.webp`}
+        src={`/images/logo-tagline-${tone}${compact ? '-compact' : ''}.webp?v=3`}
         alt={HERO.brandMessage}
         width={1073}
         height={320}
-        className={`${compact ? 'w-52 sm:w-64 md:w-72' : 'w-60 sm:w-72 md:w-80'} h-auto max-w-full object-contain`}
+        className={`${compact ? 'w-39 sm:w-48 md:w-54' : 'w-60 sm:w-72 md:w-80'} h-auto max-w-full object-contain`}
         loading="eager"
         fetchPriority={compact ? 'high' : 'low'}
       />

@@ -15,8 +15,8 @@ import { NavLink } from './NavLink';
  * blog pages so the links become /#about-me (full-document navigation, avoids App Router
  * hash-stacking bug).
  */
-const desktopLinkClass = (lightSurface: boolean) => `
-    type-lead
+const desktopLinkClass = (lightSurface: boolean, expandedOnMobile: boolean) => `
+    ${expandedOnMobile ? 'type-quote' : 'type-lead'}
     ${lightSurface ? 'text-plum' : 'text-cream'}
     font-bold
     transition-opacity
@@ -50,7 +50,7 @@ export function SiteNav({
           : 'hidden items-center justify-center gap-region md:flex'}
       >
         {links.map(({ href, label }) => (
-          <NavLink key={href} href={href} label={label} className={desktopLinkClass(lightSurface)} />
+          <NavLink key={href} href={href} label={label} className={desktopLinkClass(lightSurface, expandedOnMobile)} />
         ))}
 
       </nav>

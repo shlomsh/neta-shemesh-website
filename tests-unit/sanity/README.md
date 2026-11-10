@@ -13,11 +13,11 @@ npm run test:unit       # all of tests-unit/ (what the Vercel gate runs)
 
 | Helper | Holds |
 |---|---|
-| `lib/source.ts` | Read `src/**` once, `sourceNamed`, `globalsCss`, `expectNone`, `classStrings`. |
+| `lib/source.ts` | Read `src/**` once, `sourceNamed`, `globalsCss` (including the selected palette import), `expectNone`, `classStrings`. |
 | `lib/dom.ts` | `classTokens`, `hasClass`, `typeClassesOf`, `textNodes`. |
 | `lib/page.ts` | `EXPECTED_SECTIONS`, `renderHome`, section finders, `SUBTITLES`/`subtitleOf`, `buttons`, nav, `kindOf`. |
 | `lib/one-screen.ts` | `data-fit` plus `screen-fit` predicates (`oneScreenMode`, `hasMobileFill`), desktop flex-chain predicates. |
-| `lib/css.ts` | `parseTypeRules`, `sizeRange`, `parseToneRules`, `cssVar`, `displayFontSelectors`. |
+| `lib/css.ts` | `parseTypeRules`, `sizeRange`, `parseToneRules`, `cssVar`, `displayFontSelectors`, `themeDeclarations` (all non-static theme blocks). |
 | `lib/scan-rules.ts` | `SCAN_RULES` = `scan-typography.ts` + `scan-layout.ts` + `scan-code.ts` + `scan-colour.ts`; shape in `scan-types.ts`. |
 | `lib/type-literals.ts` | `classLiterals`, `typeLiteralOffenses` (stacked `type-*`, leading/tracking overrides). |
 | `lib/ban-rules.ts` | `CONTRAST_BANS` (NS-42), `ratchetBan`, `containsBanSample`. |
@@ -35,6 +35,7 @@ npm run test:unit       # all of tests-unit/ (what the Vercel gate runs)
 | `type-scale-css.test.ts` | `.type-*` values, closed set, 14px floor, Latin scale, font tokens, Elamy reserved roles. |
 | `type-usage.test.tsx` | Rendered type usage: no stacked `type-*`, `font-latin`, subtitle lockup, buttons/nav, headings. |
 | `contrast.test.tsx` | Palette maths, resolver fixtures, WCAG matrix over home, `/blog` and every post. |
+| `palette.test.ts` | Preset source colors, selected import, accessible reading surfaces for each preset, derived colors/shadows, palette-colored wordmark pixels, and selector input validation. |
 | `brand-guards.test.tsx` | WhatsApp FAB, no title underlines, hero stroke/entrance, line-art. |
 | `page-integrity.test.tsx` | Anchors resolve, text under `type-*`, nav, image URLs, overlays, icon link names. |
 | `single-source.test.tsx` | Ids, no phone/email/street literals in any format, links from `SITE`, JSON-LD from content. |
@@ -47,6 +48,8 @@ Other folders in `tests-unit/`: `reduced-motion-hydration`, `reveal-observer`, `
 ## Contrast resolver limits
 
 `contrastReport` resolves the class list of every ancestor against the `@theme` palette (jsdom has no Tailwind CSS). Deliberate limits:
+
+The real-page matrix always uses the selected preset. Known-answer resolver controls explicitly use the retained Airy Rose fixture environment, so selecting a palette does not rewrite or weaken those controls. Both presets must meet the same reading-surface thresholds.
 
 - Base (mobile) state only: `hover:`, `focus-visible:`, `group-hover:` and breakpoint colour overrides are not evaluated.
 - Size is the nearest `.type-*` mobile minimum (x0.88 per `.font-latin` span); no type class means 16px regular. Large = >= 24px, or >= 18.67px bold.

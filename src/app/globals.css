@@ -1,4 +1,5 @@
 @import "tailwindcss" source(none);
+@import "./palettes/color-hunt.css";
 
 /* Tailwind scans only src/ (source(none) disables auto-detect, which emitted junk rules). */
 @source "../";
@@ -48,13 +49,7 @@
 }
 
 @theme {
-  /* Palette guard: drop Tailwind's default palette. */
-  --color-*: initial;
-  --color-plum: #7A5978;
-  --color-mauve: #C49AB8;
-  --color-blush: #ECC8CE;
-  --color-cream: #FFF5F0;
-  --color-white: #FFF5F0;
+  --color-white: var(--color-cream);
   /* photo scrims only */
   --color-black: #000;
 
@@ -81,9 +76,9 @@
   --radius-card: 1.5rem;  /* cards, photo frames, portrait, step/expertise cards, collage panels */
 
   /* Elevations beyond Tailwind's shadow scale. */
-  --shadow-cover: 0 24px 60px -30px rgba(122,89,120,0.6);     /* blog post cover image */
-  --shadow-portrait: 0 16px 30px -15px rgba(122,89,120,0.3);  /* bio portrait */
-  --shadow-lift: 0 18px 40px -20px rgba(122,89,120,0.45);     /* blog PostCard on hover */
+  --shadow-cover: 0 24px 60px -30px color-mix(in srgb, var(--color-plum) 60%, transparent);     /* blog post cover image */
+  --shadow-portrait: 0 16px 30px -15px color-mix(in srgb, var(--color-plum) 30%, transparent);  /* bio portrait */
+  --shadow-lift: 0 18px 40px -20px color-mix(in srgb, var(--color-plum) 45%, transparent);     /* blog PostCard on hover */
   --shadow-fab: 0 12px 30px -10px rgba(0,0,0,0.35);           /* ContactFAB pill */
 
   /* Fluid spacing steps (NS-61, CLAUDE.md "Spacing"). Never name one after a CSS display word (`inline-<step>` breaks `inline-block`). */
@@ -99,7 +94,7 @@
 
 /* static: always emitted to :root (used only via bg-[var(--surface-veil)]). */
 @theme static {
-  /* Cream veil over mauve for inner cards: 4.97:1 against plum. */
+  /* Cream veil over mauve for inner cards; follows the selected palette. */
   --surface-veil: color-mix(in srgb, var(--color-cream) 85%, var(--color-mauve));
 }
 
@@ -169,8 +164,8 @@
   }
 }
 
-/* Home card snap, CSS only: desktop, fine pointer, no reduced motion. */
-@media (min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+/* Home card snap, CSS only, including touch; disabled for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
   html:has(main[data-snap-cards]) { scroll-snap-type: y mandatory; }
   main[data-snap-cards] > section,
   main[data-snap-cards] > footer { scroll-snap-align: start; scroll-snap-stop: always; }

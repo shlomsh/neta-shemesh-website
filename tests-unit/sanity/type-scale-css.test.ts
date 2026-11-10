@@ -8,7 +8,7 @@
  * companion's size scale compounded. Every one of those regressed at least once.
  */
 import { describe, expect, it } from 'vitest';
-import { cssVar, displayFontSelectors, expectNone, globalsCss, parseToneRules, parseTypeRules, sizeRange, stripCssComments, readSources } from './helpers';
+import { cssVar, displayFontSelectors, expectNone, globalsCss, parseToneRules, parseTypeRules, sizeRange, stripCssComments, readSources, themeColours } from './helpers';
 
 const css = globalsCss();
 const clean = stripCssComments(css);
@@ -80,16 +80,11 @@ describe('C10b: font tokens and the Latin companion', () => {
     expect(before.slice(before.indexOf('{', opener) + 1).includes('}'), '--surface-veil escaped its @theme static block').toBe(false);
   });
 
-  it('the four brand colour tokens keep their values; --color-white is the cream alias (never pure #fff)', () => {
-    for (const [token, hex] of [
-      ['plum', '#7A5978'],
-      ['mauve', '#C49AB8'],
-      ['blush', '#ECC8CE'],
-      ['cream', '#FFF5F0'],
-    ]) {
-      expect(clean, `--color-${token}`).toMatch(new RegExp(`--color-${token}\\s*:\\s*${hex}\\s*;`, 'i'));
-    }
-    expect(cssVar(css, '--color-white')?.toLowerCase(), '--color-white must equal the cream hex').toBe('#fff5f0');
+  it('the selected preset supplies all four brand tokens; --color-white follows cream (never an independent hex)', () => {
+    const palette = themeColours(css);
+    for (const token of ['plum', 'mauve', 'blush', 'cream']) expect(palette[token], token).toBeDefined();
+    expect(cssVar(css, '--color-white')).toBe('var(--color-cream)');
+    expect(palette.white).toEqual(palette.cream);
   });
 
   it.each(['--color-dark', '--color-text-primary', '--color-text-secondary', '--color-bg-light', '--color-brand-primary'])('the retired colour alias %s is gone (four colours only: plum / mauve / blush / cream)', (name) => {

@@ -3,7 +3,7 @@
  * (`renderContrastPages`) and the ratchet for the owner-approved exceptions. CLAUDE.md "Color": contrast pairs.
  */
 import React from 'react';
-import { compositeOver, contrastRatio, hex2, type RGBA } from './colour-math';
+import { colourEnv, compositeOver, contrastRatio, hex2, type ColourEnv, type RGBA } from './colour-math';
 import { backdropOf, baseTokens, composeGroupOpacity, foregroundOf, splitVariant } from './colour-resolve';
 import { parseTypeRules, sizeRange } from './css';
 import { classTokens, textNodes, typeClassesOf } from './dom';
@@ -114,7 +114,7 @@ function whereOf(el: Element): string {
 }
 
 /** Measure every visible text node under `root` (one page). */
-export function contrastReport(root: Element, page: string): ContrastReport {
+export function contrastReport(root: Element, page: string, env: ColourEnv = colourEnv()): ContrastReport {
   const report: ContrastReport = { findings: [], all: [], skipped: [], measured: 0 };
   const seen = new Set<string>();
   for (const node of textNodes(root)) {
@@ -133,14 +133,14 @@ export function contrastReport(root: Element, page: string): ContrastReport {
     if (skip || (hiddenMobile && hiddenDesktop)) continue;
     const where = whereOf(el);
     const snippet = text.slice(0, 60);
-    const fg = foregroundOf(el);
-    const bd = backdropOf(el);
+    const fg = foregroundOf(el, env);
+    const bd = backdropOf(el, env);
     if (!fg.ok) { report.skipped.push({ page, where, text: snippet, reason: fg.reason }); continue; }
     if (!bd.ok) { report.skipped.push({ page, where, text: snippet, reason: bd.reason }); continue; }
     const style = textStyleOf(el);
     // ancestor opacity (below the backdrop) fades the text colour toward the backdrop
     const fgRgba: RGBA = { ...fg.value, a: fg.value.a * bd.value.faded };
-    const composed = composeGroupOpacity(compositeOver(fgRgba, bd.value.colour), bd.value.colour, bd.value.supplier);
+    const composed = composeGroupOpacity(compositeOver(fgRgba, bd.value.colour), bd.value.colour, bd.value.supplier, env);
     const fgFinal = composed.fg;
     const bgFinal = composed.bg;
     const raw = contrastRatio(fgFinal, bgFinal);

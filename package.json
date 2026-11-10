@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tests.json",
     "test:unit": "vitest run",
     "test:sanity": "vitest run tests-unit/sanity",
+    "palette": "node scripts/select-palette.mjs",
     "vr": "node tests/visual/run.mjs"
   },
   "dependencies": {

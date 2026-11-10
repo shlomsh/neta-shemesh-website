@@ -104,13 +104,13 @@ describe('C14: buttons, nav and hero copy', () => {
     expect(buttonHeightToken(cta), 'hero CTA is the sm variant').toBe('min-h-12');
   });
 
-  it('desktop nav links are type-lead font-bold (no tracking, no uppercase)', () => {
+  it('expanded homepage nav links are type-quote font-bold (no tracking, no uppercase)', () => {
     const nav = desktopNav(home);
     expect(nav, 'primary navigation not found').not.toBeNull();
     const links = Array.from(nav!.querySelectorAll<HTMLElement>('a')).filter((a) => !buttons(nav!).includes(a));
     expect(links.length, 'nav text links').toBeGreaterThanOrEqual(4);
     for (const a of links) {
-      expect(typeClassesOf(a), desc(a)).toEqual(['type-lead']);
+      expect(typeClassesOf(a), desc(a)).toEqual(['type-quote']);
       expect(hasClass(a, 'font-bold'), `${desc(a)} font-bold`).toBe(true);
       expect(classTokens(a).filter((t) => /uppercase|tracking-/.test(t)), desc(a)).toEqual([]);
     }

@@ -40,7 +40,7 @@ function hidingReasons(el: Element, stopAt: Element): string[] {
 describe('hero server HTML shows its text from the first paint (owner ruling: hero text never starts at opacity 0)', () => {
   it('shows the tagline image above the therapist name and profession', () => {
     const logo = hero.querySelector<HTMLImageElement>('#brand-logo img')!;
-    expect(logo.getAttribute('src')).toBe('/images/logo-tagline-plum-compact.webp');
+    expect(logo.getAttribute('src')).toBe('/images/logo-tagline-plum-compact.webp?v=3');
     expect(logo.alt).toBe('מקום בטוח לצמוח בו ביחד');
     expect(hero.querySelector('.bg-cream')).not.toBeNull();
     const heading = hero.querySelector('h1')!;

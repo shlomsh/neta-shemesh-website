@@ -90,7 +90,11 @@ describe('Readable running text', () => {
     expect(answers.length).toBeGreaterThan(0);
     expect(bullets.length).toBeGreaterThan(0);
     expect(contact.length).toBe(2);
-    answers.forEach((element) => expect(hasClass(element, 'type-lead')).toBe(true));
+    answers.forEach((element) => {
+      expect(hasClass(element, 'type-quote')).toBe(true);
+      expect(hasClass(element, 'whitespace-pre-line')).toBe(true);
+      expect(hasClass(element, 'max-w-prose')).toBe(false);
+    });
     bullets.forEach((element) => expect(hasClass(element, 'type-body')).toBe(true));
     contact.forEach((element) => expect(hasClass(element, 'type-lead')).toBe(true));
   });

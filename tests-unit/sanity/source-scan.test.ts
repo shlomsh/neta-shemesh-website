@@ -24,6 +24,7 @@ import {
   readSources,
   sourceNamed,
   stripCssComments,
+  themeDeclarations,
   typeLiteralOffenses,
   type BanAllow,
 } from './helpers';
@@ -32,7 +33,7 @@ const sources = readSources();
 const code = sources.filter((s) => /\.tsx?$/.test(s.name));
 const rule = (id: string) => SCAN_RULES.find((r) => r.id === id)!;
 const noComments = (s: string) => s.split('\n').filter((l) => !/^\s*(\/\/|\*|\{?\/\*)/.test(l)).join('\n');
-const theme = (css: string) => stripCssComments(css).match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
+const theme = themeDeclarations;
 
 /** every offender as "file:line  match" */
 function scan(files: typeof sources, re: RegExp): string[] {
@@ -75,7 +76,7 @@ describe('type, class and layout bans (CLAUDE.md typography rule 7, layout)', ()
     expectNone(scan(files, r.re), `src contains ${r.label}`);
   });
 
-  it('the one scroll-snap rule exists exactly once, in globals.css (desktop, fine pointer, no reduced motion, home only)', () => {
+  it('the one scroll-snap rule exists exactly once, in globals.css (all widths and pointers, no reduced motion, home only)', () => {
     const holders = sources.filter((f) => SNAP_RULE.test(f.text));
     expect(holders.map((f) => f.path)).toEqual(['src/app/globals.css']);
     expect(holders[0].text.match(new RegExp(SNAP_RULE.source, 'g'))).toHaveLength(1);
@@ -214,7 +215,6 @@ describe('fonts (app/fonts.ts, applied in app/layout.tsx)', () => {
 });
 
 describe('colour bans (CLAUDE.md colour: four colours only, theme utilities, no bg-white)', () => {
-  const BRAND = ['#7a5978', '#c49ab8', '#ecc8ce', '#fff5f0'];
   /** Everything else must be listed WITH a reason, keyed by hex + file NAME so moving a file does not break the entry. */
   const ALLOWED: Array<{ hex: string; file: string; reason: string }> = [
     { hex: '#25d366', file: 'globals.css', reason: '--color-whatsapp: WhatsApp brand green, owner ruling (kept native 2026-10-09); used only as bg-whatsapp in ContactFAB' },
@@ -228,16 +228,21 @@ describe('colour bans (CLAUDE.md colour: four colours only, theme utilities, no 
       return [...text.matchAll(new RegExp(rule('hex').re.source, 'g'))].map((m) => ({ hex: m[0].toLowerCase(), file: f.name, line: `${f.path}:${text.slice(0, m.index).split('\n').length}` }));
     });
 
-  it('only the 4 brand hexes plus the allow-listed WhatsApp / scrim ones appear in src; every allow entry is still used', () => {
+  it('brand hexes live only in palette presets; only allow-listed WhatsApp / scrim literals appear elsewhere', () => {
     const hits = hexHits();
-    expectNone(hits.filter((h) => !BRAND.includes(h.hex) && !ALLOWED.some((a) => a.hex === h.hex && a.file === h.file)).map((h) => `${h.line}  ${h.hex}`), 'hex colour outside the palette');
+    const presets = sources.filter((s) => /^src\/app\/palettes\/[\w-]+\.css$/.test(s.path));
+    for (const preset of presets) {
+      const declarations = [...stripCssComments(preset.text).matchAll(/--color-(plum|mauve|blush|cream):\s*(#[0-9a-f]{6});/gi)];
+      expect(declarations.map((m) => m[1]).sort(), preset.path).toEqual(['blush', 'cream', 'mauve', 'plum']);
+      expect(hits.filter((h) => h.file === preset.name).map((h) => h.hex).sort(), preset.path).toEqual(declarations.map((m) => m[2].toLowerCase()).sort());
+    }
+    expectNone(hits.filter((h) => !presets.some((p) => p.name === h.file) && !ALLOWED.some((a) => a.hex === h.hex && a.file === h.file)).map((h) => `${h.line}  ${h.hex}`), 'hex colour outside the palette');
     expectNone(ALLOWED.filter((a) => !hits.some((h) => h.hex === a.hex && h.file === a.file)).map((a) => `${a.file} ${a.hex}`), 'stale ALLOWED entries: delete them');
   });
 
-  it('rgb()/rgba() literals are only brand colours or black (shadows)', () => {
-    const OK = ['122,89,120', '196,154,184', '236,200,206', '255,245,240', '0,0,0'];
-    const offenders = sources.flatMap((f) => [...f.text.matchAll(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/g)].filter((m) => !OK.includes(`${m[1]},${m[2]},${m[3]}`)).map((m) => `${f.path}: ${m[0]}`));
-    expectNone(offenders, 'rgb()/rgba() literal that is not a brand colour');
+  it('brand RGB literals cannot bypass the palette; only the neutral black FAB shadow is allowed', () => {
+    const offenders = sources.flatMap((f) => [...f.text.matchAll(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/g)].filter((m) => f.name !== 'globals.css' || `${m[1]},${m[2]},${m[3]}` !== '0,0,0').map((m) => `${f.path}: ${m[0]}`));
+    expectNone(offenders, 'RGB colour outside the palette');
   });
 
   it.each(['stock-palette', 'arbitrary-colour-var', 'white-utility'])('src has no %s', (id) => {
@@ -262,7 +267,7 @@ describe('colour bans (CLAUDE.md colour: four colours only, theme utilities, no 
   it('Tailwind scans only src (tests, docs and configs cannot generate CSS) and the default palette is dropped', () => {
     const css = sourceNamed('app/globals.css').text; // raw: stripCssComments would eat a `/**/` inside a glob
     for (const s of ['@import "tailwindcss" source(none);', '@source "../";', '@source not "../**/*.md";']) expect(css, s).toContain(s);
-    expect(theme(css)).toMatch(/--color-\*\s*:\s*initial\s*;/);
+    expect(theme(globalsCss())).toMatch(/--color-\*\s*:\s*initial\s*;/);
   });
 
   describe('NS-42 contrast and focus bans (each with an allow table that only shrinks)', () => {

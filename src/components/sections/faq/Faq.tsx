@@ -8,7 +8,7 @@ import { ANCHOR, ID } from '@/content/ids';
 export function Faq() {
   return (
     <Section id={ID.faq} anchor={ANCHOR.faq} tone="mid" fit="grow" pad="section">
-      <Container maxWidth="lg">
+      <Container maxWidth="none">
         <SectionTitle id={ID.faqTitle} className="mb-region text-center">
           שאלות נפוצות
         </SectionTitle>
@@ -30,7 +30,7 @@ export function Faq() {
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </summary>
-              <BodyText className="type-lead max-w-prose pb-5">
+              <BodyText className="type-quote whitespace-pre-line pb-5">
                 {answer}
               </BodyText>
             </details>

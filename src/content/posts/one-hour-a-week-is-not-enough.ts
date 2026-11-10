@@ -9,9 +9,9 @@ export const oneHourAWeekIsNotEnough: BlogPost = {
   date: '2026-06-12',
   dateDisplay: '12 ביוני 2026',
   readTime: '4 דקות קריאה',
-  coverImage: '/images/expertise-parenting.webp',
+  coverImage: '/images/parent-child-connection.webp',
   shareImage: '/images/share/one-hour-a-week-is-not-enough.jpg',
-  coverAlt: 'הורה וילד יושבים יחד בשיחה רגועה',
+  coverAlt: 'אישה וילד יושבים על כריות בחדר משחקים ומשוחחים בגובה העיניים',
   body: [
     {
       type: 'lead',

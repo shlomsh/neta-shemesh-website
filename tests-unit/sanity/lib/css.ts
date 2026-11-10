@@ -4,6 +4,11 @@
  */
 import { globalsCss, stripCssComments } from './source';
 
+/** All non-static theme blocks, including the selected palette import. */
+export function themeDeclarations(css = globalsCss()): string {
+  return [...stripCssComments(css).matchAll(/@theme\s*\{([\s\S]*?)\n\}/g)].map((m) => m[1]).join('\n');
+}
+
 export interface TypeRule {
   name: string; // e.g. "quote" for .type-quote
   family?: string;

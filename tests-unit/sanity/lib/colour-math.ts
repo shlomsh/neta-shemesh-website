@@ -36,11 +36,16 @@ export function compositeOver(fg: RGBA, bg: RGB): RGB {
   return { r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a) };
 }
 
-/** `@theme` colours (`--color-plum: #7A5978;` ...), straight from globals.css so the palette has one source. */
+/** Resolve the selected preset and derived tokens in CSS import order. */
 export function themeColours(css = globalsCss()): Record<string, RGB> {
-  const theme = stripCssComments(css).match(/@theme\s*\{([\s\S]*?)\n\}/)?.[1] ?? '';
   const out: Record<string, RGB> = {};
-  for (const m of theme.matchAll(/--color-([a-z]+)\s*:\s*(#[0-9a-fA-F]{3,8})\s*;/g)) out[m[1]] = hexToRgb(m[2]);
+  for (const block of stripCssComments(css).matchAll(/@theme\s*\{([\s\S]*?)\n\}/g)) {
+    for (const m of block[1].matchAll(/--color-([a-z-]+)\s*:\s*([^;]+);/g)) {
+      const colour = evalColour(m[2], { palette: out, vars: {} });
+      if (!colour) throw new Error(`sanity: cannot resolve --color-${m[1]}: ${m[2]}`);
+      out[m[1]] = { r: colour.r, g: colour.g, b: colour.b };
+    }
+  }
   return out;
 }
 

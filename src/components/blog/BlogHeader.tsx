@@ -11,7 +11,7 @@ export function BlogHeader() {
   return (
     <header className="paper-surface w-full border-b border-plum/15">
       <div className="flex w-full items-center justify-between gap-4 px-gutter-wide py-stack">
-        <BrandLogo tone="plum" />
+        <BrandLogo tone="plum" compact />
         <SiteNav crossRoute lightSurface />
       </div>
     </header>

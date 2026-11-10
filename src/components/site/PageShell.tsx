@@ -15,7 +15,7 @@ import { Footer } from './footer/Footer';
  *   - 'hidden' the blog pages, which do not snap and rely on `overflow-hidden` to contain
  *              the cover-image overlap.
  *
- * The page surface is always cream (`bg-cream`, #FFF5F0). The home page and the blog pages used to spell
+ * The page surface is always palette cream (`bg-cream`). The home page and the blog pages used to spell
  * it through two different tokens; both resolved to the same value.
  */
 const OVERFLOW = {
@@ -26,7 +26,7 @@ const OVERFLOW = {
 interface PageShellProps {
   overflow: keyof typeof OVERFLOW;
   children: ReactNode;
-  /** Marks `<main>` `data-snap-cards`: the desktop card snap rule in globals.css applies to its sections and footer (home only). */
+  /** Marks `<main>` `data-snap-cards`: the card snap rule in globals.css applies to its sections and footer (home only). */
   snapCards?: boolean;
 }
 

@@ -56,7 +56,10 @@ export function sourceNamed(suffix: string): SourceFile {
 }
 
 export function globalsCss(): string {
-  return sourceNamed('app/globals.css').text;
+  return sourceNamed('app/globals.css').text.replace(
+    /@import "\.\/(palettes\/[\w-]+\.css)";/g,
+    (_match, path: string) => sourceNamed(`app/${path}`).text,
+  );
 }
 
 /** CSS with /* comments *\/ removed (comments mention class names and braces). */

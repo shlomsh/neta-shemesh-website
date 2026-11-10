@@ -3,8 +3,8 @@ import { cx } from '@/lib/cx';
 
 /**
  * The card surface.
- *   'cream' solid cream (#FFF5F0): paragraph-heavy content on a toned section (plum text, 5.55:1)
- *   'veil'  cream at 85% over the mauve section behind it (`--surface-veil`), 4.97:1 against plum, so
+ *   'cream' solid palette cream: paragraph-heavy content on a toned section (plum text)
+ *   'veil'  cream at 85% over mauve (`--surface-veil`), checked for AA contrast against plum, so
  *           lead copy may sit on it. Used on mauve sections only.
  * Both publish `data-bg-tone="cream"`, so text and `--header-color` come from the tone rules in
  * globals.css and children need no colour classes.
