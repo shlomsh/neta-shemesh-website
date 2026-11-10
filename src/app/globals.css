@@ -12,9 +12,9 @@
   font-weight: 400;
   src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5B9, U+5BB-5C2, U+5D0-5EA, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB2A-FB2D, U+FB31-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB44, U+FB46-FB47, U+FB49-FB4B;
-  size-adjust: 59.38%;
-  ascent-override: 115.89%;
-  descent-override: 39.34%;
+  size-adjust: 59.35%;
+  ascent-override: 115.96%;
+  descent-override: 39.36%;
   line-gap-override: 2.89%;
 }
 @font-face {
@@ -22,9 +22,9 @@
   font-weight: 700;
   src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5B9, U+5BB-5C2, U+5D0-5EA, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB2A-FB2D, U+FB31-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB44, U+FB46-FB47, U+FB49-FB4B;
-  size-adjust: 57.30%;
-  ascent-override: 120.10%;
-  descent-override: 40.77%;
+  size-adjust: 57.28%;
+  ascent-override: 120.15%;
+  descent-override: 40.79%;
   line-gap-override: 3.00%;
 }
 @font-face {
@@ -32,10 +32,10 @@
   font-weight: 400;
   src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5C5, U+5C7, U+5D0-5EA, U+5F0-5F4, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB1F, U+FB29-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB43-FB44, U+FB46-FB4F;
-  size-adjust: 91.01%;
-  ascent-override: 87.90%;
+  size-adjust: 90.98%;
+  ascent-override: 87.93%;
   descent-override: 21.98%;
-  line-gap-override: 4.94%;
+  line-gap-override: 4.95%;
 }
 @font-face {
   font-family: "elamy-fb";

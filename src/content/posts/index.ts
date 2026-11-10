@@ -1,6 +1,7 @@
 import type { BlogPost } from './types';
 import { oneHourAWeekIsNotEnough } from './one-hour-a-week-is-not-enough';
 import { lonelinessInARelationship } from './loneliness-in-a-relationship';
+import { whenOnlyOnePartnerWantsHelp } from './when-only-one-partner-wants-help';
 
 export type { BlogPost, ContentBlock, ListItem } from './types';
 
@@ -9,6 +10,7 @@ export type { BlogPost, ContentBlock, ListItem } from './types';
  * listing, routes, sitemap and metadata pick them up automatically.
  */
 export const posts: BlogPost[] = [
+  whenOnlyOnePartnerWantsHelp,
   lonelinessInARelationship,
   oneHourAWeekIsNotEnough,
 ];
