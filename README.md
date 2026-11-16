@@ -83,6 +83,7 @@ Vercel deploys `main` through its Git integration. Before each build `vercel.jso
 - [PRODUCT.md](PRODUCT.md) audience, brand personality, design principles
 - [docs/neta.md](docs/neta.md) who Netta is, site goals, her voice
 - [docs/deployment.md](docs/deployment.md) Vercel, domain and DNS, test gate, rollback
+- [GA4 and Google Ads setup](docs/deployment.md#google-analytics-4-and-google-ads) contact conversions, article views and 10-second visible reading events
 - [src/components/README.md](src/components/README.md) layers, folder rules, primitive contracts
 - [tests-unit/sanity/README.md](tests-unit/sanity/README.md) what each sanity guard protects
 - [tests/visual/README.md](tests/visual/README.md) the `npm run vr` harness

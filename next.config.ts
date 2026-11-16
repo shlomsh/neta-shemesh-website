@@ -53,9 +53,9 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              isDev ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'" : "script-src 'self' 'unsafe-inline'",
+              `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com${isDev ? " 'unsafe-eval'" : ''}`,
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data:",
+              "img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com",
               // Fonts are next/font/local (same origin). Nothing loads from fonts.gstatic.com.
               "font-src 'self'",
               // The contact map (src/content/site.ts `mapEmbedSrc`) navigates maps.google.com/maps?output=embed,
@@ -63,7 +63,8 @@ const nextConfig: NextConfig = {
               "frame-src 'self' https://maps.google.com https://www.google.com",
               "frame-ancestors 'none'",
               "media-src 'self'",
-              "connect-src 'self'",
+              // GA4 measurement only; Google Signals and ad personalization are disabled in layout.tsx.
+              "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com",
               "object-src 'none'",
               "base-uri 'self'",
             ].join('; '),

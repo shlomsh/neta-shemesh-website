@@ -8,6 +8,9 @@ import { siteJsonLd } from '@/lib/seo/jsonld';
 import { JsonLd } from '@/components/site/JsonLd';
 import { cx } from '@/lib/cx';
 import { Analytics } from '@vercel/analytics/next';
+import Script from 'next/script';
+import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
+import { GOOGLE_ANALYTICS_ENABLED } from '@/lib/analytics';
 
 // Any build not pointed at the production domain is a staging copy (a preview deploy or a
 // tunnel with NEXT_PUBLIC_SITE_URL set to its own host). Those self-canonicalise
@@ -40,8 +43,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="he" dir="rtl" className={cx(elamy.variable, stanga.variable, latin.variable)}>
       <body>
+        {GOOGLE_ANALYTICS_ENABLED && (
+          <Script id="ga4-init" strategy="beforeInteractive">
+            {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${SITE.ga4MeasurementId}', {
+  allow_google_signals: false,
+  allow_ad_personalization_signals: false
+});`}
+          </Script>
+        )}
         <JsonLd data={siteJsonLd()} />
         {children}
+        {GOOGLE_ANALYTICS_ENABLED && <GoogleAnalytics />}
         {/* Vercel Web Analytics: cookieless, same-origin (/_vercel/insights/*, covered by 'self' in the CSP).
             Rendered only on Vercel builds (VERCEL=1): elsewhere that script 404s and trips the console-clean tests. */}
         {process.env.VERCEL ? <Analytics /> : null}

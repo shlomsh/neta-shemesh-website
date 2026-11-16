@@ -12,6 +12,7 @@ import { BlogHeader } from '@/components/blog/BlogHeader';
 import { PostBody } from '@/components/blog/PostBody';
 import { PostCard } from '@/components/blog/PostCard';
 import { AuthorCard } from '@/components/blog/AuthorCard';
+import { BlogAnalytics } from '@/components/blog/BlogAnalytics';
 import { getAllPosts, getPostBySlug, getOtherPosts } from '@/content/posts';
 import { PageShell } from '@/components/site/PageShell';
 import { JsonLd } from '@/components/site/JsonLd';
@@ -20,6 +21,7 @@ import { ID } from '@/content/ids';
 import { stagger } from '@/lib/motion';
 import { pageMeta } from '@/lib/seo/metadata';
 import { blogPostingJsonLd } from '@/lib/seo/jsonld';
+import { GOOGLE_ANALYTICS_ENABLED } from '@/lib/analytics';
 
 // Only the slugs below exist; anything else is a 404 rather than an on-demand render.
 export const dynamicParams = false;
@@ -60,6 +62,7 @@ export default async function BlogPostPage(
 
   return (
     <PageShell overflow="hidden">
+      {GOOGLE_ANALYTICS_ENABLED && <BlogAnalytics slug={post.slug} />}
       <JsonLd data={blogPostingJsonLd(post)} />
 
       <BlogHeader />

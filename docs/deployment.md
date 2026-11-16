@@ -4,9 +4,34 @@ The site ships to **one target: Vercel**, production at `https://www.netashemesh
 
 ## Environment variables
 
-Only one is read by code: `NEXT_PUBLIC_SITE_URL` (`src/content/site.ts`, inlined at build time). Production leaves it unset and gets `https://www.netashemesh.co.il`. It drives the canonical, `og:url`, the sitemap and the JSON-LD `@id`s. When it points anywhere else (a preview, a tunnel), `layout.tsx` emits `robots: noindex, nofollow`, so a staging copy never competes with production (`tests-unit/lib/noindex-host.test.ts`). Never add `Disallow: /` to `robots.txt` for that: a blocked crawler never sees the `noindex`.
+`NEXT_PUBLIC_SITE_URL` (`src/content/site.ts`, inlined at build time) defaults to `https://www.netashemesh.co.il`. It drives the canonical, `og:url`, the sitemap and the JSON-LD `@id`s. When it points anywhere else (a preview, a tunnel), `layout.tsx` emits `robots: noindex, nofollow`, so a staging copy never competes with production (`tests-unit/lib/noindex-host.test.ts`). Never add `Disallow: /` to `robots.txt` for that: a blocked crawler never sees the `noindex`.
 
 **Web Analytics** (`@vercel/analytics`, rendered in `layout.tsx` only when `VERCEL` is set, so local runs and tests stay silent) is cookieless, needs no consent banner and is served same-origin under `/_vercel/insights/` (covered by the CSP's `'self'`). Eran must enable it once in the Vercel project (Project → Analytics → Enable); until then it collects nothing.
+
+## Google Analytics 4 and Google Ads
+
+GA4 uses `SITE.ga4MeasurementId` (`G-664E7DFVEJ`, a public measurement ID, not a secret). It is enabled only when Vercel sets `VERCEL_ENV=production` at build time; previews and local runs do not load the tag or track articles. No additional environment variable or package is needed. The small queue initializes before hydration so events are retained while the external tag loads asynchronously. Contact links keep their native navigation; analytics never waits for a network request or prevents a call/WhatsApp from opening. Ad blockers can prevent delivery.
+
+| Event | When | Custom parameters |
+|---|---|---|
+| `phone_click` | Any clinic phone link is activated, including navigation, footer and floating pill | `page_path` |
+| `whatsapp_click` | Any clinic WhatsApp link is activated | `page_path` |
+| `blog_view` | An article opens, once per visit (including Next.js client navigation) | `article_id` (slug), `page_path` |
+| `blog_read_10s` | The article has accumulated at least 10 seconds in a visible tab, once per visit | `article_id`, `page_path` |
+
+Hidden-tab and page-cache time does not count; leaving the article cancels its timer. Returning to an article through navigation starts a new visit. The threshold measures visible dwell time, not proof of reading, and contact events measure clicks, not completed calls or messages.
+
+GA4's standard `page_view` is separate from `blog_view`. In **Admin → Data streams → Web → Enhanced measurement → Page views → Advanced settings**, keep page loads and browser-history changes enabled so regular page views follow Next.js navigation. Do not install the same tag again through GTM or Vercel.
+
+Setup in the Google accounts (not performed by a code deploy):
+
+1. In GA4, confirm the web stream's measurement ID matches `SITE.ga4MeasurementId`. Use **Realtime**, or Tag Assistant plus **DebugView**, to verify the four events. For a local verification build, explicitly set `VERCEL_ENV=production`, rebuild, and intercept Google's script/collection requests so synthetic events do not reach the live property.
+2. Register `article_id` as an event-scoped custom dimension (**Admin → Custom definitions**) to break down both article events by post. Reports can take 24–48 hours to populate.
+3. Mark only `phone_click` and `whatsapp_click` as **key events**. Link the Google Ads account under **Product links → Google Ads links**, with auto-tagging enabled in Ads.
+4. In Google Ads, create/import conversions from those two GA4 key events. Use **Count: One** for leads, and make them **Primary** if the campaign should optimize toward contacts. Do not also import the generic outbound `click` or add duplicate direct Ads conversions for the same action.
+5. Keep article events for analysis, not primary bidding goals. If imported into Ads at all, make them **Secondary**.
+
+**Privacy:** Unlike the existing Vercel analytics, GA4 uses cookies and sends data to Google. Establish the appropriate privacy notice and consent handling for the site's audience before enabling collection where consent is required; this integration is not a consent banner/CMP. Google Signals and advertising personalization are disabled in the tag configuration; do not enable remarketing or sensitive-audience targeting based on therapy article visits. Custom events send no phone number, email or WhatsApp message. GA4 also collects standard page metadata, so never put personal data in URLs or page titles. Review enhanced measurement separately (especially outbound-click collection). CSP allows the measurement endpoints from Google's [GA4 CSP guidance](https://developers.google.com/tag-platform/security/guides/csp); direct Ads/remarketing endpoints are intentionally not added.
 
 ## The test gate
 

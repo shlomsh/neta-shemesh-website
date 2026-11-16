@@ -14,6 +14,7 @@ const CITY = 'נתניה';
 const STREET = 'קרל פופר 7';
 
 export const SITE = {
+  ga4MeasurementId: 'G-664E7DFVEJ',
   name: 'נטע שמש',
   /** Short service line used in titles / OG ("נטע שמש | טיפול זוגי ומשפחתי"). */
   tagline: 'טיפול זוגי ומשפחתי',
