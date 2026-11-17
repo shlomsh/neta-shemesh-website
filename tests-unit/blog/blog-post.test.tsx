@@ -103,7 +103,7 @@ describe('blog post static params and metadata', () => {
   it.each(getAllPosts().map((p) => [p.slug]))('%s metadata: canonical, hreflang, article OG with a 1200x630 JPG share card, twitter', async (slug) => {
     const post = getPostBySlug(slug)!;
     const meta = await generateMetadata(params(slug));
-    expect(String(meta.title)).toContain(post.title);
+    expect(meta.title).toBe(post.seoTitle ?? `${post.title} | ${SITE.name}`);
     expect(meta.description).toBe(post.excerpt);
     expect(meta.alternates?.canonical).toBe(`${SITE.url}/blog/${slug}`);
 

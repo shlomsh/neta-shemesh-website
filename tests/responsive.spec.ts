@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { getPostBySlug } from '../src/content/posts';
+import { SITE } from '../src/content/site';
 
 test.describe('Responsive Layout Tests', () => {
 
@@ -83,6 +85,36 @@ test.describe('Responsive Layout Tests', () => {
         await page.goto(route);
         await expect(page.locator('#brand-logo img'), `${route} at ${width}px`).toHaveCSS('width', `${logoWidth}px`);
       }
+    }
+  });
+
+  test('New PDF articles have complete metadata, working covers and no overflow at 375px', async ({ page, request }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/blog');
+    const slugs = ['improve-couple-communication', 'emotional-distance-in-a-relationship'];
+    for (const slug of slugs) {
+      await expect(page.locator(`a[href="/blog/${slug}"]`)).toHaveCount(1);
+    }
+
+    for (const slug of slugs) {
+      const post = getPostBySlug(slug)!;
+      const response = await page.goto(`/blog/${slug}`);
+      expect(response?.status()).toBe(200);
+      await page.evaluate(() => document.fonts.ready);
+      await expect(page.locator('h1')).toHaveText(post.title);
+      await expect(page).toHaveTitle(post.seoTitle ?? `${post.title} | ${SITE.name}`);
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', post.excerpt);
+      await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', `${SITE.url}${post.shareImage}`);
+      const cover = page.locator('#post-body').getByRole('img', { name: post.coverAlt, exact: true });
+      await expect.poll(() => cover.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+      const share = await request.get(post.shareImage);
+      expect(share.ok()).toBe(true);
+      expect(share.headers()['content-type']).toContain('image/jpeg');
+      await expect(page.locator('article')).not.toContainText('פוסט מוכן להעלאה');
+      await expect(page.locator('article')).not.toContainText('המלצות טכניות');
+      expect(await page.evaluate(() =>
+        document.documentElement.scrollWidth > document.documentElement.clientWidth,
+      )).toBe(false);
     }
   });
 

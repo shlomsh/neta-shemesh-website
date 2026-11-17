@@ -38,7 +38,7 @@ export async function generateMetadata(
   if (!post) return {};
 
   return pageMeta({
-    title: `${post.title} | ${SITE.name}`,
+    title: post.seoTitle ?? `${post.title} | ${SITE.name}`,
     description: post.excerpt,
     path: `/blog/${post.slug}`,
     hreflang: true,

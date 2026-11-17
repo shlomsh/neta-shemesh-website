@@ -25,6 +25,8 @@ export interface BlogPost {
   /** Category label, e.g. "הדרכת הורים" */
   category: string;
   title: string;
+  /** Optional search-result title; visible headings and social cards retain `title`. */
+  seoTitle?: string;
   /** Short summary used on the listing card and in metadata. */
   excerpt: string;
   /** ISO 8601 date, e.g. "2026-06-12" — used for <time> and JSON-LD. */
