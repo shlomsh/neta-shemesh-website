@@ -9,9 +9,9 @@ export const emotionalDistanceInARelationship: BlogPost = {
   date: '2026-11-17',
   dateDisplay: '17 בנובמבר 2026',
   readTime: '3 דקות קריאה',
-  coverImage: '/images/relationship-loneliness.webp',
-  shareImage: '/images/share/loneliness-in-a-relationship.jpg',
-  coverAlt: 'בני זוג יושבים בנפרד על הספה, האישה בטלפון והגבר מחזיק בשלט',
+  coverImage: '/images/emotional-distance-in-a-relationship.webp',
+  shareImage: '/images/share/emotional-distance-in-a-relationship.jpg',
+  coverAlt: 'בני זוג יושבים בכורסאות נפרדות בסלון ומביטים לכיוונים שונים',
   body: [
     {
       type: 'lead',

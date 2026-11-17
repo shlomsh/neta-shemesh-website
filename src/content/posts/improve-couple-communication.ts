@@ -10,9 +10,9 @@ export const improveCoupleCommunication: BlogPost = {
   date: '2026-11-17',
   dateDisplay: '17 בנובמבר 2026',
   readTime: '3 דקות קריאה',
-  coverImage: '/images/couples-therapy-session.webp',
+  coverImage: '/images/improve-couple-communication.webp',
   shareImage: '/images/share/improve-couple-communication.jpg',
-  coverAlt: 'בני זוג יושבים על ספה ומשוחחים במהלך מפגש טיפול זוגי',
+  coverAlt: 'בני זוג יושבים ליד שולחן ומשוחחים בקשב באור יום רך',
   body: [
     {
       type: 'lead',
