@@ -30,8 +30,20 @@ export function Bio() {
           {/* Right Column: Narrative Text */}
           <div className="w-full lg:w-[60%] flex flex-col gap-7">
             
-            {/* Title (NS-54: the clinic armchair as a marker beside it, same row) */}
-            <SectionTitle id={ID.aboutMeTitle} marker={<LineArt name="chair" marker />}>קצת עלי</SectionTitle>
+            {/* Keep the mobile portrait beside the static title, with full-width copy below. */}
+            <div className="flex items-start justify-start gap-stack lg:block">
+              <SectionTitle id={ID.aboutMeTitle} marker={<LineArt name="chair" marker />}>קצת עלי</SectionTitle>
+              <Photo
+                src={PROFILE_PHOTO}
+                alt={SITE.name}
+                sizes="(min-width: 640px) 160px, 144px"
+                radius="card"
+                ratio="4/3"
+                outlined
+                objectPosition="50% 35%"
+                className="w-36 max-w-[45%] shrink-0 shadow-portrait sm:w-40 lg:hidden"
+              />
+            </div>
 
             {/* Introduction/Bio Narrative */}
             <ScrollReveal delay={0.24} className="flex flex-col gap-4">
@@ -58,7 +70,7 @@ export function Bio() {
           <div className="w-full lg:w-[40%] flex flex-col gap-8 lg:sticky lg:top-[7.5rem]">
             
             {/* Personal Photo */}
-            <ScrollReveal delay={0.24} className="w-full flex justify-start">
+            <ScrollReveal delay={0.24} className="hidden w-full justify-start lg:flex">
               <Photo
                 src={PROFILE_PHOTO}
                 alt={SITE.name}

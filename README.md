@@ -15,6 +15,7 @@ This is a Next.js app: App Router, server components, static prerender, `next/im
 - **Live motion without a library:** CSS reveals armed by one small observer, CSS scroll-driven parallax, hero sequence and signature; reduced motion switches it off in CSS. Cost: hand-written keyframes.
 - **Desktop slide-through scrolling** (1024px+, fine pointer), dynamically imported so touch devices download none. Cost: our own gesture code.
 - **Every contact fact in one place:** `src/content/site.ts` and `ids.ts`. Cost: copy edits need a developer.
+- **Live Google business preview:** the clinic section embeds the business listing identified by `SITE.googleMapsCid`, rather than an address-only map. Google supplies its current rating and review link; the address link opens the same listing.
 - **Release safety:** Vercel runs lint, typecheck and Vitest before each build; Playwright CI (Chrome, Safari, iPhone, iPad) does not block; `npm run vr -- <ref>` pixel-diffs refactors.
 
 Where we are more custom than stock Next + Tailwind, and could converge: the type scale is plain classes under `@layer components` in `globals.css`, not `--text-*` theme tokens; the motion CSS there sits outside Tailwind's layers; `tests-unit` is about as large as `src`.

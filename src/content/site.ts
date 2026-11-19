@@ -42,9 +42,9 @@ export const SITE = {
     postalCode: '4250708',
     country: 'IL',
     geo: { latitude: 32.2915701, longitude: 34.854951 },
-    /** Google Maps resolves the Hebrew address more reliably without the neighborhood. */
-    mapQuery: `${STREET}, ${CITY}`,
   },
+  /** Business listing from the owner's Google Maps share link, not an address-only pin. */
+  googleMapsCid: '10455955229416921706',
   /** schema.org openingHours. */
   openingHours: ['Su-Th 09:00-19:00'],
   /** Prefilled first message of the WhatsApp contact pill. */
@@ -70,13 +70,13 @@ export const waHref = () =>
 /** "קרל פופר 7, שכונת אגמים, נתניה" */
 export const addressLine = () => `${SITE.address.street}, ${SITE.address.city}`;
 
-/** Google Maps search for the same address as the embedded map. */
+/** Open the same business listing as the embedded preview. */
 export const mapSearchHref = () =>
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.address.mapQuery)}`;
+  `https://www.google.com/maps?cid=${SITE.googleMapsCid}`;
 
-/** Google Maps embed URL for the clinic. */
+/** Live Google Maps business preview, including Google's current rating and review link. */
 export const mapEmbedSrc = () =>
-  `https://maps.google.com/maps?q=${encodeURIComponent(SITE.address.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  `https://maps.google.com/maps?cid=${SITE.googleMapsCid}&hl=he&output=embed`;
 
 /** True when this build is the production site (staging copies must stay non-indexable). */
 export const IS_PRODUCTION_HOST = SITE.url === PRODUCTION_URL;

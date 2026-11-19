@@ -11,11 +11,14 @@ const BOX = 'h-[16.25rem] lg:h-full lg:min-h-[22.5rem]';
 const source = (f: string) => readFileSync(join(process.cwd(), 'src/components/sections/contact', f), 'utf8');
 
 describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
-  it('the map and address link search the same Hebrew street and city', () => {
+  it('the preview and address link open the supplied business listing, not an address search', () => {
     const embed = new URL(mapEmbedSrc());
     const search = new URL(mapSearchHref());
-    expect(embed.searchParams.get('q')).toBe('קרל פופר 7, נתניה');
-    expect(search.searchParams.get('query')).toBe(SITE.address.mapQuery);
+    expect(embed.searchParams.get('cid')).toBe('10455955229416921706');
+    expect(search.searchParams.get('cid')).toBe(embed.searchParams.get('cid'));
+    expect(embed.searchParams.get('hl')).toBe('he');
+    expect(embed.searchParams.get('output')).toBe('embed');
+    expect(embed.searchParams.has('q')).toBe(false);
     const { getByRole } = render(<ContactDetails />);
     expect(getByRole('link', { name: addressLine() }).getAttribute('href')).toBe(mapSearchHref());
   });
@@ -24,7 +27,7 @@ describe('MapEmbed: lazy iframe over a designed placeholder (NS-28)', () => {
     const html = renderToString(<MapEmbed className={BOX} />);
     const frame = html.match(/<iframe[^>]*>/)![0];
     expect(frame.replace(/&amp;/g, '&')).toContain(`src="${mapEmbedSrc()}"`);
-    expect(frame).toContain('title="מיקום הקליניקה"');
+    expect(frame).toContain(`title="דף העסק של ${SITE.name} ב־Google Maps"`);
     expect(frame).toContain('loading="lazy"');
     expect(frame).toContain(
       'sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms"',

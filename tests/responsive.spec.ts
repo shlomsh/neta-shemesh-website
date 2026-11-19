@@ -31,6 +31,39 @@ test.describe('Responsive Layout Tests', () => {
     expect(hasHorizontalScroll).toBe(false);
   });
 
+  test('Mobile bio portrait is enlarged beside the start-aligned title, with full-width copy below', async ({ page }) => {
+    for (const width of [320, 375, 768]) {
+      await page.setViewportSize({ width, height: 812 });
+      await page.evaluate(() => document.fonts.ready);
+      const bio = page.locator('#about-me-section');
+      const portrait = bio.getByRole('img', { name: SITE.name, exact: true });
+      await expect(portrait).toHaveCount(1);
+      const photoBox = await portrait.boundingBox();
+      const titleBox = await bio.getByRole('heading', { name: 'קצת עלי', exact: true }).boundingBox();
+      const copyBox = await bio.locator('p.type-lead').first().boundingBox();
+      expect(photoBox).not.toBeNull();
+      expect(titleBox).not.toBeNull();
+      expect(copyBox).not.toBeNull();
+      expect(photoBox!.x + photoBox!.width).toBeLessThanOrEqual(titleBox!.x);
+      expect(photoBox!.y).toBeLessThan(titleBox!.y + titleBox!.height);
+      expect(photoBox!.y + photoBox!.height).toBeGreaterThan(titleBox!.y);
+      expect(copyBox!.y).toBeGreaterThanOrEqual(photoBox!.y + photoBox!.height);
+      expect(copyBox!.width).toBeGreaterThan(photoBox!.width + titleBox!.width);
+      if (width >= 375) expect(photoBox!.width).toBeGreaterThanOrEqual(144);
+      const alignment = await portrait.evaluate((image) => {
+        const row = image.parentElement!.parentElement!;
+        return {
+          row: row.getBoundingClientRect().right,
+          title: row.firstElementChild!.getBoundingClientRect().right,
+        };
+      });
+      expect(Math.abs(alignment.title - alignment.row)).toBeLessThanOrEqual(1);
+      expect(await page.evaluate(() =>
+        document.documentElement.scrollWidth > document.documentElement.clientWidth,
+      )).toBe(false);
+    }
+  });
+
   test('Consultation buttons fit within narrow and desktop viewports', async ({ page }) => {
     for (const width of [320, 375, 1280]) {
       await page.setViewportSize({ width, height: 812 });

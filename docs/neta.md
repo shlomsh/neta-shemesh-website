@@ -69,9 +69,9 @@ bright, busy, or corporate design.
 
 ### Page outline (home page, anchored sections, in order)
 1. **Hero** — name, tagline, primary CTA.
-2. **Expertise** — the four service areas as cards.
-3. **FAQ** — common questions about treatment and the clinic.
-4. **Bio** — "קצת עלי": background, philosophy pull-quote, signature.
+2. **Bio** — "קצת עלי": background, philosophy pull-quote, signature.
+3. **Expertise** — the four service areas as cards.
+4. **FAQ** — common questions about treatment and the clinic.
 5. **Credentials** — 14 years of clinical experience, couple and family therapist, parent
    guidance, M.S.W. clinical social worker, group facilitator, consistent 5-star client rating.
 6. **Services** — "איך זה עובד?", the four steps of the process.

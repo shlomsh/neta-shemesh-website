@@ -43,9 +43,9 @@ export default function Home() {
     // overflow 'clip', never 'hidden': CSS snap and sticky need <main> not to be a scroll container.
     <PageShell overflow="clip" snapCards>
       <Hero />
+      <Bio />
       <Expertise />
       <Faq />
-      <Bio />
       <Credentials />
       <div id={ANCHOR.reignite} className="invisible h-0" aria-hidden="true" />
       <Services />

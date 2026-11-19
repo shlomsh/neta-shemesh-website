@@ -26,6 +26,8 @@ Enforced by `no-restricted-imports` blocks in `eslint.config.mjs` (`npm run lint
 
 **Adding a section:** `sections/<slug>/<Name>.tsx` with one `Section`, ids from `content/ids.ts`, copy from `content/`; mount it in `app/page.tsx` in page order; add its row to `EXPECTED_SECTIONS` (`tests-unit/sanity/lib/page.ts`) and `DESKTOP` (`one-screen.test.tsx`; the phone list derives from it); run `npm run test:sanity` and `npm run vr -- HEAD`.
 
+**Bio portrait:** below `lg` the portrait sits beside the static "קצת עלי" title, above full-width copy. From `lg` it stays in the sticky photo/quote column. Responsive visibility keeps only one portrait visible at a time.
+
 ## Motion (`motion/`)
 
 Reduced motion is CSS-only (the `[data-reveal="io"]` hidden state exists only under `no-preference`; `[data-parallax]` is forced static under `reduce`; both in `globals.css`).

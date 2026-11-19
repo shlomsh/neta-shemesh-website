@@ -30,9 +30,9 @@ export interface SectionSpec {
 
 export const EXPECTED_SECTIONS: SectionSpec[] = [
   { name: 'hero', ids: ['hero'], heading: 'נטע שמש מטפלת זוגית ומשפחתית', kind: 'photo' },
+  { name: 'about-me', ids: ['about-me-section'], heading: 'קצת עלי', kind: 'cream' },
   { name: 'expertise', ids: [], heading: 'טיפול זוגי ומשפחתי בנתניה', kind: 'light' },
   { name: 'faq', ids: ['faq'], heading: 'שאלות נפוצות', kind: 'mid' },
-  { name: 'about-me', ids: ['about-me-section'], heading: 'קצת עלי', kind: 'cream' },
   { name: 'about-credentials', ids: ['about-credentials'], heading: 'ליווי להתגברות על מכשולים וחיזוק הקשר בין בני הזוג', kind: 'dark' },
   { name: 'services', ids: ['services'], heading: 'איך זה עובד?', kind: 'light' },
   { name: 'contact-office', ids: ['contact-office'], heading: 'הקליניקה שלי', kind: 'mid' },
