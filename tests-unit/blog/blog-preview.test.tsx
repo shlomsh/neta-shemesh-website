@@ -28,6 +28,7 @@ describe('local blog comparisons', () => {
 
   it('keeps the hero teaser in the first section and the contextual teaser after expertise', async () => {
     vi.stubEnv('NODE_ENV', 'development');
+    vi.stubEnv('VERCEL_ENV', undefined);
     const hero = render(await BlogPreviewPage({ params: Promise.resolve({ option: 'hero' }) }));
     const firstSection = hero.container.querySelector<HTMLElement>('main > section');
     expect(firstSection).not.toBeNull();
@@ -47,6 +48,7 @@ describe('local blog comparisons', () => {
 
   it('rejects unknown preview names instead of silently choosing an option', async () => {
     vi.stubEnv('NODE_ENV', 'development');
+    vi.stubEnv('VERCEL_ENV', undefined);
     await expect(BlogPreviewPage({ params: Promise.resolve({ option: 'unknown' }) })).rejects.toThrow('NEXT_HTTP_ERROR_FALLBACK;404');
   });
 
