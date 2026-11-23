@@ -2,6 +2,7 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { PageShell } from '@/components/site/PageShell';
 import { HomeSectionAnalytics } from '@/components/site/HomeSectionAnalytics';
 import { Hero } from '@/components/sections/hero/Hero';
+import { HeroArticlePreview } from '@/components/blog/BlogSpotlight';
 import { Expertise } from '@/components/sections/expertise/Expertise';
 import { Faq } from '@/components/sections/faq/Faq';
 import { Bio } from '@/components/sections/bio/Bio';
@@ -44,7 +45,7 @@ export default function Home() {
   return (
     // overflow 'clip', never 'hidden': CSS snap and sticky need <main> not to be a scroll container.
     <PageShell overflow="clip" snapCards>
-      <Hero />
+      <Hero articlePreview={<HeroArticlePreview />} />
       <Bio />
       <Expertise />
       <Faq />

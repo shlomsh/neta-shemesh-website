@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { BLOG_PREVIEW } from '../src/content/home/blog-preview';
 
 /**
  * The contact pill (ContactFAB, fixed bottom-left) never covers hero content or a card title on a phone (NS-61).
@@ -61,6 +62,23 @@ const fabBox = (page: Page) =>
   });
 
 test.describe('contact pill vs hero content and card titles (phone, iOS 26 overshoot simulated)', () => {
+  test('the homepage carousel sits below the original art and links to the blog', async ({ page }) => {
+    await open(page, { width: 360, height: 640 });
+    const hero = page.locator('#hero');
+    const carousel = hero.getByRole('region', { name: BLOG_PREVIEW.eyebrow });
+    const article = carousel.getByRole('heading', { level: 2 }).getByRole('link');
+    const firstArticle = await article.getAttribute('href');
+    expect(firstArticle).toMatch(/^\/blog\/.+/);
+    await expect(carousel.getByRole('img')).toBeVisible();
+    await expect(carousel.getByRole('link', { name: BLOG_PREVIEW.hero.all })).toHaveAttribute('href', '/blog');
+    const art = await hero.getByTestId('hero-art').boundingBox();
+    const strip = await carousel.boundingBox();
+    expect(strip!.y).toBeGreaterThanOrEqual(art!.y + art!.height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+    await carousel.getByRole('button', { name: BLOG_PREVIEW.hero.next }).click();
+    await expect(article).not.toHaveAttribute('href', firstArticle!);
+  });
+
   for (const viewport of HERO_VIEWPORTS) {
     const at = `${viewport.width}x${viewport.height}`;
 
@@ -76,7 +94,7 @@ test.describe('contact pill vs hero content and card titles (phone, iOS 26 overs
           return { name, left: r.left, top: r.top, right: r.right, bottom: r.bottom };
         };
         const out: { name: string; left: number; top: number; right: number; bottom: number }[] = [];
-        for (const e of hero.querySelectorAll('h1, p, a, button')) if (visible(e)) out.push(boxOf(`<${e.tagName.toLowerCase()}> "${(e.textContent ?? '').trim().slice(0, 24)}"`, e));
+        for (const e of hero.querySelectorAll('h1, h2, p, a, button')) if (visible(e) && !e.closest('[inert]')) out.push(boxOf(`<${e.tagName.toLowerCase()}> "${(e.textContent ?? '').trim().slice(0, 24)}"`, e));
         const art = hero.querySelector('[data-testid="hero-art"]');
         if (art) out.push(boxOf('hero art', art));
         return { heroHeight: hero.getBoundingClientRect().height, boxes: out };

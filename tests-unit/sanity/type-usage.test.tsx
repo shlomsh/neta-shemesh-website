@@ -149,12 +149,18 @@ describe('C15: about-me copy', () => {
 
 describe('C16: headings', () => {
   it('every section h2 on the page is bare type-title (Elamy 700 baked into the class)', () => {
-    const h2s = Array.from(home.querySelectorAll('h2:not(.sr-only)'));
+    const h2s = Array.from(home.querySelectorAll('h2:not(.sr-only, #hero [role="region"] h2)'));
     expect(h2s.length, 'visible section h2s').toBe(6);
     for (const h of h2s) {
       expect(typeClassesOf(h), `h2 "${h.textContent!.trim()}"`).toEqual(['type-title']);
       expect(hasClass(h, 'font-bold'), `h2 "${h.textContent!.trim()}" has a redundant font-bold`).toBe(false);
     }
+  });
+
+  it('the animated hero carousel uses Stanga card titles rather than Elamy section titles', () => {
+    const titles = Array.from(findSection(home, 'hero').querySelectorAll('[role="region"] h2'));
+    expect(titles.length).toBeGreaterThan(0);
+    for (const title of titles) expect(typeClassesOf(title), desc(title)).toEqual(['type-card-title']);
   });
 
   it('every solid section and the CTA band has an h2; the hero has the h1', () => {

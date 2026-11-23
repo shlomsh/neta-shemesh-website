@@ -34,7 +34,7 @@ export function HeroArt({ compact = false }: { compact?: boolean } = {}) {
       data-testid="hero-art"
       className={cx(
         'relative flex items-center justify-center w-full',
-        compact ? 'h-28 max-sm:[@media(max-height:700px)]:h-24 sm:h-40 lg:h-56' : 'lg:h-[clamp(17.5rem,36vw,28rem)]',
+        compact ? 'h-28 max-sm:[@media(max-height:725px)]:h-16 sm:h-40 lg:h-56' : 'lg:h-[clamp(17.5rem,36vw,28rem)]',
       )}
     >
       {/* Asymmetric organic blob */}

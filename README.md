@@ -63,9 +63,9 @@ Run `npm run dev -- --hostname 127.0.0.1 --port 3300`. The five full-homepage
 alternatives are available at `/preview/blog/hero`, `/preview/blog/editorial`,
 `/preview/blog/chooser`, `/preview/blog/quote`, and `/preview/blog/magazine`.
 They reuse existing articles; the chooser updates its recommendation when a
-visitor selects a topic, and the hero preview keeps the illustration above a
-carousel with cover thumbnails, five-second rotation, manual navigation, and a
-pause control. The ordinary `/` page remains unchanged.
+visitor selects a topic. The homepage (`/`) and the hero comparison both show
+the illustration above a carousel with cover thumbnails, five-second rotation,
+manual navigation, and a pause control.
 
 Only `/preview/blog/hero` is also available on Vercel Preview deployments.
 Production returns 404 for all comparison routes. They carry `noindex` and

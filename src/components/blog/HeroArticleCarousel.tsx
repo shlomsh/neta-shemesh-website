@@ -77,10 +77,10 @@ export function HeroArticleCarousel({ slides, eyebrow, label, all, previous, nex
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
       }}
-      className="mx-auto flex max-w-lg flex-col gap-2 border border-plum/25 shadow-lift"
+      className="mx-auto flex max-w-lg flex-col gap-2 border border-plum/25 shadow-lift max-lg:w-full max-lg:p-3!"
     >
-      <span className="type-eyebrow">{eyebrow}</span>
-      <p className="type-small">{label}</p>
+      <span className="type-eyebrow max-sm:[@media(max-height:725px)]:hidden">{eyebrow}</span>
+      <p className="type-small max-sm:[@media(max-height:725px)]:hidden">{label}</p>
       <div className="grid overflow-clip" aria-live={paused || focused || hovered ? 'polite' : 'off'} aria-atomic="true">
         {slides.map((slide, i) => {
           const active = i === index;
@@ -96,7 +96,7 @@ export function HeroArticleCarousel({ slides, eyebrow, label, all, previous, nex
                     {slide.hook}
                   </Link>
                 </h2>
-                <p className="type-lead">{slide.text}</p>
+                <p className="type-lead max-sm:[@media(max-height:725px)]:hidden">{slide.text}</p>
                 <p className="type-small">{slide.readTime}</p>
               </div>
             </div>
