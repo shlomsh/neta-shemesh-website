@@ -57,6 +57,21 @@ Use a fresh port: when nothing listens there the config starts `npm run start -p
 
 Pixel diff of the working tree against any git ref (0 px tolerance, no committed baselines): `npm run vr -- <ref>`, see [tests/visual/README.md](tests/visual/README.md).
 
+## Local blog spotlight comparisons
+
+Run `npm run dev -- --hostname 127.0.0.1 --port 3300`. The five full-homepage
+alternatives are available at `/preview/blog/hero`, `/preview/blog/editorial`,
+`/preview/blog/chooser`, `/preview/blog/quote`, and `/preview/blog/magazine`.
+They reuse existing articles; the chooser updates its recommendation when a
+visitor selects a topic, and the hero preview keeps the illustration above a
+carousel with cover thumbnails, five-second rotation, manual navigation, and a
+pause control. The ordinary `/` page remains unchanged.
+
+Only `/preview/blog/hero` is also available on Vercel Preview deployments.
+Production returns 404 for all comparison routes. They carry `noindex` and
+are not included in the sitemap. The preview copy lives in
+`src/content/home/blog-preview.ts`.
+
 ## Palette selection
 
 The selected preset is the single `./palettes/<name>.css` import at the top of `src/app/globals.css`. Use `npm run palette -- <name>` to switch it and regenerate the four wordmark images (lettering and house artwork). Available presets: `color-hunt` (selected, [Color Hunt source](https://colorhunt.co/palette/fdf3f3f8e7e7a070a1724060)) and `airy-rose` (the previous site colors).

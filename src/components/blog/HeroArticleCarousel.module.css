@@ -1,0 +1,36 @@
+.exitNext,
+.exitPrevious {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enterNext,
+  .enterPrevious {
+    animation: enter 460ms cubic-bezier(0.25, 0.7, 0.25, 1) both;
+  }
+
+  .exitNext,
+  .exitPrevious {
+    animation: exit 460ms cubic-bezier(0.25, 0.7, 0.25, 1) both;
+  }
+
+  .enterNext,
+  .exitPrevious {
+    --slide-offset: -100%;
+  }
+
+  .enterPrevious,
+  .exitNext {
+    --slide-offset: 100%;
+  }
+
+  @keyframes enter {
+    from { transform: translateX(var(--slide-offset)); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes exit {
+    from { transform: translateX(0); visibility: visible; }
+    to { transform: translateX(var(--slide-offset)); visibility: hidden; }
+  }
+}

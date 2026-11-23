@@ -12,6 +12,7 @@
  * hides its content until the client observer arms it). Everything in this file stays server-side.
  */
 
+import type { ReactNode } from 'react';
 import { ButtonLink } from '@/components/primitives/ui/ButtonLink';
 import { BrandLogo } from '@/components/site/BrandLogo';
 import { SiteNav } from '@/components/site/SiteNav';
@@ -20,7 +21,7 @@ import { SITE } from '@/content/site';
 import { HeroHeading } from './HeroHeading';
 import { HeroArt, ART_SLOT } from './HeroArt';
 
-export function HeroContent() {
+export function HeroContent({ articlePreview }: { articlePreview?: ReactNode } = {}) {
   // px stays a clamp() (NS-61): gutter-wide is 4px wider at 375, which narrows the hero text column by 8px and re-wraps
   // the subtext to three lines. Hero composition is not moved to a step.
   // Phones: bottom padding = the iOS 26 overshoot (--hero-overshoot, 0 elsewhere) + the ContactFAB's footprint
@@ -89,9 +90,9 @@ export function HeroContent() {
           </div>
         </div>
 
-        {/* Art block */}
-        <div className={ART_SLOT}>
-          <HeroArt />
+        <div className={articlePreview ? 'flex w-full flex-col gap-stack lg:flex-1' : ART_SLOT}>
+          <HeroArt compact={Boolean(articlePreview)} />
+          {articlePreview}
         </div>
       </div>
     </div>

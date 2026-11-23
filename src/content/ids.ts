@@ -74,6 +74,12 @@ export const ID = {
   postMore: 'post-more',
 } as const;
 
+/** Development-only comparison pages; these hooks are not part of the public home page. */
+export const PREVIEW_ID = {
+  blogSpotlight: 'blog-spotlight',
+  blogSpotlightTitle: 'blog-spotlight-title',
+} as const;
+
 /**
  * Zero-height scroll anchors. `aboutMe`, `expertise`, `faq` and `contact` are linked to (nav and
  * CTAs); the others are historical landing points kept so old shared URLs still scroll to the

@@ -12,9 +12,9 @@
   font-weight: 400;
   src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5B9, U+5BB-5C2, U+5D0-5EA, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB2A-FB2D, U+FB31-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB44, U+FB46-FB47, U+FB49-FB4B;
-  size-adjust: 59.29%;
-  ascent-override: 116.07%;
-  descent-override: 39.40%;
+  size-adjust: 59.26%;
+  ascent-override: 116.12%;
+  descent-override: 39.42%;
   line-gap-override: 2.90%;
 }
 @font-face {
@@ -22,9 +22,9 @@
   font-weight: 700;
   src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5B9, U+5BB-5C2, U+5D0-5EA, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB2A-FB2D, U+FB31-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB44, U+FB46-FB47, U+FB49-FB4B;
-  size-adjust: 57.23%;
-  ascent-override: 120.26%;
-  descent-override: 40.82%;
+  size-adjust: 57.21%;
+  ascent-override: 120.30%;
+  descent-override: 40.84%;
   line-gap-override: 3.00%;
 }
 @font-face {
@@ -32,9 +32,9 @@
   font-weight: 400;
   src: local("Arial"), local("ArialMT"), local("Arial Hebrew"), local("ArialHebrew"), local("Noto Sans Hebrew");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B0-5C5, U+5C7, U+5D0-5EA, U+5F0-5F4, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB1F, U+FB29-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB43-FB44, U+FB46-FB4F;
-  size-adjust: 91.06%;
-  ascent-override: 87.86%;
-  descent-override: 21.96%;
+  size-adjust: 91.01%;
+  ascent-override: 87.90%;
+  descent-override: 21.98%;
   line-gap-override: 4.94%;
 }
 @font-face {
@@ -42,8 +42,8 @@
   font-weight: 700;
   src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial Hebrew Bold"), local("ArialHebrew-Bold"), local("Noto Sans Hebrew Bold"), local("NotoSansHebrew-Bold");
   unicode-range: U+20-25, U+27-40, U+5B-5F, U+7B-7D, U+A0, U+AB, U+BB, U+5B9, U+5BC, U+5BE-5C5, U+5D0-5EA, U+5F0-5F4, U+2013-2014, U+2018-201A, U+201C-201E, U+20AA, U+FB1F, U+FB29-FB36, U+FB38-FB3C, U+FB3E, U+FB40-FB41, U+FB43-FB44, U+FB46-FB4F;
-  size-adjust: 93.03%;
-  ascent-override: 85.99%;
+  size-adjust: 93.04%;
+  ascent-override: 85.98%;
   descent-override: 16.12%;
   line-gap-override: 2.47%;
 }

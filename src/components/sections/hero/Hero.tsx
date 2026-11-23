@@ -9,11 +9,12 @@
  * and the background, and delegates the content to HeroContent.
  */
 
+import type { ReactNode } from 'react';
 import { ANCHOR, ID } from '@/content/ids';
 import { HeroContent } from './HeroContent';
 import styles from './HeroPaper.module.css';
 
-export function Hero() {
+export function Hero({ articlePreview }: { articlePreview?: ReactNode } = {}) {
   return (
     <>
       {/* Anchor preserved for scroll-to-top and test selectors */}
@@ -34,7 +35,7 @@ export function Hero() {
           aria-hidden="true"
         />
         <div aria-hidden="true" className="pointer-events-none absolute inset-4 border border-plum/35 sm:inset-6" />
-        <HeroContent />
+        <HeroContent articlePreview={articlePreview} />
       </section>
     </>
   );
