@@ -1,7 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import Link from 'next/link';
+import { StrictMode } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import Home from '@/app/page';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
+import { HomeSectionAnalytics } from '@/components/site/HomeSectionAnalytics';
 import { ContactFAB } from '@/components/site/ContactFAB';
 import { SITE, telHref, waHref } from '@/content/site';
 
@@ -33,6 +36,80 @@ describe('GA4 contact tracking', () => {
       ['event', 'phone_click', { send_to: SITE.ga4MeasurementId, page_path: '/' }],
       ['event', 'whatsapp_click', { send_to: SITE.ga4MeasurementId, page_path: '/' }],
     ]);
+  });
+
+  describe('GA4 homepage screen tracking', () => {
+    class Observer {
+      static latest: Observer;
+      observed = new Set<Element>();
+
+      constructor(private callback: IntersectionObserverCallback, readonly options: IntersectionObserverInit) {
+        Observer.latest = this;
+      }
+
+      observe(target: Element) { this.observed.add(target); }
+      unobserve(target: Element) { this.observed.delete(target); }
+      disconnect() { this.observed.clear(); }
+
+      report(target: Element, isIntersecting: boolean) {
+        this.callback([{ target, isIntersecting } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
+      }
+    }
+
+    beforeEach(() => {
+      vi.stubGlobal('IntersectionObserver', Observer);
+      vi.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800);
+      vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('visible');
+    });
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+      vi.unstubAllGlobals();
+    });
+
+    it('tracks all rendered home screens once and gives no credit to skipped screens', () => {
+      const { unmount } = render(<StrictMode><Home /><HomeSectionAnalytics /></StrictMode>);
+      const observer = Observer.latest;
+      const screens = [...observer.observed];
+      expect(screens.map((element) => element.id || element.tagName)).toEqual([
+        'hero', 'about-me-section', 'SECTION', 'faq-section',
+        'about-credentials', 'services', 'contact-office', 'FOOTER',
+      ]);
+      expect(observer.options.rootMargin).toBe('-400px 0px -399px 0px');
+
+      observer.report(screens[0], true);
+      observer.report(screens[1], false);
+      observer.report(screens[2], true);
+      observer.report(screens[0], true);
+      observer.report(screens[7], true);
+      expect(gtag.mock.calls).toEqual(['hero', 'expertise', 'footer'].map((section_id) => [
+        'event', 'home_section_view', { send_to: SITE.ga4MeasurementId, page_path: '/', section_id },
+      ]));
+
+      unmount();
+      expect(observer.observed.size).toBe(0);
+      observer.report(screens[1], true);
+      expect(gtag).toHaveBeenCalledTimes(3);
+    });
+
+    it('does not count hidden tabs and resumes for uncounted screens only', () => {
+      const visibility = vi.mocked(Object.getOwnPropertyDescriptor(document, 'visibilityState')!.get!);
+      render(<><main id="main"><section id="hero" /><section id="about-me-section" /></main><HomeSectionAnalytics /></>);
+      const original = Observer.latest;
+      const [hero, about] = [...original.observed];
+      original.report(hero, true);
+
+      visibility.mockReturnValue('hidden');
+      document.dispatchEvent(new Event('visibilitychange'));
+      original.report(about, true);
+      expect(gtag).toHaveBeenCalledTimes(1);
+
+      visibility.mockReturnValue('visible');
+      document.dispatchEvent(new Event('visibilitychange'));
+      expect([...Observer.latest.observed]).toEqual([about]);
+      Observer.latest.report(about, true);
+      expect(gtag).toHaveBeenCalledTimes(2);
+    });
   });
 
   it('covers links added after mount and capture survives propagation being stopped', () => {

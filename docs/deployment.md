@@ -10,7 +10,7 @@ The site ships to **one target: Vercel**, production at `https://www.netashemesh
 
 ## Google Analytics 4 and Google Ads
 
-GA4 uses `SITE.ga4MeasurementId` (`G-664E7DFVEJ`, a public measurement ID, not a secret). It is enabled only when Vercel sets `VERCEL_ENV=production` at build time; previews and local runs do not load the tag or track articles. No additional environment variable or package is needed. The small queue initializes before hydration so events are retained while the external tag loads asynchronously. Contact links keep their native navigation; analytics never waits for a network request or prevents a call/WhatsApp from opening. Ad blockers can prevent delivery.
+GA4 uses `SITE.ga4MeasurementId` (`G-664E7DFVEJ`, a public measurement ID, not a secret). It is enabled only when Vercel sets `VERCEL_ENV=production` at build time; previews and normal local runs do not load the tag or send events. No additional environment variable or package is needed. The small queue initializes before hydration so events are retained while the external tag loads asynchronously. Contact links keep their native navigation; analytics never waits for a network request or prevents a call/WhatsApp from opening. Ad blockers can prevent delivery.
 
 | Event | When | Custom parameters |
 |---|---|---|
@@ -18,15 +18,18 @@ GA4 uses `SITE.ga4MeasurementId` (`G-664E7DFVEJ`, a public measurement ID, not a
 | `whatsapp_click` | Any clinic WhatsApp link is activated | `page_path` |
 | `blog_view` | An article opens, once per visit (including Next.js client navigation) | `article_id` (slug), `page_path` |
 | `blog_read_10s` | The article has accumulated at least 10 seconds in a visible tab, once per visit | `article_id`, `page_path` |
+| `home_section_view` | A homepage screen reaches the vertical center of the visible viewport, once per screen per page view | `section_id`, `page_path` |
 
 Hidden-tab and page-cache time does not count; leaving the article cancels its timer. Returning to an article through navigation starts a new visit. The threshold measures visible dwell time, not proof of reading, and contact events measure clicks, not completed calls or messages.
 
 GA4's standard `page_view` is separate from `blog_view`. In **Admin → Data streams → Web → Enhanced measurement → Page views → Advanced settings**, keep page loads and browser-history changes enabled so regular page views follow Next.js navigation. Do not install the same tag again through GTM or Vercel.
 
+**Homepage reach:** screens in order are `hero`, `about-me-section`, `expertise`, `faq-section`, `about-credentials`, `services`, `contact-office`, and `footer`. The event measures screens shown, not reading or a strictly sequential funnel: opening an anchor or reaching one from the nav counts for its destination, without crediting skipped screens. In **Explore → Free form**, filter to homepage `Page path and screen class` (`/`) and event `home_section_view`, with Section ID in Rows and Event count in Values. Divide each count by the homepage Views for the same post-release date range (without the `home_section_view` filter) for reach per recorded page view. Compare `about-me-section` and `expertise` to assess reach around the proposed placement; `expertise` is the next screen, not a direct measure of finishing the bio. Use Device category to split mobile and desktop.
+
 Setup in the Google accounts (not performed by a code deploy):
 
-1. In GA4, confirm the web stream's measurement ID matches `SITE.ga4MeasurementId`. Use **Realtime**, or Tag Assistant plus **DebugView**, to verify the four events. For a local verification build, explicitly set `VERCEL_ENV=production`, rebuild, and intercept Google's script/collection requests so synthetic events do not reach the live property.
-2. Register `article_id` as an event-scoped custom dimension (**Admin → Custom definitions**) to break down both article events by post. Reports can take 24–48 hours to populate.
+1. In GA4, confirm the web stream's measurement ID matches `SITE.ga4MeasurementId`. Use **Realtime**, or Tag Assistant plus **DebugView**, to verify the events. For a local verification build, explicitly set `VERCEL_ENV=production`, rebuild, and intercept Google's script/collection requests so synthetic events do not reach the live property.
+2. In **Admin → Custom definitions**, register event-scoped custom dimensions for `article_id` (to break down article events by post) and `section_id` (display name: Section ID, to break down homepage reach). Create them before collecting the reporting period; reports can take 24–48 hours to populate.
 3. Mark only `phone_click` and `whatsapp_click` as **key events**. Link the Google Ads account under **Product links → Google Ads links**, with auto-tagging enabled in Ads.
 4. In Google Ads, create/import conversions from those two GA4 key events. Use **Count: One** for leads, and make them **Primary** if the campaign should optimize toward contacts. Do not also import the generic outbound `click` or add duplicate direct Ads conversions for the same action.
 5. Keep article events for analysis, not primary bidding goals. If imported into Ads at all, make them **Secondary**.

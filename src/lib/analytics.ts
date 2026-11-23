@@ -1,6 +1,6 @@
 import { SITE } from '@/content/site';
 
-type AnalyticsEvent = 'phone_click' | 'whatsapp_click' | 'blog_view' | 'blog_read_10s';
+type AnalyticsEvent = 'phone_click' | 'whatsapp_click' | 'blog_view' | 'blog_read_10s' | 'home_section_view';
 
 declare global {
   interface Window {

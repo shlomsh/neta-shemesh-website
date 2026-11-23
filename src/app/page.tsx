@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import { PageShell } from '@/components/site/PageShell';
+import { HomeSectionAnalytics } from '@/components/site/HomeSectionAnalytics';
 import { Hero } from '@/components/sections/hero/Hero';
 import { Expertise } from '@/components/sections/expertise/Expertise';
 import { Faq } from '@/components/sections/faq/Faq';
@@ -11,6 +12,7 @@ import { ContactOffice } from '@/components/sections/contact/ContactOffice';
 import { SITE } from '@/content/site';
 import { ANCHOR } from '@/content/ids';
 import { pageMeta } from '@/lib/seo/metadata';
+import { GOOGLE_ANALYTICS_ENABLED } from '@/lib/analytics';
 
 /**
  * The home page's own metadata: canonical, hreflang, title, description and Open Graph. No `twitter`
@@ -52,6 +54,7 @@ export default function Home() {
       {SHOW_TESTIMONIALS && <Testimonials />}
       <div id={ANCHOR.gallery} className="invisible h-0" aria-hidden="true" />
       <ContactOffice />
+      {GOOGLE_ANALYTICS_ENABLED && <HomeSectionAnalytics />}
     </PageShell>
   );
 }
